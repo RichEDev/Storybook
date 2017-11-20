@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="teamsordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\spend management\employee management\teams\teamsordered.orderedtest" id="7003ced3-c88c-46f6-a1d6-dfc1f22d38bb" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <Execution id="4fa8d52c-9bb3-4d9e-b17b-243ca275173b" />
+  <TestLinks>
+    <TestLink id="b8824500-eabf-d698-30cb-d8237890680c" name="TeamsEnsureEmptyTeamProducesError" storage="..\..\..\..\bin\debug\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="e639be6a-c23c-ef40-a97b-87cdec7c5dab" name="TeamsCreateNewTeamWithMembers" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="e86928b2-ea8f-613c-cb3d-777ddf761514" name="TeamsUnsuccessfullyCreateNewTeamWhereTeamNameAlreadyUsed" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="d004e8ce-35a9-b4b5-c9b1-bd295ea6acb0" name="TeamsSuccessfullyEditTeam" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="8d634862-042d-eeb6-b5ad-3419b5a42425" name="TeamsDeleteTeamContainingMembers" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="a006b0c1-30b9-848d-5882-e2d6db8f17eb" name="TeamsSuccessfullyVerifyThatTeamNeedsAtLeast1Member" storage="..\..\..\..\bin\debug\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

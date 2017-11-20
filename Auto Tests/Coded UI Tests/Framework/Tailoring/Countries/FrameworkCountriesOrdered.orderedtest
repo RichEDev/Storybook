@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="FrameworkCountriesOrdered" storage="c:\projects\spend management\main\auto tests\coded ui tests\framework\tailoring\countries\frameworkcountriesordered.orderedtest" id="c94f038e-ee1a-40e9-b7a5-7b66b2e3c452" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <TestLinks>
+    <TestLink id="8d492d73-5807-f09b-c399-cb0d6126710e" name="CountriesUnsuccessfullyDeleteCountryWhereCountryIsUsedForSupplierAddress" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="eac0d9d5-24f8-0c60-9fa6-35bcfec29d7a" name="CountriesSuccessfullyArchiveCountryWhereCountryHasBeenUsedForSupplierAddress" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

@@ -1,0 +1,209 @@
+<html>
+	<head>
+		<title>Framework Help</title>
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<LINK href="fwhelp.css" type="text/css" rel="stylesheet">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><IMG alt="Close Help Window" src="../images/exithelp.gif"></a>
+			Reports - Column Selection</div>
+		<div class="help_section">
+			<div class="help_section_title">Overview
+			</div>
+			<div class="help_overview">
+				<p>All reports must have a collection of fields defined that match the information 
+					the user aims to deliver.</p>
+				<p>The Select Columns screen allow the required fields for the report to be 
+					included or excluded depending on whether a new report is being compiled or if 
+					an existing report is being modified.</p>
+				<p>If an existing report is being modified, all current selections will be 
+					displayed. A new report will show a blank selection.</p>
+				<p><b>Note:</b> All reports <u>must</u> be given a unique name in order to saved. 
+					The report description is optional, though will often provide a means of 
+					greater information to describe the report.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title"><IMG id="img1" onclick="toggle('1');" src="../buttons/open.gif">&nbsp;Report 
+				Base
+			</div>
+			<div class="help_body_text" id="1">
+				<p>The report base allows the user to change the base (core) level on which the 
+					report is being generate.</p>
+				<p>The default is Contract Details, though a report can be based around Vendor 
+					Details, Product Details or Staff Details. On changing the selection in the 
+					drop down list, the fields that are available for selection change accordingly.</p>
+				<p><b>An example might be...</b></p>
+				<p>If a Contract Details based report is generated, then for each contract a single 
+					Vendor will be returned because of the relationship being one to one, whereas 
+					in a Vendor Details based report, for each Vendor reported on, multiple 
+					contract items could be returned.</p>
+				<p>All fields are grouped together under a title detailing the logical area of the 
+					application from which they originate. Clicking on the '+' icon will expand the 
+					group to show the fields available for selection.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('2');" id="img2">&nbsp;Select / 
+				Deselect fields
+			</div>
+			<div class="help_body_text" id="2">
+				<p>
+					<table class="inner" width="500" align="center">
+						<tr>
+							<td class="inner" width="150" align="center"><b>Select Single Field</b></td>
+							<td class="inner" width="350">To select a single field, click on the field name. 
+								This should highlight the field.<br>
+								<br>
+								Click the <b>Select--&gt;</b> button. The highlighted field will move to the 
+								selected columns list.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Select Multiple Fields</b></td>
+							<td class="inner">To the left of all available fields, a tick appears. All required 
+								fields, regardless of which grouping they are in, can be checked for selection<br>
+								<br>
+								Click the <b>Select Checked--&gt;</b> button. All checked items will be moved 
+								to the selected columns list.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Deselect Single Field</b></td>
+							<td class="inner">To the left of each field in the selected columns list, a single 
+								select (radio) button appears. Click the radio button adjacent to the field to 
+								deselect.<br>
+								<br>
+								Click the <b>&lt;--Deselect</b> button. The field is removed from the selected 
+								list.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Deselect Multiple Fields</b></td>
+							<td class="inner">Clicking the <b>&lt;--Deselect All</b> button will remove all 
+								current selections in the list.</td>
+						</tr>
+					</table>
+				</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('3');" id="Img3">&nbsp;Field 
+				Sequencing
+			</div>
+			<div class="help_body_text" id="3">
+				<p>Selected fields in the report will when selected singly, appear in the order 
+					required. If fields are added using the 'Select Checked' button, they will be 
+					added to the list in the order they are encountered in the list.</p>
+				<p>This is likely not to be the order required in the report.</p>
+				<p>
+				To resequence the order of the fields: -<p>
+				<p><li>
+				Type in the position number that you wish the column to appear
+				<P></P>
+				<p></p>
+				<li>
+					Click the <b>'Re-sequence Fields'</b> button at the top of selected fields 
+					list.
+					<P></P>
+					<p></p>
+				<li>
+					Fields should be in sequence specified
+					<P></P>
+					<div class="help_tip">
+						<b>Tip:</b> It is not necessary to provide a sequence number for every field. 
+						You may only want to specify the fields you want in position 1 and 5. All other 
+						fields will fall into place around them.
+					</div>
+				</li>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('4');" id="Img4">&nbsp;Sort &amp; 
+				Subtotal
+			</div>
+			<div class="help_body_text" id="4">
+				<p>Each field in the selected list can be sort in ascending (A-Z,0-9) or descending 
+					(Z-A,9-0).</p>
+				<p>Sort seeding will also be in place in a future release that will allow 
+					specification 'Sort Column A, then Column B' as is possible in spreadsheets.</p>
+				<p>Use the drop-down list against each field to select Ascending or Descending sort 
+					for that field.</p>
+				<p>A tick box is also available adjacent to the field which allows the user to 
+					specify whether they wish to subtotal the field. For any non-numeric field, 
+					this will be ignored.
+				</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('5');" id="Img5">&nbsp;Saving the 
+				Report
+			</div>
+			<div class="help_body_text" id="5">
+				<p>On completion of your report setup, you have two options. Both of which will 
+					save the report configuration (as long as a unique report name has been 
+					specified).</p>
+				<p>
+					<table class="inner" width="500" align="center">
+						<tr>
+							<td align="center" width="150" class="inner"><b>Apply Criteria</b></td>
+							<td width="350" class="inner">This option will take the user directly to the 
+								criteria definition screen. He they can specify any filter criteria to reduce 
+								the amount of returned data.<br>
+								<br>
+								On an existing report, any criteria already defined will be displayed.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Run Report</b></td>
+							<td class="inner">This option will execute the report immediately. If the report is 
+								an existing report, the report will execute with any already saved criteria.<br>
+								<br>
+								If it is a new report, it will run returning all data in the database.</td>
+						</tr>
+					</table>
+				</p>
+				<div class="help_tip">
+					<b>Tip:</b>It is strongly recommended, for both report clarity and system 
+					performance benefit, that some criteria is always used to focus the amount of 
+					data being returned from the database.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

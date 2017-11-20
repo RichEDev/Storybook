@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[purchasecardrecords]
+    ADD CONSTRAINT [PK_purchasecardrecords] PRIMARY KEY CLUSTERED ([purchasecardrecordid] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

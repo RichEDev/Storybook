@@ -1,0 +1,82 @@
+﻿@using System.Web.Http.Controllers
+@using System.Web.Http.Description
+@using System.Collections.ObjectModel
+@model Collection<ApiDescription>
+@{
+    ViewBag.Title = "Expenses API: Resource Reference";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.HttpMethodOrder = new Dictionary<string, int>
+    {
+        {"HEAD", 0},
+        {"OPTIONS", 1},
+        {"GET", 2},
+        {"POST", 3},
+        {"PUT", 4},
+        {"PATCH", 5},
+        {"DELETE", 6}
+    };
+
+    // Group APIs by controller
+    ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.OrderBy(api => api.ActionDescriptor.ControllerDescriptor.ControllerName).ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
+}
+
+ <h1>@ViewBag.Title</h1>
+
+<header>
+    <h2>Introduction</h2>
+    <p>
+        The API comes in the form of sets of related objects, each one representing a part of the system. These objects are accessed by API end points called Resources.
+        Press a key to jump to that letter.
+    </p>
+</header>
+
+<section class="clear-fix">
+    <header>
+        <h2>Resources</h2>
+    </header>
+    
+        <div>
+            Version of the API to display:
+            <select name="version" id="version">
+                @foreach (var version in ViewBag.VersionNumbers)
+                {
+                    if (version == ViewBag.SelectedVersion)
+                    {
+                        <option value="@version" selected>@version</option>
+                    }
+                    else
+                    {
+                        <option value="@version">@version</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="accordion">
+            @foreach (var group in apiGroups)
+            {
+                @Html.DisplayFor(m => group, "ApiGroup")
+            }
+        </div>
+    
+    </section>
+
+
+@section Scripts {
+    
+    <script type="text/javascript">
+
+        var doc = $(document);
+        doc.ready(function() {
+            $('#version').change(function (element) {
+                var val = $(this).val();
+                var url = '@Url.Action("Reference", "Help", new { versionId = "----" })';
+                url = url.replace("----", val);
+                window.location = url;
+            });
+        });
+
+        var version = '@ViewBag.SelectedVersion';
+    </script>
+    <script src="~/Scripts/WebApiUtils.js"></script>
+}

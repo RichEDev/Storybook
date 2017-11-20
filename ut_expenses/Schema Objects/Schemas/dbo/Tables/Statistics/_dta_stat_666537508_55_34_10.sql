@@ -1,0 +1,1 @@
+﻿CREATE STATISTICS [_dta_stat_666537508_55_34_10] ON [dbo].[savedexpenses]([primaryitem], [tempallow], [subcatid])

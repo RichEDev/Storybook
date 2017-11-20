@@ -1,0 +1,38 @@
+@model SpendManagementApi.Areas.HelpPage.TypeDocumentation
+
+<section class="api-list-collapsible">
+    <table class="help-page-table">
+        <thead>
+            <tr>
+                <th class="property-name">Property</th>
+                <th class="property-type">Type</th>
+                <th class="property-comments">Comments</th>
+                <th class="property-rules">Rules</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prop in Model.MemberDocumentation)
+            {
+                <tr>
+                    <td class="property-name">@prop.Key</td>
+                    <td class="property-type">@Html.Raw(prop.Value.Type)</td>
+                    <td class="property-comments">
+                        @Html.Raw(prop.Value.Summary)
+                        <br />
+                        @Html.Raw(prop.Value.Parameters)
+                        <br />
+                        @Html.Raw(prop.Value.Return)
+                    </td>
+                    <td class="property-rules">
+                        @foreach (var rule in prop.Value.Rules)
+                        {
+                            @Html.Raw(rule)
+                            <br />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+<hr />

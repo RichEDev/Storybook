@@ -1,0 +1,164 @@
+<html>
+	<head>
+		<title>Framework Help</title>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Framework Reports</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>The Framework report screen is where the executed report actually appears.</p>
+				<p>From this main report screen, the report can be viewed, exported, printed or 
+					modified (assuming the current user is the contract owner).</p>
+				<div class="help_tip">
+					<b>Note:&nbsp;</b>A Global report can only be modified by the user who created 
+					it. This prevents modification of what might be considered 'standard' reports 
+					available for general use.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1">&nbsp;Publish a 
+				Report as Global
+			</div>
+			<div class="help_body_text" id="1">
+				<p><b><u>Why Publish a Report as Global?</u></b></p>
+				<p>By default, all reports created are Personal and so can only be viewed or used 
+					by the user that created it. If a report you have compiled is thought to be of 
+					use to others, it can be published as Global enabling all other users to run 
+					it.</p>
+				<p></p>
+				<p><b><u>How do I publish my report?</u></b></p>
+				<p>To Publish the report, simply click the radio button at the top of the screen 
+					from Personal to Global.</p>
+				<p>This will change the status of the report.</p>
+				<p><b>Note:</b>&nbsp;As 'creator' of the report, only they will be able to change 
+					the criteria, column selections etc.</p>
+				<div class="help_tip">
+					<b>Important:</b>&nbsp;If the Global radio button is greyed out, the user does 
+					not have sufficient access rights to publish Global reports.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('2');" id="img2">&nbsp;Grouping 
+				By Column
+			</div>
+			<div class="help_body_text" id="2">
+				<p><b><u>What is Grouping?</u></b></p>
+				<p>Framework's reporting displays in the same way as Microsoft Outlook email 
+					application.</p>
+				<p>For added clarity, it may be desirable to view the returned report data by a 
+					particular column (e.g. Contract Vendor).</p>
+				<p></p>
+				<p><b><u>How do I group by a column?</u></b></p>
+				<p>Simply drag and drop the desire column header into the area above it marked 
+					'Outlook Group by area'.</p>
+				<p><b>If you don't know how to drag and drop</b>, follow the steps below: -</p>
+				<p></p>
+				<p><li>
+				Using the mouse, left-click (and hold down) over the column header that you 
+				wish to group by.
+				<P></P>
+				<p></p>
+				<li>
+					While still holding the mouse button down, move the mouse into the area above 
+					the column headers. You should see the column header being dragged
+					<P></P>
+					<p></p>
+				<li>
+					Release the mouse button
+					<P></P>
+					<div class="help_tip">
+						<b>Tip:</b>&nbsp;Select a column that has been sorted as your Grouping header 
+						for more meaningful results.
+					</div>
+					<p>Any column groupings you make will be stored with the report and retained for 
+						the next time the report is run.</p>
+				</li>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('3');" id="img3">&nbsp;Export 
+				Report
+			</div>
+			<div id="3" class="help_body_text">
+				<p>At the top right corner of the reporting screen, a drop-down list provides the 
+					ability to export the report in three ways. Select desired export and click the 
+					'Export' button adjacent to it and a new window (printer friendly without 
+					menus) will re-run the report</p>
+				<p>The three export types are: -</p>
+				<p><table class="inner" width="500" align="center">
+						<tr>
+							<td class="inner" align="center" width="150"><b>Printer</b></td>
+							<td class="inner" width="350">Displays the report in a format ready for printing. 
+								Type CTRL+P or choose Print from the Internet Explorer File menu. Remember to 
+								print using Landscape orientation as this is most likely to fit your columns to 
+								the page.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Excel</b></td>
+							<td class="inner">Microsoft Excel is a commonly used spreadsheet application and by 
+								providing an export, in this format, allows the flexibility to transform the 
+								report for other business documents. This will especially be the case for the 
+								financial reports it can create.<br>
+								<br>
+								Once opened in the export window, click the 'Export' button at the top of the 
+								screen. This will then export the Excel file.
+							</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Comma Separate File (CSV)</b></td>
+							<td class="inner">On exporting, a text file is generated and opened in a browser 
+								window. A CSV file is a common format for importing the data into other 
+								applications (e.g. Excel, MS Access etc.).</td>
+						</tr>
+					</table>
+				</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

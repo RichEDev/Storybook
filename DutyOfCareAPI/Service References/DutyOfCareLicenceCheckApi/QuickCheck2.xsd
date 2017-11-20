@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RiskAndLicenceManager.SupportClasses" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RiskAndLicenceManager.SupportClasses" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="LicenceDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Expires" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IsLgv" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsPcv" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsPhotoCard" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsShortTerm" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsVocational" type="xs:boolean" />
+      <xs:element minOccurs="0" name="NextMedicalDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PhotocardExpiryDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PhotocardIssueDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LicenceDetails" nillable="true" type="tns:LicenceDetails" />
+  <xs:complexType name="DriverRisk">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodeThatSetRisk" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RiskDeterminedBy" type="tns:RiskDeterminator" />
+      <xs:element minOccurs="0" name="RiskLevel" type="tns:RiskLevel" />
+      <xs:element minOccurs="0" name="RiskLevelAsText" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RiskLevelPoints" type="xs:int" />
+      <xs:element minOccurs="0" name="RiskReason" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DriverRisk" nillable="true" type="tns:DriverRisk" />
+  <xs:simpleType name="RiskDeterminator">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Points" />
+      <xs:enumeration value="EndorsementType" />
+      <xs:enumeration value="CustomEndorsementType" />
+      <xs:enumeration value="Status" />
+      <xs:enumeration value="Expiry" />
+      <xs:enumeration value="LicenceRestrictions" />
+      <xs:enumeration value="All" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RiskDeterminator" nillable="true" type="tns:RiskDeterminator" />
+  <xs:simpleType name="RiskLevel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Low" />
+      <xs:enumeration value="Medium" />
+      <xs:enumeration value="High" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RiskLevel" nillable="true" type="tns:RiskLevel" />
+</xs:schema>

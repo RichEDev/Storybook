@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[mileage_thresholds] (
+    [mileagethresholdid]  INT      IDENTITY (1, 1)  NOT NULL,
+    [mileagedateid]       INT      NOT NULL,
+    [rangetype]           TINYINT  NOT NULL,
+    [rangevalue1]         DECIMAL(18, 2)      NULL,
+    [rangevalue2]         DECIMAL(18, 2)      NULL,
+    [ppmpetrol]           MONEY    NOT NULL,
+    [ppmdiesel]           MONEY    NOT NULL,
+    [ppmlpg]              MONEY    NOT NULL,
+    [amountforvatp]       MONEY    NOT NULL,
+    [amountforvatd]       MONEY    NOT NULL,
+    [amountforvatlpg]     MONEY    NOT NULL,
+    [passenger1]          MONEY    NOT NULL,
+    [passengerx]          MONEY    NOT NULL,
+    [CreatedOn]           DATETIME NULL,
+    [CreatedBy]           INT      NULL,
+    [ModifiedOn]          DATETIME NULL,
+    [ModifiedBy]          INT      NULL,
+    [heavyBulkyEquipment] MONEY    NOT NULL,
+	[ppmhybrid]               MONEY    NOT NULL,
+    [ppmelectric]             MONEY    NOT NULL,
+    [ppmdieseleurov]          MONEY    NOT NULL,
+    [amountforvathybrid]      MONEY    NOT NULL,
+    [amountforvatelectric]    MONEY    NOT NULL,
+    [amountforvatdieseleurov] MONEY    NOT NULL
+);
+

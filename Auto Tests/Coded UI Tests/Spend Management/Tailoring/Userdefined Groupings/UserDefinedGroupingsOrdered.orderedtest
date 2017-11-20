@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="UserDefinedGroupingsOrdered" storage="c:\projects\spend management\main\auto tests\coded ui tests\spend management\tailoring\userdefined groupings\userdefinedgroupingsordered.orderedtest" id="fa98b2da-138a-48b1-81b5-6a4c327c5a98" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <TestLinks>
+    <TestLink id="ea1c0f1c-3a31-7f4d-6e34-227fe8e8c170" name="UserDefinedGroupingsSuccessfullyCreateNew" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="a099b088-3a83-46df-4a34-9c9606d71aa4" name="UserDefinedGroupingsUnSuccessfullyCreateNewWithDuplicateDetails" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="a0c87e0e-98f5-a824-ec20-c20043b12846" name="UserDefinedGroupingsSuccessfullyEdit" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="02017d6e-662c-ed68-1330-ecf4d05efeb8" name="UserDefinedGroupingsSuccessfullyDelete" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

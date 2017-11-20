@@ -1,0 +1,4 @@
+	ALTER TABLE [dbo].[addresses]  WITH CHECK ADD  CONSTRAINT [FK_addresses_ESRAddresses] FOREIGN KEY([ESRAddressID])
+	REFERENCES [dbo].[ESRAddresses] ([ESRAddressID])
+	ON UPDATE CASCADE
+	ON DELETE CASCADE

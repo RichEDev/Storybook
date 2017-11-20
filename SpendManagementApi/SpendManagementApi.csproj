@@ -1,0 +1,1157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build;Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C8F2658A-B8E1-4D2D-ACEC-CC16F8AD234B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SpendManagementApi</RootNamespace>
+    <AssemblyName>SpendManagementApi</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <OutputPath>bin\</OutputPath>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\SpendManagementApi.XML</DocumentationFile>
+    <IncludeIisSettings>true</IncludeIisSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\SpendManagementApi.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU'">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <DocumentationFile>bin\SpendManagementApi.XML</DocumentationFile>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <AutoParameterizationWebConfigConnectionStrings>False</AutoParameterizationWebConfigConnectionStrings>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>bin\SpendManagementApi.XML</DocumentationFile>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisRuleSet>SpendManagementApi.Production.ruleset</CodeAnalysisRuleSet>
+    <AutoParameterizationWebConfigConnectionStrings>False</AutoParameterizationWebConfigConnectionStrings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxMin">
+      <HintPath>..\..\References\AjaxMin.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Configuration.Core, Version=1.1.2.28033, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Configuration.Core.1.1.2.28033\lib\net461\Configuration.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Configuration.Interface, Version=1.1.2.28032, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Configuration.Interface.1.1.2.28032\lib\net461\Configuration.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.0.11.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.0.11\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.WebApi, Version=4.0.11.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.WebApi.4.0.11\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.1.2\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.1.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.1.2\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
+    <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
+    <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
+    <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\InvalidSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ObjectGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
+    <Compile Include="Areas\HelpPage\SelApiExplorer.cs" />
+    <Compile Include="Areas\HelpPage\TypeAndDocumentation.cs" />
+    <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Attributes\AuthAuditAttribute.cs" />
+    <Compile Include="Attributes\InternalSelenityMethodAttribute.cs" />
+    <Compile Include="Attributes\HandleApiError.cs" />
+    <Compile Include="Attributes\HttpsAttribute.cs" />
+    <Compile Include="Attributes\Mobile\MobileAuthAttribute.cs" />
+    <Compile Include="Attributes\SystemGreenlightOnlyAttribute.cs" />
+    <Compile Include="Attributes\Validation\CurrencyIdValidation.cs" />
+    <Compile Include="Attributes\Validation\CurrencyExchangeRateDateValidation.cs" />
+    <Compile Include="Attributes\Validation\ExpenseCategoryValidation.cs" />
+    <Compile Include="Attributes\Validation\APIRequestValidationBase.cs" />
+    <Compile Include="Attributes\Validation\ExpenseDateValidation.cs" />
+    <Compile Include="Attributes\VersionAttribute.cs" />
+    <Compile Include="Attributes\ValidateRequestAttribute.cs" />
+    <Compile Include="Attributes\Validation\IsSpendManagementValueAttribute.cs" />
+    <Compile Include="Attributes\Validation\OptionalEmailAddress.cs" />
+    <Compile Include="Attributes\Validation\RequiredIfAttribute.cs" />
+    <Compile Include="Attributes\Validation\ValidEnumValueAttribute.cs" />
+    <Compile Include="Bootstrap\BootstrapAccount.cs" />
+    <Compile Include="Bootstrap\Bootstrapper.cs" />
+    <Compile Include="Bootstrap\WebIdentityContext.cs" />
+    <Compile Include="Common\ActionContext.cs" />
+    <Compile Include="Common\ApiControllerSelector.cs" />
+    <Compile Include="Common\Enum\AddressActionOutcome.cs" />
+    <Compile Include="Common\Enum\AddressCreationMethod.cs" />
+    <Compile Include="Common\Enum\AddressSource.cs" />
+    <Compile Include="Common\Enum\ClaimUnsubmittableReason.cs" />
+    <Compile Include="Common\Enum\AttributeFormat.cs" />
+    <Compile Include="Common\Enum\ExpenseActionOutcome.cs" />
+    <Compile Include="Common\Enum\FavouriteAction.cs" />
+    <Compile Include="Common\Enum\FlagFrequencyType.cs" />
+    <Compile Include="Common\Enum\FlagInclusionType.cs" />
+    <Compile Include="Common\Enum\FlagPeriodType.cs" />
+    <Compile Include="Common\Enum\FlagType.cs" />
+    <Compile Include="Common\Enum\InvalidDateFlagType.cs" />
+    <Compile Include="Common\Enum\NotifyAdminOfChangesOutcome.cs" />
+    <Compile Include="Common\Enum\PartSubmittalFieldType.cs" />
+    <Compile Include="Common\Enum\SubmitRejectionReason.cs" />
+    <Compile Include="Common\FieldSettingFactory.cs" />
+    <Compile Include="Common\Mobile\Authenticator.cs" />
+    <Compile Include="Common\Mobile\HttpRequestMessageExtensions.cs" />
+    <Compile Include="Controllers\Expedite\V1\EnvelopesTypeController.cs" />
+    <Compile Include="Controllers\Expedite\V1\FundManagerController.cs" />
+    <Compile Include="Controllers\Expedite\V1\PaymentManagerController.cs" />
+    <Compile Include="Controllers\Expedite\V1\ReceiptsController.cs" />
+    <Compile Include="Controllers\V1\AccessRolesController.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\Helper.cs" />
+    <Compile Include="Common\PredicateBuilder.cs" />
+    <Compile Include="Controllers\Expedite\V1\EnvelopePhysicalStatesController.cs" />
+    <Compile Include="Controllers\Expedite\V1\ExpenseValidationCriteriaController.cs" />
+    <Compile Include="Controllers\Expedite\V1\ExpenseValidationResultsController.cs" />
+    <Compile Include="Controllers\Expedite\V1\EnvelopesController.cs" />
+    <Compile Include="Controllers\V1\AdvancesController.cs" />
+    <Compile Include="Controllers\V1\DvlaV1Controller.cs" />
+    <Compile Include="Controllers\V1\DutyOfCareV1Controller.cs" />
+    <Compile Include="Controllers\V1\FlagManagementController.cs" />
+    <Compile Include="Controllers\V1\BankAccountsController.cs" />
+    <Compile Include="Controllers\V1\ClaimableItemsController.cs" />
+    <Compile Include="Controllers\V1\HolidaysController.cs" />
+    <Compile Include="Controllers\V1\HotelController.cs" />
+    <Compile Include="Controllers\V1\MobileInformationMessagesController.cs" />
+    <Compile Include="Controllers\V1\MobileMetricDataController.cs" />
+    <Compile Include="Models\Requests\MobileMetricData\MobileMetricDataRequest.cs" />
+    <Compile Include="Models\Requests\MobileMetricData\SetDeviceStatusRequest.cs" />
+    <Compile Include="Models\Types\MobileMetricData\MobileMetricData.cs" />
+    <Compile Include="Models\Responses\GeneralOptionsDisplayFieldSettingResponse.cs" />
+    <Compile Include="Models\Types\GeneralOptionsDisplayFieldSetting.cs" />
+    <Compile Include="Repositories\MobileInformationMessagesRepository.cs" />
+    <Compile Include="Controllers\V1\PopulateDrivingLicenceController.cs" />
+    <Compile Include="Controllers\V1\ReceiptController.cs" />
+    <Compile Include="Controllers\V1\SystemGreenLightController .cs" />
+    <Compile Include="Controllers\V1\TooltipsController.cs" />
+    <Compile Include="Controllers\V1\FilterRulesController.cs" />
+    <Compile Include="Controllers\V1\CompanyPolicyController.cs" />
+    <Compile Include="Controllers\V1\ESRAssignmentsController.cs" />
+    <Compile Include="Controllers\V1\GeneralOptionsController.cs" />
+    <Compile Include="Controllers\V1\JourneysController.cs" />
+    <Compile Include="Controllers\V1\MyDetailsController.cs" />
+    <Compile Include="Controllers\V1\SelfRegistrationController.cs" />
+    <Compile Include="Controllers\V1\ClaimsController.cs" />
+    <Compile Include="Controllers\V1\OrganisationsController.cs" />
+    <Compile Include="Controllers\V1\AccountController.cs" />
+    <Compile Include="Controllers\V1\AddressRecommendedDistancesController.cs" />
+    <Compile Include="Controllers\V1\ExpenseItemsController.cs" />
+    <Compile Include="Controllers\V1\FinancialYearsController.cs" />
+    <Compile Include="Controllers\V1\CorporateCardsController.cs" />
+    <Compile Include="Controllers\V1\CurrencyExchangeRatesController.cs" />
+    <Compile Include="Controllers\V1\GlobalsController.cs" />
+    <Compile Include="Controllers\V1\NhsTrustController.cs" />
+    <Compile Include="Controllers\V1\CustomEntityAttributesController.cs" />
+    <Compile Include="Controllers\V1\CustomEntityRecordsController.cs" />
+    <Compile Include="Controllers\V1\CustomEntityFormsController.cs" />
+    <Compile Include="Controllers\V1\CustomEntityViewsController.cs" />
+    <Compile Include="Controllers\V1\OdometerReadingsController.cs" />
+    <Compile Include="Controllers\V1\FuelReceiptToVATCalculationController.cs" />
+    <Compile Include="Models\Responses\CurrentClaimReminderResponse.cs" />
+    <Compile Include="Controllers\V1\VehiclesController.cs" />
+    <Compile Include="Controllers\V1\TeamsController.cs" />
+    <Compile Include="Controllers\BaseAPIController.cs" />
+    <Compile Include="Controllers\V1\AllowancesController.cs" />
+    <Compile Include="Controllers\V1\ClaimReasonsController.cs" />
+    <Compile Include="Controllers\V1\BudgetHoldersController.cs" />
+    <Compile Include="Controllers\V1\ProjectCodesController.cs" />
+    <Compile Include="Controllers\V1\CostCodesController.cs" />
+    <Compile Include="Controllers\V1\DepartmentsController.cs" />
+    <Compile Include="Controllers\V1\EmployeesController.cs" />
+    <Compile Include="Controllers\V1\AddressesController.cs" />
+    <Compile Include="Controllers\V1\CardProvidersController.cs" />
+    <Compile Include="Controllers\V1\EmailNotificationsController.cs" />
+    <Compile Include="Controllers\V1\UserDefinedFieldsController.cs" />
+    <Compile Include="Controllers\V1\SignOffGroupsController.cs" />
+    <Compile Include="Controllers\V1\MileageCategoriesController.cs" />
+    <Compile Include="Controllers\V1\ExpenseSubCategoriesController.cs" />
+    <Compile Include="Controllers\V1\CurrenciesController.cs" />
+    <Compile Include="Controllers\V1\CountriesController.cs" />
+    <Compile Include="Controllers\V1\ExpenseCategoriesController.cs" />
+    <Compile Include="Controllers\V1\ItemRolesController.cs" />
+    <Compile Include="Controllers\V1\VersionsController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileJourneysController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileAllowancesController.cs" />
+    <Compile Include="Controllers\Mobile\V1\AuthenticateController.cs" />
+    <Compile Include="Controllers\Mobile\BaseMobileApiController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileCategoriesController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileClaimsController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileCompanyPolicyController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileCurrenciesController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileEmployeesController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileExpenseItemController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileFieldsController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileGeneralOptionsController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobilePairController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileReasonsController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileReceiptsController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileSubcatsController.cs" />
+    <Compile Include="Controllers\Mobile\V1\MobileVersionsController.cs" />
+    <Compile Include="Controllers\V1\P11DCategoriesController.cs" />
+    <Compile Include="Controllers\ControllerFactory.cs" />
+    <Compile Include="Controllers\EnumsController.cs" />
+    <Compile Include="Controllers\V2\ClaimsControllerV2.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\IAccessRole.cs" />
+    <Compile Include="Interfaces\IApiTypeToBaseClass.cs" />
+    <Compile Include="Interfaces\IBaseClassToAPIType.cs" />
+    <Compile Include="Interfaces\ICanAddOrganisations.cs" />
+    <Compile Include="Interfaces\IEmployee.cs" />
+    <Compile Include="Interfaces\IEmployeeData.cs" />
+    <Compile Include="Interfaces\IFieldSetting.cs" />
+    <Compile Include="Interfaces\IInterceptTransactionDecrement.cs" />
+    <Compile Include="Interfaces\IActionContext.cs" />
+    <Compile Include="Interfaces\ISupportsActionContext.cs" />
+    <Compile Include="Interfaces\ISupportsDelete.cs" />
+    <Compile Include="Interfaces\IRequiresValidation.cs" />
+    <Compile Include="Interfaces\IApiFrontForDbObject.cs" />
+    <Compile Include="Interfaces\IAuthTokenProvider.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IValidateCheckPay.cs" />
+    <Compile Include="Models\Common\ApiErrorDetail.cs" />
+    <Compile Include="Models\Common\ApiResponseInformation.cs" />
+    <Compile Include="Models\Common\ApiException.cs" />
+    <Compile Include="Models\Common\ApiRequest.cs" />
+    <Compile Include="Models\Common\ApiResponse.cs" />
+    <Compile Include="Models\Common\ApiStatusCode.cs" />
+    <Compile Include="Models\Common\Link.cs" />
+    <Compile Include="Models\FindPassengerRequest.cs" />
+    <Compile Include="Models\Requests\AccountRequest.cs" />
+    <Compile Include="Models\Requests\AddRemovePersonalFavouriteAddressRequest.cs" />
+    <Compile Include="Models\Requests\AddressLabelRequest.cs" />
+    <Compile Include="Models\Requests\AddressRequest.cs" />
+    <Compile Include="Models\Requests\AdvanceRequest.cs" />
+    <Compile Include="Models\Requests\AllocateCardToEmployeeRequest.cs" />
+    <Compile Include="Models\Requests\AssignClaimsRequest.cs" />
+    <Compile Include="Models\Requests\CustomEntityRequest.cs" />
+    <Compile Include="Models\Requests\DeleteReceiptAsApproverRequest.cs" />
+    <Compile Include="Models\Requests\DrivingLicenceRequest.cs" />
+    <Compile Include="Models\Requests\EsrAssignmentRequest.cs" />
+    <Compile Include="Models\Requests\GetClaimantsRequest.cs" />
+    <Compile Include="Models\Requests\GetClaimantsEsrAssignments.cs" />
+    <Compile Include="Models\Requests\GetClaimantsVehiclesRequest.cs" />
+    <Compile Include="Models\Requests\HolidayRequest.cs" />
+    <Compile Include="Models\Requests\ImportTransactionRequest.cs" />
+    <Compile Include="Models\Requests\UpdateMultipleGeneralOptions.cs" />
+    <Compile Include="Models\Requests\UserDefinedFieldRequest.cs" />
+    <Compile Include="Models\Responses\Addresses\AddressLabelResponse.cs" />
+    <Compile Include="Models\Responses\InformationMessage\MobileInformationMessagesResponse.cs" />
+    <Compile Include="Models\Responses\CorporateCardAutoMatchResponse.cs" />
+    <Compile Include="Models\Requests\CorporateCardImportRequest.cs" />
+    <Compile Include="Models\Responses\MyAdvanceResponse.cs" />
+    <Compile Include="Models\Responses\AdvancesResponse.cs" />
+    <Compile Include="Models\Responses\AssignClaimsResponse.cs" />
+    <Compile Include="Models\Types\InformationMessage\MobileInformationMessage.cs" />
+    <Compile Include="Models\Types\MyAdvance.cs" />
+    <Compile Include="Models\Responses\ExchangeRateResponse.cs" />
+    <Compile Include="Models\Responses\GeneralOptionAccountsResponse.cs" />
+    <Compile Include="Models\Responses\GeneralOptionEnabledAccount.cs" />
+    <Compile Include="Models\Types\BankAccountMasterData.cs" />
+    <Compile Include="Models\Responses\BankAccountMasterDataResponse.cs" />
+    <Compile Include="Models\Responses\BankAccountsResponse.cs" />
+    <Compile Include="Models\Responses\CorporateCardTransactionDetailsResponse.cs" />
+    <Compile Include="Models\Responses\CreditCardTransactions.cs" />
+    <Compile Include="Models\Responses\DvlaResponse.cs" />
+    <Compile Include="Models\Responses\DvlaConsentEmployeeResponse.cs" />
+    <Compile Include="Models\Responses\DvlaDrivingLicenceResponse.cs" />
+    <Compile Include="Models\Responses\DrivingLicenceDetailsResponse.cs" />
+    <Compile Include="Models\Responses\Expedite\ExpenseItemValidationDefinitionResponse.cs" />
+    <Compile Include="Models\Responses\Expedite\ExpenseValidationArea.cs" />
+    <Compile Include="Models\Responses\Expedite\ExpenseValidationResults.cs" />
+    <Compile Include="Models\Responses\Expedite\ValidationCriterion.cs" />
+    <Compile Include="Models\Responses\FuelReceiptToVATCalculationResponses.cs" />
+    <Compile Include="Models\Responses\GetClaimantAccountDetailResponse.cs" />
+    <Compile Include="Models\Responses\HolidayResponse.cs" />
+    <Compile Include="Models\Responses\HolidaysResponse.cs" />
+    <Compile Include="Models\Types\AddressLabel.cs" />
+    <Compile Include="Models\Responses\ClaimExpenseOverviewResponse.cs" />
+    <Compile Include="Models\Responses\CostCodeBasicResponse.cs" />
+    <Compile Include="Models\Responses\DepartmentBasicResponse.cs" />
+    <Compile Include="Models\Responses\GetExpenseSubCategoriesBasicResponse.cs" />
+    <Compile Include="Models\Responses\ProjectCodeBasicResponse.cs" />
+    <Compile Include="Models\Responses\SornVehiclesResponse.cs" />
+    <Compile Include="Models\Responses\VehicleBasicResponse.cs" />
+    <Compile Include="Models\Types\Advance.cs" />
+    <Compile Include="Models\Types\AssignClaimResult.cs" />
+    <Compile Include="Models\Types\BaseCurrency.cs" />
+    <Compile Include="Models\Types\CardStatement.cs" />
+    <Compile Include="Models\Types\ClaimExpenseOverview.cs" />
+    <Compile Include="Models\Types\CostCodeBasic.cs" />
+    <Compile Include="Models\Responses\DutyOfCareCheckResults.cs" />
+    <Compile Include="Models\Responses\ESRAssignmentsBasicResponse.cs" />
+    <Compile Include="Models\Responses\VehicleDocumentsRequiredForDOCResponse.cs" />
+    <Compile Include="Models\Types\Addresses\MileageJourneyCoordinate.cs" />
+    <Compile Include="Models\Requests\Address\RouteForAddressIdentifiersRequest.cs" />
+    <Compile Include="Models\Requests\Address\RouteForExpenseItemRequest.cs" />
+    <Compile Include="Models\Requests\AssociateExpenseItemsWithFlagRequest.cs" />
+    <Compile Include="Models\Requests\AssociateFieldsWithFlagRequest.cs" />
+    <Compile Include="Models\Requests\AssociateWithItemRolesFlagRequest.cs" />
+    <Compile Include="Models\Requests\ClaimEnvelopeInfo.cs" />
+    <Compile Include="Models\Requests\CustomEntityToCopy.cs" />
+    <Compile Include="Models\Requests\GlobalIdentifierRequest.cs" />
+    <Compile Include="Models\Requests\SaveEnvelopesRequest.cs" />
+    <Compile Include="Models\Responses\Addresses\RouteResponse.cs" />
+    <Compile Include="Models\Responses\FlagResponse.cs" />
+    <Compile Include="Models\Responses\BankAccountResponse.cs" />
+    <Compile Include="Models\Responses\ClaimEnvelopeAttachmentResults.cs" />
+    <Compile Include="Models\Responses\ClaimEnvelopeAttachmentResultsResponse.cs" />
+    <Compile Include="Models\Responses\ClaimReminderResponse.cs" />
+    <Compile Include="Models\Responses\EnvelopeAttachmentResult.cs" />
+    <Compile Include="Models\Responses\NotifyAdminOfChangeResponse.cs" />
+    <Compile Include="Models\Responses\RecommendedOrCustomDistanceResponse.cs" />
+    <Compile Include="Models\Responses\GetClaimHistoryResponse.cs" />
+    <Compile Include="Models\Responses\GetClaimHistoryResult.cs" />
+    <Compile Include="Models\Responses\HotelResponse.cs" />
+    <Compile Include="Models\Responses\EmployeeCategoriesAndSubCategoriesResponse.cs" />
+    <Compile Include="Models\Responses\UnsubmitClaimResponse.cs" />
+    <Compile Include="Models\Responses\UnsubmitClaimResult.cs" />
+    <Compile Include="Models\Responses\VehicleDefinitionResponse.cs" />
+    <Compile Include="Models\Types\Addresses\Route.cs" />
+    <Compile Include="Models\Types\Addresses\RouteStep.cs" />
+    <Compile Include="Models\Types\CreditCardTransaction.cs" />
+    <Compile Include="Models\Types\CurrencyExchangeRatesList.cs" />
+    <Compile Include="Models\Types\CurrencyWithRate.cs" />
+    <Compile Include="Models\Types\DepartmentBasic.cs" />
+    <Compile Include="Models\Types\DocumentExpiry.cs" />
+    <Compile Include="Models\Types\DrivingLicenceDetails.cs" />
+    <Compile Include="Models\Types\DrivingLicenceReviewRequest.cs" />
+    <Compile Include="Models\Types\EmployeeDrivingLicenceDetails.cs" />
+    <Compile Include="Models\Types\EmployeesDetailsToPopulateDrivingLicence.cs" />
+    <Compile Include="Models\Types\Employees\CostCodeBreakdownWithLabelData.cs" />
+    <Compile Include="Models\Types\ESRAssignmentBasic.cs" />
+    <Compile Include="Models\Types\ExpenseSubCategoriesMileageBasic.cs" />
+    <Compile Include="Models\Types\Holidays\Holiday.cs" />
+    <Compile Include="Models\Types\MileageCategoryBasic.cs" />
+    <Compile Include="Models\Types\ProjectCodeBasic.cs" />
+    <Compile Include="Models\Types\SornVehicle.cs" />
+    <Compile Include="Models\Types\UdfListElement.cs" />
+    <Compile Include="Models\Types\VehicleDefinition.cs" />
+    <Compile Include="Models\StringResponse.cs" />
+    <Compile Include="Models\Types\BankAccount.cs" />
+    <Compile Include="Models\Responses\SystemGreenLightResponse.cs" />
+    <Compile Include="Models\Types\CostcodeBreakdownSettings.cs" />
+    <Compile Include="Models\Types\CostcodeSettings.cs" />
+    <Compile Include="Models\Types\DepartmentSettings.cs" />
+    <Compile Include="Models\Types\FilterRuleValues.cs" />
+    <Compile Include="Models\Types\Flag.cs" />
+    <Compile Include="Models\Types\Flags\DuplicateFlaggedItem.cs" />
+    <Compile Include="Models\Types\Favourite.cs" />
+    <Compile Include="Models\Types\Flags\JorneyStepFlaggedItem.cs" />
+    <Compile Include="Models\Types\Flags\LimitFlaggedItem.cs" />
+    <Compile Include="Models\Types\Flags\MileageFlaggedItem.cs" />
+    <Compile Include="Models\Types\FromSettings.cs" />
+    <Compile Include="Models\Types\Hotel.cs" />
+    <Compile Include="Models\Requests\AccessRoles.cs" />
+    <Compile Include="Models\Requests\CheckAndPayActionRequest.cs" />
+    <Compile Include="Models\Requests\ChangePasswordRequest.cs" />
+    <Compile Include="Models\Requests\ClaimableItemsRequest.cs" />
+    <Compile Include="Models\Requests\FlagJustificationRequest.cs" />
+    <Compile Include="Models\Requests\ClaimSubmission.cs" />
+    <Compile Include="Models\Requests\Expedite\ExpenseItemValidationResults.cs" />
+    <Compile Include="Models\Requests\CurrencyExchangeRate.cs" />
+    <Compile Include="Models\Requests\GetFlagsGridRequest.cs" />
+    <Compile Include="Models\Requests\MileageCategoryRequest.cs" />
+    <Compile Include="Models\Requests\MyDetailRequest.cs" />
+    <Compile Include="Models\Requests\Organisation.cs" />
+    <Compile Include="Models\Requests\ReceiptRequest.cs" />
+    <Compile Include="Models\Requests\ReturnExpenseItemsRequest.cs" />
+    <Compile Include="Models\Requests\SelfRegistration\SelfRegistrationInitiatorRequest.cs" />
+    <Compile Include="Models\Requests\SelfRegistration\SelfRegistrationRequest.cs" />
+    <Compile Include="Models\Requests\NhsTrusts.cs" />
+    <Compile Include="Models\Requests\MobileDevices.cs" />
+    <Compile Include="Models\Requests\CorporateCards.cs" />
+    <Compile Include="Models\Requests\OdometerReadings.cs" />
+    <Compile Include="Models\Requests\ResetKeyRequest.cs" />
+    <Compile Include="Models\Requests\UpdateExpenseItemRequest.cs" />
+    <Compile Include="Models\Requests\Vehicles.cs" />
+    <Compile Include="Models\Requests\Teams.cs" />
+    <Compile Include="Models\Requests\Allowances.cs" />
+    <Compile Include="Models\Requests\ClaimReasons.cs" />
+    <Compile Include="Models\Requests\ProjectCodes.cs" />
+    <Compile Include="Models\Requests\CostCodes.cs" />
+    <Compile Include="Models\Requests\Departments.cs" />
+    <Compile Include="Models\Requests\BudgetHolders.cs" />
+    <Compile Include="Models\Requests\Employees.cs" />
+    <Compile Include="Models\Requests\ItemRoles.cs" />
+    <Compile Include="Models\Requests\Currencies.cs" />
+    <Compile Include="Models\Requests\Countries.cs" />
+    <Compile Include="Models\Requests\ExpenseCategories.cs" />
+    <Compile Include="Models\Requests\ExpenseItems.cs" />
+    <Compile Include="Models\Requests\LoginRequest.cs" />
+    <Compile Include="Models\Requests\P11DCategories.cs" />
+    <Compile Include="Models\Requests\MileageCategories.cs" />
+    <Compile Include="Models\Requests\SignOffGroups.cs" />
+    <Compile Include="Models\Responses\AccessRoles.cs" />
+    <Compile Include="Models\Responses\Accounts.cs" />
+    <Compile Include="Models\Responses\Addresses.cs" />
+    <Compile Include="Models\Responses\AddressRecommendedDistances.cs" />
+    <Compile Include="Models\Responses\ApprovedExpenseItemsResponse.cs" />
+    <Compile Include="Models\Responses\ClaimableItemsResponse.cs" />
+    <Compile Include="Models\Responses\ClaimCountForAllStagesResponse.cs" />
+    <Compile Include="Models\Responses\ClaimDefinition.cs" />
+    <Compile Include="Models\Responses\ClaimExpenseItem.cs" />
+    <Compile Include="Models\Responses\Claims.cs" />
+    <Compile Include="Models\Responses\ClaimSubmissionDetail.cs" />
+    <Compile Include="Models\Responses\ClaimSubmissionResponse.cs" />
+    <Compile Include="Models\Responses\ClaimSubmissionResult.cs" />
+    <Compile Include="Models\Responses\CostCodeBreakdown.cs" />
+    <Compile Include="Models\Responses\ESRAssignments.cs" />
+    <Compile Include="Models\Responses\DutyOfCareResponse.cs" />
+    <Compile Include="Models\Responses\Expedite\FundManagerResponse.cs" />
+    <Compile Include="Models\Responses\Expedite\PaymentServiceResponse.cs" />
+    <Compile Include="Models\Responses\ExpenseItemDefinition.cs" />
+    <Compile Include="Models\Responses\ExpenseItemDefinitionResponse.cs" />
+    <Compile Include="Models\Responses\FilterRules.cs" />
+    <Compile Include="Models\Responses\FlagItemsManagerResponse.cs" />
+    <Compile Include="Models\Responses\FlagSummaryResponse.cs" />
+    <Compile Include="Models\Responses\GeneralOptionsResponse.cs" />
+    <Compile Include="Models\Responses\JourneyStep.cs" />
+    <Compile Include="Models\Responses\ListIntResponse.cs" />
+    <Compile Include="Models\Responses\ListItemDataResponse.cs" />
+    <Compile Include="Models\Responses\MobileJourneyResponse.cs" />
+    <Compile Include="Models\Responses\MyDetailResponse.cs" />
+    <Compile Include="Models\Responses\NumericResponse.cs" />
+    <Compile Include="Models\Responses\Organisations.cs" />
+    <Compile Include="Models\Responses\EmployeeLinkageResponse.cs" />
+    <Compile Include="Models\Responses\Expedite\EnvelopePhysicalStateResponse.cs" />
+    <Compile Include="Models\Responses\Expedite\ExpenseValidationCriterionResponse.cs" />
+    <Compile Include="Models\Responses\Expedite\ExpenseValidationResultResponse.cs" />
+    <Compile Include="Models\Responses\Expedite\ReceiptResponse.cs" />
+    <Compile Include="Models\Responses\Expedite\EnvelopeTypeResponse.cs" />
+    <Compile Include="Models\Responses\Expedite\EnvelopeResponse.cs" />
+    <Compile Include="Models\Responses\ExpenseItems.cs" />
+    <Compile Include="Models\Responses\Globals.cs" />
+    <Compile Include="Models\Responses\IdResponse.cs" />
+    <Compile Include="Models\Responses\MobileDevices.cs" />
+    <Compile Include="Models\Responses\ChangePasswordResponse.cs" />
+    <Compile Include="Models\Responses\CorporateCards.cs" />
+    <Compile Include="Models\Responses\ReceiptResponse.cs" />
+    <Compile Include="Models\Responses\ReturnExpenseItemsResponse.cs" />
+    <Compile Include="Models\Responses\SaveUpdateClaimResponse.cs" />
+    <Compile Include="Models\Responses\SelfRegistration\SelfRegistrationDummyDataPopulator.cs" />
+    <Compile Include="Models\Responses\SelfRegistration\SelfRegistrationResponse.cs" />
+    <Compile Include="Models\Responses\NhsTrusts.cs" />
+    <Compile Include="Models\Responses\CustomEntities.cs" />
+    <Compile Include="Models\Responses\ForgottenDetailsResponse.cs" />
+    <Compile Include="Models\Responses\MobileLoginResponse.cs" />
+    <Compile Include="Models\Responses\PasswordPolicy.cs" />
+    <Compile Include="Models\Responses\SessionTimeoutSettingsResponse.cs" />
+    <Compile Include="Models\Responses\Tooltips.cs" />
+    <Compile Include="Models\Responses\UserDefinedFields.cs" />
+    <Compile Include="Models\Responses\CurrencyExchangeRates.cs" />
+    <Compile Include="Models\Responses\OdometerReadings.cs" />
+    <Compile Include="Models\Responses\Teams.cs" />
+    <Compile Include="Models\Responses\Allowances.cs" />
+    <Compile Include="Models\Responses\ClaimReasons.cs" />
+    <Compile Include="Models\Responses\ProjectCodes.cs" />
+    <Compile Include="Models\Responses\CostCodes.cs" />
+    <Compile Include="Models\Responses\Departments.cs" />
+    <Compile Include="Models\Responses\BudgetHolders.cs" />
+    <Compile Include="Models\Responses\Employees.cs" />
+    <Compile Include="Models\Responses\ItemRoles.cs" />
+    <Compile Include="Models\Responses\Currencies.cs" />
+    <Compile Include="Models\Responses\Countries.cs" />
+    <Compile Include="Models\Responses\ExpenseCategories.cs" />
+    <Compile Include="Models\Responses\ExpenseSubCategories.cs" />
+    <Compile Include="Models\Responses\LoginResponse.cs" />
+    <Compile Include="Models\Responses\P11DCategories.cs" />
+    <Compile Include="Models\Responses\MileageCategories.cs" />
+    <Compile Include="Models\Responses\SignOffGroups.cs" />
+    <Compile Include="Models\Responses\Vehicles.cs" />
+    <Compile Include="Models\Types\AccessRole.cs" />
+    <Compile Include="Models\Types\AccessRoleBasic.cs" />
+    <Compile Include="Models\Types\Address.cs" />
+    <Compile Include="Models\Types\AddressRecommendedDistance.cs" />
+    <Compile Include="Models\Types\Allowance.cs" />
+    <Compile Include="Models\Types\AllowExpenseItems.cs" />
+    <Compile Include="Models\Types\AssociatedExpense.cs" />
+    <Compile Include="Models\Types\AssociatedExpenseItem.cs" />
+    <Compile Include="Models\Types\Attribute.cs" />
+    <Compile Include="Models\Types\AuthoriserJustification.cs" />
+    <Compile Include="Models\Types\BaseExternalType.cs" />
+    <Compile Include="Models\Types\Attachment.cs" />
+    <Compile Include="Models\Types\BudgetHolder.cs" />
+    <Compile Include="Models\Types\ClaimableItem\ClaimableItem.cs" />
+    <Compile Include="Models\Types\ClaimableItem\ClaimableItemConversion.cs" />
+    <Compile Include="Models\Types\ClaimBasic.cs" />
+    <Compile Include="Models\Types\ClaimCountForAllStages.cs" />
+    <Compile Include="Models\Responses\ClaimDefinitionResponse.cs" />
+    <Compile Include="Models\Types\ClaimExpenseItem.cs" />
+    <Compile Include="Models\Types\ClaimReason.cs" />
+    <Compile Include="Models\Types\ClaimSubmission\ClaimSubmissionApi.cs" />
+    <Compile Include="Models\Types\ClaimSubmission\ClaimSubmissionApprover.cs" />
+    <Compile Include="Models\Types\ClaimSubmission\ClaimSubmissionConversion.cs" />
+    <Compile Include="Models\Types\ClaimDefinition.cs" />
+    <Compile Include="Models\Types\CountrySettings.cs" />
+    <Compile Include="Models\Types\CurrencySettings.cs" />
+    <Compile Include="Models\Types\ESRAssignments.cs" />
+    <Compile Include="Models\Types\Expedite\ExpediteOperatorValidationProgress.cs" />
+    <Compile Include="Models\Types\Expedite\FinancialExport.cs" />
+    <Compile Include="Models\Types\Expedite\FundManager.cs" />
+    <Compile Include="Models\Types\Expedite\PaymentService.cs" />
+    <Compile Include="Models\Types\ExpenseItemFlagSummary.cs" />
+    <Compile Include="Models\Types\FilterRule.cs" />
+    <Compile Include="Models\Types\FlaggedItemsManager.cs" />
+    <Compile Include="Models\Types\FlagSummary.cs" />
+    <Compile Include="Models\Types\GeneralOption.cs" />
+    <Compile Include="Models\Types\ListItemData.cs" />
+    <Compile Include="Models\Types\MyDetails\CostCentreBreakdown.cs" />
+    <Compile Include="Models\Types\MyDetails\ESRAssignment.cs" />
+    <Compile Include="Models\Types\MyDetails\ESRAssignmentNumber.cs" />
+    <Compile Include="Models\Types\MyDetails\HomeAddress.cs" />
+    <Compile Include="Models\Types\MyDetails\MyDetail.cs" />
+    <Compile Include="Models\Types\MyDetails\NotifyAdminOfChange.cs" />
+    <Compile Include="Models\Types\MyDetails\VehicleDetail.cs" />
+    <Compile Include="Models\Types\MyDetails\WorkAddress.cs" />
+    <Compile Include="Models\Types\JourneyStep.cs" />
+    <Compile Include="Models\Types\Organisation.cs" />
+    <Compile Include="Models\Types\CustomEntityAttribute.cs" />
+    <Compile Include="Models\Types\CustomEntityFormField.cs" />
+    <Compile Include="Models\Types\CustomEntityFormSection.cs" />
+    <Compile Include="Models\Types\CustomEntityFormTab.cs" />
+    <Compile Include="Models\Types\CustomEntityRecord.cs" />
+    <Compile Include="Models\Types\CustomEntityView.cs" />
+    <Compile Include="Models\Types\EmailNotification.cs" />
+    <Compile Include="Models\Types\Employees\EmployeeBasic.cs" />
+    <Compile Include="Models\Types\Employees\UserDefinedFieldListElement.cs" />
+    <Compile Include="Models\Types\ExchangeRate.cs" />
+    <Compile Include="Models\Types\Claim.cs" />
+    <Compile Include="Models\Types\Expedite\EnvelopePhysicalState.cs" />
+    <Compile Include="Models\Types\Expedite\Envelope.cs" />
+    <Compile Include="Models\Types\Expedite\EnvelopeStatus.cs" />
+    <Compile Include="Models\Types\Expedite\EnvelopeType.cs" />
+    <Compile Include="Models\Types\Expedite\ExpenseValidationCriterion.cs" />
+    <Compile Include="Models\Types\Expedite\ExpenseValidationMatchingResult.cs" />
+    <Compile Include="Models\Types\Expedite\ExpenseValidationProgress.cs" />
+    <Compile Include="Models\Types\Expedite\ExpenseValidationResult.cs" />
+    <Compile Include="Models\Types\Expedite\ExpenseValidationStatus.cs" />
+    <Compile Include="Models\Types\ExpenseItem.cs" />
+    <Compile Include="Models\Types\Expedite\Receipt.cs" />
+    <Compile Include="Models\Types\Expedite\ReceiptCreationMethod.cs" />
+    <Compile Include="Models\Types\FinancialYear.cs" />
+    <Compile Include="Models\Types\Flags\FlaggedItem.cs" />
+    <Compile Include="Models\Types\MobileDevice.cs" />
+    <Compile Include="Controllers\V1\MobileDevicesController.cs" />
+    <Compile Include="Models\Types\NhsTrust.cs" />
+    <Compile Include="Models\Types\OrganisationSettings.cs" />
+    <Compile Include="Models\Types\OtherDetailsSettings.cs" />
+    <Compile Include="Models\Types\Passenger.cs" />
+    <Compile Include="Models\Types\ProjectcodeSettings.cs" />
+    <Compile Include="Models\Types\ReasonSettings.cs" />
+    <Compile Include="Models\Types\Receipt.cs" />
+    <Compile Include="Models\Types\ReturnedExpenseItem.cs" />
+    <Compile Include="Models\Types\SaveUpdateClaimResult.cs" />
+    <Compile Include="Models\Types\SignoffGroupBasic.cs" />
+    <Compile Include="Models\Types\SubCatItemRole.cs" />
+    <Compile Include="Models\Types\CostCode.cs" />
+    <Compile Include="Models\Types\Department.cs" />
+    <Compile Include="Models\Types\ProjectCode.cs" />
+    <Compile Include="Models\Types\SubmitClaimResult.cs" />
+    <Compile Include="Models\Types\Team.cs" />
+    <Compile Include="Models\Types\ApiDetails.cs" />
+    <Compile Include="Models\Types\CardProvider.cs" />
+    <Compile Include="Models\Types\Employees\ClaimSignOffDetails.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Types\Employees\UserDefinedField.cs" />
+    <Compile Include="Models\Types\Employees\EmployeeBasicInfo.cs" />
+    <Compile Include="Models\Types\Employees\EmployeePoolCar.cs" />
+    <Compile Include="Models\Types\Employees\CorporateCard.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Types\Employees\CostCentreBreakdown.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Types\Employees\DutyOfCareDocDetails.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Types\Employees\Employee.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Types\Employees\EmployeeDetails.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Types\Employees\EmployeePermissions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Types\Employees\Locale.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Types\Employees\NhsDetails.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Types\Employees\PersonalDetails.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Types\Tooltip.cs" />
+    <Compile Include="Models\Types\ToSettings.cs" />
+    <Compile Include="Models\Types\UserDefinedField.cs" />
+    <Compile Include="Models\Types\UserDefinedFieldValue.cs" />
+    <Compile Include="Models\Types\Vehicle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Types\Employees\WorkDetails.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Types\SignOffGroup.cs" />
+    <Compile Include="Models\Types\MileageCategory.cs" />
+    <Compile Include="Models\Types\ExpenseSubCategory.cs" />
+    <Compile Include="Models\Types\Country.cs" />
+    <Compile Include="Models\Types\CustomEntityAccess.cs" />
+    <Compile Include="Models\Types\ElementAccess.cs" />
+    <Compile Include="Models\Types\ExpenseCategory.cs" />
+    <Compile Include="Models\Types\Currency.cs" />
+    <Compile Include="Models\Types\GlobalCountry.cs" />
+    <Compile Include="Models\Types\GlobalCurrency.cs" />
+    <Compile Include="Models\Types\ItemRole.cs" />
+    <Compile Include="Models\Types\Stage.cs" />
+    <Compile Include="Models\Types\P11DCategory.cs" />
+    <Compile Include="Models\Types\SubCatVatRate.cs" />
+    <Compile Include="Models\Types\VatRate.cs" />
+    <Compile Include="Models\Types\VehicleEngineType.cs" />
+    <Compile Include="Models\VehicleBasic.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AccessRoleRepository.cs" />
+    <Compile Include="Models\Types\DutyOfCareDocument.cs" />
+    <Compile Include="Repositories\AdvancesRepository.cs" />
+    <Compile Include="Repositories\DutyOfCareRepository.cs" />
+    <Compile Include="Repositories\FlagManagementRepository.cs" />
+    <Compile Include="Repositories\BankAccountRepository.cs" />
+    <Compile Include="Repositories\ClaimableItemsRepository.cs" />
+    <Compile Include="Repositories\ClaimRepository.cs" />
+    <Compile Include="Repositories\ESRRepository.cs" />
+    <Compile Include="Repositories\Expedite\FundRepository.cs" />
+    <Compile Include="Repositories\Expedite\PaymentServiceRepository.cs" />
+    <Compile Include="Repositories\FavouritesRepository.cs" />
+    <Compile Include="Repositories\FilterRuleRepository.cs" />
+    <Compile Include="Repositories\GeneralOptionRepository.cs" />
+    <Compile Include="Repositories\HolidayRepository.cs" />
+    <Compile Include="Repositories\HotelRepository.cs" />
+    <Compile Include="Repositories\JourneyRepository.cs" />
+    <Compile Include="Repositories\MobileMetricDataRepository.cs" />
+    <Compile Include="Repositories\MyDetailRepository.cs" />
+    <Compile Include="Repositories\OrganisationRepository.cs" />
+    <Compile Include="Repositories\CustomEntityAttributeRepository.cs" />
+    <Compile Include="Repositories\CustomEntityRecordRepository.cs" />
+    <Compile Include="Repositories\CustomEntityFormRepository.cs" />
+    <Compile Include="Repositories\CustomEntityViewRepository.cs" />
+    <Compile Include="Repositories\AddressRecommendedDistanceRepository.cs" />
+    <Compile Include="Repositories\AddressRepository.cs" />
+    <Compile Include="Repositories\Expedite\EnvelopePhysicalStateRepository.cs" />
+    <Compile Include="Repositories\Expedite\ExpenseValidationResultRepository.cs" />
+    <Compile Include="Repositories\Expedite\ExpenseValidationCriterionRepository.cs" />
+    <Compile Include="Repositories\Expedite\ReceiptRepository.cs" />
+    <Compile Include="Repositories\Expedite\EnvelopeTypeRepository.cs" />
+    <Compile Include="Repositories\Expedite\EnvelopeRepository.cs" />
+    <Compile Include="Repositories\CorporateCardRepository.cs" />
+    <Compile Include="Repositories\ExpenseItemRepository.cs" />
+    <Compile Include="Repositories\MobileDeviceRepository.cs" />
+    <Compile Include="Repositories\NhsTrustRepository.cs" />
+    <Compile Include="Repositories\PopulateDrivingLicenceRepository.cs" />
+    <Compile Include="Repositories\ReceiptsRepository.cs" />
+    <Compile Include="Repositories\SystemGreenLightRepository.cs" />
+    <Compile Include="Repositories\TooltipRepository.cs" />
+    <Compile Include="Repositories\UserDefinedFieldsRepository.cs" />
+    <Compile Include="Repositories\CurrencyExchangeRatesRepository.cs" />
+    <Compile Include="Repositories\OdometerReadingRepository.cs" />
+    <Compile Include="Repositories\FuelReceiptToVATCalculationRepository.cs" />
+    <Compile Include="Repositories\VehicleRepository.cs" />
+    <Compile Include="Repositories\TeamRepository.cs" />
+    <Compile Include="Repositories\AllowanceRepository.cs" />
+    <Compile Include="Repositories\ClaimReasonRepository.cs" />
+    <Compile Include="Repositories\ProjectCodeRepository.cs" />
+    <Compile Include="Repositories\CostCodeRepository.cs" />
+    <Compile Include="Repositories\DepartmentRepository.cs" />
+    <Compile Include="Repositories\BudgetHolderRepository.cs" />
+    <Compile Include="Repositories\BaseRepository.cs" />
+    <Compile Include="Repositories\EmployeeRepository.cs" />
+    <Compile Include="Repositories\ItemRoleRepository.cs" />
+    <Compile Include="Repositories\ExpenseSubCategoryRepository.cs" />
+    <Compile Include="Repositories\CurrencyRepository.cs" />
+    <Compile Include="Repositories\CountryRepository.cs" />
+    <Compile Include="Repositories\ExpenseCategoryRepository.cs" />
+    <Compile Include="Repositories\P11DCategoryRepository.cs" />
+    <Compile Include="Repositories\MileageCategoryRepository.cs" />
+    <Compile Include="Repositories\RepositoryFactory.cs" />
+    <Compile Include="Repositories\SignOffGroupsRepository.cs" />
+    <Compile Include="Utilities\ApiAuditLog.cs" />
+    <Compile Include="Utilities\ApiResources.cs" />
+    <Compile Include="Utilities\ApiAuthTokenProvider.cs" />
+    <Compile Include="Utilities\ExtensionMethods.cs" />
+    <Compile Include="Utilities\IPValidator.cs" />
+    <Compile Include="Utilities\UdfValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="--app_offline.htm" />
+    <Content Include="Content\themes\base\bootstrap-theme.css" />
+    <Content Include="Content\themes\base\minified\bootstrap-theme.min.css" />
+    <Content Include="Content\themes\base\bootstrap.css" />
+    <Content Include="Content\themes\base\minified\bootstrap.min.css" />
+    <Content Include="Content\HelpPage.css" />
+    <Content Include="Content\themes\base\images\animated-overlay.gif" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_000000_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_004990_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_eee_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_6280a7_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_004990_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_FFFFFF_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui-1.10.4.custom.css" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.menu.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.spinner.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\jquery.ui.tooltip.css" />
+    <Content Include="Content\themes\base\minified\images\animated-overlay.gif" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_000000_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_004990_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_eee_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_6280a7_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_004990_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_FFFFFF_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui-1.10.4.custom.min.css" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.menu.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.spinner.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Images\SEL-AccessRoles.png" />
+    <Content Include="Images\SEL-TestClient.png" />
+    <Content Include="Images\Selenity-Diagrams.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Selenity-Logo-small.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Selenity-Logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Images\SEL-keyboard.jpg" />
+    <Content Include="Content\TestClient.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\bootstrap.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\SEL-Logo.png" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\HelpPage\Views\Web.config" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TestClientDialogs.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeParameter.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\ApiTypes.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TypeDocumentation.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiEnum.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Reference.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\themes\base\bootstrap-theme.css.map" />
+    <Content Include="Content\themes\base\bootstrap.css.map" />
+    <Compile Include="Models\Types\CustomEntityForm.cs" />
+    <Content Include="log4net.config" />
+    <None Include="log4net.Debug.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+    </None>
+    <None Include="log4net.Production.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="log4net.Automated Build.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+    </None>
+    <None Include="Properties\PublishProfiles\Local IIS.pubxml" />
+    <None Include="Properties\PublishProfiles\Cloud.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js">
+    </None>
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\jquery-ui-1.9.2.js" />
+    <Content Include="Scripts\knockout-3.1.0.debug.js" />
+    <Content Include="Scripts\knockout-3.1.0.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\WebApiTestClient.js" />
+    <Content Include="Scripts\WebApiUtils.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\Site.css">
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml">
+    </Content>
+    <Content Include="Views\Shared\Error.cshtml">
+    </Content>
+    <Content Include="Views\Shared\_Layout.cshtml">
+    </Content>
+    <Content Include="Scripts\jquery-1.10.2.min.map">
+    </Content>
+    <Content Include="Areas\HelpPage\Views\Help\GettingStarted.cshtml">
+    </Content>
+    <Content Include="Areas\HelpPage\Views\Help\Overview.cshtml">
+    </Content>
+    <None Include="Web.Automated Build.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.Production.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
+      <Project>{69860ce5-949c-47f0-8fda-65c0a74171c8}</Project>
+      <Name>BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CacheDataAccess\CacheDataAccess.csproj">
+      <Project>{14f70e37-b7c3-4c0c-94b7-cf8788e14abb}</Project>
+      <Name>CacheDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{85dfc378-171e-46c8-9c54-74cbe66368ac}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spend Management\Spend Management.csproj">
+      <Project>{1cbfd8ec-f67c-4425-a10c-97bfc7501045}</Project>
+      <Name>Spend Management</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementHelpers\SpendManagementHelpers.csproj">
+      <Project>{f12fba1a-995d-429f-a9a5-e54fb0ae536f}</Project>
+      <Name>SpendManagementHelpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementLibrary\SpendManagementLibrary.csproj">
+      <Project>{9bdaa543-ac54-47a1-8bdd-c7bf34f2f005}</Project>
+      <Name>SpendManagementLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLDataAccess\SQLDataAccess.csproj">
+      <Project>{d1de01ae-fe1f-4d65-b57b-08ca4e10d747}</Project>
+      <Name>SQLDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{C417335B-7BE1-45AE-8274-C0B65829C4FC}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\PopulateDrivingLicence\" />
+  </ItemGroup>
+  <ItemGroup />
+  <!--<ItemGroup>
+ <Folder Include="App_Data\" />
+    <Folder Include="Properties\DataSources\" />
+    <Folder Include="Views\Home\" />
+  </ItemGroup>-->
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="Build" Condition="'$(MvcBuildViews)'=='true'">
+    <ItemGroup Label="ItemsForDeploymment">
+      <!--<Folders Include="$(_PackageTempDir)\**\*.*"/>-->
+    </ItemGroup>
+    <Message Text="$(WebProjectOutputDir)" />
+    <Message Text="$(_PackageTempDir)" />
+    <Message Text="@(Fold)" />
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" Updateable="true" Clean="true" TargetPath="$(_PackageTempDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3433</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://development.smapi.localhost</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="PublishWebsites" AfterTargets="Package">
+    <ItemGroup Label="ItemsForDeploymment">
+      <Folders Include="$(_PackageTempDir)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Folders)" DestinationFiles="@(Folders->'$(TeamBuildOutDir)\_PublishedWebsites\$(MSBuildProjectName)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

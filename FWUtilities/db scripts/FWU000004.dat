@@ -1,0 +1,164 @@
+% FW Update.dat file
+% 10/08/2000
+# 000004 000005
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Attachments
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Invoice Status Type
+
+% Codes - Note Category
+
+% Codes - Sales Tax
+
+% Codes - SLD
+
+% Codes - Term Type
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract Classes
+
+% Contract Details
+
+% Contract - Forecast Details
+
+% Contract Notes
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+
+% Contract - Product Platforms
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Export Fields
+
+% Exports
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+ALTER TABLE [Imports]
+    ADD [Ignore Line One] int
+*
+
+% Invoice Details
+
+% Invoice - Product Details
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Location
+
+% Location Users
+
+% Mail
+
+% Metrics
+
+% OLAP Cube 02
+
+% OLAP Cube 03	
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Product Details
+
+% Product Notes
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Schedule
+
+% Security
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Staff Details
+
+% System Parameters
+
+% Target Types
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+ALTER TABLE [Vendor Details]
+    ADD [Vendor URL] varchar(50)
+*
+
+% Vendor Notes
+
+% Vendor Status
+
+% ---------- Views ----------
+
+% Performance Metrics
+
+% CalView
+
+% EQ Vendor Details
+
+% ---------- Procedures ----------
+
+% SPF003
+

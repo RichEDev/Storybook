@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="Barclaycard 377" FileType="Text" Delimiter="{" NumberHeaderRecords="1" NumberFooterRecords="1">
+  <Fields Type="CardTransaction" UniqueValue="trans" >
+    <Field Name="RecordType" Label="Record Type" MappedTable="card_transactions_ref_377_bc" MappedField="record_type" FieldType="S" MaxLength="4" />
+    <Field Name="InternalReference" MappedTable="card_transactions" MappedField="reference" FieldType="S" MaxLength="11" />
+    <Field Name="CardholderNumber" Label="Cardholder Number" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="16" />
+    <Field Name="CardholderName" Label="Cardholder Name" MappedTable="card_transactions_ref_377_bc" MappedField="cardholder_name" FieldType="S" MaxLength="35" DisplayInUnallocatedCardGrid="yes" />
+    <Field Name="SpendCategory" Label="Spend Category" MappedTable="card_transactions_ref_377_bc" MappedField="spend_category" FieldType="S" MaxLength="16" />
+    <Field Name="DateOfTransaction" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="dd/MM/yyyy" />
+    <Field Name="DatePosted" Label="Date Posted" MappedTable="card_transactions_ref_377_bc" MappedField="date_posted" FieldType="D" Format="dd/MM/yyyy" />
+    <Field Name="MerchantDescription" MappedTable="card_transactions" MappedField="description" FieldType="S" MaxLength="38" />
+    <Field Name="MerchantCode" Label="Merchant Code" MappedTable="card_transactions_ref_377_bc" MappedField="merchant_description" FieldType="S" MaxLength="80" />
+    <Field Name="MerchantCountryCode" Label="Merchant Country Code" MappedTable="card_transactions" MappedField="country_code" CountryType="alpha" FieldType="S" MaxLength="2" DefaultValue="GB" DisplayInMoreDetailsTable="yes" />
+    <Field Name="Exchangerate" MappedTable="card_transactions" MappedField="exchangerate" FieldType="M" />
+    <Field Name="AmountOfTransaction" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C" />
+    <Field Name="TransactionCode" Label="Transaction Code" MappedTable="card_transactions_ref_377_bc" MappedField="transaction_code" FieldType="S" MaxLength="2" />
+    <Field Name="OriginalCurrencyAmount" MappedTable="card_transactions" MappedField="original_amount" FieldType="C" />
+    <Field Name="CurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="N" CurrencyType="numeric" />
+    <Field Name="VisaMCC" Label="Visa MCC Category" MappedTable="card_transactions_ref_377_bc" MappedField="visa_mcc" FieldType="S" MaxLength="5" />
+    <Field Name="TransactionType" Label="Number" MappedTable="card_transactions_ref_377_bc" MappedField="transaction_type" FieldType="S" MaxLength="1" />
+ </Fields>
+</CardTemplate>

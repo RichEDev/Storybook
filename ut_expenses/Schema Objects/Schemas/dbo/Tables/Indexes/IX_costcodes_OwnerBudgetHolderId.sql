@@ -1,0 +1,1 @@
+﻿create index [IX_costcodes_OwnerBudgetHolderId] on dbo.costcodes (OwnerBudgetHolderId)

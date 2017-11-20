@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1a12cd31-e016-4783-9214-f1d1f2a16b67" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/ApiRpc/ApiRpc.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ApiRpc1.xsd" MetadataType="Schema" ID="157bf805-bf33-4950-84d0-eab72821c395" SourceId="1" SourceUrl="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd0" />
+    <MetadataFile FileName="ApiRpc2.xsd" MetadataType="Schema" ID="54853131-35ac-4b18-a115-88ae05e84c3d" SourceId="1" SourceUrl="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd2" />
+    <MetadataFile FileName="ApiRpc.wsdl" MetadataType="Wsdl" ID="0d53d1d7-fb59-46c1-9d45-90cea22891ff" SourceId="1" SourceUrl="http://localhost/ApiRpc/ApiRpc.svc?wsdl" />
+    <MetadataFile FileName="ApiRpc3.xsd" MetadataType="Schema" ID="3c94186c-2105-4374-9be4-daf999c772d1" SourceId="1" SourceUrl="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd1" />
+    <MetadataFile FileName="ApiRpc4.xsd" MetadataType="Schema" ID="12334fae-0549-4156-8e5b-203d0afdef65" SourceId="1" SourceUrl="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd3" />
+    <MetadataFile FileName="ApiRpc1.wsdl" MetadataType="Wsdl" ID="e2fa1585-214c-4fe3-8062-41aadc28b69e" SourceId="1" SourceUrl="http://localhost/ApiRpc/ApiRpc.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="ApiRpc5.xsd" MetadataType="Schema" ID="53043e49-647e-476a-ad29-365e57d0e810" SourceId="1" SourceUrl="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd4" />
+    <MetadataFile FileName="ApiRpc.disco" MetadataType="Disco" ID="149c6bc2-79dc-4e2a-a292-bfab223a1502" SourceId="1" SourceUrl="http://localhost/ApiRpc/ApiRpc.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

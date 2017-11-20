@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="Allstar Fuel Card 348A" FileType="Text" Delimiter="," NumberHeaderRecords="1" NumberFooterRecords="0">
+  <QuotedCharacters>&#34;</QuotedCharacters>
+   <Fields Type="CardTransaction" UniqueValue="trans">
+
+    <Field Name="ParentAccountNumber" Label="Parent Account Number" MappedTable="card_transactions_ref_arval341" MappedField="parentaccountnumber" FieldType="S" MaxLength="500"/>
+    <Field Name="ParentAccountName" Label="Parent Account Name" MappedTable="card_transactions_ref_arval341" MappedField="parentaccountname" FieldType="S" MaxLength="500"/>
+    <Field Name="AccountNumber" Label="Account Number" MappedTable="card_transactions_ref_arval341" MappedField="account_no" FieldType="S" MaxLength="500"/>
+    <Field Name="AccountName" Label="Account Name" MappedTable="card_transactions_ref_arval341" MappedField="account_name" FieldType="S" MaxLength="500"/>
+    <Field Name="CustomerReference" Label="Customer Own Reference" MappedTable="card_transactions_ref_arval341" MappedField="customer_ref" FieldType="S" MaxLength="50"/>
+    <Field Name="CardGroup" Label="CardGroup" MappedTable="card_transactions_ref_arval341" MappedField="card_group" FieldType="S" MaxLength="50"/>
+    <Field Name="CardNumber" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="20"/>
+    <Field Name="CardTypeDescription" MappedTable="card_transactions" MappedField="description" FieldType="S" MaxLength="500"/>
+    <Field Name="PurchaseCategory" Label="Card Purchase Category" MappedTable="card_transactions_ref_arval341" MappedField="purchase_cat" FieldType="S" MaxLength="500"/>
+    <Field Name="VehicleType" Label="VehicleType" MappedTable="card_transactions_ref_arval341" MappedField="vehicle_type" FieldType="S" MaxLength="50"/>
+    <Field Name="DriverName" Label="Card Driver Name" MappedTable="card_transactions_ref_arval341" MappedField="driver_name" FieldType="S" MaxLength="500" />
+    <Field Name="CardVRN" Label="Card VRN" MappedTable="card_transactions_ref_arval341" MappedField="card_vrn" FieldType="S" MaxLength="50"/>
+    <Field Name="CardAdditionalData" Label="Card Additional Data" MappedTable="card_transactions_ref_arval341" MappedField="card_additionaldata" FieldType="S" MaxLength="50"/>
+    <Field Name="InvoiceDate" Label="Invoice Date" MappedTable="card_transactions_ref_arval341" MappedField="invoice_date" FieldType="D" Format="dd/MM/yyyy hh:mm" />
+    <Field Name="InvoiceNumber" Label="Invoice Number" MappedTable="card_transactions_ref_arval341" MappedField="invoice_no" FieldType="S" MaxLength="50"/>
+    <Field Name="InvoiceReference" Label="Invoice Reference" MappedTable="card_transactions_ref_arval341" MappedField="invoice_ref" FieldType="S" MaxLength="500"/>
+    <Field Name="VoucherNumber" Label="Voucher Number" MappedTable="card_transactions_ref_arval341" MappedField="voucher_no" FieldType="S" MaxLength="500"/>
+    <Field Name="AuthorisationCode" Label="AuthorisationCode" MappedTable="card_transactions_ref_arval341" MappedField="auth_code" FieldType="S" MaxLength="50" />
+    <Field Name="TransactionDate" Label="Transaction Date" MappedTable="card_transactions_ref_arval341" MappedField="txn_date" FieldType="S" MaxLength="30" />
+    <Field Name="PostingDate" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="dd/MM/yyyy HH:mm" />
+    <Field Name="TransactionRegNumber" Label="Transaction VRN" MappedTable="card_transactions_ref_arval341" MappedField="transaction_reg" FieldType="S" MaxLength="50"/>
+    <Field Name="Odometer" Label="Odometer" MappedTable="card_transactions_ref_arval341" MappedField="odometer" FieldType="N"/>
+    <Field Name="TxnType" Label="Transaction Type" MappedTable="card_transactions_ref_arval341" MappedField="transaction_type" FieldType="S" MaxLength="50"/>
+    <Field Name="ProductChargeDescription" Label="Product Description" MappedTable="card_transactions_ref_arval341" MappedField="charge_desc" FieldType="S" MaxLength="500"/>
+    <Field Name="Quantity" Label="Quantity" MappedTable="card_transactions_ref_arval341" MappedField="gallons" FieldType="S" MaxLength="50"/>
+    <Field Name="UnitPrice" Label="Unit Price" MappedTable="card_transactions_ref_arval341" MappedField="ppl" FieldType="C" />
+    <Field Name="NetAmount" Label="Net Amount" MappedTable="card_transactions_ref_arval341" MappedField="net" FieldType="C" />
+    <Field Name="VATAmount" Label="VAT Value" MappedTable="card_transactions_ref_arval341" MappedField="vat" FieldType="C" />
+    <Field Name="VATRate" Label="VAT Rate" MappedTable="card_transactions_ref_arval341" MappedField="vat_rate" FieldType="C" />
+    <Field Name="VATType" Label="VAT Type" MappedTable="card_transactions_ref_arval341" MappedField="vat_type" FieldType="S" MaxLength="50"/>
+    <Field Name="GrossAmount" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C" />
+    <Field Name="Network" Label="Network" MappedTable="card_transactions_ref_arval341" MappedField="network" FieldType="S" MaxLength="500"/>
+    <Field Name="SupplierSiteNumber" Label="Site Number" MappedTable="card_transactions_ref_arval341" MappedField="site_no" FieldType="S" MaxLength="500"/>
+    <Field Name="SupplierSiteName" Label="Site Name" MappedTable="card_transactions_ref_arval341" MappedField="site_name" FieldType="S" MaxLength="500"/>
+    <Field Name="SupplierSiteAddress" Label="Site Address" MappedTable="card_transactions_ref_arval341" MappedField="site_add" FieldType="S" MaxLength="500"/>
+    <Field Name="SupplierSiteTown" Label="Site City" MappedTable="card_transactions_ref_arval341" MappedField="site_town" FieldType="S" MaxLength="500"/>
+    <Field Name="SupplierSiteRegion" Label="Site Region" MappedTable="card_transactions_ref_arval341" MappedField="site_region" FieldType="S" MaxLength="500"/>
+    <Field Name="SupplierSitePostCode" Label="Site Post Code" MappedTable="card_transactions_ref_arval341" MappedField="site_postcode" FieldType="S" MaxLength="50"/>
+    <Field Name="SupplierPhoneNumber" Label="Site Phone Number" MappedTable="card_transactions_ref_arval341" MappedField="site_phone" FieldType="S" MaxLength="50"/>
+    <Field Name="Country" Label="Site Country" MappedTable="card_transactions_ref_arval341" MappedField="country" FieldType="S" MaxLength="50"/>
+    <Field Name="SupplierSiteType" Label="Site Type" MappedTable="card_transactions_ref_arval341" MappedField="site_type" FieldType="S" MaxLength="500"/>
+    <Field Name="PurchaseDescription" Label="Purchase Description" MappedTable="card_transactions_ref_arval341" MappedField="purch_desc" FieldType="S" MaxLength="500"/>
+    <Field Name="CurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" DefaultValue="GBP" CurrencyType="alpha" />
+    <Field Name="CountryCode" MappedTable="card_transactions" MappedField="country_code" FieldType="S" DefaultValue="GB" CountryType="alpha" />
+  </Fields>
+</CardTemplate>

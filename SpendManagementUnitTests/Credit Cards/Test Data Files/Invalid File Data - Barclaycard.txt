@@ -1,0 +1,13 @@
+invalid
+ 1460039{Unspecified     {4529468641319297{ROSE WMH            {09/08/2007{Restaurants and Bars     {U{40 {BELLA PASTA 4356         LONDON SW1E  {   5812{       2.26{         0.00{  0{GB
+ 1460039{Unspecified     {4529468641319297{ROSE WMH            {09/08/2007{Restaurants and Bars     {U{40 {BELLA PASTA 4356         LONDON SW1E  {   5812{      22.74{         0.00{  0{GB
+ 1460039{Unspecified     {4529468641319297{ROSE WMH            {31/08/2007{Automotive Fuel          {U{40 {SHELL SAVOY 437          LONDON SW18  {   9752{      41.00{         0.00{  0{GB
+ 1460039{Unspecified     {4529468647087997{BUSH C              {01/09/2007{Automotive Fuel          {F{40 {GAR  DEMATHIEU  12406    24GARDONNE   {   5541{      38.33{       370.00{250{FR
+ 1460039{Unspecified     {4529468647087997{BUSH C              {04/09/2007{Automotive Fuel          {F{40 {S.P.P.P.                 80COMPTE STAT{   5541{      32.36{       312.40{250{FR
+ 1460039{Unspecified     {4529468647087997{BUSH C              {05/09/2007{Automotive Fuel          {F{40 {STATION ST DENI 6353493  37 AMBOISE   {   5541{      37.28{       360.00{250{FR
+ 1460039{Unspecified     {4529468647087997{BUSH C              {13/08/2007{Automotive Fuel          {U{40 {BP SHOTOVER F/STN        HEADINGTON   {   9752{      38.85{         0.00{  0{GB
+ 1460039{Unspecified     {4529468647087997{BUSH C              {22/08/2007{Automotive Fuel          {U{40 {BP GRANADA F/STN         TODDINGTON   {   9752{      36.95{         0.00{  0{GB
+ 1460039{Unspecified     {4529468647087997{BUSH C              {28/08/2007{Automotive Fuel          {U{40 {BP ST NICHOLAS F/S       WESTMINSTER  {   9752{      37.55{         0.00{  0{GB
+ 1460039{Unspecified     {4529468655838497{STEWART-MALIR H     {03/09/2007{Leisure Activities       {U{40 {THE ROYAL ALBERT HALL    LONDON       {   7922{      13.00{         0.00{  0{GB
+ 1460039{Unspecified     {4529468523165297{TAYLOR K            {25/08/2007{Travel - Air/Rail/Road   {F{40 {BRITISH AIR 1252119934637 PARIS       {   3005{      37.00{       353.52{250{FR
+END OF FILE

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StaticMappings>
+  <Table Name="car">
+    <Field Name="cartypeid">
+      <!--Expected Values for Output value
+      0 = None
+      1 = Petrol
+      2 = Diesel
+      3 = LPG
+      4 = Hybrid-->
+      <Mapping InputValue="P" OutputValue="1"></Mapping>
+      <Mapping InputValue="D" OutputValue="2"></Mapping>
+      <Mapping InputValue="DE" OutputValue="2"></Mapping>
+      <Mapping InputValue="H" OutputValue="4"></Mapping>
+    </Field>
+  </Table>
+</StaticMappings>

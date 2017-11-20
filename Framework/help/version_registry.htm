@@ -1,0 +1,120 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - Version Registry</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+	
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,500)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Version Registry</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Version Registry
+			</div>
+			<div class="help_overview">
+				The product version registry allows the accurate management of multiple 
+				versions or releases of a single product.<br>
+				<br>
+				For example, over a number of years, a word processing application may undergo 
+				numerous releases, resulting in release 1.1, 1.2, 1.3, and 2.0. A company may 
+				over this period have bought numerous copies of the word processing 
+				application. They now have a single type of word processing application but 
+				four different versions.<br>
+				<br>
+				The version registry allows the user to manage the number of releases held. In 
+				the event of an upgrade being purchased, the company is merely superseding the 
+				specifications of one of the earlier releases and not actually purchasing an 
+				additional copy. This is especially the case with desktop software. Such 
+				upgrades can be easily managed by specifying the number of upgrades and what 
+				release they are moving to and the registry will tally the releases correctly.
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1"> Help For 
+				Interacting With Version Registry Details
+			</div>
+			<div class="help_body_text" id="1">
+				SELECT Version Registry<br>
+				<br>
+				SELECT Insert<br>
+				<br>
+				The user is prompted to enter a version description, version order and 
+				quantity. (NB. Pressing return after each input moves to the next required 
+				input)<br>
+				<br>
+				The version order allows specification of the chronological ordering of 
+				releases. This is a required parameter, as the registry will only permit 
+				upgrading to a more recent version of itself. It is recommended that version 
+				orders be sequenced with enough space to insert a version later if the need 
+				should arise (i.e. enter version orders of 5,10,15 etc.)<br>
+				<br>
+				<b>Upgrading a product</b><br>
+				<br>
+				If an upgrade of a product is to take place, the drop down list should be used 
+				to select the newer version that is being moved to<br>
+				<br>
+				On clicking the 'Upgrade' button, the user is prompted to enter the quantity to 
+				be upgraded (NB. This cannot exceed the quantity of that version held). The 
+				quantity will be transferred automatically.<br>
+				<br>
+				<b>Delete a Version</b><br>
+				<br>
+				Only versions with a quantity of zero can be deleted. On clicking the 'Delete' 
+				button, those entries with a quantity of zero will have a selection check box 
+				placed to the left of them. Tick each entry that is to be deleted and then 
+				click the 'Delete' button after the arrow. The selected entries are then 
+				removed.<br>
+				Selecting 'Print' takes the active product shown on the registry and outputs it 
+				in the standard Framework print preview facility.<br>
+				<br>
+				From here the data can be printed, exported to Excel or sent as an email 
+				attachment.<br>
+				<br>
+				<b>Update Contract Products </b>
+				<br>
+				<br>
+				If the check box is selected, the contract product quantities are updated 
+				according to the quantities held for each product in the Version Registry.<br>
+				<br>
+				The database is only updated once the 'Close' button is clicked to exit the 
+				registry.
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

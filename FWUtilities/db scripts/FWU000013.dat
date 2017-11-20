@@ -1,0 +1,798 @@
+% FW Update.dat file
+% 10/09/2004
+# 000013 000014
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Assets
+
+% Attachments
+ALTER TABLE [Attachments]
+ADD [Date Attached] datetime
+*
+
+ALTER TABLE [Attachments]
+ADD [Attachment Type] int NOT NULL DEFAULT(0)
+*
+
+ALTER TABLE [Attachments]
+ADD [Attachment Area] int NOT NULL DEFAULT(0)
+*
+
+UPDATE [Attachments] SET [Attachment Type] = 0
+*
+
+UPDATE [Attachments] SET [Attachment Area] = 0
+*
+
+% Audit Log
+DROP TABLE [Audit Log]
+*
+
+CREATE TABLE dbo.[Audit Log] (
+	[Audit Id] int IDENTITY PRIMARY KEY ,
+	[Datestamp] datetime NOT NULL DEFAULT (getdate()) ,
+	[User Id] varchar(15) NOT NULL ,
+	[Full Name] varchar(50) NOT NULL ,
+	[Action] char(6) NOT NULL ,
+	[Data Element Type] varchar(50) NOT NULL ,
+	[Contract Number] varchar(50) NOT NULL ,
+	[Element Description] varchar(50) NOT NULL ,
+	[Old Value] varchar(60) NOT NULL ,
+	[New Value] varchar(60) NOT NULL ,
+	[Location Id] int NOT NULL 
+)
+*
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Contract Status
+CREATE TABLE dbo.[Codes - Contract Status]
+(
+	[Status Id] [int] IDENTITY PRIMARY KEY,
+	[Location Id] [int] NOT NULL,
+	[Status Description] [varchar] (30) NOT NULL,
+	[IsArchive] [int] NULL DEFAULT (0)
+)
+*
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Inflator Metrics
+CREATE TABLE dbo.[Codes - Inflator Metrics]
+(
+	[Metric Id] [int] IDENTITY PRIMARY KEY,
+	[Name] [varchar] (20) NOT NULL ,
+	[Percentage] [float] NOT NULL DEFAULT(0),
+	[Location Id] [int] NOT NULL,
+	[requires Extra Pct] [int] NOT NULL DEFAULT (0) 
+)
+*
+
+% Codes - Financial Status
+CREATE TABLE dbo.[Codes - Financial Status]
+(
+	[Financial Status Id] int IDENTITY PRIMARY KEY,
+	[Location Id] int,
+	[Status Description] varchar(50)
+)
+*
+
+% Codes - Invoice Status Type
+
+% Codes - Licence Renewal Type
+
+% Codes - Note Category
+
+% Codes - Platform Type
+
+% Codes - Region
+
+% Codes - Sales Tax
+
+% Codes - SLD
+
+% Codes - Term Type
+
+% Codes - Units
+
+% Codes - User Field Grouping
+CREATE TABLE dbo.[Codes - User Field Grouping]
+(
+     [UF Group Id]                    int IDENTITY PRIMARY KEY,
+     [Grouping Description]           varchar(50),
+     [Grouping Sequence]	      int NOT NULL DEFAULT(0)
+)
+*
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract - Forecast Details
+ALTER TABLE [Contract - Forecast Details]
+ADD [PO Number] varchar(30)
+*
+
+ALTER TABLE [Contract - Forecast Details]
+ADD [PO Start Date] datetime
+*
+
+ALTER TABLE [Contract - Forecast Details]
+ADD [PO Expiry Date] datetime
+*
+
+ALTER TABLE [Contract - Forecast Details]
+ADD [PO Max Value] float NOT NULL DEFAULT(0)
+*
+
+% Contract - Forecast Products
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+
+% Contract - Product-History
+
+% Contract - Product-Platforms
+
+% Contract Classes
+
+% Contract Details
+ALTER TABLE [Contract Details]
+ALTER COLUMN [Contract Number] varchar(25)
+*
+
+ALTER TABLE [Contract Details]
+ADD [Maintenance Inflator X] int DEFAULT (0)
+*
+
+ALTER TABLE [Contract Details]
+ADD [Maintenance Inflator Y] int DEFAULT (0)
+*
+
+ALTER TABLE [Contract Details]
+ADD [Maintenance Percent X] float DEFAULT (0)
+*
+
+ALTER TABLE [Contract Details]
+ADD [Maintenance Percent Y] float DEFAULT (0)
+*
+
+ALTER TABLE [Contract Details]
+ADD [Total Maintenance Value] float DEFAULT (0)
+*
+
+ALTER TABLE [Contract Details]
+ADD [Contract Status Id] int DEFAULT (0)
+*
+
+ALTER TABLE [Contract Details]
+ADD [Archive Date] datetime
+*
+
+ALTER TABLE [Contract Details]
+ADD [Last Changed By] varchar(50)
+*
+
+ALTER TABLE [Contract Details]
+ADD [Last Change Date] datetime
+*
+
+ALTER TABLE [Contract Details]
+ADD [Annual Contract Value] float NOT NULL DEFAULT (0)
+*
+
+ALTER TABLE [Contract Details]
+ADD [Cancellation Penalty] int NOT NULL DEFAULT (0)
+*
+
+ALTER TABLE [Contract Details]
+ADD [Supercede Contract] varchar(25)
+*
+
+ALTER TABLE [Contract Details]
+ADD [Contract Key] varchar(30)
+*
+
+ALTER TABLE [Contract Details]
+ADD [Forecast Type Id] int DEFAULT(0)
+*
+
+UPDATE [Contract Details]
+SET [Contract Status Id] = 0
+*
+
+UPDATE [Contract Details]
+SET [Forecast Type Id] = 0
+*
+
+% Contract Notes
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Export Fields
+
+% Exports
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice - Product Details
+
+% Invoice Details
+ALTER TABLE [Invoice Details]
+ADD [Invoice Paid Date] datetime
+*
+
+ALTER TABLE [Invoice Details]
+ADD [Payment Reference] varchar(25)
+*
+
+ALTER TABLE [Invoice Details]
+ADD [PO Number] varchar(30)
+*
+
+ALTER TABLE [Invoice Details]
+ADD [PO Start Date] datetime
+*
+
+ALTER TABLE [Invoice Details]
+ADD [PO Expiry Date] datetime
+*
+
+ALTER TABLE [Invoice Details]
+ADD [PO Max Value] float NOT NULL DEFAULT(0)
+*
+
+% Invoice Log
+
+% Invoice Notes
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Location
+
+% Mail
+
+% Mail Schedule
+
+% Metrics
+
+% OLAP Cube 02
+
+% OLAP Cube 03
+
+% Pallet
+IF EXISTS (SELECT TABLE_NAME
+           FROM INFORMATION_SCHEMA.TABLES
+           WHERE TABLE_NAME = 'Pallet')
+    DROP TABLE dbo.[Pallet]
+*
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Platform LPars
+
+% Product Details
+ALTER TABLE [Product Details]
+ALTER COLUMN [Product Name] varchar(70)
+*
+
+% Product Notes
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Saved Reports
+CREATE TABLE dbo.[Saved Reports] (
+	[ReportId] int IDENTITY PRIMARY KEY,
+	[Location Id] int NOT NULL,
+	[ReportName] varchar(30) NOT NULL ,
+	[RecordType] char(1) NOT NULL ,
+	[SQLText] varchar(250) NOT NULL ,
+	[Display] int NOT NULL ,
+	[ColumnWidth] int NULL DEFAULT (0),
+	[UserId] int NOT NULL ,
+	[Description] varchar(64) NULL ,
+	[Report Order] int NOT NULL DEFAULT (0),
+	[Condition] varchar(50) NULL ,
+	[FieldID] int NULL ,
+	[SubTotal] int NOT NULL DEFAULT (0),
+	[Sort] varchar(4) NULL,
+	[Grand Total] int NOT NULL DEFAULT (0),
+	[ReportType] int NOT NULL DEFAULT (0),
+	[exportType] int NULL,
+	[HeaderText] varchar(30) NULL,
+	[isIndirect] int NOT NULL DEFAULT (0),
+	[ReportBase] varchar(50) NULL,
+	[LinkValue] varchar(10) NULL
+)
+*
+
+% Saved Views
+
+% Schedule
+
+% Security
+ALTER TABLE [Security]
+ADD [Frozen] int NOT NULL DEFAULT(0)
+*
+
+ALTER TABLE [Security]
+ADD [Active Report] varchar(30)
+*
+
+ALTER TABLE [Security]
+ADD [Role Id] int
+*
+
+ALTER TABLE [Security]
+ADD [Hint] varchar(50)
+*
+
+ALTER TABLE [Security]
+ADD [Email] varchar(100)
+*
+
+ALTER TABLE [Security]
+ADD [Last Contract Id] int NOT NULL DEFAULT(0)
+*
+
+ALTER TABLE [Security]
+ADD [Logon Count] int NOT NULL DEFAULT(0)
+*
+
+ALTER TABLE [Security]
+ADD [Last Active Location Id] int
+*
+
+ALTER TABLE [Security]
+ADD [Last Report Type] int
+*
+
+ALTER TABLE [Security]
+ADD [Retry Count] int NOT NULL DEFAULT(0)
+*
+
+% Security History
+CREATE TABLE dbo.[Security History]
+(
+  [User Id] int,
+  [History Sequence] int,
+  [Password] varchar(10)
+)
+*
+
+% Security Locations
+ALTER TABLE [Security Locations]
+ADD [Default Location] int NOT NULL DEFAULT(0)
+*
+
+UPDATE [Security Locations] SET [Default Location] = 0
+*
+
+% SLM Classes
+
+% SLM Details
+
+% Staff Details
+
+% Sublocations
+
+% System-DBJoins
+CREATE TABLE dbo.[System-DBJoins]
+(
+	[Table] nvarchar(50) NOT NULL ,
+	[Field] nvarchar(50) NOT NULL ,
+	[IsIDField] int NOT NULL DEFAULT (0) ,
+	[JoinTable] varchar(64) NULL ,
+	[JoinField] varchar(64) NULL ,
+	[JoinType] varchar(20) NULL ,
+	[Description] varchar(128) NOT NULL ,
+	[Display] int NOT NULL DEFAULT ((-1)) ,
+	[FieldID] int NULL ,
+	[FieldType] char(1) NULL ,
+	[useForImport] int NOT NULL DEFAULT ((-1)),
+	[useForExport] int NOT NULL DEFAULT ((-1)) ,
+	[canTotal] int NOT NULL DEFAULT (0) ,
+	[FieldGroup] char(2) NULL ,
+	[IsUserDefined] int NOT NULL DEFAULT (0) 
+)
+*
+
+% System Parameters
+
+% Target Types
+
+% User Field Values
+
+% User Fields
+ALTER TABLE [User Fields]
+ADD [AppArea] int NOT NULL DEFAULT (1)
+*
+
+ALTER TABLE [User Fields]
+ADD [Group Id] int NOT NULL DEFAULT (0)
+*
+
+ALTER TABLE [User Fields]
+ADD [Field Sequence] int NOT NULL DEFAULT (0)
+*
+
+% User Help Docs
+CREATE TABLE dbo.[User Help Docs]
+(
+	[Field Identifier] varchar(60) NOT NULL,
+	[Path Def] varchar(250) NOT NULL
+)
+*
+
+% User Roles
+CREATE TABLE dbo.[User Roles]
+(
+	[Role Id] int IDENTITY PRIMARY KEY,
+	[Location Id] int,
+	[Role Name] varchar(25) NULL,
+	[Role Description] varchar(250) NULL,
+	[Administration] bit NOT NULL DEFAULT(0),
+	[Table Maintenance] bit NOT NULL DEFAULT(0),
+	[Code Maintenance] bit NOT NULL DEFAULT(0),
+	[Insert] bit NOT NULL DEFAULT(0),
+	[Amend] bit NOT NULL DEFAULT(0),
+	[Delete] bit NOT NULL DEFAULT(0),
+	[View Financial] bit NOT NULL DEFAULT(0),
+	[Export] bit NOT NULL DEFAULT(0),
+	[Auditor] bit NOT NULL DEFAULT(0),
+	[Notes] bit NOT NULL DEFAULT(0),
+	[Publish Global] bit NOT NULL DEFAULT(0),
+	[Default Role] bit NOT NULL DEFAULT(0),
+	[View Type] int NOT NULL DEFAULT(0)
+)
+*
+
+% Vendor Addresses
+ALTER TABLE [Vendor Addresses]
+ADD [Country] varchar(50)
+*
+
+% Vendor Categories
+
+% Vendor Details
+ALTER TABLE [Vendor Details]
+ADD [Internal Contact] varchar(50)
+*
+
+ALTER TABLE [Vendor Details]
+ADD [Financial Year End] int
+*
+
+ALTER TABLE [Vendor Details]
+ADD [DUNS Number] varchar(50)
+*
+
+ALTER TABLE [Vendor Details]
+ADD [DUNS-Name] varchar(50)
+*
+ 
+ALTER TABLE [Vendor Details]
+ADD [Parent DUNS Number] varchar(50)
+*
+
+ALTER TABLE [Vendor Details]
+ADD [Parent-Name] varchar(50)
+*
+
+ALTER TABLE [Vendor Details]
+ADD [Global Ultimate DUNS Number] varchar(50)
+*
+
+ALTER TABLE [Vendor Details]
+ADD [Global Ultimate-Name] varchar(50)
+*
+
+ALTER TABLE [Vendor Details]
+ADD [Last Financial Status Id] int NOT NULL DEFAULT(0)
+*
+
+% Vendor Contact Notes
+
+% Vendor Notes
+
+% Vendor Regions
+
+% Vendor Status
+
+% Version Registry
+ALTER TABLE [Version Registry]
+ADD [First Obtained Date] datetime
+*
+
+% Version Registry CallOff
+CREATE TABLE dbo.[Version Registry CallOff]
+(
+	[CallOff Id] int IDENTITY PRIMARY KEY,
+	[Registry Id] int NOT NULL,
+	[Quantity Used] int NOT NULL,
+	[Locale] varchar(50),
+	[Comment] varchar(100),
+	[Date Obtained] datetime
+)
+*
+
+% Version History
+CREATE TABLE dbo.[Version History]
+(
+	[History Id] int IDENTITY PRIMARY KEY,
+	[Registry Id] int NOT NULL,
+	[DateStamp] datetime,
+	[Changed by] varchar(30),
+	[PlusMinusQty] int NOT NULL DEFAULT(0),
+	[Type] varchar(30),
+	[Comment] varchar(100),
+	[Reseller] varchar(60)
+)
+*
+
+% ---------- Views ----------
+
+
+% Performance Metrics
+
+% CalView
+
+% ---------- Procedures ----------
+% update the Total Maintenance Value field in the Contract Details table
+UPDATE [Contract Details] SET [Total Maintenance Value] = (
+SELECT SUM([Maintenance Value]) AS [Total] 
+FROM [Contract - Product Details]
+WHERE [Contract - Product Details].[Contract Id] = [Contract Details].[Contract Id])
+*
+            
+% update the master Contract Product quantity field with the new total
+% quantity in the version registry for this contract and product
+UPDATE [Contract - Product Details] SET [Quantity] = (
+SELECT SUM([Quantity]) AS [Total] FROM [Version Registry] 
+WHERE [Version Registry].[Product Id] = [Contract - Product Details].[Product Id] AND [Version Registry].[Contract Id] = [Contract - Product Details].[Contract Id]
+)
+*
+
+% update the total call-off quantity in the product details record
+DECLARE @id INT
+DECLARE loop_cursor CURSOR FOR
+SELECT DISTINCT [Product Id] FROM [Version Registry]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @id
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	UPDATE [Product Details] SET [Calloff Quantity] = 
+	(
+		SELECT SUM([Quantity Used]) AS [Total] FROM [Version Registry Calloff] WHERE [registry id] 
+		IN (SELECT [Registry Id] FROM [Version Registry] WHERE [product id] = @id)
+	)
+	WHERE [Product Id] = @id
+	FETCH NEXT FROM loop_cursor INTO @id
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+UPDATE [Product Details] SET [Number of Licensed Copies] = 
+(
+SELECT SUM([Quantity]) AS [QtyTotal] FROM [Contract - Product Details] 
+WHERE [Contract - Product Details].[Product Id] = [Product Details].[Product Id]
+)
+*
+
+% Add a default role and admin role for each location defined. Set all users to the default role
+INSERT INTO [User Roles]
+	([Role Name],[Role Description],[Administration],[Table Maintenance],[Code Maintenance],[Insert],[Amend],[Delete],[View Financial],[Export],[Auditor],[Notes],[Publish Global],[Default Role],[View Type])
+	VALUES
+	(
+	 'FW Administrator','Super User role for Framework',1,1,1,1,1,1,1,1,1,1,1,0,0
+	)
+*
+
+INSERT INTO [User Roles]
+	([Role Name],[Role Description],[Administration],[Table Maintenance],[Code Maintenance],[Insert],[Amend],[Delete],[View Financial],[Export],[Auditor],[Notes],[Publish Global],[Default Role],[View Type])
+	VALUES
+	(
+	 'Default User','Basic role for Framework',0,0,0,1,1,1,1,0,0,1,0,1,0
+	)
+*
+
+UPDATE [Security] SET [Role Id] = (SELECT [Role Id] FROM [User Roles] WHERE [Default Role] = 1) WHERE [Role Id] = 0 OR [Role Id] IS NULL
+*
+
+UPDATE [Security] SET [Logon Count] = 0
+*
+
+DECLARE @locationid INT
+DECLARE @userid INT
+DECLARE loop_cursor CURSOR FOR
+SELECT DISTINCT [Location Id] FROM [Location]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @locationid
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	DECLARE loop_cursor2 CURSOR FOR
+	SELECT [User Id] FROM [Security]
+	OPEN loop_cursor2
+	FETCH NEXT FROM loop_cursor2 INTO @userid
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		IF ISNULL(@userid,0) > 0 AND ISNULL(@locationid,-1) > -1
+		BEGIN
+			DELETE FROM [Security Locations] WHERE [User Id] = @userid AND [Location Id] = @locationid
+			INSERT INTO [Security Locations] ([Location Id],[User Id],[Access]) VALUES (@locationid, @userid, 2)
+		END
+		FETCH NEXT FROM loop_cursor2 INTO @userid
+	END
+	CLOSE loop_cursor2
+	DEALLOCATE loop_cursor2	
+	FETCH NEXT FROM loop_cursor INTO @locationid
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+% Insert a Live & Archive and Inflator metrics for each location that exists
+DECLARE @locationid INT
+DECLARE loop_cursor CURSOR FOR
+SELECT DISTINCT [Location Id] FROM [Location]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @locationid
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	IF ISNULL(@locationid,-1) > -1
+	BEGIN
+		INSERT INTO [Codes - Contract Status] ([Location Id],[Status Description],[IsArchive])
+		VALUES (@locationid,'Live',0)
+	
+		UPDATE [Contract Details] SET [Contract Status Id] = (SELECT [Status Id] FROM [Codes - Contract Status] WHERE [Status Description] = 'Live' AND [Location Id] = @locationid)
+		WHERE [Archived] = 'N' AND [Location Id] = @locationid
+	
+		INSERT INTO [Codes - Contract Status] ([Location Id],[Status Description],[IsArchive])
+		VALUES (@locationid,'Archived',1)
+
+		UPDATE [Contract Details] SET [Contract Status Id] = (SELECT [Status Id] FROM [Codes - Contract Status] WHERE [Status Description] = 'Archived' AND [Location Id] = @locationid)
+		WHERE [Archived] = 'Y' AND [Location Id] = @locationid
+
+		INSERT INTO [Codes - Inflator Metrics]
+			([Location Id],[Name],[Percentage],[requires Extra Pct])
+			VALUES (@locationid,'RPI',3,0)
+
+		INSERT INTO [Codes - Inflator Metrics]
+			([Location Id],[Name],[Percentage],[requires Extra Pct])
+			VALUES (@locationid,'RPI+%',3,1)
+	END
+	FETCH NEXT FROM loop_cursor INTO @locationid
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+% UPDATE CONTRACT KEY FIELD FOR ALL RECORDS
+DECLARE @cid INT
+DECLARE @vid INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Contract Id],[Vendor Id] FROM [Contract Details]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @cid,@vid
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	IF ISNULL(@cid,0) > 0 AND ISNULL(@vid,0) > 0
+	BEGIN
+		UPDATE [Contract Details] SET [Contract Key] = 'CD/' + CONVERT(varchar,@cid) + '/' + CONVERT(varchar,@vid)
+		WHERE [Contract Id] = @cid
+	END
+	FETCH NEXT FROM loop_cursor INTO @cid,@vid
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+% UPDATE USER FIELD 1-4 WITH DEFAULT VALUES
+UPDATE [User Fields] SET [AppArea] = 1, [Group Id] = 0 WHERE [User Field Id] < 5
+*
+
+UPDATE [User Fields] SET [Field Sequence] = 10 WHERE [User Field Id] = 1
+*
+UPDATE [User Fields] SET [Field Sequence] = 20 WHERE [User Field Id] = 2
+*
+UPDATE [User Fields] SET [Field Sequence] = 30 WHERE [User Field Id] = 3
+*
+UPDATE [User Fields] SET [Field Sequence] = 40 WHERE [User Field Id] = 4
+*
+
+% VENDOR CONTACTS FROM DDLIST (STAFF) TO TEXT - UPDATE
+UPDATE [Vendor Details] SET [Internal Staff Contact Id] = 0 WHERE [Internal Staff Contact Id] IS NULL OR [Internal Staff Contact Id] = -1
+*
+
+DECLARE @sid INT
+DECLARE loop_cursor CURSOR FOR
+SELECT DISTINCT [Internal Staff Contact Id] FROM [Vendor Details]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @sid
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	IF @sid > 0
+	BEGIN
+		UPDATE [Vendor Details] SET [Internal Contact] = (SELECT [Staff Name] FROM [Staff Details] WHERE [Staff Id] = @sid) WHERE [Internal Staff Contact Id] = @sid
+	END
+	FETCH NEXT FROM loop_cursor INTO @sid
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+UPDATE [Contract - Product Details] SET [Sales Tax Rate] = 0 WHERE [Sales Tax Rate] = -1 OR [Sales Tax Rate] IS NULL
+*
+
+UPDATE [Contract - Product Details] SET [Currency Id] = 0 WHERE [Currency Id] = -1 OR [Currency Id] IS NULL
+*
+
+DECLARE @fieldid INT
+DECLARE @fieldname varchar(50)
+DECLARE loop_cursor CURSOR FOR
+SELECT [User Field Id],[Field Name] FROM [User Fields]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @fieldid,@fieldname
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	PRINT 'User Field Id = ' + CONVERT(varchar(5),@fieldid)
+	PRINT 'Field name = ' + @fieldname
+	PRINT 'Adding Report field for [UF'+RTRIM(CONVERT(char,@fieldid))+']'
+	INSERT INTO [System-DBJoins] ([Table],[Field],[IsIDField],[Description],[Display],[FieldID],[FieldType],[FieldGroup],[IsUserDefined])
+		VALUES ('[Contract Details]','[UF'+RTRIM(CONVERT(char,@fieldid))+']',0,@fieldname,-1,10000+@fieldid,'S','CD',-1)
+	FETCH NEXT FROM loop_cursor INTO @fieldid,@fieldname
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+% End of file

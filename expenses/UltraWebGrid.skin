@@ -1,0 +1,49 @@
+<%--
+Default skin template. The following skins are provided as examples only.
+
+1. Named control skin. The SkinId should be uniquely defined because
+   duplicate SkinId's per control type are not allowed in the same theme.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Default skin. The SkinId is not defined. Only one default 
+   control skin per control type is allowed in the same theme.
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+--%>
+
+<%@ Register TagPrefix="igtbl" Namespace="Infragistics.WebUI.UltraWebGrid" Assembly="Infragistics35.WebUI.UltraWebGrid.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" %>
+<igtbl:UltraWebGrid runat="server" SkinId="gridskin" Browser="Auto">
+    <DisplayLayout AllowAddNewDefault="No" AllowColSizingDefault="Free" AllowColumnMovingDefault="OnServer" OptimizeCSSClassNamesOutput="false"
+                AllowDeleteDefault="No" AllowSortingDefault="OnClient" AllowUpdateDefault="No"
+                CellClickActionDefault="NotSet" HeaderClickActionDefault="SortSingle"
+                RowSelectorsDefault="No" SelectTypeRowDefault="Extended"
+                StationaryMarginsOutlookGroupBy="False" ColWidthDefault=""
+                Version="4.00" ViewType="Flat" TableLayout="Auto" BorderCollapseDefault="collapse" LoadOnDemand="Xml">
+       
+                <FooterStyleDefault /> <RowStyleDefault CSSClass="row1"></RowStyleDefault>
+        <RowAlternateStyleDefault CssClass="row2">
+                </RowAlternateStyleDefault>
+                
+                <Pager Alignment="Left" MinimumPagesForDisplay="2" AllowPaging="True" PageSize="20">
+                    <PagerStyle BackColor="LightGray" BorderStyle="Solid" BorderWidth="1px">
+                        <BorderDetails ColorLeft="White" ColorTop="White" WidthLeft="1px" WidthTop="1px" />
+                    </PagerStyle>
+                </Pager>
+                <FrameStyle CssClass="datatbl">
+                </FrameStyle>
+                <HeaderStyleDefault CssClass="infagisticsHeader">
+                    
+                </HeaderStyleDefault>
+                
+                
+
+	
+	
+    
+    
+                <GroupByRowStyleDefault Width="800"></GroupByRowStyleDefault>
+    </DisplayLayout>
+</igtbl:UltraWebGrid>

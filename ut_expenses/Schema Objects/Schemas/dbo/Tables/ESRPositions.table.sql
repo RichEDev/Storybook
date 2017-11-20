@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[ESRPositions] (
+    [ESRPositionId]             BIGINT          NOT NULL,
+    [EffectiveFromDate]         DATETIME        NULL,
+    [EffectiveToDate]           DATETIME        NULL,
+    [PositionNumber]            BIGINT          NOT NULL,
+    [PositionName]              NVARCHAR (240)  NOT NULL,
+    [BudgetedFTE]               DECIMAL (13, 5) NULL,
+    [SubjectiveCode]            NVARCHAR (15)   NULL,
+    [JobStaffGroup]             NVARCHAR (40)   NULL,
+    [JobRole]                   NVARCHAR (60)   NULL,
+    [OccupationCode]            NVARCHAR (5)    NULL,
+    [Payscale]                  NVARCHAR (10)   NULL,
+    [GradeStep]                 NVARCHAR (30)   NULL,
+    [ISARegulatedPost]          NVARCHAR (15)   NULL,
+    [ESROrganisationId]         BIGINT          NULL,
+    [HiringStatus]              NVARCHAR (80)   NULL,
+    [PositionType]              NVARCHAR (80)   NULL,
+    [OHProcessingEligible]      NVARCHAR (30)   NULL,
+    [EPPFlag]                   NVARCHAR (30)   NULL,
+    [DeaneryPostNumber]         NVARCHAR (30)   NULL,
+    [ManagingDeaneryBody]       NVARCHAR (10)   NULL,
+    [WorkplaceOrgCode]          NVARCHAR (10)   NULL,
+    [ESRLastUpdateDate]         DATETIME        NOT NULL,
+    [SubjectiveCodeDescription] NVARCHAR (240)  NULL,
+    CONSTRAINT [PK_ESRPositions] PRIMARY KEY CLUSTERED ([ESRPositionId] ASC)
+);
+

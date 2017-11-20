@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Spend_Management.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Spend_Management_postcodeanywhereuk_LookupUK" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://services.postcodeanywhere.co.uk/uk/lookup.asmx</Value>
+    </Setting>
+    <Setting Name="Spend_Management_uk_co_postcodeanywhere_services_LookupInternational" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://services.postcodeanywhere.co.uk/international/lookup.asmx</Value>
+    </Setting>
+    <Setting Name="Spend_Management_tfsintegrator_svcErrors" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost:50685/svcErrors.asmx</Value>
+    </Setting>
+    <Setting Name="Spend_Management_uk_co_software_europe_support_HelpAndSupport" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://support.software-europe.co.uk/helpandsupport.asmx</Value>
+    </Setting>
+    <Setting Name="Spend_Management_com_sel_expenses_sp_svcSupportPortalAPI" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://sp.sel-expenses.com/webServices/svcSupportPortalAPI.asmx</Value>
+    </Setting>
+    <Setting Name="Spend_Management_svcHelpAndSupport_svcHelpAndSupport" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://help.software-europe.co.uk/webservices/svchelpandsupport.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

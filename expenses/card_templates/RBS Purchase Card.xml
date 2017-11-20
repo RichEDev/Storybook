@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="RBS Purchase Card" FileType="XLS" NumberHeaderRecords="2" NumberFooterRecords="0">
+  <Fields Type="CardTransaction" UniqueValue="trans">
+    <HeaderRecord>
+      <HeaderField>Date From:</HeaderField>
+      <HeaderField FieldType="D" />
+      <HeaderField>Date To:</HeaderField>
+      <HeaderField FieldType="D" />
+    </HeaderRecord>
+
+    <Field Name="CycleDate" MappedTable="card_transactions_rbs_purchase" MappedField="cycle_date" FieldType="D" />
+    <Field Name="CardNumber" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="16" />
+    <Field Name="TransDate" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="dd/MM/yyyy hh:mm:ss" />
+    <Field Name="TransPostDate" MappedTable="card_transactions_rbs_purchase" MappedField="trans_postdate" FieldType="D" Format="dd/MM/yyyy hh:mm:ss" />
+    <Field Name="TransValue" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C" />
+    <Field Name="TransType" MappedTable="card_transactions_rbs_purchase" MappedField="trans_type" FieldType="S" MaxLength="50" />
+    <Field Name="YourRef" MappedTable="card_transactions" MappedField="reference" FieldType="S" MaxLength="17" />
+    <Field Name="BankRef" MappedTable="card_transactions_rbs_purchase" MappedField="bank_ref" FieldType="S" MaxLength="23" />
+    <Field Name="MerchantDetails" MappedTable="card_transactions" MappedField="description" FieldType="S" MaxLength="25" />
+    <Field Name="MCC" MappedTable="card_transactions_rbs_purchase" MappedField="mcc" FieldType="S" MaxLength="4" />
+    <Field Name="ExceptionIndicator" MappedTable="card_transactions_rbs_purchase" MappedField="exception_indicator" FieldType="S" MaxLength="9" />
+    <Field Name="SequenceNumber" MappedTable="card_transactions_rbs_purchase" MappedField="sequence_number" FieldType="S" MaxLength="3" />
+    <Field Name="MchCountryCode" MappedTable="card_transactions" MappedField="country_code" FieldType="S" MaxLength="3" CountryType="alpha" />
+    <Field Name="MchCurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="N" CurrencyType="numeric" MaxLength="3" />
+    <Field Name="MchTown" MappedTable="card_transactions_rbs_purchase" MappedField="merchant_town" FieldType="S" MaxLength="13" />
+    <Field Name="LocalTax" MappedTable="card_transactions_rbs_purchase" MappedField="local_tax" FieldType="C" />
+    <Field Name="TaxIncluded" MappedTable="card_transactions_rbs_purchase" MappedField="tax_included" FieldType="X"  />
+    <Field Name="NationalTax" MappedTable="card_transactions_rbs_purchase" MappedField="national_tax" FieldType="C" />
+    <Field Name="NationalTaxIncluded" MappedTable="card_transactions_rbs_purchase" MappedField="national_tax_included" FieldType="X"  />
+    <Field Name="MchVatRegistration" MappedTable="card_transactions_rbs_purchase" MappedField="merchant_vat_registration" FieldType="S" MaxLength="20" />
+    <Field Name="CustomerVatRegistration" MappedTable="card_transactions_rbs_purchase" MappedField="customer_vat_registration" FieldType="S" MaxLength="20" />
+    <Field Name="MchOrderNumber" MappedTable="card_transactions_rbs_purchase" MappedField="merchant_order_number" FieldType="S" MaxLength="25" />
+    <Field Name="CommodityCode" MappedTable="card_transactions_rbs_purchase" MappedField="commodity_code" FieldType="S" MaxLength="4" />
+    <Field Name="OtherTax" MappedTable="card_transactions_rbs_purchase" MappedField="other_tax" FieldType="C" />
+    <Field Name="MessageId" MappedTable="card_transactions_rbs_purchase" MappedField="messageid" FieldType="S" MaxLength="15" />
+    <Field Name="CreationDate" MappedTable="card_transactions_rbs_purchase" MappedField="creation_date" FieldType="D" />
+    <Field Name="VatEvidenceReportType" MappedTable="card_transactions_rbs_purchase" MappedField="vat_evidence_report_type" FieldType="S" MaxLength="2" />
+    <Field Name="MchCurrencyDescription" MappedTable="card_transactions_rbs_purchase" MappedField="merchant_currency_description" FieldType="S" MaxLength="40" />
+    <Field Name="OriginalCurrencyAmount" MappedTable="card_transactions" MappedField="original_amount" FieldType="C" />
+    <Field Name="MCG" MappedTable="card_transactions_rbs_purchase" MappedField="mcg" FieldType="S" MaxLength="10" />
+    <Field Name="MchCountryDescription" MappedTable="card_transactions_rbs_purchase" MappedField="merchant_country_description" FieldType="S" MaxLength="75" />
+    <Field Name="ReasonCode" MappedTable="card_transactions_rbs_purchase" MappedField="reason_code" FieldType="S" MaxLength="2" />
+    <Field Name="ReasonDescription" MappedTable="card_transactions_rbs_purchase" MappedField="reason_description" FieldType="S" MaxLength="40" />
+  </Fields>
+</CardTemplate>

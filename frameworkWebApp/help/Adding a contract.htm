@@ -1,0 +1,95 @@
+<html>
+<head>
+    <title>Framework Help - Version Registry</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" href="fwhelp.css" type="text/css">
+
+    <script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+	
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+    </script>
+
+</head>
+<body class="help_page" onload="window.resizeTo(800,500)">
+    <div class="help_page_title">
+        <a onclick="closewindow();">
+            <img src="../images/exithelp.gif" alt="Close Help Window" /></a> Version Registry</div>
+    <div class="help_section">
+        <div class="help_section_title">
+            Version Registry
+        </div>
+        <div class="help_overview">
+            Purpose; The key aim of this screen is to facilitate the pro-active management of
+            contracts.<br />
+            <br />
+            Structure; The contract is presented on a single screen with has six major segments:<br />
+            This holds, for information purposes and automated email notifications of renewals,
+            data on basic contract information e.g. Vendor Name, Contract Number, Cost, Type
+            of Contract, Start, End & Review dates.
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img src="../buttons/open.gif" onclick="toggle('1');" id="img1" />
+            Details For Adding A Contract
+        </div>
+        <div class="help_body_text" id="1">
+            <li>SELECT Contracts from the Main Menu</li><br />
+            <li>SELECT Add Contract - Insert the Contractual Information.</li><br />
+            <li>SELECT Update when complete</li><br />
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img src="../buttons/open.gif" onclick="toggle('2');" id="img2" />
+            Field Descriptions
+        </div>
+        <div class="help_body_text" id="2">
+            Description Field: A Description must be defined - Insert the description required.<br />
+            <br />
+            <br />
+            Vendor Field : A Vendor must be defined -From the drop down menu SELECT Vendor required.<br />
+            <br />
+            <br />
+            You only need to complete the remaining fields required specific to the contract
+            type.<br />
+            <br />
+            <br />
+            If extra fields are required the undefined fields can be used.<br />
+            They can be set in either a character, date, numeric format or a pre-defined option
+            list. These are defined at the logon section, by the Administrator. See Administrator
+            Functions on page 17<br />
+            When Complete SELECT Update
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_comments">
+            * If you do not find a topic outlined in the help which is relevant to your enquiry
+            then please contact your administrator
+        </div>
+    </div>
+</body>
+</html>

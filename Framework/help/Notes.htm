@@ -1,0 +1,117 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Free Text Notes</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>Free text notes are stored relative to their context. Depending from where the 
+					Notes are accessed, they will be stored as one of the following types of note: 
+					-</p>
+				<p>
+					<li>
+						Contract Note</li>
+					<li>
+						Product Note</li>
+					<li>
+						Vendor Note</li>
+					<li>
+						Invoice Note</li>
+					<li>
+						Vendor Contact Note</li></p>
+				<p>To improve the meaningfulness of the notes, each individual notes can be tagged 
+					with a primary and secondary definition. These are labelled as Note Category 
+					and Note Type.</p>
+				<p>When a Note Category is selected, the Note Types will change to those associated 
+					with the selected type. For example, a Note Type of 'Recent Communication' may 
+					have Note Categories of 'Email','Letter' or 'Telephone'</p>
+				<p>The Note Category and Types are definable by the user. Note Categories are 
+					available to user with access to the Table Maintenance.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1">&nbsp;Adding a 
+				Note
+			</div>
+			<div class="help_body_text" id="1">
+				<p><li>Click the 'New' button</li></p>
+				<p><li>Select the Note Category and Note Type definitions as appropriate</li></p>
+				<p><li>Enter the date for the Note. This will default to the current date.</li></p>
+				<p><li>Type the note (or paste the required text from your clipboard) in to the note 
+						area.</li></p>
+				<p><li>Click the 'Update' button once the Note is completed.</li></p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('2');" id="Img2">&nbsp;View / 
+				Edit an Existing Note
+			</div>
+			<div class="help_body_text" id="2">
+				<p><li>Existing Notes are displayed in the left hand panel ordered by Date and Note 
+						Category</li></p>
+				<p><li>Simply click the Note item you wish to view in the Note List panel</li></p>
+				<p><li>The note will then be loaded in full where it can be read or modified.</li></p>
+				<p><li>To save any modifications, click the 'Update' button.</li></p>
+				<p><li>To exit without making any modifications, click the 'Close' button.</li></p>
+				<p></p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('3');" id="Img3">&nbsp;Delete a Note
+			</div>
+			<div class="help_body_text" id="3">
+				<p><li>Select the Note you wish to delete from the Note List pane on the left side of the Note screen.</li></p>
+				<p><li>A Note is selected by clicking in the list. This will then be loaded into the edit panel in full.</li></p>
+				<p><li>Click the 'Delete' button.</li></p>
+				<p><li>You will be prompted to confirm that you wish to proceed with the Note deletion.</li></p>
+				<p><li>Click 'OK' to confirm deletion.</li></p>
+				<p><li>The Note will then be deleted permanently from the database.</li></p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

@@ -1,0 +1,11 @@
+﻿<div>
+When preparing envelopes for the scan and attach service, ensure you do the following:
+	<ul>
+		<li>Number all your receipts using the Expense Item Reference Numbers found on your expenses</li>
+		<li>Ensure that the Expense Item Reference Number is written on the front of the receipt</li>
+		<li>Write any extra instructions on the back of the receipt</li>
+		<li>Remove all staples from your receipts</li>
+		<li>Make sure all receipts are single, and not glued to a sheet of paper</li>
+		<li>Ensure your envelopes are not used for more than one claim</li>
+	</ul>
+</div>

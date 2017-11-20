@@ -1,0 +1,1 @@
+﻿ALTER TABLE dbo.importTemplateMappings ADD CONSTRAINT [DF_importTemplateMappings_importField] DEFAULT(1) FOR importField

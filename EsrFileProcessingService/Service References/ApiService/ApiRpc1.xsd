@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://software-europe.com/ApiRpc/2013/02" elementFormDefault="qualified" targetNamespace="http://software-europe.com/ApiRpc/2013/02" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd2" namespace="http://software-europe.com/API/2013/02" />
+  <xs:import schemaLocation="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ApiLibrary.ApiObjects.ESR" />
+  <xs:element name="UpdateEsrPersonRecords">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+        <xs:element minOccurs="0" name="trustVpd" nillable="true" type="xs:string" />
+        <xs:element xmlns:q1="http://software-europe.com/API/2013/02" minOccurs="0" name="esrPersonRecords" nillable="true" type="q1:ArrayOfEsrPersonRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEsrPersonRecordsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://software-europe.com/API/2013/02" minOccurs="0" name="UpdateEsrPersonRecordsResult" nillable="true" type="q2:ArrayOfEsrPersonRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllPersons">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllPersonsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://software-europe.com/API/2013/02" minOccurs="0" name="GetAllPersonsResult" nillable="true" type="q3:ArrayOfEsrPersonRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEsrLocationRecords">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+        <xs:element minOccurs="0" name="trustVpd" nillable="true" type="xs:string" />
+        <xs:element xmlns:q4="http://software-europe.com/API/2013/02" minOccurs="0" name="esrLocationRecords" nillable="true" type="q4:ArrayOfEsrLocationRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEsrLocationRecordsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://software-europe.com/API/2013/02" minOccurs="0" name="UpdateEsrLocationRecordsResult" nillable="true" type="q5:ArrayOfEsrLocationRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEsrLocationRecord">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+        <xs:element minOccurs="0" name="esrLocationRecordId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEsrLocationRecordResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://software-europe.com/API/2013/02" minOccurs="0" name="GetEsrLocationRecordResult" nillable="true" type="q6:EsrLocationRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEsrOrganisations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+        <xs:element minOccurs="0" name="trustVpd" nillable="true" type="xs:string" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ApiLibrary.ApiObjects.ESR" minOccurs="0" name="esrOrganisation" nillable="true" type="q7:ArrayOfEsrOrganisationRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEsrOrganisationsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ApiLibrary.ApiObjects.ESR" minOccurs="0" name="UpdateEsrOrganisationsResult" nillable="true" type="q8:ArrayOfEsrOrganisationRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEsrOrganisation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+        <xs:element minOccurs="0" name="esrOrganisationId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEsrOrganisationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ApiLibrary.ApiObjects.ESR" minOccurs="0" name="GetEsrOrganisationResult" nillable="true" type="q9:EsrOrganisationRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEsrPositions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+        <xs:element minOccurs="0" name="trustVpd" nillable="true" type="xs:string" />
+        <xs:element xmlns:q10="http://software-europe.com/API/2013/02" minOccurs="0" name="esrPositionRecords" nillable="true" type="q10:ArrayOfEsrPositionRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEsrPositionsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://software-europe.com/API/2013/02" minOccurs="0" name="UpdateEsrPositionsResult" nillable="true" type="q11:ArrayOfEsrPositionRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEsrPosition">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+        <xs:element minOccurs="0" name="esrPositionId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEsrPositionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://software-europe.com/API/2013/02" minOccurs="0" name="GetEsrPositionResult" nillable="true" type="q12:EsrPositionRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountFromVpd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="vpd" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountFromVpdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://software-europe.com/API/2013/02" minOccurs="0" name="GetAccountFromVpdResult" nillable="true" type="q13:EsrTrust" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEsrTrust">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://software-europe.com/API/2013/02" minOccurs="0" name="trust" nillable="true" type="q14:EsrTrust" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEsrTrustResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateEsrTrustResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateImportLog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+        <xs:element xmlns:q15="http://software-europe.com/API/2013/02" minOccurs="0" name="importLogs" nillable="true" type="q15:ArrayOfImportLog" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateImportLogResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://software-europe.com/API/2013/02" minOccurs="0" name="CreateImportLogResult" nillable="true" type="q16:ArrayOfImportLog" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateImportLog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+        <xs:element xmlns:q17="http://software-europe.com/API/2013/02" minOccurs="0" name="importLogs" nillable="true" type="q17:ArrayOfImportLog" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateImportLogResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://software-europe.com/API/2013/02" minOccurs="0" name="UpdateImportLogResult" nillable="true" type="q18:ArrayOfImportLog" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateImportHistory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+        <xs:element xmlns:q19="http://software-europe.com/API/2013/02" minOccurs="0" name="importHistories" nillable="true" type="q19:ArrayOfImportHistory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateImportHistoryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://software-europe.com/API/2013/02" minOccurs="0" name="CreateImportHistoryResult" nillable="true" type="q20:ArrayOfImportHistory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateImportHistory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+        <xs:element xmlns:q21="http://software-europe.com/API/2013/02" minOccurs="0" name="importHistories" nillable="true" type="q21:ArrayOfImportHistory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateImportHistoryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://software-europe.com/API/2013/02" minOccurs="0" name="UpdateImportHistoryResult" nillable="true" type="q22:ArrayOfImportHistory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteEntity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+        <xs:element xmlns:q23="http://software-europe.com/API/2013/02" minOccurs="0" name="entity" nillable="true" type="q23:DataClassBase" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteEntityResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://software-europe.com/API/2013/02" minOccurs="0" name="DeleteEntityResult" nillable="true" type="q24:DataClassBase" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

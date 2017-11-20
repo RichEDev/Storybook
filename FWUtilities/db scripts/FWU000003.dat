@@ -1,0 +1,318 @@
+% FW Update.dat file
+% 27/06/2000
+# 000003 000004
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+ALTER TABLE [Acquisition Vendors]
+ADD [Acq Vendor Id] int IDENTITY
+*
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Attachments
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Invoice Status Type
+
+% Codes - Note Category
+CREATE TABLE [Codes - Note Category]
+(
+     [Note Cat Id]                     int IDENTITY(0,1) PRIMARY KEY,
+     [Note Type]                       int,
+     [Description]                     varchar(30),
+     [Full Description]                varchar(50)
+)    
+*
+SET IDENTITY_INSERT [Codes - Note Category] ON
+INSERT INTO [Codes - Note Category] 
+    ([Note Cat Id], [Note Type], Description, [Full Description]) 
+    VALUES (0, 0, 'Cat 0', 'Note Categories')
+SET IDENTITY_INSERT [Codes - Note Category] OFF
+*
+
+% Codes - Sales Tax
+
+% Codes - SLD
+UPDATE [Codes - SLD]
+    SET [Location Id] = 0
+    WHERE [Location Id] IS NULL 
+*
+$DPK [Codes - SLD]
+ALTER TABLE [Codes - SLD]
+    ALTER COLUMN [Location Id] int NOT NULL
+ALTER TABLE [Codes - SLD]
+    ALTER COLUMN [SLD Number] int NOT NULL
+*
+ALTER TABLE [Codes - SLD]
+    ADD CONSTRAINT Codes_SLD_key PRIMARY KEY ([Location Id], [SLD Number])
+*
+
+% Codes - Term Type
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract Classes
+
+% Contract Details
+ALTER TABLE [Contract Details]
+    ALTER COLUMN [Schedule Number] char(50)
+ALTER TABLE [Contract Details]
+    ALTER COLUMN [Supplier Code] char(50)
+*
+
+% Contract - Forecast Details
+
+% Contract Notes
+ALTER TABLE [Contract Notes]
+    ADD [Note Type] int
+ALTER TABLE [Contract Notes]
+    ADD [Note Cat Id] int
+*
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+
+% Contract - Product Platforms
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Export Fields
+CREATE TABLE [Export Fields]
+(
+     [Export Field Id]                 int IDENTITY PRIMARY KEY,
+     [Export Id]                       int,                   
+     [Table Name]                      varchar(50),           
+     [Field Name]                      varchar(30)            
+)
+*
+
+% Exports
+CREATE TABLE Exports
+(
+     [Export Id]                       int IDENTITY PRIMARY KEY,
+     [Location Id]                     int,                   
+     [Description]                     varchar(50),           
+     [Base Table]                      varchar(50),           
+     [Titles]                          int,                   
+     [Output Drive]                    varchar(10),           
+     [Output Path]                     varchar(250),          
+     [Output File]                     varchar(50)            
+)
+*
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice Details
+
+% Invoice - Product Details
+
+% ITT_RFI Templates
+CREATE TABLE [ITT_RFI Templates]
+(
+     [ITT Id]                          int IDENTITY PRIMARY KEY,
+     [Location Id]                     int,                   
+     [Template Type]                   smallint,              
+     [Template Name]                   varchar(50),
+     [Template Text]                   text
+)
+*
+
+% Languages
+
+% Language Texts
+
+% Location
+
+% Location Users
+IF EXISTS (SELECT TABLE_NAME
+           FROM INFORMATION_SCHEMA.TABLES
+           WHERE TABLE_NAME = 'Location Users')
+    DROP TABLE [Location Users]
+*
+
+% Mail
+
+% Metrics
+
+% OLAP Cube 02
+CREATE TABLE [OLAP Cube 02]
+(
+     [OLAP Cube 02 Id]                 int IDENTITY PRIMARY KEY,
+     [Location Id]                     int,                   
+     [Vendor Name]                     varchar(50),
+     [Contract Description]            varchar(50),
+     [Date Stamp]                      datetime,
+     [Contract Value]                  money,
+     [Invoice Amount]                  money,
+     [Forecast Amount]                 money
+)
+*
+
+% OLAP Cube 03	
+CREATE TABLE [OLAP Cube 03]
+(
+     [OLAP Cube 03 Id]                 int IDENTITY PRIMARY KEY,
+     [Location Id]                     int,                   -- Pointer to [Location]
+     [Vendor Name]                     varchar(50),
+     [Contract Description]            varchar(50),
+     [Product Name]                    varchar(50),
+     [Platform_Lpar]                   varchar(50),
+     [Date Stamp]                      datetime,
+     [Usage]                           int,
+     [Licensed Usage]                  float
+)
+*
+
+% Performance
+ALTER TABLE Performance
+    ADD [Location Id] int
+*
+
+% Pending Email
+
+% Period Types
+
+% Product Details
+ALTER TABLE [Product Details]
+    DROP COLUMN Usage
+ALTER TABLE [Product Details]
+    DROP COLUMN [Usage From]
+ALTER TABLE [Product Details]
+    DROP COLUMN [Usage To]
+ALTER TABLE [Product Details]
+    ADD [Total Usage] int
+*
+
+% Product Notes
+ALTER TABLE [Product Notes]
+    ADD [Note Type] int
+ALTER TABLE [Product Notes]
+    ADD [Note Cat Id] int
+*
+
+% Product Platforms
+
+% Product Usage
+CREATE TABLE [Product Usage]
+(
+     [Usage Id]                        int IDENTITY PRIMARY KEY,
+     [Product Id]                      int,                   
+     [Platform]                        varchar(50),
+      LPar                             varchar(50),
+      Usage                            int,
+     [Usage From]                      datetime,
+     [Usage To]                        datetime
+)
+*
+
+% Product Vendors
+ALTER TABLE [Product Vendors]
+ADD [Product Vendor Id] int IDENTITY
+*
+
+% Purchase Orders
+
+% Schedule
+
+% Security
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Staff Details
+
+% System Parameters
+
+% Target Types
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+
+% Vendor Notes
+ALTER TABLE [Vendor Notes]
+    ADD [Note Type] int
+ALTER TABLE [Vendor Notes]
+    ADD [Note Cat Id] int
+*
+
+% Vendor Status
+
+% ---------- Views ----------
+
+% Performance Metrics
+
+% CalView
+
+% EQ Vendor Details
+IF EXISTS (SELECT TABLE_NAME
+           FROM INFORMATION_SCHEMA.VIEWS
+           WHERE TABLE_NAME = 'EQ Vendor Details')
+    DROP VIEW [EQ Vendor Details]
+*
+
+% ---------- Procedures ----------
+
+% SPF003
+DROP PROCEDURE SPF003
+*
+CREATE PROCEDURE [SPF003]
+    @p1 int
+    AS
+    SELECT [Vendor Details].[Vendor Id],
+           [Vendor Name], 
+           [Address Line 1],
+           [Address Line 2], 
+           [Address Line 3], 
+           [Address Line 4], 
+           [Address Line 5],
+           [Email]
+    FROM [Vendor Details]
+    JOIN [Acquisition Vendors] 
+    ON [Vendor Details].[Vendor Id] = [Acquisition Vendors].[Vendor Id] 
+    JOIN [Vendor Addresses]
+    ON [Vendor Details].[Primary Address Id] = [Vendor Addresses].[Address Id]
+    WHERE [Acquisition Id] = @p1
+*
+

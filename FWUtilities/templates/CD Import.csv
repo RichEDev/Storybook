@@ -1,0 +1,32 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+contract_details,subAccountId,Repository SubAccount,S,50,N,Y,F,accountsSubAccounts.subAccountId,accountsSubAccounts.Description,
+contract_details,contractDescription,Contract Description,S,250,Y,Y,N,,,
+contract_details,contractNumber,Contract Number,S,25,N,N,N,,,
+contract_details,Archived,Archived Y/N?,S,1,N,N,N,,,N
+contract_details,supplierId,Supplier Name,S,100,N,Y,Y,[supplier_details].[supplierId],[supplier_details].[supplierName],
+contract_details,scheduleNumber,Schedule Number,S,100,N,N,N,,,
+contract_details,supplierCode,Supplier Code,S,50,N,N,N,,,
+contract_details,categoryId,Contract Category,S,50,N,N,Y,[codes_contractcategory].[categoryId],[codes_contractcategory].[categoryDescription],
+contract_details,contractTypeId,Contract Type,S,50,N,N,Y,[codes_contracttype].[contractTypeId],[codes_contracttype].[contractTypeDescription],
+contract_details,termTypeId,Term Type,S,50,N,N,Y,[codes_termtype].[termTypeId],[codes_termtype].[termTypeDescription],
+contract_details,invoiceFrequencyTypeId,Invoice Frequency,S,50,N,N,Y,[codes_invoicefrequencytype].[invoiceFrequencyTypeId],[codes_invoicefrequencytype].[invoiceFrequencyTypeDesc],
+contract_details,startDate,Start Date,D,,N,N,N,,,
+contract_details,endDate,End Date,D,,N,N,N,,,
+contract_details,contractValue,Contract Value,F,,N,N,N,,,0
+contract_details,contractCurrency,Contract Currency,S,50,N,N,Y,[currencyview].[currencyId],[currencyview].[currencyName],
+contract_details,noticePeriod,Cancellation Period,N,,N,N,N,,,
+contract_details,cancellationDate,Cancellation Date,D,,N,N,N,,,
+contract_details,reviewPeriod,Review Period,N,,N,N,N,,,
+contract_details,reviewDate,Review Date,D,,N,N,N,,,
+contract_details,reviewComplete,Review Complete Date,D,,N,N,N,,,
+contract_details,forecastTypeId,Maint. Forecast Type,N,,N,N,S,%MaintForecastTypes%,,
+contract_details,maintenanceType,Maintenance Type,N,,N,N,S,%MaintTypes%,,
+contract_details,maintenanceInflatorX,Maintenance Inflator X,S,20,N,N,Y,[codes_inflatormetrics].[metricId],[codes_inflatormetrics].[Name],
+contract_details,maintenancePercentX,Maintenance Percent X,N,,N,N,N,,,0
+contract_details,maintenanceInflatorY,Maintenance Inflator Y,S,20,N,N,Y,[codes_inflatormetrics].[metricId],[codes_inflatormetrics].[Name],
+contract_details,maintenancePercentY,Maintenance Percent Y,N,,N,N,N,,,0
+contract_details,totalMaintenanceValue,Total Maintenance Value,F,,N,N,N,,,0
+contract_details,contractStatusId,Contract Status,S,30,N,N,Y,[codes_contractstatus].[statusId],[codes_contractstatus].[statusDescription],
+contract_details,annualContractValue,Annual Contract Value,F,,N,N,N,,,0
+contract_details,cancellationPenalty,Cancellation Penalty,X,,N,N,N,,,0
+contract_details,contractOwner,Contract Owner,S,50,N,N,Y,[employees].[employeeId],dbo.getEmployeeFullName(employeeid),

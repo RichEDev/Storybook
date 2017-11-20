@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="chkdisplayflagaddedResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkdisplayflagaddedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkdisplaylimitResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkdisplaylimitResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkduplicatesResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkduplicatesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkflagdateResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkflagdateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkincreaseothersResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkincreaseothersResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chklimitdatesResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chklimitdatesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkrejecttipResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkrejecttipResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkweekendResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkweekendResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbfrequencytypeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdcancelResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdcancelResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdokResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdokResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compdateResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a valid  date value</value>
+  </data>
+  <data name="compdateResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compdateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compfreqResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a valid frequency limit</value>
+  </data>
+  <data name="compfreqResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compfreqResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compolderResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a valid value for Num Months</value>
+  </data>
+  <data name="compolderResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compolderResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="comptiplimitResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a valid tip limit</value>
+  </data>
+  <data name="comptiplimitResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="comptiplimitResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imginitialdateResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imginitialdateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label1Resource1.Text" xml:space="preserve">
+    <value>Receipt Limits</value>
+  </data>
+  <data name="Label1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label2Resource1.Text" xml:space="preserve">
+    <value>Duplicates</value>
+  </data>
+  <data name="Label2Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label3Resource1.Text" xml:space="preserve">
+    <value>Address Mileage</value>
+  </data>
+  <data name="Label3Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label4Resource1.Text" xml:space="preserve">
+    <value>Dates</value>
+  </data>
+  <data name="Label4Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label5Resource1.Text" xml:space="preserve">
+    <value>Tips</value>
+  </data>
+  <data name="Label5Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label6Resource1.Text" xml:space="preserve">
+    <value>Claim Frequency</value>
+  </data>
+  <data name="Label6Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label7Resource1.Text" xml:space="preserve">
+    <value>Display a claimant's limit when they are adding an expense:</value>
+  </data>
+  <data name="Label7Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblclaimfrequencyResource1.Text" xml:space="preserve">
+    <value>Claimants are limited to 
+					submitting</value>
+  </data>
+  <data name="lblclaimfrequencyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblclaimlimitResource1.Text" xml:space="preserve">
+    <value>There is no limit to the amount of claims that can be submitted 
+					by a claimant:</value>
+  </data>
+  <data name="lblclaimlimitResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblclaimnumberResource1.Text" xml:space="preserve">
+    <value>Claimants are restricted to the number of claims they can 
+					submit:</value>
+  </data>
+  <data name="lblclaimnumberResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbldisplayflagResource1.Text" xml:space="preserve">
+    <value>Display flag information as soon as an expense has been added:</value>
+  </data>
+  <data name="lbldisplayflagResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblduplicatesResource1.Text" xml:space="preserve">
+    <value>Flag any expense items that appear to have been duplicated:</value>
+  </data>
+  <data name="lblduplicatesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblflagdateResource1.Text" xml:space="preserve">
+    <value>If an item is not for an acceptable date, reject the claim, do not just flag it:</value>
+  </data>
+  <data name="lblflagdateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblflagmsgResource1.Text" xml:space="preserve">
+    <value>When a claimant submits a claim, display the following message if an item is flagged:</value>
+  </data>
+  <data name="lblflagmsgResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblflagoptionsResource1.Text" xml:space="preserve">
+    <value>Flag Options</value>
+  </data>
+  <data name="lblflagoptionsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblincreaseothersResource1.Text" xml:space="preserve">
+    <value>If an expense item is treated as a meal, increase the limit by the Number of Others field, not just the Number of Employees field:</value>
+  </data>
+  <data name="lblincreaseothersResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblinitialdateResource1.Text" xml:space="preserve">
+    <value>Claimants cannot make a claim for an item before the following date:</value>
+  </data>
+  <data name="lblinitialdateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbllimitdatesResource1.Text" xml:space="preserve">
+    <value>The dates a claimant may enter an expense for will be limited:</value>
+  </data>
+  <data name="lbllimitdatesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbllimitflagResource1.Text" xml:space="preserve">
+    <value>If a limit without a receipt is exceeded, user should be notified but allowed to continue:</value>
+  </data>
+  <data name="lbllimitflagResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbllimitreceiptflagResource1.Text" xml:space="preserve">
+    <value>If a limit with a receipt is exceeded, user should be notified but allowed to continue:</value>
+  </data>
+  <data name="lbllimitreceiptflagResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbllimitreceiptstopResource1.Text" xml:space="preserve">
+    <value>If a limit with a receipt is exceeded, the claim is not allowed:</value>
+  </data>
+  <data name="lbllimitreceiptstopResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbllimitstopResource1.Text" xml:space="preserve">
+    <value>If a limit without a receipt is exceeded, the claim is not allowed:</value>
+  </data>
+  <data name="lbllimitstopResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmileageflagResource1.Text" xml:space="preserve">
+    <value>If a mileage claim exceeds the limit specified for an address, the user should be notified but allowed to continue:</value>
+  </data>
+  <data name="lblmileageflagResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmileagestopResource1.Text" xml:space="preserve">
+    <value>If a mileage claim exceeds the limit specified for an address, do not allow it:</value>
+  </data>
+  <data name="lblmileagestopResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmonthsResource1.Text" xml:space="preserve">
+    <value>An item cannot be added if it is older than:</value>
+  </data>
+  <data name="lblmonthsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblperResource1.Text" xml:space="preserve">
+    <value>per</value>
+  </data>
+  <data name="lblperResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblrejecttipResource1.Text" xml:space="preserve">
+    <value>If a tip exceeds its limit, reject the item do not just flag it:</value>
+  </data>
+  <data name="lblrejecttipResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbltiplimitResource1.Text" xml:space="preserve">
+    <value>Tips should be limited to:</value>
+  </data>
+  <data name="lbltiplimitResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblweekendResource1.Text" xml:space="preserve">
+    <value>Flag items incurred at the weekend:</value>
+  </data>
+  <data name="lblweekendResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optfrequencylimitResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optfrequencylimitResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optfrequencynolimitResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optfrequencynolimitResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optlimitflagResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optlimitflagResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optlimitreceiptflagResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optlimitreceiptflagResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optlimitreceiptstopResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optlimitreceiptstopResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optlimitstopResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optlimitstopResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optmileageflagResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optmileageflagResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optmileagestopResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optmileagestopResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtflagmessageResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtflagmessageResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtfrequencyvalueResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtfrequencyvalueResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtinitialdateResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtinitialdateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtlimitmonthsResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtlimitmonthsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txttiplimitResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txttiplimitResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ValidationSummary1Resource1.HeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ValidationSummary1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+</root>

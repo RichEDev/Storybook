@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="OrderedTest1" storage="c:\mapping\spend management\spend management_root\spendmanagementautomatedtests\admin\base information\cost codes\orderedtest1.orderedtest" id="633c6dfa-a6bb-4bd2-9d2d-e7168184bb60" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Execution timeOut="2147483647" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <TestLinks>
+    <TestLink id="4d2032c3-ead4-471b-a173-3d8b105c2154" name="AddCostCode" storage="addcostcode.webtest" type="Microsoft.VisualStudio.TestTools.WebStress.DeclarativeWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="f1a723a7-a79c-5da1-b794-63bc9f0ddc8e" name="EditCostCodeCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="30319be1-d5c9-d1f2-fc09-ec5490d33355" name="DeleteCostCodeCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="4d2032c3-ead4-471b-a173-3d8b105c2154" name="AddCostCode" storage="addcostcode.webtest" type="Microsoft.VisualStudio.TestTools.WebStress.DeclarativeWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="804f8bf0-0cf3-d73d-f07a-f63ed92c6f93" name="ArchiveCostCodeCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="f1a723a7-a79c-5da1-b794-63bc9f0ddc8e" name="EditCostCodeCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="d1aff272-a4f9-4abd-458d-f9fbd070bfef" name="UnArchiveCostCodeCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="804f8bf0-0cf3-d73d-f07a-f63ed92c6f93" name="ArchiveCostCodeCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="30319be1-d5c9-d1f2-fc09-ec5490d33355" name="DeleteCostCodeCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

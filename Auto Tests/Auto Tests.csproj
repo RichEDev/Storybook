@@ -1,0 +1,1113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5FC9BAA2-D766-4F01-8FEC-9F572F8094EC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Auto_Tests</RootNamespace>
+    <AssemblyName>Auto Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>True</IsCodedUITest>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU'">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Automated Build\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU'">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Automated Build\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+    <OutDir>$(TeamBuildOutDir)</OutDir>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' Or '$(VisualStudioVersion)' == '11.0'">
+      <ItemGroup>
+        <Reference Include="UIAutomationTypes" />
+      </ItemGroup>
+    </When>
+  </Choose>
+  <ItemGroup>
+    <Reference Include="Microsoft.TeamFoundation.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\References\Microsoft.TeamFoundation.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.WorkItemTracking.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\References\Microsoft.TeamFoundation.WorkItemTracking.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.ExecutionCommon, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension.CrossBrowser, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.XML" />
+    <!--<Reference Include="WebDriver">
+      <HintPath>..\packages\Selenium.WebDriver.2.33.0\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>..\packages\Selenium.Support.2.33.0\lib\net40\WebDriver.Support.dll</HintPath>
+    </Reference>-->
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="cGlobalVariables.cs" />
+    <!--<Compile Include="Coded UI Tests\Expenses\Add Expense\CodedUITest1.cs" />
+    <Compile Include="Coded UI Tests\Expenses\Add Expense\CodedUITest2.cs" />-->
+    <Compile Include="Coded UI Tests\Expenses\Administration\Employees\Access Roles\AccessRolesExpensesTests.cs" />
+    <Compile Include="Coded UI Tests\Expenses\Base Information\Cost Codes\CostCodes.cs" />
+    <Compile Include="Coded UI Tests\Expenses\Base Information\Cost Codes\CostCodesRepository.cs" />
+    <Compile Include="Coded UI Tests\Expenses\System Options\Attachment Types\AttachmentTypesMethods.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity Forms Client\CustomEntityFormsClientUITest.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Approval Matrices\ApprovalMatrices.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Approval Matrices\ApprovalMatricesRepository.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Approval Matrices\ApprovalMatricesUITests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Budget Holders\BudgetHolders.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Budget Holders\BudgetHoldersRepository.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Budget Holders\BudgetHoldersUITests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\ESRAssignments\ESRAssignments.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\ESRAssignments\ESRAssignmentsRepository.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\ESRAssignments\ESRAssignmentsUITest.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\Cars\Cars.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\Cars\CarsRepository.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\Cars\CarsUITests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Teams\Teams.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Teams\TeamsRepository.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Tailoring\User Defined Fields\UserDefinedFields.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Tailoring\User Defined Fields\UserDefinedFieldsRepository.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Tailoring\User Defined Fields\UserDefinedFieldsUITests.cs" />
+    <Compile Include="New Performance\EmployeesCaching\View Check and Pay Claims\ViewAllClaimsCoded.cs" />
+    <Compile Include="New Performance\EmployeesCaching\View Employee Records\ExpensesSelectEmployeesCoded.cs" />
+    <Compile Include="Product Variables\PageUrlSuffixes.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Access Roles\MyMobileDevicesAccessRoles\MyMobileDevicesAccessRoleMethods.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Access Roles\MyMobileDevicesAccessRoles\MyMobileDevicesAccessRoleUITest.cs" />
+    <Compile Include="Coded UI Tests\Expenses\Base Information\Addresses\AddressesTests.cs" />
+    <Compile Include="Coded UI Tests\Expenses\Base Information\Cost Codes\CostCodesUITests.cs" />
+    <Compile Include="Coded UI Tests\Expenses\Base Information\Project Codes\ExpensesProjectCodesTests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Imports Exports\NHSTrusts\NHSTrustsRepository.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Imports Exports\NHSTrusts\NHSTrustsUITests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Imports Exports\NHSTrusts\NHSTrusts.cs" />
+    <Compile Include="Coded UI Tests\Expenses\System Options\Attachment Types\AttachmentTypesUITests.cs" />
+    <Compile Include="Coded UI Tests\Expenses\Tailoring\General Options\GeneralOptionsTests.cs" />
+    <Compile Include="Coded UI Tests\Expenses\Tailoring\General Options\PasswordComplexityTests.cs" />
+    <Compile Include="Coded UI Tests\Expenses\Tailoring\User Defined Fields\UserDefinedFieldsTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Contract Configuration Options\Contract Categories\ContractCategoriesTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Contract Configuration Options\Contract Status\ContractStatusTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Contract Configuration Options\Contract Types\ContractTypesTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Contract Configuration Options\Inflator Metrics\InflatorMetricsTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Contract Configuration Options\Sales Tax\SalesTaxTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Contract Configuration Options\Term Types\TermTypesTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Generic Information\Addresses\AddressesTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Generic Information\Task Types\TaskTypesTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Invoice Information\Invoice Frequencies\InvoiceFrequenciesTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Invoice Information\Invoice Status\InvoiceStatusTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Product and Service Information\Licence Renewal Types\LicenceRenewalTypesTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Product and Service Information\Product Categories\ProductCategoriesTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Product and Service Information\Product Licence Types\ProductLicenceTypesTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Product and Service Information\Units\UnitsTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Relationship Information\Financial Status\FinancialStatusTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Relationship Information\Supplier Categories\SupplierCategoriesTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Base Information\Relationship Information\Supplier Status\SupplierStatusTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\My Details\MyDetailsTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Supplier Details\Supplier Contacts\SupplierContactsTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Supplier Details\SuppliersTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\System Options\Attachment Types\AttachmentTypesTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Tailoring\Countries\CountriesFrameworkTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Tailoring\General Options\GeneralOptionsTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Tailoring\User Defined Fields\UserDefinedEnums.cs" />
+    <Compile Include="Coded UI Tests\Framework\Tailoring\User Defined Fields\UserDefinedFieldsDAO.cs" />
+    <Compile Include="Coded UI Tests\Framework\Tailoring\User Defined Fields\UserDefinedFieldsDTO.cs" />
+    <Compile Include="Coded UI Tests\Framework\Tailoring\User Defined Fields\UserDefinedFieldsTests.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entities\CustomEntitiesUITests.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entities\CustomEntity.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entities\CustomEntityDAO.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entities\CustomEntityDatabaseAdapter.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entities\CustomEntityEnum.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity Attributes\AttributesDAO.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity Attributes\AttributesEnum.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity Attributes\CustomEntityListAttributesUITests.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity Attributes\CustomEntityAttributesUITests.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity Forms\FormGlobalProperties.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity Forms\FormsDAO.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity Forms\FormsEnum.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity Forms\CustomEntityFormsUITests.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity N to One Attributes\CustomEntityNtoOneAttributesUITests.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity One to N Attributes\CustomEntityOnetoNAttributesUITests.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity Views\CustomEntityViewsUITest.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity Views\ViewsDatabaseAdaptor.cs" />
+    <Compile Include="Coded UI Tests\GreenLight\Custom Entity Views\ViewsEnum.cs" />
+    <Compile Include="Product Variables\ModalMessages.cs" />
+    <Compile Include="Coded UI Tests\Smart diligence\Projects\ProjectDemo.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Access Roles\AccessRolesTests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\Cars\CarsTests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\Corporate Cards\CorporateCardsTests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\Employees.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\EmployeesRepository.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\EmployeesTests.Designer.cs">
+      <DependentUpon>EmployeesTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\EmployeesUITests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\Home Locations\HomeLocationTests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\MobileDevices\MobileDevicesUITests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\Pool Cars\PoolCarsUITests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\Work Locations\WorkLocationTests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Teams\TeamsUITests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Base Information\Countries\CountriesTests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Logon\LogonTests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\My Details\My Mobile Devices\MobileDevicesDAO.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\My Details\My Mobile Devices\MobileDevicesEnum.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\My Details\My Mobile Devices\MobileDevicesMethods.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\My Details\My Mobile Devices\MyMobileDevicesUITests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\My Details\MyDetailsTests.cs" />
+    <Compile Include="Coded UI Tests\Framework\Tailoring\General Options\PasswordComplexityTests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\System Options\IP Address Filtering\IPFiltersDAO.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\System Options\IP Address Filtering\IPFilterEnums.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\System Options\IP Address Filtering\IPFiltersDTO.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Tailoring\Colours\Colours.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Tailoring\Colours\ColoursUITests.cs" />
+    <Compile Include="Tools\CacheUtilities.cs" />
+    <Compile Include="Tools\cGridHelperFunctions.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\System Options\IP Address Filtering\IPAddressFilteringTests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Tailoring\Userdefined Groupings\UserDefinedGroupingsTests.cs" />
+    <Compile Include="Coded UI Tests\Spend Management\Employee Management\Employees\EmployeesTests.cs" />
+    <Compile Include="cDatabaseConnection.cs" />
+    <Compile Include="cPasswords.cs" />
+    <Compile Include="Performance Tests\General\Advances\ApproveAndPayAdvance.cs" />
+    <Compile Include="Performance Tests\General\Advances\RequestAdvance.cs" />
+    <Compile Include="Performance Tests\General\Logon\LogonTryAll.cs" />
+    <Compile Include="Performance Tests\My Details\Change My Details\UpdatingMyDetailsInvalid.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Employees\SearchingForAnEmployee.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Employees\SelectingAnEmployee.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Expense Items\DeleteEveryExpenseItem.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Signoff Groups\AddSignoffGroupAllStages.cs" />
+    <Compile Include="Performance Tests\Admin\Tailoring\Email Suffixes\AddEmailSuffix.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Signoff Groups\AddSignoffGroup.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Teams\AddTeam.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Budget Holders\AddBudgetHolders.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Audiences\AddAudience.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Audiences\EditAudience.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Item Roles\AddItemRole.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Access Roles\AddAccessRole.cs" />
+    <Compile Include="Performance Tests\General\Claims\AddMileageExpense.cs" />
+    <Compile Include="Performance Tests\General\Claims\AddEveryExpense.cs" />
+    <Compile Include="Performance Tests\General\Claims\AddStandardAllExpense.cs" />
+    <Compile Include="Performance Tests\General\Claims\AddStandardExpense.cs" />
+    <Compile Include="Performance Tests\General\Claims\AddDailyAllowanceExpense.cs" />
+    <Compile Include="Performance Tests\General\Claims\AddFixedAllowanceExpense.cs" />
+    <Compile Include="Performance Tests\General\Claims\AddMealSplitExpense.cs" />
+    <Compile Include="Performance Tests\General\Claims\AddMealExpense.cs" />
+    <Compile Include="Performance Tests\General\Claims\AddHotelExpense.cs" />
+    <Compile Include="Performance Tests\General\Claims\AddFirstClaim.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Expense Items\AddExpenseItemMileage.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Project Codes\AddProjectCode.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Expense Items\AddExpenseItemStandard.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\P11D Categories\AddP11DExpenseItem.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Project Codes\UnarchiveProjectCode.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Vehicle Journey Rate Categories\AddJourneyCatAll.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Vehicle Journey Rate Categories\DeleteJourneyCatAll.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Project Codes\EditProjectCode.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Project Codes\ArchiveProjectCode.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Project Codes\DeleteProjectCode.cs" />
+    <Compile Include="Performance Tests\Admin\Tailoring\User Defined Fields\EditUDF.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Access Roles\EditAccessRole.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Access Roles\DeleteAccessRole.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Budget Holders\EditBudgetHolders.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Budget Holders\DeleteBudgetHolders.cs" />
+    <Compile Include="Performance Tests\Self Registration\SelfRegistrationAll.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Audiences\DeleteAudience.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Teams\EditTeam.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Teams\DeleteTeam.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Signoff Groups\EditSignoffGroup.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Signoff Groups\DeleteSignoffGroup.cs" />
+    <Compile Include="Tools\cHtmlTextAreaWrapper.cs" />
+    <Compile Include="Tools\ExtensionMethods.cs" />
+    <Compile Include="Tools\ControlLocator.cs" />
+    <Compile Include="Tools\CustomEntitiesUtilities.cs" />
+    <Compile Include="Tools\CustomEntityCachePopulator.cs" />
+    <Compile Include="Tools\EnumDescription.cs" />
+    <Compile Include="Tools\Logon.cs" />
+    <Compile Include="Performance Tests\My Claimable Items\SelectSpecificItem.cs" />
+    <Compile Include="Performance Tests\My Claimable Items\SelectAutoMileageItem.cs" />
+    <Compile Include="Performance Tests\Admin\User Management\Employees\SelectJourneyRates.cs" />
+    <Compile Include="Performance Tests\Using User Defined Fields\Cost Codes\AddCostCodeWithUDFs.cs" />
+    <Compile Include="Performance Tests\Admin\Tailoring\User Defined Fields\AddUDF.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Locations\Recommended Distances\AddRecommendedDistanceShortest.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Locations\Recommended Distances\AddMultipleLocations.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Locations\Recommended Distances\AddRecommendedDistanceQuickest.cs" />
+    <Compile Include="Performance Tests\Admin\Tailoring\General Options\GeneralOptionsValidate.cs" />
+    <Compile Include="Performance Tests\Admin\Tailoring\General Options\GeneralOptionsChangeRbtn.cs" />
+    <Compile Include="Performance Tests\Admin\Tailoring\General Options\GeneralOptionsChangeTxt.cs" />
+    <Compile Include="Performance Tests\Admin\Tailoring\General Options\GeneralOptionsChangeList.cs" />
+    <Compile Include="Performance Tests\Admin\Tailoring\General Options\GeneralOptionsUnselectChk.cs" />
+    <Compile Include="Performance Tests\Admin\Tailoring\General Options\GeneralOptionsSelectChk.cs" />
+    <Compile Include="Performance Tests\Admin\Tailoring\General Options\GeneralOptionsUpdateAll.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Locations\Recommended Distances\DeleteMultipleLocations.cs" />
+    <Compile Include="Performance Tests\Using User Defined Fields\Cost Codes\EditCostCodeWithUDF.cs" />
+    <Compile Include="Performance Tests\Using User Defined Fields\Departments\AddDepartmentWithUDF.cs" />
+    <Compile Include="Performance Tests\Using User Defined Fields\Departments\EditDepartmentWithUDF.cs" />
+    <Compile Include="Performance Tests\Using User Defined Fields\InsertUDFvalues.cs" />
+    <Compile Include="Performance Tests\Admin\Tailoring\User Defined Fields\DeleteUDF.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Locations\Recommended Distances\CheckRecommendedDistance.cs" />
+    <Compile Include="Performance Tests\General\Claims\DeleteClaim.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Pool Cars\AddPoolCar.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Pool Cars\EditPoolCar.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Pool Cars\DeletePoolCar.cs" />
+    <Compile Include="Tools\MoveFiles.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Reasons\AddReason.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Countries\AddCountry.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Currencies\AddCurrency.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\P11D Categories\AddP11DCategory.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Locations\AddLocation.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Expense Categories\AddExpenseCategory.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Departments\AddDepartment.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Cost Codes\AddCostCode.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Allowances\AddAllowance.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Allowances\DeleteAllowance.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Allowances\EditAllowance.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Allowances\EditAllowanceRate.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Cost Codes\ArchiveCostCode.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Cost Codes\DeleteCostCode.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Cost Codes\EditCostCode.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Cost Codes\UnArchiveCostCode.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Departments\ArchiveDepartment.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Departments\DeleteDepartment.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Departments\EditDepartment.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Departments\UnArchiveDepartment.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Expense Categories\DeleteExpenseCategory.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Expense Categories\EditExpenseCategory.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Locations\ArchiveLocation.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Locations\DeleteLocation.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Locations\EditLocation.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Locations\UnArchiveLocation.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\P11D Categories\EditP11DCategory.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\P11D Categories\DeleteP11DCategory.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Currencies\ArchiveCurrency.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Currencies\DeleteCurrency.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Countries\EditCountry.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Countries\ArchiveCountry.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Countries\DeleteCountry.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Reasons\EditReason.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Reasons\DeleteReason.cs" />
+    <Compile Include="Tools\AutoTools.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Currencies\EditCurrency.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Currencies\UnArchiveCurrency.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Countries\UnArchiveCountry.cs" />
+    <Compile Include="Performance Tests\Admin\Tailoring\General Options\GeneralOptionsEdit.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Vehicle Journey Rate Categories\AddJourneyCatStandard.cs" />
+    <Compile Include="Performance Tests\Using User Defined Fields\Project Codes\AddProjectCodeWithUDF.cs" />
+    <Compile Include="Performance Tests\Using User Defined Fields\Project Codes\EditProjectCodeWithUDF.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Expense Items\AddEveryItem.cs" />
+    <Compile Include="Performance Tests\Admin\Base Information\Vehicle Journey Rate Categories\UseEveryJourneyCat.cs" />
+    <Compile Include="Performance Tests\My Details\Change My Details\UpdatingMyDetails.cs" />
+    <Compile Include="Tools\ValidationAsterisk.cs" />
+    <Compile Include="UI Maps\AccessRolesUIMap.cs">
+      <DependentUpon>AccessRolesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\AccessRolesUIMap.Designer.cs">
+      <DependentUpon>AccessRolesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\AddressesUIMap.cs">
+      <DependentUpon>AddressesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\AddressesUIMap.Designer.cs">
+      <DependentUpon>AddressesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ApprovalMatricesUIMap.cs">
+      <DependentUpon>ApprovalMatricesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ApprovalMatricesUIMap.Designer.cs">
+      <DependentUpon>ApprovalMatricesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\BudgetHoldersUIMap.cs">
+      <DependentUpon>BudgetHoldersUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\BudgetHoldersUIMap.Designer.cs">
+      <DependentUpon>BudgetHoldersUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ESRAssignmentsUIMap.cs">
+      <DependentUpon>ESRAssignmentsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ESRAssignmentsUIMap.Designer.cs">
+      <DependentUpon>ESRAssignmentsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\AttachmentTypesUIMap.cs">
+      <DependentUpon>AttachmentTypesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\AttachmentTypesUIMap.Designer.cs">
+      <DependentUpon>AttachmentTypesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CarsNewUIMap.cs">
+      <DependentUpon>CarsNewUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CarsNewUIMap.Designer.cs">
+      <DependentUpon>CarsNewUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CarsUIMap.cs">
+      <DependentUpon>CarsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CarsUIMap.Designer.cs">
+      <DependentUpon>CarsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ColoursUIMap.cs">
+      <DependentUpon>ColoursUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ColoursUIMap.Designer.cs">
+      <DependentUpon>ColoursUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ContractCategoriesUIMap.cs">
+      <DependentUpon>ContractCategoriesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ContractCategoriesUIMap.Designer.cs">
+      <DependentUpon>ContractCategoriesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ContractStatusUIMap.cs">
+      <DependentUpon>ContractStatusUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ContractStatusUIMap.Designer.cs">
+      <DependentUpon>ContractStatusUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ContractTypesUIMap.cs">
+      <DependentUpon>ContractTypesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ContractTypesUIMap.Designer.cs">
+      <DependentUpon>ContractTypesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CorporateCardsUIMap.cs">
+      <DependentUpon>CorporateCardsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CorporateCardsUIMap.Designer.cs">
+      <DependentUpon>CorporateCardsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CostCodesUIMap.cs">
+      <DependentUpon>CostCodesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CostCodesUIMap.Designer.cs">
+      <DependentUpon>CostCodesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CountriesUIMap.cs">
+      <DependentUpon>CountriesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CountriesUIMap.Designer.cs">
+      <DependentUpon>CountriesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntitiesUIMap.cs">
+      <DependentUpon>CustomEntitiesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntitiesUIMap.Designer.cs">
+      <DependentUpon>CustomEntitiesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityAttributesUIMap.cs">
+      <DependentUpon>CustomEntityAttributesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityAttributesUIMap.Designer.cs">
+      <DependentUpon>CustomEntityAttributesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityFormsClientUIMap.cs">
+      <DependentUpon>CustomEntityFormsClientUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityFormsClientUIMap.Designer.cs">
+      <DependentUpon>CustomEntityFormsClientUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityFormsUIMap.cs">
+      <DependentUpon>CustomEntityFormsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityFormsUIMap.Designer.cs">
+      <DependentUpon>CustomEntityFormsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityNtoOneAttributesUIMap.cs">
+      <DependentUpon>CustomEntityNtoOneAttributesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityNtoOneAttributesUIMap.Designer.cs">
+      <DependentUpon>CustomEntityNtoOneAttributesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityOneToNAttributesUIMap.cs">
+      <DependentUpon>CustomEntityOneToNAttributesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityOneToNAttributesUIMap.Designer.cs">
+      <DependentUpon>CustomEntityOneToNAttributesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityViewsUIMap.cs">
+      <DependentUpon>CustomEntityViewsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityViewsUIMap.Designer.cs">
+      <DependentUpon>CustomEntityViewsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\EmployeeHomeLocationsUIMap.cs">
+      <DependentUpon>EmployeeHomeLocationsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\EmployeeHomeLocationsUIMap.Designer.cs">
+      <DependentUpon>EmployeeHomeLocationsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\EmployeesNewUIMap.cs">
+      <DependentUpon>EmployeesNewUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\EmployeesNewUIMap.Designer.cs">
+      <DependentUpon>EmployeesNewUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\EmployeesUIMap.cs">
+      <DependentUpon>EmployeesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\EmployeesUIMap.Designer.cs">
+      <DependentUpon>EmployeesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\EmployeeWorkLocations.cs">
+      <DependentUpon>EmployeeWorkLocations.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\EmployeeWorkLocations.Designer.cs">
+      <DependentUpon>EmployeeWorkLocations.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\FinancialStatusUIMap.cs">
+      <DependentUpon>FinancialStatusUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\FinancialStatusUIMap.Designer.cs">
+      <DependentUpon>FinancialStatusUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\GeneralOptionsUIMap.cs">
+      <DependentUpon>GeneralOptionsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\GeneralOptionsUIMap.Designer.cs">
+      <DependentUpon>GeneralOptionsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\IPAddressFilteringUIMap.cs">
+      <DependentUpon>IPAddressFilteringUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\IPAddressFilteringUIMap.Designer.cs">
+      <DependentUpon>IPAddressFilteringUIMap.uitest</DependentUpon>
+    </Compile>
+    <!--<Compile Include="UI Maps\LogonNewUIMap.cs">
+      <DependentUpon>LogonNewUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\LogonNewUIMap.Designer.cs">
+      <DependentUpon>LogonNewUIMap.uitest</DependentUpon>
+    </Compile>-->
+    <Compile Include="UI Maps\LogonUIMap.cs">
+      <DependentUpon>LogonUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\LogonUIMap.Designer.cs">
+      <DependentUpon>LogonUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\MobileDevicesEmployeesPageUIMap.cs">
+      <DependentUpon>MobileDevicesEmployeesPageUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\MobileDevicesEmployeesPageUIMap.Designer.cs">
+      <DependentUpon>MobileDevicesEmployeesPageUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\MyDetailsUIMap.cs">
+      <DependentUpon>MyDetailsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\MyDetailsUIMap.Designer.cs">
+      <DependentUpon>MyDetailsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\MyMobileDevicesAccessRoleUIMap.cs">
+      <DependentUpon>MyMobileDevicesAccessRoleUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\MyMobileDevicesAccessRoleUIMap.Designer.cs">
+      <DependentUpon>MyMobileDevicesAccessRoleUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\MyMobileDevicesUIMap.cs">
+      <DependentUpon>MyMobileDevicesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\MyMobileDevicesUIMap.Designer.cs">
+      <DependentUpon>MyMobileDevicesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\NHSTrustsUIMap.cs">
+      <DependentUpon>NHSTrustsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\NHSTrustsUIMap.Designer.cs">
+      <DependentUpon>NHSTrustsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\PasswordComplexityUIMap.cs">
+      <DependentUpon>PasswordComplexityUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\PasswordComplexityUIMap.Designer.cs">
+      <DependentUpon>PasswordComplexityUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\InflatorMetricsUIMap.cs">
+      <DependentUpon>InflatorMetricsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\InflatorMetricsUIMap.Designer.cs">
+      <DependentUpon>InflatorMetricsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\InvoiceFrequenciesUIMap.cs">
+      <DependentUpon>InvoiceFrequenciesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\InvoiceFrequenciesUIMap.Designer.cs">
+      <DependentUpon>InvoiceFrequenciesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\InvoiceStatusUIMap.cs">
+      <DependentUpon>InvoiceStatusUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\InvoiceStatusUIMap.Designer.cs">
+      <DependentUpon>InvoiceStatusUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\LicenceRenewalTypeUIMap.cs">
+      <DependentUpon>LicenceRenewalTypeUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\LicenceRenewalTypeUIMap.Designer.cs">
+      <DependentUpon>LicenceRenewalTypeUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\PoolCarsUIMap.cs">
+      <DependentUpon>PoolCarsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\PoolCarsUIMap.Designer.cs">
+      <DependentUpon>PoolCarsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ProductCategoriesUIMap.cs">
+      <DependentUpon>ProductCategoriesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ProductCategoriesUIMap.Designer.cs">
+      <DependentUpon>ProductCategoriesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ProductLicenceTypesUIMap.cs">
+      <DependentUpon>ProductLicenceTypesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ProductLicenceTypesUIMap.Designer.cs">
+      <DependentUpon>ProductLicenceTypesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ProjectDemoUIMap.cs">
+      <DependentUpon>ProjectDemoUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ProjectDemoUIMap.Designer.cs">
+      <DependentUpon>ProjectDemoUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\SalesTaxUIMap.cs">
+      <DependentUpon>SalesTaxUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\SalesTaxUIMap.Designer.cs">
+      <DependentUpon>SalesTaxUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\SharedMethodsUIMap.cs">
+      <DependentUpon>SharedMethodsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\SharedMethodsUIMap.Designer.cs">
+      <DependentUpon>SharedMethodsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ProjectCodesUIMap.cs">
+      <DependentUpon>ProjectCodesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\ProjectCodesUIMap.Designer.cs">
+      <DependentUpon>ProjectCodesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\SupplierCategoriesUIMap.cs">
+      <DependentUpon>SupplierCategoriesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\SupplierCategoriesUIMap.Designer.cs">
+      <DependentUpon>SupplierCategoriesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\SupplierStatusUIMap.cs">
+      <DependentUpon>SupplierStatusUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\SupplierStatusUIMap.Designer.cs">
+      <DependentUpon>SupplierStatusUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\SuppliersUIMap.cs">
+      <DependentUpon>SuppliersUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\SuppliersUIMap.Designer.cs">
+      <DependentUpon>SuppliersUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\TaskTypesUIMap.cs">
+      <DependentUpon>TaskTypesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\TaskTypesUIMap.Designer.cs">
+      <DependentUpon>TaskTypesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\TeamsUIMap.cs">
+      <DependentUpon>TeamsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\TeamsUIMap.Designer.cs">
+      <DependentUpon>TeamsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\TermTypesUIMap.cs">
+      <DependentUpon>TermTypesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\TermTypesUIMap.Designer.cs">
+      <DependentUpon>TermTypesUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityFormsNewUIMap.cs">
+      <DependentUpon>CustomEntityFormsNewUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\CustomEntityFormsNewUIMap.Designer.cs">
+      <DependentUpon>CustomEntityFormsNewUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\UnitsUIMap.cs">
+      <DependentUpon>UnitsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\UnitsUIMap.Designer.cs">
+      <DependentUpon>UnitsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\UserDefinedFieldsNewUIMap.cs">
+      <DependentUpon>UserDefinedFieldsNewUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\UserDefinedFieldsNewUIMap.Designer.cs">
+      <DependentUpon>UserDefinedFieldsNewUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\UserDefinedFieldsUIMap.cs">
+      <DependentUpon>UserDefinedFieldsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\UserDefinedFieldsUIMap.Designer.cs">
+      <DependentUpon>UserDefinedFieldsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\UserDefinedGroupingsUIMap.cs">
+      <DependentUpon>UserDefinedGroupingsUIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UI Maps\UserDefinedGroupingsUIMap.Designer.cs">
+      <DependentUpon>UserDefinedGroupingsUIMap.uitest</DependentUpon>
+    </Compile>
+    <!--<Compile Include="UIMap.cs">
+      <DependentUpon>UIMap.uitest</DependentUpon>
+    </Compile>
+    <Compile Include="UIMap.Designer.cs">
+      <DependentUpon>UIMap.uitest</DependentUpon>
+    </Compile>-->
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Coded UI Tests\Expenses\Base Information\Addresses\ExpensesAddressesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Expenses\Base Information\Cost Codes\ExpensesCostCodesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Expenses\Base Information\Project Codes\ExpensesProjectCodesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Imports Exports\NHSTrusts\NHSTrustDetailsordered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Expenses\Tailoring\General Options\ExpensesGeneralOptionsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Expenses\Tailoring\General Options\ExpensesPasswordComplexityOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Expenses\Tailoring\User Defined Fields\ExpensesUDFOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Contract Configuration Options\Contract Categories\ContractCategoriesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Contract Configuration Options\Contract Status\ContractStatusOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Contract Configuration Options\Contract Types\ContractTypesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Contract Configuration Options\Inflator Metrics\InflatorMetricsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Contract Configuration Options\Sales Tax\SalesTaxOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Contract Configuration Options\Term Types\TermTypesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Generic Information\Addresses\AddressesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Generic Information\Task Types\TaskTypesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Invoice Information\Invoice Frequencies\InvoiceFrequenciesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Invoice Information\Invoice Status\InvoiceStatusOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Product and Service Information\Licence Renewal Types\LicenceRenewalTypesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Product and Service Information\Product Categories\ProductCategoriesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Product and Service Information\Product Licence Types\ProductLicenceTypesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Product and Service Information\Units\UnitsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Relationship Information\Financial Status\FinancialStatusOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Relationship Information\Supplier Categories\SupplierCategoriesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Base Information\Relationship Information\Supplier Status\SupplierStatusOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\My Details\FrameworkMyDetailsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Supplier Details\Supplier Contacts\SupplierContactsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Supplier Details\SuppliersOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\System Options\Attachment Types\AttachmentTypesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\System Options\Attachment Types\CustomAttachmentTypesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Tailoring\Countries\FrameworkCountriesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Tailoring\General Options\FWGeneralOptionsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Tailoring\General Options\FWPasswordComplexityOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Framework\Tailoring\User Defined Fields\FWUserDefinedFieldsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\GreenLight\Custom Entities\CustomEntitiesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\GreenLight\Custom Entity Attributes\CustomEntityAttributesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\GreenLight\Custom Entity Forms\CustomEntityFormsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\GreenLight\Custom Entity N to One Attributes\CustomEntityNtoOneAttributesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\GreenLight\Custom Entity One to N Attributes\CustomEntityOneToNAttributesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\GreenLight\Custom Entity Views\CustomEntityViewsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Employee Management\Access Roles\AccessRolesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Employee Management\Employees\Cars\CarsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Employee Management\Employees\Corporate Cards\CorporateCardsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Employee Management\Employees\EmployeesTests.uitest" />
+    <None Include="Coded UI Tests\Spend Management\Employee Management\Employees\Home Locations\HomeLocationOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Employee Management\Employees\EmployeesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Employee Management\Employees\Pool Cars\PoolCarsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Employee Management\Employees\Work Locations\WorkLocationOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Employee Management\Teams\TeamsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Base Information\Countries\CountriesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Logon\LogonOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\My Details\MyDetailsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\System Options\IP Address Filtering\IPAddressFilteringOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Tailoring\Colours\ColoursOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Coded UI Tests\Spend Management\Tailoring\Userdefined Groupings\UserDefinedGroupingsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="New Performance\EmployeesCaching\Logon to Expenses\EmployeeLogonLoadTest.loadtest" />
+    <None Include="New Performance\EmployeesCaching\Logon to Expenses\ExpensesLogon.webtest" />
+    <None Include="New Performance\EmployeesCaching\View Check and Pay Claims\EmployeesViewClaimLoadTest.loadtest" />
+    <None Include="New Performance\EmployeesCaching\View Employee Records\EmployeeSelectLoadTest.loadtest" />
+    <None Include="NightlyBuild.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <!--<None Include="packages.config" />-->
+    <None Include="Performance Tests\Admin\Base Information\Expense Items\AddExpenseItemMeal.webtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Performance Tests\Employee Caching\EmployeeLogin.webtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Performance Tests\Reports\AddReport.webtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="UI Maps\AccessRolesUIMap.uitest" />
+    <None Include="UI Maps\AddressesUIMap.uitest" />
+    <None Include="UI Maps\ApprovalMatricesUIMap.uitest" />
+    <None Include="UI Maps\BudgetHoldersUIMap.uitest" />
+    <None Include="UI Maps\ESRAssignmentsUIMap.uitest" />
+    <None Include="UI Maps\AttachmentTypesUIMap.uitest" />
+    <None Include="UI Maps\CarsNewUIMap.uitest" />
+    <None Include="UI Maps\CarsUIMap.uitest" />
+    <None Include="UI Maps\ColoursUIMap.uitest" />
+    <None Include="UI Maps\ContractCategoriesUIMap.uitest" />
+    <None Include="UI Maps\ContractStatusUIMap.uitest" />
+    <None Include="UI Maps\ContractTypesUIMap.uitest" />
+    <None Include="UI Maps\CorporateCardsUIMap.uitest" />
+    <None Include="UI Maps\CostCodesUIMap.uitest" />
+    <None Include="UI Maps\CountriesUIMap.uitest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="UI Maps\CustomEntitiesUIMap.uitest" />
+    <None Include="UI Maps\CustomEntityAttributesUIMap.uitest" />
+    <None Include="UI Maps\CustomEntityFormsClientUIMap.uitest" />
+    <None Include="UI Maps\CustomEntityFormsUIMap.uitest" />
+    <None Include="UI Maps\CustomEntityNtoOneAttributesUIMap.uitest" />
+    <None Include="UI Maps\CustomEntityOneToNAttributesUIMap.uitest" />
+    <None Include="UI Maps\CustomEntityViewsUIMap.uitest" />
+    <None Include="UI Maps\EmployeeHomeLocationsUIMap.uitest" />
+    <None Include="UI Maps\EmployeesNewUIMap.uitest" />
+    <None Include="UI Maps\EmployeesUIMap.uitest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="UI Maps\EmployeeWorkLocations.uitest" />
+    <None Include="UI Maps\FinancialStatusUIMap.uitest" />
+    <None Include="UI Maps\GeneralOptionsUIMap.uitest" />
+    <None Include="UI Maps\IPAddressFilteringUIMap.uitest" />
+    <!--<None Include="UI Maps\LogonNewUIMap.uitest" />-->
+    <None Include="UI Maps\LogonUIMap.uitest" />
+    <None Include="UI Maps\MobileDevicesEmployeesPageUIMap.uitest" />
+    <None Include="UI Maps\MyDetailsUIMap.uitest" />
+    <None Include="UI Maps\MyMobileDevicesAccessRoleUIMap.uitest" />
+    <None Include="UI Maps\MyMobileDevicesUIMap.uitest" />
+    <None Include="UI Maps\NHSTrustsUIMap.uitest" />
+    <None Include="UI Maps\PasswordComplexityUIMap.uitest" />
+    <None Include="UI Maps\InflatorMetricsUIMap.uitest" />
+    <None Include="UI Maps\InvoiceFrequenciesUIMap.uitest" />
+    <None Include="UI Maps\InvoiceStatusUIMap.uitest" />
+    <None Include="UI Maps\LicenceRenewalTypeUIMap.uitest" />
+    <None Include="UI Maps\PoolCarsUIMap.uitest" />
+    <None Include="UI Maps\ProductCategoriesUIMap.uitest" />
+    <None Include="UI Maps\ProductLicenceTypesUIMap.uitest" />
+    <None Include="UI Maps\ProjectDemoUIMap.uitest" />
+    <None Include="UI Maps\SalesTaxUIMap.uitest" />
+    <None Include="UI Maps\SharedMethodsUIMap.uitest" />
+    <None Include="UI Maps\ProjectCodesUIMap.uitest" />
+    <None Include="UI Maps\SupplierCategoriesUIMap.uitest" />
+    <None Include="UI Maps\SupplierStatusUIMap.uitest" />
+    <None Include="UI Maps\SuppliersUIMap.uitest" />
+    <None Include="UI Maps\TaskTypesUIMap.uitest" />
+    <None Include="UI Maps\TeamsUIMap.uitest" />
+    <None Include="UI Maps\TermTypesUIMap.uitest" />
+    <None Include="UI Maps\CustomEntityFormsNewUIMap.uitest" />
+    <None Include="UI Maps\UnitsUIMap.uitest" />
+    <None Include="UI Maps\UserDefinedFieldsNewUIMap.uitest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="UI Maps\UserDefinedFieldsUIMap.uitest" />
+    <None Include="UI Maps\UserDefinedGroupingsUIMap.uitest" />
+    <!--<None Include="UIMap.uitest" />-->
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Coded UI Tests\Expenses\Logon\" />
+    <Folder Include="Coded UI Tests\Expenses\My Details\" />
+    <Folder Include="Coded UI Tests\Spend Management\Tailoring\General Options\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\Allowances\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\Cost Codes\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\Countries\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\Currencies\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\Departments\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\Expense Categories\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\Expense Items\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\Locations\Recommended Distances\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\P11D Categories\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\Pool Cars\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\Project Codes\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\Reasons\" />
+    <Folder Include="Performance Tests\Admin\Admin\Base Information\Vehicle Journey Rate Categories\" />
+    <Folder Include="Performance Tests\Admin\Admin\Tailoring\Email Suffixes\" />
+    <Folder Include="Performance Tests\Admin\Admin\Tailoring\General Options\" />
+    <Folder Include="Performance Tests\Admin\Admin\Tailoring\User Defined Fields\" />
+    <Folder Include="Performance Tests\Admin\Admin\User Management\Access Roles\" />
+    <Folder Include="Performance Tests\Admin\Admin\User Management\Audiences\" />
+    <Folder Include="Performance Tests\Admin\Admin\User Management\Budget Holders\" />
+    <Folder Include="Performance Tests\Admin\Admin\User Management\Employees\" />
+    <Folder Include="Performance Tests\Admin\Admin\User Management\Item Roles\" />
+    <Folder Include="Performance Tests\Admin\Admin\User Management\Signoff Groups\" />
+    <Folder Include="Performance Tests\Admin\Admin\User Management\Teams\" />
+    <Folder Include="Performance Tests\My Details\Add Car\" />
+    <Folder Include="Performance Tests\My Details\Delegates\" />
+    <Folder Include="Performance Tests\My Details\My Tasks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="MSHTML">
+      <Guid>{3050F1C5-98B5-11CF-BB82-00AA00BDCE0B}</Guid>
+      <VersionMajor>4</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Spend Management\Spend Management.csproj">
+      <Project>{1cbfd8ec-f67c-4425-a10c-97bfc7501045}</Project>
+      <Name>Spend Management</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementLibrary\SpendManagementLibrary.csproj">
+      <Project>{9bdaa543-ac54-47a1-8bdd-c7bf34f2f005}</Project>
+      <Name>SpendManagementLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{c417335b-7be1-45ae-8274-c0b65829c4fc}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension.Firefox, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension.Silverlight, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,858 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="chkallowanceResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkallowanceResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkallowancesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkattendeesmandResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkattendeesmandResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkattendeesResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkattendeesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkblitresResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkblitresResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkbmilesResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkbmilesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkentertainmentResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkentertainmentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkeventinhomeResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkeventinhomeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkhotelmandResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkhotelmandResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkhotelResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkhotelResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkmileageResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkmileageResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chknodirectorsResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chknodirectorsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chknonightsResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chknonightsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chknopassengersResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chknopassengersResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chknormalreceiptResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chknormalreceiptResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chknoroomsResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chknoroomsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkotherdetailsResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkotherdetailsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkothersResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkothersResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkpassengerResource1.Text" xml:space="preserve">
+    <value>Show number of passengers</value>
+  </data>
+  <data name="chkpassengernamesResource1.Text" xml:space="preserve">
+    <value>Show names of passengers</value>
+  </data>
+  <data name="chkpassengerResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkpersonalguestsResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkpersonalguestsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkplitresResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkplitresResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkpmilesResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkpmilesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkreasonResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkreasonResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkreimbursableResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkreimbursableResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkremoteworkersResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkremoteworkersResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chksplitpersonalResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chksplitpersonalResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chksplitremoteworkersResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chksplitremoteworkersResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkstaffResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkstaffResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chktipResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chktipResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkuserdefinedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkvatappResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkvatappResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkvatnumbermandResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkvatnumbermandResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkvatnumberResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkvatnumberResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkvatreceiptResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkvatreceiptResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbcategoriesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbentertainmentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbpdcatsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbsplitpersonalResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbsplitremoteResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbtotaltypeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdokResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdokResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compallowanceamountResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a valid value for Allowance amount</value>
+  </data>
+  <data name="compallowanceamountResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compallowanceamountResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compmasterResource1.ErrorMessage" xml:space="preserve">
+    <value>Please select a Master Category</value>
+  </data>
+  <data name="compmasterResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compmasterResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compvatamountResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a valid value for VAT Amount</value>
+  </data>
+  <data name="compvatamountResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compvatamountResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compvatlimitwithoutResource1.ErrorMessage" xml:space="preserve">
+    <value>The Vat Limit (With Receipt) you have entered is invalid</value>
+  </data>
+  <data name="compvatlimitwithoutResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compvatlimitwithoutResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compvatlimitwithResource1.ErrorMessage" xml:space="preserve">
+    <value>The Vat Limit (With Receipt) you have entered is invalid</value>
+  </data>
+  <data name="compvatlimitwithResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compvatlimitwithResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compvatpercentResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a valid value for VAT Percent Claimable</value>
+  </data>
+  <data name="compvatpercentResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compvatpercentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label10Resource1.Text" xml:space="preserve">
+    <value>User Defined Fields</value>
+  </data>
+  <data name="Label10Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label11Resource1.Text" xml:space="preserve">
+    <value>Display the following User Defined Fields when entering this expense</value>
+  </data>
+  <data name="Label11Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label12Resource1.Text" xml:space="preserve">
+    <value>Allowed Roles</value>
+  </data>
+  <data name="Label12Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label1Resource1.Text" xml:space="preserve">
+    <value>Is Attendees List Mandatory?</value>
+  </data>
+  <data name="Label1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label2Resource1.Text" xml:space="preserve">
+    <value>General Details</value>
+  </data>
+  <data name="Label2Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label3Resource1.Text" xml:space="preserve">
+    <value>Account Codes</value>
+  </data>
+  <data name="Label3Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label4Resource1.Text" xml:space="preserve">
+    <value>Split Expense Items </value>
+  </data>
+  <data name="Label4Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label5Resource1.Text" xml:space="preserve">
+    <value>Label</value>
+  </data>
+  <data name="Label5Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label6Resource1.Text" xml:space="preserve">
+    <value>VAT Details</value>
+  </data>
+  <data name="Label6Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label7Resource1.Text" xml:space="preserve">
+    <value>Calculations</value>
+  </data>
+  <data name="Label7Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label8Resource1.Text" xml:space="preserve">
+    <value>Other Calculations</value>
+  </data>
+  <data name="Label8Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label9Resource1.Text" xml:space="preserve">
+    <value>Extra Fields</value>
+  </data>
+  <data name="Label9Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblaccountcodeResource1.Text" xml:space="preserve">
+    <value>Account Code:</value>
+  </data>
+  <data name="lblaccountcodeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblallowanceamountResource1.Text" xml:space="preserve">
+    <value>Allowance amount:</value>
+  </data>
+  <data name="lblallowanceamountResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblallowanceResource1.Text" xml:space="preserve">
+    <value>This expense is an allowance:</value>
+  </data>
+  <data name="lblallowanceResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblalternateaccountcodeResource1.Text" xml:space="preserve">
+    <value>Alternate Account Code:</value>
+  </data>
+  <data name="lblalternateaccountcodeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblattendeesResource1.Text" xml:space="preserve">
+    <value>Show Attendees List:</value>
+  </data>
+  <data name="lblattendeesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblblitresResource1.Text" xml:space="preserve">
+    <value>Show Business Fuel (litres):</value>
+  </data>
+  <data name="lblblitresResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblbmilesResource1.Text" xml:space="preserve">
+    <value>Show Business Miles:</value>
+  </data>
+  <data name="lblbmilesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblcategoryResource1.Text" xml:space="preserve">
+    <value>Expense Category:</value>
+  </data>
+  <data name="lblcategoryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblcommentResource1.Text" xml:space="preserve">
+    <value>Comment:</value>
+  </data>
+  <data name="lblcommentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbldailyallowanceResource1.Text" xml:space="preserve">
+    <value>Expense is a Daily Allowance</value>
+  </data>
+  <data name="lbldailyallowanceResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbldescriptionResource1.Text" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="lbldescriptionResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbleventinhomeResource1.Text" xml:space="preserve">
+    <value>Show event in home city:</value>
+  </data>
+  <data name="lbleventinhomeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblhotelmandResource1.Text" xml:space="preserve">
+    <value>Is the Hotel Name mandatory?</value>
+  </data>
+  <data name="lblhotelmandResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblhotelResource1.Text" xml:space="preserve">
+    <value>Show Hotel Name/Rating:</value>
+  </data>
+  <data name="lblhotelResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblitemResource1.Text" xml:space="preserve">
+    <value>Expense Item:</value>
+  </data>
+  <data name="lblitemResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmealResource1.Text" xml:space="preserve">
+    <value>Treat Expense as a Meal</value>
+  </data>
+  <data name="lblmealResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmileageResource1.Text" xml:space="preserve">
+    <value>Show Mileage:</value>
+  </data>
+  <data name="lblmileageResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmsgResource1.Text" xml:space="preserve">
+    <value>Label</value>
+  </data>
+  <data name="lblmsgResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblnodirectorsResource1.Text" xml:space="preserve">
+    <value>Show No Directors:</value>
+  </data>
+  <data name="lblnodirectorsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblnoneResource1.Text" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="lblnoneResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblnonightsResource1.Text" xml:space="preserve">
+    <value>Show No Nights:</value>
+  </data>
+  <data name="lblnonightsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblnopassengersResource1.Text" xml:space="preserve">
+    <value>Show No Passengers:</value>
+  </data>
+  <data name="lblnopassengersResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblnormalreceiptResource1.Text" xml:space="preserve">
+    <value>Show Normal Receipt:</value>
+  </data>
+  <data name="lblnormalreceiptResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblnoroomsResource1.Text" xml:space="preserve">
+    <value>Show No Rooms:</value>
+  </data>
+  <data name="lblnoroomsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblothersResource1.Text" xml:space="preserve">
+    <value>Show No of Others:</value>
+  </data>
+  <data name="lblothersResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblp11dResource1.Text" xml:space="preserve">
+    <value>P11D Category:</value>
+  </data>
+  <data name="lblp11dResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblpencepermileResource1.Text" xml:space="preserve">
+    <value>Calculate Pence per Mile</value>
+  </data>
+  <data name="lblpencepermileResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblplitresResource1.Text" xml:space="preserve">
+    <value>Show Personal Fuel (litres):</value>
+  </data>
+  <data name="lblplitresResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblpmilesResource1.Text" xml:space="preserve">
+    <value>Show Personal Miles:</value>
+  </data>
+  <data name="lblpmilesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblreimbursableResource1.Text" xml:space="preserve">
+    <value>Reimbursable:</value>
+  </data>
+  <data name="lblreimbursableResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblstaffResource1.Text" xml:space="preserve">
+    <value>Show No of Staff:</value>
+  </data>
+  <data name="lblstaffResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbltipResource1.Text" xml:space="preserve">
+    <value>Show Tip:</value>
+  </data>
+  <data name="lbltipResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbltotalenteredResource1.Text" xml:space="preserve">
+    <value>Total entered as:</value>
+  </data>
+  <data name="lbltotalenteredResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblvatamountResource1.Text" xml:space="preserve">
+    <value>VAT Amount:</value>
+  </data>
+  <data name="lblvatamountResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblvatappResource1.Text" xml:space="preserve">
+    <value>VAT Applicable:</value>
+  </data>
+  <data name="lblvatappResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblvatpercentResource1.Text" xml:space="preserve">
+    <value>Vat Percent Claimable:</value>
+  </data>
+  <data name="lblvatpercentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblvatreceiptResource1.Text" xml:space="preserve">
+    <value>VAT Receipt Needed:</value>
+  </data>
+  <data name="lblvatreceiptResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="litcountriesResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="litsplitResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lnkadditemResource1.Text" xml:space="preserve">
+    <value>Add Item Role</value>
+  </data>
+  <data name="lnkadditemResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optallowanceResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optallowanceResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optfuelreceiptResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optfuelreceiptResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optmealResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optmealResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optmilesfuelrecResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optmilesfuelrecResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optmilesResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optmilesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optnoneResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optnoneResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlitemsResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlitemsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="reqsubcatResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a name for the Expense Item</value>
+  </data>
+  <data name="reqsubcatResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="reqsubcatResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RequiredFieldValidator1Resource1.ErrorMessage" xml:space="preserve">
+    <value>Please select a Expense Category</value>
+  </data>
+  <data name="RequiredFieldValidator1Resource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="RequiredFieldValidator1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tblitemsResource1.Caption" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tblitemsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbludfResource1.Caption" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbludfResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtaccountcodeResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtaccountcodeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtactionResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtactionResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtallowanceamountResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtallowanceamountResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtalternateaccountcodeResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtalternateaccountcodeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtcommentResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtcommentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtdescriptionResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtdescriptionResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtsubcatidResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtsubcatidResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtsubcatResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtsubcatResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtvatamountResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtvatamountResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtvatlimitwithoutResource1.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txtvatlimitwithoutResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtvatlimitwithResource1.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txtvatlimitwithResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtvatpercentResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtvatpercentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ValidationSummary1Resource1.HeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ValidationSummary1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblshortnameResource1.Text" xml:space="preserve">
+    <value>Expense Item Abbreviated</value>
+  </data>
+</root>

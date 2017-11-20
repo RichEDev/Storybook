@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="customattachmenttypesordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\framework\system options\attachment types\customattachmenttypesordered.orderedtest" id="d18bd953-456e-4d68-9948-231138e5fc30" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <TestLinks>
+    <TestLink id="7098087b-fcfa-4348-1282-426c83772935" name="AttachmentTypesSuccessfullyCreateCustomAttachmentType" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="09447301-dea0-f807-c378-791b1d049cae" name="AttachmentTypesSuccessfullyEditCustomAttachmentType" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="86c13da6-1630-c013-440f-5a632f15a11e" name="AttachmentTypesSuccessfullyDeleteCustomAttachmentType" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="eb3c2624-3d7f-9553-836b-8699111a3080" name="AttachmentTypesSuccessfullyCreateAttachmentTypeUsingCustomDefinition" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="7aec7795-65c9-bf1d-8d82-0cc5cf80ef94" name="AttachmentTypesSuccessfullyDeleteAttachmentType" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

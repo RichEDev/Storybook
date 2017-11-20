@@ -1,0 +1,221 @@
+% FW Update.dat file
+% 28/07/2004
+# 000012 000013
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Assets
+
+% Attachments
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Invoice Status Type
+
+% Codes - Licence Renewal Type
+
+% Codes - Note Category
+
+% Codes - Platform Type
+
+% Codes - Region
+
+% Codes - Sales Tax
+
+% Codes - SLD
+
+% Codes - Term Type
+
+% Codes - Units
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract - Forecast Details
+ALTER TABLE [Contract - Forecast Details]
+ADD [Comment] varchar(250)
+*
+
+% Contract - Forecast Products
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+% in a small number of cases - this table is mysteriously missing due to it being commented out!!!
+
+IF EXISTS (SELECT TABLE_NAME
+            FROM INFORMATION_SCHEMA.TABLES
+            WHERE TABLE_NAME = 'Contract - Product Details - Calloff')
+ALTER TABLE [Contract - Product Details - Calloff]
+ALTER COLUMN [Calloff Quantity] int
+*
+
+IF NOT EXISTS (SELECT TABLE_NAME
+            FROM INFORMATION_SCHEMA.TABLES
+            WHERE TABLE_NAME = 'Contract - Product Details - Calloff')
+CREATE TABLE [Contract - Product Details - Calloff]
+(
+      [CallOff Id]                      int IDENTITY PRIMARY KEY,
+      [Contract-Product Id]             int,
+      [Location Id]                     int,
+      [Sublocation Id]                  int,
+      [Platform Id]                     int,     
+      [Platform Lpar Id]                int,    
+      [Vendor Id]                       int,
+      [Calloff Quantity]                int     
+)
+*
+
+% Contract - Product-History
+
+% Contract - Product-Platforms
+
+% Contract Classes
+
+% Contract Details
+
+% Contract Notes
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Export Fields
+
+% Exports
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice - Product Details
+
+% Invoice Details
+
+% Invoice Log
+
+% Invoice Notes
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Location
+
+% Mail
+
+% Mail Schedule
+
+% Metrics
+
+% OLAP Cube 02
+
+% OLAP Cube 03
+
+% Pallet
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Platform LPars
+
+% Product Details
+
+% Product Notes
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Saved Views
+
+% Schedule
+
+% Security
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Staff Details
+
+% Sublocations
+
+% System Parameters
+
+% Target Types
+
+% User Field Values
+
+% User Fields
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+
+% Vendor Contact Notes
+
+% Vendor Notes
+
+% Vendor Regions
+
+% Vendor Status
+
+% Version Registry
+
+% Version Registry CallOff
+
+% Version History
+
+% ---------- Views ----------
+
+% Performance Metrics
+
+% CalView
+
+% ---------- Procedures ----------
+% End of file

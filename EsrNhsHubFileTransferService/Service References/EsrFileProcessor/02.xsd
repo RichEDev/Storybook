@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://software-europe.com/API/2013/02" elementFormDefault="qualified" targetNamespace="http://software-europe.com/API/2013/02" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="FileBytes" type="xs:long" />
+  <xs:element name="FileId" type="xs:int" />
+  <xs:element name="FileName" nillable="true" type="xs:string" />
+</xs:schema>

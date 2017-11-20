@@ -1,0 +1,1 @@
+﻿CREATE STATISTICS [_dta_stat_1838253321_2_1_4] ON [dbo].[savedexpensesFlags]([expenseid], [flaggedItemId], [flagType])

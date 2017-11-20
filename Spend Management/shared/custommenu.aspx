@@ -1,0 +1,2 @@
+﻿<%@ Page Language="C#" MasterPageFile="~/masters/smMenu.master" AutoEventWireup="true" CodeBehind="custommenu.aspx.cs" Inherits="Spend_Management.custommenu" Title="Untitled Page" %>
+<%@ MasterType VirtualPath="~/masters/smMenu.master" %>

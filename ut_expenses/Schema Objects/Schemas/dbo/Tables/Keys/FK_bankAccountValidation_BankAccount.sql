@@ -1,0 +1,2 @@
+﻿ALTER TABLE [dbo].[bankAccountValidation]
+    ADD CONSTRAINT [FK_bankAccountValidation_BankAccount] FOREIGN KEY ([BankAccountID]) REFERENCES [dbo].[BankAccounts] ([BankAccountId]) ON DELETE CASCADE ON UPDATE CASCADE;

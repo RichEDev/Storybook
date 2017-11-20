@@ -1,0 +1,1 @@
+﻿CREATE STATISTICS [_dta_stat_2062254119_2_7] ON [dbo].[savedExpensesFlagsApproverJustifications]([flaggedItemId], [delegateID])

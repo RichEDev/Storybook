@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="accessrolesordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\spend management\employee management\access roles\accessrolesordered.orderedtest" id="926941ec-4658-43c7-9fff-a8c4d1fe8111" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <Execution id="0c2587b8-5f3f-42c5-8bf3-a4675ca3d76e" />
+  <TestLinks>
+    <TestLink id="5b0b3b1e-b1f8-7766-4489-ec9fa49aebdc" name="AccessRolesSuccessfullyCreateAccessRole" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="b366936c-dc40-4b5f-c37e-593eaf3f98ac" name="AccessRolesUnsuccessfullySaveNewAccessRoleWhereRoleNameAlreadyExists" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="92f7919e-e682-1132-1c2d-f7f9da433bde" name="AccessRolesSuccessfullyCancelAccessRoleRecordWhereChangesHaveBeenMade" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="64391fa6-27d6-8c98-b74b-9608b00551bc" name="AccessRolesSuccessfullyEditAccessRole" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="b2a4653b-9ea0-1157-2e2d-431b3cbe0d6f" name="AccessRolesSuccessfullyDeleteAccessRoleRecord" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

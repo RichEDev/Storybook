@@ -1,0 +1,60 @@
+Imports FWBase
+
+
+Namespace Framework2006
+
+
+Partial Class ContractRecharge
+    Inherits System.Web.UI.Page
+
+#Region " Web Form Designer Generated Code "
+
+    'This call is required by the Web Form Designer.
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    End Sub
+
+
+    Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
+        'CODEGEN: This method call is required by the Web Form Designer
+        'Do not modify it using the code editor.
+        InitializeComponent()
+    End Sub
+
+#End Region
+
+    Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        If Me.IsPostBack = False Then
+            Dim ui As UserInfo
+            Dim rs As RechargeSettings
+
+            rs = Application("RechargeSettings")
+            ui = Session("UserInfo")
+
+            lblTitle.Text = "Contract Product Recharge Summary"
+
+            Dim mytab As Infragistics.WebUI.UltraWebTab.Tab
+
+            mytab = RechargeTabs.Tabs.FromKey("RechargeDetailTab")
+            mytab.Text = rs.ReferenceAs & " Recharge"
+            mytab.ContentPane.TargetUrl = "ContractRechargeList.aspx?id=" & Session("ActiveContract")
+
+            mytab = RechargeTabs.Tabs.FromKey("RechargeTemplateTab")
+            mytab.ContentPane.TargetUrl = "ContractRechargeBreakdown.aspx?id=" & Session("ActiveContract")
+
+            mytab = RechargeTabs.Tabs.FromKey("RechargePaymentsTab")
+            mytab.ContentPane.TargetUrl = "ContractRechargeData.aspx?id=" & Session("ActiveContract")
+
+            With RechargeTabs
+                .Width = Unit.Pixel(ui.xMax - (NAVBAR_WIDTH + 115))
+                .Height = Unit.Pixel(ui.yMax - (HEADERBAR_HEIGHT + 320))
+                .TextOrientation = Infragistics.WebUI.UltraWebTab.TextOrientation.Vertical
+                .TabOrientation = Infragistics.WebUI.UltraWebTab.TabOrientation.RightTop
+                .DefaultTabStyle.Height = Unit.Pixel(120)
+                .DefaultTabStyle.Width = Unit.Pixel(20)
+            End With
+        End If
+    End Sub
+End Class
+
+End Namespace

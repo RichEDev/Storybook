@@ -1,0 +1,1 @@
+﻿CREATE STATISTICS [_dta_stat_261628025_4_1] ON [dbo].[subcats]([subcat], [subcatid])

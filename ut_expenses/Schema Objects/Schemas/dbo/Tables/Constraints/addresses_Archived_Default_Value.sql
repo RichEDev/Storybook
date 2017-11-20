@@ -1,0 +1,1 @@
+	ALTER TABLE [dbo].[addresses] ADD  CONSTRAINT [DF_Addresses_Archived]  DEFAULT ((0)) FOR [Archived]

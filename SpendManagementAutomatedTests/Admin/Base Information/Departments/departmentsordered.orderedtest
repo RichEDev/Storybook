@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="DepartmentsOrdered" storage="c:\mapping\spend management\spend management_root\spendmanagementautomatedtests\admin\base information\departments\departmentsordered.orderedtest" id="92b4ed80-cfe2-46ea-8760-d4a1610720b2" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Execution timeOut="2147483647" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <TestLinks>
+    <TestLink id="82bdd7c5-bbb1-49fe-8221-a9a566d14069" name="AddDepartment" storage="adddepartment.webtest" type="Microsoft.VisualStudio.TestTools.WebStress.DeclarativeWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="f32b94e9-38e7-c610-918b-d83d88e5dc98" name="EditDepartmentCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="d218c3d3-9dd8-78ce-754a-e7aceea46cd6" name="DeleteDepartmentCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="82bdd7c5-bbb1-49fe-8221-a9a566d14069" name="AddDepartment" storage="adddepartment.webtest" type="Microsoft.VisualStudio.TestTools.WebStress.DeclarativeWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="f993d409-4a97-ec7d-56fb-4cc52809170d" name="ArchiveDepartmentCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="f32b94e9-38e7-c610-918b-d83d88e5dc98" name="EditDepartmentCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="58e84ca0-9993-766f-18ab-be124052f51d" name="UnArchiveDepartmentCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="f993d409-4a97-ec7d-56fb-4cc52809170d" name="ArchiveDepartmentCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="d218c3d3-9dd8-78ce-754a-e7aceea46cd6" name="DeleteDepartmentCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

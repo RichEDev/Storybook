@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://testapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://testapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://testapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI" />
+  <xs:import schemaLocation="http://testapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/RiskAndLicenceManager.SupportClasses" />
+  <xs:complexType name="StatusResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Dated" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Details" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StatusResponse" nillable="true" type="tns:StatusResponse" />
+  <xs:complexType name="CheckLicenceData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CompanyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DriverId" type="xs:long" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Firstname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IncludeCpcData" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IncludeTachoData" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Live" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sex" type="tns:Sex" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="YourReference" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CheckLicenceData" nillable="true" type="tns:CheckLicenceData" />
+  <xs:simpleType name="Sex">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Male" />
+      <xs:enumeration value="Female" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Sex" nillable="true" type="tns:Sex" />
+  <xs:complexType name="MandateAdditionalData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DAddress1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DAddress2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DAddress3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DPostalTown" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DPostcode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MandateReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostalTown" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MandateAdditionalData" nillable="true" type="tns:MandateAdditionalData" />
+  <xs:complexType name="CheckResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Analytics" nillable="true" type="tns:Analytics" />
+      <xs:element minOccurs="0" name="ConsentExpiryDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Data" nillable="true" type="tns:Rootobject" />
+      <xs:element minOccurs="0" name="DatabaseAnalytics" nillable="true" type="tns:DatabaseAnalytics" />
+      <xs:element minOccurs="0" name="DriverId" type="xs:long" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LookupReference" type="ser:guid" />
+      <xs:element minOccurs="0" name="Reference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RemainingCredits" type="xs:int" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="ValidationRecord" nillable="true" type="tns:ValidationRecord" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CheckResponse" nillable="true" type="tns:CheckResponse" />
+  <xs:complexType name="Analytics">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DVLARequestEnd" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DVLARequestStart" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Request" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SaveDataEnd" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SaveDataStart" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Analytics" nillable="true" type="tns:Analytics" />
+  <xs:complexType name="Rootobject">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DriverExtension" nillable="true" type="tns:DriverExtension" />
+      <xs:element minOccurs="0" name="header" nillable="true" type="tns:Header" />
+      <xs:element minOccurs="0" name="messages" nillable="true" type="tns:ArrayOfMessage" />
+      <xs:element minOccurs="0" name="result" nillable="true" type="tns:ArrayOfResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Rootobject" nillable="true" type="tns:Rootobject" />
+  <xs:complexType name="DriverExtension">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DriverID" type="xs:long" />
+      <xs:element minOccurs="0" name="LastEnquiryDate" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DriverExtension" nillable="true" type="tns:DriverExtension" />
+  <xs:complexType name="Header">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="enquirerRef" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="guid" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="version" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Header" nillable="true" type="tns:Header" />
+  <xs:complexType name="ArrayOfMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Message" nillable="true" type="tns:Message" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMessage" nillable="true" type="tns:ArrayOfMessage" />
+  <xs:complexType name="Message">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Message" nillable="true" type="tns:Message" />
+  <xs:complexType name="ArrayOfResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Result" nillable="true" type="tns:Result" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfResult" nillable="true" type="tns:ArrayOfResult" />
+  <xs:complexType name="Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="address" nillable="true" type="tns:Address" />
+      <xs:element minOccurs="0" name="cpcs" nillable="true" type="tns:ArrayOfCpc" />
+      <xs:element minOccurs="0" name="driver" nillable="true" type="tns:Driver" />
+      <xs:element minOccurs="0" name="enquiryGuid" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="lgvCpcValidTo" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="licence" nillable="true" type="tns:Licence" />
+      <xs:element minOccurs="0" name="pcvCpcValidTo" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="resultMessages" nillable="true" type="tns:ArrayOfMessage" />
+      <xs:element minOccurs="0" name="tachoCards" nillable="true" type="tns:ArrayOfTachoCard" />
+      <xs:element minOccurs="0" name="tachoValidTo" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="validTachoCardNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Result" nillable="true" type="tns:Result" />
+  <xs:complexType name="Address">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="addressLines" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="postCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Address" nillable="true" type="tns:Address" />
+  <xs:complexType name="ArrayOfCpc">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Cpc" nillable="true" type="tns:Cpc" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCpc" nillable="true" type="tns:ArrayOfCpc" />
+  <xs:complexType name="Cpc">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cardValidFrom" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="lgvValidTo" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="pcvValidTo" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Cpc" nillable="true" type="tns:Cpc" />
+  <xs:complexType name="Driver">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ApplicationReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="dateOfBirth" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="gender" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="givenName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="surname" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Driver" nillable="true" type="tns:Driver" />
+  <xs:complexType name="Licence">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LicenceCheckID" type="xs:long" />
+      <xs:element minOccurs="0" name="directiveIdentifier" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="endorsements" nillable="true" type="tns:ArrayOfEndorsement" />
+      <xs:element minOccurs="0" name="entitlements" nillable="true" type="tns:ArrayOfEntitlement" />
+      <xs:element minOccurs="0" name="issueNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="validFrom" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="validTo" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Licence" nillable="true" type="tns:Licence" />
+  <xs:complexType name="ArrayOfEndorsement">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Endorsement" nillable="true" type="tns:Endorsement" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEndorsement" nillable="true" type="tns:ArrayOfEndorsement" />
+  <xs:complexType name="Endorsement">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="convictionDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="disqualEndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="isDisqual" type="xs:boolean" />
+      <xs:element minOccurs="0" name="noOfPoints" type="xs:int" />
+      <xs:element minOccurs="0" name="offenceDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Endorsement" nillable="true" type="tns:Endorsement" />
+  <xs:complexType name="ArrayOfEntitlement">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Entitlement" nillable="true" type="tns:Entitlement" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEntitlement" nillable="true" type="tns:ArrayOfEntitlement" />
+  <xs:complexType name="Entitlement">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="restrictions" nillable="true" type="tns:ArrayOfRestriction" />
+      <xs:element minOccurs="0" name="type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="validFrom" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="validTo" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Entitlement" nillable="true" type="tns:Entitlement" />
+  <xs:complexType name="ArrayOfRestriction">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Restriction" nillable="true" type="tns:Restriction" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRestriction" nillable="true" type="tns:ArrayOfRestriction" />
+  <xs:complexType name="Restriction">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="info" nillable="true" type="xs:anyType" />
+      <xs:element minOccurs="0" name="type" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Restriction" nillable="true" type="tns:Restriction" />
+  <xs:complexType name="ArrayOfTachoCard">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TachoCard" nillable="true" type="tns:TachoCard" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTachoCard" nillable="true" type="tns:ArrayOfTachoCard" />
+  <xs:complexType name="TachoCard">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cardNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cardStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="validFrom" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="validTo" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TachoCard" nillable="true" type="tns:TachoCard" />
+  <xs:complexType name="DatabaseAnalytics">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EndProcessingEndorsements" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EndProcessingEntitlements" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EndSaveChanges" type="xs:dateTime" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Log" nillable="true" type="q2:ArrayOfstring" />
+      <xs:element minOccurs="0" name="StartProcessingEndorsements" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartProcessingEntitlements" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartSaveChanges" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DatabaseAnalytics" nillable="true" type="tns:DatabaseAnalytics" />
+  <xs:complexType name="ValidationRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FailureCount" type="xs:int" />
+      <xs:element minOccurs="0" name="ValidationErrors" nillable="true" type="tns:ArrayOfValidationError" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValidationRecord" nillable="true" type="tns:ValidationRecord" />
+  <xs:complexType name="ArrayOfValidationError">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ValidationError" nillable="true" type="tns:ValidationError" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfValidationError" nillable="true" type="tns:ArrayOfValidationError" />
+  <xs:complexType name="ValidationError">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CorrectValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Error" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Requirement" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValidationError" nillable="true" type="tns:ValidationError" />
+  <xs:complexType name="GetLicenceData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DriverId" type="xs:long" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Firstname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sex" type="tns:Sex" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetLicenceData" nillable="true" type="tns:GetLicenceData" />
+  <xs:complexType name="InformationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Data" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="YourReference" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InformationResponse" nillable="true" type="tns:InformationResponse" />
+  <xs:complexType name="CategoryRestrictionsCodesResponse">
+    <xs:sequence>
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI" minOccurs="0" name="CategoryRestrictionCodes" nillable="true" type="q3:ArrayOfEntitlementInformationCode" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CategoryRestrictionsCodesResponse" nillable="true" type="tns:CategoryRestrictionsCodesResponse" />
+  <xs:complexType name="LicenceCategoriesResponse">
+    <xs:sequence>
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI" minOccurs="0" name="LicenceCategories" nillable="true" type="q4:ArrayOfLicenceCategory" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LicenceCategoriesResponse" nillable="true" type="tns:LicenceCategoriesResponse" />
+  <xs:complexType name="EndorsementOffenceCodesResponse">
+    <xs:sequence>
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI" minOccurs="0" name="EndorsmentCodes" nillable="true" type="q5:ArrayOfEndorsementOffenceCode" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EndorsementOffenceCodesResponse" nillable="true" type="tns:EndorsementOffenceCodesResponse" />
+  <xs:complexType name="DateResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DateResponse" nillable="true" type="tns:DateResponse" />
+  <xs:complexType name="MessageCodeResponse">
+    <xs:sequence>
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI" minOccurs="0" name="MessageCodes" nillable="true" type="q6:ArrayOfMessageCode" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MessageCodeResponse" nillable="true" type="tns:MessageCodeResponse" />
+  <xs:complexType name="ArrayOfCheckResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CheckResponse" nillable="true" type="tns:CheckResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCheckResponse" nillable="true" type="tns:ArrayOfCheckResponse" />
+  <xs:simpleType name="RiskType">
+    <xs:restriction base="xs:string" />
+  </xs:simpleType>
+  <xs:element name="RiskType" nillable="true" type="tns:RiskType" />
+  <xs:complexType name="SimpleResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Data" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataMember" nillable="true" type="xs:anyType" />
+      <xs:element minOccurs="0" name="DriverId" type="xs:long" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="YourReference" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SimpleResponse" nillable="true" type="tns:SimpleResponse" />
+  <xs:complexType name="MandateDataRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CpcNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateBlank" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DAddress1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DAddress2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DAddress3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DPostalTown" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DPostcode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DQCNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DriverId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostalTown" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RequireCPC" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RequireTacho" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Sex" type="tns:Sex" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TachoNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MandateDataRecord" nillable="true" type="tns:MandateDataRecord" />
+  <xs:complexType name="MandateCreateResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DriverId" type="xs:long" />
+      <xs:element minOccurs="0" name="Mandate" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="MandateReferenceCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RemoteId" type="xs:long" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="YourReference" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MandateCreateResponse" nillable="true" type="tns:MandateCreateResponse" />
+  <xs:complexType name="BooleanResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Data" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="YourReference" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BooleanResponse" nillable="true" type="tns:BooleanResponse" />
+  <xs:complexType name="ActionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Data" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="YourReference" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ActionResponse" nillable="true" type="tns:ActionResponse" />
+  <xs:complexType name="DriverListResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Drivers" nillable="true" type="tns:ArrayOfSimpleDriver" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DriverListResponse" nillable="true" type="tns:DriverListResponse" />
+  <xs:complexType name="ArrayOfSimpleDriver">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SimpleDriver" nillable="true" type="tns:SimpleDriver" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSimpleDriver" nillable="true" type="tns:ArrayOfSimpleDriver" />
+  <xs:complexType name="SimpleDriver">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GivenName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:long" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SimpleDriver" nillable="true" type="tns:SimpleDriver" />
+  <xs:complexType name="CreateDriverData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ApplicationReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DriverId" type="xs:long" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Firstname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Gender" type="tns:Sex" />
+      <xs:element minOccurs="0" name="Middlename" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreateDriverData" nillable="true" type="tns:CreateDriverData" />
+  <xs:complexType name="DriverResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ApplicationReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DriverId" type="xs:long" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Firstname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Gender" type="tns:Sex" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="SecurityCode" type="ser:guid" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DriverResponse" nillable="true" type="tns:DriverResponse" />
+  <xs:complexType name="CreateSystemDriverConsentData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CompanyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Firstname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreateSystemDriverConsentData" nillable="true" type="tns:CreateSystemDriverConsentData" />
+  <xs:complexType name="DriverEconsentResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DriverId" type="xs:long" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="SecurityCode" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DriverEconsentResponse" nillable="true" type="tns:DriverEconsentResponse" />
+  <xs:complexType name="RejectedMandatesResponse">
+    <xs:sequence>
+      <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="MandateIds" nillable="true" type="q7:ArrayOflong" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RejectedMandatesResponse" nillable="true" type="tns:RejectedMandatesResponse" />
+  <xs:complexType name="EConsentDataRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DriverId" type="xs:long" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Forenames" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Gender" type="tns:Sex" />
+      <xs:element minOccurs="0" name="Mobile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostalTown" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RequireCPC" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RequireTacho" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="YourReference" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EConsentDataRecord" nillable="true" type="tns:EConsentDataRecord" />
+  <xs:complexType name="EConsentResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ConsentReference" type="ser:guid" />
+      <xs:element minOccurs="0" name="Dated" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="YourReference" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EConsentResponse" nillable="true" type="tns:EConsentResponse" />
+  <xs:complexType name="SmsPinResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PinSent" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SmsPinResponse" nillable="true" type="tns:SmsPinResponse" />
+  <xs:complexType name="PinValidationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ConsentReference" type="ser:guid" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PinValidationResponse" nillable="true" type="tns:PinValidationResponse" />
+  <xs:complexType name="AdditionalConsentRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ConsentReference" type="ser:guid" />
+      <xs:element minOccurs="0" name="Cpc" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CpcCardNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DriverId" type="xs:long" />
+      <xs:element minOccurs="0" name="TachoCardNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tachograph" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AdditionalConsentRecord" nillable="true" type="tns:AdditionalConsentRecord" />
+  <xs:complexType name="UpdateMismatchRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Firstname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Gender" type="tns:Sex" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UpdateMismatchRecord" nillable="true" type="tns:UpdateMismatchRecord" />
+  <xs:complexType name="ValidateEConsentPersonalDetailsData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ConsentReference" type="ser:guid" />
+      <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DriverNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Forenames" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Mobile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sex" type="tns:Sex" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValidateEConsentPersonalDetailsData" nillable="true" type="tns:ValidateEConsentPersonalDetailsData" />
+  <xs:complexType name="ValidateEConsentPersonalDetailsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="ValidationRecord" nillable="true" type="tns:ValidationRecord" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValidateEConsentPersonalDetailsResponse" nillable="true" type="tns:ValidateEConsentPersonalDetailsResponse" />
+  <xs:complexType name="OptedOutConsentResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DriverId" type="xs:long" />
+      <xs:element minOccurs="0" name="OptedOut" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OptedOutDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Reason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OptedOutConsentResponse" nillable="true" type="tns:OptedOutConsentResponse" />
+  <xs:complexType name="CreditUsageResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Data" nillable="true" type="tns:ArrayOfCreditUsageItem" />
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreditUsageResponse" nillable="true" type="tns:CreditUsageResponse" />
+  <xs:complexType name="ArrayOfCreditUsageItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CreditUsageItem" nillable="true" type="tns:CreditUsageItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCreditUsageItem" nillable="true" type="tns:ArrayOfCreditUsageItem" />
+  <xs:complexType name="CreditUsageItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DriverId" type="xs:long" />
+      <xs:element minOccurs="0" name="Originator" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Reference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SpendDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreditUsageItem" nillable="true" type="tns:CreditUsageItem" />
+  <xs:complexType name="LicenceListResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Analytics" nillable="true" type="tns:Analytics" />
+      <xs:element minOccurs="0" name="Data" nillable="true" type="tns:ArrayOfRootobject" />
+      <xs:element minOccurs="0" name="DatabaseAnalytics" nillable="true" type="tns:DatabaseAnalytics" />
+      <xs:element minOccurs="0" name="LookupReference" type="ser:guid" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LicenceListResponse" nillable="true" type="tns:LicenceListResponse" />
+  <xs:complexType name="ArrayOfRootobject">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Rootobject" nillable="true" type="tns:Rootobject" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRootobject" nillable="true" type="tns:ArrayOfRootobject" />
+  <xs:complexType name="AccountsListResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Data" nillable="true" type="tns:ArrayOfAccountDetails" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountsListResponse" nillable="true" type="tns:AccountsListResponse" />
+  <xs:complexType name="ArrayOfAccountDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountDetails" nillable="true" type="tns:AccountDetails" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountDetails" nillable="true" type="tns:ArrayOfAccountDetails" />
+  <xs:complexType name="AccountDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentAccountCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountDetails" nillable="true" type="tns:AccountDetails" />
+  <xs:complexType name="VehicleDataResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="VehicleData" nillable="true" type="tns:VehicleResponseObject" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VehicleDataResponse" nillable="true" type="tns:VehicleDataResponse" />
+  <xs:complexType name="VehicleResponseObject">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccelerationMph" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AxleName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Bhp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BodyStyle" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Bore" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Cc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Co2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Colour" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CombinedMpg" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryOfOrigin" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Cylinders" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateOfRegistration" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Derivative" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Doors" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DriveType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DvlaMake" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DvlaModel" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EngineAlignment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EngineCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EngineMake" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EngineNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EngineSizeDescripion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EuroStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExactCc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExtraUrbanMpg" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Fuel" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FuelDelivery" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Gears" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Height" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImageName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Kw" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Length" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Make" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ManufacturerVersionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MassInService" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaxNetPower" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaxSpeedMph" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaxTechMass" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Model" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ModelVersionFromMonth" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ModelVersionFromYear" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ModelVersionNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ModelversionToMonth" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ModelversionToYear" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotExpiry" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumberOfSeats" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaxExpiry" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaxStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TorqueLbFt" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TorqueNm" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TorqueRpm" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrailerBraked" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrailerUnbraked" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TransmissionType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UrbanColdMpg" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Valves" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VehicleGrossWeight" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VehicleType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VehicleYear" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Vin" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Vrm" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Weight" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Wheelbase" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Width" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VehicleResponseObject" nillable="true" type="tns:VehicleResponseObject" />
+  <xs:complexType name="ValueResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="Value" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValueResponse" nillable="true" type="tns:ValueResponse" />
+  <xs:complexType name="CreateCompanyData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountCompanyType" type="tns:AccountCompanyType" />
+      <xs:element minOccurs="0" name="AccountContact" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Fax" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LegalStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentCompanyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostalTown" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UseParentCompanyCredits" type="xs:boolean" />
+      <xs:element minOccurs="0" name="VATNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Website" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreateCompanyData" nillable="true" type="tns:CreateCompanyData" />
+  <xs:simpleType name="AccountCompanyType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Agent" />
+      <xs:enumeration value="Client" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="AccountCompanyType" nillable="true" type="tns:AccountCompanyType" />
+  <xs:complexType name="CompanyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CompanyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyId" type="xs:long" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+      <xs:element minOccurs="0" name="UniqueReference" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CompanyResponse" nillable="true" type="tns:CompanyResponse" />
+  <xs:complexType name="UpdateCompanyData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountCompanyType" type="tns:AccountCompanyType" />
+      <xs:element minOccurs="0" name="AccountContact" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyId" type="xs:long" />
+      <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Fax" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LegalStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostalTown" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VATNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Website" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UpdateCompanyData" nillable="true" type="tns:UpdateCompanyData" />
+  <xs:complexType name="SystemResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RequestValue" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SystemResponse" nillable="true" type="tns:SystemResponse" />
+  <xs:complexType name="LicenceDetailsResponse">
+    <xs:sequence>
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/RiskAndLicenceManager.SupportClasses" minOccurs="0" name="LicenceDetails" nillable="true" type="q8:LicenceDetails" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LicenceDetailsResponse" nillable="true" type="tns:LicenceDetailsResponse" />
+  <xs:complexType name="DriverRiskResponse">
+    <xs:sequence>
+      <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/RiskAndLicenceManager.SupportClasses" minOccurs="0" name="DriverRisk" nillable="true" type="q9:DriverRisk" />
+      <xs:element minOccurs="0" name="Response" nillable="true" type="tns:StatusResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DriverRiskResponse" nillable="true" type="tns:DriverRiskResponse" />
+</xs:schema>

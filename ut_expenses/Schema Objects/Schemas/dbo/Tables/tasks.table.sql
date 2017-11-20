@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[tasks] (
+    [taskId]           INT            IDENTITY (1, 1)  NOT NULL,
+    [subAccountId]     INT            NULL,
+    [regardingId]      INT            NOT NULL,
+    [regardingArea]    SMALLINT       NOT NULL,
+    [taskCreatorId]    INT            NULL,
+    [taskCreationDate] DATETIME       NOT NULL,
+    [taskTypeId]       INT            NULL,
+    [taskOwnerId]      INT            NOT NULL,
+    [taskOwnerType]    SMALLINT       NOT NULL,
+    [subject]          NVARCHAR (150) NULL,
+    [description]      NVARCHAR (MAX) NULL,
+    [startDate]        DATETIME       NULL,
+    [dueDate]          DATETIME       NULL,
+    [endDate]          DATETIME       NULL,
+    [statusId]         SMALLINT       NOT NULL,
+    [escalated]        BIT            NOT NULL,
+    [escalationDate]   DATETIME       NULL,
+    [taskCmdType]      SMALLINT       NULL,
+	[ContractId]       as (CASE regardingArea WHEN 1 THEN regardingId END),
+	[ContractProductId] as (CASE regardingArea WHEN 2 THEN regardingId END ),
+	[ProductId] as (CASE regardingArea WHEN 3 THEN regardingId END ),
+	[EmployeeId] as (CASE regardingArea WHEN 13 THEN regardingId END ),
+	[CarId] as (CASE regardingArea WHEN 17 THEN regardingId END ),
+	[SupplierId] as (CASE regardingArea WHEN 4 THEN regardingId END )
+);
+

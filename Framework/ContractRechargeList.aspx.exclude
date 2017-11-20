@@ -1,0 +1,87 @@
+<%@ Page Language="vb" AutoEventWireup="false" Inherits="Framework2006.ContractRechargeList" CodeFile="ContractRechargeList.aspx.vb" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+	<HEAD>
+		<title>ContractRechargeList</title>
+		<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+		<meta name="CODE_LANGUAGE" content="Visual Basic .NET 7.1">
+		<meta name="vs_defaultClientScript" content="JavaScript">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<link href="FWStyle.css" type="text/css" rel="stylesheet">
+		<script language=javascript>
+			var searchwnd;
+			var UF_FieldName;
+			
+			function doTextEntry(UF_name,UF_recId,UF_area)
+			{
+				window.name = 'main';
+				UF_FieldName = UF_name;
+				UF_Value = document.getElementById(UF_name).value;
+				searchwnd = window.open('UFSearch.aspx?action=uftxt&ufn=' + UF_name + '&ufi=' + UF_recId + '&ufa=' + UF_area + '&ufv=' + UF_Value,'search','width=600, height=600, scrollbars=yes');
+			}
+			
+			function getTextEntry()
+			{
+				var UF_Field;
+				var src_Field;
+				//Form1.
+				src_Field = searchwnd.document.getElementById(UF_FieldName); //eval('searchwnd.' + UF_FieldName);
+				// 'Form1.' + 
+				UF_Field =  document.getElementById(UF_FieldName); //eval(UF_FieldName);
+				UF_Field.value = src_Field.value;
+				searchwnd.close();
+			}
+			
+			function getSearchResult()
+			{
+				var UF_Field_txt = document.getElementById(UF_FieldName + '_TXT');
+				if(UF_Field_txt != null)
+				{				
+				    UF_Field_txt.value = searchwnd.document.getElementById('searchResultTxt').value;
+				}
+				
+				var UF_Field_val = document.getElementById(UF_FieldName);
+				if(UF_Field_val != null)
+				{
+				    UF_Field_val.value= searchwnd.document.getElementById('searchResultId').value;
+				}
+				searchwnd.close();
+			}
+						
+			function doSearch(i,UF_name)
+			{
+				window.name = 'main';
+				UF_FieldName = UF_name;
+				searchwnd = window.open('UFSearch.aspx?searchtype=' + i + '&ufid=' + UF_name,'search','width=600, height=600, scrollbars=yes');
+			}
+		</script>
+	</HEAD>
+	<body>
+		<form id="Form1" method="post" runat="server">
+			<table class="main" align="center" border="0">
+				<tr>
+					<td class="main" align="center">
+						<asp:Label id="lblTitle" runat="server" CssClass="screentitle"></asp:Label></td>
+				</tr>
+				<tr>
+					<td class="main" align="right"><a class="help" onclick="javascript:window.open('help/cs_recharge_products.htm');"><img alt="Open help text on this Contract Recharge section" src="buttons/help.gif">Help</a></td>
+				</tr>
+				<tr>
+					<td class="main" align="center">
+						<asp:Literal id="litEditFields" runat="server"></asp:Literal></td>
+				</tr>
+				<tr>
+					<td class="main" align="center">
+						<asp:PlaceHolder id="holderUpdateButton" runat="server"></asp:PlaceHolder></td>
+				</tr>
+				<tr>
+					<td class="main" align="center">
+						<asp:Literal id="litConProdList" runat="server"></asp:Literal></td>
+				</tr>
+				<tr>
+					<td class="main"></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</HTML>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="homelocationordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\spend management\employee management\employees\home locations\homelocationordered.orderedtest" id="8f593dd5-0f57-472e-976d-1015be8a25e0" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <Execution id="53b50597-9ab2-40b5-9474-c6233a5348c5" />
+  <TestLinks>
+    <TestLink id="fe5a4a85-0242-c856-3425-c4acc74d7428" name="EmployeesSuccessfullyAddExisitngHomeAddress" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="14d88e52-5d4d-e295-2e67-46af3e215c7d" name="EmployeesSuccessfullyEditExistingHomeAddress" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="11c8ecd5-b057-25ee-9f86-3b94b12504f5" name="EmployeesSuccessfullyDeleteHomeAddress" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

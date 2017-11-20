@@ -1,0 +1,342 @@
+Imports FWBase
+
+Namespace Framework2006
+    Public Class cRecharge
+        Private Structure RechargeElements
+            Dim Maintenance As Double
+            Dim Quantity As Integer
+            Dim ApportionType As RechargeApportionType
+            Dim Portion As Double
+            Dim SurchargeApportionType As SurchargeType
+            Dim SurchargePortion As Double
+            Dim PostWarrantyApportionType As RechargeApportionType
+            Dim PostWarrantyPortion As Double
+            Dim SupportStartDate As Date
+            Dim WarrantyEndDate As Date
+            Dim SupportEndDate As Date
+            Dim RechargeValue As Double
+        End Structure
+
+        Private currentRechargeDate As Date
+        Private currentRechargeElements As RechargeElements
+
+        Private WriteOnly Property SetRechargeValue() As Double
+            Set(ByVal Value As Double)
+                currentRechargeElements.RechargeValue = Value
+            End Set
+        End Property
+
+        Public Property Maintenance() As Double
+            Get
+                Return currentRechargeElements.Maintenance
+            End Get
+            Set(ByVal Value As Double)
+                currentRechargeElements.Maintenance = Value
+            End Set
+        End Property
+
+        Public Property Quantity() As Integer
+            Get
+                Return currentRechargeElements.Quantity
+            End Get
+            Set(ByVal Value As Integer)
+                currentRechargeElements.Maintenance = Value
+            End Set
+        End Property
+
+        Public ReadOnly Property GetRechargeValue() As Double
+            Get
+                Return currentRechargeElements.RechargeValue
+            End Get
+        End Property
+
+        Public Property SupportStartDate() As Date
+            Get
+                Return currentRechargeElements.SupportStartDate
+            End Get
+            Set(ByVal Value As Date)
+                currentRechargeElements.SupportStartDate = Value
+            End Set
+        End Property
+
+        Public Property WarrantyEndDate() As Date
+            Get
+                Return currentRechargeElements.WarrantyEndDate
+            End Get
+            Set(ByVal Value As Date)
+                currentRechargeElements.WarrantyEndDate = Value
+            End Set
+        End Property
+
+        Public Property SupportEndDate() As Date
+            Get
+                Return currentRechargeElements.SupportEndDate
+            End Get
+            Set(ByVal Value As Date)
+                currentRechargeElements.SupportEndDate = Value
+            End Set
+        End Property
+
+        Public WriteOnly Property SetCurrentRechargeDate() As Date
+            Set(ByVal RechargeDate As Date)
+                currentRechargeDate = RechargeDate
+            End Set
+        End Property
+
+        Public Property ApportionType() As RechargeApportionType
+            Get
+                Return currentRechargeElements.ApportionType
+            End Get
+            Set(ByVal Value As RechargeApportionType)
+                currentRechargeElements.ApportionType = Value
+            End Set
+        End Property
+
+        Public Property PostWarrantyApportionType() As RechargeApportionType
+            Get
+                Return currentRechargeElements.PostWarrantyApportionType
+            End Get
+            Set(ByVal Value As RechargeApportionType)
+                currentRechargeElements.PostWarrantyApportionType = Value
+            End Set
+        End Property
+
+        Public Property SurchargeApportionType() As SurchargeType
+            Get
+                Return currentRechargeElements.SurchargeApportionType
+            End Get
+            Set(ByVal Value As SurchargeType)
+                currentRechargeElements.SurchargeApportionType = Value
+            End Set
+        End Property
+
+        Public Property Portion() As Double
+            Get
+                Return currentRechargeElements.Portion
+            End Get
+            Set(ByVal Value As Double)
+                currentRechargeElements.Portion = Value
+            End Set
+        End Property
+
+        Public Property SurchargePortion() As Double
+            Get
+                Return currentRechargeElements.SurchargePortion
+            End Get
+            Set(ByVal Value As Double)
+                currentRechargeElements.SurchargePortion = Value
+            End Set
+        End Property
+
+        Public Property PostWarrantyPortion() As Double
+            Get
+                Return currentRechargeElements.PostWarrantyPortion
+            End Get
+            Set(ByVal Value As Double)
+                currentRechargeElements.PostWarrantyPortion = Value
+            End Set
+        End Property
+
+        Public Function CalcRechargeValue() As Double
+            Dim RechargeResult As Double
+            Dim hasSSD As Boolean = False
+            Dim hasSED As Boolean = False
+
+            Try
+                With currentRechargeElements
+                    Dim curValue As Double
+
+                    If Date.Compare(.SupportEndDate, CDate("01/01/1970")) > 0 Then
+                        ' valid end date
+                        hasSED = True
+                    End If
+
+                    If Date.Compare(.SupportStartDate, CDate("01/01/1970")) > 0 Then
+                        ' valid start date
+                        hasSSD = True
+                    End If
+
+                    Dim numDaysInMonth As Integer
+                    numDaysInMonth = DateTime.DaysInMonth(currentRechargeDate.Year, currentRechargeDate.Month)
+
+                    If IsDate(currentRechargeDate) = True Then
+                        If hasSED And hasSSD Then
+                            System.Diagnostics.Debug.WriteLine("current = " & currentRechargeDate)
+                            System.Diagnostics.Debug.WriteLine("current, supportEnd = " & Date.Compare(currentRechargeDate.ToShortDateString, .SupportEndDate.ToShortDateString))
+                            System.Diagnostics.Debug.WriteLine("current, supportstart = " & Date.Compare(currentRechargeDate.ToShortDateString, .SupportStartDate.ToShortDateString))
+                            If Date.Compare(currentRechargeDate.ToShortDateString, .SupportEndDate.ToShortDateString) > 0 Or Date.Compare(currentRechargeDate.ToShortDateString, .SupportStartDate.ToShortDateString) < 0 Then
+                                ' current date doesn't fall within the support periods
+                                curValue = 0
+                            Else
+                                If Date.Compare(currentRechargeDate.ToShortDateString, .WarrantyEndDate.ToShortDateString) > 0 Then
+                                    ' warranty period has expired
+
+                                    ' check that support end date doesn't occur during the current month
+                                    If .SupportEndDate.Month = currentRechargeDate.Month And .SupportEndDate.Year = currentRechargeDate.Year Then
+                                        curValue = GetPostWarrantyCharge(numDaysInMonth, numDaysInMonth - (numDaysInMonth - .SupportEndDate.Day))
+                                    Else
+                                        curValue = GetPostWarrantyCharge()
+                                    End If
+                                Else
+                                    ' check if warranty runs out DURING the current month
+                                    If .WarrantyEndDate.Month = currentRechargeDate.Month And .WarrantyEndDate.Year = currentRechargeDate.Year Then
+                                        ' runs out during this month
+
+                                        ' add basic amount for portion prior to actual warranty end date (e.g. 31 days in month - (31- warranty end day plus 1) = 9 days (31-22)
+                                        ' check that support end date doesn't occur during the current month
+                                        If .SupportEndDate.Month = currentRechargeDate.Month And .SupportEndDate.Year = currentRechargeDate.Year Then
+                                            curValue = GetPostWarrantyCharge(numDaysInMonth, numDaysInMonth - (numDaysInMonth - (.SupportEndDate.Day - .WarrantyEndDate.Day)))
+                                        Else
+                                            curValue = GetPostWarrantyCharge(numDaysInMonth, numDaysInMonth - .WarrantyEndDate.Day)
+                                        End If
+
+                                        curValue += GetBasicCharge(numDaysInMonth, numDaysInMonth - (numDaysInMonth - .WarrantyEndDate.Day))
+                                    Else
+                                        ' check if support ends DURING the current month
+                                        If .SupportEndDate.Month = currentRechargeDate.Month And .SupportEndDate.Year = currentRechargeDate.Year Then
+                                            curValue = GetBasicCharge(numDaysInMonth, numDaysInMonth - (numDaysInMonth - .SupportEndDate.Day))
+                                        Else
+                                            ' get basic charge for a full month
+                                            curValue = GetBasicCharge()
+                                        End If
+                                    End If
+                                End If
+                            End If
+                        Else
+                            curValue = GetBasicCharge()
+                        End If
+                    End If
+
+                    RechargeResult = curValue
+                End With
+
+            Catch ex As Exception
+                RechargeResult = 0
+            End Try
+
+            SetRechargeValue = RechargeResult
+            Return RechargeResult
+        End Function
+
+        Public Function SetRechargeProperties(ByVal RechargeRecord As DataRow) As Boolean
+            Try
+                ' if any field is not present, then it will return false
+                With currentRechargeElements
+                    .Portion = RechargeRecord.Item("Portion")
+                    .ApportionType = CType(RechargeRecord.Item("Apportion Id"), RechargeApportionType)
+                    If IsDBNull(RechargeRecord.Item("Support End Date")) = False Then
+                        .SupportEndDate = CDate(RechargeRecord.Item("Support End Date"))
+                    End If
+                    If IsDBNull(RechargeRecord.Item("Support Start Date")) = False Then
+                        .SupportStartDate = CDate(RechargeRecord.Item("Support Start Date"))
+                    End If
+                    If IsDBNull(RechargeRecord.Item("Warranty End Date")) = False Then
+                        .WarrantyEndDate = CDate(RechargeRecord.Item("Warranty End Date"))
+                    End If
+                    .SurchargeApportionType = CType(RechargeRecord.Item("Surcharge Type"), SurchargeType)
+                    .SurchargePortion = RechargeRecord.Item("Surcharge")
+                    .PostWarrantyApportionType = CType(RechargeRecord.Item("Post Warranty Apportion Id"), RechargeApportionType)
+                    .PostWarrantyPortion = RechargeRecord.Item("Post Warranty Portion")
+                    .Quantity = RechargeRecord.Item("Quantity")
+                    .Maintenance = RechargeRecord.Item("Maintenance Value")
+                End With
+
+                Return True
+
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Private Function GetBasicCharge(Optional ByVal numDaysInMonth As Integer = 0, Optional ByVal NumDays As Integer = 0) As Double
+            Try
+                Dim curValue As Double = 0
+
+                With currentRechargeElements
+                    Select Case .ApportionType
+                        Case RechargeApportionType.Fixed
+                            curValue = .Portion
+                        Case RechargeApportionType.n_Units
+                            curValue = ((.Maintenance / 12) / .Quantity) * .Portion
+                        Case RechargeApportionType.Percentage
+                            curValue = ((.Maintenance / 12) / 100) * .Portion
+                        Case Else
+
+                    End Select
+
+                    If numDaysInMonth > 0 And NumDays > 0 Then
+                        ' only return a proportion of the monthly charge
+                        Dim retVal As Double
+                        retVal = (curValue / numDaysInMonth) * NumDays
+                        curValue = retVal
+                    End If
+
+                    ' apply surcharge
+                    curValue = ApplySurcharge(curValue)
+                End With
+
+                Return curValue
+
+            Catch ex As Exception
+                Return 0
+            End Try
+
+        End Function
+
+        Private Function GetPostWarrantyCharge(Optional ByVal numDaysInMonth As Integer = 0, Optional ByVal NumDays As Integer = 0) As Double
+            Try
+                Dim curValue As Double = 0
+
+                With currentRechargeElements
+                    Select Case .PostWarrantyApportionType
+                        Case RechargeApportionType.Fixed
+                            curValue = .PostWarrantyPortion
+                        Case RechargeApportionType.n_Units
+                            curValue = ((.Maintenance / 12) / .Quantity) * .PostWarrantyPortion
+                        Case RechargeApportionType.Percentage
+                            curValue = ((.Maintenance / 12) / 100) * .PostWarrantyPortion
+                        Case Else
+                    End Select
+
+                    If numDaysInMonth > 0 And NumDays > 0 Then
+                        ' only return a proportion of the monthly charge
+                        Dim retVal As Double
+                        retVal = (curValue / numDaysInMonth) * NumDays
+                        curValue = retVal
+                    End If
+
+                    ' apply surcharge
+                    curValue = ApplySurcharge(curValue)
+                End With
+
+                Return curValue
+
+            Catch ex As Exception
+                Return 0
+            End Try
+        End Function
+
+        Private Function ApplySurcharge(ByVal curValue As Double) As Double
+            Try
+                Dim tmpValue As Double
+
+                With currentRechargeElements
+                    Select Case .SurchargeApportionType
+                        Case RechargeApportionType.Fixed
+                            tmpValue = curValue + .SurchargePortion
+                        Case RechargeApportionType.Percentage
+                            tmpValue = curValue + ((curValue / 100) * .SurchargePortion)
+                        Case Else
+                            tmpValue = curValue
+                    End Select
+                End With
+
+                Return tmpValue
+
+            Catch ex As Exception
+                Return curValue
+            End Try
+        End Function
+    End Class
+
+End Namespace

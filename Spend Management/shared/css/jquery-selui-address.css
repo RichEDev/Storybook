@@ -1,0 +1,383 @@
+﻿.ui-sel-wrapper {
+    z-index: 10000 !important;
+}
+.ui-sel-address {
+    width: 409px;
+    position: absolute;
+    height: 252px;
+}
+
+.ui-sel-address .ui-sel-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.ui-sel-address .ui-widget-content {
+    border: 2px #CCCCCC solid;
+}
+
+.ui-sel-address .ui-sel-no-results {
+    position: absolute;
+    width: 355px;
+    top: 0;
+}
+
+.ui-sel-address .ui-sel-no-results p, .ui-sel-address .ui-sel-start p {
+    margin: 30px;
+    text-align: center;
+}
+
+/* START menu */
+.ui-sel-address .ui-menu {
+    border: 0;
+    height: 222px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ui-sel-address .ui-sel-favourites .ui-menu, .ui-sel-address .ui-sel-labels .ui-menu {
+    height: 248px;
+}
+
+.ui-sel-address li.ui-menu-item a {
+    padding: 2px 0 2px 22px !important;
+    margin: 0 !important;
+    cursor: pointer;
+
+    background-repeat: no-repeat !important;
+    background-position: 2px 4px !important;
+    background-color: transparent !important;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.ui-sel-address li.ui-menu-item.sel-suggestion a {
+    background-image: url("/static/icons/16/plain/pin_green.png") !important;
+}
+
+.ui-sel-address li.ui-menu-item.manual-address a {
+    background-image: url("/static/icons/16/plain/pin_grey.png") !important;
+}
+
+.ui-sel-address li.ui-menu-item.not-retrievable a {
+    background-image: url("/static/icons/16/plain/signpost2.png") !important;
+}
+
+.ui-sel-address li.ui-menu-item.personal-favourite a {
+    background-image: url("/static/icons/16/plain/star_yellow.png") !important;
+}
+
+.ui-sel-address li.ui-menu-item.account-favourite a {
+    background-image: url("/static/icons/16/new-icons/star_blue.png") !important;
+}
+
+.ui-sel-address li.ui-menu-item.personal-label a {
+    background-image: url("/static/icons/16/plain/bookmark_gold.png") !important;
+}
+
+.ui-sel-address li.ui-menu-item.account-label a {
+    background-image: url("/static/icons/16/plain/bookmark_blue.png") !important;
+}
+
+.ui-sel-address li.ui-menu-item.home-address a {
+    background-image: url(/static/icons/16/plain/house.png) !important;
+}
+
+.ui-sel-address li.ui-menu-item.office-address a {
+    background-image: url(/static/icons/16/plain/office_building.png) !important;
+}
+
+.ui-sel-address li.ui-menu-item a.ui-state-focus {
+    background-color: #EEE !important;
+    border: none !important;
+    color: #333;
+}
+
+.ui-sel-address li.ui-menu-item.sel-error a, .ui-sel-address li.ui-menu-item.sel-error a.ui-state-focus {
+    background-color: #da464d !important;
+    color: #fff !important;
+    background-image: url(/static/icons/16/plain/error.png) !important;
+}
+
+.sel-context-buttons {
+    display: none;
+    background-color: #eee;
+    margin: 0;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    position: absolute;
+}
+
+.sel-context-buttons span {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin: 4px 2px 0 0;
+}
+
+.sel-button-favourite-add {
+    background: transparent url("/static/icons/16/plain/star_yellow_add.png") no-repeat;
+    left: 0;
+ }
+
+.sel-button-favourite-delete {
+    background: transparent url("/static/icons/16/plain/star_yellow_delete.png") no-repeat;
+    left: 0;
+ }
+.sel-button-label-add {
+    background: transparent url("/static/icons/16/plain/bookmark_gold_add.png") no-repeat;
+    left: 20px;
+ }
+
+.sel-button-label-delete {
+    background: transparent url("/static/icons/16/plain/bookmark_gold_delete.png") no-repeat;
+    left: 20px;
+ }
+
+.sel-input-label-add 
+{
+    display: none;
+    margin-top: 4px;
+}
+
+.sel-input-label-add label, .sel-input-label-add input, .sel-input-label-add div {
+    float: left;
+    margin-right: 2px;
+}
+
+.ui-sel-address .ui-sel-tabs-nav {
+    position: absolute;
+    right: 0;
+    top: 0;
+    list-style: none;
+    
+    padding: 0;
+    margin: 0;
+    
+    width: 50px;
+
+    background-color: #CCCCCC;
+    border: 1px solid #CCCCCC;
+    border-left: none;
+
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+
+	box-shadow: 2px 2px 3px #333;
+}
+
+/* END menu */
+
+/* START tab panels */
+.ui-sel-address .ui-sel-loading {
+    width: 16px;
+    height: 16px;
+    right: 54px;
+    bottom: 2px;
+    position: absolute;
+    background: transparent url(/shared/images/ajax-loader.gif) no-repeat;
+}
+
+
+.ui-sel-address .ui-sel-shortcut-buttons {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+}
+
+.ui-sel-address .ui-sel-shortcut-buttons div {
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin-left: 2px;
+    cursor: pointer;
+}
+
+.ui-sel-address .ui-sel-home-button {
+    background: transparent url(/shared/images/icons/16/plain/house.png) no-repeat;
+}
+
+.ui-sel-address .ui-sel-office-button {
+    background: transparent url(/shared/images/icons/16/plain/office_building.png) no-repeat;
+}
+
+.ui-sel-address .ui-sel-no-results-message {
+    bottom: 2px;
+    right: 72px;
+    position: absolute;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.ui-sel-address .ui-sel-tab-container {
+    width: 355px;
+    height: 252px;
+
+	box-shadow: 2px 2px 3px #333;
+}
+
+.ui-sel-address .ui-sel-new-address form {
+    padding: 2px;
+}
+
+.ui-sel-address .ui-sel-instructions {
+    font-size: 11px;
+    margin: 0;
+    padding: 2px;
+    max-height: 184px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ui-sel-address .ui-sel-error {
+    color: #f00;
+    font-size: 11px;
+    clear: both;
+}
+
+.ui-sel-address .ui-sel-new-address .ui-sel-form-field {
+    padding: 0;
+    height: 26px;
+    width: 100%;
+}
+
+.ui-sel-address .ui-sel-new-address .ui-sel-form-field label {
+    float: left;
+    width: 80px;
+    height: 16px;
+    text-align: left !important;
+}
+
+.ui-sel-address .ui-sel-new-address .ui-sel-form-field input {
+    width: 230px;
+    margin-left: 4px;
+}
+
+.ui-sel-address .ui-sel-new-address .buttons {
+    position: absolute;
+    bottom: 0;
+    right: 82px;
+}
+
+.ui-sel-address .ui-sel-new-address .form-button {
+    float: right;
+    height: 27px;
+    color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 4px;
+}
+
+.ui-sel-address .ui-sel-home-button.ui-sel-home-office-buttons, .ui-sel-address .ui-sel-office-button.ui-sel-home-office-buttons  {
+    min-width: 50px; 
+    min-height: 50px;
+    display: inline-block;
+    margin: 40px 0 0 40px;
+    cursor: pointer;
+}
+
+.ui-sel-address .ui-sel-home-button.ui-sel-home-office-buttons {
+    margin-left: 110px;
+    background: transparent url("/static/icons/48/new/home.png") no-repeat;
+}
+
+.ui-sel-address .ui-sel-office-button.ui-sel-home-office-buttons  {
+    background: transparent url("/static/icons/48/new/office_building.png") no-repeat;
+}
+
+
+/* IE7/8 hack for hiding button text http://css-tricks.com/snippets/css/remove-button-text-in-ie7/ */
+.ie7 .ui-sel-address .form-button, .ie8 .ui-sel-address .form-button {
+    text-indent: -9000px;
+    text-transform: capitalize;
+}
+
+.ui-sel-address .ui-sel-new-address .save-button {
+    background: url("/shared/images/buttons/btn_save.png") no-repeat scroll 0 0 transparent;
+    width: 53px;
+}
+
+.ui-sel-address .ui-sel-new-address .cancel-button {
+    background: url("/shared/images/buttons/cancel_up.gif") no-repeat scroll 0 0 transparent;
+    width: 53px;
+    padding-right:65px;
+}
+
+.ui-sel-address .ui-sel-invalid {
+    color: red;
+    margin-left: 2px;
+ }
+
+/* END tab panels */
+
+/* START tabs */
+.ui-sel-address .ui-sel-tabs-nav li {
+    height: 48px;
+    width: 48px;
+    margin: 1px 2px 2px 1px;
+    cursor: pointer;
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: #FFF;
+
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.ui-sel-address .ui-sel-tabs-nav li:hover {
+    background-color: #eee;
+}
+
+.ui-sel-address .ui-sel-tabs-nav li:last-child {
+    margin-bottom: 1px;
+}
+
+.ui-sel-address .ui-sel-tabs-nav li.ui-sel-tab-active {
+    background-color: #DBDBDB;
+}
+
+.ui-sel-address .ui-sel-tabs-nav li.ui-sel-tab-search {
+    background-image: url("/static/icons/32/new/magnifying_glass.png");
+}
+
+.ui-sel-address .ui-sel-tabs-nav li.ui-sel-tab-favourites {
+    background-image: url("/static/icons/32/new/star_yellow.png");
+}
+
+.ui-sel-address .ui-sel-tabs-nav li.ui-sel-tab-labels {
+    background-image: url("/static/icons/32/new/bookmarks.png");
+}
+
+.ui-sel-address .ui-sel-tabs-nav li.ui-sel-tab-countries {
+    background-image: url("/static/icons/32/new/earth.png");
+}
+
+/* END Tabs */
+
+.ui-sel-button {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+}
+
+.ui-sel-button.save {
+    background-image: url("/static/icons/16/plain/check.png") !important;
+}
+
+.ui-sel-button.cancel {
+    background-image: url("/static/icons/16/plain/delete.png") !important;
+}
+
+/* START Browser specific rules */
+
+/* IE7 workaround to fix the width of menu list items */
+.ui-sel-address .ui-menu li {
+    *width: 336px;
+}
+
+/* END Browser specific rules */

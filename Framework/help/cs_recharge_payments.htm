@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - Recharge Payments</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Recharge Payments</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>In order for recharges to be applied for given products, the payments must be 
+					generated.</p>
+				<p>Once these recharge payments have been generated, the recharge costs can be 
+					reported upon or committed as a forecasted invoice entry.</p>
+				<p>By default, recharge payments are displayed for the current quarter. The current quarter is assumed to be a month either side of the current month.</p>
+				<p>The dates for which the recharge payments are displayed can be changed easily. Simply modify the date range at the top of the screen to the date range you
+				wish to display and click the refresh button.</p>
+				<div class="help_tip">
+					<b>Note:</b> Any payments generated are calculated according to the recharge 
+					template for the given product and recharge party. You should ensure that these 
+					specifications are correct prior to creating charges, otherwise manual 
+					modification of the items will be necessary.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1"> Generating the 
+				Recharge Payments
+			</div>
+			<div class="help_body_text" id="1">
+				<p>To create recharge payments for a specified period, click the '<b>Generate</b>' 
+					button.</p>
+				<p>You will be prompted to specify the dates for which you want to create the 
+					payments for.</p>
+				<p>Enter the date range required and click '<b>OK</b>'.</p>
+				<p>Recharge payments for the defined period are now created at the frequency 
+					specified in the global recharge frequency parameter. This may be specified as 
+					monthly, quarterly etc.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

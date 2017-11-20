@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[productLicences] (
+    [licenceID]        INT            IDENTITY (1, 1) NOT NULL,
+    [productID]        INT            NULL,
+    [licenceKey]       NVARCHAR (250) NULL,
+    [licenceType]      INT            NULL,
+    [location]         NVARCHAR (250) NULL,
+    [expiry]           DATETIME       NULL,
+    [renewalType]      INT            NULL,
+    [notifyId]         INT            NULL,
+    [notifyType]       INT            NULL,
+    [notifyDays]       INT            NULL,
+    [softCopy]         BIT            NULL,
+    [hardCopy]         BIT            NULL,
+    [unlimited]        BIT            NULL,
+    [numberCopiesHeld] INT            NOT NULL,
+    [createdon]        DATETIME       NULL,
+    [createdby]        INT            NOT NULL,
+    [modifiedon]       DATETIME       NULL,
+    [modifiedby]       INT            NULL,
+    [dateInstalled]    DATETIME       NULL,
+    [installedVersion] NVARCHAR (50)  NULL,
+    [availableVersion] NVARCHAR (50)  NULL,
+    [userCode]         NVARCHAR (MAX) NULL,
+    [comments]         NVARCHAR (MAX) NULL,
+    [licenceTypeId]    INT            NULL
+);
+

@@ -1,0 +1,189 @@
+<html>
+	<head>
+		<title>Framework Help</title>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Defining Report Criteria</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>By default, any report created will report on every contract in the database.</p>
+				<p>The purpose of a report is to provide meaningful information from which either 
+					decisions can be made or important information can be communicated to others.</p>
+				<p>To make a report meaningful, it must <i>focus</i> on only the information that 
+					is relevant to the information requirement.</p>
+				<p>To provide this <i>focus</i>, Report Criteria must be specified. The more 
+					criteria specified the narrower the focus on the data becomes.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onClick="toggle('1');" id="img1">&nbsp;How do I 
+				add a criteria element?
+			</div>
+			<div class="help_body_text" id="1">
+				<p>On entry to the criteria screen, any existing criteria defined against the 
+					report will be displayed. Below the existing criteria are input boxes organised 
+					in five columns.</p>
+				<p>The input boxes are as follows: -</p>
+				<p>
+					<table align="center" width="500" border="1" class="inner">
+						<tr>
+							<td align="center" width="100" class="inner"><b>AND / OR</b></td>
+							<td width="400" class="inner"><p>Specifies the logical relationship to the other 
+									criteria. This is not required for the first line of criteria entered.</p>
+								<p>
+									<b>Example:</b>&nbsp;Vendor = Software Europe <b>AND</b> Contract Product = 
+									Framework
+									<br>
+									or Contract Product = Framework <b>OR</b> Contract Product = Expenses<br>
+								</p>
+								<p>With AND, all conditions must be satisfied in order to be included in the 
+									report, whereas OR will allow either to be true for it to be included in the 
+									report.</p>
+							</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Field Description</b></td>
+							<td class="inner">This is the field for which the report is being asked to satisfy.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Comparison Type</b></td>
+							<td class="inner">
+								<P>This is context sensitive and will make the statement read as simply as 
+									possible. All entries will equate to 'is true' or 'is false'.</P>
+								<P>For example, date fields&nbsp;will provide comparison dates of 'before', 'on or 
+									after', whereas numeric fields will ask 'greater than' or 'equal to'.</P>
+							</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Comparison Value</b></td>
+							<td class="inner"><p>This is the actual value to be compared.<br>
+								</p>
+								<p>
+									Depending on the type of field, this will be either a drop-down list of options 
+									or a text box where you can enter the value.</p>
+							</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>User Specified?</b></td>
+							<td class="inner">This check box indicates that the Comparison Value is to entered 
+								at the report run time. Should this box be checked, any entry specified in the 
+								Comparison Value field is ignored.<br>
+								<br>
+								This allows the criteria elements to by dynamic rather than static; ideal for 
+								reports that are to be published Global.</td>
+						</tr>
+					</table>
+				</p>
+				<p>All criteria lines should be thought of as statements. For a record to be 
+					included in the report (i.e. to satisfy the criteria) it's statement <u>must</u>
+					read as TRUE.</p>
+				<div class="help_tip">
+					<b>Tip:</b>&nbsp;Never use AND when including two entries for the same field 
+					using equals (=) because no entity will ever satisfy both (e.g. Each contract 
+					only has a single Type selected, so it can never be Type A AND Type B).
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('2');" id="img2">&nbsp;Common 
+				Criteria
+			</div>
+			<div class="help_body_text" id="2">
+				<p>Certain criteria options should be considered for inclusion regularly in your 
+					reports.</p>
+				<p>
+					<table class="inner" align="center" width="500">
+						<tr>
+							<td width="100" align="center" class="inner"><b>Archived</b></td>
+							<td width="400" class="inner"><p>All Contract Status definitions equate to either a 
+									'live' or 'archived' contract. On selection of the contract status, the 
+									'Archived' field will be set as Y or N.</p>
+								<p>This enables easy exlusion of all 'Archived' contracts resulting in reporting of 
+									'live' contract data only.</p>
+							</td>
+						</tr>
+					</table>
+				</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('3');" id="img3">&nbsp;Fixed 
+				(Static) Criteria
+			</div>
+			<div class="help_body_text" id="3">
+				<p>If criteria rows have the Comparison Value completed on this screen, the 
+					criteria is fixed every time the report is run.</p>
+				<p>Even if the report is published as Global, the report will execute with the same 
+					criteria applied each time. As only the Contract Owner can modify a Global 
+					report, this results in loss of flexibility and usefulness of the report.</p>
+				<p>For some fields this will be fine. For the best results and the least overhead 
+					in generating reports, these fixed criteria should be mixed with Variable 
+					criteria.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('4');" id="img4">&nbsp;Variable 
+				Criteria
+			</div>
+			<div class="help_body_text" id="4">
+				<p>Variable criteria means that the executor of the report will be prompted to 
+					complete the criteria item prior to the report being executed against the 
+					database.</p>
+				<p>For example, if a 'month end' report was generated, the month in question could 
+					have the date range applied as Variable criteria, thus removing the need to 
+					edit the report template each month. On running the report, the user will be 
+					prompted to enter start and end period date for which the monthly report is to 
+					retrieve data for.</p>
+				<p>It is strongly recommended that Variable criteria be implemented for reports 
+					that are to be published as Global. It is not necessary for all criteria 
+					elements to be Variable, as it may be important for some to remain static. The 
+					use of Variable criteria will add flexibility to the report you are creating.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

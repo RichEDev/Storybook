@@ -1,0 +1,3 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+supplier_categories,subAccountId,Repository SubAccount,S,50,N,Y,F,accountsSubAccounts.subAccountId,accountsSubAccounts.Description,
+supplier_categories,Description,,S,50,Y,Y,N,,,

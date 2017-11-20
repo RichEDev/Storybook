@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="worklocationordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\spend management\employee management\employees\work locations\worklocationordered.orderedtest" id="4e3283eb-8b97-41be-bbdd-18f859365385" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <Execution id="9a60bff0-fdf2-43a4-9145-e6a9e30ab218" />
+  <TestLinks>
+    <TestLink id="023c3e26-568e-3704-dae6-3b16a57e127e" name="EmployeesSuccessfullyAddExisitngWorkAddress" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="12853f97-662c-3857-2bc8-a68bcf64a5ab" name="EmployeesSuccessfullyEditExistingWorkAddress" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="bc196553-796e-49a7-4829-3c1b10eb23e2" name="EmployeesSuccessfullyDeleteWorkAddress" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

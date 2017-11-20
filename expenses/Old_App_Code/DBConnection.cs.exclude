@@ -1,0 +1,263 @@
+using System;
+using System.Data.OleDb;
+using System.Data.SqlClient;
+namespace expenses
+{
+	/// <summary>
+	/// Summary description for DBConnection.
+	/// </summary>
+	public class DBConnection
+	{
+		private System.Data.SqlClient.SqlConnection dataconnection = new System.Data.SqlClient.SqlConnection();
+		private System.Data.SqlClient.SqlDataAdapter sqladapter = new System.Data.SqlClient.SqlDataAdapter();
+		public System.Data.SqlClient.SqlCommand sqlexecute = new System.Data.SqlClient.SqlCommand();
+        public SqlCommand command = new SqlCommand();
+		private System.Data.SqlClient.SqlDataReader sqlreader;
+		string ConnectionString;
+		
+		public void SetConnectionString(string strconnection)
+		{
+			ConnectionString = strconnection;
+            sqlexecute.CommandTimeout = 120;
+		}
+
+		public string GetConnectionString()
+		{
+			return ConnectionString;
+		}
+		public DBConnection()
+		{
+			
+		}
+
+		public void getini()
+		{
+
+		}
+
+		public void ExecuteSQL(string strsql)
+		{
+			
+			OpenDB();
+			//strsql = checkSQL(strsql);
+			sqlexecute.CommandText = strsql;
+			sqlexecute.ExecuteNonQuery();
+			Close();
+		}
+		public bool OpenDB()
+		{
+			System.Web.HttpApplication appinfo = (System.Web.HttpApplication)System.Web.HttpContext.Current.ApplicationInstance;
+
+            //local connection
+			ConnectionString = "Password=penguin;Persist Security Info=True;User ID=expenseuser;Max Pool Size=10000;Server=.;Connect Timeout=120";
+				
+			//test server
+			//ConnectionString = "Password=penguin;Persist Security Info=True;User ID=" + appinfo.Application["user"] + ";Initial Catalog=expenses;Max Pool Size=10000;Data Source=expenses-test.com;";
+			//ConnectionString = "Persist Security Info=False;User ID=sa;Initial Catalog=expenses;Data Source=212.227.167.68;Workstation ID=DARREN;";
+
+
+			
+			dataconnection= new System.Data.SqlClient.SqlConnection(ConnectionString);
+			dataconnection.Open();
+			sqlexecute.Connection=dataconnection;
+			
+
+			//framework
+//			ConnectionString = "Provider=SQLOLEDB.1;Password=halstead;Persist Security Info=True;User ID=FrameworkUser;Max Pool Size=1000;Server=.";
+//			System.Data.OleDb.OleDbConnection con = new OleDbConnection(ConnectionString);
+//			con.Open();
+			return true;
+		}
+
+		public System.Data.DataSet GetDataSet(string strsql)
+		{
+			OpenDB();
+			System.Data.DataSet TempDataSet = new System.Data.DataSet();
+			sqlexecute.CommandText=strsql;
+			sqladapter.SelectCommand=sqlexecute;
+			
+			sqladapter.Fill(TempDataSet);
+			Close();
+			return TempDataSet;
+
+		}
+
+		
+
+		public void GetHierDataSet(string strsql, string dsname, ref System.Data.DataSet TempDataSet)
+		{
+			OpenDB();
+			
+			sqlexecute.CommandText = strsql;
+			sqladapter.SelectCommand = sqlexecute;
+			sqladapter.Fill(TempDataSet,dsname);
+			Close();
+			//return TempDataSet;
+
+
+        }
+
+        #region new methods
+        public SqlDataReader getReader(string sql)
+        {
+            OpenDB();
+           
+           command.Connection = dataconnection;
+           command.CommandText = sql;
+           command.CommandType = System.Data.CommandType.StoredProcedure;
+            
+           sqlreader = command.ExecuteReader();
+           command.Parameters.Clear();
+           return sqlreader;
+        }
+        public void addParameter(string name, object value)
+        {
+            command.Parameters.AddWithValue(name, value);
+        }
+
+        public int executeSaveCommand(string sql)
+        {
+            OpenDB();
+            int id;
+
+            command.Parameters.Add("@id", System.Data.SqlDbType.Int);
+            command.Parameters["@id"].Direction = System.Data.ParameterDirection.Output;
+
+            command.Connection = dataconnection;
+            command.CommandText = sql;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+
+            id = (int)command.Parameters["@id"].Value;
+            command.Parameters.Clear();
+
+            return id;
+        }
+        public void executeCommand(string sql)
+        {
+            OpenDB();
+
+            command.Connection = dataconnection;
+            command.CommandText = sql;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+            command.Parameters.Clear();
+        }
+        #endregion
+        public System.Data.SqlClient.SqlDataReader GetReader(string strsql)
+		{
+
+			
+			OpenDB();
+			sqlexecute.CommandText=strsql;
+			sqlexecute.Connection= dataconnection;
+			sqlreader = sqlexecute.ExecuteReader();
+			
+			return sqlreader;
+		}
+
+		public int getcount (string strsql)
+		{
+			int count;
+			OpenDB();
+			sqlexecute.CommandText=strsql;
+     
+			count = (int)sqlexecute.ExecuteScalar();
+			Close();
+			return count;
+			
+
+		}
+
+		public byte getTinyValue(string strsql)
+		{
+			byte bValue;
+			OpenDB();
+			sqlexecute.CommandText=strsql;
+			bValue = (byte)sqlexecute.ExecuteScalar();
+			Close();
+			return bValue;
+		}
+		public string getStringValue(string strsql)
+		{
+			System.Data.SqlClient.SqlDataReader reader;
+			string bValue = "";
+			OpenDB();
+			sqlexecute.CommandText=strsql;
+			reader = sqlexecute.ExecuteReader();
+			while (reader.Read())
+			{
+				if (reader.IsDBNull(0) == false)
+				{
+					bValue = reader.GetString(0);
+				}
+			}
+			reader.Close();
+			Close();
+			return bValue;
+		}
+		public decimal getSum (string strsql)
+		{
+			System.Data.SqlClient.SqlDataReader reader;
+			
+			decimal sum = 0;
+			OpenDB();
+			sqlexecute.CommandText=strsql;
+			reader = GetReader(strsql);
+			while (reader.Read())
+			{
+				if (reader.IsDBNull(0) == false)
+				{
+					sum = reader.GetDecimal(0);
+				}
+			}
+			reader.Close();
+			Close();
+			return sum;
+			
+
+		}
+        public int getIntSum(string strsql)
+        {
+            System.Data.SqlClient.SqlDataReader reader;
+
+            int sum = 0;
+            OpenDB();
+            sqlexecute.CommandText = strsql;
+            reader = GetReader(strsql);
+            while (reader.Read())
+            {
+                if (reader.IsDBNull(0) == false)
+                {
+                    sum = reader.GetInt32(0);
+                }
+            }
+            reader.Close();
+            Close();
+            return sum;
+
+
+        }
+		public int getMax(string strsql)
+		{
+			System.Data.SqlClient.SqlDataReader reader;
+			int max = 0;
+			reader = GetReader(strsql);
+			while (reader.Read())
+			{
+				if (reader.IsDBNull(0) == false)
+				{
+					max = reader.GetInt32(0);
+				}
+			}
+			reader.Close();
+			Close();
+
+			return max;
+		}
+		public void Close()
+		{
+			dataconnection.Close();
+		}
+	}
+}

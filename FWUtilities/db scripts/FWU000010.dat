@@ -1,0 +1,619 @@
+% FW Update.dat file
+% 13/07/2001
+# 000010 000011
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Assets
+
+% Attachments
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+ALTER TABLE [Codes - Contract Type]
+ADD [Financial Contract] int
+*
+UPDATE [Codes - Contract Type] SET [Financial Contract] = 1 WHERE [Financial Contract] is null
+*
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Invoice Status Type
+ALTER TABLE [Codes - Invoice Status Type]
+ADD [Archive] int
+*
+UPDATE [Codes - Invoice Status Type] SET [Archive] = 0
+*
+
+% Codes - Note Category
+
+% Codes - Platform Type
+
+% Codes - Region
+
+% Codes - Sales Tax
+
+% Codes - SLD
+
+% Codes - Term Type
+
+% Codes - Units
+
+CREATE TABLE [Codes - Units]
+(
+     [Unit Id]                         int IDENTITY PRIMARY KEY,
+     [Location Id]                     int,
+     [Unit Description]                varchar(50)
+)
+*
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract - Forecast Details
+
+% Contract - Forecast Products
+CREATE TABLE [Contract - Forecast Products]
+(
+	[Forecast Product Id]	int IDENTITY PRIMARY KEY,
+	[Forecast Id]		int,
+	[Product Id]		int,
+	[Product Amount]	float
+)
+*
+
+% Contract - Notification
+
+% Contract - Product Details
+ALTER TABLE [Contract - Product Details]
+ADD [Unit Id] int
+*
+ALTER TABLE [Contract - Product Details]
+ADD [Projected Saving] float
+*
+
+UPDATE [Contract - Product Details]
+SET [Product Value] = 0
+WHERE [Product Value] IS NULL
+*
+UPDATE [Contract - Product Details]
+SET [Unit Cost] = 0
+WHERE [Unit Cost] IS NULL
+*
+UPDATE [Contract - Product Details]
+SET [Unit Id] = -1
+WHERE [Product Value] IS NULL
+*
+UPDATE [Contract - Product Details]
+SET [Projected Saving] = 0
+WHERE [Projected Saving] IS NULL
+*
+
+% Contract - Product Details - Calloff
+
+% Contract - Product-History
+CREATE TABLE [Contract - Product-History]
+(
+     [Product-History Id]              int IDENTITY PRIMARY KEY,
+     [Date Changed]                    datetime,
+     [User Id]                         int,
+     [Contract-Product Id]             int,
+     [Product Value]                   float,
+     [Current Maint]                   float,
+     [Next Year Maint]                 float,
+     [Comment]			       text
+)
+*
+
+% Contract - Product-Platforms
+ALTER TABLE [Contract - Product-Platforms]
+ADD [Location id] int
+*
+ALTER TABLE [Contract - Product-Platforms]
+ADD [Sublocation id] int
+*
+ALTER TABLE [Contract - Product-Platforms]
+ADD [Vendor Id] int
+*
+ALTER TABLE [Contract - Product-Platforms]
+ADD [Calloff Quantity] int
+*
+
+$S02
+
+
+% Contract Classes
+
+% Contract Details
+ALTER TABLE [Contract Details]
+ADD [Maintenance Type] int
+*
+ALTER TABLE [Contract Details]
+ADD [Maintenance Pct] float
+*
+ALTER TABLE [Contract Details]
+ADD [Contract Owner] int
+*
+
+% Contract Notes
+ALTER TABLE [Contract Notes]
+ADD [temp] varchar(8000)
+*
+UPDATE [Contract Notes] SET [temp] = [Note]
+*
+ALTER TABLE [Contract Notes]
+DROP COLUMN [Note]
+*
+ALTER TABLE [Contract Notes]
+ADD [Note] varchar(8000)
+*
+UPDATE [Contract Notes] SET [Note] = [temp]
+*
+ALTER TABLE [Contract Notes]
+DROP COLUMN [Temp]
+*
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Export Fields
+
+% Exports
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice - Product Details
+
+% Invoice Details
+
+% Invoice Log
+CREATE TABLE [Invoice Log]
+(
+     [Invoice Log Id]                  int IDENTITY PRIMARY KEY,
+     [Invoice Id]                      int,
+     [Date Changed]                    datetime,
+     [User Id]                         int,           
+     [Invoice Status]                  int,
+     [Comment]			       text                  
+)
+*
+
+% Invoice Notes
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+ALTER TABLE [Language Texts]
+ADD [MaxLen] int
+*
+ALTER TABLE [Language Texts]
+ADD [ScreenIdent] char(30)
+*
+UPDATE [Language Texts] SET [MaxLen] = 0
+*
+
+% Location
+
+% Mail
+
+% Mail Schedule
+
+% Metrics
+
+% OLAP Cube 02
+
+% OLAP Cube 03
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Platform LPars
+
+% Product Details
+
+% Product Notes
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Saved Views
+DELETE FROM [Saved Views]
+*
+ALTER TABLE [Saved Views]
+ALTER COLUMN [View Name] varchar(250)
+*
+ALTER TABLE [Saved Views]
+ADD [SelOwner] varchar(50)
+*
+ALTER TABLE [Saved Views]
+ADD [SelMaintType] varchar(50)
+*
+ALTER TABLE [Saved Views]
+ADD [SelMaintPct] varchar(50)
+*
+ALTER TABLE [Saved Views]
+DROP COLUMN [SortCol]
+*
+ALTER TABLE [Saved Views]
+DROP COLUMN [SortOrd]
+*
+ALTER TABLE [Saved Views]
+ADD [Grand Total] int
+*
+ALTER TABLE [Saved Views]
+ADD [Def Currency] int
+*
+ALTER TABLE [Saved Views]
+ADD [SLT] int
+*
+
+% Schedule
+
+% Security
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Staff Details
+
+% Sublocations
+CREATE TABLE [Sublocations]
+(
+	[Sublocation Id] int IDENTITY PRIMARY KEY,
+	[Location Id] int,
+	[Sublocation Desc] varchar(50)
+)
+*
+
+% System Parameters
+ALTER TABLE [System Parameters]
+ADD [Retail Price Index] float
+*
+UPDATE [System Parameters] SET [Retail Price Index] = 3
+*
+ALTER TABLE [System Parameters]
+ADD [Retail Codes] varchar(50)
+*
+ALTER TABLE [System Parameters]
+ADD [Maintenance Criteria] int
+*
+UPDATE [System Parameters] SET [Maintenance Criteria] = 0
+*
+
+% Target Types
+
+% User Field Values
+CREATE TABLE [User Field Values]
+(
+	[User Value Id] int IDENTITY PRIMARY KEY,
+	[User Field Id] int,
+	[Field Value] varchar(50)
+)
+*
+
+% User Fields
+
+% Vendor Addresses
+ALTER TABLE [Vendor Addresses]
+ADD [Main Contact] int
+*
+ALTER TABLE [Vendor Addresses]
+ADD [Name] varchar(50)
+*
+ALTER TABLE [Vendor Addresses]
+ADD [Position] varchar(50)
+*
+UPDATE [Vendor Addresses]
+SET [Name] = [Acct Manager]
+*
+ALTER TABLE [Vendor Addresses]
+DROP COLUMN [Acct Manager]
+*
+UPDATE [Vendor Addresses] SET [Main Contact] = 0
+*
+
+% Vendor Categories
+
+% Vendor Details
+
+% Vendor Notes
+
+% Vendor Regions
+
+% Vendor Status
+
+% ---------- Views ----------
+
+% Performance Metrics
+
+% CalView
+
+% ---------- Procedures ----------
+IF EXISTS (SELECT name
+           FROM sysobjects
+           WHERE name = 'SPF003' AND type = 'P')
+    DROP PROCEDURE [SPF003]
+*
+
+CREATE PROCEDURE [SPF003]
+    @p1 int
+    AS
+    SELECT [Vendor Details].[Vendor Id],
+           [Vendor Name], 
+           [Address Line 1],
+           [Address Line 2], 
+           [Address Line 3], 
+           [Address Line 4], 
+           [Address Line 5],
+           [Email]
+    FROM (([Vendor Details]
+    LEFT OUTER JOIN [Acquisition Vendors] 
+    ON [Vendor Details].[Vendor Id] = [Acquisition Vendors].[Vendor Id]) 
+    LEFT OUTER JOIN [Vendor Addresses]
+    ON [Vendor Details].[Primary Address Id] = [Vendor Addresses].[Address Id])
+    WHERE [Acquisition Id] = @p1
+*
+
+------- Tidy Up Script
+
+-- Acquisition Vendors
+
+-- Acquisition Details
+
+-- Analysis Rules
+
+-- Assets
+
+-- Attachments
+
+-- Audit Trail
+
+-- Calendar
+
+-- Clauses
+
+-- Code Tables
+
+-- Codes - Contract Category
+
+-- Codes - Contract Type
+UPDATE [Codes - Contract Type] SET [Financial Contract] = 1 WHERE [Financial Contract] IS NULL
+*
+
+-- Codes - Currency
+
+-- Codes - Invoice Frequency Type
+
+-- Codes - Invoice Status Type
+
+-- Codes - Note Category
+
+-- Codes - Platform Type
+
+-- Codes - Region
+
+-- Codes - Sales Tax
+
+-- Codes - SLD
+
+-- Codes - Term Type
+
+-- Codes - Units
+
+-- Committed Contracts
+
+-- Committed Contract Details
+
+-- Contract - Forecast Details
+
+-- Contract - Forecast Products
+
+-- Contract - Notification
+
+-- Contract - Product Details
+update [contract - product details] set [maintenance value] = 0 where [maintenance value] is null
+*
+update [contract - product details] set [currency id] = -1 where [currency id] is null
+*
+update [contract - product details] set [sales tax rate] = 0 where [sales tax rate] is null
+*
+update [contract - product details] set [maintenance percent] = 0 where [maintenance percent] is null
+*
+update [contract - product details] set [quantity] = 0 where [quantity] is null
+*
+update [contract - product details] set [unit id] = -1 where [unit id] is null
+*
+delete from [contract - product details] where [product id] is null
+*
+
+-- Contract - Product Details - Calloff
+
+-- Contract - Product-History
+
+-- Contract - Product-Platforms
+
+-- Contract Classes
+
+-- Contract Details
+update [contract details] set [category id] = -1 where [category id] is null
+*
+update [contract details] set [review period] = 0 where [review period] is null
+*
+update [contract details] set [contract owner] = -1 where [contract owner] is null
+*
+update [contract details] set [maintenance pct] = 0 where [maintenance pct] is null
+*
+update [contract details] set [maintenance type] = -1 where [maintenance type] is null
+*
+-- Contract Notes
+update [contract notes] set [note cat id] = -1 where [note cat id] is null
+*
+update [contract notes] set [note type] = -1 where [note type] is null
+*
+
+-- Contract Types
+
+-- Contract Type Clauses
+
+-- Data Fields
+
+-- Data Tables
+
+-- Export Fields
+
+-- Exports
+
+-- Financials
+
+-- Import Fields
+
+-- Import Mapping
+
+-- Imports
+
+-- Invoice - Product Details
+
+-- Invoice Details
+
+-- Invoice Log
+
+-- Invoice Notes
+
+-- ITT_RFI Templates
+
+-- Languages
+
+-- Language Texts
+
+-- Location
+
+-- Mail
+
+-- Mail Schedule
+
+-- Metrics
+
+-- OLAP Cube 02
+
+-- OLAP Cube 03
+
+-- Performance
+
+-- Pending Email
+
+-- Period Types
+
+-- Platform LPars
+
+-- Product Details
+UPDATE [Product Details] SET [Number of Licensed Copies] = 0 WHERE [Number of Licensed Copies] IS NULL
+*
+UPDATE [Product Details] SET [Calloff Quantity] = 0 WHERE [Calloff Quantity] IS NULL
+*
+UPDATE [Product Details] SET [Total Usage] = 0 WHERE [Total Usage] IS NULL
+*
+
+-- Product Notes
+update [product notes] set [note cat id] = -1 where [note cat id] is null
+*
+update [product notes] set [note type] = -1 where [note type] is null
+*
+
+-- Product Platforms
+UPDATE [Product Platforms] SET [Quantity] = 0 WHERE [Quantity] IS NULL
+*
+
+-- Product Usage
+
+-- Product Vendors
+
+-- Purchase Orders
+
+-- Saved Views
+
+-- Schedule
+
+-- Security
+
+-- Security Locations
+
+-- SLM Classes
+
+-- SLM Details
+
+-- Staff Details
+
+-- Sublocations
+
+-- System Parameters
+
+-- Target Types
+
+-- User Field Values
+
+-- User Fields
+
+-- Vendor Addresses
+
+-- Vendor Categories
+
+-- Vendor Details
+update [vendor details] set [annual turnover currency id] = -1 where [annual turnover currency id] is null
+*
+update [vendor details] set [internal staff contact id] = -1 where [internal staff contact id] is null
+*
+
+-- Vendor Notes
+update [vendor notes] set [note cat id] = -1 where [note cat id] is null
+*
+update [vendor notes] set [note type] = -1 where [note type] is null
+*
+
+-- Vendor Regions
+
+-- Vendor Status
+
+
+% End of file

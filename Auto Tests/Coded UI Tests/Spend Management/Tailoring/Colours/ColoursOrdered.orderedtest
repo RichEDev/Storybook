@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="OrderedTest1" storage="c:\projects\spend management\teamdc\auto tests\coded ui tests\spend management\tailoring\colours\orderedtest1.orderedtest" id="9b47150b-996e-46c6-b6ef-ca983e4f805b" continueAfterFailure="true" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="313dd472-f5ac-ab27-fed1-b3ef7b7de195" name="ColoursSuccessfullyRestoreDefaultColours_UITest" storage="..\..\..\..\bin\debug\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="beb1f9fc-b53e-4aa0-09e6-13baa77bdd94" name="ColoursSuccessfullySaveColours_UITest" storage="..\..\..\..\bin\debug\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="a956df80-b473-3661-3d3b-4e96b1f541d5" name="ColoursSuccessfullyVerifyColoursSaveDefaultValuesWhenMandatoryFieldsAreMissing_UITest" storage="..\..\..\..\bin\debug\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="4a841306-74e9-92a4-d674-14d236ede7c7" name="ColoursUnsuccessfullySaveColoursWhereInvalidDataAreSet_UITest" storage="..\..\..\..\bin\debug\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

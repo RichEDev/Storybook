@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="Allstar Fuel Card" FileType="Text" Delimiter="," NumberHeaderRecords="2">
+  <QuotedCharacters>&#34;</QuotedCharacters>
+  <Fields Type="CardTransaction" UniqueValue="trans">
+    <HeaderRecord>
+      <HeaderField>Start Date :</HeaderField>
+      <HeaderField FieldType="D" />
+      <HeaderField>End Date :</HeaderField>
+      <HeaderField FieldType="D" />
+    </HeaderRecord>
+    
+    <ExcludeValues>
+      <ExcludeValue ExcludeValueColumnIndex="0">Cost Centre Total :</ExcludeValue>
+      <ExcludeValue ExcludeValueColumnIndex="0">Card Total :</ExcludeValue>
+      <ExcludeValue ExcludeValueColumnIndex="0">Invoice Centre Total :</ExcludeValue>
+      <ExcludeValue ExcludeValueColumnIndex="0">Grand Total :</ExcludeValue>
+    </ExcludeValues>
+
+    <Field Name="AccountNo" MappedTable="card_transactions_allstar" MappedField="AccountNo" FieldType="S" MaxLength="500"/>
+    <Field Name="InvoiceCentre" MappedTable="card_transactions_allstar" MappedField="InvoiceCentre" FieldType="S" MaxLength="500"/>
+    <Field Name="CostCentre" MappedTable="card_transactions_allstar" MappedField="CostCentre" FieldType="S" MaxLength="500"/>
+    <Field Name="CardNo" Label="Cardholder Number" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="20"/>
+    <Field Name="InvDt" MappedTable="card_transactions_allstar" MappedField="InvoiceDate" FieldType="D" Format="mm/dd/yyyy" />
+    <Field Name="TxnDt" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="mm/dd/yyyy" />
+    <Field Name="TxnReg" MappedTable="card_transactions_allstar" MappedField="TransactionReg" FieldType="S" MaxLength="50"/>
+    <Field Name="Mileage" MappedTable="card_transactions_allstar" MappedField="Mileage" FieldType="N"/>
+    <Field Name="Brand" MappedTable="card_transactions_allstar" MappedField="Brand" FieldType="S" MaxLength="500"/>
+    <Field Name="Product" MappedTable="card_transactions_allstar" MappedField="Product" FieldType="S" MaxLength="500"/>
+    <Field Name="PPL" MappedTable="card_transactions_allstar" MappedField="PPL" FieldType="C" />
+    <Field Name="Gallons" MappedTable="card_transactions_allstar" MappedField="Gallons" FieldType="S" MaxLength="50"/>
+    <Field Name="Net" MappedTable="card_transactions_allstar" MappedField="Net" FieldType="C" />
+    <Field Name="Vat" MappedTable="card_transactions_allstar" MappedField="Vat" FieldType="C" />
+    <Field Name="Gross" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C" />
+    <Field Name="VoucherNo" MappedTable="card_transactions_allstar" MappedField="VoucherNo" FieldType="S" MaxLength="500"/>
+    <Field Name="SuppNo" MappedTable="card_transactions_allstar" MappedField="SuppNo" FieldType="S" MaxLength="500"/>
+    <Field Name="SuppNm" MappedTable="card_transactions_allstar" MappedField="SuppName" FieldType="S" MaxLength="500"/>
+    <Field Name="SuppAdd1" MappedTable="card_transactions_allstar" MappedField="SuppAdd1" FieldType="S" MaxLength="500"/>
+    <Field Name="SuppAdd2" MappedTable="card_transactions_allstar" MappedField="SuppAdd2" FieldType="S" MaxLength="500"/>
+    <Field Name="SuppAdd3" MappedTable="card_transactions_allstar" MappedField="SuppAdd3" FieldType="S" MaxLength="500"/>
+    <Field Name="SuppTown" MappedTable="card_transactions_allstar" MappedField="SuppTown" FieldType="S" MaxLength="500"/>
+    <Field Name="SuppCounty" MappedTable="card_transactions_allstar" MappedField="SuppCounty" FieldType="S" MaxLength="500"/>
+    <Field Name="SuppPC" MappedTable="card_transactions_allstar" MappedField="SuppPostcode" FieldType="S" MaxLength="50"/>
+    <Field Name="SuppTele" MappedTable="card_transactions_allstar" MappedField="SuppTelephone" FieldType="S" MaxLength="50"/>
+    <Field Name="EmbossedReg" MappedTable="card_transactions_allstar" MappedField="EmbossedReg" FieldType="S" MaxLength="50"/>
+    <Field Name="EmbossedDriver" MappedTable="card_transactions_allstar" MappedField="EmbossedDriver" FieldType="S" MaxLength="500"/>
+    <Field Name="FilmNumber" MappedTable="card_transactions_allstar" MappedField="FilmNumber" FieldType="S" MaxLength="50"/>
+    <Field Name="InvoiceNo" MappedTable="card_transactions_allstar" MappedField="InvoiceNo" FieldType="S" MaxLength="50"/>
+    <Field Name="Source" MappedTable="card_transactions_allstar" MappedField="Source" FieldType="S" MaxLength="500"/>
+    <Field Name="CurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" DefaultValue="GBP" CurrencyType="alpha" />
+    <Field Name="CountryCode" MappedTable="card_transactions" MappedField="country_code" FieldType="S" DefaultValue="GB" CountryType="alpha" />
+  </Fields>
+</CardTemplate>

@@ -1,0 +1,180 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+		<title>Framework Help - User Setup Detail</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<link rel="stylesheet" href="fwhelp.css" type="text/css" />
+		<script language="javascript" type="text/javascript">
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window" /></a>
+			User Definition Detail</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>This screen provides the means for an administrator to add or modify the detail 
+					for a Framework user security account.</p>
+				<p>In addition to the user detail, access can be granted or denied to any locations 
+					defined.</p>
+				<div class="help_tip">
+					<b>Note:</b> This screen will also allow a user's password to be reset.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img id="img1" alt="Expand Topic" onclick="toggle('1');" src="../buttons/open.gif" />&nbsp;Field 
+				Descriptions
+			</div>
+			<div class="help_body_text" id="1">
+				<p>The following fields are displayed for population: -</p>
+				<p>
+					<table width="700" align="center" class="inner">
+						<tr>
+							<th class="inner" width="150">
+								Field Name</th>
+							<th class="inner" width="350">
+								Description</th>
+							<th class="inner" width="100">
+								Mandatory /<br />
+								Optional</th>
+							<th class="inner" width="100">
+								Max Length</th>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Full Name</b></td>
+							<td class="inner">This should be the 'real' name of the user.</td>
+							<td class="inner" align="center">Mandatory</td>
+							<td class="inner" align="center">30</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>User Name</b></td>
+							<td class="inner">This is the identity the use at the logon screen to identify 
+								themselves to the application. A user name can be any format of choice (e.g. a 
+								number, firstname or a mixture of the two).</td>
+							<td class="inner" align="center">Mandatory</td>
+							<td class="inner" align="center">15</td>
+						</tr>
+						<tr>
+						    <td class="inner" align="center"><b>Position</b></td>
+						    <td class="inner">The job title or role within the organisation</td>
+						    <td class="inner" align="center">Optional</td>
+						    <td class="inner" align="center">100</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Password</b></td>
+							<td class="inner">The password must be 6 to 10 characters and is case sensitive.</td>
+							<td class="inner" align="center">Mandatory</td>
+							<td class="inner" align="center">10</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Confirm Password</b></td>
+							<td class="inner">Re-entry of the password enables confirmation and elimination of 
+								typing errors.</td>
+							<td class="inner" align="center">Mandatory</td>
+							<td class="inner" align="center">10</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Email</b></td>
+							<td class="inner">Without an email address, the user will be unable to request a 
+								password hint should they forget it.</td>
+							<td class="inner" align="center">Optional</td>
+							<td class="inner" align="center">100</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Password Hint</b></td>
+							<td class="inner">A short clue as to what their password is. This should <u>never</u>
+								be the password itself!<br /><br /><b>Note: </b>This hint will be sent via email, so will require an email
+								address to be usable.</td>
+							<td class="inner" align="center">Optional</td>
+							<td class="inner" align="center">50</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>User Role</b></td>
+							<td class="inner">The user role selected from the list determines the actual 
+								permissions the user inherits. Individual permissions are controlled within the 
+								role definition.<br />
+								<br />
+								<b>Warning:</b> Changing a role definition permission will affect <i>all</i> users 
+								assigned that role.</td>
+							<td class="inner" align="center">Mandatory</td>
+							<td class="inner" align="center">n/a</td>
+						</tr>
+						<tr>
+						<td class="inner" align="center"><b>Icon Size</b></td>
+						<td class="inner">Drop down list allowing user to decide whether they use the large icon display or the small icon display.</td>
+						<td class="inner" align="center">Mandatory</td>
+						<td class="inner" align="center">Default: Large</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center"><b>Location List</b></td>
+							<td class="inner">It is possible that Framework will have multiple repository locations defined.<br /><br />
+							Each user can be granted or denied access to these locations by ticking the box adjacent to each location
+							definition.<br /><br />
+							In addition to this, one location should be selected as the user's default location that they will access automatically
+							on logon. This can be selected using the 'radio' (single select) button.<br /><br />
+							<b>Note:</b> The default location <u>must</u> be a location ticked for access.</td>
+							<td class="inner" align="center">One Selection Mandatory</td>
+							<td class="inner" align="center">n/a</td>
+						</tr>
+					</table>
+				</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img id="img2" alt="Expand Topic" onclick="toggle('2');" src="../buttons/open.gif" />&nbsp;Reset a User's password
+			</div>
+			<div class="help_body_text" id="2">
+				<p>A common task that will arise is that of users forgetting their password.</p>
+				<p>As all passwords are encrypted within the database, it is impossible for anyone to tell a user
+				what their password is.</p>
+				<p>If a password requires overriding: -</p>
+				<p><li>Click 'Edit' to access the user's detail.</li></p>
+				<p><li>Enter the new password in the 'Password' text box.</li></p>
+				<p><li>Re-enter the password in the 'Confirm Password' text box.</li></p>
+				<p><li>Click the 'Update' button.</li></p>
+				<p>The user should be advised to change their password as soon as possible. The override password
+				should be considered as temporary.</p>
+				<div class="help_tip">
+					<b>Note:</b> On reporting a forgotten password, the user should be reminded of their password hint as a first try.
+					This can be received via email by clicking the 'Forgotten Password?' link on the logon screen.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<div></div>
+	</body>
+</html>

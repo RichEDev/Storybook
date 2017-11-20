@@ -1,0 +1,5 @@
+﻿<asp:GridView runat="server" CssClass="datatbl">
+    <HeaderStyle CssClass="tableheader"/>
+    <%--<RowStyle CssClass="row1" />--%>
+    <AlternatingRowStyle CssClass="row2" />
+</asp:GridView>

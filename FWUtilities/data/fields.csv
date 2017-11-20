@@ -1,0 +1,41 @@
+1,Cancellation Date,Cancellation Date
+1,Contract Category,Contract Category
+1,Contract Description,Contract Description
+1,Contract Key,Contract Key
+1,Contract Number,Contract Number
+1,Contract Owner,Contract Owner
+1,Contract Renewal Date,End Date
+1,Contract Start Date,Start Date
+1,Contract Type,Contract Type
+1,Contract Value,Contract Value
+1,Review Date,Review Date
+1,Schedule Number,Schedule Number
+1,Supercedes Contract,Supercedes Contract
+1,NYM Info,Total Maintenance Value
+1,Supplier Name,Vendor Name
+1,Contract Link,Contract Link
+1,Cancellation Period,Notice Period
+1,Review Period,Review Period
+4,Licence Key,Licence Key
+4,Licence Expires,Expiry
+4,Number Copies Held,Number Copies Held
+4,Renewal Type,Renewal Type
+4,Product Category,Description
+4,Notify,Notify Id
+4,Product Code,Product Code
+4,Product Name,Product Name
+4,Product Description,Product Description
+4,Installed Version,Installed Version Number
+4,Available Version,Available Version Number
+4,Date Installed,Date Installed
+4,Total Licenced Copies,Number of Licenced Copies
+2,Contract Number,Contract Number
+2,Payment Date,Payment Date
+2,Invoice Amount,Invoice Amount
+2,Comment,Comment
+2,PO Number,PO Number
+2,PO Start Date,PO Start Date
+2,PO Max Value,PO Max Value
+2,PO Expiry Date,PO Expiry Date
+3,Cleardown Date,Cleardown Date
+3,Cleardown Time,Cleardown Time

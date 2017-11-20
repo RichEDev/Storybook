@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[static_exchangerates]
+    ADD CONSTRAINT [PK_static_exchangerates] PRIMARY KEY CLUSTERED ([currencyid] ASC, [tocurrencyid] ASC) WITH (FILLFACTOR = 90, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

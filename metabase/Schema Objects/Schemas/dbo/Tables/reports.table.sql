@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[reports] (
+    [oldreportid]       INT              IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [reportname]        NVARCHAR (150)   COLLATE Latin1_General_CI_AS NOT NULL,
+    [description]       NVARCHAR (2000)  COLLATE Latin1_General_CI_AS NULL,
+    [curexportnum]      INT              NOT NULL,
+    [lastexportdate]    DATETIME         NULL,
+    [footerreport]      BIT              NOT NULL,
+    [oldfooterreportid] INT              NULL,
+    [oldfolderid]       INT              NULL,
+    [readonly]          BIT              NOT NULL,
+    [forclaimants]      BIT              NOT NULL,
+    [allowexport]       BIT              NOT NULL,
+    [exporttype]        TINYINT          NOT NULL,
+    [CreatedOn]         DATETIME         NULL,
+    [CreatedBy]         INT              NULL,
+    [ModifiedOn]        DATETIME         NULL,
+    [ModifiedBy]        INT              NULL,
+    [staticReportSQL]   NVARCHAR (MAX)   COLLATE Latin1_General_CI_AS NULL,
+    [limit]             SMALLINT         NOT NULL,
+    [basetable]         UNIQUEIDENTIFIER NOT NULL,
+    [reportid]          UNIQUEIDENTIFIER NOT NULL,
+    [folderid]          UNIQUEIDENTIFIER NULL,
+    [footerreportid]    UNIQUEIDENTIFIER NULL
+);
+

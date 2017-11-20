@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="Premier Inn XLS" FileType="XLS" NumberHeaderRecords="2" NumberFooterRecords="1">
+  <Fields Type="CardTransaction" UniqueValue="trans">
+    <HeaderRecord>
+      <HeaderField>Date Range</HeaderField>
+      <HeaderField FieldType="D" Format="dd/MM/yyyy hh:mm:ss"/>
+      <HeaderField FieldType="D" Format="dd/MM/yyyy hh:mm:ss"/>
+    </HeaderRecord>
+
+    <Field Name="InvoiceDate" MappedTable="card_transactions_premierinn" MappedField="invoice_date" FieldType="D" Format="dd/MM/yyyy hh:mm:ss"/>
+    <Field Name="InvoiceNumber" MappedTable="card_transactions_premierinn" MappedField="invoice_number" FieldType="S" MaxLength="10" />
+    <Field Name="TransDate" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="dd/MM/yyyy hh:mm:ss" />
+    <Field Name="GuestName" MappedTable="card_transactions_premierinn" MappedField="guest_name" FieldType="S" MaxLength="50" />
+    <Field Name="Location" MappedTable="card_transactions" MappedField="description" FieldType="S" MaxLength="50" />
+    <Field Name="CardNumber" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="16" DisplayInUnallocatedCardGrid="yes" /> 
+    <Field Name="CardName" MappedTable="card_transactions_premierinn" MappedField="card_name" FieldType="S" MaxLength="50" />
+    <Field Name="PurchaseOrderNumber" MappedTable="card_transactions_premierinn" MappedField="Purchase_order_number" FieldType="S" MaxLength="50" />
+    <Field Name="CustomerOwnReference" MappedTable="card_transactions_premierinn" MappedField="Customer_own_reference" FieldType="S" MaxLength="50" />
+    <Field Name="Product" MappedTable="card_transactions_premierinn" MappedField="Product" FieldType="S" MaxLength="50" />
+    <Field Name="Quantity" MappedTable="card_transactions_premierinn" MappedField="Quantity" FieldType="C" />
+    <Field Name="Net" MappedTable="card_transactions_premierinn" MappedField="net" FieldType="C" />
+    <Field Name="VAT" MappedTable="card_transactions_premierinn" MappedField="Vat" FieldType="C" />
+    <Field Name="GrossValue" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C" />    
+    <Field Name="CurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" DefaultValue="GBP" CurrencyType="alpha" /> 
+    <Field Name="CountryCode" MappedTable="card_transactions" MappedField="country_code" FieldType="S" DefaultValue="GB" CountryType="alpha" /> 
+  </Fields>
+</CardTemplate>

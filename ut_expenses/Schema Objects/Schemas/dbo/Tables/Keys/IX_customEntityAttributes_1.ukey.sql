@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[customEntityAttributes]
+    ADD CONSTRAINT [IX_customEntityAttributes_1] UNIQUE NONCLUSTERED ([entityid] ASC, [display_name] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF) ON [PRIMARY];
+

@@ -1,0 +1,88 @@
+@model SpendManagementApi.Areas.HelpPage.TypeLibrary
+@{
+    ViewBag.Title = "Expenses API Element Types";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<section title="Contents" id="Contents">
+    <header>
+        <h2>Contents</h2>
+    </header>
+    <p>
+        <ul>
+            <li><a href="#Enums">Enums</a></li>
+            <li><a href="#Requests">Requests</a></li>
+            <li><a href="#Types">Reference Types</a></li>
+        </ul>
+    </p>
+</section>
+
+
+<div class="help-section accordion" id="Enums">
+    <header>
+        <h2>Enumerations</h2>
+    </header>
+    @foreach (var el in Model.EnumTypes)
+    {
+        <header class="api-list-header" id="@el.Key">
+            <a href="#@el.Key">
+                <h2>@el.Key</h2>
+            </a>
+        </header>
+        <section title="details">
+            <div class="help-type-comments">
+
+            </div>
+            @Html.DisplayFor(s => el.Value, "ApiEnum")
+        </section>
+        <br />
+    }
+</div>
+
+<div class="help-section accordion" id="Requests">
+    <header>
+        <h2>Request Types</h2>
+    </header>
+    @foreach (var el in Model.RequestTypes)
+    {
+        <header class="api-list-header" id="@el.Key">
+            <a href="#@el.Key">
+                <h2>@el.Key</h2>
+            </a>
+        </header>
+        <section title="details">
+            <div class="help-type-comments">
+                @Html.Raw(el.Value.Documentation)
+            </div>
+            @Html.DisplayFor(s => el.Value)
+        </section>
+        <br />
+    }
+</div>
+
+<div class="help-section accordion" id="Types">
+    <header>
+        <h2>Reference Types</h2>
+    </header>
+    @foreach (var el in Model.ReferenceTypes)
+    {
+        <header class="api-list-header" id="@el.Key">
+            <a href="#@el.Key">
+                <h2>@el.Key</h2>
+            </a>
+        </header>
+        <section title="details">
+            <div class="help-type-comments">
+                @Html.Raw(el.Value.Documentation)
+            </div>
+            @Html.DisplayFor(s => el.Value)
+        </section>
+        <br />
+    }
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/WebApiUtils.js"></script>
+}

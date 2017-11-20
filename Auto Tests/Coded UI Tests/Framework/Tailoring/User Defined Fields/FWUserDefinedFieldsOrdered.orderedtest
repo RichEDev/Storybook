@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="fwuserdefinedfieldsordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\framework\tailoring\user defined fields\fwuserdefinedfieldsordered.orderedtest" id="19641bc8-322a-483b-bcca-b3214eeab62f" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <TestLinks>
+    <TestLink id="3153ac3d-a260-e359-eafa-f78b3b84bb8c" name="UserDefinedFieldsSuccessfullyAddEveryUDFForAppliesToWithinFramework" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="5d17ecf5-138e-00ae-6362-8c1cdf656c37" name="UserDefinedFieldsSuccessfullyAddEveryUDFWithinFramework" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="75918a84-bde4-bb1c-feae-79c1e9aa4d27" name="UserDefinedFieldSuccessfullyAddUDFWhereAllowSearchIsSetWithinFramework" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="e5c8a52f-be36-79f8-71ab-0f64ed3fc392" name="UserDefinedFieldSuccessfullyAddUDFWhereGroupIsSetWithinFramework" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="57053c7a-14a0-8c38-78ad-183e39f3de82" name="UserDefinedFieldUnSuccessfullyAddUDFWithDuplicateDetailsWithinFramework" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

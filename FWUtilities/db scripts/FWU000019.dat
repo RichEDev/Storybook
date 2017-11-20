@@ -1,0 +1,623 @@
+% FW Update.dat file
+% 29/03/2007
+# 000019 000020
+
+% ---------- Tables and Indices ----------
+
+% Attachment Audience
+
+% Attachments
+ALTER TABLE dbo.[attachments]
+ALTER COLUMN [Attached By] varchar(60)
+*
+
+% Audit Log
+ALTER TABLE dbo.[audit_log]
+ALTER COLUMN [Full Name] varchar(60)
+*
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Account Codes
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Contract Status
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Inflator Metrics
+
+% Codes - Financial Status
+
+% Codes - Invoice Status Type
+
+% Codes - Licence Renewal Type
+
+% Codes - Note Category
+
+% Codes - Product Category
+
+% Codes - Platform Type
+
+% Codes - Recharge Entity
+
+% Codes - Sales Tax
+
+% Codes - Sites
+
+% Codes - Term Type
+
+% Codes - Units
+
+% Codes - User Field Grouping
+
+% Contract - Forecast Details
+
+% Contract - Forecast Products
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+
+% Contract - Product Details - Recharge
+
+% Contract - Product-History
+
+% Contract - Product Information
+
+% Contract - Product-Platforms
+
+% Contract Audience
+
+% Contract Details
+ALTER TABLE dbo.[contract_details]
+ALTER COLUMN [Last Changed By] varchar(60)
+*
+
+ALTER TABLE dbo.[contract_details]
+ALTER COLUMN [Contract Description] varchar(250)
+*
+
+ALTER TABLE dbo.[contract_details]
+ALTER COLUMN [Schedule Number] varchar(100)
+*
+
+% Contract Notes
+ALTER TABLE dbo.[contract_notes]
+ADD [Created By Id] int
+*
+
+% Contract Types
+
+% Email Schedule
+
+% Email Templates
+
+% Favourite Reports
+
+% Invoice - Product Details
+
+% Invoice Details
+
+% Invoice Log
+
+% Invoice Notes
+ALTER TABLE dbo.[invoice_notes]
+ADD [Created By Id] int
+*
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Link Definitions
+
+% Link Matrix
+
+% Link Variations
+CREATE TABLE dbo.[link_variations]
+(
+	[Link Id] int IDENTITY PRIMARY KEY,
+	[Primary Contract Id] int NOT NULL DEFAULT(0),
+	[Variation Contract Id] int NOT NULL DEFAULT(0),
+	[Closed] smallint NOT NULL DEFAULT(0)
+)
+*
+
+% Location
+
+% Mail
+
+% Mail Schedule
+
+% Metrics
+
+% MIME Headers
+
+% Param
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Platform LPars
+
+% Product Details
+ALTER TABLE dbo.[product_details]
+ADD [Notify Id] int NOT NULL DEFAULT(0)
+*
+
+% Product Notes
+ALTER TABLE dbo.[product_notes]
+ADD [Created By Id] int
+*
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Recharge Associations
+
+% Saved Reports
+
+% Saved Views
+
+% Savings
+
+% Schedule
+
+% Security
+
+% Security History
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Standard Reports
+
+% Staff Details
+
+% Sublocations
+
+% System-DBJoins
+ALTER TABLE dbo.system_dbjoins
+ALTER COLUMN [Field] varchar(150)
+*
+
+% System Parameters
+
+% Ubiquity Product Assocations
+
+% Ubiquity Dorana Product Locations
+
+% Ubiquity Dorana Libraries
+
+% Ubiquity Dorana Products
+
+% Ubiquity Dorana Product Vendors
+
+% Ubiquity Vendor Assocations
+
+% Ubiquity Dorana Vendors
+
+% Ubiquity Product versions
+
+% UF Group Allocation
+
+% User Field Values
+
+% User Fields
+
+% User Help Docs
+
+% User Roles
+
+% User Roles - Tabs
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+
+% Vendor Contact Notes
+ALTER TABLE dbo.[vendorcontact_notes]
+ADD [Created By Id] int
+*
+
+% Vendor Notes
+ALTER TABLE dbo.[vendor_notes]
+ADD [Created By Id] int
+*
+
+% Vendor Regions
+
+% Vendor Status
+
+% Version Registry
+
+% Version History
+
+% ---------- Views ----------
+
+
+% Performance Metrics
+
+% CalView
+
+% ---------- Procedures ----------
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'VariationCount')
+	DROP FUNCTION dbo.VariationCount 
+*
+
+CREATE FUNCTION dbo.VariationCount (@PrimaryContractId INT)
+RETURNS INT AS
+BEGIN
+
+DECLARE @variationCount INT
+SET @variationCount = (SELECT COUNT(*) AS [variations] FROM [link_variations] WHERE [Primary Contract Id] = @PrimaryContractId)
+
+RETURN(@variationCount)
+END
+*
+
+CREATE FUNCTION dbo.AttachmentCount (@attArea INT, @refID INT)  
+RETURNS INT AS  
+BEGIN 
+
+DECLARE @attachmentCount INT
+SET @attachmentCount = (SELECT COUNT(*) FROM [attachments] WHERE [Attachment Area] = @attArea AND [Reference Number] = @refID)
+
+RETURN(@attachmentCount)
+ 
+END
+*
+
+IF EXISTS (SELECT name 
+	   FROM   sysobjects 
+	   WHERE  name = 'RefreshReportFieldTitles' 
+	   AND 	  type = 'P')
+    DROP PROCEDURE dbo.RefreshReportFieldTitles
+*
+
+CREATE PROCEDURE dbo.RefreshReportFieldTitles
+AS
+DECLARE @fieldID INT
+DECLARE @reportID INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [ReportID],[FieldID] FROM [saved_reports] WHERE ([RecordType] <> 'C' AND [RecordType] <> 'V' AND [RecordType] <> 'G')AND ([HeaderText] <> 'ID' AND [HeaderText] <> 'ConProdID')
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @reportID,@fieldID
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	UPDATE [saved_reports] SET [HeaderText] = (SELECT [Description] FROM [system_dbjoins] WHERE [FieldID] = @fieldID) WHERE [ReportId] = @reportID
+
+	FETCH NEXT FROM loop_cursor INTO @reportID,@fieldID
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+% ---------- function dbo.GetContractValue ----------------------
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'GetContractValue')
+	DROP FUNCTION dbo.GetContractValue
+*
+
+CREATE FUNCTION dbo.GetContractValue(@contractId INT, @includeVariations INT) 
+RETURNS FLOAT AS
+BEGIN
+	DECLARE @contractValue FLOAT
+	DECLARE @variationCount INT
+
+	-- @includeVariatons: 1=include, 0=exclude
+	IF(@includeVariations = 1)
+	BEGIN
+		SET @variationCount = (SELECT dbo.VariationCount(@contractId))
+		IF(@variationCount > 0)
+		BEGIN
+			SET @contractValue = (SELECT SUM([Contract Value]) FROM [contract_details] WHERE [Contract Id] IN
+					(SELECT [Variation Contract Id] FROM [link_variations] WHERE [Primary Contract Id] = @contractId) OR [Contract Id] = @contractId)
+		END
+		ELSE
+		BEGIN
+			SET @contractValue = (SELECT [Contract Value] FROM [contract_details] WHERE [Contract Id] = @contractId)
+		END
+	END
+	ELSE
+	BEGIN
+		SET @contractValue = (SELECT [Contract Value] FROM [contract_details] WHERE [Contract Id] = @contractId)
+	END
+	RETURN @contractValue
+END
+*
+
+% --------------- function dbo.IsVariation ---------------------------
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'IsVariation')
+	DROP FUNCTION dbo.IsVariation
+*
+
+CREATE FUNCTION dbo.IsVariation (@contractId INT)
+RETURNS SMALLINT AS
+BEGIN
+	DECLARE @isVariation INT
+	SET @isVariation = (SELECT COUNT(*) AS [IsVariation] FROM [link_variations] WHERE [Variation Contract Id] = @contractId)
+	RETURN @isVariation
+END
+*
+
+% -------------- dbo.GetNextVariationSequence ----------------------
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'GetNextVariationSequence')
+	DROP FUNCTION dbo.GetNextVariationSequence
+*
+
+CREATE FUNCTION dbo.GetNextVariationSequence (@contractId INT)
+RETURNS INT AS
+BEGIN
+
+DECLARE @sequenceNum INT
+
+SET @sequenceNum = (
+SELECT ISNULL(MAX([Schedule Number]),0) AS [MaxVariationNumber] FROM [contract_details] 
+INNER JOIN [link_variations] ON [link_variations].[Variation Contract Id] = [contract_details].[Contract Id]
+WHERE [link_variations].[Primary Contract Id] = @contractId AND dbo.IsVariation([contract_details].[Contract Id]) > 0 AND ISNUMERIC([Schedule Number]) > 0
+)
+
+RETURN @sequenceNum + 1
+END
+*
+
+% ----------- Routines ---------------
+DECLARE @locId INT
+DECLARE @rec_count INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Location Id] FROM [location]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @locId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'OPENSAVE_ATTACHMENTS')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'OPENSAVE_ATTACHMENTS','0',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'ENABLE_ATTACHMENT_HYPERLINK')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'ENABLE_ATTACHMENT_HYPERLINK','0',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'ENABLE_ATTACHMENT_UPLOAD')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'ENABLE_ATTACHMENT_UPLOAD','1',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'CACHE_TIMEOUT')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'CACHE_TIMEOUT','5',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'ENABLE_FLASHING_NOTESICON')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'ENABLE_FLASHING_NOTESICON','1',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'ENABLE_CONTRACTNUM_UPDATE')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'ENABLE_CONTRACTNUM_UPDATE','1',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'ENABLE_VARIATION_AUTOSEQ')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'ENABLE_VARIATION_AUTOSEQ','0',1)
+END
+
+FETCH NEXT FROM loop_cursor INTO @locId
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+DECLARE @locId INT
+DECLARE @matchCount INT
+DECLARE @productId INT
+DECLARE @notifyId INT
+DECLARE @notifyName nvarchar(100)
+DECLARE loop_cursor CURSOR FOR
+SELECT [Location Id],[Product Id],[Notify] FROM [product_details]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @locId,@productId, @notifyName
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	SET @matchCount = (SELECT COUNT(*) FROM [staff_details] WHERE [Staff Name] = @notifyName)
+	IF(@matchCount > 0)
+	BEGIN
+		SET @notifyId = (SELECT [Staff Id] FROM [staff_details] WHERE LOWER([Staff Name]) = LOWER(@notifyName) AND [Location Id] = @locId)
+	END
+	ELSE
+	BEGIN
+		SET @notifyId = 0
+	END
+
+	UPDATE [product_details] SET [Notify Id] = @notifyId WHERE [Product Id] = @productId
+
+	FETCH NEXT FROM loop_cursor INTO @locId, @productId, @notifyName	
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+% ------- Repair script for redundant rows left behind by UF Field deletion error
+
+DELETE FROM uf_groupallocation WHERE [Allocation Id] IN (
+SELECT [Allocation Id] FROM uf_groupallocation
+LEFT JOIN [user_fields] ON [user_fields].[group id] = [uf_groupallocation].[uf grouping id]
+WHERE [user_fields].[User Field Id] IS NULL)
+*
+
+DECLARE @noteId INT
+DECLARE @CreatedBy NVARCHAR(250)
+DECLARE @userId INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Note Id],[Created By] FROM [contract_notes]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @noteId,@CreatedBy
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	SET @userId = (SELECT [User Id] FROM [security] WHERE [Full Name] = @CreatedBy)
+	IF(@userId IS NULL)
+	BEGIN
+		PRINT 'Updating [Note Id] ' + CAST(@noteId AS NVARCHAR) + ' to zero (User Not Matched)'
+		UPDATE [contract_notes] SET [Created By Id] = 0 WHERE [Note Id] = @noteId
+	END
+	ELSE
+	BEGIN
+		PRINT 'Updating [Note Id] ' + CAST(@noteId AS NVARCHAR) + ' to ' + CAST(@userId AS NVARCHAR) + ' for ' + @CreatedBy
+		UPDATE [contract_notes] SET [Created By Id] = @userId WHERE [Note Id] = @noteId
+	END
+	FETCH NEXT FROM loop_cursor INTO @noteId,@CreatedBy
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+DECLARE @noteId INT
+DECLARE @CreatedBy NVARCHAR(250)
+DECLARE @userId INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Note Id],[Created By] FROM [invoice_notes]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @noteId,@CreatedBy
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	SET @userId = (SELECT [User Id] FROM [security] WHERE [Full Name] = @CreatedBy)
+	IF(@userId IS NULL)
+	BEGIN
+		PRINT 'Updating [Note Id] ' + CAST(@noteId AS NVARCHAR) + ' to zero (User Not Matched)'
+		UPDATE [invoice_notes] SET [Created By Id] = 0 WHERE [Note Id] = @noteId
+	END
+	ELSE
+	BEGIN
+		PRINT 'Updating [Note Id] ' + CAST(@noteId AS NVARCHAR) + ' to ' + CAST(@userId AS NVARCHAR) + ' for ' + @CreatedBy
+		UPDATE [invoice_notes] SET [Created By Id] = @userId WHERE [Note Id] = @noteId
+	END
+	FETCH NEXT FROM loop_cursor INTO @noteId,@CreatedBy
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+DECLARE @noteId INT
+DECLARE @CreatedBy NVARCHAR(250)
+DECLARE @userId INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Note Id],[Created By] FROM [product_notes]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @noteId,@CreatedBy
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	SET @userId = (SELECT [User Id] FROM [security] WHERE [Full Name] = @CreatedBy)
+	IF(@userId IS NULL)
+	BEGIN
+		PRINT 'Updating [Note Id] ' + CAST(@noteId AS NVARCHAR) + ' to zero (User Not Matched)'
+		UPDATE [product_notes] SET [Created By Id] = 0 WHERE [Note Id] = @noteId
+	END
+	ELSE
+	BEGIN
+		PRINT 'Updating [Note Id] ' + CAST(@noteId AS NVARCHAR) + ' to ' + CAST(@userId AS NVARCHAR) + ' for ' + @CreatedBy
+		UPDATE [product_notes] SET [Created By Id] = @userId WHERE [Note Id] = @noteId
+	END
+	FETCH NEXT FROM loop_cursor INTO @noteId,@CreatedBy
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+DECLARE @noteId INT
+DECLARE @CreatedBy NVARCHAR(250)
+DECLARE @userId INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Note Id],[Created By] FROM [vendor_notes]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @noteId,@CreatedBy
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	SET @userId = (SELECT [User Id] FROM [security] WHERE [Full Name] = @CreatedBy)
+	IF(@userId IS NULL)
+	BEGIN
+		PRINT 'Updating [Note Id] ' + CAST(@noteId AS NVARCHAR) + ' to zero (User Not Matched)'
+		UPDATE [vendor_notes] SET [Created By Id] = 0 WHERE [Note Id] = @noteId
+	END
+	ELSE
+	BEGIN
+		PRINT 'Updating [Note Id] ' + CAST(@noteId AS NVARCHAR) + ' to ' + CAST(@userId AS NVARCHAR) + ' for ' + @CreatedBy
+		UPDATE [vendor_notes] SET [Created By Id] = @userId WHERE [Note Id] = @noteId
+	END
+	FETCH NEXT FROM loop_cursor INTO @noteId,@CreatedBy
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+DECLARE @noteId INT
+DECLARE @CreatedBy NVARCHAR(250)
+DECLARE @userId INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Note Id],[Created By] FROM [vendorcontact_notes]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @noteId,@CreatedBy
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	SET @userId = (SELECT [User Id] FROM [security] WHERE [Full Name] = @CreatedBy)
+	IF(@userId IS NULL)
+	BEGIN
+		PRINT 'Updating [Note Id] ' + CAST(@noteId AS NVARCHAR) + ' to zero (User Not Matched)'
+		UPDATE [vendorcontact_notes] SET [Created By Id] = 0 WHERE [Note Id] = @noteId
+	END
+	ELSE
+	BEGIN
+		PRINT 'Updating [Note Id] ' + CAST(@noteId AS NVARCHAR) + ' to ' + CAST(@userId AS NVARCHAR) + ' for ' + @CreatedBy
+		UPDATE [vendorcontact_notes] SET [Created By Id] = @userId WHERE [Note Id] = @noteId
+	END
+	FETCH NEXT FROM loop_cursor INTO @noteId,@CreatedBy
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+% End of file

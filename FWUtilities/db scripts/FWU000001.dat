@@ -1,0 +1,12 @@
+% FW Update File
+% 27/09/1999 
+# 000001 000002
+ALTER TABLE [Committed Contracts]
+ADD [Vendor ID] int
+*
+ALTER TABLE [Committed Contracts]
+ADD [Contract Number] char(16)
+*
+ALTER TABLE [Committed Contracts]
+ADD [Schedule Number] char(2)
+*

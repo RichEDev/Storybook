@@ -1,0 +1,1 @@
+﻿create index [IX_ESRPositions_ESROrganisationId] on ESRPositions (ESROrganisationId)

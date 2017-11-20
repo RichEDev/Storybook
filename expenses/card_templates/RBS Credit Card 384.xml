@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="RBS Credit Card 384" FileType="XLS" NumberHeaderRecords="1" NumberFooterRecords="0">
+  <QuotedCharacters>&#34;</QuotedCharacters>
+  <Fields Type="CardTransaction" UniqueValue="trans">
+
+    <Field Name="TransDate" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="dd/MM/yyyy hh:mm:ss" />
+    <Field Name="TransPostDate" Label="Posting Date" MappedTable="card_transactions_rbs" MappedField="trans_postdate" FieldType="D" Format="dd/MM/yyyy hh:mm:ss" />
+    <Field Name="TransValue" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C" />
+    <Field Name="MerchantDetails" MappedTable="card_transactions" MappedField="description" FieldType="S" MaxLength="500" />
+    <Field Name="MerchantTown" Label="Merchant Town" MappedTable="card_transactions_rbs" MappedField="merchant_town" FieldType="S" MaxLength="13" />
+    <Field Name="MerchantCountry" MappedTable="card_transactions" MappedField="country_code" FieldType="S" MaxLength="3" DefaultValue="GBR" CountryType="alpha3"  />
+    <Field Name="TransType" Label="Merchant Post Code" MappedTable="card_transactions_rbs" MappedField="trans_type" FieldType="S" MaxLength="50" />
+    <Field Name="TransRef" MappedTable="card_transactions" MappedField="reference" FieldType="S" MaxLength="50" />
+    <Field Name="DebitCredit" Label="Debit or Credit Flag" MappedTable="card_transactions_rbs" MappedField="exception_indicator" FieldType="S" MaxLength="9" />
+    <Field Name="MCC" Label="SICMCC Code" MappedTable="card_transactions_rbs" MappedField="mcc" FieldType="S" MaxLength="4" />
+    <Field Name="CardNumber" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="20" />
+    <Field Name="MerchantCurrencyDescription" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" DefaultValue="GBP" CurrencyType="alpha" />
+  </Fields>
+</CardTemplate>

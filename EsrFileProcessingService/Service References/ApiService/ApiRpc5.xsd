@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ApiLibrary.ApiObjects.ESR" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ApiLibrary.ApiObjects.ESR" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd2" namespace="http://software-europe.com/API/2013/02" />
+  <xs:complexType name="ArrayOfEsrOrganisationRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EsrOrganisationRecord" nillable="true" type="tns:EsrOrganisationRecord" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEsrOrganisationRecord" nillable="true" type="tns:ArrayOfEsrOrganisationRecord" />
+  <xs:complexType name="EsrOrganisationRecord">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://software-europe.com/API/2013/02" base="q1:EsrOrganisation">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrOrganisationRecord" nillable="true" type="tns:EsrOrganisationRecord" />
+</xs:schema>

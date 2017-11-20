@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="esrNhsHubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ftpLocations">
+          <Key>
+            <PropertyRef Name="ftpLocationId" />
+          </Key>
+          <Property Name="ftpLocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="host" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="path" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="archived" Type="bit" Nullable="false" />
+          <Property Name="InboundPath" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="transferredFiles">
+          <Key>
+            <PropertyRef Name="fileId" />
+          </Key>
+          <Property Name="fileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ftpLocationId" Type="int" Nullable="false" />
+          <Property Name="fileName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="firstCollectedOn" Type="datetime" Nullable="false" />
+          <Property Name="lastCollectedOn" Type="datetime" Nullable="false" />
+          <Property Name="transferAttempts" Type="int" Nullable="false" />
+          <Property Name="transferAgain" Type="bit" Nullable="false" />
+          <Property Name="processed" Type="bit" Nullable="false" />
+          <Property Name="deleteAfter" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="transferStatus" Type="tinyint" />
+        </EntityType>
+        <Association Name="FK_transferredFiles_ftpLocations">
+          <End Role="ftpLocations" Type="Self.ftpLocations" Multiplicity="1" />
+          <End Role="transferredFiles" Type="Self.transferredFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftpLocations">
+              <PropertyRef Name="ftpLocationId" />
+            </Principal>
+            <Dependent Role="transferredFiles">
+              <PropertyRef Name="ftpLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="esrNhsHubModelStoreContainer">
+          <EntitySet Name="ftpLocations" EntityType="Self.ftpLocations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transferredFiles" EntityType="Self.transferredFiles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_transferredFiles_ftpLocations" Association="Self.FK_transferredFiles_ftpLocations">
+            <End Role="ftpLocations" EntitySet="ftpLocations" />
+            <End Role="transferredFiles" EntitySet="transferredFiles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="esrNhsHubModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="esrNhsHubEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="transferredFiles" EntityType="esrNhsHubModel.transferredFile" />
+          <EntitySet Name="ftpLocations" EntityType="esrNhsHubModel.ftpLocation" />
+          <AssociationSet Name="FK_transferredFiles_ftpLocations" Association="esrNhsHubModel.FK_transferredFiles_ftpLocations">
+            <End Role="ftpLocation" EntitySet="ftpLocations" />
+            <End Role="transferredFile" EntitySet="transferredFiles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="transferredFile">
+          <Key>
+            <PropertyRef Name="fileId" />
+          </Key>
+          <Property Type="Int32" Name="fileId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ftpLocationId" Nullable="false" />
+          <Property Type="String" Name="fileName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="firstCollectedOn" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="lastCollectedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="transferAttempts" Nullable="false" />
+          <Property Type="Boolean" Name="transferAgain" Nullable="false" />
+          <Property Type="Boolean" Name="processed" Nullable="false" />
+          <Property Type="DateTime" Name="deleteAfter" Precision="3" />
+          <Property Type="Boolean" Name="deleted" Nullable="false" />
+          <NavigationProperty Name="ftpLocation" Relationship="esrNhsHubModel.FK_transferredFiles_ftpLocations" FromRole="transferredFile" ToRole="ftpLocation" />
+          <Property Type="Byte" Name="transferStatus" Nullable="true" />
+        </EntityType>
+        <EntityType Name="ftpLocation">
+          <Key>
+            <PropertyRef Name="ftpLocationId" />
+          </Key>
+          <Property Type="Int32" Name="ftpLocationId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="host" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="path" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="archived" Nullable="false" />
+          <NavigationProperty Name="transferredFiles" Relationship="esrNhsHubModel.FK_transferredFiles_ftpLocations" FromRole="ftpLocation" ToRole="transferredFile" />
+          <Property Name="InboundPath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_transferredFiles_ftpLocations">
+          <End Type="esrNhsHubModel.ftpLocation" Role="ftpLocation" Multiplicity="1" />
+          <End Type="esrNhsHubModel.transferredFile" Role="transferredFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftpLocation">
+              <PropertyRef Name="ftpLocationId" />
+            </Principal>
+            <Dependent Role="transferredFile">
+              <PropertyRef Name="ftpLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="esrNhsHubModelStoreContainer" CdmEntityContainer="esrNhsHubEntities">
+    <EntitySetMapping Name="transferredFiles">
+      <EntityTypeMapping TypeName="IsTypeOf(esrNhsHubModel.transferredFile)">
+        <MappingFragment StoreEntitySet="transferredFiles">
+          <ScalarProperty Name="fileId" ColumnName="fileId" />
+          <ScalarProperty Name="ftpLocationId" ColumnName="ftpLocationId" />
+          <ScalarProperty Name="fileName" ColumnName="fileName" />
+          <ScalarProperty Name="firstCollectedOn" ColumnName="firstCollectedOn" />
+          <ScalarProperty Name="lastCollectedOn" ColumnName="lastCollectedOn" />
+          <ScalarProperty Name="transferAttempts" ColumnName="transferAttempts" />
+          <ScalarProperty Name="transferAgain" ColumnName="transferAgain" />
+          <ScalarProperty Name="processed" ColumnName="processed" />
+          <ScalarProperty Name="deleteAfter" ColumnName="deleteAfter" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+          <ScalarProperty Name="transferStatus" ColumnName="transferStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ftpLocations">
+      <EntityTypeMapping TypeName="IsTypeOf(esrNhsHubModel.ftpLocation)">
+        <MappingFragment StoreEntitySet="ftpLocations">
+          <ScalarProperty Name="InboundPath" ColumnName="InboundPath" />
+                <ScalarProperty Name="ftpLocationId" ColumnName="ftpLocationId" />
+          <ScalarProperty Name="host" ColumnName="host" />
+          <ScalarProperty Name="path" ColumnName="path" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="archived" ColumnName="archived" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

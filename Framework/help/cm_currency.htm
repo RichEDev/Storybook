@@ -1,0 +1,147 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - Currency</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Currency</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>Mult-currency support is an integral part of modern business. Contracts are 
+					frequently held is currencies other than the native currency of your 
+					organisation.</p>
+				<p>This area of code maintenance allows the configuration of all currencies to be 
+					used throughout Framework.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1"> Required 
+				Information
+			</div>
+			<div class="help_body_text" id="1">
+				<p>The following elements of information are required for the Currency definition: 
+					-</p>
+				<p>
+					<table class="inner" width="600" align="center">
+						<tr>
+							<th class="inner" width="200">
+								Field</th>
+							<th class="inner" width="100">
+								Type</th>
+							<th class="inner" width="300">
+								Description</th>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Currency</td>
+							<td class="inner" align="center">Text</td>
+							<td class="inner">This is the name of the currency by which it will be referred to 
+								throughout the application.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Currency Symbol</td>
+							<td class="inner" align="center">Text</td>
+							<td class="inner">The keyboard symbol / letters used to represent the currency when 
+								formatted (e.g. £,$)</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Decimal Separator</td>
+							<td class="inner" align="center">Text</td>
+							<td class="inner">The character or symbol to be used to separate whole numbers from 
+								the decimal portion. This is '.' by default.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Decimal Places</td>
+							<td class="inner" align="center">Numeric</td>
+							<td class="inner">This is the number of digits (accuracy) to use for the decimal 
+								portion of the number (e.g. 2 = .00)</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Group Symbol</td>
+							<td class="inner" align="center">Text</td>
+							<td class="inner">Character or symbol by which numbers greater than 999 have the 
+								thousands separated. This is typically a ','. (e.g. 3999 = 3<b>,</b>999)</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Group Digits</td>
+							<td class="inner" align="center">Numeric</td>
+							<td class="inner">This is the number of digits (accuracy) that dictates the 
+								placement of the Group Symbol. (e.g. 3 = x<b>,</b>000 and 2 = x<b>,</b>00)</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Positive Format</td>
+							<td class="inner" align="center">Drop Down List</td>
+							<td class="inner">Provides options on how positive currency amounts are formatted 
+								and displayed. The <b>X</b> represents the currency symbol.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Negative Format</td>
+							<td class="inner" align="center">Drop Down List</td>
+							<td class="inner">Provides options on how negative currency amounts are formatted 
+								and displayed. The <b>X</b> represents the currency symbol.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Rate to Base</td>
+							<td class="inner" align="center">Decimal</td>
+							<td class="inner">This is the amount ratio for this currency that equal 1 (one 
+								unit) of the specified base currency.<br>
+								<br>
+								<b>IMPORTANT: </b>If this is the base currency, then this must be entered as 
+								'1'</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Base Currency?</td>
+							<td class="inner" align="center">Check Box</td>
+							<td class="inner">This should only be checked if the currency specified is to be 
+								your base currency.<br>
+								<br>
+								<b>Note: </b>Only ONE currency can be specified as your base currency. 
+								Selecting this check box will supercede any previous selection.</td>
+						</tr>
+					</table>
+				</p>
+				<p>On successful update, you will be returned to the definitions list screen.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

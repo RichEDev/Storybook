@@ -1,0 +1,108 @@
+﻿<div class="helptext tooltipcontainer contextualhelp"><span class="tooltipcontent"></span></div>
+<div class="helpindicator">&#9660;</div>
+    <table class="mileagegrid mileagegridtable">
+    <thead>
+        <tr class="titles">
+            <th><div>&nbsp;</div></th> <!-- mileagerownum -->
+            <th class="left" data-field='from'><div>From</div></th>
+            <th class="left" data-field='to'><div>To</div>
+                <input type="hidden" data-field="mileagegridtable_numrows" name="mileagegridtable_numrows" value="0"/>
+            </th>
+            
+            <th class="distancedetailsheader">
+                <div>Distance Details</div>
+            </th>
+
+            <th class="passengersheader"><div>Passengers</div></th>
+            <th class="heavybulky"><div>Heavy/Bulky Equipment</div></th>
+            <th>&nbsp;<!--delete--></th>
+            <th>&nbsp;<!--delete--></th>
+        </tr>
+        </thead>
+        <tbody>
+            <!--Data rows placeholder-->
+            <tr class="template">
+                <td>
+                    <span data-field="mileagerownum" class="mileagerownum"></span>
+                    <input type="hidden" data-field="subcatid" name="mileagegridtable_subcatid"/>
+                    <input type="hidden" data-field="heavybulkyequipment" name="mileagegridtable_heavybulkyequipment"/>
+                    <!-- this is in this td as the heavybulky td gets removed if we're not wanting to show heavybulky
+                        on the subcat, which could mess up the postback -->
+                </td>
+                <td>
+                    <input type="text" placeholder="from" data-field="from_search" name="mileagegridtable_from_address_text"/>
+                    <input type="hidden" data-field="from_id" name="mileagegridtable_from_address_id"/>
+                    <img src="/shared/images/icons/16/plain/find.png" class="binoculars" />
+                </td>
+                <td>
+                    <input type="text" placeholder="to" data-field="to_search" name="mileagegridtable_to_address_text"/>
+                    <input type="hidden" data-field="to_id" data-address-id="true" name="mileagegridtable_to_address_id"/>
+                    <img src="/shared/images/icons/16/plain/find.png" class="binoculars" />
+                </td>
+                <td class="distance">
+                    <input data-field="userentereddistance" class="userentereddistance" name="mileagegridtable_userentereddistance" placeholder="distance" type="text" onkeypress="return SEL.MileageGrid.validateDistance(event);"/>
+                    <!--<div data-field="recommendeddistance" class="recommendeddistance" >&nbsp;</div>-->
+                    <input data-field="recommendeddistance" class="recommendeddistance" name="mileagegridtable_recommendeddistance" type="text" readonly="readonly" tabindex="-1"/>
+                    <div class="mileagecomment commenttooltip">This is the recommended distance for the journey step, calculated by our route planning provider.</div>
+                    <input type="hidden" name="mileagegridtable_uom" data-field="uom"/>
+                    <div data-field="nodistancewarningmessage" class="nodistancecomment commenttooltip">The distance could not be calculated. Please enter this manually.</div>
+                    <span data-field="nodistancewarningicon" class="warning nodistancewarning" title=""></span>
+                    <span class="loading" ></span>
+                </td>
+                <td class="numpassengers">
+                    <input type="text" data-field="numpassengers" name="mileagegridtable_numpassengers" onkeypress="return SEL.MileageGrid.validateNumPassengers(event);" class="numpassengers"/>
+                    <input type="hidden" name="mileagegridtable_passengers"/> <!--doesn't get populated, just to keep the form field arrays in sync --> 
+                </td>
+                <td class="passengernames">
+                    
+                    <div class="passengersclick" data-field="passengersclick" tabindex="0">
+                        <img src="/static/icons/16/plain/passenger.png"/>
+                        <span>Add Passenger</span>
+                        <input type="hidden" name="mileagegridtable_passengers" data-field="passengers"/>
+                        <input type="hidden" name="mileagegridtable_numpassengers"/> <!--doesn't get populated, just to keep the form field arrays in sync --> 
+                    </div> 
+                    <div class="passengersdialoginner mileagegriddialog formpanel" title="Passengers">
+                        <div>
+                            <input data-field="passengers"/>
+                        </div>
+                        <div>
+                            <span class="passengersdialogbuttons buttonContainer">
+                                <input type="button" class="buttonInner" value="close" onclick="SEL.MileageGrid.closePassengersDialog(this);"/>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="custompassengerdialoginner mileagegriddialog formpanel" title="Non-Expenses user">
+                        <div class="twocolumn">
+                            <label>Passenger name:</label>
+                            <span class="inputs">
+                                <input data-field="custompassenger" type="text" maxlength="50"/>
+                            </span>
+                        </div>
+                        <div>
+                            <span>Please enter the name of the passenger who is not registered.</span>
+                        </div>
+                        <div>
+                            <span class="passengersdialogbuttons buttonContainer">
+                                <input type="button" class="buttonInner buttonSave" value="save" onclick="SEL.MileageGrid.addCustomPassenger(this);"/>
+                            </span>
+                            <span class="passengersdialogbuttons buttonContainer">
+                                <input type="button" class="buttonInner" value="cancel" onclick="SEL.MileageGrid.cancelCustomPassenger(this);"/>
+                            </span>
+                        </div>
+
+                    </div>
+                </td>
+                <td class="heavybulky">
+                    <input type="checkbox" data-field="heavybulkyequipment"/>
+                </td>
+                <td>
+                    <div class="deleterow"></div>
+                    <div class="mileagecomment commenttooltip">Clears this journey step.</div>
+                </td>
+                <td>
+                    &nbsp;<!--'spare' row, to make sure the help text doesn't expand the spacing-->
+                </td>
+            </tr>
+        </tbody>
+</table>

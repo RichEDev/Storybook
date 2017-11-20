@@ -1,0 +1,1 @@
+﻿create index [IX_ESRAssignmentCostings_ESRAssignmentId] on dbo.ESRAssignmentCostings (ESRAssignmentId)

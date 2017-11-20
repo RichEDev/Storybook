@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="87c24939-1a0e-4137-921f-b38c28cdd207" ChangeDateTime="01/07/2014 21:58:32">
+    <Property Name="ElementName" Value="[dbo].[addressPostcodeDistances].[PostcodeAnywhereShortestDistanceWithRoads]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[addressPostcodeDistances]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ShortestDistanceWithRoads" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cdc164c2-5c42-4755-a5c7-f41f0fcd5c46" ChangeDateTime="01/10/2014 14:48:05">
+    <Property Name="ElementName" Value="[dbo].[AddressPostcodeDistances].[FromPostcode]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressPostcodeDistances]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OriginLocator" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0444e951-ba2c-4dda-bf59-d18d202ed422" ChangeDateTime="01/10/2014 14:48:12">
+    <Property Name="ElementName" Value="[dbo].[AddressPostcodeDistances].[ToPostcode]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressPostcodeDistances]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DestinationLocator" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="27de1233-e6c3-4c5e-9b76-a913ba2afc02" ChangeDateTime="01/10/2014 14:48:18">
+    <Property Name="ElementName" Value="[dbo].[AddressPostcodeDistances].[AddressPostcodeDistanceId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressPostcodeDistances]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AddressLocatorDistanceId" />
+  </Operation>
+</Operations>

@@ -1,0 +1,3 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+product_suppliers,supplierId,Supplier Name,S,150,N,Y,Y,[supplier_details].[supplierId],[supplier_details].[supplierName],
+product_suppliers,productId,Product Name Supplied,S,70,N,Y,Y,[productDetails].[productId],[productDetails].[productName],

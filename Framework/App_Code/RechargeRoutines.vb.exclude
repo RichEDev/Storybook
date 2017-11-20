@@ -1,0 +1,139 @@
+Imports FWBase
+
+Namespace Framework2006
+    Public Module RechargeRoutines
+        Public Structure CP_UF_COLL
+            Dim CP_UF1 As Integer
+            Dim CP_UF2 As Integer
+            Dim CP_UF1_Type As UserFieldType
+            Dim CP_UF2_Type As UserFieldType
+            Dim CP_UF1_FId As Integer
+            Dim CP_UF2_FId As Integer
+            Dim CP_UF1_Coll As System.Collections.SortedList
+            Dim CP_UF2_Coll As System.Collections.SortedList
+        End Structure
+
+        Public Function SetRechargeProperties(ByVal db As DBConnection, ByVal ui As UserInfo) As RechargeSettings
+            Dim sql As String
+            Dim drow As DataRow
+            Dim rs As RechargeSettings
+            Dim paramVal, paramVar As Object
+
+            sql = "SELECT * FROM [fwparams]" ' WHERE [Location Id] = " & Trim(Str(ui.ActiveLocation))
+
+            db.RunSQL(sql, db.glDBWorkL)
+            For Each drow In db.glDBWorkL.Tables(0).Rows
+                paramVar = drow.Item("Param")
+                paramVal = drow.Item("Value")
+                Select Case paramVar
+                    Case "REFERENCE_AS"
+                        rs.ReferenceAs = paramVal
+
+                    Case "STAFF_REF"
+                        rs.StaffRepAs = paramVal
+
+                    Case "RECHARGE_PERIOD"
+                        rs.RechargePeriod = paramVal
+
+                    Case "FY_COMMENCES"
+                        rs.FinYearCommence = paramVal
+
+                    Case "CP_DEL_ACTION"
+                        rs.CP_Delete_Action = paramVal
+
+                    Case "ADD_CPINFO_UF_1"
+                        rs.Additional_CPInfo_UF_1 = paramVal
+
+                    Case "ADD_CPINFO_UF_2"
+                        rs.Additional_CPInfo_UF_2 = paramVal
+
+                    Case Else
+                End Select
+            Next
+
+            SetRechargeProperties = rs
+        End Function
+
+        Public Function GetRechargeEntityCollection(ByVal db As DBConnection, ByVal conId As Integer)
+            Dim sql As New System.Text.StringBuilder
+            Dim collRE As New System.Collections.SortedList
+            Dim dRow As DataRow
+
+            ' obtain a list of the recharge entities for the current contract
+            sql.Append("SELECT DISTINCT [Recharge Entity Id],[codes_rechargeentity].[Name] FROM [recharge_associations] ")
+            sql.Append("INNER JOIN [codes_rechargeentity] ON [codes_rechargeentity].[Entity Id] = [recharge_associations].[Recharge Entity Id] ")
+            sql.Append("INNER JOIN [contract_productdetails] ON [contract_productdetails].[Contract-Product Id] = [recharge_associations].[Contract-Product Id] ")
+            sql.Append("WHERE [contract_productdetails].[Contract Id] = " & conId.ToString)
+            sql.Append(" ORDER BY [codes_rechargeentity].[Name]")
+            db.RunSQL(sql.ToString, db.glDBWorkL)
+
+            Dim x As Integer = 0
+            For Each dRow In db.glDBWorkL.Tables(0).Rows
+                collRE.Add(dRow.Item("Recharge Entity Id"), dRow.Item("Name"))
+            Next
+
+            GetRechargeEntityCollection = collRE
+        End Function
+
+        Public Function GetRechargeApportionType(ByVal AppId As Integer) As String
+            Dim retStr As String
+
+            Select Case CType(AppId, RechargeApportionType)
+                Case RechargeApportionType.Fixed
+                    retStr = "Fixed"
+                Case RechargeApportionType.n_Units
+                    retStr = "n_Units"
+                Case RechargeApportionType.Percentage
+                    retStr = "Percentage"
+                Case Else
+                    retStr = "Unknown"
+            End Select
+
+            Return retStr
+        End Function
+
+        Public Function GetSurchargeType(ByVal AppId As Integer) As String
+            Dim retStr As String
+
+            Select Case CType(AppId, SurchargeType)
+                Case SurchargeType.Fixed
+                    retStr = "Fixed"
+                Case SurchargeType.Percentage
+                    retStr = "Percentage"
+                Case Else
+                    retStr = "Unknown"
+            End Select
+
+            Return retStr
+        End Function
+
+        Public Sub RecalcRechargeTemplates(ByVal db As DBConnection, ByVal csvRechargeIdList As String)
+            Try
+                Dim sql As New System.Text.StringBuilder
+
+                sql.Append("SELECT [recharge_associations].*,[contract_productdetails].[Maintenance Value],[contract_productdetails].[Quantity] FROM [recharge_associations] ")
+                sql.Append("LEFT JOIN [contract_productdetails] ON [contract_productdetails].[Contract-Product Id] = [recharge_associations].[Contract-Product Id] ")
+                sql.Append("WHERE [Recharge Id] IN (" & csvRechargeIdList & ")")
+                db.RunSQL(sql.ToString, db.glDBWorkA)
+                Dim drow As DataRow
+                Dim RechargeItem As New cRecharge
+
+                RechargeItem.SetCurrentRechargeDate = Now
+
+                For Each drow In db.glDBWorkA.Tables(0).Rows
+                    If RechargeItem.SetRechargeProperties(drow) = True Then
+                        RechargeItem.CalcRechargeValue()
+
+                        db.SetFieldValue("Recharge Amount", RechargeItem.GetRechargeValue, "N", True)
+                        db.FWDb("A", "recharge_associations", "Recharge Id", drow.Item("Recharge Id"))
+                    End If
+                Next
+
+            Catch ex As Exception
+
+            End Try
+
+        End Sub
+    End Module
+
+End Namespace

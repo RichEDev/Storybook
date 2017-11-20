@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="30d040d8f5a245d49847ee9896504ae8" Name="Diagram1">
+        <EntityTypeShape EntityType="esrNhsHubModel.transferredFile" Width="1.5" PointX="0.59692625915488517" PointY="0.51928025508265951" />
+        <EntityTypeShape EntityType="esrNhsHubModel.ftpLocation" Width="1.5" PointX="5.6993943050966571" PointY="6.2337114094913524" />
+        <AssociationConnector Association="esrNhsHubModel.FK_transferredFiles_ftpLocations" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,112 @@
+<html>
+<head>
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+    <title>Framework Help - Audit Log</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" href="fwhelp.css" type="text/css">
+
+    <script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+    </script>
+
+</head>
+<body class="help_page" onload="window.resizeTo(800,600)">
+    <div class="help_page_title">
+        <a onclick="closewindow();">
+            <img src="../images/exithelp.gif" alt="Close Help Window"></a> Audit Log</div>
+    <div class="help_section">
+        <div class="help_section_title">
+            Overview
+        </div>
+        <div class="help_overview">
+            <p>
+                It is important for any application to provide a history of activity so that adequate
+                auditability is available should checks or investigations into activity need to
+                take place. Framework provides a full Audit Log of activity to hopefully achieve
+                this.</p>
+            <p>
+                <b><u>What is logged by Framework?</u></b></p>
+            <li>Users Logging On</li>
+            <li>Users Logging Off</li>
+            <li>Logon Failures</li>
+            <li>Account Freeze</li>
+            <li>Adding of any new element to Framework</li>
+            <li>Removal of any element within Framework</li>
+            <li>Update of a record.<sup>1</sup></li>
+            <div class="help_tip">
+                <b><sup>1</sup>&nbsp;In the case of an update within Framework, an Audit Log entry is
+                    made for each and every field update made. If a contract record is edited and 3
+                    fields updated, then three update records will appear in the Audit Log providing
+                    (where possible) the pre and post edit values.</b>
+            </div>
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img src="../buttons/open.gif" onclick="toggle('1');" id="img1">
+            Clear Down the Log
+        </div>
+        <div class="help_body_text" id="1">
+            <p>
+                Clicking the 'Cleardown Audit Log' option in the menu panel will export all the
+                audit entries, up to the current date, to an Excel spreadsheet file and remove them
+                from the database.
+            </p>
+            <p>
+                The exported file, though remaining on the server as a backup, is emailed to whoever
+                has been tagged in Framework's FWSetup as the Auditor.</p>
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img src="../buttons/open.gif" onclick="toggle('2');" id="img2">
+            Audit Log User Filter
+        </div>
+        <div class="help_body_text" id="2">
+            <p>
+                If a particular user of Framework needs to be focused on, they can be selected from
+                the User Filter at the top of the screen.
+            </p>
+            <p>
+                On selection of the user, the audit log grid will re-populate with only the selected
+                user's activity.
+            </p>
+            <p>
+                <b>Note:&nbsp;</b>By default, ALL user activity is displayed.
+            </p>
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_comments">
+            * If you do not find a topic outlined in the help which is relevant to your enquiry
+            then please contact your administrator
+        </div>
+    </div>
+    <div>
+    </div>
+</body>
+</html>

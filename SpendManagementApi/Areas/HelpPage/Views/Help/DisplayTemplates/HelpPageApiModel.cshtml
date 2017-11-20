@@ -1,0 +1,100 @@
+@using System.Web.Http
+@using System.Web.Http.Description
+@using SpendManagementApi.Areas.HelpPage
+@using SpendManagementApi.Areas.HelpPage.Models
+@model HelpPageApiModel
+
+@{
+    var description = Model.ApiDescription;
+    bool hasParameters = description.ParameterDescriptions.Count > 0;
+    bool hasRequestSamples = Model.SampleRequests.Count > 0;
+    bool hasResponseSamples = Model.SampleResponses.Count > 0;
+}
+
+<h1>@description.HttpMethod.Method @description.RelativePath</h1>
+
+    @if (description.Documentation != null)
+    {
+        <p>@Html.Raw(XmlDocumentationProvider.RemoveNamespaces(description.Documentation, false))</p>
+    }
+    else
+    {
+        <p>No documentation available.</p>
+    }
+<br/>
+<div id="api-tabs">
+    <ul>
+        @if (hasParameters)
+        {
+            <li>
+                <a href="#tab-request">Request Parameters</a>
+            </li>
+        }
+        @if (hasRequestSamples)
+        {
+            <li>
+                <a href="#tab-request-sample">Request Samples</a>
+            </li>
+        }
+        @if (hasResponseSamples)
+        {
+            <li>
+                <a href="#tab-response">Response Samples</a>
+            </li>
+        }
+    </ul>
+
+
+    @if (hasParameters)
+    {
+        <section id="tab-request">
+            <h2>Parameters</h2>
+            @if (Model.ApiDescription.RelativePath.Contains("Find?"))
+            {
+                Model.ApiDescription.ParameterDescriptions.Clear();
+                var relativePath = Model.ApiDescription.RelativePath;
+                var path = relativePath.Substring(relativePath.IndexOf("?") + 1);
+                var qryParts = path.Split('&');
+                for (var j = 0; j < qryParts.Length; j++) {
+                    var qry = qryParts[j].Split('=');
+                    var param = new ApiParameterDescription();
+                    param.Name = qry[0];
+                    param.Source = ApiParameterSource.FromUri;
+                    param.Documentation = param.Name;
+                    Model.ApiDescription.ParameterDescriptions.Add(param);
+                }
+            }
+            @Html.DisplayFor(apiModel => apiModel.ApiDescription.ParameterDescriptions, "Parameters")
+            
+        </section>
+    }
+
+    @if (hasRequestSamples)
+    {
+        <section id="tab-request-sample">
+            <h2>Request body formats</h2>
+            @Html.DisplayFor(apiModel => apiModel.SampleRequests, "Samples")
+        </section>
+    }
+
+    @if (hasResponseSamples)
+    {
+        <section id="tab-response">
+            <h2>Response body formats</h2>
+            @if (description.ResponseDescription.Documentation != null)
+            {
+                <p>@Html.Raw(description.ResponseDescription.Documentation)</p>
+                @*<p>@Html.Raw(XmlDocumentationProvider.RemoveNamespaces(XmlDocumentationProvider.ConvertSeeToAnchor(description.ResponseDescription.Documentation)))</p>*@
+
+            }
+            else
+            {
+                <p>No documentation available.</p>
+            }
+            @Html.DisplayFor(apiModel => apiModel.SampleResponses, "Samples")
+        </section>
+    }
+
+</div>
+
+

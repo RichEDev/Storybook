@@ -1,0 +1,454 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="testInitializeAction.SqlScript" xml:space="preserve">
+    <value>/* Cleanup if necessary */
+declare @employeeId int;
+
+if exists (select employeeid from employees where username = 'mobileDevice_unitTestUser')
+begin
+	select @employeeId = employeeid from employees where username = 'mobileDevice_unitTestUser';
+
+	delete from mobileExpenseItemReceipts where mobileID in (select mobileID from mobileExpenseItems where employeeId = @employeeId);
+	delete from mobileExpenseItems where employeeId = @employeeId;
+	delete from mobileDevices where employeeId = @employeeId;
+	delete from employees where employeeId = @employeeId;
+end
+
+/* Create Employee Record */
+insert into employees 
+(username, password, title, firstname, surname, passwordMethod, cacheExpiry, CreationMethod)
+values
+('mobileDevice_unitTestUser', 'vlUnCTgO1bFJXxfib/suGQ==', 'Mr', 'mobileDevice', 'unitTester', 4, GETUTCDATE(), 0);
+
+set @employeeId = SCOPE_IDENTITY();
+
+if @employeeId &gt; 0
+	select 1;
+else
+	select 0;
+
+/* Create Mobile Device */
+insert into mobileDevices
+(employeeID, deviceTypeID, deviceName, pairingKey, deviceSerialKey, createdOn, createdBy)
+values
+(@employeeId, 1, 'Unit Test iPhone', '00999-88888-222222', 'be21d28605cf201291c4a2ad0ae93a5f0d141ba9', GETUTCDATE(), @employeeId);
+
+select mobileDeviceID from mobileDevices where employeeId = @employeeId;
+
+/* Create an expense category */
+if not exists (select categoryId from categories where category = 'mobileDevices_UTCategory')
+begin
+	insert into categories (category, description)
+	values ('mobileDevices_UTCategory','DB Unit Test category for mobile devices');
+end
+
+declare @categoryId int;
+select @categoryId = categoryid from categories where category = 'mobileDevices_UTCategory';
+
+if @categoryId &gt; 0
+	select 1;
+else
+	select 0;
+
+/* Create a subcat */
+declare @subCatId int;
+
+if not exists (select subcatId from subcats where categoryid = @categoryId and subcat = 'mobileDevices_UTSubcat')
+begin
+	insert into subcats (categoryId, subcat, description)
+	values (@categoryId, 'mobileDevices_UTSubcat','DB Unit Test sub-category for mobile devices');
+end
+
+select @subCatId = subcatid from subcats where categoryId = @categoryId and subcat = 'mobileDevices_UTSubcat';
+
+if @subCatId &gt; 0
+	select 1;
+else
+	select 0;
+
+declare @reasonid int;
+declare @subaccountid int = (select top 1 subaccountid from accountsSubAccounts);
+
+if not exists (select reasonid from reasons where reason = 'mobileDevices_UTReason')
+begin
+	insert into reasons (reason, description)
+	values ('mobileDevices_UTReason', 'DB Unit Test reason for mobile devices');
+end
+
+select @reasonid = reasonid from reasons where reason = 'mobileDevices_UTReason';
+
+if @reasonid &gt; 0
+	select 1;
+else
+	select 0;
+
+if not exists (select currencyid from currencies where globalcurrencyid = 159)
+begin
+	insert into currencies (globalcurrencyid, positiveFormat, negativeFormat, subaccountid)
+	values (159, 1, 1, @subaccountid);
+end
+
+declare @itemroleid int;
+if not exists (select itemroleid from item_roles where rolename = 'MobileDevice Test Item Role')
+begin
+	insert into item_roles (rolename, description, CreatedOn) values ('MobileDevice Test Item Role', 'MobileDevice Test Item Role', GETUTCDATE())
+end
+
+select @itemroleid = itemroleid from item_roles where rolename = 'MobileDevice Test Item Role';
+
+if not exists (select rolesubcatid from rolesubcats where subcatid = @subCatId and roleid = @itemroleid)
+begin
+	insert into rolesubcats (roleid, subcatid) values (@itemroleid, @subCatId)
+end
+
+if not exists (select employeeid from employee_roles where employeeid = @employeeId and itemroleid = @itemroleid)
+begin
+	insert into employee_roles (employeeid, itemroleid, [order]) values (@employeeId, @itemroleid, 1);
+end
+
+</value>
+  </data>
+  <data name="testCleanupAction.SqlScript" xml:space="preserve">
+    <value>declare @employeeId int;
+declare @subCatId int;
+declare @itemRoleId int;
+
+if exists (select employeeid from employees where username = 'mobileDevice_unitTestUser')
+begin
+	select @employeeId = employeeid from employees where username = 'mobileDevice_unitTestUser';
+
+	delete from mobileExpenseItemReceipts where mobileID in (select mobileID from mobileExpenseItems where employeeId = @employeeId);
+	delete from mobileExpenseItems where employeeId = @employeeId;
+	delete from reasons where reason = 'mobileDevices_UTReason';
+	delete from employee_roles where employeeid = @employeeId;
+	select @subCatId = subcatid from subcats where subcat = 'mobileDevices_UTSubcat';
+	select @itemRoleId = itemroleid from item_roles where rolename = 'MobileDevice Test Item Role';
+	delete from rolesubcats where roleid = @itemRoleId;
+	delete from item_roles where itemroleid = @itemRoleId;
+	delete from subcats where subcatid = @subCatId;
+	delete from categories where category = 'mobileDevices_UTCategory';	
+	delete from mobileDevices where employeeId = @employeeId;
+	delete from employees where employeeId = @employeeId;
+end
+</value>
+  </data>
+  <data name="dbo_saveMobileItemWithInvalidCurrency_TestAction.SqlScript" xml:space="preserve">
+    <value>declare @employeeId int = 0;
+declare @categoryId int = 0;
+declare @subCatId int = 0;
+declare @reasonid int = 0;
+declare @mobileId int = 0;
+
+begin try
+	select @employeeId = employeeid from employees where username = 'mobileDevice_unitTestUser';
+	select @categoryId = categoryid from categories where category = 'mobileDevices_UTCategory';
+	select @subCatId = subcatid from subcats where categoryId = @categoryId and subcat = 'mobileDevices_UTSubcat';
+	select @reasonid = reasonid from reasons where reason = 'mobileDevices_UTReason';
+
+	declare @otherdetails nvarchar(max) = 'Other details info for mobile item';
+	declare @total money = 1.23;
+	declare @date datetime = getutcdate();
+	declare @currencyid int = (select max(currencyid)+1 from currencies where globalcurrencyid = 159);
+	declare @miles decimal(18,2) = 1.42;
+	declare @quantity float = 1.5;
+	declare @fromLocation nvarchar(200) = 'Home';
+	declare @toLocation nvarchar(200) = 'Somewhere';
+	declare @allowancestartdate datetime = dateadd(day, -2, @date);
+	declare @allowanceenddate datetime = dateadd(day, 2, @date);
+	declare @itemNotes nvarchar(max) = 'Test item notes';
+	declare @deviceTypeId int = 4; -- iPhone
+
+	exec @mobileId = dbo.saveMobileItem
+	@employeeId,
+	@otherdetails,
+	@reasonid,
+	@total,
+	@subCatId,
+	@date,
+	@currencyid,
+	@miles,
+	@quantity,
+	@fromLocation,
+	@toLocation,
+	@allowancestartdate,
+	@allowanceenddate,
+	@itemNotes,
+	@deviceTypeId;
+
+	select @mobileId;
+end try
+begin catch
+	select -999;
+end catch</value>
+  </data>
+  <data name="dbo_saveMobileItemWithInvalidSubcat_TestAction.SqlScript" xml:space="preserve">
+    <value>declare @employeeId int = 0;
+declare @categoryId int = 0;
+declare @subCatId int = 0;
+declare @reasonid int = 0;
+declare @mobileId int = 0;
+
+begin try
+	select @employeeId = employeeid from employees where username = 'mobileDevice_unitTestUser';
+	select @categoryId = categoryid from categories where category = 'mobileDevices_UTCategory';
+	set @subCatId = (select max(subcatid)+1 from subcats where categoryId = @categoryId and subcat = 'mobileDevices_UTSubcat');
+	select @reasonid = reasonid from reasons where reason = 'mobileDevices_UTReason';
+
+	declare @otherdetails nvarchar(max) = 'Other details info for mobile item';
+	declare @total money = 1.23;
+	declare @date datetime = getutcdate();
+	declare @currencyid int = (select top 1 currencyid from currencies where globalcurrencyid = 159);
+	declare @miles decimal(18,2) = 1.42;
+	declare @quantity float = 1.5;
+	declare @fromLocation nvarchar(200) = 'Home';
+	declare @toLocation nvarchar(200) = 'Somewhere';
+	declare @allowancestartdate datetime = dateadd(day, -2, @date);
+	declare @allowanceenddate datetime = dateadd(day, 2, @date);
+	declare @itemNotes nvarchar(max) = 'Test item notes';
+	declare @deviceTypeId int = 4; -- iPhone
+
+	exec @mobileId = dbo.saveMobileItem
+	@employeeId,
+	@otherdetails,
+	@reasonid,
+	@total,
+	@subCatId,
+	@date,
+	@currencyid,
+	@miles,
+	@quantity,
+	@fromLocation,
+	@toLocation,
+	@allowancestartdate,
+	@allowanceenddate,
+	@itemNotes,
+	@deviceTypeId;
+
+	select @mobileId;
+end try
+begin catch
+	select -999;
+end catch</value>
+  </data>
+  <data name="dbo_saveMobileItemSuccess_TestAction.SqlScript" xml:space="preserve">
+    <value>declare @employeeId int = 0;
+declare @categoryId int = 0;
+declare @subCatId int = 0;
+declare @reasonid int = 0;
+declare @mobileId int = 0;
+
+begin try
+	select @employeeId = employeeid from employees where username = 'mobileDevice_unitTestUser';
+	select @categoryId = categoryid from categories where category = 'mobileDevices_UTCategory';
+	select @subCatId = subcatid from subcats where categoryId = @categoryId and subcat = 'mobileDevices_UTSubcat';
+	select @reasonid = reasonid from reasons where reason = 'mobileDevices_UTReason';
+
+	declare @otherdetails nvarchar(max) = 'Other details info for mobile item';
+	declare @total money = 1.23;
+	declare @date datetime = getutcdate();
+	declare @currencyid int = (select top 1 currencyid from currencies where globalcurrencyid = 159);
+	declare @miles decimal(18,2) = 1.42;
+	declare @quantity float = 1.5;
+	declare @fromLocation nvarchar(200) = 'Home';
+	declare @toLocation nvarchar(200) = 'Somewhere';
+	declare @allowancestartdate datetime = dateadd(day, -2, @date);
+	declare @allowanceenddate datetime = dateadd(day, 2, @date);
+	declare @itemNotes nvarchar(max) = 'Test item notes';
+	declare @deviceTypeId int = 4; -- iPhone
+
+	exec @mobileId = dbo.saveMobileItem
+	@employeeId,
+	@otherdetails,
+	@reasonid,
+	@total,
+	@subCatId,
+	@date,
+	@currencyid,
+	@miles,
+	@quantity,
+	@fromLocation,
+	@toLocation,
+	@allowancestartdate,
+	@allowanceenddate,
+	@itemNotes,
+	@deviceTypeId;
+
+	if @mobileId &gt; 0
+		select 1;
+	else
+		select 0;
+end try
+begin catch
+	select -999;
+end catch</value>
+  </data>
+  <data name="dbo_saveMobileItemWithInvalidReason_TestAction.SqlScript" xml:space="preserve">
+    <value>declare @employeeId int = 0;
+declare @categoryId int = 0;
+declare @subCatId int = 0;
+declare @reasonid int = 0;
+declare @mobileId int = 0;
+
+begin try
+	select @employeeId = employeeid from employees where username = 'mobileDevice_unitTestUser';
+	select @categoryId = categoryid from categories where category = 'mobileDevices_UTCategory';
+	select @subCatId = subcatid from subcats where categoryId = @categoryId and subcat = 'mobileDevices_UTSubcat';
+	set @reasonid = (select max(reasonid)+1 from reasons where reason = 'mobileDevices_UTReason');
+
+	declare @otherdetails nvarchar(max) = 'Other details info for mobile item';
+	declare @total money = 1.23;
+	declare @date datetime = getutcdate();
+	declare @currencyid int = (select top 1 currencyid from currencies where globalcurrencyid = 159);
+	declare @miles decimal(18,2) = 1.42;
+	declare @quantity float = 1.5;
+	declare @fromLocation nvarchar(200) = 'Home';
+	declare @toLocation nvarchar(200) = 'Somewhere';
+	declare @allowancestartdate datetime = dateadd(day, -2, @date);
+	declare @allowanceenddate datetime = dateadd(day, 2, @date);
+	declare @itemNotes nvarchar(max) = 'Test item notes';
+	declare @deviceTypeId int = 4; -- iPhone
+
+	exec @mobileId = dbo.saveMobileItem
+	@employeeId,
+	@otherdetails,
+	@reasonid,
+	@total,
+	@subCatId,
+	@date,
+	@currencyid,
+	@miles,
+	@quantity,
+	@fromLocation,
+	@toLocation,
+	@allowancestartdate,
+	@allowanceenddate,
+	@itemNotes,
+	@deviceTypeId;
+
+	select @mobileId;
+end try
+begin catch
+	select -999;
+end catch</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+</root>

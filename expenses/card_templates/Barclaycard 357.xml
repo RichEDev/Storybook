@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="Barclaycard 357" FileType="XLS" NumberHeaderRecords="1">
+  <Fields Type="CardTransaction" UniqueValue="trans">
+
+    <Field Name="TransactionId" Label= "Transaction ID" MappedTable="card_transactions_barclaycard357" MappedField="Transaction_identity" FieldType="S" MaxLength="20"/>
+    <Field Name="RecordType" Label= "Record Type" MappedTable="card_transactions_barclaycard357" MappedField="Record_type" FieldType="S" MaxLength="4"/>
+    <Field Name="UnitNameNumber" Label= "Unit Name and Number" MappedTable="card_transactions_barclaycard357" MappedField="unit_name_and_number" FieldType="S" MaxLength="50"/>
+    <Field Name="Name1" Label= "Card Holder Name" MappedTable="card_transactions_barclaycard357" MappedField="cardholder_name" FieldType="S" MaxLength="100"/>
+    <Field Name="Name2" Label= "Card Holder Name Line 2" MappedTable="card_transactions_barclaycard357" MappedField="cardholder_name2" FieldType="S" MaxLength="100"/>
+    <Field Name="Merchant" MappedTable="card_transactions" MappedField="description" FieldType="S" MaxLength="500"/>
+    <Field Name="MercahntLocation" Label= "Merchant Location" MappedTable="card_transactions_barclaycard357" MappedField="merchant_location" FieldType="S" MaxLength="100"/>
+    <Field Name="CardNumber" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="20"/>
+    <Field Name="MCC" Label= "MCC" MappedTable="card_transactions_barclaycard357" MappedField="mcc" FieldType="S" MaxLength="4"/>
+    <Field Name="DateOccurred" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="dd/MM/yyyy"/>
+    <Field Name="DatePosted" Label= "Date Posted" MappedTable="card_transactions_barclaycard357" MappedField="date_posted" FieldType="D" Format="dd/MM/yyyy"/>
+    <Field Name="OrigAmount" MappedTable="card_transactions" MappedField="original_amount" FieldType="M"/>
+    <Field Name="CurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" DefaultValue="GBP" CurrencyType="alpha" />
+    <Field Name="ConversionRate" MappedTable="card_transactions" MappedField="exchangerate" FieldType="M" />
+    <Field Name="Settlementamount" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C" />
+    <Field Name="Allocation" Label= "Allocation" MappedTable="card_transactions_barclaycard357" MappedField="allocation" FieldType="S" MaxLength="50"/>
+    <Field Name="Transaction_description" Label= "Transaction Description" MappedTable="card_transactions_barclaycard357" MappedField="transaction_description" FieldType="S" MaxLength="100"/>
+    <Field Name="Reference_number" Label= "Reference Number" MappedTable="card_transactions_barclaycard357" MappedField="reference" FieldType="S" MaxLength="50"/>
+    <Field Name="Purch_descritpion" Label= "Purchase Description" MappedTable="card_transactions_barclaycard357" MappedField="purchase_desc" FieldType="S" MaxLength="100"/>
+    <Field Name="Purch_quantity" Label= "Purchase Quantity" MappedTable="card_transactions_barclaycard357" MappedField="purchase_quantity" FieldType="S" MaxLength="50"/>
+    <Field Name="Purch_unit_cost" Label= "Purchase Unit Cost" MappedTable="card_transactions_barclaycard357" MappedField="purchase_cost" FieldType="S" MaxLength="50"/>
+    <Field Name="Purch_unit_of_measure" Label= "Purchase Unit of Measure" MappedTable="card_transactions_barclaycard357" MappedField="measure_unit" FieldType="S" MaxLength="50"/>
+    <Field Name="Purch_Extended_Amount" Label= "Purchase Extended Amount" MappedTable="card_transactions_barclaycard357" MappedField="extended_amount" FieldType="S" MaxLength="50"/>
+    <Field Name="Passenger_name" Label= "Passenger Name" MappedTable="card_transactions_barclaycard357" MappedField="passenger_name" FieldType="S" MaxLength="100"/>
+    <Field Name="Ticket_number" Label= "Ticket Number" MappedTable="card_transactions_barclaycard357" MappedField="ticket_number" FieldType="S" MaxLength="50"/>
+    <Field Name="Travel_date" Label= "Travel Date" MappedTable="card_transactions_barclaycard357" MappedField="travel_date" FieldType="D" Format="dd/MM/yyyy"/>
+    <Field Name="Travel_legs" Label= "Travel Legs" MappedTable="card_transactions_barclaycard357" MappedField="travel_legs" FieldType="S" MaxLength="500"/>
+    <Field Name="Check_in_date" Label= "Check In Date" MappedTable="card_transactions_barclaycard357" MappedField="check_in_date" FieldType="D" Format="dd/MM/yyyy"/>
+    <Field Name="Check_out_date" Label= "Check Out Date" MappedTable="card_transactions_barclaycard357" MappedField="check_out_date" FieldType="D" Format="dd/MM/yyyy"/>
+    <Field Name="Lodging_number_of_days" Label= "Lodging Number of Days" MappedTable="card_transactions_barclaycard357" MappedField="lodging_days" FieldType="S" MaxLength="20"/>
+    <Field Name="Room_rate" Label= "Room Rate" MappedTable="card_transactions_barclaycard357" MappedField="room_rate" FieldType="S" MaxLength="50"/>
+    <Field Name="Renter" Label= "Renter" MappedTable="card_transactions_barclaycard357" MappedField="renter" FieldType="S" MaxLength="100"/>
+    <Field Name="Agreement_number" Label= "Agreement Number" MappedTable="card_transactions_barclaycard357" MappedField="agreement_number" FieldType="S" MaxLength="50"/>
+    <Field Name="Renter_check_out" Label= "Renter Check Out" MappedTable="card_transactions_barclaycard357" MappedField="renter_check_out" FieldType="D" Format="dd/MM/yyyy"/>
+    <Field Name="Renter_check_in" Label= "Renter Check In" MappedTable="card_transactions_barclaycard357" MappedField="renter_check_in" FieldType="D" Format="dd/MM/yyyy"/>
+    <Field Name="Return_location" Label= "Return Location" MappedTable="card_transactions_barclaycard357" MappedField="return_location" FieldType="S" MaxLength="50"/>
+    <Field Name="Renter_number_of_days" Label= "Renter Number of Days" MappedTable="card_transactions_barclaycard357" MappedField="renter_no_days" FieldType="S" MaxLength="10"/>
+    <Field Name="Fuel_quantity" Label= "Fuel Quantity" MappedTable="card_transactions_barclaycard357" MappedField="fuel_quantity" FieldType="S" MaxLength="50"/>
+    <Field Name="Fuel_unit_price" Label= "Fuel Unit Price" MappedTable="card_transactions_barclaycard357" MappedField="fuel_uom_price" FieldType="S" MaxLength="50"/>
+    <Field Name="Fuel_uom" Label= "Fuel UOM" MappedTable="card_transactions_barclaycard357" MappedField="fuel_uom" FieldType="S" MaxLength="50"/>
+    <Field Name="Odometer_reading" Label= "Odometer Reding" MappedTable="card_transactions_barclaycard357" MappedField="odometer_reading" FieldType="S" MaxLength="50"/>
+    <Field Name="Driver_number" Label= "Driver Number" MappedTable="card_transactions_barclaycard357" MappedField="driver_number" FieldType="S" MaxLength="50"/>
+    <Field Name="Delivery_company" Label= "Delivery Company" MappedTable="card_transactions_barclaycard357" MappedField="delivery_company" FieldType="S" MaxLength="50"/>
+    <Field Name="Number_of_packages" Label= "Number of Packages" MappedTable="card_transactions_barclaycard357" MappedField="number_pkgs" FieldType="S" MaxLength="10"/>
+    <Field Name="Tracking_number" Label= "Tracking Number" MappedTable="card_transactions_barclaycard357" MappedField="tracking_number" FieldType="S" MaxLength="50"/>
+    <Field Name="Pick_up_date" Label= "Pick up Date" MappedTable="card_transactions_barclaycard357" MappedField="pick_up_date" FieldType="D" Format="dd/MM/yyyy"/>
+    <Field Name="Delivery_description" Label= "Delivery Description" MappedTable="card_transactions_barclaycard357" MappedField="delivery_desc" FieldType="S" MaxLength="50"/>
+    <Field Name="Connect_date" Label= "Connect Date" MappedTable="card_transactions_barclaycard357" MappedField="connect_date" FieldType="D" Format="dd/MM/yyyy"/>
+    <Field Name="Connect_time" Label= "Connect Time" MappedTable="card_transactions_barclaycard357" MappedField="connect_time" FieldType="S" MaxLength="50"/>
+    <Field Name="To_state" Label= "To State" MappedTable="card_transactions_barclaycard357" MappedField="to_state" FieldType="S" MaxLength="50"/>
+    <Field Name="Call_duration" Label= "Call Duration" MappedTable="card_transactions_barclaycard357" MappedField="call_duration" FieldType="S" MaxLength="50"/>
+    <Field Name="Number_dialled" Label= "Number Dialled" MappedTable="card_transactions_barclaycard357" MappedField="number_dialled" FieldType="S" MaxLength="50"/>
+    <Field Name="Temp_name" Label= "Temp Name" MappedTable="card_transactions_barclaycard357" MappedField="temp_name" FieldType="S" MaxLength="50"/>
+    <Field Name="Temp_rate" Label= "Temp Rate" MappedTable="card_transactions_barclaycard357" MappedField="temp_rate" FieldType="S" MaxLength="50"/>
+    <Field Name="Temp_hours" Label= "Temp Hours" MappedTable="card_transactions_barclaycard357" MappedField="temp_hours" FieldType="S" MaxLength="10"/>
+    <Field Name="Temp_start_date" Label= "Temp Start Date" MappedTable="card_transactions_barclaycard357" MappedField="temp_start_date" FieldType="D" Format="dd/MM/yyyy"/>
+    <Field Name="Temp_id_number" Label= "Temp ID Number" MappedTable="card_transactions_barclaycard357" MappedField="temp_id_number" FieldType="S" MaxLength="50"/>
+    <Field Name="Health_id" Label= "Health ID" MappedTable="card_transactions_barclaycard357" MappedField="health_id" FieldType="S" MaxLength="50"/>
+    <Field Name="Contract_number" Label= "Contract Number" MappedTable="card_transactions_barclaycard357" MappedField="contract_number" FieldType="S" MaxLength="50"/>
+    <Field Name="Health_order_date" Label= "Health Order Date" MappedTable="card_transactions_barclaycard357" MappedField="health_order_date" FieldType="D" Format="dd/MM/yyyy"/>
+    <Field Name="Health_unit_price" Label= "Health Unit Price" MappedTable="card_transactions_barclaycard357" MappedField="health_unit_price" FieldType="S" MaxLength="50"/>
+    <Field Name="CountryCode" MappedTable="card_transactions" MappedField="country_code" FieldType="S" DefaultValue="GB" CountryType="alpha" />
+  </Fields>
+</CardTemplate>

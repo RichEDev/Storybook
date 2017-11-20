@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[codes_invoicefrequencytype]
+    ADD CONSTRAINT [PK__codes_invoicefre__12725CE9] PRIMARY KEY CLUSTERED ([invoiceFrequencyTypeId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

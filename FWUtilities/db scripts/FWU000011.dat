@@ -1,0 +1,305 @@
+% FW Update.dat file
+% 29/05/2002
+# 000011 000012
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Assets
+
+% Attachments
+
+% Audit Log
+CREATE TABLE [Audit Log]
+(
+	[Audit Id]		int IDENTITY PRIMARY KEY,
+	[Datestamp]		datetime,
+	[User Id]		varchar(15),
+	[Full Name]		varchar(30),
+	[Action]		varchar(3),
+	[Data Element Type]	varchar(25),
+	[Contract Number]	varchar(16),
+	[Element Description]	varchar(50),
+	[Old Value]		varchar(30),
+	[New Value]		varchar(30)
+)
+*
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Invoice Status Type
+
+% Codes - Licence Renewal Type
+CREATE TABLE [Codes - Licence Renewal Type]
+(
+	[Renewal Type]			int IDENTITY PRIMARY KEY,
+	[Location Id]			int,
+	[Renewal Type Description]	varchar(30)
+)
+*
+
+% Codes - Note Category
+
+% Codes - Platform Type
+
+% Codes - Region
+
+% Codes - Sales Tax
+
+% Codes - SLD
+
+% Codes - Term Type
+
+% Codes - Units
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract - Forecast Details
+
+% Contract - Forecast Products
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+
+% Contract - Product-History
+
+% Contract - Product-Platforms
+
+% Contract Classes
+
+% Contract Details
+
+% Contract Notes
+ALTER TABLE [Contract Notes]
+ADD [Created by] varchar(30)
+*
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Export Fields
+
+% Exports
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice - Product Details
+
+% Invoice Details
+ALTER TABLE [Invoice Details]
+ADD [Comment] text
+*
+
+% Invoice Log
+
+% Invoice Notes
+ALTER TABLE [Invoice Notes]
+ADD [Created by] char(30)
+*
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Location
+
+% Mail
+
+% Mail Schedule
+
+% Metrics
+
+% OLAP Cube 02
+
+% OLAP Cube 03
+
+% Pallet
+CREATE TABLE Pallet
+(
+     [Pallet Id]	               int IDENTITY PRIMARY KEY,
+     [Location Id]                     int,
+     [User Id]			       int,
+     [Pallet Name]		       char(16),
+     [Default Pallet]		       char(1),
+     [Use System]		       char(1),
+     [Use SEL Colours]		       char(1),
+     [Form Back]                       int,
+     [Form Text]                       int,
+     [Button]			       int,
+     [Label Text]		       int,
+     [Edit Back]		       int,
+     [Edit Text]		       int,
+     [Button Bar]		       int,     
+     [Combo Back]		       int,
+     [Combo Text]		       int,
+     [Spread OddEven]                  char(1),
+     [Spread Odd Back]		       int,
+     [Spread Even Back]		       int,
+     [Spread Odd Text]		       int,
+     [Spread Even Text]		       int,
+     [Spread Back]		       int,
+     [Spread Text]                     int,
+     [Spread GrayArea]                 int,
+     [Spread Header]                   int,
+     [Spread Header Text]              int,
+     [Spread Border]		       int
+)
+*
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Platform LPars
+
+% Product Details
+ALTER TABLE [Product Details]
+ADD [Licence Expires] datetime
+*
+ALTER TABLE [Product Details]
+ADD [Notify] varchar(25)
+*
+ALTER TABLE [Product Details]
+ADD [Renewal Type] int
+*
+ALTER TABLE [Product Details]
+ADD [Notify Days] int
+*
+
+% Product Notes
+ALTER TABLE [Product Notes]
+ADD [Created by] varchar(30)
+*
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Saved Views
+ALTER TABLE [Saved Views]
+ADD [Location Id] int
+*
+
+% Schedule
+
+% Security
+ALTER TABLE [Security]
+ADD [Full Name] varchar(30)
+*
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Staff Details
+
+% Sublocations
+
+% System Parameters
+ALTER TABLE [System Parameters]
+ADD [DBType] int
+*
+
+% Target Types
+
+% User Field Values
+
+% User Fields
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+
+% Vendor Contact Notes
+CREATE TABLE [Vendor Contact Notes]
+(
+     [Note Id]                         int IDENTITY PRIMARY KEY,
+     [Address Id]                      int,
+     [Code]                            int,
+     [Note]                            text,
+     [Date]                            datetime,
+     [Note Type]                       int,
+     [Note Cat Id]                     int,
+     [Created by]		       varchar(30)
+)
+*
+
+% Vendor Notes
+ALTER TABLE [Vendor Notes]
+ADD [Created by] varchar(30)
+*
+
+% Vendor Regions
+
+% Vendor Status
+
+% Version Registry
+CREATE TABLE [Version Registry]
+(
+     [Registry Id]                     int IDENTITY PRIMARY KEY,
+     [Contract Id]                     int NOT NULL,
+     [Product Id]		       int NOT NULL,
+     [Version]                         varchar(30),
+     [Version Order]		       int,
+     [Quantity]			       int
+)
+*
+
+% ---------- Views ----------
+
+$S03
+
+% Performance Metrics
+
+% CalView
+
+% ---------- Procedures ----------
+
+% End of file

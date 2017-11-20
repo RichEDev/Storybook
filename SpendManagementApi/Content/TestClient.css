@@ -1,0 +1,46 @@
+.httpMethod {
+    width: 20%;
+}
+
+.uriPath {
+    width: 70%;
+}
+
+.sampleArea {
+    width: 95%;
+}
+
+#testClientButton {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 150px;
+    font-size: x-large;
+}
+
+
+select {
+    margin-top: 10px;
+}
+
+.panel {
+    max-height: 120px;
+    overflow: auto;
+}
+
+ .authTokenHeader input, .panel input {
+        width: 150px;
+    }
+
+.uriParameterLabel {
+    width: 100px;
+    float: left;
+    border: none;
+}
+
+textarea { max-width: 100%; }
+
+
+/*
+    Todo: Revisit for browser compat.
+*/ 

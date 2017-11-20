@@ -1,0 +1,15 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+codes_rechargeentity,Location Id,Repository Location,S,50,N,Y,F,[location].[Location Id],[location].[Description],
+codes_rechargeentity,Name,,S,50,Y,Y,N,,,
+codes_rechargeentity,Code,,S,20,N,N,N,,,
+codes_rechargeentity,Shared,,X,,N,N,N,,,0
+codes_rechargeentity,Staff Rep,Representative,S,50,N,N,Y,[staff_details].[Staff Id],[staff_details].[Staff Name],
+codes_rechargeentity,Deputy Rep,Deputy Representative,S,50,N,N,Y,[staff_details].[Staff Id],[staff_details].[Staff Name],
+codes_rechargeentity,Account Mgr,Account Manager,S,50,N,N,Y,[staff_details].[Staff Id],[staff_details].[Staff Name],
+codes_rechargeentity,Service Mgr,Service Manager,S,50,N,N,Y,[staff_details].[Staff Id],[staff_details].[Staff Name],
+codes_rechargeentity,Sector,,S,50,N,N,N,,,
+codes_rechargeentity,Service Line,,S,20,N,N,N,,,
+codes_rechargeentity,Notes,,S,250,N,N,N,,,
+codes_rechargeentity,Closed,,X,,N,N,N,,,0
+codes_rechargeentity,Date Closed,,D,,N,N,N,,,
+codes_rechargeentity,Date Ceased,,D,,N,N,N,,,

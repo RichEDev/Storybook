@@ -1,0 +1,5 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+codes_inflatormetrics,subAccountId,Repository SubAccount,S,50,N,Y,F,accountsSubAccounts.subAccountId,accountsSubAccounts.Description,
+codes_inflatormetrics,Name,,S,20,Y,Y,N,,,
+codes_inflatormetrics,Percentage,,F,,N,Y,N,,,0
+codes_inflatormetrics,requiresExtraPct,Req. Extra % entry,X,,N,Y,N,,,0

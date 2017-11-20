@@ -1,0 +1,2 @@
+﻿ALTER TABLE [dbo].[ESRPersons]
+	ADD CONSTRAINT [PK_ESRPersons] PRIMARY KEY (ESRPersonId)

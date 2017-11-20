@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://software-europe.com/API/2013/02" elementFormDefault="qualified" targetNamespace="http://software-europe.com/API/2013/02" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ApiLibrary.DataObjects.Base" />
+  <xs:complexType name="ArrayOfEsrPersonRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EsrPersonRecord" nillable="true" type="tns:EsrPersonRecord" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEsrPersonRecord" nillable="true" type="tns:ArrayOfEsrPersonRecord" />
+  <xs:complexType name="EsrPersonRecord">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:EsrPerson">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="addresses" nillable="true" type="tns:ArrayOfEsrAddress" />
+          <xs:element minOccurs="0" name="assignmentCostings" nillable="true" type="tns:ArrayOfEsrAssignmentCostings" />
+          <xs:element minOccurs="0" name="assignments" nillable="true" type="tns:ArrayOfEsrAssignment" />
+          <xs:element minOccurs="0" name="phones" nillable="true" type="tns:ArrayOfEsrPhone" />
+          <xs:element minOccurs="0" name="vehicles" nillable="true" type="tns:ArrayOfEsrVehicle" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrPersonRecord" nillable="true" type="tns:EsrPersonRecord" />
+  <xs:complexType name="EsrPerson">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataClassBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActualTerminationDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CSD12Months" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CSD3Months" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CountryOfBirth" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DateOfBirth" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DisabilityFlag" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ESRLastUpdateDate" nillable="true" type="xs:dateTime" />
+          <xs:element name="ESRPersonId" type="xs:long" />
+          <xs:element minOccurs="0" name="EffectiveEndDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EffectiveStartDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EmployeeNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EmployeeStatusFlag" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EthnicOrigin" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Gender" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="HireDate" nillable="true" type="xs:dateTime" />
+          <xs:element name="LastName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LegacyPayrollNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MaidenName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MaritalStatus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MiddleNames" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NHSCRSUUID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NHSStartDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="NHSUniqueId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NINumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Nationality" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OfficeEmailAddress" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PreferredName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PreviousEmployer" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PreviousEmployerType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PreviousLastName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RecordPositionIndex" type="xs:int" />
+          <xs:element minOccurs="0" name="SystemPersonType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TerminationReason" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserPersonType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WTROptOut" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WTROptOutDate" nillable="true" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrPerson" nillable="true" type="tns:EsrPerson" />
+  <xs:complexType name="DataClassBase">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ApiLibrary.DataObjects.Base" name="Action" type="q1:Action" />
+      <xs:element minOccurs="0" name="ActionResult" nillable="true" type="tns:ApiResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DataClassBase" nillable="true" type="tns:DataClassBase" />
+  <xs:complexType name="ApiResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LookupUpdateFailure" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ApiLibrary.DataObjects.Base" minOccurs="0" name="Result" type="q2:ApiActionResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ApiResult" nillable="true" type="tns:ApiResult" />
+  <xs:complexType name="EsrVehicleRecord">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:EsrVehicle">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrVehicleRecord" nillable="true" type="tns:EsrVehicleRecord" />
+  <xs:complexType name="EsrVehicle">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataClassBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ESRAssignID" nillable="true" type="xs:int" />
+          <xs:element name="ESRAssignmentId" type="xs:long" />
+          <xs:element minOccurs="0" name="ESRLastUpdate" nillable="true" type="xs:dateTime" />
+          <xs:element name="ESRPersonId" type="xs:long" />
+          <xs:element name="ESRVehicleAllocationId" type="xs:long" />
+          <xs:element minOccurs="0" name="EffectiveEndDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EffectiveStartDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EngineCC" type="xs:int" />
+          <xs:element minOccurs="0" name="FuelType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InitialRegistrationDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Make" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Model" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Ownership" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RegistrationNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserRatesTable" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrVehicle" nillable="true" type="tns:EsrVehicle" />
+  <xs:complexType name="EsrAssignmentCostingRecord">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:EsrAssignmentCostings">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrAssignmentCostingRecord" nillable="true" type="tns:EsrAssignmentCostingRecord" />
+  <xs:complexType name="EsrAssignmentCostings">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataClassBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Analysis1" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Analysis2" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CharitableIndicator" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CostCentre" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ESRAssignId" nillable="true" type="xs:int" />
+          <xs:element name="ESRAssignmentId" type="xs:long" />
+          <xs:element name="ESRCostingAllocationId" type="xs:long" />
+          <xs:element minOccurs="0" name="ESRLastUpdate" nillable="true" type="xs:dateTime" />
+          <xs:element name="ESRPersonId" type="xs:long" />
+          <xs:element minOccurs="0" name="EffectiveEndDate" nillable="true" type="xs:dateTime" />
+          <xs:element name="EffectiveStartDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ElementNumber" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="EntityCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PercentageSplit" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="SpareSegment" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Subjective" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrAssignmentCostings" nillable="true" type="tns:EsrAssignmentCostings" />
+  <xs:complexType name="EsrAddressRecord">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:EsrAddress">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrAddressRecord" nillable="true" type="tns:EsrAddressRecord" />
+  <xs:complexType name="EsrAddress">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataClassBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AddressCountry" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressCounty" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine1" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine2" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine3" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressPostcode" nillable="true" type="xs:string" />
+          <xs:element name="AddressStyle" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressTown" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressType" nillable="true" type="xs:string" />
+          <xs:element name="ESRAddressId" type="xs:long" />
+          <xs:element minOccurs="0" name="ESRLastUpdate" nillable="true" type="xs:dateTime" />
+          <xs:element name="ESRPersonId" type="xs:long" />
+          <xs:element minOccurs="0" name="EffectiveEndDate" nillable="true" type="xs:dateTime" />
+          <xs:element name="EffectiveStartDate" type="xs:dateTime" />
+          <xs:element name="PrimaryFlag" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrAddress" nillable="true" type="tns:EsrAddress" />
+  <xs:complexType name="EsrAssignmentRecord">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:EsrAssignment">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrAssignmentRecord" nillable="true" type="tns:EsrAssignmentRecord" />
+  <xs:complexType name="EsrAssignment">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataClassBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AfcFlag" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AnnualSalaryValue" type="xs:decimal" />
+          <xs:element minOccurs="0" name="AssignmentCategory" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AssignmentID" type="xs:long" />
+          <xs:element name="AssignmentNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AssignmentStatus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AssignmentType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ContractEndDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DepartmentManagerPersonId" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="ESRPersonId" nillable="true" type="xs:long" />
+          <xs:element name="EarliestAssignmentStartDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EffectiveEndDate" nillable="true" type="xs:dateTime" />
+          <xs:element name="EffectiveStartDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EmployeeCategory" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EmployeeStatusFlag" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EsrLastUpdate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EsrLocationId" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="EsrOrganisationId" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="EsrPositionId" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="FinalAssignmentEndDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="FlexibleWorkingPattern" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Fte" type="xs:decimal" />
+          <xs:element minOccurs="0" name="Grade" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GradeContractHours" type="xs:decimal" />
+          <xs:element minOccurs="0" name="GradeStep" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Group" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IncrementDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="JobName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LastWorkingDay" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ManagerFlag" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MaximumPartTimeFlag" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NightWorkerOptOut" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NormalHours" type="xs:decimal" />
+          <xs:element minOccurs="0" name="NormalHoursFrequency" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PayrollName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PayrollPeriodType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PositionName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PrimaryAssignment" type="xs:boolean" />
+          <xs:element minOccurs="0" name="PrimaryAssignmentString" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProjectedHireDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SafeDepartmentManagerPersonId" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="SafeSupervisorAssignmentId" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="SafeSupervisorAssignmentNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SafeSupervisorPersonId" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="StartDateInGrade" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SupervisorAssignmentId" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="SupervisorAssignmentNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SupervisorEsrAssignID" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="SupervisorFlag" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SupervisorPersonId" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="SystemAssignmentStatus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TAndAFlag" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyID" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="eKSFSpinalPoint" nillable="true" type="xs:string" />
+          <xs:element name="employeeid" type="xs:int" />
+          <xs:element name="esrAssignID" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrAssignment" nillable="true" type="tns:EsrAssignment" />
+  <xs:complexType name="EsrLocationRecord">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:EsrLocation">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrLocationRecord" nillable="true" type="tns:EsrLocationRecord" />
+  <xs:complexType name="EsrLocation">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataClassBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AddressLine1" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine2" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine3" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ESRLastUpdate" nillable="true" type="xs:dateTime" />
+          <xs:element name="ESRLocationId" type="xs:long" />
+          <xs:element minOccurs="0" name="Fax" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InactiveDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="LocationCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PayslipDeliveryPoint" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SiteCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Town" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WelshAddress1" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WelshAddress2" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WelshAddress3" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WelshLocationTranslation" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WelshTownTranslation" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrLocation" nillable="true" type="tns:EsrLocation" />
+  <xs:complexType name="EsrPhoneRecord">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:EsrPhone">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrPhoneRecord" nillable="true" type="tns:EsrPhoneRecord" />
+  <xs:complexType name="EsrPhone">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataClassBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ESRLastUpdate" nillable="true" type="xs:dateTime" />
+          <xs:element name="ESRPersonId" type="xs:long" />
+          <xs:element name="ESRPhoneId" type="xs:long" />
+          <xs:element minOccurs="0" name="EffectiveEndDate" nillable="true" type="xs:dateTime" />
+          <xs:element name="EffectiveStartDate" type="xs:dateTime" />
+          <xs:element name="PhoneNumber" nillable="true" type="xs:string" />
+          <xs:element name="PhoneType" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrPhone" nillable="true" type="tns:EsrPhone" />
+  <xs:complexType name="ArrayOfEsrAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EsrAddress" nillable="true" type="tns:EsrAddress" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEsrAddress" nillable="true" type="tns:ArrayOfEsrAddress" />
+  <xs:complexType name="ArrayOfEsrAssignmentCostings">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EsrAssignmentCostings" nillable="true" type="tns:EsrAssignmentCostings" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEsrAssignmentCostings" nillable="true" type="tns:ArrayOfEsrAssignmentCostings" />
+  <xs:complexType name="ArrayOfEsrAssignment">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EsrAssignment" nillable="true" type="tns:EsrAssignment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEsrAssignment" nillable="true" type="tns:ArrayOfEsrAssignment" />
+  <xs:complexType name="ArrayOfEsrPhone">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EsrPhone" nillable="true" type="tns:EsrPhone" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEsrPhone" nillable="true" type="tns:ArrayOfEsrPhone" />
+  <xs:complexType name="ArrayOfEsrVehicle">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EsrVehicle" nillable="true" type="tns:EsrVehicle" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEsrVehicle" nillable="true" type="tns:ArrayOfEsrVehicle" />
+  <xs:complexType name="ArrayOfEsrLocationRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EsrLocationRecord" nillable="true" type="tns:EsrLocationRecord" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEsrLocationRecord" nillable="true" type="tns:ArrayOfEsrLocationRecord" />
+  <xs:complexType name="EsrOrganisation">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataClassBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CostCentreDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DefaultCostCentre" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ESRLastUpdateDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ESRLocationId" nillable="true" type="xs:long" />
+          <xs:element name="ESROrganisationId" type="xs:long" />
+          <xs:element name="EffectiveFrom" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EffectiveTo" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="HierarchyVersionFrom" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="HierarchyVersionId" type="xs:long" />
+          <xs:element minOccurs="0" name="HierarchyVersionTo" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="NACSCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OrganisationName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OrganisationType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ParentOrganisationId" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="RecordPositionIndex" type="xs:int" />
+          <xs:element minOccurs="0" name="SafeParentOrganisationId" nillable="true" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrOrganisation" nillable="true" type="tns:EsrOrganisation" />
+  <xs:complexType name="ArrayOfEsrPositionRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EsrPositionRecord" nillable="true" type="tns:EsrPositionRecord" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEsrPositionRecord" nillable="true" type="tns:ArrayOfEsrPositionRecord" />
+  <xs:complexType name="EsrPositionRecord">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:EsrPosition">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrPositionRecord" nillable="true" type="tns:EsrPositionRecord" />
+  <xs:complexType name="EsrPosition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataClassBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BudgetedFTE" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="DeaneryPostNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EPPFlag" nillable="true" type="xs:string" />
+          <xs:element name="ESRLastUpdateDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ESROrganisationId" nillable="true" type="xs:long" />
+          <xs:element name="ESRPositionId" type="xs:long" />
+          <xs:element minOccurs="0" name="EffectiveFromDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EffectiveToDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="GradeStep" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="HiringStatus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ISARegulatedPost" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="JobRole" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="JobStaffGroup" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ManagingDeaneryBody" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OHProcessingEligible" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OccupationCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Payscale" nillable="true" type="xs:string" />
+          <xs:element name="PositionName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PositionNumber" type="xs:long" />
+          <xs:element minOccurs="0" name="PositionType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SubjectiveCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SubjectiveCodeDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WorkplaceOrgCode" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrPosition" nillable="true" type="tns:EsrPosition" />
+  <xs:complexType name="EsrTrust">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataClassBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+          <xs:element name="ESRVersionNumber" type="xs:unsignedByte" />
+          <xs:element minOccurs="0" name="archived" type="xs:boolean" />
+          <xs:element minOccurs="0" name="createdOn" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="currentOutboundSequence" nillable="true" type="xs:int" />
+          <xs:element name="delimiterCharacter" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ftpAddress" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ftpPassword" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ftpUsername" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="modifiedOn" nillable="true" type="xs:dateTime" />
+          <xs:element name="periodRun" nillable="true" type="xs:string" />
+          <xs:element name="periodType" nillable="true" type="xs:string" />
+          <xs:element name="runSequenceNumber" type="xs:int" />
+          <xs:element name="trustID" type="xs:int" />
+          <xs:element name="trustName" nillable="true" type="xs:string" />
+          <xs:element name="trustVPD" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EsrTrust" nillable="true" type="tns:EsrTrust" />
+  <xs:complexType name="ArrayOfImportLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ImportLog" nillable="true" type="tns:ImportLog" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfImportLog" nillable="true" type="tns:ArrayOfImportLog" />
+  <xs:complexType name="ImportLog">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataClassBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="expectedLines" type="xs:int" />
+          <xs:element minOccurs="0" name="failedLines" type="xs:int" />
+          <xs:element name="logID" type="xs:int" />
+          <xs:element minOccurs="0" name="logName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="logType" type="xs:unsignedByte" />
+          <xs:element minOccurs="0" name="processedLines" type="xs:int" />
+          <xs:element minOccurs="0" name="successfulLines" type="xs:int" />
+          <xs:element minOccurs="0" name="warningLines" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ImportLog" nillable="true" type="tns:ImportLog" />
+  <xs:complexType name="ArrayOfImportHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ImportHistory" nillable="true" type="tns:ImportHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfImportHistory" nillable="true" type="tns:ArrayOfImportHistory" />
+  <xs:complexType name="ImportHistory">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataClassBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="applicationType" type="xs:int" />
+          <xs:element minOccurs="0" name="dataId" type="xs:int" />
+          <xs:element minOccurs="0" name="historyId" type="xs:int" />
+          <xs:element minOccurs="0" name="importId" type="xs:int" />
+          <xs:element minOccurs="0" name="importStatus" type="xs:int" />
+          <xs:element minOccurs="0" name="importedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="logId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ImportHistory" nillable="true" type="tns:ImportHistory" />
+</xs:schema>

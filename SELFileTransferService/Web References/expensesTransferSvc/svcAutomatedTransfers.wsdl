@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetReadyTransfers">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetReadyTransfersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetReadyTransfersResult" type="tns:ArrayOfCAutomatedTransfer" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCAutomatedTransfer">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="cAutomatedTransfer" nillable="true" type="tns:cAutomatedTransfer" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="cAutomatedTransfer">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="accountID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="trustID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TransferType" type="tns:AutomatedTransferType" />
+          <s:element minOccurs="1" maxOccurs="1" name="financialExportID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="exportHistoryID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="AutomatedTransferType">
+        <s:restriction base="s:string">
+          <s:enumeration value="ESRInbound" />
+          <s:enumeration value="ESROutbound" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetUpdatedTrusts">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="since" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUpdatedTrustsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUpdatedTrustsResult" type="tns:ArrayOfTrustUpdateInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTrustUpdateInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TrustUpdateInfo" type="tns:TrustUpdateInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TrustUpdateInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="AccountID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="lstTrusts" type="tns:ArrayOfCESRTrust" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCESRTrust">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="cESRTrust" nillable="true" type="tns:cESRTrust" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="cESRTrust">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TrustID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="expTrustID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="AccountID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="TrustName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TrustVPD" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PeriodType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PeriodRun" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="RunSequenceNumber" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FTPAddress" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FTPUsername" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FTPPassword" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Archived" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetExportData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExportDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetExportDataResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="startInboundExport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="accountID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="financialReportID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="exportHistoryID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="startInboundExportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="startInboundExportResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getExportProgress">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfAnyType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="getExportProgressResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getExportProgressResult" type="tns:ArrayOfAnyType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadOutboundFiles">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="accountID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="outboundFileInfo" type="tns:cESRFileInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="cESRFileInfo" />
+      <s:element name="UploadOutboundFilesResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdateTransferStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="accountID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="exportHistoryID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="tns:FinancialExportStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="FinancialExportStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="None" />
+          <s:enumeration value="ExportFailed" />
+          <s:enumeration value="ExportSucceeded" />
+          <s:enumeration value="AwaitingESRInboundTransfer" />
+          <s:enumeration value="CollectedForUploadToESR" />
+          <s:enumeration value="UploadToESRFailed" />
+          <s:enumeration value="UploadToESRSucceeded" />
+          <s:enumeration value="FileTransferProcessComplete" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="UpdateTransferStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateTransferStatusResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUpdateServerUTCDateTime">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetUpdateServerUTCDateTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetUpdateServerUTCDateTimeResult" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetReadyTransfersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetReadyTransfers" />
+  </wsdl:message>
+  <wsdl:message name="GetReadyTransfersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetReadyTransfersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUpdatedTrustsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUpdatedTrusts" />
+  </wsdl:message>
+  <wsdl:message name="GetUpdatedTrustsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUpdatedTrustsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetExportDataSoapIn">
+    <wsdl:part name="parameters" element="tns:GetExportData" />
+  </wsdl:message>
+  <wsdl:message name="GetExportDataSoapOut">
+    <wsdl:part name="parameters" element="tns:GetExportDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="startInboundExportSoapIn">
+    <wsdl:part name="parameters" element="tns:startInboundExport" />
+  </wsdl:message>
+  <wsdl:message name="startInboundExportSoapOut">
+    <wsdl:part name="parameters" element="tns:startInboundExportResponse" />
+  </wsdl:message>
+  <wsdl:message name="getExportProgressSoapIn">
+    <wsdl:part name="parameters" element="tns:getExportProgress" />
+  </wsdl:message>
+  <wsdl:message name="getExportProgressSoapOut">
+    <wsdl:part name="parameters" element="tns:getExportProgressResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadOutboundFilesSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadOutboundFiles" />
+  </wsdl:message>
+  <wsdl:message name="UploadOutboundFilesSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadOutboundFilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateTransferStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateTransferStatus" />
+  </wsdl:message>
+  <wsdl:message name="UpdateTransferStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateTransferStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUpdateServerUTCDateTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUpdateServerUTCDateTime" />
+  </wsdl:message>
+  <wsdl:message name="GetUpdateServerUTCDateTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUpdateServerUTCDateTimeResponse" />
+  </wsdl:message>
+  <wsdl:portType name="svcAutomatedTransfersSoap">
+    <wsdl:operation name="GetReadyTransfers">
+      <wsdl:input message="tns:GetReadyTransfersSoapIn" />
+      <wsdl:output message="tns:GetReadyTransfersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdatedTrusts">
+      <wsdl:input message="tns:GetUpdatedTrustsSoapIn" />
+      <wsdl:output message="tns:GetUpdatedTrustsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExportData">
+      <wsdl:input message="tns:GetExportDataSoapIn" />
+      <wsdl:output message="tns:GetExportDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="startInboundExport">
+      <wsdl:input message="tns:startInboundExportSoapIn" />
+      <wsdl:output message="tns:startInboundExportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getExportProgress">
+      <wsdl:input message="tns:getExportProgressSoapIn" />
+      <wsdl:output message="tns:getExportProgressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadOutboundFiles">
+      <wsdl:input message="tns:UploadOutboundFilesSoapIn" />
+      <wsdl:output message="tns:UploadOutboundFilesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransferStatus">
+      <wsdl:input message="tns:UpdateTransferStatusSoapIn" />
+      <wsdl:output message="tns:UpdateTransferStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdateServerUTCDateTime">
+      <wsdl:input message="tns:GetUpdateServerUTCDateTimeSoapIn" />
+      <wsdl:output message="tns:GetUpdateServerUTCDateTimeSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="svcAutomatedTransfersSoap" type="tns:svcAutomatedTransfersSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetReadyTransfers">
+      <soap:operation soapAction="http://tempuri.org/GetReadyTransfers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdatedTrusts">
+      <soap:operation soapAction="http://tempuri.org/GetUpdatedTrusts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExportData">
+      <soap:operation soapAction="http://tempuri.org/GetExportData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="startInboundExport">
+      <soap:operation soapAction="http://tempuri.org/startInboundExport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getExportProgress">
+      <soap:operation soapAction="http://tempuri.org/getExportProgress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadOutboundFiles">
+      <soap:operation soapAction="http://tempuri.org/UploadOutboundFiles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransferStatus">
+      <soap:operation soapAction="http://tempuri.org/UpdateTransferStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdateServerUTCDateTime">
+      <soap:operation soapAction="http://tempuri.org/GetUpdateServerUTCDateTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="svcAutomatedTransfersSoap12" type="tns:svcAutomatedTransfersSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetReadyTransfers">
+      <soap12:operation soapAction="http://tempuri.org/GetReadyTransfers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdatedTrusts">
+      <soap12:operation soapAction="http://tempuri.org/GetUpdatedTrusts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExportData">
+      <soap12:operation soapAction="http://tempuri.org/GetExportData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="startInboundExport">
+      <soap12:operation soapAction="http://tempuri.org/startInboundExport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getExportProgress">
+      <soap12:operation soapAction="http://tempuri.org/getExportProgress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadOutboundFiles">
+      <soap12:operation soapAction="http://tempuri.org/UploadOutboundFiles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransferStatus">
+      <soap12:operation soapAction="http://tempuri.org/UpdateTransferStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdateServerUTCDateTime">
+      <soap12:operation soapAction="http://tempuri.org/GetUpdateServerUTCDateTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="svcAutomatedTransfers">
+    <wsdl:port name="svcAutomatedTransfersSoap" binding="tns:svcAutomatedTransfersSoap">
+      <soap:address location="http://localhost/expenses/expenses/webservices/svcAutomatedTransfers.asmx" />
+    </wsdl:port>
+    <wsdl:port name="svcAutomatedTransfersSoap12" binding="tns:svcAutomatedTransfersSoap12">
+      <soap12:address location="http://localhost/expenses/expenses/webservices/svcAutomatedTransfers.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

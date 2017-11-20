@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[userdefinedContractDetails]
+    ADD CONSTRAINT [PK_userdefinedContractDetails] PRIMARY KEY CLUSTERED ([contractid] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

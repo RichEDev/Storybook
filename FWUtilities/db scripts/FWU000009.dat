@@ -1,0 +1,369 @@
+% FW Update.dat file
+% 29/05/2001
+# 000009 000010
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Assets
+
+% Attachments
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Invoice Status Type
+
+% Codes - Note Category
+
+% Codes - Platform Type
+
+% Codes - Region
+
+% Codes - Sales Tax
+
+% Codes - SLD
+
+% Codes - Term Type
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract - Forecast Details
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+
+% Contract - Product-Platforms
+
+% Contract Classes
+
+% Contract Details
+ALTER TABLE [Contract Details]
+ADD [UF1] varchar(50)
+*
+ALTER TABLE [Contract Details]
+ADD [UF2] varchar(50)
+*
+ALTER TABLE [Contract Details]
+ADD [UF3] varchar(50)
+*
+ALTER TABLE [Contract Details]
+ADD [UF4] varchar(50)
+*
+
+% Contract Notes
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Export Fields
+
+% Exports
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice - Product Details
+
+% Invoice Details
+
+% Invoice Notes
+CREATE TABLE [Invoice Notes]
+(
+     [Note Id]                         int IDENTITY PRIMARY KEY,
+     [Invoice Id]                      int,
+     [Code]                            int,
+     [Note]                            text,
+     [Date]                            datetime,
+     [Note Type]                       int,
+     [Note Cat Id]                     int 
+)
+*
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Location
+
+% Mail
+
+% Mail Schedule
+CREATE TABLE [Mail Schedule]
+(
+     [Mail Schedule Id]                int IDENTITY PRIMARY KEY,
+     [Schedule Type]                   int, 
+     [Run Time]                        datetime,
+     [Days Of Week]                    char(7),
+     [Day Of Month]                    int,
+     [Scheduled Items]                 varchar(500)	
+)
+*
+
+% Metrics
+
+% OLAP Cube 02
+
+% OLAP Cube 03
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Platform LPars
+
+% Product Details
+
+% Product Notes
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Saved Views
+CREATE TABLE [Saved Views]
+(
+     [View Id]                         int IDENTITY PRIMARY KEY,
+     [User Id]                         int,
+     [View Name]                       char(20),
+     [SelContractNo]                   varchar(16),
+     [SelDesc]                         varchar(100),
+     [SelSched]                        varchar(50),
+     [SelVendor]                       varchar(50),
+     [SelSupplier]                     varchar(50),
+     [SelCategory]                     varchar(50),
+     [SelContract]                     varchar(50),
+     [SelTermType]                     varchar(50),
+     [SelInvFreq]                      varchar(50),
+     [SelValue]                        varchar(50),
+     [SelCurrency]                     varchar(50),
+     [SelStart]                        varchar(50),
+     [SelEnd]                          varchar(50),
+     [SelTerm]                         varchar(50),
+     [SelNotify]                       varchar(50),
+     [SelNotice]                       varchar(50),
+     [SelCancel]                       varchar(50),
+     [SelReview]                       varchar(50),
+     [SelReviewDate]                   varchar(50),
+     [SelArchived]                     varchar(1),
+     [SelUF1]                          varchar(50),
+     [SelUF2]                          varchar(50),
+     [SelUF3]                          varchar(50),
+     [SelUF4]                          varchar(50),
+     [SelFields]                       text, 
+     [SortCol]                         int,
+     [SortOrd]                         int,
+     [Default]                         int
+)
+*
+
+% Schedule
+
+% Security
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Staff Details
+
+% System Parameters
+
+% Target Types
+
+% User Fields
+CREATE TABLE [User Fields]
+(
+     [User Field Id]                   int NOT NULL UNIQUE,
+     [Field Type]                      int,
+     [Field Name]                      varchar(50)
+)
+*
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+
+% Vendor Notes
+
+% Vendor Regions
+
+% Vendor Status
+
+% ---------- Views ----------
+
+% Performance Metrics
+
+% CalView
+
+% ---------- Procedures ----------
+DROP PROCEDURE SPF009, SPF015
+*
+IF EXISTS (SELECT name
+           FROM sysobjects
+           WHERE name = 'SPF015A' AND type = 'P')
+    DROP PROCEDURE [SPF015A]
+*
+IF EXISTS (SELECT name
+           FROM sysobjects
+           WHERE name = 'SPF016A' AND type = 'P')
+    DROP PROCEDURE [SPF016A]
+*
+
+CREATE PROCEDURE [SPF009] 
+    @p1 int
+    AS
+    SELECT [Product Platforms].[Platform Id],
+           [Product Platforms].[Quantity] AS PlatformQty,
+           [Product Platforms].[Location Id],
+           [Product Platforms].[Description] AS PlatformDesc,
+           [Platform LPars].[Platform LPar Id],
+           [Platform LPars].[Quantity] AS LParQty,
+           [Platform LPars].[Description] AS LParDesc
+    FROM [Product Platforms]
+    LEFT OUTER JOIN [Platform LPars]
+    ON [Product Platforms].[Platform Id] = [Platform LPars].[Platform Id]
+*
+
+CREATE PROCEDURE [SPF015]  
+    @p1 int, 
+    @p2 int  
+    AS 
+    SELECT [Contract - Product Details].[Product Id], 
+           [Contract - Product Details].Quantity, 
+           [Contract Details].[Location Id], 
+           SUM([Contract - Product Details - Calloff].[Calloff Quantity])
+    FROM (([Contract - Product Details] 
+    LEFT OUTER JOIN [Contract Details] 
+      ON [Contract - Product Details].[Contract Id] = [Contract Details].[Contract Id])
+    LEFT OUTER JOIN [Contract - Product Details - Calloff]
+      ON [Contract - Product Details].[Contract-Product Id] = [Contract - Product Details - Calloff].[Contract-Product Id])
+    GROUP BY [Contract - Product Details].[Product Id], 
+             [Contract - Product Details].Quantity, 
+             [Contract Details].[Location Id]
+    HAVING ([Contract - Product Details].[Product Id] = @p1) 
+    AND    ([Contract Details].[Location Id] =@p2)
+
+*
+
+CREATE PROCEDURE [SPF015A]  
+    @p1 int, 
+    @p2 int  
+    AS 
+    SELECT [Contract - Product Details].[Product Id],
+           [Contract - Product Details].Quantity,
+           [Contract Details].[Location Id],
+           SUM( [Contract - Product Details - Calloff].[Calloff Quantity])
+    FROM ([Contract - Product Details] 
+    LEFT OUTER JOIN [Contract - Product Details - Calloff] 
+      ON [Contract - Product Details].[Contract-Product Id] = [Contract - Product Details - Calloff].[Contract-Product Id]) 
+    LEFT OUTER JOIN [Contract Details] 
+      ON [Contract - Product Details].[Contract Id] = [Contract Details].[Contract Id]
+   GROUP BY [Contract - Product Details].[Product Id],
+            [Contract - Product Details].Quantity,
+            [Contract Details].[Location Id]
+   HAVING ([Contract - Product Details].[Product Id] = @p1) 
+   AND    ([Contract Details].[Location Id] =@p2)
+*
+
+CREATE PROCEDURE [SPF016A]  
+    @p1 int
+    AS 
+    SELECT [Product Details].[Product Id],
+           [Product Details].[Product Code],
+           [Product Details].[Product Name],
+           [Product Details].[Icon Name],
+           [Contract - Product-Platforms].[Product-Platform Id],
+           [Contract - Product-Platforms].[Platform Id],
+           [Contract - Product-Platforms].[Platform LPar Id]
+    FROM ([Product Details]
+    LEFT OUTER JOIN [Contract - Product Details]
+      ON [Product Details].[Product Id] = [Contract - Product Details].[Product Id])
+    LEFT OUTER JOIN [Contract - Product-Platforms]
+      ON [Contract - Product Details].[Contract-Product Id] = [Contract - Product-Platforms].[Contract-Product Id]
+    WHERE [Contract - Product-Platforms].[Platform Id] IS NOT NULL
+    AND [Product Details].[Location Id] = @p1
+*
+
+CREATE PROCEDURE [SPF017]  
+    @p1 int
+    AS 
+    SELECT [Invoice - Product Details].[Invoice-Product Id],
+           [Product Name],
+           [Product Invoice Amount],
+           [Invoice - Product Details].[Product Id], 
+           [Code Tables].[Description] 
+    FROM [Invoice - Product Details]
+    LEFT OUTER JOIN [Product Details]
+      ON [Invoice - Product Details].[Product Id] = [Product Details].[Product Id]
+    LEFT OUTER JOIN [Code Tables]
+      ON [Invoice - Product Details].[Code Type] = [Code Tables].[Code Type]
+    AND [Invoice - Product Details].[Code Number] = [Code Tables].[Code Number]
+    WHERE [Invoice Id] = @p1
+    ORDER BY [Invoice - Product Details].[Product Id]
+*
+
+CREATE PROCEDURE [SPF017A]  
+    @p1 int
+    AS 
+    SELECT [Invoice - Product Details].[Invoice-Product Id],
+           [Product Name],
+           [Product Invoice Amount],
+           [Invoice - Product Details].[Product Id], 
+           [Code Tables].[Description] 
+    FROM ([Invoice - Product Details]
+    LEFT OUTER JOIN [Product Details]
+      ON [Invoice - Product Details].[Product Id] = [Product Details].[Product Id])
+    LEFT OUTER JOIN [Code Tables]
+      ON [Invoice - Product Details].[Code Type] = [Code Tables].[Code Type]
+    AND [Invoice - Product Details].[Code Number] = [Code Tables].[Code Number]
+    WHERE [Invoice Id] = @p1
+    ORDER BY [Invoice - Product Details].[Product Id]
+*
+
+% End of file

@@ -1,0 +1,1 @@
+﻿ALTER TABLE [dbo].[registeredusers] ADD  CONSTRAINT [DF_registeredusers_mapsEnabled]  DEFAULT ((0)) FOR [mapsEnabled]

@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{94829C9A-3E2B-42E3-A270-42FDAD55EE63}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UnitTest2012Ultimate</RootNamespace>
+    <AssemblyName>UnitTest2012Ultimate</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Automated Build\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <!-- Customizable Output Directory Opt-In for TFS Build (non-web application projects) -->
+  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+    <OutputPath>$(TeamBuildOutDir)\$(MSBuildProjectName)</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SsdtUnitTestVersion>1.0</SsdtUnitTestVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludeSsdtUnitTestAdapter>True</IncludeSsdtUnitTestAdapter>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit">
+      <HintPath>..\..\..\References\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="ErrorLogger">
+      <HintPath>..\..\..\References\ErrorLogger.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.Web.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.Web.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.Documents.Excel.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.Documents.Excel.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.Misc.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.Misc.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.Shared.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.Shared.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebCalcManager.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebCalcManager.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebChart.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics4.WebUI.UltraWebGrid.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebGrid.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebNavigator.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebNavigator.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebTab.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebTab.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebToolbar.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebToolbar.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebCombo.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.WebCombo.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebDataInput.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.WebDataInput.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebDateChooser.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.WebDateChooser.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebHtmlEditor.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.WebHtmlEditor.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.JScript">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\..\References\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Sso.Fakes">
+      <HintPath>FakesAssemblies\Sso.Fakes.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Core, Version=9.304.0.61, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Syncfusion.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.DocIO.Base, Version=9.304.0.61, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Syncfusion.DocIO.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Base, Version=12.2450.0.36, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\references\Syncfusion.Shared.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Base, Version=12.2450.0.36, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\references\Syncfusion.XlsIO.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Selectors" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.1.2\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Administration\Base Information\Addresses\AddressesTests.cs" />
+    <Compile Include="Administration\Base Information\Addresses\AddressTests.cs" />
+    <Compile Include="Administration\Base Information\cBaseDefinitionsTest.cs" />
+    <Compile Include="Administration\Base Information\CostCodeTests.cs" />
+    <Compile Include="Administration\Departments\DepartmentsTest.cs" />
+    <Compile Include="Administration\ESR\cESRImportTests.cs" />
+    <Compile Include="Administration\FilterRules\FilterRules.cs" />
+    <Compile Include="Administration\Imports Exports\cCardStatementsTests.cs" />
+    <Compile Include="Administration\Imports Exports\cCardTemplatesTests.cs" />
+    <Compile Include="Administration\Project Codes\ProjectCodesTest.cs" />
+    <Compile Include="Administration\SignOffGroups\SignOffGroupsTests.cs" />
+    <Compile Include="Administration\Sub Accounts\cAccountSubAccountTests.cs" />
+    <Compile Include="Administration\System Options\Mime Types\cGlobalMimeTypesTests.cs" />
+    <Compile Include="Administration\System Options\Mime Types\cMimeTypesTests.cs" />
+    <Compile Include="Administration\User Management\Employees\EmployeesAuthenticate.cs" />
+    <Compile Include="Administration\User Management\Employees\EmployeeTests.cs" />
+    <Compile Include="Administration\Userdefined Fields\UserdefinedFieldsTests.cs" />
+    <Compile Include="Administration\Userdefined Fields\UserdefinedObject.cs" />
+    <Compile Include="API.CRUD\Objects\ApiDataBaseMoq.cs" />
+    <Compile Include="API.CRUD\Objects\Helper.cs" />
+    <Compile Include="API.CRUD\Tests\DatabaseTests.cs" />
+    <Compile Include="API.CRUD\Tests\ApiCrudServiceTests.cs" />
+    <Compile Include="Api.Rpc\ApiCrudTests.cs" />
+    <Compile Include="Api.Rpc\ApiMockedCrudCalls.cs" />
+    <Compile Include="Api.Log\ApiLogTests.cs" />
+    <Compile Include="ApiLibrary\DataObjects\ESR\EsrAddressRecordTest.cs" />
+    <Compile Include="ApiLibrary\DataObjects\ESR\EsrLocationRecordTest.cs" />
+    <Compile Include="ApiLibrary\DataObjects\ESR\EsrOrganisationRecordTest.cs" />
+    <Compile Include="ApiLibrary\DataObjects\ESR\EsrPositionRecordTest.cs" />
+    <Compile Include="ApiLibrary\DataObjects\ESR\EsrHeaderRecordTest.cs" />
+    <Compile Include="ApiLibrary\DataObjects\ESR\EsrTrailerRecordTest.cs" />
+    <Compile Include="ApiLibrary\DataObjects\ESR\EsrPersonRecordTest.cs" />
+    <Compile Include="ApiLibrary\DataObjects\ESR\EsrAssignmentRecordTest.cs" />
+    <Compile Include="ApiLibrary\DataObjects\ESR\EsrPhoneRecordTest.cs" />
+    <Compile Include="ApiLibrary\DataObjects\ESR\EsrAssignmentCostingRecordTest.cs" />
+    <Compile Include="ApiLibrary\DataObjects\ESR\EsrVehicleRecordTest.cs" />
+    <Compile Include="APIRequestTests\ExpenseCategoryRequests.cs" />
+    <Compile Include="APIRequestTests\FindCurrencyExchangeRateRequests.cs" />
+    <Compile Include="APIRequestTests\TestCase.cs" />
+    <Compile Include="ApiTester\ApiTesterHelpers.cs" />
+    <Compile Include="ApiTester\Database.cs" />
+    <Compile Include="ApiTester\AuthorisationToken.cs" />
+    <Compile Include="ApiTester\JsonDeserializer.cs" />
+    <Compile Include="ApiTester\Resource Tests\AccessRoles.cs" />
+    <Compile Include="ApiTester\Resource Tests\Costcodes.cs" />
+    <Compile Include="ApiTester\Resource Tests\Currencies.cs" />
+    <Compile Include="ApiTester\RestClient.cs" />
+    <Compile Include="API\AccountTests.cs" />
+    <Compile Include="API\EnvelopePhysicalStateTests.cs" />
+    <Compile Include="API\ExpenseValidationCriterionTests.cs" />
+    <Compile Include="API\ExpenseValidationResultTests.cs" />
+    <Compile Include="API\ReceiptTests.cs" />
+    <Compile Include="API\EnvelopeTypeTests.cs" />
+    <Compile Include="API\ItemRolesTests.cs" />
+    <Compile Include="API\EnvelopeTests.cs" />
+    <Compile Include="API\TeamTests.cs" />
+    <Compile Include="API\ProjectCodeTests.cs" />
+    <Compile Include="API\PoolCarTests.cs" />
+    <Compile Include="API\P11DCategoryTests.cs" />
+    <Compile Include="API\ExpenseCategoryTests.cs" />
+    <Compile Include="API\DepartmentTests.cs" />
+    <Compile Include="API\CostCodesTests.cs" />
+    <Compile Include="API\BaseTests.cs" />
+    <Compile Include="API\BudgetHolderTests.cs" />
+    <Compile Include="API\CountriesTests.cs" />
+    <Compile Include="API\CurrenciesTests.cs" />
+    <Compile Include="API\AllowanceTests.cs" />
+    <Compile Include="API\ClaimReasonsTests.cs" />
+    <Compile Include="API\EmployeeTests.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="API\ExpenseItemsTests.cs" />
+    <Compile Include="API\MileageCategoriesTests.cs" />
+    <Compile Include="API\Stubs\RequestStubCreator.cs" />
+    <Compile Include="API\SignOffGroupsTests.cs" />
+    <Compile Include="API\AccessRolesTests.cs" />
+    <Compile Include="API\Utilities\MockAccount.cs" />
+    <Compile Include="API\Utilities\MockExpenseItem.cs" />
+    <Compile Include="API\Utilities\TestActionContext.cs" />
+    <Compile Include="API\Utilities\TestExpenseValidationManager.cs" />
+    <Compile Include="API\Utilities\TestReceipts.cs" />
+    <Compile Include="API\Utilities\TestEnvelopes.cs" />
+    <Compile Include="ApprovalMatricies\ApprovalMatriciesUnitTests.cs" />
+    <Compile Include="Audiences\cAudienceObject.cs" />
+    <Compile Include="Auto Complete\AutoCompleteTest.cs" />
+    <Compile Include="CardProvidersTest.cs" />
+    <Compile Include="Claims\ClaimsTest.cs" />
+    <Compile Include="Administration\Base Information\CountriesTest.cs" />
+    <Compile Include="Claims\Organisations.cs" />
+    <Compile Include="code\MasterPageMethods.cs" />
+    <Compile Include="ConstructorValidation\ConstructorTester.cs" />
+    <Compile Include="ConstructorValidation\ConstructorTests.cs" />
+    <Compile Include="ConstructorValidation\FailTest.cs" />
+    <Compile Include="ConstructorValidation\MissingConstructor.cs" />
+    <Compile Include="ConstructorValidation\SucessTest.cs" />
+    <Compile Include="ConstructorValidation\TestCase.cs" />
+    <Compile Include="ConstructorValidation\Tester.cs" />
+    <Compile Include="CorporateCardsTests.cs" />
+    <Compile Include="DatabaseMock\Reader.cs" />
+    <Compile Include="DatabasesTest.cs" />
+    <Compile Include="DocumentMerge\TorchTests.cs" />
+    <Compile Include="EsrFileProcessingService\EsrRecordProcessorTest.cs" />
+    <Compile Include="EsrNhsHubFileTransferService\TransfersTest.cs" />
+    <Compile Include="expenses\cAccessRoleObject.cs" />
+    <Compile Include="expenses\cClaimObject.cs" />
+    <Compile Include="expenses\cExpenseCategoryObject.cs" />
+    <Compile Include="expenses\cExpenseItemObject.cs" />
+    <Compile Include="expenses\cItemRoleObject.cs" />
+    <Compile Include="expenses\cMiscTest.cs" />
+    <Compile Include="expenses\cMileageCatObject.cs" />
+    <Compile Include="expenses\cSubcatObject.cs" />
+    <Compile Include="expenses\ExcessMileage.cs" />
+    <Compile Include="expenses\ExpenseCategories.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="expenses\ExpenseItemTests.cs" />
+    <Compile Include="Flags\Flags.cs" />
+    <Compile Include="Helpers\DecimalExtensionTests.cs" />
+    <Compile Include="Hosts\HostTests.cs" />
+    <Compile Include="Administration\Hotel\HotelTest.cs" />
+    <Compile Include="Library\cJoinsTest.cs" />
+    <Compile Include="Custom Entities\cCustomEntitiesTest.cs" />
+    <Compile Include="Custom Entities\cCustomEntityTest.cs" />
+    <Compile Include="Custom Entities\cCustomEntityObject.cs" />
+    <Compile Include="DatabaseSetup.cs" />
+    <Compile Include="GlobalAsax.cs" />
+    <Compile Include="GlobalTestVariables.cs" />
+    <Compile Include="Library\Helpers\EsrInboundBuilderTests.cs" />
+    <Compile Include="Library\Helpers\GlobalVariablesTest.cs" />
+    <Compile Include="Library\JourneyDeductionBaseRuleTest.cs" />
+    <Compile Include="Library\JourneyDeductionFullHomeToOfficeForEveryVisitTest.cs" />
+    <Compile Include="Library\JourneyDeductionFullHomeToOfficeIfStartOrFinishHomeTest.cs" />
+    <Compile Include="Library\JourneyDeductionHomeToOfficeForEveryVisitTest.cs" />
+    <Compile Include="Library\JourneyDeductionHomeToOfficeForFirstAndLastHomeTest.cs" />
+    <Compile Include="Library\JourneyDeductionHomeToOfficeIfStartOrFinishHomeTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\JourneyDeductionHomeToOfficeOnceTest.cs" />
+    <Compile Include="Library\JourneyDeductionFixedMileageForEveryHomeVisitTest.cs" />
+    <Compile Include="Library\EmployeeWorkAddress.cs" />
+    <Compile Include="Library\JourneyDeductionJuniorDoctorRotation.cs" />
+    <Compile Include="Mileage\MileageCatsTests.cs" />
+    <Compile Include="Mobile Devices\cMobileDeviceObject.cs" />
+    <Compile Include="Mobile Devices\cMobileDevicesTest.cs" />
+    <Compile Include="Mobile Devices\WcfMobileServiceTest.cs" />
+    <Compile Include="Mobile Devices\WcfServiceObject.cs" />
+    <Compile Include="MockHelpers.cs" />
+    <Compile Include="Modules\ModulesTests.cs" />
+    <Compile Include="Moqs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\cGridNewTests.cs" />
+    <Compile Include="Shared\LogonTests.cs" />
+    <Compile Include="Shared\SsoSamltests.cs" />
+    <Compile Include="Shared\cTeamsTests.cs" />
+    <Compile Include="UnitTestClasses.cs" />
+    <Compile Include="UnitTestClassesTests.cs" />
+    <Compile Include="Vehicles\VehicleEngineType.cs" />
+    <Compile Include="Workflows\cWorkflowObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <Shadow Include="Test References\SpendManagementLibrary.accessor" />
+    <Shadow Include="Test References\Spend Management.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EsrGo2FromNhsWcfLibrary\EsrGo2FromNhsWcfLibrary.csproj">
+      <Project>{974b8177-970f-45c3-99a2-9485aba0a601}</Project>
+      <Name>EsrGo2FromNhsWcfLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EsrNhsHubFileTransferService\EsrNhsHubFileTransferService.csproj">
+      <Project>{e7d059f9-4689-4fa0-87e8-e2b72d4e5ebc}</Project>
+      <Name>EsrNhsHubFileTransferService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spend Management\Spend Management.csproj">
+      <Project>{1CBFD8EC-F67C-4425-A10C-97BFC7501045}</Project>
+      <Name>Spend Management</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementApi\SpendManagementApi.csproj">
+      <Project>{c8f2658a-b8e1-4d2d-acec-cc16f8ad234b}</Project>
+      <Name>SpendManagementApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementHelpers\SpendManagementHelpers.csproj">
+      <Project>{F12FBA1A-995D-429F-A9A5-E54FB0AE536F}</Project>
+      <Name>SpendManagementHelpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementLibrary\SpendManagementLibrary.csproj">
+      <Project>{9BDAA543-AC54-47A1-8BDD-C7BF34F2F005}</Project>
+      <Name>SpendManagementLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sso\Sso.csproj">
+      <Project>{f243bb76-f40c-4595-ad47-60b3bdd5ccfc}</Project>
+      <Name>Sso</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{c417335b-7be1-45ae-8274-c0b65829c4fc}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="images\Lunch Receipt.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Administration\Attachments\" />
+    <Folder Include="API\Repository\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="false" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(VisualStudioVersion)' != ''" /> -->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

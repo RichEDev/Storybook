@@ -1,0 +1,267 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Framework Help - Parameters</title>
+    <meta http-equiv="Content-Type" content="text/html;">
+    <link rel="stylesheet" href="fwhelp.css" type="text/css" />
+
+    <script language="javascript" type="text/javascript">  
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+    </script>
+
+</head>
+<body class="help_page" onload="window.resizeTo(800,600)">
+    <div class="help_page_title">
+        <a onclick="closewindow();">
+            <img src="../images/exithelp.gif" alt="Close Help Window" /></a> Framework Parameters</div>
+    <div class="help_section">
+        <div class="help_section_title">
+            Framework Parameter - What are they?
+        </div>
+        <div class="help_overview">
+            Framework contains system wide parameters that permit a change in appearance or
+            functionality.
+            <br />
+            <br />
+            If any of the settings are modified, the action will affect the application as a
+            whole and therefore every user of the system.
+            <br />
+            <br />
+            The parameters are location specific, so it is possible to have different settings
+            in different database locations (compartments).
+            <br />
+            <br />
+            The relevant location should be selected from the filter drop-down list at the top
+            of the screen.
+            <br />
+            <br />
+            Caution should be taken before considering whether to change any of the parameters.
+            If in doubt, contact Software Europe who will be happy to answer any questions you
+            may have.
+            <br />
+            <br />
+            For details of parameters available for modification, see Parameter Definitions section below.
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img alt="Expand" src="../buttons/open.gif" onclick="toggle('1');" id="img1" />&nbsp;Parameter
+            Definitions
+        </div>
+        <div class="help_body_text" id="1">
+            <table class="inner" align="center">
+                <tr style="height: 30px;">
+                    <th class="inner">
+                        Parameter</th>
+                    <th class="inner">
+                        Description</th>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        CONCAT_MANDATORY
+                    </td>
+                    <td class="inner">
+                        Specify whether the selection of a contract category is a mandatory field in contract
+                        details.<br />
+                        0 = DISABLED<br />
+                        1 = ENABLED (default)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        CONCAT_TITLE
+                    </td>
+                    <td class="inner">
+                        Permits the renaming of the Contract Category field should the use need to be altered
+                        from its default.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        CONDESC_TITLE
+                    </td>
+                    <td class="inner">
+                        Permits the renaming of the Contract Description field should the use need to be
+                        altered from its default.<br /><br />
+                        <b>Note:</b> This parameter is used when client resolution is at least 1024x768.
+                        <br />Must update CONDESC_SHORT_TITLE for when resolution is below this.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        CONDESC_SHORT_TITLE
+                    </td>
+                    <td class="inner">
+                        See above.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        CONTRACT_NUM_GEN
+                    </td>
+                    <td class="inner">
+                        Activate the automatic contract number generation for a contract.<br />
+                        0 = OFF (default)<br />
+                        1 = ON
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        CONTRACT_NUM_SEQ
+                    </td>
+                    <td class="inner">
+                        The current sequence number for contract numbering.<br /><br /> Resultant number is zero padded
+                        (e.g. 000001)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        INFLATOR_ACTIVE
+                    </td>
+                    <td class="inner">
+                        Provides the capability to disable the Inflator section of contract details should
+                        they not be required.<br />
+                        0 = DISABLED<br />
+                        1 = ENABLED (default)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        INVFREQ_ACTIVE
+                    </td>
+                    <td class="inner">
+                        Disable the invoice frequency field in the core contract details.<br />
+                        0 = DISABLED<br />
+                        1 = ENABLED (default)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        TERMTYPE_ACTIVE
+                    </td>
+                    <td class="inner">
+                        Disable the term type field in core contract details.<br />
+                        0 = DISABLED<br />
+                        1 = ENABLED (default)
+                    </td>
+                </tr>
+                <tr>
+                <td class="inner" align="center">VENDOR_CAT_TITLE</td>
+                <td class="inner">Permits the renaming of the Supplier Category field should the use need to be altered
+                        from its default.</td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        VALUE_COMMENTS
+                    </td>
+                    <td class="inner">
+                        Comment appearing after Contract Value & Annual Contract Value fields<br />
+                        Default: &quot;(ex VAT)&quot;
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        VENDOR_STATUS_ENFORCED
+                    </td>
+                    <td class="inner">
+                        Dictates whether a contract is permitted to be added on the contract screen<br />according
+                        to the Supplier Status selected.<br />0 = DISABLED<br />1 = ENABLED (default)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        VENDOR_LASTFINSTATUS_ENABLED
+                    </td>
+                    <td class="inner">
+                        Dictates whether the Financial Status field is enabled on the supplier screen.<br />
+                        0 = DISABLED<br />
+                        1 = ENABLED (default)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        VENDOR_LASTFINCHECK_ENABLED
+                    </td>
+                    <td class="inner">
+                        Dictates whether the Last Financial Check date field on the supplier screen is enabled.<br />
+                        0 = DISABLED<br />
+                        1 = ENABLED (default)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        VENDOR_FYE_ENABLED
+                    </td>
+                    <td class="inner">
+                        Dictates whether the Financial Year End field is enabled on the supplier screen.<br />
+                        0 = DISABLED<br />
+                        1 = ENABLED (default)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        VENDOR_NUMEMPLOYEES_ENABLED
+                    </td>
+                    <td class="inner">
+                        Dictates whether the Num of Employees field on the supplier screen is enabled.<br />
+                        0 = DISABLED<br />
+                        1 = ENABLED (default)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        VENDOR_TURNOVER_ENABLED
+                    </td>
+                    <td class="inner">
+                        Dictates whether the Turnover field on the supplier screen is enabled.<br />
+                        0 = DISABLED<br />
+                        1 = ENABLED (default)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inner" align="center">
+                        VENDOR_INTCONTACT_ENABLED
+                    </td>
+                    <td class="inner">
+                        Dictates whether the Internal Contact field on the supplier screen is enabled.<br />
+                        0 = DISABLED<br />
+                        1 = ENABLED (default)
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_comments">
+            * If you do not find a topic outlined in the help which is relevant to your enquiry
+            then please contact your administrator
+        </div>
+    </div>
+    <div>
+    </div>
+</body>
+</html>

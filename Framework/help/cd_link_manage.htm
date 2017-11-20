@@ -1,0 +1,139 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - [Contract Linking]</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Manage Contract Links</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>The contract link management screen allows the user to display which contracts 
+					are linked to which link definition.</p>
+				<p>Not only is it possible to review the contracts linked to each defintion, 
+					individual contract can be unlinked or the definition as a whole can be 
+					deleted, thus removing all it's links at the same time.</p>
+				<p>
+					<div class="help_tip">
+						<table class="inner" align="center" width="500">
+							<tr>
+								<th class="inner" width="150">
+									<b>To Add a New LinkDefintion</b></th>
+								<td class="inner" width="350">To simply create a new definition, without assigning 
+									any contracts to it, click the <i>Add New Link Definition</i> under the 
+									Contract menu option.</td>
+							</tr>
+							<tr>
+								<th class="inner">
+									<b>To Add a New Definition &amp; Contract Link</b></th>
+								<td class="inner">A contract link definition can be created at the same time as the 
+									adding of link. This action is triggered from the core contract detail screen.</td>
+							</tr>
+						</table>
+					</div>
+				<P></P>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1"> Functions
+			</div>
+			<div class="help_body_text" id="1">
+				<table class="inner" align="center" width="500">
+					<tr>
+						<th class="inner" width="150">
+							<b>Function</b></th>
+						<th class="inner" width="300">
+							<b>Description</b></th>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Link Definition</td>
+						<td class="inner"><p>The drop down list contains all defined link definitions. By 
+								default, <i>[None]</i> is displayed, and as a result the will not be any 
+								contract information displayed.</p>
+							<p>Selecting a link definition from the list will display all contracts currently 
+								associated with that definition.</p>
+							<p>Selecting the hyperlink definitions of those contracts returned, will transfer 
+								you to either the contract or vendor (depending which definition was selected.</p>
+						</td>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Delete Definition</td>
+						<td class="inner"><p>If you elect to delete the actual link definition, you will be 
+								prompted to confirm this course of action. Clicking OK acknowledges your wish 
+								to proceed.</p>
+							<div class="help_tip">
+								<b>WARNING: </b>Electing to delete a definition will result in the loss of all 
+								contract links associated with the definition.
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Delete</td>
+						<td class="inner"><p>For each contract displayed, the delete hyperlink allows it's 
+								deletion.</p>
+							<p>This provides the ability to remove a single contract link from a collection.</p>
+						</td>
+					</tr>
+					<tr>
+						<td class="inner" align="center">New Definition</td>
+						<td class="inner"><p>If a new link definition is required, a text box appears at the 
+								top of the screen where the name can be specified.</p>
+							<p>On entering the definition, click the OK button and the new definition will be 
+								created.</p>
+							<p>If a contract link is specified, then the new link will be associated and 
+								displayed in the Link Management screen with any other linked contracts that 
+								have been previously linked.</p>
+							<p>If only a definition is being created, the user is returned to the Summary 
+								Portal after the definition has been created.</p>
+							<div class="help_tip">
+								<b>NOTE: </b>Duplicate Link Definitions are not permitted. An error status 
+								message will inform of any encountered duplication. If this should occur, the 
+								definition will have to be edited before it can be used.
+							</div>
+						</td>
+					</tr>
+				</table>
+				<p></p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

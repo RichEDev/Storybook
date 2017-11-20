@@ -1,0 +1,2892 @@
+% FW Update.dat file
+% 02/05/2007
+# 000020 000021
+
+% ---------- Tables and Indices ----------
+
+% Attachment Audience
+
+% Attachments
+
+% Audit Log
+ALTER TABLE dbo.audit_log
+ALTER COLUMN [Old Value] ntext
+*
+
+ALTER TABLE dbo.audit_log
+ALTER COLUMN [New Value] ntext
+*
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Account Codes
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Contract Status
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Inflator Metrics
+
+% Codes - Financial Status
+
+% Codes - Invoice Status Type
+
+% Codes - Licence Renewal Type
+
+% Codes - Note Category
+
+% Codes - Product Category
+
+% Codes - Platform Type
+
+% Codes - Recharge Entity
+IF NOT EXISTS (
+SELECT COLUMN_NAME
+           FROM INFORMATION_SCHEMA.COLUMNS
+           WHERE TABLE_NAME  = 'codes_rechargeentity' AND COLUMN_NAME = 'Code'
+)
+ALTER TABLE dbo.[codes_rechargeentity]
+ADD [Code] varchar(20)
+*
+
+IF NOT EXISTS (
+SELECT COLUMN_NAME
+           FROM INFORMATION_SCHEMA.COLUMNS
+           WHERE TABLE_NAME  = 'codes_rechargeentity' AND COLUMN_NAME = 'Sector'
+)
+ALTER TABLE dbo.[codes_rechargeentity]
+ADD [Sector] varchar(50)
+*
+
+IF NOT EXISTS (
+SELECT COLUMN_NAME
+           FROM INFORMATION_SCHEMA.COLUMNS
+           WHERE TABLE_NAME  = 'codes_rechargeentity' AND COLUMN_NAME = 'Service Line'
+)
+ALTER TABLE dbo.[codes_rechargeentity]
+ADD [Service Line] varchar(20)
+*
+
+% Codes - Sales Tax
+
+% Codes - Sites
+
+% Codes - Term Type
+
+% Codes - Units
+
+% Codes - User Field Grouping
+
+% Column Templates
+CREATE TABLE [dbo].[column_templates] 
+(
+	[templateid] [int] IDENTITY (1, 1) NOT NULL ,
+	[userid] [int] NOT NULL ,
+	[templatename] [nvarchar] (50) NOT NULL ,
+	[description] [nvarchar] (1000) NULL ,
+	[basetable] [int] NOT NULL 
+) ON [PRIMARY]
+*
+
+% Contract - Forecast Details
+ALTER TABLE dbo.[contract_forecastdetails]
+ADD [Cover Period End] datetime
+*
+
+% Contract - Forecast Products
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+
+% Contract - Product Details - Recharge
+
+% Contract - Product Details - One Off Charge
+CREATE TABLE dbo.contract_productdetails_oneoffcharge
+(
+	[Charge Id] int IDENTITY PRIMARY KEY,
+	[Contract Id] int NOT NULL DEFAULT(0),
+	[Charge Date] datetime NOT NULL,
+	[Recharge Entity Id] int NOT NULL DEFAULT(0),
+	[Charge Amount] float NOT NULL DEFAULT(0)
+)
+*
+
+% Contract - Product-History
+
+% Contract - Product Information
+
+% Contract - Product-Platforms
+
+% Contract Audience
+
+% Contract Details
+ALTER TABLE dbo.[contract_details]
+ADD [Notice Period Type] smallint NOT NULL DEFAULT(0)
+*
+
+ALTER TABLE dbo.[contract_details]
+ADD [Review Period Type] smallint NOT NULL DEFAULT(0)
+*
+
+% Contract History
+ALTER TABLE dbo.[contract_history]
+ALTER COLUMN [PreVal] ntext
+*
+
+ALTER TABLE dbo.[contract_history]
+ALTER COLUMN [PostVal] ntext
+*
+
+% Contract Notes
+
+% Contract Types
+
+% Email Schedule
+
+% Email Templates
+
+% Export History
+IF EXISTS (SELECT TABLE_NAME
+           FROM INFORMATION_SCHEMA.TABLES
+           WHERE TABLE_NAME = 'exporthistory')
+    DROP TABLE dbo.[exporthistory]
+*
+
+CREATE TABLE [dbo].[exporthistory] (
+	[exporthistoryid] [int] IDENTITY (1, 1) NOT NULL ,
+	[reportid] [int] NOT NULL ,
+	[exportnum] [int] NOT NULL ,
+	[userid] [int] NOT NULL ,
+	[dateexported] [datetime] NOT NULL 
+) ON [PRIMARY]
+*
+
+% Favourite Reports
+
+% Fields
+CREATE TABLE [dbo].[fields] 
+(
+	[fieldid] [int] NOT NULL ,
+	[tableid] [int] NOT NULL ,
+	[field] [nvarchar] (50) NOT NULL ,
+	[fieldtype] [char] (1) NOT NULL ,
+	[description] [nvarchar] (1000) NULL ,
+	[comment] [ntext] NULL ,
+	[idfield] [bit] NOT NULL ,
+	[viewgroupid] [int] NOT NULL ,
+	[genlist] [bit] NOT NULL ,
+	[width] [int] NOT NULL ,
+	[cantotal] [bit] NOT NULL ,
+	[printout] [bit] NOT NULL ,
+	[valuelist] [bit] NOT NULL ,
+	[relabel] [nvarchar] (150) NULL ,
+	[alias] [nvarchar] (150) NULL,
+	[isuserdefined] [bit] NOT NULL DEFAULT(0)
+) ON [PRIMARY]
+*
+
+% Help Text
+CREATE TABLE dbo.help_text
+(
+	[helpid] int NOT NULL,
+	[description] nvarchar(200),
+	[helptext] ntext
+)
+*
+
+% Invoice - Product Details
+
+% Invoice Details
+ALTER TABLE dbo.[invoice_details]
+ADD [Cover Period End] datetime
+*
+
+% Invoice Log
+
+% Invoice Notes
+
+% ITT_RFI Templates
+
+% Join Breakdown
+CREATE TABLE [dbo].[joinbreakdown] 
+(
+	[joinbreakdownid] [int] NOT NULL ,
+	[jointableid] [int] NOT NULL ,
+	[order] [tinyint] NOT NULL ,
+	[tableid] [int] NOT NULL ,
+	[table_fieldkey] [int] NOT NULL ,
+	[sourcetable] [int] NULL ,
+	[joinkey] [int] NOT NULL 
+) ON [PRIMARY]
+*
+
+% Join Tables
+CREATE TABLE [dbo].[jointables] 
+(
+	[jointableid] [int] NOT NULL ,
+	[tableid] [int] NOT NULL ,
+	[basetableid] [int] NOT NULL ,
+	[description] [ntext] NULL 
+) ON [PRIMARY]
+*
+
+% Languages
+
+% Language Texts
+
+% Link Definitions
+
+% Link Matrix
+
+% Link Variations
+
+% Location
+
+% Location Access
+ALTER TABLE dbo.[location_access]
+ADD [Last Report Id] int NOT NULL DEFAULT(0)
+*
+
+% Mail
+
+% Mail Schedule
+
+% Metrics
+
+% MIME Headers
+
+% Param
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Platform LPars
+
+% Product Details
+
+% Product Notes
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Recharge Associations
+%ALTER TABLE dbo.recharge_associations
+%ALTER COLUMN [Portion] float
+%*
+
+% Recharge Service Dates
+CREATE TABLE dbo.recharge_servicedates
+(
+	[Service Date Id] int IDENTITY PRIMARY KEY,
+	[Recharge Id] int NOT NULL,
+	[Offline From] datetime NULL,
+	[Online From] datetime NULL
+)
+*
+
+% Report Columns
+CREATE TABLE [dbo].[reportcolumns] 
+(
+	[reportcolumnid] [int] IDENTITY (1, 1) NOT NULL ,
+	[reportid] [int] NOT NULL ,
+	[fieldid] [int] NULL ,
+	[groupby] [bit] NOT NULL DEFAULT(0) ,
+	[sort] [tinyint] NOT NULL DEFAULT(0),
+	[order] [int] NOT NULL DEFAULT(1),
+	[aggfunction] [tinyint] NULL ,
+	[funcsum] [bit] NOT NULL DEFAULT(0),
+	[funcmax] [bit] NOT NULL DEFAULT(0),
+	[funcmin] [bit] NOT NULL DEFAULT(0),
+	[funcavg] [bit] NOT NULL DEFAULT(0),
+	[funccount] [bit] NOT NULL DEFAULT(0),
+	[isLiteral] [bit] NOT NULL DEFAULT(0),
+	[literalname] [nvarchar] (50) NULL ,
+	[literalvalue] [nvarchar] (1000) NULL ,
+	[length] [int] NOT NULL DEFAULT(0),
+	[format] [nvarchar] (50) NULL ,
+	[removedecimals] [bit] NOT NULL DEFAULT(0),
+	[pivottype] [tinyint] NOT NULL DEFAULT(0),
+	[pivotorder] [int] NOT NULL DEFAULT(0),
+	[runtime] [bit] NOT NULL DEFAULT(0),
+	[columntype] [tinyint] NOT NULL ,
+	[hidden] [bit] NOT NULL DEFAULT(0)
+) ON [PRIMARY]
+*
+
+% reportcolumns_flatfile
+CREATE TABLE [dbo].[reportcolumns_flatfile] (
+	[reportcolumnid] [int] NOT NULL ,
+	[userid] [int] NOT NULL ,
+	[columnlength] [int] NOT NULL 
+) ON [PRIMARY]
+*
+
+% Report Criteria
+CREATE TABLE [dbo].[reportcriteria] (
+	[criteriaid] [int] IDENTITY (1, 1) NOT NULL ,
+	[reportid] [int] NOT NULL ,
+	[fieldid] [int] NOT NULL ,
+	[condition] [tinyint] NOT NULL ,
+	[value1] [nvarchar] (1000) NULL ,
+	[value2] [nvarchar] (1000) NULL ,
+	[andor] [tinyint] NOT NULL DEFAULT(0),
+	[order] [int] NOT NULL DEFAULT(1),
+	[runtime] [bit] NOT NULL DEFAULT(0),
+	[groupnumber] [tinyint] NULL 
+) ON [PRIMARY]
+*
+
+% Reports
+CREATE TABLE [dbo].[reports] (
+	[reportid] [int] IDENTITY (1, 1) NOT NULL ,
+	[locationid] [int] NOT NULL ,
+	[userid] [int] NOT NULL ,
+	[reportname] [nvarchar] (50) NOT NULL ,
+	[description] [nvarchar] (2000) NULL ,
+	[personalreport] [bit] NOT NULL DEFAULT(0),
+	[basetable] [int] NOT NULL ,
+	[curexportnum] [int] NOT NULL DEFAULT(1),
+	[lastexportdate] [datetime] NULL ,
+	[footerreport] [bit] NOT NULL DEFAULT(0),
+	[footerreportid] [int] NULL ,
+	[folderid] [int] NULL ,
+	[readonly] [bit] NOT NULL DEFAULT(0),
+	[forothers] [bit] NOT NULL DEFAULT(0),
+	[allowexport] [bit] NOT NULL DEFAULT(0),
+	[exporttype] [tinyint] NOT NULL DEFAULT(3) 
+) ON [PRIMARY]
+
+*
+
+% Reports - Allowed Tables
+CREATE TABLE [dbo].[reports_allowedtables] (
+	[basetableid] [int] NOT NULL ,
+	[tableid] [int] NOT NULL 
+) ON [PRIMARY]
+*
+
+% Reports - Common Columns
+CREATE TABLE [dbo].[reports_common_columns] (
+	[tableid] [int] NOT NULL ,
+	[fieldid] [int] NOT NULL 
+) ON [PRIMARY]
+*
+
+% Reports - Export Options
+CREATE TABLE [dbo].[reports_export_options] (
+	[userid] [int] NOT NULL ,
+	[reportid] [int] NOT NULL ,
+	[excelheader] [bit] NOT NULL ,
+	[csvheader] [bit] NOT NULL ,
+	[flatfileheader] [bit] NOT NULL ,
+	[footerid] [int] NULL ,
+	[drilldownreport] [int] NULL 
+) ON [PRIMARY]
+*
+
+
+% Reports Folders
+IF EXISTS (SELECT TABLE_NAME
+           FROM INFORMATION_SCHEMA.TABLES
+           WHERE TABLE_NAME = 'report_folders')
+    DROP TABLE dbo.[report_folders]
+*
+
+CREATE TABLE [dbo].[report_folders] (
+	[folderid] [int] IDENTITY (1, 1) NOT NULL ,
+	[foldername] [nvarchar] (100) NOT NULL ,
+	[userid] [int] NOT NULL ,
+	[personal] [bit] NOT NULL 
+) ON [PRIMARY]
+*
+
+% Report List Items
+CREATE TABLE [dbo].[rptlistitems] 
+(
+	[fieldid] [int] NOT NULL ,
+	[listitem] [nvarchar] (50) NOT NULL ,
+	[listvalue] [nvarchar] (50) NOT NULL ,
+	[valuetype] [nvarchar] (50) NULL 
+) ON [PRIMARY]
+*
+% Saved Reports
+
+% Saved Views
+
+% Savings
+
+% Schedule
+
+% Scheduled_days
+CREATE TABLE [dbo].[scheduled_days] 
+(
+	[scheduleid] [int] NOT NULL ,
+	[day] [tinyint] NOT NULL 
+) ON [PRIMARY]
+*
+
+% scheduled_months
+CREATE TABLE [dbo].[scheduled_months] 
+(
+	[scheduleid] [int] NOT NULL ,
+	[month] [tinyint] NOT NULL 
+) ON [PRIMARY]
+*
+
+% scheduled_reports
+CREATE TABLE [dbo].[scheduled_reports] 
+(
+	[scheduleid] int IDENTITY (1, 1) NOT NULL ,
+	[locationid] int NOT NULL ,
+	[reportid] int NOT NULL ,
+	[userid] int NOT NULL ,
+	[scheduletype] tinyint NOT NULL ,
+	[date] datetime NULL ,
+	[repeat_frequency] tinyint NULL ,
+	[week] tinyint NULL ,
+	[calendar_days] nvarchar(50) NULL ,
+	[startdate] datetime NOT NULL ,
+	[enddate] datetime NULL ,
+	[starttime] datetime NOT NULL ,
+	[outputtype] tinyint NOT NULL ,
+	[deliverymethod] tinyint NOT NULL ,
+	[emailaddresses] ntext NULL ,
+	[ftpserver] nvarchar(1000) NULL ,
+	[ftpusername] nvarchar(100) NULL ,
+	[ftppassword] nvarchar(100) NULL 
+) ON [PRIMARY]
+*
+
+% scheduled_reports_columns
+CREATE TABLE [dbo].[scheduled_reports_columns] 
+(
+	[scheduleid] int NOT NULL ,
+	[reportcolumnid] int NOT NULL ,
+	[literalvalue] nvarchar(1000) NOT NULL 
+) ON [PRIMARY]
+*
+
+% scheduled_reports_criteria
+CREATE TABLE [dbo].[scheduled_reports_criteria] 
+(
+	[scheduleid] int NOT NULL ,
+	[criteriaid] int NOT NULL ,
+	[value1] nvarchar(1000) NOT NULL ,
+	[value2] nvarchar(1000) NULL 
+) ON [PRIMARY]
+*
+
+% scheduled_reports_log
+CREATE TABLE [dbo].[scheduled_reports_log] 
+(
+	[scheduleid] int NOT NULL ,
+	[datestamp] datetime NOT NULL DEFAULT(getdate())
+) ON [PRIMARY]
+*
+
+% Security
+
+% Security History
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Standard Reports
+
+% Staff Details
+
+% Sublocations
+
+% System-DBJoins
+
+% System Parameters
+ALTER TABLE dbo.system_parameters
+ADD [Licensed Users] nvarchar(150)
+*
+
+% Tables
+IF EXISTS (SELECT TABLE_NAME
+           FROM INFORMATION_SCHEMA.TABLES
+           WHERE TABLE_NAME = 'tables')
+    DROP TABLE dbo.[tables]
+*
+
+CREATE TABLE [dbo].[tables] (
+	[tableid] [int] NOT NULL ,
+	[tablename] [nvarchar] (50) NOT NULL ,
+	[jointype] [tinyint] NULL ,
+	[allowreporton] [bit] NOT NULL ,
+	[description] [nvarchar] (50) NULL ,
+	[primarykey] [int] NULL 
+) ON [PRIMARY]
+*
+
+% Template Columns
+IF EXISTS (SELECT TABLE_NAME
+           FROM INFORMATION_SCHEMA.TABLES
+           WHERE TABLE_NAME = 'template_columns')
+    DROP TABLE dbo.[template_columns]
+*
+
+CREATE TABLE [dbo].[template_columns] 
+(
+	[templateid] [int] NOT NULL ,
+	[columntype] [tinyint] NOT NULL ,
+	[fieldid] [int] NULL ,
+	[groupby] [bit] NOT NULL ,
+	[sort] [tinyint] NOT NULL ,
+	[order] [int] NOT NULL ,
+	[funcsum] [bit] NOT NULL ,
+	[funcmax] [bit] NOT NULL ,
+	[funcmin] [bit] NOT NULL ,
+	[funcavg] [bit] NOT NULL ,
+	[funccount] [bit] NOT NULL ,
+	[literalname] [nvarchar] (50) NULL ,
+	[literalvalue] [nvarchar] (1000) NULL ,
+	[runtime] [bit] NOT NULL ,
+	[hidden] [bit] NOT NULL 
+) ON [PRIMARY]
+*
+
+% Ubiquity Product Assocations
+
+% Ubiquity Dorana Product Locations
+
+% Ubiquity Dorana Libraries
+
+% Ubiquity Dorana Products
+
+% Ubiquity Dorana Product Vendors
+
+% Ubiquity Vendor Assocations
+
+% Ubiquity Dorana Vendors
+
+% Ubiquity Product versions
+
+% UF Group Allocation
+
+% User Field Values
+
+% User Fields
+ALTER TABLE dbo.user_fields
+ADD [Allow Search] tinyint NOT NULL DEFAULT(0)
+*
+
+% User Help Docs
+
+% User Preferences
+IF EXISTS (SELECT TABLE_NAME
+           FROM INFORMATION_SCHEMA.TABLES
+           WHERE TABLE_NAME = 'user_preferences')
+    DROP TABLE dbo.[user_preferences]
+*
+
+CREATE TABLE dbo.user_preferences
+(
+	[Preference Id] int IDENTITY PRIMARY KEY,
+	[Location Id] int NOT NULL,
+	[User Id] int NOT NULL,
+	[Category Id] int NOT NULL,
+	[UF1_Id] int NOT NULL DEFAULT(0),
+	[UF2_Id] int NOT NULL DEFAULT(0)
+)
+*
+
+% User Roles
+
+% User Roles - Tabs
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+
+% Vendor Contact Notes
+
+% Vendor Notes
+
+% Vendor Regions
+
+% Vendor Status
+
+% Version Registry
+
+% Version History
+
+% View Groups
+CREATE TABLE [dbo].[viewgroups] (
+	[viewgroupid] [int] NOT NULL ,
+	[groupname] [nvarchar] (50) NOT NULL ,
+	[parentid] [int] NULL ,
+	[level] [int] NOT NULL 
+) ON [PRIMARY]
+*
+
+% Performance Metrics
+
+% CalView
+
+% ---------- Procedures ----------
+IF EXISTS (SELECT name 
+	   FROM   sysobjects 
+	   WHERE  name = 'CreateLocationParams' 
+	   AND 	  type = 'P')
+    DROP PROCEDURE dbo.CreateLocationParams
+*
+
+CREATE PROCEDURE dbo.CreateLocationParams(@src_location int) 
+AS
+DECLARE @param_name NVARCHAR(50)
+DECLARE @param_value NVARCHAR(50)
+DECLARE @param_editable SMALLINT
+
+DECLARE @locId INT
+DECLARE @rec_count INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Location Id] FROM [location] WHERE [Location Id] <> @src_location
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @locId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+
+DECLARE param_cursor CURSOR FOR
+SELECT [Param],[Value],[Editable] FROM fwparams WHERE [Location Id] = @src_location
+OPEN param_cursor
+FETCH NEXT FROM param_cursor INTO @param_name,@param_value,@param_editable
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = @param_name)
+	IF(@rec_count = 0)
+	BEGIN
+	INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,@param_name,@param_value,@param_editable)
+	END
+	
+	FETCH NEXT FROM param_cursor INTO @param_name,@param_value,@param_editable
+END
+CLOSE param_cursor
+DEALLOCATE param_cursor
+FETCH NEXT FROM loop_cursor INTO @locId
+END
+
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+IF EXISTS (SELECT name 
+	   FROM   sysobjects 
+	   WHERE  name = 'migrate_reports' 
+	   AND 	  type = 'P')
+    DROP PROCEDURE dbo.migrate_reports
+*
+
+CREATE PROCEDURE dbo.migrate_reports 
+AS
+-- UPGRADE EXISTING REPORTS TO NEW FORMAT
+DECLARE @reportId int
+DECLARE @reportName nvarchar(250)
+DECLARE @reportDesc nvarchar(250)
+DECLARE @storeReportName nvarchar(250)
+DECLARE @locationId int
+DECLARE @recordType nvarchar(1)
+DECLARE @Display int
+DECLARE @UserId int
+DECLARE @reportBaseId int
+DECLARE @reportBaseName nvarchar(100)
+DECLARE @SQL_Text nvarchar(250)
+DECLARE @ReportSeq int
+DECLARE @criteriaCondition nvarchar(10)
+DECLARE @conditionId int
+DECLARE @tableID int
+DECLARE @fieldID int
+DECLARE @fieldType varchar(1)
+DECLARE @Subtotal int
+DECLARE @AndOr nvarchar(5)
+DECLARE @AndOrID int
+DECLARE @GrandTotal int
+DECLARE @Sort nvarchar(3)
+DECLARE @SortId int
+DECLARE @HeaderText nvarchar(250)
+DECLARE @isGlobal int
+DECLARE @groupBy int
+DECLARE @folderName nvarchar(100)
+DECLARE @folderId int
+
+DECLARE @tempTableName nvarchar(250)
+DECLARE @tempReportName nvarchar(250)
+DECLARE @tempUserId int
+DECLARE @tempLocationId int
+DECLARE @tempStr nvarchar(250)
+DECLARE @value1 nvarchar(250)
+DECLARE @value2 nvarchar(250)
+
+SET @tempTableName = ''
+SET @tempReportName = ''
+SET @tempUserId = 0
+SET @reportId = 0
+SET @tempLocationId = 0
+SET @groupBy = 0
+
+-- Remove spurious invalid rows
+DELETE FROM [saved_reports] WHERE ReportName = '' OR ReportName IS NULL
+DELETE FROM [saved_reports] WHERE [UserId] = 0
+-- Remove Criteria rows with no corresponding report
+DELETE FROM saved_reports WHERE reportid in (
+SELECT reportid FROM saved_reports AS [SR]
+WHERE recordtype = 'C' AND
+(SELECT COUNT(*) FROM saved_reports WHERE (recordtype = 'F' OR recordtype = 'M') AND SR.ReportName = ReportName) = 0)
+
+DELETE FROM saved_reports WHERE reportid in (
+SELECT reportid FROM saved_reports AS [SR]
+WHERE recordtype = 'V' AND
+(SELECT COUNT(*) FROM saved_reports WHERE (recordtype = 'F' OR recordtype = 'M') AND SR.ReportName = ReportName) = 0)
+
+DECLARE loop_cursor CURSOR FOR
+SELECT [Location Id],[ReportName],[RecordType],SQLText,Display,UserId,ISNULL([Description],'') AS [Description],[Report Order],Condition,FieldID,Subtotal,Sort,ReportType,HeaderText,ISNULL(ReportBase,'') AS ReportBase,LinkValue,[Grand Total]
+FROM saved_reports
+WHERE (RecordType = 'F' OR RecordType = 'M') AND Display = -1
+ORDER BY [Location Id],[UserId],[ReportName],[Report Order]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @locationId,@reportName,@recordType,@SQL_Text,@Display,@UserId,@reportDesc,@ReportSeq,@criteriaCondition,@fieldID,@Subtotal,@Sort,@isGlobal,@HeaderText,@reportBaseName,@AndOr,@GrandTotal
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	IF(@UserId <> @tempUserId OR @reportName <> @tempReportName OR @locationId <> @tempLocationId)
+	BEGIN
+		-- Different report
+		SET @tempLocationId = @locationId
+		SET @tempUserId = @UserId
+		SET @storeReportName = REPLACE(REPLACE(@reportName,'¬',' '),'&amp','&')
+		SET @tempReportName = @reportName
+	
+		PRINT 'New Report encountered called ' + @tempReportName
+		IF(@reportBaseName <> '')
+		BEGIN
+			IF REPLACE(REPLACE(@reportBaseName,'[',''),']','') = 'vendor_details'
+			BEGIN
+				SET @reportBaseId = (SELECT TOP 1 tableid FROM tables WHERE tablename = 'supplierdetails_summary_view')
+			END
+			ELSE
+			BEGIN
+				SET @reportBaseId = (SELECT TOP 1 tableid FROM tables WHERE tablename = REPLACE(REPLACE(@reportBaseName,'[',''),']',''))
+			END			
+		END
+		ELSE
+		BEGIN
+			SET @reportBaseId = (SELECT TOP 1 tableid FROM tables WHERE tablename = 'contract_details')
+		END
+	
+		-- Store New report entry
+		IF @isGlobal = 1
+		BEGIN
+			SET @folderId = 0 -- don't bother to store in a category folder
+		END
+		ELSE
+		BEGIN
+			-- must be a personal report, save in personal folder for user
+			SET @foldername = ((SELECT LTRIM(RTRIM([Full Name])) FROM security WHERE [User Id] = @UserId) + ' Reports')
+			IF NOT EXISTS (SELECT folderid FROM report_folders WHERE foldername = @foldername AND personal = 1)
+			BEGIN
+				PRINT 'Adding new personal folder called "' + @foldername + '"'
+				INSERT INTO report_folders (foldername, userid, personal) VALUES (@foldername, @UserId, 1)
+				SET @folderId = @@IDENTITY
+			END
+			ELSE
+			BEGIN
+				SET @folderid = (SELECT folderid FROM report_folders WHERE foldername = @foldername AND personal = 1)
+			END
+		END
+
+		INSERT INTO [reports] (locationid,reportname,userid,[description],personalreport,basetable,folderid)
+		VALUES (@locationid,@storeReportName,@UserId,@reportDesc,@isGlobal,@reportBaseId,@folderId)
+		SET @reportId = @@IDENTITY	
+	END
+	ELSE
+	BEGIN
+		IF(@reportBaseName <> '')
+		BEGIN
+			-- Report Base was not on the first line of the new report, so update retrospectively
+			IF(@reportBaseName <> '')
+			BEGIN
+				IF REPLACE(REPLACE(@reportBaseName,'[',''),']','') = 'vendor_details'
+				BEGIN
+					SET @reportBaseId = (SELECT TOP 1 tableid FROM tables WHERE tablename = 'supplierdetails_summary_view')
+				END
+				ELSE
+				BEGIN
+					SET @reportBaseId = (SELECT TOP 1 tableid FROM tables WHERE tablename = REPLACE(REPLACE(@reportBaseName,'[',''),']',''))
+				END			
+			END
+			ELSE
+			BEGIN
+				SET @reportBaseId = (SELECT TOP 1 tableid FROM tables WHERE tablename = 'contract_details')
+			END
+			UPDATE [reports] SET [basetable] = @reportBaseId WHERE reportid = @reportId
+		END
+	END
+	
+	-- insert reportcolumn entry for this row
+	SET @tempStr = REPLACE(REPLACE(SUBSTRING(@SQL_Text,1,(CHARINDEX('.',@SQL_Text)-1)),'[',''),']','')
+	SET @tableID = (SELECT TOP 1 tableid FROM tables WHERE tablename = @tempStr)
+
+	DECLARE @tmpFieldName nvarchar(100)
+	SET @tmpFieldName = (REPLACE(REPLACE(SUBSTRING(@SQL_Text,CHARINDEX('.',@SQL_Text)+1,LEN(@SQL_Text)-CHARINDEX('.',@SQL_Text)),'[',''),']',''))
+
+	SET @tempStr =
+	CASE @tmpFieldName
+		WHEN 'Maintenance Inflator X' THEN 'Inflator X'
+		WHEN 'Maintenance Inflator Y' THEN 'Inflator Y'
+		ELSE @tmpFieldName
+	END
+
+	IF EXISTS (SELECT TOP 1 fieldid FROM fields WHERE field = @tempStr AND tableid = @tableID)
+	BEGIN
+		SET @fieldID = (SELECT TOP 1 fieldid FROM fields WHERE field = @tempStr AND tableid = @tableID)
+	END
+	ELSE
+	BEGIN
+		DECLARE @skip INT
+		DECLARE @altTableID int
+		SET @skip = 0
+
+		PRINT '@tempStr = ' + @tempStr
+
+		IF @tempStr = 'GetNotifyString(contract_details.Contract Id)'
+		BEGIN
+			PRINT 'migrating column GetNotifyString'
+			SET @altTableID = 92
+			SET @tempStr = 'Contract Notify List'
+			SET @skip = 1
+		END
+
+		IF @tempStr = 'GetContractValue(contract_details.Contract Id,0)' OR @tempStr = 'Contract Value'
+		BEGIN
+			PRINT 'migrating column GetNotifyString'
+			SET @altTableID = 92
+			SET @tempStr = 'Contract Value excl Variations'
+			SET @skip = 1
+		END
+
+		IF @tempStr = 'GetContractValue(contract_details.Contract Id,1)' 
+		BEGIN
+			PRINT 'migrating column GetContractValue'
+			SET @altTableID = 92
+			SET @tempStr = 'Contract Value incl Variations'
+			SET @skip = 1
+		END
+
+		IF @tempStr = 'AttachmentCount(0,contract_details.Contract Id)'
+		BEGIN
+			PRINT 'migrating column Contract AttachmentCount'
+			SET @altTableID = 92
+			SET @tempStr = 'Contract Attachment Count'
+			SET @skip = 1
+		END
+
+		IF @tempStr = 'AttachmentCount(1,vendor_details.Vendor Id)'
+		BEGIN
+			PRINT 'migrating column Supplier AttachmentCount'
+			SET @altTableID = 93
+			SET @tempStr = 'Supplier Attachment Count'
+			SET @skip = 1
+		END
+
+		IF @tempStr = 'VariationCount(contract_details.Contract Id)'
+		BEGIN
+			PRINT 'migrating column VariationCount'
+			SET @altTableID = 92
+			SET @tempStr = 'Contract Variations Count'
+			SET @skip = 1
+		END
+
+		
+		IF @skip = 0
+		BEGIN
+			-- set alternate tableid to one of the views as field may be contained there
+			SET @altTableID = 
+			CASE 
+			WHEN @tableID = 25 THEN 104 -- contract details to contractdetails_summary_view
+			WHEN @tableID = 31 THEN 94 -- contract_productdetails to annual_cost_summary
+			WHEN @tableID = 85 THEN 102 -- vendor_details to supplier_view
+			WHEN @tableID = 41 THEN 95 -- invoice_details to invoice_details_view
+			ELSE @tableID
+			END
+		END
+
+		SET @fieldID = (SELECT TOP 1 fieldid FROM fields WHERE field = @tempStr AND tableid = @altTableID)
+		PRINT 'new fieldID = ' + CAST(@fieldID AS nvarchar)
+	END
+
+	SET @sortId =
+		CASE SUBSTRING(@Sort,1,1)
+		WHEN 'N' THEN 0
+		WHEN 'A' THEN 1
+		WHEN 'D' THEN 2
+		ELSE 0
+		END
+
+	IF EXISTS (SELECT * FROM saved_reports WHERE reportname = @reportName AND recordType = 'G' AND UserId = @UserId AND SQLText = @SQL_Text)
+	BEGIN
+		SET @groupBy = 1
+	END
+	ELSE
+	BEGIN
+		SET @groupBy = 0
+	END
+	
+	IF NOT @fieldID IS NULL AND NOT @reportId IS NULL
+	BEGIN
+		INSERT INTO reportcolumns (reportid,fieldid,[order],sort,groupby,columntype)
+		VALUES (@reportId,@fieldID,@reportSeq,@sortId,@groupBy,1)
+	END
+
+FETCH NEXT FROM loop_cursor INTO @locationId,@reportName,@recordType,@SQL_Text,@Display,@UserId,@reportDesc,@ReportSeq,@criteriaCondition,@fieldID,@Subtotal,@Sort,@isGlobal,@HeaderText,@reportBaseName,@AndOr,@GrandTotal
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+
+
+DECLARE @isIDField int
+DECLARE @origfieldID int
+DECLARE @tmpStr nvarchar(150)
+DECLARE @origDisplay int
+
+DECLARE loop_cursor CURSOR FOR
+SELECT [Location Id],[ReportName],[RecordType],IsIDField,SQLText,saved_reports.Display,UserId,ISNULL(saved_reports.[Description],'') AS [Description],[Report Order],Condition,saved_reports.FieldID,Subtotal,Sort,ReportType,HeaderText,ISNULL(ReportBase,'') AS ReportBase,ISNULL(LinkValue,'') AS LinkValue,[Grand Total],[system_dbjoins].[FieldType]
+FROM saved_reports
+INNER JOIN [system_dbjoins] ON [saved_reports].[FieldID] = [system_dbjoins].[FieldID]
+WHERE RecordType = 'C' OR RecordType = 'V'
+ORDER BY [Location Id],[UserId],[ReportName],[Report Order]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @locationId,@reportName,@recordType,@isIDField,@SQL_Text,@origDisplay,@UserId,@reportDesc,@ReportSeq,@criteriaCondition,@origfieldID,@Subtotal,@Sort,@isGlobal,@HeaderText,@reportBaseName,@AndOr,@GrandTotal,@fieldType
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	DECLARE @runtime int
+	DECLARE @viewgroup int
+	DECLARE @tmpFieldID int
+
+	SET @value1 = NULL
+	SET @value2 = NULL
+	SET @tempUserId = @UserId
+	SET @tempReportName = REPLACE(REPLACE(@reportName,'¬',' '),'&amp','&')
+	SET @reportName = @tempReportName -- REPLACE(REPLACE(@tempReportName,'[',''),']','')
+	SET @reportId = (SELECT TOP 1 reportid FROM reports WHERE reportname = @reportName AND userid = @UserId AND locationid = @locationId)
+	SET @tempStr = REPLACE(REPLACE(SUBSTRING(@SQL_Text,1,(CHARINDEX('.',@SQL_Text)-1)),'[',''),']','')
+
+	SET @tableID = (SELECT TOP 1 tableid FROM tables WHERE tablename = @tempStr)
+	SET @tempStr = SUBSTRING(@SQL_Text,CHARINDEX('.',@SQL_Text)+1,LEN(@SQL_Text)-CHARINDEX('.',@SQL_Text))
+	SET @tempStr = SUBSTRING(@tempStr,1,CHARINDEX(']',@tempStr))
+	SET @tempStr = REPLACE(REPLACE(@tempStr,'[',''),']','')
+
+	IF EXISTS (SELECT TOP 1 fieldid FROM fields WHERE field = @tempStr AND tableid = @tableID)
+	BEGIN
+		SET @fieldID = (SELECT TOP 1 fieldid FROM fields WHERE field = @tempStr AND tableid = @tableID)
+	END
+	ELSE
+	BEGIN
+		SET @skip = 0
+
+		IF @tempStr = 'GetNotifyString(contract_details.Contract Id)'
+		BEGIN
+			PRINT 'migrating criteria GetNotifyString'
+			SET @altTableID = 92
+			SET @tempStr = 'Contract Notify List'
+			SET @skip = 1
+		END
+
+		IF @tempStr = 'GetContractValue(contract_details.Contract Id,0)' OR @tempStr = 'Contract Value'
+		BEGIN
+			PRINT 'migrating criteria GetContractValue excl variations'
+			SET @altTableID = 92
+			SET @tempStr = 'Contract Value excl Variations'
+			SET @skip = 1
+		END
+
+		IF @tempStr = 'GetContractValue(contract_details.Contract Id,1)'
+		BEGIN
+			PRINT 'migrating criteria GetContractValue inc variations'
+			SET @altTableID = 92
+			SET @tempStr = 'Contract Value incl Variations'
+			SET @skip = 1
+		END
+
+		IF @tempStr = 'AttachmentCount(0,contract_details.Contract Id)'
+		BEGIN
+			PRINT 'migrating criteria Contract AttachmentCount'
+			SET @altTableID = 92
+			SET @tempStr = 'Contract Attachment Count'
+			SET @skip = 1
+		END
+
+		IF @tempStr = 'AttachmentCount(1,vendor_details.Vendor Id)'
+		BEGIN
+			PRINT 'migrating criteria Supplier AttachmentCount'
+			SET @altTableID = 93
+			SET @tempStr = 'Supplier Attachment Count'
+			SET @skip = 1
+		END
+
+		IF @tempStr = 'VariationCount(contract_details.Contract Id)'
+		BEGIN
+			PRINT 'migrating criteria VariationCount'
+			SET @altTableID = 92
+			SET @tempStr = 'Contract Variations Count'
+			SET @skip = 1
+		END
+
+		IF @skip = 0
+		BEGIN
+			-- set alternate tableid to one of the views as field may be contained there
+			SET @altTableID = 
+			CASE 
+			WHEN @tableID = 25 THEN 104 -- contract details to contractdetails_summary_view
+			WHEN @tableID = 31 THEN 94 -- contract_productdetails to annual_cost_summary
+			WHEN @tableID = 85 THEN 102 -- vendor_details to supplier_view
+			WHEN @tableID = 41 THEN 95 -- invoice_details to invoice_details_view
+			ELSE @tableID
+			END
+		END
+
+		SET @fieldID = (SELECT TOP 1 fieldid FROM fields WHERE field = @tempStr AND tableid = @altTableID)
+	END
+
+	SET @viewgroup = (SELECT viewgroupid FROM fields WHERE fieldid = @fieldID)
+	IF @viewgroup = 0
+	BEGIN
+		-- old field points at the id field not the field itself
+		SET @isIDField = (SELECT IsIDField FROM system_dbjoins WHERE fieldid = @origfieldID)
+		IF @isIDField = -1
+		BEGIN
+			SET @Display = (SELECT Display FROM system_dbjoins WHERE fieldid = @origfieldID)
+			SET @tmpStr = (SELECT field FROM system_dbjoins WHERE fieldID = @Display)
+			SET @tempStr = (REPLACE(REPLACE(@tmpStr,'[',''),']',''))
+			DECLARE @tmpTableName nvarchar(150)
+			SET @SQL_Text = (SELECT [Table] FROM system_dbjoins WHERE fieldID = @Display)
+			SET @tmpTableName = (REPLACE(REPLACE(@SQL_Text,'[',''),']',''))
+			SET @tableID = (SELECT TOP 1 tableid FROM tables WHERE tablename = @tmpTableName)
+
+			SET @tmpFieldID = (SELECT TOP 1 fieldid FROM fields WHERE tableid = @tableID AND field = @tempStr)
+
+			IF NOT @tmpFieldID IS NULL
+			BEGIN
+				SET @fieldID = @tmpFieldID
+			END
+		END
+	END
+
+SET @conditionId =
+	CASE @fieldType
+		WHEN 'S' THEN
+		CASE @criteriaCondition
+			WHEN '=' THEN 1
+			WHEN '<>' THEN 2
+			WHEN 'LIKE' THEN 7
+			ELSE 1
+		END
+		WHEN 'D' THEN
+		CASE @criteriaCondition
+			WHEN '=' THEN 37
+			WHEN '<>' THEN 38
+			WHEN 'BETWEEN' THEN 8
+			WHEN '>' THEN 39
+			WHEN '<' THEN 40
+			WHEN '>=' THEN 41
+			WHEN '<=' THEN 42
+			ELSE 37
+		END
+		WHEN 'X' THEN
+		CASE @criteriaCondition
+			WHEN '=' THEN 1
+			WHEN '<>' THEN 2
+			ELSE 1
+		END
+
+		WHEN 'R' THEN
+			CASE @criteriaCondition
+			WHEN '=' THEN 1
+			WHEN '<>' THEN 2
+			ELSE 1
+		END
+
+		WHEN 'L' THEN
+			CASE @criteriaCondition
+			WHEN '=' THEN 1
+			WHEN '<>' THEN 2
+			ELSE 1
+		END
+
+		WHEN 'Y' THEN
+			CASE @criteriaCondition
+			WHEN '=' THEN 1
+			WHEN '<>' THEN 2
+			ELSE 1
+		END
+
+		WHEN 'N' THEN
+			CASE @criteriaCondition
+				WHEN '=' THEN 1
+				WHEN '<>' THEN 2
+				WHEN '>' THEN 3
+				WHEN '<' THEN 4
+				WHEN '>=' THEN 5
+				WHEN '<=' THEN 6
+				ELSE 1
+		END
+
+		WHEN 'F' THEN
+			CASE @criteriaCondition
+				WHEN '=' THEN 1
+				WHEN '<>' THEN 2
+				WHEN '>' THEN 3
+				WHEN '<' THEN 4
+				WHEN '>=' THEN 5
+				WHEN '<=' THEN 6
+				ELSE 1
+			END
+
+		WHEN 'C' THEN
+			CASE @criteriaCondition
+				WHEN '=' THEN 1
+				WHEN '<>' THEN 2
+				WHEN '>' THEN 3
+				WHEN '<' THEN 4
+				WHEN '>=' THEN 5
+				WHEN '<=' THEN 6
+				ELSE 1
+			END
+		ELSE 1
+		END
+
+SET @AndOrID = 0
+
+DECLARE @datestr1 datetime
+DECLARE @datestr2 datetime
+
+IF(@recordType = 'C')
+BEGIN
+	IF(@fieldType = 'D')
+	BEGIN
+		IF @conditionId <> 8
+		BEGIN
+			IF ISDATE(@HeaderText) = 1
+			BEGIN
+				SET @datestr1 = CONVERT(datetime,@HeaderText,120)
+			END
+			ELSE
+			BEGIN
+				SET @datestr1 = NULL
+			END
+		END
+		ELSE
+		BEGIN
+			IF ISDATE(CONVERT(datetime,SUBSTRING(@HeaderText,1,CHARINDEX('|',@HeaderText)-1),120)) = 1
+			BEGIN
+				SET @datestr1 = CONVERT(datetime,SUBSTRING(@HeaderText,1,CHARINDEX('|',@HeaderText)-1),120)
+			END
+			ELSE
+			BEGIN
+				SET @datestr1 = NULL
+			END
+		END
+
+		IF @datestr1 IS NULL
+		BEGIN
+			SET @datestr1 = CONVERT(datetime, '1900-01-01', 120)
+		END
+
+		SET @value1 = CAST(DAY(@datestr1) AS varchar(2)) + '/' + CAST(MONTH(@datestr1) AS varchar(2)) + '/' + CAST(YEAR(@datestr1) AS varchar(4))
+	END
+	ELSE
+	BEGIN
+		IF @fieldID > 10000
+		BEGIN
+			PRINT 'converting UF list value to its ID'
+			DECLARE @UFfieldtype int
+			SET @UFfieldtype = (SELECT [Field Type] from user_fields WHERE [User Field Id] = (@fieldID-10000))
+			IF @UFfieldtype = 4 -- UF DDList
+			BEGIN
+				-- convert text value to id value
+				SET @value1 = (SELECT [User Value Id] FROM user_fieldvalues WHERE [User Field Id] = (@fieldID-10000) AND LOWER([Field Value]) = LOWER(@HeaderText))
+				PRINT 'converted ' + @HeaderText + ' to its ID = ' + @value1
+			END
+		END
+		ELSE
+		BEGIN
+			SET @value1 = @HeaderText
+		END
+	END
+	
+	IF(@conditionId = 8 AND @fieldType = 'D')
+	BEGIN
+		IF ISDATE(SUBSTRING(@HeaderText,CHARINDEX('|',@HeaderText)+1,LEN(@HeaderText)-CHARINDEX('|',@HeaderText))) = 1
+		BEGIN
+			SET @datestr2 = CONVERT(datetime,SUBSTRING(@HeaderText,CHARINDEX('|',@HeaderText)+1,LEN(@HeaderText)-CHARINDEX('|',@HeaderText)),120)
+		END
+		ELSE
+		BEGIN
+			SET @datestr2 = CONVERT(datetime,'2020-12-31',120)
+		END
+		SET @value2 = CAST(DAY(@datestr2) AS varchar(2)) + '/' + CAST(MONTH(@datestr2) AS varchar(2)) + '/' + CAST(YEAR(@datestr2) AS varchar(4))
+	END
+
+	SET @runtime = 0
+END
+ELSE
+BEGIN
+	-- runtime criteria
+	SET @runtime = 1
+	SET @value1 = NULL
+	SET @value2 = NULL
+END
+
+IF @runtime = 0 AND @value1 IS NULL
+BEGIN
+	SET @runtime = 1
+END
+
+IF NOT @fieldID IS NULL AND NOT @reportid IS NULL
+BEGIN
+	INSERT INTO reportcriteria (reportid,fieldid,condition,andor,value1,value2,runtime)
+	VALUES (@reportid,@fieldID,@conditionId,@AndOrID,@value1,@value2,@runtime)
+END
+
+FETCH NEXT FROM loop_cursor INTO @locationId,@reportName,@recordType,@isIDField,@SQL_Text,@origDisplay,@UserId,@reportDesc,@ReportSeq,@criteriaCondition,@origfieldID,@Subtotal,@Sort,@isGlobal,@HeaderText,@reportBaseName,@AndOr,@GrandTotal,@fieldType
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+IF EXISTS (SELECT SPECIFIC_NAME 
+	   FROM   INFORMATION_SCHEMA.ROUTINES
+	   WHERE  SPECIFIC_NAME = 'GetNotifyString')
+
+DROP FUNCTION dbo.GetNotifyString 
+*
+
+CREATE FUNCTION dbo.GetNotifyString (@contractID INT)  
+RETURNS varchar(200) AS  
+BEGIN 
+DECLARE @IsATeam INT
+DECLARE @memberID INT
+DECLARE @member VARCHAR(100)
+DECLARE @memberList VARCHAR(200)
+DECLARE @temp_memberList VARCHAR(200)
+DECLARE @scolon VARCHAR(2)
+DECLARE @typeTag VARCHAR(2)
+
+SET @scolon = ''
+SET @memberList = ''
+SET @temp_memberList = ''
+SET @typeTag = ''
+
+DECLARE loop_cursor CURSOR FOR
+SELECT [Staff Id],[IsTeam] FROM [contract_notification] WHERE [Contract Id] = @contractID
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @memberID,@IsATeam
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	SET @temp_memberList = @memberList
+	IF(@IsATeam = 1)
+	BEGIN
+		SET @member = (SELECT [Team Name] FROM [teams] WHERE [Team Id] = @memberID)
+		SET @typeTag = '**'
+	END
+	ELSE
+	BEGIN
+		SET @member = (SELECT [Staff Name] FROM [staff_details] WHERE [Staff Id] = @memberID)
+		SET @typeTag = ''
+	END
+
+	SET @memberList = @temp_memberList + @scolon + @typeTag + RTRIM(LTRIM(@member))
+	SET @scolon = '; '
+
+	FETCH NEXT FROM loop_cursor INTO @memberID,@IsATeam
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+
+RETURN(@memberList)
+END
+*
+
+
+IF EXISTS (SELECT SPECIFIC_NAME 
+	   FROM   INFORMATION_SCHEMA.ROUTINES
+	   WHERE  SPECIFIC_NAME = 'GetNotifyRecipients')
+
+DROP FUNCTION dbo.GetNotifyRecipients 
+*
+
+CREATE FUNCTION dbo.GetNotifyRecipients (@contractId INT, @locationId INT)  
+RETURNS @outTable TABLE ([Employee Id] int,[Member Name] nvarchar(100), [Email] nvarchar(250))
+BEGIN 
+DECLARE @resTable TABLE ([Employee Id] int,[Member Name] nvarchar(100), [Email] nvarchar(250))
+DECLARE @NotifyId INT
+DECLARE @Is_A_Team INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Staff Id],[IsTeam] FROM [contract_notification] WHERE [Contract Id] = @contractId
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @NotifyId, @Is_A_Team
+WHILE @@FETCH_STATUS = 0
+	BEGIN
+		IF(@Is_A_Team = 0)
+		BEGIN
+			-- Must be an individual
+			INSERT @resTable
+			SELECT [Staff Id],[Staff Name],[Email Address] FROM [staff_details] WHERE [Staff Id] = @NotifyId AND [Location Id] = @locationId
+		END
+		ELSE
+		BEGIN
+			-- Must be a team of people
+			INSERT @resTable
+			SELECT [staff_details].[Staff Id],[staff_details].[Staff Name],[staff_details].[Email Address] FROM [team_members] 
+			INNER JOIN [staff_details] ON [staff_details].[Staff Id] = [team_members].[Member Id]
+			WHERE [Team Id] = @NotifyId
+		END
+	FETCH NEXT FROM loop_cursor INTO @NotifyId, @Is_A_Team
+	END
+	
+	CLOSE loop_cursor
+	DEALLOCATE loop_cursor
+	INSERT @outTable
+	SELECT [Employee Id],[Member Name],[Email] FROM @resTable
+	RETURN
+END
+*
+
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'CalcNYM')
+	DROP FUNCTION dbo.CalcNYM
+*
+
+CREATE FUNCTION dbo.CalcNYM(@CPId int, @InflatorCalcType int, @InflatorType int, @MIXtype int, @MIXpct float, @MIXextrapct float, @MIYtype int, @MIYpct float, @MIYextrapct float, @years int)
+RETURNS float
+AS
+BEGIN
+DECLARE @resultLP float
+DECLARE @curLP float
+DECLARE @curMV float
+DECLARE @pctLP float
+DECLARE @resultX float
+DECLARE @resultY float
+DECLARE @XYresult float
+DECLARE @NYMresult float
+
+SET @curLP = (SELECT [Product Value] FROM contract_productdetails WHERE [Contract-Product Id] = @CPId)
+SET @pctLP = (SELECT ISNULL([Maintenance Percent],0) FROM contract_productdetails WHERE [Contract-Product Id] = @CPId)
+SET @curMV = (SELECT ISNULL([Maintenance Value],0) FROM contract_productdetails WHERE [Contract-Product Id] = @CPId)
+
+SET @XYresult = @curMV
+
+WHILE @years >= 0
+BEGIN
+	IF(@curLP > 0 AND @pctLP > 0)
+	BEGIN
+		SET @resultLP = (@curLP*(@pctLP/100))
+	END
+	ELSE
+	BEGIN
+		SET @resultLP = 0
+	END
+	
+	SET @resultX = @XYresult + (@XYresult * ((@MIXpct + @MIXextrapct) / 100))
+	SET @resultY = @XYresult + (@XYresult * ((@MIYpct + @MIYextrapct) / 100))
+	
+	IF @InflatorType = 0 -- Single Inflator (x only)
+	BEGIN
+		SET @XYresult = @resultX
+	END
+	ELSE IF @InflatorType = 1 -- Greater of X and Y
+	BEGIN
+		IF(@resultX >= @resultY)
+		BEGIN
+			SET @XYresult = @resultX
+		END
+		ELSE
+		BEGIN
+			SET @XYresult = @resultY
+		END
+	END
+	ELSE -- Lesser of X and Y
+	BEGIN
+		IF(@resultX <= @resultY)
+		BEGIN
+			SET @XYresult = @resultX
+		END
+		ELSE
+		BEGIN
+			SET @XYresult = @resultY
+		END
+	END
+
+	SET @years = @years-1
+END
+
+IF @InflatorCalcType = 0 -- Prod £ v Inflator
+BEGIN	
+	IF((@resultLP <= @XYresult) AND (@resultLP != 0))
+	BEGIN
+		SET @NYMresult = @resultLP
+	END
+	ELSE
+	BEGIN
+		SET @NYMresult = @XYresult
+	END
+END
+ELSE IF	@InflatorCalcType = 1 -- Inflator only
+BEGIN
+	SET @NYMresult = @XYresult
+END
+ELSE
+BEGIN
+	SET @NYMresult = 0
+END
+RETURN @NYMresult
+END
+*
+
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'RechargeItemIsOffline')
+	DROP FUNCTION dbo.RechargeItemIsOffline
+*
+
+CREATE FUNCTION dbo.RechargeItemIsOffline(@RA_Id int, @curDate datetime)
+RETURNS int
+AS
+BEGIN
+DECLARE @isOffline int
+SET @isOffline = (
+SELECT COUNT(*) FROM recharge_servicedates WHERE @curDate BETWEEN [Offline From] AND [Online From] AND [Recharge Id] = @RA_Id
+)
+
+RETURN @isOffline
+END
+*
+
+IF EXISTS (SELECT SPECIFIC_NAME 
+	   FROM   INFORMATION_SCHEMA.ROUTINES
+	   WHERE  SPECIFIC_NAME = 'GetBasicCharge')
+
+DROP FUNCTION dbo.GetBasicCharge 
+*
+
+CREATE FUNCTION dbo.GetBasicCharge(@RA_Id int, @curDate datetime, @NumDays int)
+RETURNS float
+BEGIN
+	DECLARE @curValue float
+	SET @curValue = 0
+
+	DECLARE @numDaysInMonth int
+	DECLARE @ApportionType int
+	DECLARE @Portion float
+	DECLARE @Maintenance float
+	DECLARE @Quantity float
+
+	SET @numDaysInMonth = 
+	CASE DATEPART(month,@curDate)
+	WHEN 2 THEN 
+		CASE DATEPART(year,@curDate) % 4
+		WHEN 0 THEN 29
+		ELSE 28
+		END
+	WHEN 4 THEN 30
+	WHEN 6 THEN 30
+	WHEN 9 THEN 30
+	WHEN 11 THEN 30
+	ELSE 31
+	END
+
+	SET @ApportionType = (SELECT [Apportion Id] FROM [recharge_associations] WHERE [Recharge Id] = @RA_Id)
+	SET @Portion = (SELECT [Portion] FROM [recharge_associations] WHERE [Recharge Id] = @RA_Id)
+	SET @Maintenance = (SELECT [Maintenance Value] FROM [recharge_associations] INNER JOIN [contract_productdetails] ON [contract_productdetails].[Contract-Product Id] = [recharge_associations].[Contract-Product Id] WHERE [Recharge Id] = @RA_Id)
+	SET @Quantity = (SELECT [Quantity] FROM [recharge_associations] INNER JOIN [contract_productdetails] ON [contract_productdetails].[Contract-Product Id] = [recharge_associations].[Contract-Product Id] WHERE [Recharge Id] = @RA_Id)
+
+	SET @curValue = 
+	CASE @ApportionType
+	WHEN 0 THEN ((@Maintenance / 12) / 100) * @Portion
+	WHEN 1 THEN @Portion
+	WHEN 2 THEN ((@Maintenance / 12) / @Quantity) * @Portion
+	ELSE 0
+	END
+
+	IF(@numDaysInMonth > 0 And @NumDays > 0)
+	BEGIN
+		-- only return a proportion of the monthly charge
+		DECLARE @retVal float
+		SET @retVal = (@curValue / @numDaysInMonth) * @NumDays
+
+		SET @curValue = @retVal
+	END
+	ELSE
+	BEGIN
+		SET @curValue = 0
+	END
+
+	RETURN @curValue
+END
+*
+
+IF EXISTS (SELECT SPECIFIC_NAME 
+	   FROM   INFORMATION_SCHEMA.ROUTINES
+	   WHERE  SPECIFIC_NAME = 'GetPostWarrantyCharge')
+
+DROP FUNCTION dbo.GetPostWarrantyCharge 
+*
+
+CREATE FUNCTION dbo.GetPostWarrantyCharge(@RA_Id int, @curDate datetime, @NumDays int)
+RETURNS float
+BEGIN
+	DECLARE @curValue float
+	SET @curValue = 0
+
+	DECLARE @numDaysInMonth int
+	DECLARE @ApportionType int
+	DECLARE @PWPortion float
+	DECLARE @Maintenance float
+	DECLARE @Quantity float
+
+	SET @numDaysInMonth = 
+	CASE DATEPART(month,@curDate)
+	WHEN 2 THEN
+		CASE DATEPART(year,@curDate) % 4
+		WHEN 0 THEN 29
+		ELSE 28
+		END
+	WHEN 4 THEN 30
+	WHEN 6 THEN 30
+	WHEN 9 THEN 30
+	WHEN 11 THEN 30
+	ELSE 31
+	END
+
+	SET @ApportionType = (SELECT [Post Warranty Apportion Id] FROM [recharge_associations] WHERE [Recharge Id] = @RA_Id)
+	SET @PWPortion = (SELECT [Post Warranty Portion] FROM [recharge_associations] WHERE [Recharge Id] = @RA_Id)
+	SET @Maintenance = (SELECT [Maintenance Value] FROM [recharge_associations] INNER JOIN [contract_productdetails] ON [contract_productdetails].[Contract-Product Id] = [recharge_associations].[Contract-Product Id] WHERE [Recharge Id] = @RA_Id)
+	SET @Quantity = (SELECT [Quantity] FROM [recharge_associations] INNER JOIN [contract_productdetails] ON [contract_productdetails].[Contract-Product Id] = [recharge_associations].[Contract-Product Id] WHERE [Recharge Id] = @RA_Id)
+
+	SET @curValue = 
+	CASE @ApportionType
+	WHEN 0 THEN ((@Maintenance / 12) / 100) * @PWPortion
+	WHEN 1 THEN @PWPortion
+	WHEN 2 THEN ((@Maintenance / 12) / @Quantity) * @PWPortion
+	ELSE 0
+	END
+
+	IF(@numDaysInMonth > 0 And @NumDays > 0)
+	BEGIN
+		-- only return a proportion of the monthly charge
+		DECLARE @retVal float
+		SET @retVal = (@curValue / @numDaysInMonth) * @NumDays
+
+		SET @curValue = @retVal
+	END
+	ELSE
+	BEGIN
+		SET @curValue = 0
+	END
+
+	RETURN @curValue
+END
+*
+
+IF EXISTS (SELECT SPECIFIC_NAME 
+	   FROM   INFORMATION_SCHEMA.ROUTINES
+	   WHERE  SPECIFIC_NAME = 'CalcRechargeValue')
+
+DROP FUNCTION dbo.CalcRechargeValue 
+*
+
+CREATE FUNCTION dbo.CalcRechargeValue(@currentRechargeDate datetime, @RA_Id int)
+RETURNS float
+BEGIN
+--incoming params
+DECLARE @SEDate datetime
+DECLARE @SSDate datetime
+DECLARE @WEDate datetime
+DECLARE @curDate datetime
+
+DECLARE @endofmonthdate datetime
+DECLARE @startofmonthdate datetime
+DECLARE @numDaysInMonth int
+DECLARE @hasSSD tinyint
+DECLARE @hasSED tinyint
+DECLARE @hasWED tinyint
+DECLARE @curValue float
+DECLARE @tmpStr nvarchar(100)
+
+SET @SSDate = (SELECT ISNULL([Support Start Date],CONVERT(datetime,'1970-01-01',120)) FROM [recharge_associations] WHERE [Recharge Id] = @RA_Id)
+SET @SEDate = (SELECT ISNULL([Support End Date],CONVERT(datetime,'2100-12-31',120)) FROM [recharge_associations] WHERE [Recharge Id] = @RA_Id)
+SET @WEDate = (SELECT ISNULL([Warranty End Date],CONVERT(datetime,'2100-12-31',120)) FROM [recharge_associations] WHERE [Recharge Id] = @RA_Id)
+
+IF(CONVERT(datetime,@SEDate,120) < CONVERT(datetime,'2100-12-31',120))
+BEGIN
+	SET @hasSED = 1
+END
+
+IF(CONVERT(datetime,@SSDate,120) > CONVERT(datetime,'1970-01-01',120))
+BEGIN
+	SET @hasSSD = 1
+END
+
+IF(CONVERT(datetime,@WEDate,120) < CONVERT(datetime,'2100-12-31',120))
+BEGIN
+	SET @hasWED = 1
+END
+
+SET @numDaysInMonth = 
+	CASE DATEPART(month,@currentRechargeDate)
+	WHEN 2 THEN 
+		CASE DATEPART(year,@currentRechargeDate) % 4
+		WHEN 0 THEN 29
+		ELSE 28
+		END
+	WHEN 4 THEN 30
+	WHEN 6 THEN 30
+	WHEN 9 THEN 30
+	WHEN 11 THEN 30
+	ELSE 31
+	END
+
+SET @tmpStr = CAST(DATEPART(year,@currentRechargeDate) as nvarchar) + '-' + CAST(DATEPART(month,@currentRechargeDate) as nvarchar) + '-' + CAST(@numDaysInMonth AS nvarchar)
+SET @endofmonthdate = CONVERT(datetime, @tmpStr, 120)
+SET @tmpStr = CAST(DATEPART(year,@currentRechargeDate) AS nvarchar) + '-' + CAST(DATEPART(month,@currentRechargeDate) AS nvarchar) + '-01'
+SET @startofmonthdate = CONVERT(datetime, @tmpStr, 120)
+
+IF @hasSSD = 1 AND (DATEPART(month,@SSDate) = DATEPART(month,@currentRechargeDate) AND DATEPART(year,@SSDate) = DATEPART(year,@currentRechargeDate))
+BEGIN
+	SET @startofmonthdate = @SSDate
+END
+
+IF @hasSED = 1 AND (DATEPART(month,@SEDate) = DATEPART(month,@currentRechargeDate) AND DATEPART(year,@SEDate) = DATEPART(year,@currentRechargeDate))
+BEGIN
+	SET @endofmonthdate = @SEDate
+END
+
+DECLARE @day int
+SET @day = DATEPART(day,@startofmonthdate)
+DECLARE @numStandardDays int
+DECLARE @numPWDays int
+SET @numStandardDays = 0
+SET @numPWDays = 0
+
+IF((@endofmonthdate > @SEDate) OR (@startofmonthdate < @SSDate))
+BEGIN
+    -- current date doesn't fall within the support periods
+    SET @curValue = 0
+END
+ELSE
+BEGIN
+	WHILE @day <= @numDaysInMonth
+	BEGIN
+		SET @tmpStr = (CAST(DATEPART(year,@currentRechargeDate) AS nvarchar) + '-' + CAST(DATEPART(month,@currentRechargeDate) AS nvarchar) + '-' + CAST(@day AS nvarchar))
+		SET @curDate = CONVERT(datetime,@tmpStr,120)
+
+		IF @curDate <= @SEDate
+		BEGIN
+			IF dbo.RechargeItemIsOffline(@RA_Id, @curDate) = 0
+			BEGIN
+				IF @curDate > @WEDate
+				BEGIN
+					-- Is after WED
+					IF @curDate <= @endofmonthdate
+					BEGIN
+						-- Is before SED but after WED
+						SET @numPWDays = (@numPWDays + 1)
+					END
+				END
+				ELSE
+				BEGIN
+					-- Is before WED & SED
+					IF @curDate >= @startofmonthdate
+					BEGIN
+						-- Is after SSD
+						SET @numStandardDays = (@numStandardDays + 1)
+					END
+				END
+			END
+		END
+		SET @day = (@day + 1)
+	END
+END
+
+DECLARE @StandardCharge float
+DECLARE @PWCharge float
+
+SET @StandardCharge = dbo.GetBasicCharge(@RA_Id, @currentRechargeDate, @numStandardDays)
+SET @PWCharge = dbo.GetPostWarrantyCharge(@RA_Id, @currentRechargeDate, @numPWDays)
+
+SET @curValue = (@StandardCharge + @PWCharge)
+
+RETURN @curValue
+END
+*
+
+IF EXISTS (SELECT SPECIFIC_NAME 
+	   FROM   INFORMATION_SCHEMA.ROUTINES
+	   WHERE  SPECIFIC_NAME = 'GetUnrecoveredRecharge')
+
+DROP FUNCTION dbo.GetUnrecoveredRecharge 
+*
+
+CREATE FUNCTION dbo.GetUnrecoveredRecharge(@currentRechargeDate datetime, @CP_Id int)
+RETURNS float
+BEGIN
+DECLARE @totalRechargedVal float
+DECLARE @annualCost float
+DECLARE @recoveredPct float
+DECLARE @monthlyCost float
+
+IF((SELECT COUNT(*) FROM recharge_associations WHERE [Contract-Product Id] = @CP_Id) > 0)
+BEGIN
+	SET @totalRechargedVal = ((SELECT SUM(dbo.CalcRechargeValue(@currentRechargeDate, [Recharge Id])) FROM [recharge_associations] WHERE [Contract-Product Id] = @CP_Id))
+END
+ELSE
+BEGIN
+	SET @totalRechargedVal = 0
+END
+
+SET @annualCost = ((SELECT [Maintenance Value] FROM [contract_productdetails] WHERE [Contract-Product Id] = @CP_Id))
+IF(@annualCost > 0)
+BEGIN
+	SET @monthlyCost = (@annualCost / 12)
+	SET @recoveredPct = ((@totalRechargedVal / @monthlyCost) * 100)
+END
+ELSE
+BEGIN
+	SET @recoveredPct = 100
+END
+RETURN (100 - @recoveredPct)
+END
+*
+
+% --------- function GetAnnualContractValue
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'GetAnnualContractValue')
+	DROP FUNCTION dbo.GetAnnualContractValue
+*
+
+CREATE FUNCTION dbo.GetAnnualContractValue(@contractId int) 
+RETURNS float
+AS
+BEGIN
+	DECLARE @retVal float
+	SET @retVal = (SELECT SUM([Maintenance Value]) FROM [contract_productdetails] WHERE [Archive Status] = 0 AND [Contract Id] = @contractId)
+
+	RETURN @retVal
+END
+*
+
+% ---------- Views ----------
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'contract_summary')
+    DROP VIEW dbo.contract_summary
+*
+
+CREATE VIEW dbo.contract_summary
+AS 
+	SELECT [Contract Id],contract_details.[Location Id],
+	dbo.GetContractValue([contract_details].[Contract Id],1) AS [Contract Value incl Variations],
+	dbo.GetContractValue([contract_details].[Contract Id],0) AS [Contract Value excl Variations],
+	dbo.AttachmentCount(0,[contract_details].[Contract Id]) AS [Contract Attachment Count],
+	dbo.VariationCount([contract_details].[Contract Id]) AS [Contract Variations Count],
+	dbo.GetNotifyString([contract_details].[Contract Id]) AS [Contract Notify List],
+	dbo.IsVariation([contract_details].[Contract Id]) AS [Is Variation],
+	[codes_currency].[Name] AS [Contract Currency Name],
+	[inflatorX].[Name] AS [Inflator X],
+	[inflatorX].[Percentage] AS [Inflator X Percentage],
+	[inflatorY].[Name] AS [Inflator Y],
+	[inflatorY].[Percentage] AS [Inflator Y Percentage]	
+	FROM [contract_details]
+	LEFT JOIN codes_currency ON codes_currency.[Currency Id] = contract_details.[Contract Currency]
+	LEFT JOIN codes_inflatormetrics AS [inflatorX] ON [inflatorX].[Metric Id] = [contract_details].[Maintenance Inflator X]
+	LEFT JOIN codes_inflatormetrics AS [inflatorY] ON [inflatorY].[Metric Id] = [contract_details].[Maintenance Inflator Y]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'supplier_summary')
+    DROP VIEW dbo.supplier_summary
+*
+
+CREATE VIEW dbo.supplier_summary
+AS 
+	SELECT [Vendor Id],[Location Id],
+	dbo.AttachmentCount(1,[vendor_details].[Vendor Id]) AS [Supplier Attachment Count]
+	FROM [vendor_details]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'contract_productdetails_summary')
+    DROP VIEW dbo.[contract_productdetails_summary]
+*
+
+CREATE VIEW dbo.contract_productdetails_summary
+AS 
+	SELECT 
+	[Contract-Product Id], 
+	codes_currency.[Name] AS [Contract Product Currency], 
+	codes_salestax.[Sales Tax Description] AS [Contract Product Sales Tax]
+	FROM contract_productdetails
+	LEFT JOIN codes_currency ON codes_currency.[Currency Id] = contract_productdetails.[Currency Id]
+	LEFT JOIN codes_salestax ON codes_salestax.[Sales Tax Id] = contract_productdetails.[Sales Tax Rate]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'availablejoins')
+    DROP VIEW dbo.availablejoins
+*
+
+CREATE VIEW dbo.availablejoins
+AS
+SELECT     
+dbo.jointables.[description], 
+dbo.tables.tablename, 
+dbo.fields.field,
+sourcetables.tablename AS sourcetable, 
+sourcefields.field as sourcefield,
+dbo.tables.jointype, 
+dbo.joinbreakdown.[order], 
+sourcetables.tableid AS sourcetableid, 
+dbo.tables.tableid, 
+dbo.jointables.basetableid, 
+dbo.joinbreakdown.jointableid
+FROM dbo.jointables 
+INNER JOIN dbo.joinbreakdown ON dbo.jointables.jointableid = dbo.joinbreakdown.jointableid 
+INNER JOIN dbo.tables ON dbo.joinbreakdown.tableid = dbo.tables.tableid 
+INNER JOIN dbo.fields ON dbo.fields.fieldid = dbo.joinbreakdown.table_fieldkey
+INNER JOIN dbo.tables sourcetables ON sourcetables.tableid = dbo.joinbreakdown.sourcetable 
+INNER JOIN dbo.fields sourcefields ON sourcefields.fieldid = dbo.joinbreakdown.joinkey
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'annual_cost_summary')
+   DROP VIEW dbo.annual_cost_summary
+*
+
+CREATE VIEW dbo.annual_cost_summary
+AS 
+SELECT 
+contract_details.[Contract Id],
+[Contract-Product Id],
+ISNULL([Product Value],0) AS [Product Value],
+ISNULL([Maintenance Value],0) AS [Maintenance Value],
+ISNULL([Maintenance Percent],0) AS [Maintenance Percent],
+ISNULL(contract_details.[Forecast Type Id],0) AS [Forecast Type Id],
+ISNULL(contract_details.[Maintenance Type],0) AS [Maintenance Type],
+ISNULL([Maintenance Inflator X],0) AS [Maintenance Inflator X],
+ISNULL(contract_details.[Maintenance Percent X],0) AS [Maintenance Percent X],
+ISNULL([X].[Percentage],0) AS [PercentageX],
+ISNULL([Maintenance Inflator Y],0) AS [Maintenance Inflator Y],
+ISNULL([Maintenance Percent Y],0) AS [Maintenance Percent Y],
+ISNULL([Y].[Percentage],0) AS [PercentageY],
+dbo.CalcNYM([Contract-Product Id],ISNULL([Forecast Type Id],0),ISNULL([Maintenance Type],0),ISNULL([Maintenance Inflator X],0),ISNULL([X].[Percentage],0),ISNULL([Maintenance Percent X],0),ISNULL([Maintenance Inflator Y],0),ISNULL([Y].[Percentage],0),ISNULL([Maintenance Percent Y],0),0) AS [Next Year Maintenance],
+dbo.CalcNYM([Contract-Product Id],ISNULL([Forecast Type Id],0),ISNULL([Maintenance Type],0),ISNULL([Maintenance Inflator X],0),ISNULL([X].[Percentage],0),ISNULL([Maintenance Percent X],0),ISNULL([Maintenance Inflator Y],0),ISNULL([Y].[Percentage],0),ISNULL([Maintenance Percent Y],0),1) AS [Next Year Maintenance+1],
+dbo.CalcNYM([Contract-Product Id],ISNULL([Forecast Type Id],0),ISNULL([Maintenance Type],0),ISNULL([Maintenance Inflator X],0),ISNULL([X].[Percentage],0),ISNULL([Maintenance Percent X],0),ISNULL([Maintenance Inflator Y],0),ISNULL([Y].[Percentage],0),ISNULL([Maintenance Percent Y],0),2) AS [Next Year Maintenance+2],
+dbo.CalcNYM([Contract-Product Id],ISNULL([Forecast Type Id],0),ISNULL([Maintenance Type],0),ISNULL([Maintenance Inflator X],0),ISNULL([X].[Percentage],0),ISNULL([Maintenance Percent X],0),ISNULL([Maintenance Inflator Y],0),ISNULL([Y].[Percentage],0),ISNULL([Maintenance Percent Y],0),3) AS [Next Year Maintenance+3],
+dbo.CalcNYM([Contract-Product Id],ISNULL([Forecast Type Id],0),ISNULL([Maintenance Type],0),ISNULL([Maintenance Inflator X],0),ISNULL([X].[Percentage],0),ISNULL([Maintenance Percent X],0),ISNULL([Maintenance Inflator Y],0),ISNULL([Y].[Percentage],0),ISNULL([Maintenance Percent Y],0),4) AS [Next Year Maintenance+4],
+dbo.CalcNYM([Contract-Product Id],ISNULL([Forecast Type Id],0),ISNULL([Maintenance Type],0),ISNULL([Maintenance Inflator X],0),ISNULL([X].[Percentage],0),ISNULL([Maintenance Percent X],0),ISNULL([Maintenance Inflator Y],0),ISNULL([Y].[Percentage],0),ISNULL([Maintenance Percent Y],0),5) AS [Next Year Maintenance+5]
+FROM contract_productdetails
+INNER JOIN contract_details ON contract_productdetails.[Contract Id] = contract_details.[Contract Id]
+LEFT OUTER JOIN [codes_inflatormetrics] AS [X] ON [contract_details].[Maintenance Inflator X] = [X].[Metric Id]
+LEFT OUTER JOIN [codes_inflatormetrics] AS [Y] ON [contract_details].[Maintenance Inflator Y] = [Y].[Metric Id]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'invoice_details_view')
+    DROP VIEW dbo.invoice_details_view
+*
+
+CREATE VIEW dbo.invoice_details_view
+AS 
+	SELECT 
+	invoice_details.*, 
+	codes_salestax.[Sales Tax Description], 
+	codes_salestax.[Sales Tax] AS [Sales Tax Percentage],
+	codes_invoicestatustype.[Invoice Status Type Desc] AS [Invoice Status Description],
+	codes_invoicestatustype.[Archive] AS [Invoice Status is Archive]
+	FROM invoice_details
+	LEFT OUTER JOIN codes_salestax ON codes_salestax.[Sales Tax Id] = invoice_details.[Sales Tax Rate]
+	LEFT OUTER JOIN codes_invoicestatustype ON codes_invoicestatustype.[Invoice Status Type Id] = invoice_details.[Invoice Status]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'contract_productdetails_view')
+    DROP VIEW dbo.contract_productdetails_view
+*
+
+CREATE VIEW dbo.contract_productdetails_view
+AS 
+	SELECT contract_productdetails.*,
+	product_details.[Product Name],
+	codes_currency.[Name] AS [Contract Product Currency],
+	codes_salestax.[Sales Tax Description] AS [Contract Product Sales Tax],
+	codes_units.[Unit Description] AS [Contract Product Unit Desc]
+	FROM contract_productdetails
+	INNER JOIN product_details ON contract_productdetails.[Product Id] = product_details.[Product Id]
+	LEFT JOIN codes_currency ON contract_productdetails.[Currency Id] = codes_currency.[Currency Id]
+	LEFT JOIN codes_salestax ON contract_productdetails.[Sales Tax Rate] = codes_salestax.[Sales Tax Id]
+	LEFT JOIN codes_units ON contract_productdetails.[Unit Id] = codes_units.[Unit Id]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'contract_notes_view')
+    DROP VIEW dbo.contract_notes_view
+*
+
+CREATE VIEW dbo.contract_notes_view
+AS 
+	SELECT contract_notes.*,[Primary].[Full Description] AS [Primary Category],[Secondary].[Full Description] AS [Secondary Category]
+	FROM [contract_notes]
+        LEFT OUTER JOIN [codes_notecategory] AS [Primary] ON [Primary].[Note Cat Id] = [contract_notes].[Note Type]
+        LEFT OUTER JOIN [codes_notecategory] AS [Secondary] ON [Secondary].[Note Cat Id] = [contract_notes].[Note Cat Id]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'supplier_notes_view')
+    DROP VIEW dbo.supplier_notes_view
+*
+
+CREATE VIEW dbo.supplier_notes_view
+AS 
+	SELECT vendor_notes.*, [Primary].[Full Description] AS [Primary Category],[Secondary].[Full Description] AS [Secondary Category] 
+	FROM [vendor_notes]
+        LEFT OUTER JOIN [codes_notecategory] AS [Primary] ON [Primary].[Note Cat Id] = [vendor_notes].[Note Type]
+        LEFT OUTER JOIN [codes_notecategory] AS [Secondary] ON [Secondary].[Note Cat Id] = [vendor_notes].[Note Cat Id]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'invoice_notes_view')
+    DROP VIEW dbo.invoice_notes_view
+*
+
+CREATE VIEW dbo.invoice_notes_view
+AS 
+	SELECT invoice_notes.*,[Primary].[Full Description] AS [Primary Category],[Secondary].[Full Description] AS [Secondary Category]
+	FROM [invoice_notes]
+        LEFT OUTER JOIN [codes_notecategory] AS [Primary] ON [Primary].[Note Cat Id] = [invoice_notes].[Note Type]
+        LEFT OUTER JOIN [codes_notecategory] AS [Secondary] ON [Secondary].[Note Cat Id] = [invoice_notes].[Note Cat Id]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'product_notes_view')
+    DROP VIEW dbo.product_notes_view
+*
+
+CREATE VIEW dbo.product_notes_view
+AS 
+	SELECT product_notes.*,[Primary].[Full Description] AS [Primary Category],[Secondary].[Full Description] AS [Secondary Category]
+	FROM [product_notes]
+        LEFT OUTER JOIN [codes_notecategory] AS [Primary] ON [Primary].[Note Cat Id] = [product_notes].[Note Type]
+        LEFT OUTER JOIN [codes_notecategory] AS [Secondary] ON [Secondary].[Note Cat Id] = [product_notes].[Note Cat Id]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'suppliercontact_notes_view')
+    DROP VIEW dbo.suppliercontact_notes_view
+*
+
+CREATE VIEW dbo.suppliercontact_notes_view
+AS 
+	SELECT vendorcontact_notes.*,[Primary].[Full Description] AS [Primary Category],[Secondary].[Full Description] AS [Secondary Category]
+	FROM [vendorcontact_notes]
+        LEFT OUTER JOIN [codes_notecategory] AS [Primary] ON [Primary].[Note Cat Id] = [vendorcontact_notes].[Note Type]
+        LEFT OUTER JOIN [codes_notecategory] AS [Secondary] ON [Secondary].[Note Cat Id] = [vendorcontact_notes].[Note Cat Id]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'supplierdetails_summary_view')
+    DROP VIEW dbo.supplierdetails_summary_view
+*
+
+CREATE VIEW dbo.supplierdetails_summary_view
+AS 
+SELECT 
+vendor_details.*,
+vendor_addresses.[Telephone],
+vendor_addresses.[Switchboard],
+vendor_addresses.[Mobile],
+vendor_addresses.[Fax],
+vendor_addresses.[Email],
+vendor_addresses.[Address Line 1],
+vendor_addresses.[Address Line 2],
+vendor_addresses.[Address Line 3],
+vendor_addresses.[Address Line 4],
+vendor_addresses.[Address Line 5],
+vendor_addresses.[Country],
+vendor_addresses.[Customer Number],
+vendor_addresses.[Comments]
+FROM vendor_details
+INNER JOIN vendor_addresses ON vendor_details.[Primary Address Id] = vendor_addresses.[Address Id]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'suppliercontact_summary_view')
+    DROP VIEW dbo.suppliercontact_summary_view
+*
+
+CREATE VIEW dbo.suppliercontact_summary_view
+AS 
+SELECT *
+FROM vendor_addresses
+WHERE [Name] <> 'Primary Address'
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'contractdetails_summary_view')
+    DROP VIEW dbo.contractdetails_summary_view
+*
+
+CREATE VIEW dbo.contractdetails_summary_view
+AS
+SELECT contract_details.*,
+[X].[Name] AS [Inflator X],
+[Y].[Name] AS [Inflator Y]
+FROM contract_details
+LEFT JOIN codes_inflatormetrics AS [X] ON [X].[Metric Id] = contract_details.[Maintenance Inflator X]
+LEFT JOIN codes_inflatormetrics AS [Y] ON [Y].[Metric Id] = contract_details.[Maintenance Inflator Y]
+*
+
+IF EXISTS (SELECT TABLE_NAME 
+	   FROM   INFORMATION_SCHEMA.VIEWS 
+	   WHERE  TABLE_NAME = 'recharge_payments_view')
+    DROP VIEW dbo.recharge_payments_view
+*
+
+CREATE VIEW dbo.recharge_payments_view
+AS
+SELECT 
+[Recharge Item Id] AS [Record Id],
+[Recharge Id] AS [Recharge Id],
+[contract_productdetails].[Contract Id] AS [Contract Id],
+[Recharge Period] AS [Charge Date],
+[Recharge Amount] AS [Charge Amount],
+[Recharge Entity Id],
+contract_productdetails.[Currency Id] AS [Currency Id],
+0 AS [Is One Off Charge]
+FROM contract_productdetails_recharge
+INNER JOIN contract_productdetails ON contract_productdetails.[Contract-Product Id] = contract_productdetails_recharge.[Contract-Product Id]
+UNION
+SELECT 
+[Charge Id] AS [Record Id],
+0 AS [Recharge Id],
+contract_productdetails_oneoffcharge.[Contract Id] AS [Contract Id],
+[Charge Date] AS [Charge Date],
+[Charge Amount] AS [Charge Amount],
+[Recharge Entity Id],
+contract_details.[Contract Currency] AS [Currency Id],
+1 AS [Is One Off Charge]
+FROM contract_productdetails_oneoffcharge
+INNER JOIN contract_details ON contract_details.[Contract Id] = contract_productdetails_oneoffcharge.[Contract Id]
+*
+IF EXISTS (SELECT name 
+	   FROM   sysobjects 
+	   WHERE  name = 'RefreshUFReportFields' 
+	   AND 	  type = 'P')
+    DROP PROCEDURE dbo.RefreshUFReportFields
+*
+
+CREATE PROCEDURE dbo.RefreshUFReportFields
+AS
+	    DELETE FROM fields WHERE fieldid > 10000
+
+            DECLARE @origFieldDesc varchar(150)
+            DECLARE @origFieldType varchar(1)
+            DECLARE @origIsID int
+            DECLARE @origTable varchar(50)
+            DECLARE @origFieldName varchar(50)
+            DECLARE @origCanTotal int
+            DECLARE @origFieldID int
+            DECLARE @origJoinAlias varchar(50)
+            DECLARE @origFieldGroup varchar(2)
+            DECLARE @origDisplay int
+
+            DECLARE @newGenList int
+            DECLARE @newViewGroup int
+            DECLARE @newIsID int
+            DECLARE @newReLabel int
+            DECLARE @newTableId int
+            DECLARE @newFieldType varchar(1)
+            DECLARE @newTableName varchar(50)
+            DECLARE @newFieldName varchar(50)
+
+            DECLARE loop_cursor CURSOR FOR
+            SELECT [Table],[Field],[IsIDField],[Description],[FieldID],[FieldType],[Display],[canTotal],[FieldGroup],[JoinAlias] FROM system_dbjoins WHERE [IsUserDefined] = 1
+            OPEN loop_cursor
+            FETCH NEXT FROM loop_cursor INTO @origTable,@origFieldName,@origIsID,@origFieldDesc,@origFieldID,@origFieldType,@origDisplay,@origCanTotal,@origFieldGroup,@origJoinAlias
+            WHILE @@FETCH_STATUS = 0
+            BEGIN
+            IF(@origFieldType = 'M')
+            BEGIN
+            SET @newFieldType = '$'
+            END
+            ELSE IF(@origFieldType = 'R' OR @origFieldType = 'L')
+            BEGIN
+            SET @newFieldType = 'N'		
+            END
+            ELSE
+            BEGIN
+            SET @newFieldType = @origFieldType
+            END
+
+            IF(@origFieldType = 'L' OR @origFieldType = 'R' OR (@origFieldType = 'N' AND @origDisplay > 0))
+            BEGIN
+            SET @newGenList = 1
+            END
+            ELSE
+            BEGIN
+            SET @newGenList = 0
+            END
+
+            SET @newTableName = REPLACE(REPLACE(@origTable,'[',''),']','')
+            SET @newFieldName = REPLACE(REPLACE(@origFieldName,'[',''),']','')
+            SET @newTableId = (SELECT tableid FROM tables WHERE tablename = @newTableName)
+
+            IF(@origFieldGroup = 'CD')
+            BEGIN
+            SET @newViewGroup = 26
+            SET @newTableId = 104
+            END
+            ELSE IF(@origFieldGroup = 'VD')
+            BEGIN
+            SET @newViewGroup = 27
+            SET @newTableId = 102
+            END
+            ELSE IF(@origFieldGroup = 'SD')
+            BEGIN
+            SET @newViewGroup = 29
+            END
+            ELSE IF(@origFieldGroup = 'CP')
+            BEGIN
+            SET @newViewGroup = 30
+            SET @newTableId = 96
+            END
+            ELSE IF(@origFieldGroup = 'PD')
+            BEGIN
+            SET @newViewGroup = 28
+            END
+            ELSE
+            BEGIN
+            SET @newViewGroup = 0
+            END
+
+            INSERT INTO fields (fieldid,tableid,field,fieldtype,description,comment,idfield,viewgroupid,genlist,width,cantotal,printout,valuelist,relabel,alias,isuserdefined)
+            VALUES (@origFieldID,@newTableId,@newFieldName,@newFieldType,@origFieldDesc,'',ABS(@origIsID),@newViewGroup,@newGenList,50,ABS(@origCanTotal),0,0,0,@origJoinAlias,1)
+
+            FETCH NEXT FROM loop_cursor INTO @origTable,@origFieldName,@origIsID,@origFieldDesc,@origFieldID,@origFieldType,@origDisplay,@origCanTotal,@origFieldGroup,@origJoinAlias
+            END
+            CLOSE loop_cursor
+            DEALLOCATE loop_cursor
+*
+
+IF EXISTS (SELECT name 
+	   FROM   sysobjects 
+	   WHERE  name = 'UpdateCPAnnualCost'
+	   AND 	  type = 'P')
+    DROP PROCEDURE dbo.UpdateCPAnnualCost
+*
+
+CREATE PROCEDURE dbo.UpdateCPAnnualCost @contractId int, @acv int
+AS
+	IF(@contractId > 0)
+	BEGIN
+		IF(@acv = 1)
+		BEGIN
+		UPDATE contract_details SET [Annual Contract Value] = (SELECT dbo.GetAnnualContractValue(@contractId)) WHERE [Contract Id] = @contractId
+		END
+		
+		UPDATE contract_details SET [Total Maintenance Value] = (SELECT dbo.GetAnnualContractValue(@contractId)) WHERE [Contract Id] = @contractId
+	END
+	ELSE
+	BEGIN
+		-- Update for ALL contracts
+		IF(@acv = 1)
+		BEGIN
+			UPDATE contract_details SET [Annual Contract Value] = (SELECT dbo.GetAnnualContractValue([Contract Id])) 
+		END
+
+		UPDATE contract_details SET [Total Maintenance Value] = (SELECT dbo.GetAnnualContractValue([Contract Id])) 
+	END
+
+*
+% ----------- Routines ---------------
+DECLARE @locId INT
+DECLARE @rec_count INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Location Id] FROM [location]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @locId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'FY_STARTS')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'FY_STARTS','06/04',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'FY_ENDS')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'FY_ENDS','05/04',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'RECHARGE_UNRECOVERED_TITLE')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'RECHARGE_UNRECOVERED_TITLE','UNRECOVERED',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'SUPPLIER_REGION_TITLE')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'SUPPLIER_REGION_TITLE','County',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'SUPPLIER_PRIMARY_TITLE')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'SUPPLIER_PRIMARY_TITLE','Supplier',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'SUPPLIER_VARIATION_TITLE')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'SUPPLIER_VARIATION_TITLE','Supplier',1)
+END
+
+FETCH NEXT FROM loop_cursor INTO @locId
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+DECLARE @rec_count INT
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = 0 AND [Param] = 'MIGRATE_UF')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (0,'MIGRATE_UF','0',0)
+END
+*
+
+INSERT INTO [mime_headers] ([File Extension],[Mime Header])
+VALUES('ODC','application/vnd.oasis.opendocument.text-master')
+*
+
+INSERT INTO [mime_headers] ([File Extension],[Mime Header])
+VALUES('ODM','application/vnd.oasis.opendocument.text-chart')
+*
+
+INSERT INTO [mime_headers] ([File Extension],[Mime Header])
+VALUES('ODP','application/vnd.oasis.opendocument.presentation')
+*
+
+INSERT INTO [mime_headers] ([File Extension],[Mime Header])
+VALUES('ODT','application/vnd.oasis.opendocument.text')
+*
+
+INSERT INTO [mime_headers] ([File Extension],[Mime Header])
+VALUES('ODH','application/vnd.oasis.opendocument.text-web')
+*
+
+INSERT INTO [mime_headers] ([File Extension],[Mime Header])
+VALUES('ODS','application/vnd.oasis.opendocument.spreadsheet')
+*
+
+EXEC dbo.CreateLocationParams 0
+*
+
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'GetTableId')
+	DROP FUNCTION dbo.GetTableId
+*
+
+CREATE FUNCTION dbo.GetTableId	(@tablename nvarchar(150))
+RETURNS int
+AS
+BEGIN
+DECLARE @tableid int
+
+SET @tableid = (SELECT tableid FROM tables WHERE tablename = @tablename)
+
+RETURN @tableid
+END
+*
+
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'GetFieldId')
+	DROP FUNCTION dbo.GetFieldId
+*
+
+CREATE FUNCTION dbo.GetFieldId	(@tableid int, @fieldName nvarchar(150))
+RETURNS int
+AS
+BEGIN
+DECLARE @fieldid int
+
+SET @fieldid = (SELECT fieldid FROM fields WHERE tableid = @tableid AND field = @fieldName)
+
+RETURN @fieldid
+END
+*
+
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'GetNextTempFieldId')
+	DROP FUNCTION dbo.GetNextTempFieldId
+*
+
+CREATE FUNCTION dbo.GetNextTempFieldId()
+RETURNS int
+AS
+BEGIN
+DECLARE @id int
+SET @id = (SELECT ISNULL(MAX(fieldid),19999) FROM fields WHERE fieldid > 20000)
+
+RETURN @id+1
+END
+*
+
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'GetNextJoinTableId')
+	DROP FUNCTION dbo.GetNextJoinTableId
+*
+
+CREATE FUNCTION dbo.GetNextJoinTableId()
+RETURNS int
+AS
+BEGIN
+DECLARE @id int
+
+SET @id = (SELECT ISNULL(MAX(jointableid),9999) FROM jointables WHERE jointableid > 10000)
+
+RETURN @id+1
+END
+*
+
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'GetNextJoinBreakdownId')
+	DROP FUNCTION dbo.GetNextJoinBreakdownId
+*
+
+CREATE FUNCTION dbo.GetNextJoinBreakdownId()
+RETURNS int
+AS
+BEGIN
+DECLARE @id int
+
+SET @id = (SELECT ISNULL(MAX(joinbreakdownid),9999) FROM joinbreakdown WHERE joinbreakdownid > 10000)
+
+RETURN @id+1
+END
+*
+
+IF EXISTS (SELECT name 
+	   FROM   sysobjects 
+	   WHERE  name = 'AddUFReportEntry' 
+	   AND 	  type = 'P')
+    DROP PROCEDURE dbo.AddUFReportEntry
+*
+
+CREATE PROCEDURE dbo.AddUFReportEntry(@UFNumber int, @fieldType int, @fieldName nvarchar(50), @fieldDesc nvarchar(250), @AppArea int)
+AS
+	DECLARE @GenList int
+	DECLARE @ViewGroup int
+	DECLARE @TableId int
+	DECLARE @FieldId int
+	DECLARE @canTotal int
+	DECLARE @TableName varchar(50)
+	DECLARE @UFFieldName nvarchar(10)
+	DECLARE @UFFieldId int
+	DECLARE @basetableid int
+	DECLARE @srcTableId int
+	DECLARE @tmpJoinTableId int
+	DECLARE @tmpJoinBreakdownId int
+	DECLARE @tmpsrcTableId int
+	DECLARE @tmpsrcFieldId int
+	DECLARE @tmpdstTableId int
+	DECLARE @tmpdstFieldId int
+	DECLARE @FieldTypeChar char(1)
+	DECLARE @PKfield int
+
+	IF @fieldType >= 100 OR @fieldType = 4
+	BEGIN
+		SET @GenList = 1
+	END
+	ELSE
+	BEGIN
+		SET @GenList = 0
+	END
+
+	IF @GenList = 0 AND (@fieldType = 2 OR @fieldType = 7)
+	BEGIN
+		SET @canTotal = 1
+	END
+	ELSE
+	BEGIN
+		SET @canTotal = 0
+	END
+
+	SET @FieldTypeChar =
+	CASE @fieldType
+	WHEN 1 THEN 'S' -- string
+	WHEN 2 THEN 'N' -- number
+	WHEN 3 THEN 'D' -- date
+	WHEN 4 THEN 'S' -- ddlist
+	WHEN 5 THEN 'X' -- checkbox
+	WHEN 6 THEN 'T' -- text
+	WHEN 7 THEN 'F' -- float
+	WHEN 100 THEN 'S' -- employee ref
+	WHEN 101 THEN 'S' -- site ref
+	WHEN 102 THEN 'S' -- recharge client ref
+	WHEN 103 THEN 'S' -- recharge account code ref
+	ELSE 'S' -- all assume string
+	END
+	
+	SET @ViewGroup =
+	CASE @AppArea
+	WHEN 1 THEN 26 -- contract user defined
+	WHEN 2 THEN 30 -- contract product user defined
+	WHEN 3 THEN 28 -- product details user defined
+	WHEN 4 THEN 27 -- supplier user defined
+	WHEN 5 THEN 26 -- contract grouping
+	WHEN 6 THEN 25 -- recharge templates - no user defined folder at present
+	WHEN 7 THEN 30 -- contract product grouping
+	WHEN 8 THEN 29 -- employee user defined
+	ELSE 26 -- all else in contract user defined
+	END
+
+	SET @UFFieldName = 'UF' + CAST(@UFNumber as nvarchar)
+	SET @TableId = 10000 + @UFNumber
+	SET @UFFieldId = 10000 + @UFNumber
+
+	SET @basetableid =
+	CASE @AppArea 
+		WHEN 1 THEN
+			(SELECT dbo.GetTableId('contract_details'))
+		WHEN 2 THEN
+			(SELECT dbo.GetTableId('contract_productdetails'))
+		WHEN 3 THEN
+			(SELECT dbo.GetTableId('product_details'))
+		WHEN 4 THEN
+			(SELECT dbo.GetTableId('supplierdetails_summary_view'))
+		WHEN 5 THEN
+			(SELECT dbo.GetTableId('contract_details'))
+		WHEN 6 THEN
+			(SELECT dbo.GetTableId('recharge_associations'))
+		WHEN 7 THEN
+			(SELECT dbo.GetTableId('contract_productdetails'))
+		WHEN 8 THEN
+			(SELECT dbo.GetTableId('staff_details'))
+		ELSE
+			(SELECT dbo.GetTableId('contract_details'))
+	END
+
+	IF @fieldType >= 100
+	BEGIN
+		SET @PKfield = (SELECT primarykey FROM tables WHERE tableid = @basetableid)
+
+	        INSERT INTO fields (fieldid,tableid,field,fieldtype,[description],comment,idfield,viewgroupid,genlist,width,cantotal,printout,valuelist,relabel,alias,isuserdefined)
+	        VALUES (@UFFieldId,@basetableid,@UFFieldName,@FieldTypeChar,@fieldName,@fieldDesc,0,0,@GenList,50,@canTotal,0,0,0,'',1)
+
+		INSERT INTO tables (tableid, tablename, jointype, allowreporton, [description], primarykey)
+		VALUES (@TableId, '##' + @UFFieldName, 2, 0,'',@PKfield)
+
+		SET @FieldId = (SELECT dbo.GetNextTempFieldId())
+		INSERT INTO fields (fieldid,tableid,field,fieldtype,[description],comment,idfield,viewgroupid,genlist,width,cantotal,printout,valuelist,relabel,alias,isuserdefined)
+		VALUES (@FieldId,@TableId,@UFFieldName + '_value',@FieldTypeChar,@fieldName,@fieldDesc,0,@ViewGroup,@GenList,50,0,0,0,0,'',1)
+
+		INSERT INTO fields (fieldid,tableid,field,fieldtype,[description],comment,idfield,viewgroupid,genlist,width,cantotal,printout,valuelist,relabel,alias,isuserdefined)
+		VALUES (@FieldId+1,@TableId,@UFFieldName + '_Id','N',@UFFieldName + ' link ID',@fieldDesc,0,0,0,0,0,0,0,0,'',1)
+	END
+	ELSE
+	BEGIN
+	        INSERT INTO fields (fieldid,tableid,field,fieldtype,[description],comment,idfield,viewgroupid,genlist,width,cantotal,printout,valuelist,relabel,alias,isuserdefined)
+        	VALUES (@TableId,@basetableid,@UFFieldName,@FieldTypeChar,@fieldName,@fieldDesc,0,@ViewGroup,@GenList,50,@canTotal,0,0,0,'',1)
+	END
+
+	-- Create the join table, join breakdown entries
+	IF @fieldType >= 100
+	BEGIN
+		-- Employee Reference Field
+		IF @AppArea = 1 OR @AppArea = 5 -- Contract Details & Contract Details Grouping
+		BEGIN
+			-- create links relating to contract details / contract grouping
+			SET @srcTableId = (SELECT dbo.GetTableId('contract_details'))
+			SET @tmpJoinTableId = (SELECT dbo.GetNextJoinTableId())
+
+			INSERT INTO jointables (jointableid, tableid, basetableid, [description])
+			VALUES (@tmpJoinTableId, @TableId, @srcTableId,'contract details to temporary table')
+
+			SET @tmpJoinBreakdownId = (SELECT dbo.GetNextJoinBreakdownId())
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId(@TableId, @UFFieldName + '_Id'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId(@srcTableId, 'Contract Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId, @tmpJoinTableId, 1, @TableId, @tmpdstFieldId, @srcTableId, @tmpsrcFieldId)
+
+			INSERT INTO reports_allowedtables (basetableid, tableid) VALUES (@srcTableId, @TableId)	
+
+			-- contract product based report links
+			SET @srcTableId = (SELECT dbo.GetTableId('contract_productdetails'))
+
+			INSERT INTO jointables (jointableid, tableid, basetableid, [description])
+			VALUES (@tmpJoinTableId+1, @TableId, @srcTableId,'contract productdetails to temporary table')
+
+			SET @tmpdstTableId = (SELECT dbo.GetTableId('contract_details'))
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_details')), 'Contract Id'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId(@srcTableId, 'Contract Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+1, @tmpJoinTableId+1, 1, @tmpdstTableId, @tmpdstFieldId, @srcTableId, @tmpsrcFieldId)
+
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId(@TableId, @UFFieldName + '_Id'))
+			SET @tmpsrcTableId = (SELECT dbo.GetTableId('contract_details'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_details')), 'Contract Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+2, @tmpJoinTableId+1, 2, @TableId, @tmpdstFieldId, @tmpsrcTableId, @tmpsrcFieldId)
+
+			INSERT INTO reports_allowedtables (basetableid, tableid) VALUES (@srcTableId, @TableId)
+
+			-- invoice details based reports link
+			SET @srcTableId = (SELECT dbo.GetTableId('invoice_details_view'))
+
+			INSERT INTO jointables (jointableid, tableid, basetableid, [description])
+			VALUES (@tmpJoinTableId+2, @TableId, @srcTableId,'invoice details to temporary table')
+
+			SET @tmpdstFieldId = (SELECT dbo.GetTableId('contract_details'))
+			SET @tmpsrcTableId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_details')), 'Contract Id'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId(@srcTableId, 'Contract Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+3, @tmpJoinTableId+2, 1, @tmpdstFieldId, @tmpsrcTableId, @srcTableId, @tmpsrcFieldId)
+
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId(@TableId, @UFFieldName + '_Id'))
+			SET @tmpsrcTableId = (SELECT dbo.GetTableId('contract_details'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_details')), 'Contract Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+4, @tmpJoinTableId+2, 2, @TableId, @tmpdstFieldId, @tmpsrcTableId, @tmpsrcFieldId)
+
+			INSERT INTO reports_allowedtables (basetableid, tableid) VALUES (@srcTableId, @TableId)
+
+			-- supplier details to temporary table
+			SET @srcTableId = (SELECT dbo.GetTableId('supplierdetails_summary_view'))
+
+			INSERT INTO jointables (jointableid, tableid, basetableid, [description])
+			VALUES (@tmpJoinTableId+3, @TableId, @srcTableId,'supplier details to temporary table')
+
+			SET @tmpdstTableId = (SELECT dbo.GetTableId('contract_details'))
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_details')), 'Vendor Id'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId(@srcTableId, 'Vendor Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+5, @tmpJoinTableId+3, 1, @tmpdstTableId, @tmpdstFieldId, @srcTableId, @tmpsrcFieldId)
+
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId(@TableId, @UFFieldName + '_Id'))
+			SET @tmpsrcTableId = (SELECT dbo.GetTableId('contract_details'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_details')), 'Contract Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+6, @tmpJoinTableId+3, 2, @TableId, @tmpdstFieldId, @tmpsrcTableId, @tmpsrcFieldId)
+
+			INSERT INTO reports_allowedtables (basetableid, tableid) VALUES (@srcTableId, @TableId)
+		END
+
+		IF @AppArea = 2 OR @AppArea = 7 -- Contract Products & Contract Product Grouping
+		BEGIN
+			-- create reporting for employee ref to contract product details (CP->temp)
+			SET @srcTableId = (SELECT dbo.GetTableId('contract_productdetails'))
+			SET @tmpJoinTableId = (SELECT dbo.GetNextJoinTableId())
+			SET @tmpJoinBreakdownId = (SELECT dbo.GetNextJoinBreakdownId())
+
+			INSERT INTO jointables (jointableid, tableid, basetableid, [description])
+			VALUES (@tmpJoinTableId, @TableId, @srcTableId,'contract_productdetails to temporary table')
+
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId(@TableId, @UFFieldName + '_Id'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId(@srcTableId, 'Contract-Product Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId, @tmpJoinTableId, 1, @TableId, @tmpdstFieldId, @srcTableId, @tmpsrcFieldId)
+
+			INSERT INTO reports_allowedtables (basetableid, tableid) VALUES (@srcTableId, @TableId)
+
+			-- (CD->CP->temp)
+			SET @srcTableId = (SELECT dbo.GetTableId('contract_details'))
+
+			INSERT INTO jointables (jointableid, tableid, basetableid, [description])
+			VALUES (@tmpJoinTableId+1, @TableId, @srcTableId,'contract_details to temporary table')
+
+			SET @tmpdstTableId = (SELECT dbo.GetTableId('contract_productdetails'))
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_productdetails')), 'Contract Id'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId(@srcTableId, 'Contract Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+1, @tmpJoinTableId+1, 1, @tmpdstTableId, @tmpdstFieldId, @srcTableId, @tmpsrcFieldId)
+
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId(@TableId, @UFFieldName + '_Id'))
+			SET @tmpsrcTableId = (SELECT dbo.GetTableId('contract_productdetails'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_productdetails')), 'Contract-Product Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+2, @tmpJoinTableId+1, 2, @TableId, @tmpdstFieldId, @tmpsrcTableId, @tmpsrcFieldId)
+
+			INSERT INTO reports_allowedtables (basetableid, tableid) VALUES (@srcTableId, @TableId)
+
+			-- (SD->CD->CP->temp)
+			SET @srcTableId = (SELECT dbo.GetTableId('supplierdetails_summary_view'))
+
+			INSERT INTO jointables (jointableid, tableid, basetableid, [description])
+			VALUES (@tmpJoinTableId+2, @TableId, @srcTableId,'supplierdetails_summary_view to temporary table')
+
+			SET @tmpdstTableId = (SELECT dbo.GetTableId('contract_details'))
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_details')), 'Vendor Id'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId(@srcTableId, 'Vendor Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+3, @tmpJoinTableId+2, 1, @tmpdstTableId, @tmpdstFieldId, @srcTableId, @tmpsrcFieldId)
+
+			SET @tmpdstTableId = (SELECT dbo.GetTableId('contract_productdetails'))
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_productdetails')), 'Contract Id'))
+			SET @tmpsrcTableId = (SELECT dbo.GetTableId('contract_details'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_details')), 'Contract Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+4, @tmpJoinTableId+2, 2, @tmpdstTableId, @tmpdstFieldId, @tmpsrcTableId, @tmpsrcFieldId)
+
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId(@TableId, @UFFieldName + '_Id'))
+			SET @tmpsrcTableId = (SELECT dbo.GetTableId('contract_productdetails'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_productdetails')), 'Contract-Product Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+5, @tmpJoinTableId+2, 3, @TableId, @tmpdstFieldId, @tmpsrcTableId, @tmpsrcFieldId)
+
+			INSERT INTO reports_allowedtables (basetableid, tableid) VALUES (@srcTableId, @TableId)
+		END
+
+		IF @AppArea = 3 -- Product details
+		BEGIN
+			-- product details to the temporary table (PD->temp)
+			SET @srcTableId = (SELECT dbo.GetTableId('product_details'))
+			SET @tmpJoinTableId = (SELECT dbo.GetNextJoinTableId())
+			SET @tmpJoinBreakdownId = (SELECT dbo.GetNextJoinBreakdownId())
+
+			INSERT INTO jointables (jointableid, tableid, basetableid, [description])
+			VALUES (@tmpJoinTableId, @TableId, @srcTableId,'product_details to temporary table')
+
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId(@TableId, @UFFieldName + '_Id'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId(@srcTableId, 'Product Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId, @tmpJoinTableId, 1, @TableId, @tmpdstFieldId, @srcTableId, @tmpsrcFieldId)
+
+			INSERT INTO reports_allowedtables (basetableid, tableid) VALUES (@srcTableId, @TableId)
+
+			-- contract_product details to temporary table (CP->PD->temp)
+			SET @srcTableId = (SELECT dbo.GetTableId('contract_productdetails'))
+
+			INSERT INTO jointables (jointableid, tableid, basetableid, [description])
+			VALUES (@tmpJoinTableId+1, @TableId, @srcTableId,'contract_productdetails summary view to temporary table')
+
+			SET @tmpdstTableId = (SELECT dbo.GetTableId('product_details'))
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('product_details')), @UFFieldName + '_Id'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId(@srcTableId, 'Product Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+1, @tmpJoinTableId+1, 1, @tmpdstTableId, @tmpdstFieldId, @srcTableId, @tmpsrcFieldId)
+
+			SET @tmpJoinBreakdownId = (SELECT dbo.GetNextJoinBreakdownId())
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId(@TableId, @UFFieldName + '_Id'))
+			SET @tmpsrcTableId = (SELECT dbo.GetTableId('product_details'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('product_details')), 'Product Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+2, @tmpJoinTableId+1, 2, @TableId, @tmpdstFieldId, @tmpsrcTableId, @tmpsrcFieldId)
+
+			INSERT INTO reports_allowedtables (basetableid, tableid) VALUES (@srcTableId, @TableId)
+
+			-- contract details to temporary table (CD->CP->PD->temp)
+			SET @srcTableId = (SELECT dbo.GetTableId('contract_details'))
+
+			INSERT INTO jointables (jointableid, tableid, basetableid, [description])
+			VALUES (@tmpJoinTableId+2, @TableId, @srcTableId,'contract_details to temporary table')
+
+			SET @tmpdstTableId = (SELECT dbo.GetTableId('contract_productdetails'))
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_productdetails')), 'Contract Id'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId(@srcTableId, 'Contract Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+3, @tmpJoinTableId+2, 1, @tmpdstTableId, @tmpdstFieldId, @srcTableId, @tmpsrcFieldId)
+
+			SET @tmpdstTableId = (SELECT dbo.GetTableId('product_details'))
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('product_details')), 'Product Id'))
+			SET @tmpsrcTableId = (SELECT dbo.GetTableId('contract_productdetails'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_productdetails')), 'Product Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+4, @tmpJoinTableId+2, 2, @tmpdstTableId, @tmpdstFieldId, @tmpsrcTableId, @tmpsrcFieldId)
+
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId(@TableId, @UFFieldName + '_Id'))
+			SET @tmpsrcTableId = (SELECT dbo.GetTableId('product_details'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('product_details')), 'Product Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+5, @tmpJoinTableId+2, 3, @TableId, @tmpdstFieldId, @tmpsrcTableId, @tmpsrcFieldId)
+
+			INSERT INTO reports_allowedtables (basetableid, tableid) VALUES (@srcTableId, @TableId)
+
+			-- supplier details to temporary table (SD->CD->CP->PD->temp)
+			SET @srcTableId = (SELECT dbo.GetTableId('supplierdetails_summary_view'))
+
+			INSERT INTO jointables (jointableid, tableid, basetableid, [description])
+			VALUES (@tmpJoinTableId+3, @TableId, @srcTableId,'supplierdetails_summary_view to temporary table')
+
+			SET @tmpdstTableId = (SELECT dbo.GetTableId('contract_details'))
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_details')), 'Vendor Id'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId(@srcTableId, 'Vendor Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+6, @tmpJoinTableId+3, 1, @tmpdstTableId, @tmpdstFieldId, @srcTableId, @tmpsrcFieldId)
+
+			SET @tmpdstTableId = (SELECT dbo.GetTableId('contract_productdetails'))
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_productdetails')), 'Contract Id'))
+			SET @tmpsrcTableId = (SELECT dbo.GetTableId('contract_details'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_details')), 'Contract Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+7, @tmpJoinTableId+3, 2, @tmpdstTableId, @tmpdstFieldId, @tmpsrcTableId, @tmpsrcFieldId)
+
+			SET @tmpdstTableId = (SELECT dbo.GetTableId('product_details'))
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('product_details')), 'Product Id'))
+			SET @tmpsrcTableId = (SELECT dbo.GetTableId('contract_productdetails'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('contract_productdetails')), 'Product Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+8, @tmpJoinTableId+3, 3, @tmpdstTableId, @tmpdstFieldId, @tmpsrcTableId, @tmpsrcFieldId)
+
+			SET @tmpdstFieldId = (SELECT dbo.GetFieldId(@TableId, @UFFieldName + '_Id'))
+			SET @tmpsrcTableId = (SELECT dbo.GetTableId('product_details'))
+			SET @tmpsrcFieldId = (SELECT dbo.GetFieldId((SELECT dbo.GetTableId('product_details')), 'Product Id'))
+			INSERT INTO joinbreakdown (joinbreakdownid, jointableid, [order], tableid, table_fieldkey, sourcetable, joinkey)
+			VALUES (@tmpJoinBreakdownId+9, @tmpJoinTableId+3, 4, @TableId, @tmpdstFieldId, @tmpsrcTableId, @tmpsrcFieldId)
+
+			INSERT INTO reports_allowedtables (basetableid, tableid) VALUES (@srcTableId, @TableId)
+		END
+	END
+*
+
+IF EXISTS (SELECT name 
+	   FROM   sysobjects 
+	   WHERE  name = 'DeleteUFReportEntry' 
+	   AND 	  type = 'P')
+    DROP PROCEDURE dbo.DeleteUFReportEntry
+*
+
+CREATE PROCEDURE dbo.DeleteUFReportEntry(@fieldNumber int)
+AS
+	DECLARE @UFFieldName nvarchar(50)
+	DECLARE @tempTableId int
+
+	SET @UFFieldName = 'UF' + CAST(@fieldNumber as nvarchar)
+	SET @tempTableId = (SELECT dbo.GetTableId('##' + @UFFieldName))
+
+	DELETE FROM reportcriteria WHERE fieldid IN (SELECT fieldid FROM fields WHERE tableid = @tempTableId)
+	DELETE FROM reportcolumns_flatfile WHERE reportcolumnid IN (SELECT reportcolumnid FROM reportcolumns WHERE fieldid IN (SELECT fieldid FROM fields WHERE tableid = @tempTableId))
+	DELETE FROM reportcolumns WHERE fieldid IN (SELECT fieldid FROM fields WHERE tableid = @tempTableId)
+	DELETE FROM reports_allowedtables WHERE tableid = @tempTableId OR basetableid = @tempTableId
+	DELETE FROM joinbreakdown WHERE [jointableid] IN (SELECT jointableid FROM jointables WHERE tableid = @tempTableId OR basetableid = @tempTableId)
+	DELETE FROM jointables WHERE tableid = @tempTableId OR basetableid = @tempTableId
+	DELETE FROM tables WHERE tableid = @tempTableId
+	DELETE FROM fields WHERE tableid = @tempTableId OR field = @UFFieldName
+*
+
+IF EXISTS (SELECT name 
+	   FROM   sysobjects 
+	   WHERE  name = 'RefreshUFReportFields' 
+	   AND 	  type = 'P')
+    DROP PROCEDURE dbo.RefreshUFReportFields
+*
+
+CREATE PROCEDURE dbo.RefreshUFReportFields
+AS
+	DECLARE @TableId int
+	DECLARE @FieldType int
+	DECLARE @FieldName varchar(50)
+	DECLARE @UFNumber int
+	DECLARE @AppArea int
+
+	DECLARE loop_cursor CURSOR FOR
+	SELECT [User Field Id], [Field Type], [Field Name], AppArea FROM user_fields
+        OPEN loop_cursor
+        FETCH NEXT FROM loop_cursor INTO @UFNumber, @FieldType, @FieldName, @AppArea
+	WHILE @@FETCH_STATUS = 0
+        BEGIN
+		EXECUTE dbo.DeleteUFReportEntry @UFNumber
+		EXECUTE dbo.AddUFReportEntry @UFNumber, @FieldType, @FieldName, '', @AppArea
+
+	        FETCH NEXT FROM loop_cursor INTO @UFNumber, @FieldType, @FieldName, @AppArea
+	END
+	CLOSE loop_cursor
+	DEALLOCATE loop_cursor
+*
+
+IF EXISTS (SELECT * 
+	   FROM   sysobjects 
+	   WHERE  name = 'GetTemplateClientIdList')
+	DROP FUNCTION dbo.GetTemplateClientIdList
+*
+
+CREATE FUNCTION dbo.GetTemplateClientIdList(@CPId int)
+RETURNS nvarchar(500)
+AS
+BEGIN
+DECLARE @retCSV nvarchar(500)
+DECLARE @tmpCSV nvarchar(500)
+DECLARE @comma nvarchar(1)
+DECLARE @reId int
+SET @comma = ''
+SET @retCSV = ''
+SET @tmpCSV = ''
+
+DECLARE loop_cursor CURSOR FOR
+SELECT [Recharge Entity Id] FROM recharge_associations WHERE [Contract-Product Id] = @CPId
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @reId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	SET @tmpCSV = @retCSV + @comma + CAST(@reId AS nvarchar)
+	SET @comma = ','
+	SET @retCSV = @tmpCSV
+FETCH NEXT FROM loop_cursor INTO @reId
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+
+RETURN @retCSV
+END
+*
+
+% End of file

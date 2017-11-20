@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SpendManagement.AutomatedTests.Runtime.Scripting.CompiledScript">
+    <Position X="3" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAEgEAAAAAAABCQAAAEAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scripting\CompiledScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpendManagement.AutomatedTests.Runtime.Scripting.ScriptCompileException">
+    <Position X="3" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAgAABAIAAAAAAAAAAA=</HashCode>
+      <FileName>Scripting\Support.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpendManagement.AutomatedTests.Runtime.Scripting.Compiler" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAIAAAEAACAAAAJAJiAAAAAAAAAAAAAIBAAAAAIBgEA=</HashCode>
+      <FileName>Scripting\Compiler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SpendManagement.AutomatedTests.Runtime.Scripting.ExecutionContext">
+    <Position X="5.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAGAACAgAAI=</HashCode>
+      <FileName>Scripting\ExecutionContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpendManagement.AutomatedTests.Runtime.Scripting.ErrorHelper">
+    <Position X="5.5" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Scripting\ErrorHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="IScript">
+    <Position X="10.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scripting\Interfaces.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="SpendManagement.AutomatedTests.Runtime.Scripting.LanguageType">
+    <Position X="8" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAABAAAAAAQABAAAAAAAAAA=</HashCode>
+      <FileName>Scripting\Support.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SpendManagement.AutomatedTests.Runtime.Scripting.CompileType">
+    <Position X="8" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scripting\Support.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="SpendManagement.AutomatedTests.Runtime.Scripting.AsyncRunner">
+    <Position X="10.25" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scripting\Support.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SpendManagement.AutomatedTests.Runtime.Scripting.AsyncCompiler">
+    <Position X="10.25" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scripting\Support.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

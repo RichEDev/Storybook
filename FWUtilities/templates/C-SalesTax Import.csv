@@ -1,0 +1,4 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+codes_salestax,subAccountId,Repository SubAccount,S,50,N,Y,F,accountsSubAccounts.subAccountId,accountsSubAccounts.Description,
+codes_salestax,description,Sales Tax Description,S,50,Y,Y,N,,,
+codes_salestax,salesTax,Sales Tax %,F,,N,Y,N,,,0

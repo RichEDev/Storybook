@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F54D2A8F-E863-4B24-B461-DB45F5FA8CAE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SpendManagementUnitTests</RootNamespace>
+    <AssemblyName>UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup> <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU'">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU'">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Automated Build\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=3.0.30512.20315, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="ErrorLogger">
+      <HintPath>..\..\..\References\ErrorLogger.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.Web.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.Web.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.Excel.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\..\References\Infragistics35.WebUI.Excel.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.Misc.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.WebUI.Misc.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.Shared.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.WebUI.Shared.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.UltraWebCalcManager.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.WebUI.UltraWebCalcManager.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.UltraWebChart.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.WebUI.UltraWebChart.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.UltraWebGrid.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.WebUI.UltraWebGrid.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.UltraWebNavigator.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.WebUI.UltraWebNavigator.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.UltraWebTab.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.UltraWebToolbar.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.WebCombo.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.WebUI.WebCombo.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.WebDataInput.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.WebUI.WebDataInput.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.WebDateChooser.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.WebUI.WebDateChooser.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.WebHtmlEditor.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.WebUI.WebHtmlEditor.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Microsoft.TeamFoundation.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.WorkItemTracking.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ErrorLogger\ErrorLogger\bin\Microsoft.TeamFoundation.WorkItemTracking.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+      <HintPath>..\..\..\..\Program Files\Microsoft Visual Studio 10.0\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\..\References\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Core, Version=7.403.0.20, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Syncfusion.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.DocIO.Base, Version=7.403.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Syncfusion.DocIO.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Web, Version=7.403.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Syncfusion.Shared.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Web">
+      <HintPath>..\..\..\References\Syncfusion.Tools.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Web, Version=7.403.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Syncfusion.XlsIO.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Selectors" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Access Roles\cAccessRolesBaseTest.cs" />
+    <Compile Include="Access Roles\cAccessRolesTest.cs" />
+    <Compile Include="Access Roles\cAccessRoleTest.cs" />
+    <Compile Include="Global Objects\Moqs.cs" />
+    <Compile Include="Sub Accounts\cAccountSubAccountsTest.cs" />
+    <Compile Include="Cars\aeCarsTest.cs" />
+    <Compile Include="Cars\aecarTest.cs" />
+    <Compile Include="Cars\aepoolcarTest.cs" />
+    <Compile Include="Cars\cCarTest.cs" />
+    <Compile Include="Base Information\cBaseDefinitionsTest.cs" />
+    <Compile Include="Credit Cards\cCardStatementsTest.cs" />
+    <Compile Include="Credit Cards\cCardTemplatesTest.cs" />
+    <Compile Include="cCcbItemArrayTest.cs" />
+    <Compile Include="cCcbItemTest.cs" />
+    <Compile Include="cColoursTest.cs" />
+    <Compile Include="cConcurrentUsersTest.cs" />
+    <Compile Include="cCostcodesTest.cs" />
+    <Compile Include="cCountriesTest.cs" />
+    <Compile Include="cCurrenciesTest.cs" />
+    <Compile Include="cEmployeeCorporateCardTest.cs" />
+    <Compile Include="cEmployeeHomeLocationTest.cs" />
+    <Compile Include="cFTClientTest.cs" />
+    <Compile Include="cGlobalMimeTypesTest.cs" />
+    <Compile Include="cMimeTypesTest.cs" />
+    <Compile Include="cSuppliersTest.cs" />
+    <Compile Include="cUserdefinedFieldGroupingsTest.cs" />
+    <Compile Include="Employees\cEmployeesAuthenticate.cs" />
+    <Compile Include="cEmployeesTest.cs" />
+    <Compile Include="cEmployeeTest.cs" />
+    <Compile Include="cEmployeeWorkLocationTest.cs" />
+    <Compile Include="cESRAssignmentsTest.cs" />
+    <Compile Include="cESRImportTest.cs" />
+    <Compile Include="cFinancialExportsTest.cs" />
+    <Compile Include="cFTPClientTest.cs" />
+    <Compile Include="cImportHistoryTest.cs" />
+    <Compile Include="cImportTemplatesTest.cs" />
+    <Compile Include="cInboundTransfersTest.cs" />
+    <Compile Include="Misc\cMiscTest.cs" />
+    <Compile Include="cModulesTest.cs" />
+    <Compile Include="cN3InboundTransfersTest.cs" />
+    <Compile Include="cN3OutboundTransfersTest.cs" />
+    <Compile Include="cOutboundTransfersTest.cs" />
+    <Compile Include="cPostcodeAnywhereTest.cs" />
+    <Compile Include="cProductsBaseTest.cs" />
+    <Compile Include="cESRElementMappingsTest.cs" />
+    <Compile Include="cESRTrustsTest.cs" />
+    <Compile Include="cGlobalCountriesTest.cs" />
+    <Compile Include="cGlobalCurrenciesTest.cs" />
+    <Compile Include="cMonthlyCurrenciesTest.cs" />
+    <Compile Include="cRangeCurrenciesTest.cs" />
+    <Compile Include="cTasksTest.cs" />
+    <Compile Include="cTeamsTest.cs" />
+    <Compile Include="cWorkflowsTest.cs" />
+    <Compile Include="Global Objects\cAutomatedTransferObject.cs" />
+    <Compile Include="Global Objects\cBaseDefinitionObject.cs" />
+    <Compile Include="Global Objects\cBroadcastMessageObject.cs" />
+    <Compile Include="Global Objects\cBudgetHolderObject.cs" />
+    <Compile Include="Global Objects\cCardCompanyObject.cs" />
+    <Compile Include="Global Objects\cCardStatementObject.cs" />
+    <Compile Include="Global Objects\cCardTemplateObject.cs" />
+    <Compile Include="Global Objects\cColoursObject.cs" />
+    <Compile Include="Global Objects\cConcurrentUserObject.cs" />
+    <Compile Include="Global Objects\cCarObject.cs" />
+    <Compile Include="Global Objects\cCorporateCardObject.cs" />
+    <Compile Include="Global Objects\cDepItemObject.cs" />
+    <Compile Include="Global Objects\cESRAssignmentObject.cs" />
+    <Compile Include="Global Objects\cESRElementObjects.cs" />
+    <Compile Include="Global Objects\cESRTrustObject.cs" />
+    <Compile Include="Global Objects\cFinancialExportObject.cs" />
+    <Compile Include="Global Objects\cFTPClientObject.cs" />
+    <Compile Include="Global Objects\cGlobalMimeTypeObject.cs" />
+    <Compile Include="Global Objects\cGroupObject.cs" />
+    <Compile Include="Global Objects\cImportHistoryObject.cs" />
+    <Compile Include="Global Objects\cImportTemplateObject.cs" />
+    <Compile Include="Global Objects\cFloatObject.cs" />
+    <Compile Include="Global Objects\cMileageCatObject.cs" />
+    <Compile Include="Global Objects\cItemRoleObject.cs" />
+    <Compile Include="Global Objects\cMimeTypeObject.cs" />
+    <Compile Include="Global Objects\cModulesObject.cs" />
+    <Compile Include="Global Objects\cOdometerReadingObject.cs" />
+    <Compile Include="Global Objects\cNoteObject.cs" />
+    <Compile Include="Global Objects\cPurchaseOrderObject.cs" />
+    <Compile Include="Global Objects\cPurchaseOrderProductObject.cs" />
+    <Compile Include="cAddressTest.cs" />
+    <Compile Include="Global Objects\cClaimObject.cs" />
+    <Compile Include="Global Objects\cEmployeeObject.cs" />
+    <Compile Include="Global Objects\cExpenseObject.cs" />
+    <Compile Include="Global Objects\cGlobalPropertiesObject.cs" />
+    <Compile Include="Global Objects\cCostCodeObject.cs" />
+    <Compile Include="Global Objects\cCountryObject.cs" />
+    <Compile Include="Global Objects\cCurrencyObject.cs" />
+    <Compile Include="Global Objects\cDepartmentObject.cs" />
+    <Compile Include="Global Objects\cProductObject.cs" />
+    <Compile Include="Global Objects\cProjectCodeObject.cs" />
+    <Compile Include="Global Objects\cStageObject.cs" />
+    <Compile Include="Global Objects\cSubAccountObject.cs" />
+    <Compile Include="Global Objects\cSubcatObject.cs" />
+    <Compile Include="Global Objects\cSupplierObject.cs" />
+    <Compile Include="Global Objects\cTaskObject.cs" />
+    <Compile Include="Global Objects\cTeamObject.cs" />
+    <Compile Include="Global Objects\cUserDefinedFieldGroupingObject.cs" />
+    <Compile Include="Global Objects\cWorkflowObject.cs" />
+    <Compile Include="Cars\poolcarsTest.cs" />
+    <Compile Include="Invoices\aeInvoiceTest.cs" />
+    <Compile Include="Invoices\aePurchaseOrderTest.cs" />
+    <Compile Include="Invoices\cInvoiceHistoryItemTest.cs" />
+    <Compile Include="Invoices\cInvoiceLineItemCostCentreTest.cs" />
+    <Compile Include="Invoices\cInvoiceLineItemTest.cs" />
+    <Compile Include="Invoices\cInvoicesTest.cs" />
+    <Compile Include="Invoices\cInvoiceTest.cs" />
+    <Compile Include="Invoices\invoiceApprovalTest.cs" />
+    <Compile Include="Invoices\invoiceMenuTest.cs" />
+    <Compile Include="Invoices\invoicesTest.cs" />
+    <Compile Include="Invoices\svcInvoicesTest.cs" />
+    <Compile Include="cCustomEntitiesTest.cs" />
+    <Compile Include="cDepartmentsTest.cs" />
+    <Compile Include="Global Objects\cGlobalVariables.cs" />
+    <Compile Include="PurchaseOrders\cOrderDeliveriesTest.cs" />
+    <Compile Include="costCentreBreakdownTest.cs" />
+    <Compile Include="cProjectCodesTest.cs" />
+    <Compile Include="PurchaseOrders\cPurchaseOrderAjaxTest.cs" />
+    <Compile Include="PurchaseOrders\cPurchaseOrderDeliveriesAJAXTest.cs" />
+    <Compile Include="PurchaseOrders\cPurchaseOrderDeliveriesTest.cs" />
+    <Compile Include="PurchaseOrders\cPurchaseOrderDeliveryDetailsTest.cs" />
+    <Compile Include="PurchaseOrders\cPurchaseOrderHistoryItemTest.cs" />
+    <Compile Include="PurchaseOrders\cPurchaseOrderProductCostCentresTest.cs" />
+    <Compile Include="PurchaseOrders\cPurchaseOrderProductCostCentreTest.cs" />
+    <Compile Include="PurchaseOrders\cPurchaseOrderProductsTest.cs" />
+    <Compile Include="PurchaseOrders\cPurchaseOrderProductTest.cs" />
+    <Compile Include="PurchaseOrders\cPurchaseOrdersTest.cs" />
+    <Compile Include="PurchaseOrders\cPurchaseOrderTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseOrders\purchaseOrderApprovalTest.cs" />
+    <Compile Include="PurchaseOrders\purchaseOrderGlobalPropertiesTest.cs" />
+    <Compile Include="PurchaseOrders\purchaseOrderMenuTest.cs" />
+    <Compile Include="PurchaseOrders\purchaseOrdersPageTest.cs" />
+    <Compile Include="PurchaseOrders\svcPurchaseOrdersTest.cs" />
+    <Compile Include="TestRunConfigTest.cs" />
+    <Compile Include="Workflows\cApprovalStepTest.cs" />
+    <Compile Include="Workflows\cChangeValueStepTest.cs" />
+    <Compile Include="Workflows\cCheckConditionStepTest.cs" />
+    <Compile Include="Workflows\cCreateDynamicValueTest.cs" />
+    <Compile Include="Workflows\cDecisionStepTest.cs" />
+    <Compile Include="Workflows\cMovetoStepStepTest.cs" />
+    <Compile Include="Workflows\cRunSubworkflowStepTest.cs" />
+    <Compile Include="Workflows\cSendEmailStepTest.cs" />
+    <Compile Include="Workflows\cWorkflowDynamicValueTest.cs" />
+    <Compile Include="Workflows\cWorkflowEntityDetailsTest.cs" />
+    <Compile Include="Workflows\cWorkflowNextStepTest.cs" />
+    <Compile Include="Workflows\cWorkflowStepTest.cs" />
+    <Compile Include="Workflows\sWorkflowApprovalDetailsTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AuthoringTests.txt" />
+    <Content Include="Credit Cards\Test Data Files\Allstar Exclude Rows.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Credit Cards\Test Data Files\Amex Fixed Width.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Credit Cards\Test Data Files\Barclaycard Flat File.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Credit Cards\Test Data Files\Invalid Currencies and Countries - Barclaycard.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Credit Cards\Test Data Files\Invalid File Data - Barclaycard.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Credit Cards\Test Data Files\VCF4.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Shadow Include="Test References\Spend Management.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <Shadow Include="Test References\SpendManagementLibrary.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <Shadow Include="Test References\Spend Management.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <Shadow Include="Test References\SpendManagementLibrary.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Credit Cards\Test Data Files\Amex Monthly XLS.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Credit Cards\Test Data Files\RBS Monthly XLS.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ESR_File_Service\ESR_File_Service.csproj">
+      <Project>{BDCB8509-1504-47C0-AEE8-157F3FA33702}</Project>
+      <Name>ESR_File_Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SELFileTransferService\SELFileTransferService.csproj">
+      <Project>{7B3CF240-62E7-4780-B573-29C918F332EB}</Project>
+      <Name>SELFileTransferService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spend Management\Spend Management.csproj">
+      <Project>{1CBFD8EC-F67C-4425-A10C-97BFC7501045}</Project>
+      <Name>Spend Management</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementHelpers\SpendManagementHelpers.csproj">
+      <Project>{F12FBA1A-995D-429F-A9A5-E54FB0AE536F}</Project>
+      <Name>SpendManagementHelpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementLibrary\SpendManagementLibrary.csproj">
+      <Project>{9BDAA543-AC54-47A1-8BDD-C7BF34F2F005}</Project>
+      <Name>SpendManagementLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Logon\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

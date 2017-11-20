@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="expensesaddressesordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\expenses\base information\addresses\expensesaddressesordered.orderedtest" id="79908540-e399-4c06-8540-879f4bc0437b" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Expenses" />
+    <TestCategoryItem TestCategory="Nightly Build" />
+    <TestCategoryItem TestCategory="BuildServerTest" />
+  </TestCategory>
+  <TestLinks>
+    <TestLink id="8dd0aa4b-8a93-6369-cc4b-76ef4b1669a6" name="AddressesSuccessfullyCreateNewAddressWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="827c472e-d6b3-0a38-583d-c4d1f9907701" name="AddressesSuccessfullyEditAddressWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="a9e3a4cd-87b0-d713-4204-80b0ae2ab8b5" name="AddressesSuccessfullyDeleteAddressWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="8dd0aa4b-8a93-6369-cc4b-76ef4b1669a6" name="AddressesSuccessfullyCreateNewAddressWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="b154fecc-1065-d78b-709f-908ca9d6400c" name="AddressesUnSuccessfullyCreateAddressWithDuplicateDetailsWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="51a9ef2f-68ea-1ab5-6c6d-44ec36f43cb2" name="AddressesSuccessfullyArchiveAddressWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="239bf31e-9bde-07f1-6bc4-3ef29b3da787" name="AddressesSuccessfullyUnArchiveAddressWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="b6fc967b-b604-4810-e91e-3792a37f296a" name="AddressesSuccessfullyAssignParentAddressWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="a9e3a4cd-87b0-d713-4204-80b0ae2ab8b5" name="AddressesSuccessfullyDeleteAddressWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

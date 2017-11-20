@@ -1,0 +1,332 @@
+% FW Update.dat file
+% 20/01/2001
+# 000008 000009
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Assets
+CREATE TABLE Assets
+(
+     [Asset Id]                        int IDENTITY,
+     [Platform Id]                     int,
+     [Asset Number]                    varchar(50),
+     [Asset Owner]                     varchar(50),
+     [Asset Owner Id]                  int,
+     [Asset Location]                  varchar(50),
+     [Date Acquired]                   datetime
+)
+*
+
+% Attachments
+
+% Audit Trail
+
+% Calendar
+ALTER TABLE [Calendar]
+DROP COLUMN [Calendar Key]
+ALTER TABLE [Calendar]
+ADD [Calendar_Key] char(1)
+
+% Clauses
+
+% Code Tables
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Invoice Status Type
+
+% Codes - Note Category
+
+% Codes - Platform Type
+CREATE TABLE [Codes - Platform Type]
+(
+     [Platform Type Id]                int IDENTITY PRIMARY KEY,
+     [Location Id]                     int,
+     [Platform Type Desc]              varchar(50),
+     [IBM OS390]                       int,
+     [Icon Name]                       varchar(250)
+)
+*
+
+% Codes - Region
+CREATE TABLE [Codes - Region]
+(
+     [Region Id]                       int IDENTITY PRIMARY KEY,
+     [Location Id]                     int,
+     [Region Description]              varchar(50)
+)
+*
+
+% Codes - Sales Tax
+
+% Codes - SLD
+
+% Codes - Term Type
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract - Forecast Details
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+
+% Contract - Product-Platforms
+ALTER TABLE [Contract - Product-Platforms]
+ADD [Platform LPar Id]  int
+*
+
+% Contract Classes
+
+% Contract Details
+
+% Contract Notes
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Export Fields
+
+% Exports
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice - Product Details
+
+% Invoice Details
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Location
+
+% Mail
+
+% Metrics
+
+% OLAP Cube 02
+
+% OLAP Cube 03
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Platform LPars
+CREATE TABLE [Platform LPars]
+(
+     [Platform LPar Id]                int IDENTITY PRIMARY KEY,
+     [Platform Id]                     int,
+      Description                      varchar(50),
+      Quantity                         int,
+     [Icon Name]                       varchar(250)
+)
+*
+
+% Product Details
+ALTER TABLE [Product Details]
+ADD [Icon Name] varchar(250)
+*
+
+% Product Notes
+
+% Product Platforms
+ALTER TABLE [Product Platforms]
+ADD [Platform Type Id] int
+ALTER TABLE [Product Platforms]
+ADD [Parent Platform] int
+ALTER TABLE [Product Platforms]
+ADD [Icon Name] varchar(250)
+ALTER TABLE [Product Platforms]
+ADD [Date Created] datetime
+ALTER TABLE [Product Platforms]
+ADD [Creator] varchar(50)
+ALTER TABLE [Product Platforms]
+ADD [Date Amended] datetime
+ALTER TABLE [Product Platforms]
+ADD [Amendor] varchar(50)
+ALTER TABLE [Product Platforms]
+ADD [Reason for Change] varchar(50)
+ALTER TABLE [Product Platforms]
+ADD [Physical Location] varchar(50)
+*
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Schedule
+
+% Security
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Staff Details
+
+% System Parameters
+
+% Target Types
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+ALTER TABLE [Vendor Details]
+ADD [Suspended] int
+ALTER TABLE [Vendor Details]
+ADD [All Regions] int
+*
+UPDATE [Vendor Details]
+SET [All Regions] = 1
+*
+UPDATE [Vendor Details]
+SET [Suspended] = 0
+*
+
+% Vendor Notes
+
+% Vendor Regions
+CREATE TABLE [Vendor Regions]
+(
+     [Vendor Region Id]                int IDENTITY PRIMARY KEY,
+     [Vendor Id]                       int,
+     [Region Id]                       int
+)
+*
+
+% Vendor Status
+
+$S01
+
+% ---------- Views ----------
+
+% Performance Metrics
+
+% CalView
+
+% ---------- Procedures ----------
+DROP PROCEDURE SPF001, SPF004, SPF009, SPF010, SPF011
+*
+CREATE PROCEDURE [SPF001] 
+    @p1 int
+    AS
+    SELECT [Vendor Details].[Vendor Id], [Vendor Name], [All Regions], [Category Id], [Location Id]
+    FROM [Vendor Details]
+    WHERE [Vendor Details].[Suspended] = 0
+    AND [Vendor Details].[Vendor Id] NOT IN
+        (SELECT [Vendor Id] FROM [Acquisition Vendors]
+         WHERE [Acquisition Id] = @p1)
+*
+
+CREATE PROCEDURE [SPF004]
+    @p1 int
+    AS
+    SELECT [Vendor Details].[Vendor Id], [Vendor Name], [All Regions], [Category Id], [Location Id]
+    FROM [Vendor Details]
+    WHERE [Vendor Details].[Suspended] = 0
+    AND [Vendor Details].[Vendor Id] NOT IN
+        (SELECT [Vendor Id] FROM [Product Vendors]
+         WHERE [Product Id] = @p1)
+*
+
+CREATE PROCEDURE [SPF009] 
+    @p1 int
+    AS
+    SELECT [Product Platforms].[Platform Id],
+           [Product Platforms].[Quantity] PlatformQty,
+           [Product Platforms].[Location Id],
+           [Product Platforms].[Description] PlatformDesc,
+           [Platform LPars].[Platform LPar Id],
+           [Platform LPars].[Quantity] LParQty,
+           [Platform LPars].[Description] LParDesc
+    FROM [Product Platforms]
+    LEFT OUTER JOIN [Platform LPars]
+    ON [Product Platforms].[Platform Id] = [Platform LPars].[Platform Id]
+*
+
+CREATE PROCEDURE [SPF010]
+    @p1 int
+    AS
+    SELECT [Product Platforms].[Platform Id], 
+           [Product Platforms].[Description] PlatformDesc,
+           [Product Platforms].[Quantity] PlatformQty,
+           [Platform LPars].[Platform LPar Id],
+           [Platform LPars].[Quantity] LParQty,
+           [Platform LPars].[Description] LParDesc
+    FROM [Contract - Product-Platforms]
+    LEFT OUTER JOIN [Product Platforms] 
+    ON [Contract - Product-Platforms].[Platform Id] = [Product Platforms].[Platform Id]
+    LEFT OUTER JOIN [Platform LPars]
+    ON [Contract - Product-Platforms].[Platform LPar Id] = [Platform LPars].[Platform LPar Id]
+    WHERE [Contract-Product Id] = @p1
+*
+
+CREATE PROCEDURE [SPF011]
+    @p1 char(2),
+    @p2 int
+    AS
+    SELECT LText, LOriginalText
+    FROM [Language Texts]
+    WHERE LCode = @p1
+    AND LNum = @p2
+*
+
+CREATE PROCEDURE [SPF016]  
+    @p1 int
+    AS 
+    SELECT [Product Details].[Product Id],
+           [Product Details].[Product Code],
+           [Product Details].[Product Name],
+           [Product Details].[Icon Name],
+           [Contract - Product-Platforms].[Product-Platform Id],
+           [Contract - Product-Platforms].[Platform Id],
+           [Contract - Product-Platforms].[Platform LPar Id]
+    FROM [Product Details]
+    LEFT OUTER JOIN [Contract - Product Details]
+    ON [Product Details].[Product Id] = [Contract - Product Details].[Product Id]
+    LEFT OUTER JOIN [Contract - Product-Platforms]
+    ON [Contract - Product Details].[Contract-Product Id] = [Contract - Product-Platforms].[Contract-Product Id]
+    WHERE [Contract - Product-Platforms].[Platform Id] IS NOT NULL
+    AND [Product Details].[Location Id] = @p1
+*
+
+% End of file

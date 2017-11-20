@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="addressesordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\framework\base information\generic information\addresses\addressesordered.orderedtest" id="2023060d-c3de-4bdf-9b7c-e8f21dc7d7ae" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <TestLinks>
+    <TestLink id="a9fea372-b467-238a-e1f9-5e8793c6bf89" name="AddressesSuccessfullyCreateNewAddressWithinFramework" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="651f23e7-3d5c-93d4-c51f-fcf7f8efb7c5" name="AddressesUnSuccessfullyCreateAddressWithDuplicateDetailsWithinFramework" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="5ca9b7ca-f6d1-6019-6732-e583910eb251" name="AddressesSuccessfullyArchiveAddressWithinFramework" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="8471b4d6-d9d4-020b-a6fd-4ae9457eb4d9" name="AddressesSuccessfullyUnArchiveAddressWithinFramework" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="5c800783-7263-6813-9876-517a3c5f6bd6" name="AddressesSuccessfullyEditAddressWithinFramework" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="9705b5d0-b7c1-8ccb-e4ca-5b1aaa565a49" name="AddressesSuccessfullyAssignParentAddressWithinFramework" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="70c31281-43eb-f147-7bdb-f4fe54dab0e4" name="AddressesSuccessfullyDeleteAddressWithinFramework" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [NIBLEY\john]
+    FROM WINDOWS WITH DEFAULT_DATABASE = [expenses_temp], DEFAULT_LANGUAGE = [us_english];
+

@@ -1,0 +1,142 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D41A9850-E1A1-4ABC-BAA8-D3C662AEF876}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SpendManagement.AutomatedTests</RootNamespace>
+    <AssemblyName>SpendManagement.AutomatedTests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug and Tests|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug and Tests\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release and Tests|AnyCPU' ">
+    <OutputPath>bin\Release and Tests\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\Base Information\Allowances\AddAllowanceCoded.cs" />
+    <Compile Include="Admin\Base Information\Expense Items\AddExpenseItemCoded.cs" />
+    <Compile Include="Admin\Base Information\Cost Codes\UnArchiveCostCodeCoded.cs" />
+    <Compile Include="Admin\Base Information\Departments\ArchiveDepartmentCoded.cs" />
+    <Compile Include="Admin\Base Information\Cost Codes\ArchiveCostCodeCoded.cs" />
+    <Compile Include="Admin\Base Information\Locations\ArchiveLocationCoded.cs" />
+    <Compile Include="Admin\Base Information\Locations\UnArchiveLocationCoded.cs" />
+    <Compile Include="Admin\Base Information\Departments\EditDepartmentCoded.cs" />
+    <Compile Include="Admin\Base Information\Departments\DeleteDepartmentCoded.cs" />
+    <Compile Include="Admin\Base Information\Cost Codes\EditCostCodeCoded.cs" />
+    <Compile Include="Admin\Base Information\Cost Codes\DeleteCostCodeCoded.cs" />
+    <Compile Include="Admin\Base Information\Allowances\EditAllowanceCoded.cs" />
+    <Compile Include="Admin\Base Information\Allowances\EditAllowanceRateCoded.cs" />
+    <Compile Include="Admin\Base Information\Allowances\DeleteAllowanceCoded.cs" />
+    <Compile Include="Admin\Base Information\Expense Categories\EditExpenseCategoryCoded.cs" />
+    <Compile Include="Admin\Base Information\Expense Categories\DeleteExpenseCategoryCoded.cs" />
+    <Compile Include="Admin\Base Information\Locations\DeleteLocationCoded.cs" />
+    <Compile Include="Admin\Base Information\Locations\EditLocationCoded.cs" />
+    <Compile Include="FindString.cs" />
+    <Compile Include="Login.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Admin\Base Information\Departments\UnArchiveDepartmentCoded.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SpendManagementAutomatedTestPlugins\Automated Tests Runtime.csproj">
+      <Project>{D3B3CD1E-0EE2-4E5B-BE8B-E2BBE47A4D40}</Project>
+      <Name>Automated Tests Runtime</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Admin\Base Information\Allowances\AllowancesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Admin\Base Information\Cost Codes\AddCostCode.webtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Admin\Base Information\Cost Codes\CostCodesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Admin\Base Information\Departments\AddDepartment.webtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Admin\Base Information\Departments\DepartmentsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Admin\Base Information\Expense Categories\AddExpenseCategory.webtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Admin\Base Information\Expense Categories\ExpenseCategoriesOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Admin\Base Information\Expense Items\WebTest1.webtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Admin\Base Information\Locations\AddLocation.webtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Admin\Base Information\Locations\LocationsOrdered.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Login.ats" />
+    <None Include="Scripts\Logout.ats" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Static Data\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

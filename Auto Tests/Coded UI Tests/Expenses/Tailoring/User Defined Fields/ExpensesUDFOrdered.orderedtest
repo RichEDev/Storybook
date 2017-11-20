@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="expensesudfordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\expenses\tailoring\user defined fields\expensesudfordered.orderedtest" id="bd171e4a-191d-496d-a801-78cd952822f5" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Expenses" />
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <Execution id="550ba00c-304e-47cd-8025-9ecfee1a3d00" />
+  <TestLinks>
+    <TestLink id="be0fe10e-46d6-a390-8943-ff0de2714134" name="UserDefinedFieldsSuccessfullyAddEveryUDFForAppliesToWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="94eb10c2-16a4-f0a3-6fab-f35a2c893f6f" name="UserDefinedFieldsSuccessfullyAddEveryUDFWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="ea4ebc70-2dd7-4604-9daf-2a4247fc87a8" name="UserDefinedFieldSuccessfullyAddUDFWhereItemSpecificIsSetWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="d04f4dbb-88c8-c351-a666-14c9e39ed7b6" name="UserDefinedFieldSuccessfullyAddUDFWhereMandatoryIsSetWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="bee8ce14-77c8-a117-c9b8-4a688ab55351" name="UserDefinedFieldUnSuccessfullyAddUDFWithDuplicateDetailsWithinExpenses" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="902138e3-5eca-93f0-4c45-80b13b28dba6" name="ValidateTableSortingOrders" storage="..\..\..\..\bin\debug\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

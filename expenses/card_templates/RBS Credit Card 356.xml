@@ -1,0 +1,19 @@
+<CardTemplate Name="RBS Credit Card 356" FileType="XLS" NumberHeaderRecords="2" NumberFooterRecords="0">
+<Fields Type="CardTransaction" UniqueValue="trans">
+<Field Name="CycleDate" MappedTable="card_transactions_rbs" Label="Statement Date" MappedField="cycle_date" FieldType="D" Format="dd/MM/yy"/>
+<Field Name="CardNumber" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="16"/>
+<Field Name="TransDate" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="dd/MM/yy"/>
+<Field Name="TransPostDate" MappedTable="card_transactions_rbs" Label="Posting Date" MappedField="trans_postdate" FieldType="D" Format="dd/MM/yy"/>
+<Field Name="TransValue" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C"/>
+<Field Name="TransType" MappedTable="card_transactions_rbs" Label="Transaction Code" MappedField="trans_type" FieldType="S" MaxLength="50"/>
+<Field Name="YourRef" MappedTable="card_transactions" MappedField="reference" FieldType="S" MaxLength="17"/>
+<Field Name="BankRef" MappedTable="card_transactions_rbs" Label="Acquirer Reference Number" MappedField="bank_ref" FieldType="S" MaxLength="23"/>
+<Field Name="MerchantDetails" MappedTable="card_transactions" MappedField="description" FieldType="S" MaxLength="25"/>
+<Field Name="MCC" MappedTable="card_transactions_rbs" Label="MCC" MappedField="mcc" FieldType="S" MaxLength="4"/>
+<Field Name="OriginalCurrencyAmount" MappedTable="card_transactions" MappedField="original_amount" FieldType="C"/>
+<Field Name="MerchantCurrencyDescription" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" DefaultValue="GBP" CurrencyType="alpha"/>
+<Field Name="MerchantTown" MappedTable="card_transactions_rbs" Label="Merchant City Name" MappedField="merchant_town" FieldType="S" MaxLength="13"/>
+<Field Name="MerchantCountry" MappedTable="card_transactions" MappedField="country_code" FieldType="S" MaxLength="3" CountryType="alpha3"/>
+<Field Name="MCG" MappedTable="card_transactions_rbs" Label="Accounting Code" MappedField="mcg" FieldType="S" MaxLength="10"/>
+</Fields>
+</CardTemplate>

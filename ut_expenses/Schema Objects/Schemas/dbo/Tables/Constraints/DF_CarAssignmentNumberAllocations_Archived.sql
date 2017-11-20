@@ -1,0 +1,1 @@
+﻿alter table dbo.CarAssignmentNumberAllocations add constraint [DF_CarAssignmentNumberAllocations_Archived] default(0) for Archived

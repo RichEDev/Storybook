@@ -1,0 +1,14 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+recharge_associations,Recharge Entity Id,Recharge Entity,S,50,N,Y,Y,[codes_rechargeentity].[Entity Id],[codes_rechargeentity].[Name],
+recharge_associations,Contract-Product Id,Contract Product,S,50,N,Y,R1,[contract_productdetails].[Contract-Product Id],[Product Id],
+recharge_associations,Contract-Product Id,Product Name to link to,S,50,N,Y,L1,[product_details].[Product Id],[product_details].[Product Name],
+recharge_associations,Apportion Id,Portion Type (Fixed / Units / %),S,20,N,N,S,%ApportionType%,,0
+recharge_associations,Portion,Portion Value,F,,N,N,N,,,0
+recharge_associations,Surcharge,Surcharge Value,F,,N,N,N,,,0
+recharge_associations,Surcharge Type,Surcharge Type (Fixed / %),N,,N,N,S,%SurchargeType%,,0
+recharge_associations,Recharge Period,,D,,N,N,N,,,
+recharge_associations,Support Start Date,,D,,N,N,N,,,
+recharge_associations,Warranty End Date,,D,,N,N,N,,,
+recharge_associations,Support End Date,,D,,N,N,N,,,
+recharge_associations,Post Warranty Apportion Id,Post Warranty Portion Type,S,20,N,N,S,%ApportionType%,,
+recharge_associations,Post Warranty Portion,Post Warranty Portion Value,F,,N,N,N,,,0

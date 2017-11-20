@@ -1,0 +1,769 @@
+*
+{
+	font: 12px Arial, Helvetica, sans-serif;
+}
+
+img
+{
+	border-width: 0px;
+}
+
+input
+{
+	
+}
+textarea
+{
+	width: 140px;
+}
+
+.homepage
+{
+	position: relative;
+	
+	width: 90%;
+	left: 5%;
+}
+
+.homecolumn1
+{
+	float: left;
+	width: 50%;
+}
+.homecolumn2
+{
+	width: 50%;
+}
+.maindivhome
+{
+	
+}
+select
+{
+	
+}
+
+
+table
+{
+	
+}
+
+.colordd
+{
+	
+}
+body
+{
+	padding: 2px 2px 2px 2px;
+	margin: 1px 1px 1px 1px;
+	
+}
+
+.subList
+{
+	position:relative;
+	
+	height:145px; 
+	z-index:2;
+	
+	overflow: hidden;
+}
+.subs
+{
+	position:absolute;
+	top:0;
+	left:0;
+	
+	font-size:11px;
+	color:#333;
+}
+
+#subList {
+	position:relative;
+	
+	height:198px; 
+	z-index:2;
+	
+	overflow: hidden;
+	
+}
+#subs { 
+	position:absolute;
+	top:0;
+	left:0;
+	
+	font-size:11px;
+	color:#333;
+}
+
+/* classes for new design */
+
+.explogo
+{
+	
+}
+
+.clientlogo
+{
+	float: right;
+	height: 61px;
+}
+.subtitle
+{
+	background-color:#D2E4EE;
+	font-weight:bold
+}
+
+.menubar
+{
+	background-color: #003768;
+	
+}
+
+.infobar
+{
+	margin-top: 5px;
+	background-color: #6280a7;
+	height: 40px;
+	
+}
+
+#pagediv
+{
+	height: 100%;
+	width: 100%;
+	border: 4px solid #003768;
+	
+	
+}
+
+#clientlogoimg
+{
+	height: 61px;
+}
+
+#logodiv
+{
+	
+	height: 60px;
+	
+}
+
+
+
+
+
+.pagetitle
+{
+	font: bold 2em Arial,sans-serif;
+	color: white;
+	padding-top: 3px;
+	padding-left: 15px;
+	width: 50%;
+	filter:progid:DXImageTransform.Microsoft.DropShadow(color=#003768,offX=5,offY=3);
+}
+
+.userinfo
+{
+	float: right;
+	text-align: right;
+	color: White;
+	padding-right: 10px;
+	padding-top: 3px;
+}
+
+#footerdiv
+{
+	background-color: #003768;
+	color:White;
+	padding-left: 30px;
+	font-size: 0.8em;
+	padding-top: 7px;
+	padding-bottom: 3px;
+	display:none;
+}
+
+#maindiv
+{
+	
+	padding-top: 0px;
+	padding-bottom: 30px;
+	/* background: url(images/bg_people.jpg) no-repeat bottom right; */
+	padding-left: 115px;
+	overflow: auto;
+}
+
+
+
+/* datatable classes */
+.datatbl
+{
+	border: solid 2px #003768;
+	border-collapse: collapse;
+}
+
+.datatbl th
+{
+    background-color: #004174;
+    font: 12px Arial,sans-serif;
+    color: white;
+	padding: 3px;
+	text-align: center;
+	background-color: #6280a7;
+    border-top: solid 1px #003768;
+    border-bottom: solid 2px #003768;
+}
+
+.datatbl th a:link,.datatbl th a:visited,.datatbl th a:active,.datatbl th a:hover
+{
+
+    font: 12px Arial,sans-serif;
+    color: white;
+	padding: 3px;
+	text-align: center;
+	text-decoration: none;
+
+}
+
+.datatbl th a:hover
+{
+	text-decoration: underline;
+}
+
+.datatbl .row1
+{
+	 /* text-align: center;  */
+    background-color: #fff;
+   font: 12px Arial,sans-serif;
+    color: #333333;
+	
+	 border: solid 1px Gray; 
+	 border-collapse: collapse;
+	padding: 0px 3px 0px 3px;
+	height: 30px;
+}
+
+.datatbl .row2
+{
+   
+    background-color:#D2E4EE;
+    
+    font: 12px Arial,sans-serif;
+    color: #333333;
+    border: solid 1px Gray; 
+	 
+   padding: 0px 3px 0px 3px;
+   height: 30px;
+     /*padding: 1px 5px 1px 5px; */
+	
+}
+
+.datatbl .row1.col1
+{
+	 /* text-align: center;  */
+    background-color: #0f0;
+   font: 12px Arial,sans-serif;
+    color: #333333;
+	
+	 border: solid 1px Gray; 
+	 border-collapse: collapse;
+	padding: 0px 3px 0px 3px;
+	height: 30px;
+}
+
+.datatbl .row2.col1
+{
+   
+    background-color:#f4E4EE;
+    font: 12px Arial,sans-serif;
+    color: #333333;
+    border: solid 1px Gray; 
+	 
+   padding: 0px 3px 0px 3px;
+   height: 30px;
+     /*padding: 1px 5px 1px 5px; */
+	
+}
+
+.row1.col2
+{
+    background-color: #ff0000;
+}
+
+.row2.col2
+{
+   
+    background-color: #000000;
+	
+}
+
+/* Panel Classes */
+
+.emplogonholder
+{
+	position:static;
+	top: 152px;
+	left: 170px;
+	width: 500px;
+}
+.submenuholder
+{
+	position: absolute;
+	top: 140px;
+	left: 0px;
+	width: 150px;
+}
+#submenudiv
+{
+	width: 150px;
+}
+
+.homepanel
+{
+	width: 300px;
+	height: 180px;
+	margin: 0px;
+	border: solid 1px #6280a7;
+	padding-bottom: 4px;
+	position: absolute;
+	overflow: hidden;
+	
+}
+
+.homepanellarge
+{
+	width: 650px;
+	height: 180px;
+	margin: 0px;
+	border: solid 1px #6280a7;
+	padding-bottom: 4px;
+	position: absolute;
+	overflow: hidden;
+	
+}
+
+
+.homepaneltitle
+{
+	background-color: #6280a7;
+	color: white;
+	padding: 1px 2px 2px 5px;
+}
+
+.faqpanel
+{
+	
+	margin: 0px;
+	border: solid 1px #6280a7;
+	padding-bottom: 4px;
+	position: absolute;
+}
+
+.faqpaneltitle
+{
+	background-color: #6280a7;
+	color: white;
+	padding: 1px 2px 2px 5px;
+	width: 850px;
+}
+.panel
+{
+	margin: 15px;
+	border: solid 1px #6280a7;
+	padding-bottom: 4px;
+}
+
+.helppanel
+{
+	margin: 15px;
+	border: solid 1px #6280a7;
+	padding-bottom: 4px;
+	height: 150px;
+	
+	overflow: auto;
+	padding: 2px 2px 2px 2px;
+}
+
+.paneltitle
+{
+	background-color: #6280a7;
+	color: white;
+	padding: 1px 2px 2px 5px;
+}
+
+.inputpanel
+{
+	
+	margin: 20px;
+	margin-right: 50px;
+}
+
+.inputpanel table
+{
+	/*width: 500px;*/
+}
+
+.inputpaneltitle
+{
+	border: 1px solid white;
+	font-size: 1.2em;
+	/*color: #6280a7;*/
+	font-weight: bold;
+	background-color: #6280a7;
+	color: white;
+	padding: 1px 2px 2px 5px;
+	
+}
+
+.labeltd
+{
+	padding: 2px 3px 2px 7px;
+	width: 130px;
+	background-color: #cae8f4;
+	border: 1px solid #fff;
+	color: #000;
+}
+
+.inputtd
+{
+	
+	padding: 1px 3px 1px 7px;
+	/*background-color: #cae8ff;*/
+	background-color: #ffffff;
+
+}
+
+.inputtd input, .inputtd textarea
+{
+	width: 140px;
+	border: 1px solid #6280a7;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.inputradio
+{
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+.inputtd select
+{
+	
+	border: 1px solid #6280a7;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.inputtd select option
+{
+	background-color: White;
+}
+
+.datatbl td select option
+{
+	background-color: White;
+}
+
+
+.pagebutton
+{
+	
+	
+}
+
+.logonbody
+{
+	background: transparent url(/images/loginbg.gif) no-repeat center middle;
+	text-align: center;
+}
+
+.valdiv
+{
+	
+	
+	
+	color: #660000;
+	padding-left: 30px;
+	
+}
+
+#logondiv
+{
+	
+	margin-left: auto;
+	margin-right: auto;
+	width: 220px;
+	text-align: right;
+	border: 1px solid black;
+}
+
+#helpdiv
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+a:link.submenuitem, a:visited.submenuitem, a:active.submenuitem, a:hover.submenuitem
+{
+	text-decoration: none;
+	color: #003768;
+	padding: 0px 2px 2px 5px;
+	margin: 4px;
+/*	background-color: #D2E4EE; 
+	border: outset 2px #D2E4EE; */
+	display: block;
+	width: 100%;
+	background: white url(/images/arrow_black.gif) no-repeat right middle;
+}
+
+a:hover.submenuitem
+{
+	text-decoration: underline;
+}
+
+
+/* menu */
+
+.toplevelmenu
+{
+	
+	height: 16;
+	color: White;
+	display: inline-block;
+	width: 150px;
+	background-color: rgb(21,78,124);
+	border-right: 1px solid white;
+	padding: 0px;
+	text-decoration: none;
+	font-weight: bold;
+	text-transform: uppercase;
+	
+	text-align: center;
+	
+}
+
+.menuitem
+{
+	padding: 0px 0px 0px 0px; 
+	text-align: left;
+	width: 150px;
+	background-color: rgb(21,78,124);
+	color: White;
+}
+
+
+
+
+.leftMenu {	text-align: left; }
+		
+.centerMenu { text-align: center;}
+		
+.rightMenu { text-align: right;	}
+		
+a.MenuLabelLink	{ COLOR: #e0e0e0;	FONT-SIZE: 12px;
+FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None;
+margin: 0px; padding-left: 3px; font-weight: bold; }
+a.MenuLabelLink:link 
+{
+	COLOR: #e0e0e0;	
+	FONT-FAMILY: Arial, Helvetica, sans-serif; 
+	TEXT-DECORATION: None; 
+}
+a.MenuLabelLink:visited	{ COLOR: #e0e0e0; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None;	}
+a.MenuLabelLink:hover{ COLOR: #e0e0e0; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None; }
+		
+a.MenuLabelLinkOn {	COLOR: #ffffff; FONT-SIZE: 12px;
+FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None;
+margin: 0px; padding-left: 0px; font-weight: bold; }
+a.MenuLabelLinkOn:link { COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None; }
+a.MenuLabelLinkOn:visited { COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None; }
+a.MenuLabelLinkOn:hover { COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None; }
+		
+a.MenuItemLink { COLOR: #e0e0e0; FONT-SIZE: 12px;
+FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None;
+margin: 0px; padding-left: 10px; font-weight: bold; }
+a.MenuItemLink:link { COLOR: #e0e0e0; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None;}
+a.MenuItemLink:visited { COLOR: #e0e0e0; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None;}
+a.MenuItemLink:hover { COLOR: #e0e0e0; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None; }
+		
+a.MenuItemLinkOn { COLOR: #ffffff; FONT-SIZE: 12px;
+FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None;
+margin: 0px; padding-left: 10px; font-weight: bold; }
+a.MenuItemLinkOn:link { COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None; }
+a.MenuItemLinkOn:visited { COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None; }
+a.MenuItemLinkOn:hover { COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: None; }
+		
+.myMenu { position: absolute; visibility: hidden; z-index: 5; }		
+		
+/*.myMenuLabelleft { padding: 0px 0px 0px 0px; text-align: left; }		
+.myMenuLabelcenter { padding: 0px 0px 0px 0px; text-align: center; }		
+.myMenuLabelright { padding: 0px 0px 0px 0px; text-align: right; }		
+.myMenuItemleft { padding: 0px 0px 0px 0px; text-align: left; }		
+.myMenuItemcenter { padding: 0px 0px 0px 0px; text-align: center; }		
+.myMenuItemright { padding: 0px 0px 0px 0px; text-align: right; }	*/
+
+/* calendar classes */
+.calendar
+{
+	border: solid 2px #003768;
+	
+}
+
+.calendar th
+{
+    background-color: #004174;
+    font: 12px Arial,sans-serif;
+    color: white;
+	padding: 3px;
+	text-align: center;
+	background-color: #6280a7;
+    border-top: solid 1px #003768;
+    border-bottom: solid 2px #003768;
+}
+
+.calendar th a:link,.calendar th a:visited,.calendar th a:active,.calendar th a:hover
+{
+
+    font: 12px Arial,sans-serif;
+    color: white;
+	padding: 3px;
+	text-align: center;
+	text-decoration: none;
+
+}
+
+.calendar th a:hover
+{
+	text-decoration: underline;
+}
+
+.calendar .row1
+{
+	 /* text-align: center;  */
+    background-color: #fff;
+   font: 12px Arial,sans-serif;
+    color: #333333;
+	
+	 border: solid 1px Gray; 
+	 border-collapse: collapse;
+	padding: 0px 3px 0px 3px;
+	height: 30px;
+}
+
+.calendar td a:link,.calendar td a:visited,.calendar td a:active,.calendar td a:hover
+{
+
+    font: 12px Arial,sans-serif;
+   color: #333333;
+	padding: 3px;
+	text-align: center;
+	text-decoration: none;
+
+}
+.calendar td a:hover
+{
+	padding: 0px 3px 0px 3px;
+	background-color:#b6677b;
+	text-decoration: none;
+	color: #333333;
+
+}
+
+.calendar .row2
+{
+   
+    background-color:#D2E4EE;
+    font: 12px Arial,sans-serif;
+    color: #333333;
+    border: solid 1px Gray; 
+	 
+   padding: 0px 3px 0px 3px;
+   height: 30px;
+     /*padding: 1px 5px 1px 5px; */
+	
+}
+
+body.help_page {
+	font: 12px Verdana,sans-serif;
+	color: #444444;
+	background: white url();
+	padding: 0px;
+	margin: 0px;
+	
+	scrollbar-track-color: #ffffff;
+	scrollbar-arrow-color: #ffffff;
+	scrollbar-face-color: #001c69;
+	scrollbar-3dlight-color: #a09ca9;
+	scrollbar-darkshadow-color: #c0bcc9;
+	scrollbar-highlight-color: #c0bcc9;
+	scrollbar-shadow-color: #ffffff;
+}
+
+
+div.help_page_title
+{
+	font: 18px Arial, sans-serif;
+	color: #001c69;
+	font-variant: small-caps;
+	background: #ffee99 url(sm_s3_h.gif) no-repeat 0% 50%;
+	padding-left: 30px;
+	margin-bottom: 20px;
+}
+
+div.help_section
+{
+	padding: 5px 5px 5px 5px;
+}
+
+div.help_section_title
+{
+	font: 14px Arial, sans-serif;
+	color: #001c69;
+	font-weight: bold;
+}
+
+div.help_section_title img
+{
+	cursor: hand;
+}
+
+div.help_overview
+{
+	width: 100%;
+	padding: 10px 30px 10px 30px;
+	background-color: #eeeeee;
+	border-top: 1px #999999;
+	border-bottom: 1px #999999;
+	margin-bottom: 20px;
+}
+
+div.help_body_text
+{
+	width: 100%;
+	padding: 10px 30px 10px 30px;
+	/*background-color: #d2e4ee;*/
+	border-top: 1px solid #000066;
+	font: 12px Arial, Helvetica, sans-serif;
+	/*filter: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#d2e4ee,endColorStr=#f6f9ff);*/
+	margin-bottom: 20px;
+}
+
+div.help_tip
+{
+	border: 1px dotted #000099;
+	color: #000099;
+	background-color: white;
+	margin: 10px 0px 10px 0px;
+	padding: 5px;
+}
+
+div.help_comments
+{
+	padding: 5px;
+	border: 1px dotted #999999;
+	color: #999999;
+	font: 10px Arial, sans-serif;
+}
+

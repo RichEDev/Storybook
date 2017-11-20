@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+		<title>Framework Help - Product Details</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<link rel="stylesheet" href="fwhelp.css" type="text/css" />
+		<script language="javascript" type="text/javascript">
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window" /></a>
+			Product Details</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Adding Product Details
+			</div>
+			<div class="help_overview">
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1" alt="Expand Topic" /> Section Title
+			</div>
+			<div class="help_body_text" id="1">
+				Body text style, should be enough text here so that you can see how the page 
+				wraps. If not then why not add some more? I'm sure anyone would be glad to see 
+				some extra example text.
+				<br/>
+				<br/>
+				You could always just read the comments* as well if you're bored and need 
+				reading material no matter how dull.
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img id="img2" alt="Expand Topic" onclick="toggle('2');" src="../buttons/open.gif" /> Section 2 Title
+			</div>
+			<div class="help_body_text" id="2">
+				More text for you to read and digest. Body text style, should be enough text 
+				here so that you can see how the page wraps. If not then why not add some more? 
+				I'm sure anyone would be glad to see some extra example text.
+				<div class="help_tip">
+					<b>TIP:</b> blah blah blah, i know better then you how to do it so listen up :)
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<div></div>
+	</body>
+</html>

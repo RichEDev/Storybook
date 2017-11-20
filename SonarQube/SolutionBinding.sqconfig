@@ -1,0 +1,10 @@
+{
+  "ServerUri": "http://lithium:9000",
+  "ProjectKey": "SpendManagement",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "cs-software-europe-c-48536",
+      "ProfileTimestamp": "2016-07-14T11:06:13+01:00"
+    }
+  }
+}

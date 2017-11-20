@@ -1,0 +1,33 @@
+@using System.Reflection
+@model SpendManagementApi.Areas.HelpPage.TypeDocumentation
+
+<section class="api-list-collapsible">
+    <table class="help-page-table">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Value</th>
+        </thead>
+        <tbody>
+            @{
+                var flds = Model.Type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+
+                var values = new object[flds.Length];
+
+                for (var i = 0; i < flds.Length; i++)
+                {
+                    values[i] = flds[i].GetRawConstantValue();
+                }
+
+                foreach (var x in values)
+                {
+                    <tr>
+                        <td class="parameter-name">@Model.Type.GetEnumName(x)</td>
+                        <td class="parameter-documentation">@x</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>
+<hr />

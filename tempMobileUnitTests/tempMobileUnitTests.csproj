@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{56A0DE5A-44B8-4179-8A73-853000FBCC64}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>tempMobileUnitTests</RootNamespace>
+    <AssemblyName>tempMobileUnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit">
+      <HintPath>..\..\..\References\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="ErrorLogger">
+      <HintPath>..\..\..\References\ErrorLogger.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.Web.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.Web.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.Excel.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.WebUI.Excel.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics35.WebUI.Misc.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.Shared.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.UltraWebCalcManager.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.UltraWebChart.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.UltraWebGrid.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.UltraWebNavigator.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.UltraWebTab.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.UltraWebToolbar.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.WebCombo.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.WebDataInput.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.WebDateChooser.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="Infragistics35.WebUI.WebHtmlEditor.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics35.WebUI.WebHtmlEditor.v9.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Schema, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.Data.Schema.UnitTesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.TeamFoundation.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.TeamFoundation.WorkItemTracking.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Moq">
+      <HintPath>..\..\..\References\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Core, Version=9.304.0.61, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.DocIO.Base, Version=9.304.0.61, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Web, Version=9.304.0.61, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Web, Version=9.304.0.61, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Web, Version=9.304.0.61, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Selectors" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="expenses\cAccessRoleObject.cs" />
+    <Compile Include="expenses\cClaimObject.cs" />
+    <Compile Include="expenses\cExpenseCategoryObject.cs" />
+    <Compile Include="expenses\cExpenseItemObject.cs" />
+    <Compile Include="expenses\cItemRoleObject.cs" />
+    <Compile Include="expenses\cSubcatObject.cs" />
+    <Compile Include="Mobile Devices\cMobileDevicesTest.cs" />
+    <Compile Include="DB Unit Tests\authenticateMobileDevice.cs">
+      <SubType>Designer</SubType>
+    </Compile>
+    <Compile Include="DatabaseSetup.cs" />
+    <Compile Include="DB Unit Tests\deleteMobileDevice.cs">
+      <SubType>Designer</SubType>
+    </Compile>
+    <Compile Include="DB Unit Tests\employeeHasCheckAndPayRole.cs">
+      <SubType>Designer</SubType>
+    </Compile>
+    <Compile Include="DB Unit Tests\saveMobileDevice.cs">
+      <SubType>Designer</SubType>
+    </Compile>
+    <Compile Include="DB Unit Tests\saveMobileItem.cs">
+      <SubType>Designer</SubType>
+    </Compile>
+    <Compile Include="DB Unit Tests\saveMobileReceipt.cs">
+      <SubType>Designer</SubType>
+    </Compile>
+    <Compile Include="DB Unit Tests\pairMobileDevice.cs">
+      <SubType>Designer</SubType>
+    </Compile>
+    <Compile Include="GlobalAsax.cs" />
+    <Compile Include="GlobalTestVariables.cs" />
+    <Compile Include="Mobile Devices\cMobileDeviceObject.cs" />
+    <Compile Include="Mobile Devices\WcfMobileServiceTest.cs" />
+    <Compile Include="Mobile Devices\WcfServiceObject.cs" />
+    <Compile Include="MockHelpers.cs" />
+    <Compile Include="Moqs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTestClasses.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Spend Management\Spend Management.csproj">
+      <Project>{1CBFD8EC-F67C-4425-A10C-97BFC7501045}</Project>
+      <Name>Spend Management</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementHelpers\SpendManagementHelpers.csproj">
+      <Project>{F12FBA1A-995D-429F-A9A5-E54FB0AE536F}</Project>
+      <Name>SpendManagementHelpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementLibrary\SpendManagementLibrary.csproj">
+      <Project>{9BDAA543-AC54-47A1-8BDD-C7BF34F2F005}</Project>
+      <Name>SpendManagementLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Global Objects\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DB Unit Tests\authenticateMobileDevice.resx">
+      <DependentUpon>authenticateMobileDevice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DB Unit Tests\deleteMobileDevice.resx">
+      <DependentUpon>deleteMobileDevice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DB Unit Tests\employeeHasCheckAndPayRole.resx">
+      <DependentUpon>employeeHasCheckAndPayRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DB Unit Tests\pairMobileDevice.resx">
+      <DependentUpon>pairMobileDevice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DB Unit Tests\saveMobileDevice.resx">
+      <DependentUpon>saveMobileDevice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DB Unit Tests\saveMobileItem.resx">
+      <DependentUpon>saveMobileItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DB Unit Tests\saveMobileReceipt.resx">
+      <DependentUpon>saveMobileReceipt.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="images\Lunch Receipt.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

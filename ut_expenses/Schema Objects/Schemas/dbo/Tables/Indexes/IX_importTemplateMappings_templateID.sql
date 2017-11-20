@@ -1,0 +1,1 @@
+﻿CREATE INDEX [IX_importTemplateMappings_templateID] ON dbo.importTemplateMappings (templateID)

@@ -1,0 +1,1 @@
+﻿CREATE STATISTICS [_dta_stat_1479116460_1_23_10_18_11_17_9] ON [dbo].[savedexpenses]([expenseid], [currencyid], [subcatid], [claimid], [date], [refnum], [total])

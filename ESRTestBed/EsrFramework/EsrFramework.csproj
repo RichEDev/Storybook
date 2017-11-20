@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9CEAE696-95C1-4FD3-A3E2-B75506203A9A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EsrFramework</RootNamespace>
+    <AssemblyName>EsrFramework</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.2-beta1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\AddressEsrAllocation.cs" />
+    <Compile Include="Models\Car.cs" />
+    <Compile Include="Models\CarAssignmentNumberAllocation.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\EmployeeAccessRole.cs" />
+    <Compile Include="Models\EmployeeHomeAddress.cs" />
+    <Compile Include="Models\EmployeeHomeLocation.cs" />
+    <Compile Include="Models\EmployeeWorkAddress.cs" />
+    <Compile Include="Models\EmployeeWorkLocation.cs" />
+    <Compile Include="Models\EmployeeRole.cs" />
+    <Compile Include="Models\EsrAddress.cs" />
+    <Compile Include="Models\EsrAssignmentCosting.cs" />
+    <Compile Include="Models\EsrContext.cs" />
+    <Compile Include="Models\EsrElement.cs" />
+    <Compile Include="Models\EsrElementField.cs" />
+    <Compile Include="Models\EsrElementSubcat.cs" />
+    <Compile Include="Models\EsrLocation.cs" />
+    <Compile Include="Models\EsrOrganisation.cs" />
+    <Compile Include="Models\EsrPerson.cs" />
+    <Compile Include="Models\EsrPhone.cs" />
+    <Compile Include="Models\EsrPosition.cs" />
+    <Compile Include="Models\EsrTrust.cs" />
+    <Compile Include="Models\EsrVehicle.cs" />
+    <Compile Include="Models\EsrAssignment.cs" />
+    <Compile Include="Models\Mapping\AddressEsrAllocationMap.cs" />
+    <Compile Include="Models\Mapping\AddressMap.cs" />
+    <Compile Include="Models\Mapping\CarAssignmentNumberAllocationMap.cs" />
+    <Compile Include="Models\Mapping\CarMap.cs" />
+    <Compile Include="Models\Mapping\EmployeeAccessRoleMap.cs" />
+    <Compile Include="Models\Mapping\EmployeeHomeAddressMap.cs" />
+    <Compile Include="Models\Mapping\EmployeeHomeLocationMap.cs" />
+    <Compile Include="Models\Mapping\EmployeeMap.cs" />
+    <Compile Include="Models\Mapping\EmployeeWorkAddressMap.cs" />
+    <Compile Include="Models\Mapping\EmployeeWorkLocationMap.cs" />
+    <Compile Include="Models\Mapping\EmployeeRoleMap.cs" />
+    <Compile Include="Models\Mapping\EsrAddressMap.cs" />
+    <Compile Include="Models\Mapping\EsrAssignmentCostingMap.cs" />
+    <Compile Include="Models\Mapping\EsrElementFieldMap.cs" />
+    <Compile Include="Models\Mapping\EsrElementMap.cs" />
+    <Compile Include="Models\Mapping\EsrElementSubcatMap.cs" />
+    <Compile Include="Models\Mapping\EsrLocationMap.cs" />
+    <Compile Include="Models\Mapping\EsrOrganisationMap.cs" />
+    <Compile Include="Models\Mapping\EsrPersonMap.cs" />
+    <Compile Include="Models\Mapping\EsrPhoneMap.cs" />
+    <Compile Include="Models\Mapping\EsrPositionMap.cs" />
+    <Compile Include="Models\Mapping\EsrTrustMap.cs" />
+    <Compile Include="Models\Mapping\EsrVehicleMap.cs" />
+    <Compile Include="Models\Mapping\EsrAssignmentMap.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

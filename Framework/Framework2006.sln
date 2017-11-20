@@ -1,0 +1,71 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Framework2006", "http://localhost/Framework2006/Framework2006.vbproj", "{2D2BD70C-65C7-474F-8934-2A8A141F670D}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FWBase", "..\..\..\Documents and Settings\martin\My Documents\Visual Studio Projects\Framework2006\FWCommon\FWCommon\FWDatabase\FWDatabase\FWBase.vbproj", "{B8180338-C8C2-4DE1-BE2E-6FF35D33DC6A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csvParser", "..\..\..\Documents and Settings\martin\My Documents\Visual Studio Projects\csvParser\csvParser.csproj", "{9710CF5C-4B75-4D06-846D-1628C748222D}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FWCommon", "..\..\..\Documents and Settings\martin\My Documents\Visual Studio Projects\Framework2006\FWCommon\FWCommon\FWCommon\FWCommon\FWCommon.vcproj", "{38354453-D4FB-440F-A654-227F60931109}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 4
+		SccProjectUniqueName0 = http://localhost/Framework2006/Framework2006.vbproj
+		SccProjectName0 = $/Framework/Framework2006/Framework2006
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Team\u0020Foundation\u0020Server\u0020MSSCCI\u0020Provider
+		CanCheckoutShared = true
+		SccProjectEnlistmentChoice0 = 2
+		SccProjectUniqueName1 = ..\\..\\..\\Documents\u0020and\u0020Settings\\martin\\My\u0020Documents\\Visual\u0020Studio\u0020Projects\\Framework2006\\FWCommon\\FWCommon\\FWDatabase\\FWDatabase\\FWBase.vbproj
+		SccProjectName1 = $/Framework/Framework2006
+		SccLocalPath1 = ..\\..\\..\\Documents\u0020and\u0020Settings\\martin\\My\u0020Documents\\Visual\u0020Studio\u0020Projects\\Framework2006\\FWCommon\\FWCommon\\FWDatabase
+		SccProvider1 = MSSCCI:Team\u0020Foundation\u0020Server\u0020MSSCCI\u0020Provider
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection1 = FWDatabase\\
+		SccProjectUniqueName2 = ..\\..\\..\\Documents\u0020and\u0020Settings\\martin\\My\u0020Documents\\Visual\u0020Studio\u0020Projects\\csvParser\\csvParser.csproj
+		SccProjectName2 = $/Framework/csvParser
+		SccLocalPath2 = ..\\..\\..\\Documents\u0020and\u0020Settings\\martin\\My\u0020Documents\\Visual\u0020Studio\u0020Projects\\csvParser
+		SccProvider2 = MSSCCI:Team\u0020Foundation\u0020Server\u0020MSSCCI\u0020Provider
+		CanCheckoutShared = true
+		SccProjectUniqueName3 = ..\\..\\..\\Documents\u0020and\u0020Settings\\martin\\My\u0020Documents\\Visual\u0020Studio\u0020Projects\\Framework2006\\FWCommon\\FWCommon\\FWCommon\\FWCommon\\FWCommon.vcproj
+		SccProjectName3 = $/Framework/Framework2006
+		SccLocalPath3 = ..\\..\\..\\Documents\u0020and\u0020Settings\\martin\\My\u0020Documents\\Visual\u0020Studio\u0020Projects\\Framework2006\\FWCommon\\FWCommon\\FWCommon
+		SccProvider3 = MSSCCI:Team\u0020Foundation\u0020Server\u0020MSSCCI\u0020Provider
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection3 = FWCommon\\
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{2D2BD70C-65C7-474F-8934-2A8A141F670D}.Debug.ActiveCfg = Debug|.NET
+		{2D2BD70C-65C7-474F-8934-2A8A141F670D}.Debug.Build.0 = Debug|.NET
+		{2D2BD70C-65C7-474F-8934-2A8A141F670D}.Release.ActiveCfg = Release|.NET
+		{2D2BD70C-65C7-474F-8934-2A8A141F670D}.Release.Build.0 = Release|.NET
+		{B8180338-C8C2-4DE1-BE2E-6FF35D33DC6A}.Debug.ActiveCfg = Debug|.NET
+		{B8180338-C8C2-4DE1-BE2E-6FF35D33DC6A}.Debug.Build.0 = Debug|.NET
+		{B8180338-C8C2-4DE1-BE2E-6FF35D33DC6A}.Release.ActiveCfg = Release|.NET
+		{B8180338-C8C2-4DE1-BE2E-6FF35D33DC6A}.Release.Build.0 = Release|.NET
+		{9710CF5C-4B75-4D06-846D-1628C748222D}.Debug.ActiveCfg = Debug|.NET
+		{9710CF5C-4B75-4D06-846D-1628C748222D}.Debug.Build.0 = Debug|.NET
+		{9710CF5C-4B75-4D06-846D-1628C748222D}.Release.ActiveCfg = Release|.NET
+		{9710CF5C-4B75-4D06-846D-1628C748222D}.Release.Build.0 = Release|.NET
+		{38354453-D4FB-440F-A654-227F60931109}.Debug.ActiveCfg = Debug|Win32
+		{38354453-D4FB-440F-A654-227F60931109}.Debug.Build.0 = Debug|Win32
+		{38354453-D4FB-440F-A654-227F60931109}.Release.ActiveCfg = Release|Win32
+		{38354453-D4FB-440F-A654-227F60931109}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

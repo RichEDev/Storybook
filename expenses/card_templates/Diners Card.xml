@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="Diners Card" FileType="XLS" NumberHeaderRecords="4" NumberFooterRecords="2">
+  <Fields Type="CardTransaction" UniqueValue="trans">
+    <Field Name="Date" MappedTable="card_transactions" MappedField="date" FieldType="D" Format="dd-MM-yyyy hh:mm:ss"/>
+    <Field Name="Amount" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C" />    
+    <Field Name="ReferenceNumber" MappedTable="card_transactions_dinners_card" MappedField="Reference_number" FieldType="S" MaxLength="50" />
+    <Field Name="TransactionDescription" MappedTable="card_transactions" MappedField="description" FieldType="S" />
+    <Field Name="Town" MappedTable="card_transactions_dinners_card" MappedField="Town" FieldType="S" />
+    <Field Name="InvoiceNumber" MappedTable="card_transactions_dinners_card" MappedField="Invoice_number" FieldType="S" MaxLength="50" />
+    <Field Name="Name" MappedTable="card_transactions_dinner_card" MappedField="Name" FieldType="S" MaxLength="50" />
+    <Field Name="InvoiceNumber2" MappedTable="card_transactions_dinners_card" MappedField="Invoice_number2" FieldType="S" MaxLength="50" />
+    <Field Name="CurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" DefaultValue="GBP" CurrencyType="alpha" /> 
+    <Field Name="CountryCode" MappedTable="card_transactions" MappedField="country_code" FieldType="S" DefaultValue="GB" CountryType="alpha" /> 
+  </Fields>
+</CardTemplate>

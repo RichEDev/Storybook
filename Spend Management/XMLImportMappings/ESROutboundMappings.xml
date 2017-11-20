@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Mappings>
+	<Person RecordType="PER">
+		<ColumnField DestinationField="Person ID" ColumnRef="1" Mandatory="False" DataType="N" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Employee Number" ColumnRef="2" Mandatory="True" DataType="S" ReferenceTable="employees" ReferenceField="payroll"/>
+		<ColumnField DestinationField="Title" ColumnRef="3" Mandatory="True" DataType="S" ReferenceTable="employees" ReferenceField="title"/>
+		<ColumnField DestinationField="Last Name" ColumnRef="4" Mandatory="True" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="First Name" ColumnRef="5" Mandatory="True" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Middle Names" ColumnRef="6" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Maiden Name" ColumnRef="7" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Gender" ColumnRef="8" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Date of Birth" ColumnRef="9" Mandatory="False" DataType="DT" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="National Insurance Number" ColumnRef="10" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Hire Date" ColumnRef="11" Mandatory="True" DataType="DT" ReferenceTable="employees" ReferenceField="hiredate"/>
+		<ColumnField DestinationField="Termination Date" ColumnRef="12" Mandatory="False" DataType="DT" ReferenceTable="employees" ReferenceField="terminationdate"/>
+		<ColumnField DestinationField="Current Employee Status Flag" ColumnRef="13" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Personal e-Mail" ColumnRef="20" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Home Telephone Number" ColumnRef="21" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Home Fax Telephone Number" ColumnRef="22" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Mobile Telephone Number" ColumnRef="23" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Office e-Mail" ColumnRef="24" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Pager Telephone Number" ColumnRef="25" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Work Telephone Number" ColumnRef="26" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="WTR Opt Out" ColumnRef="27" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Applicant Number" ColumnRef="28" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Current Applicant Status Flag" ColumnRef="29" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+	</Person>
+	<Assignment RecordType="ASG">
+		<ColumnField DestinationField="Assignment ID" ColumnRef="1" Mandatory="True" DataType="B" ReferenceTable="esr_assignments" ReferenceField="AssignmentID"/>
+		<ColumnField DestinationField="Assignment Number" ColumnRef="2" Mandatory="True" DataType="S" ReferenceTable="esr_assignments" ReferenceField="AssignmentNumber"/>
+		<ColumnField DestinationField="Earliest Assignment Start Date" ColumnRef="3" Mandatory="False" DataType="DT" ReferenceTable="esr_assignments" ReferenceField="EarliestAssignmentStartDate"/>
+		<ColumnField DestinationField="Final Assignment End Date" ColumnRef="4" Mandatory="False" DataType="DT" ReferenceTable="esr_assignments" ReferenceField="FinalAssignmentEndDate"/>
+		<ColumnField DestinationField="Assignment Status" ColumnRef="5" Mandatory="False" DataType="S" ReferenceTable="esr_assignments" ReferenceField="AssignmentStatus"/>
+		<ColumnField DestinationField="Payroll Pay Type" ColumnRef="6" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Payroll Name" ColumnRef="7" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Payroll Period Type" ColumnRef="8" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Assignment Address 1st Line" ColumnRef="9" Mandatory="True" DataType="S" ReferenceTable="esr_assignments" ReferenceField="AssignmentAddressLine1"/>
+		<ColumnField DestinationField="Assignment Address 2nd Line" ColumnRef="10" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Assignment Address Town" ColumnRef="11" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Assignment Address County" ColumnRef="12" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Assignment Address Postcode" ColumnRef="13" Mandatory="True" DataType="S" ReferenceTable="esr_assignments" ReferenceField="AssignmentAddressPostcode"/>
+		<ColumnField DestinationField="Assignment Address Country" ColumnRef="14" Mandatory="True" DataType="S" ReferenceTable="esr_assignments" ReferenceField="AssignmentAddressCountry"/>
+		<ColumnField DestinationField="Supervisor Flag" ColumnRef="15" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Supervisor Assignment Number" ColumnRef="16" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Supervisor Employee Number" ColumnRef="17" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Supervisor Full Name" ColumnRef="18" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Accrual Plan" ColumnRef="19" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Employee Category" ColumnRef="20" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Assignment Category" ColumnRef="21" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Primary Assignment" ColumnRef="22" Mandatory="True" DataType="X" ReferenceTable="esr_assignments" ReferenceField="PrimaryAssignment"/>
+		<ColumnField DestinationField="Normal Hours" ColumnRef="23" Mandatory="False" DataType="F" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Normal Hours Frequency" ColumnRef="24" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Grade Contract Hours" ColumnRef="25" Mandatory="False" DataType="F" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="No. of Sessions" ColumnRef="26" Mandatory="False" DataType="F" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Sessions Frequency" ColumnRef="27" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Work Pattern Details" ColumnRef="28" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Work Pattern Start Day" ColumnRef="29" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Flexible Working Pattern" ColumnRef="30" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Availability Schedule" ColumnRef="31" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Organisation" ColumnRef="32" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Legal Entity" ColumnRef="33" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Position Name" ColumnRef="34" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Job Role" ColumnRef="35" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Occupation Code" ColumnRef="36" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Assignment Location" ColumnRef="37" Mandatory="True" DataType="S" ReferenceTable="esr_assignments" ReferenceField="AssignmentLocation"/>
+		<ColumnField DestinationField="Grade" ColumnRef="38" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Job Name" ColumnRef="39" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Group" ColumnRef="40" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="T and A Flag" ColumnRef="41" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField="" />
+		<ColumnField DestinationField="Assignment Night Worker Attribute" ColumnRef="42" Mandatory="False" DataType="S" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Projected Hire Date" ColumnRef="43" Mandatory="False" DataType="DT" ReferenceTable="" ReferenceField=""/>
+		<ColumnField DestinationField="Vacancy ID" ColumnRef="44" Mandatory="False" DataType="N" ReferenceTable="" ReferenceField=""/>
+	</Assignment>
+</Mappings>

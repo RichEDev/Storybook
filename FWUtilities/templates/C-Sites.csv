@@ -1,0 +1,9 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+codes_sites,Location Id,Repository Location,S,50,N,Y,F,[location].[Location Id],[location].[Description],
+codes_sites,Site Code,,S,25,Y,Y,N,,,
+codes_sites,Site Description,,S,100,N,Y,N,,,
+codes_sites,Recharge Entity Id,Recharge Client,S,50,N,N,Y,[codes_rechargeentity].[Entity Id],[codes_rechargeentity].[Name],
+codes_sites,Address Line 1,,S,50,N,N,N,,,
+codes_sites,Address Line 2,,S,50,N,N,N,,,
+codes_sites,Town,,S,50,N,N,N,,,
+codes_sites,Post Code,,S,10,N,N,N,,,

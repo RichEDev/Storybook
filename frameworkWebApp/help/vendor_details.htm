@@ -1,0 +1,210 @@
+<html>
+    <head>
+		<title>Framework Help - [Supplier Details]</title>
+        <meta name=vs_targetSchema content="http://schemas.microsoft.com/intellisense/ie5">
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <link rel="stylesheet" href="fwhelp.css" type="text/css">
+            <script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+            </script>
+    </head>
+    <body class="help_page" onload="window.resizeTo(800,600)">
+        <div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+            Supplier Details</div>
+        <div class="help_section">
+            <div class="help_section_title">
+                Overview
+            </div>
+            <div class="help_overview" id="DIV1">
+                <p>The term Supplier refers to the provider of the goods or services that have 
+                    been obtained and the party with whom you are holding a contract with. It is 
+                    used as a generic reference throughout this application.</p>
+                <p>Suppliers must be defined prior to being able to add a contract to the system.<br>
+                    <br>
+                    This screen allows all the relevant information about the supplier to be entered.<br>
+                    <br>
+                    The Address information on this screen refers to 'Primary' address. Different 
+                    addresses can be specified against supplier contacts as and when they are added.</p>
+            </div>
+        </div>
+        <div class="help_section">
+            <div class="help_section_title">
+                Finding a supplier
+            </div>
+            <div class="help_tip"><b>Tip:</b>&nbsp;By far the quickest way to locate a supplier 
+                is via the Home page of Framework.<br>
+                <br>
+                On selecting one of the returned suppliers from the search, the supplier and it's 
+                details will be automatically selected on entry to this screen.</div>
+            <div class="help_body_text">
+                <p>Due to the typically large number of suppliers held within the system, Framework 
+                    groups them alphabetically, displaying three letters at a time in the tabbed 
+                    list to the left of the screen.<br>
+                    <br>
+                    To change the letters displayed in the tabs, click the letter links that run 
+                    horizontally above the supplier fields.</p>
+                <p>Clicking between the tabs, displays all suppliers whose names begin with the tab 
+                    letter are listed.<br>
+                    <br>
+                    Once the required supplier has been found, it can be selected simply by clicking 
+                    on the name. The associated supplier information will then be loaded.</p>
+            </div>
+            <div class="help_tip">
+                <b>Note:</b>&nbsp;Double clicking on a Supplier Details based report will also 
+                navigate to the Supplier Details screen and load the relevant Supplier information.
+            </div>
+        </div>
+        <div class="help_section">
+            <div class="help_section_title">
+                <img src="../buttons/open.gif" onclick="toggle('1');" id="img1">&nbsp;Mandatory 
+                Fields
+            </div>
+            <div class="help_body_text" id="1">
+                <p>Most fields within Framework are optional. The more detail entered against a 
+                    supplier, the more meaningful the data is. The following exceptions to the rule 
+                    are mandatory fields. These are detailed below.</p>
+                <p>
+                    <table class="inner" align="center" width="500" ID="Table1">
+                        <tr>
+                            <th class="inner" width="150">
+                                Field Name</th>
+                            <th class="inner" width="350">
+                                Definition</th>
+                        </tr>
+                        <tr>
+                            <td class="inner" align="center">Supplier Name</td>
+                            <td class="inner"><p>The supplier name should be both unique and can be the formal name 
+                                    of the supplier company or, for user-friendliness, be the name by which they 
+                                    are better known to your organisation (assuming it to be different).</p>
+                                <p>The field is text and therefore alphanumeric.</p>
+                            </td>
+                        </tr>
+                    </table>
+                </p>
+            </div>
+        </div>
+        <div class="help_section">
+            <div class="help_section_title">
+                <img src="../buttons/open.gif" onclick="toggle('2');" id="Img2"> Modifying 
+                Supplier Information
+            </div>
+            <div class="help_body_text" id="2">
+                <p>The Supplier Details screen is where information about the supplier can be added, 
+                    modified or deleted.</p>
+                <p>
+                    <table class="inner" align="center" width="500" ID="Table2">
+                        <tr>
+                            <th class="inner" width="150">
+                                Action</th>
+                            <th class="inner" width="350">
+                                Method</th>
+                        </tr>
+                        <tr>
+                            <td class="inner" align="center">Adding a Supplier</td>
+                            <td class="inner"><p>At the top left corner of the screen, a 'New' link or button is 
+                                    available to those users with adequate permissions.</p>
+                                <p>On clicking this link, a blank screen is displayed and the fields can be filled 
+                                    in accordingly. Use the 'Tab' key to advance to the next field in the sequence.</p>
+                                <p>Once all information has been entered satisfactorily, click the 'Update' link or 
+                                    button and the supplier will be added to the system.</p>
+                                <p><b>NOTE:</b> The supplier name is the primary key field and therefore must be 
+                                    unique. If the name is defined elsewhere, the addition will be rejected.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="inner" align="center">Delete a Supplier</td>
+                            <td class="inner"><p>At the top left corner of the screen, a 'Delete' link or button is 
+                                    available to those users with adequate permissions.</p>
+                                <p>On clicking the link or button for deletion, the user is always prompted to 
+                                    confirm that this is the action they wish to take. Click OK to continue or 
+                                    Cancel to abort your action.</p>
+                                <p>Before electing to delete a supplier, it must be the currently selected supplier 
+                                    with all it's details displaying on the screen.</p>
+                                <p>Framework enforces referential integrity of the database at all times. This 
+                                    means that if the supplier is assigned to a contract within the database, the 
+                                    deletion will be aborted.</p>
+                                <p>If the supplier is not assigned to a contract, the deletion will take place and 
+                                    all accompanying Contacts, Notes and Attachments will also be removed from the 
+                                    system.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="inner" align="center">Update a Supplier</td>
+                            <td class="inner">
+                                <p>Once a supplier has been selected for editing, the user is free to update the 
+                                    required information on the screen.</p>
+                                <p>Once all modifications have taken place, click 'Update' to commit these changes 
+                                    to the database.<br>
+                                    <br>
+                                    <b>Note:</b> Failing to click the update button prior to leaving the screen or 
+                                    selecting another supplier will result in loss of the modifications.</p>
+                            </td>
+                        </tr>
+                    </table>
+                </p>
+            </div>
+        </div>
+        <div class="help_section">
+            <div class="help_section_title"><img src="../buttons/open.gif" onclick="toggle('3');" id="Img3">&nbsp;Related 
+                Information</div>
+            <div class="help_body_text" id="3">
+                <p>The following subset of information is associated with the Supplier Details.<br>
+                    <br>
+                    These can only be added once a supplier exists on the database and when it is 
+                    selected. Without a currently selected supplier, this information is not 
+                    available.</p>
+                <p>
+                    <table class="inner" align="center" width="500">
+                        <tr>
+                            <th class="inner" align="center" width="150">
+                                Link or Button</th>
+                            <th class="inner" width="350">
+                                Definition</th>
+                        </tr>
+                        <tr>
+                            <td class="inner" align="center">Supplier Contacts</td>
+                            <td class="inner"><p>When dealing with a supplier, many individuals from that supplier will 
+                                    be dealt with from a multitude of different roles.</p>
+                                <p>The Supplier Contact directory allows the contact details of all these individuals 
+                                    to be associated with the Supplier Details, thus allowing the sharing of this 
+                                    information across the board from a single central location.</p>
+                                <p>Click the Supplier Contact link will navigate the user to the contacts screen.</p>
+                            </td>
+                        </tr>
+                    </table>
+                </p>
+            </div>
+        </div>
+        <div class="help_section">
+            <div class="help_comments">
+                * If you do not find a topic outlined in the help which is relevant to your 
+                enquiry then please contact your administrator
+            </div>
+        </div>
+        <DIV></DIV>
+    </body>
+</html>

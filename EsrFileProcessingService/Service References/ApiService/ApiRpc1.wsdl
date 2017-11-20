@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://software-europe.com/ApiRpc/2013/02" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://software-europe.com/ApiRpc/2013/02" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://software-europe.com/ApiRpc/2013/02/Imports">
+      <xsd:import schemaLocation="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd0" namespace="http://software-europe.com/ApiRpc/2013/02" />
+      <xsd:import schemaLocation="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd2" namespace="http://software-europe.com/API/2013/02" />
+      <xsd:import schemaLocation="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ApiLibrary.DataObjects.Base" />
+      <xsd:import schemaLocation="http://localhost/ApiRpc/ApiRpc.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ApiLibrary.ApiObjects.ESR" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IApiRpc_UpdateEsrPersonRecords_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEsrPersonRecords" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateEsrPersonRecords_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEsrPersonRecordsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_GetAllPersons_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPersons" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_GetAllPersons_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPersonsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateEsrLocationRecords_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEsrLocationRecords" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateEsrLocationRecords_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEsrLocationRecordsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_GetEsrLocationRecord_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEsrLocationRecord" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_GetEsrLocationRecord_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEsrLocationRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateEsrOrganisations_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEsrOrganisations" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateEsrOrganisations_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEsrOrganisationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_GetEsrOrganisation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEsrOrganisation" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_GetEsrOrganisation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEsrOrganisationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateEsrPositions_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEsrPositions" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateEsrPositions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEsrPositionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_GetEsrPosition_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEsrPosition" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_GetEsrPosition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEsrPositionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_GetAccountFromVpd_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountFromVpd" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_GetAccountFromVpd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountFromVpdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateEsrTrust_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEsrTrust" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateEsrTrust_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEsrTrustResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_CreateImportLog_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateImportLog" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_CreateImportLog_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateImportLogResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateImportLog_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateImportLog" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateImportLog_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateImportLogResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_CreateImportHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateImportHistory" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_CreateImportHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateImportHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateImportHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateImportHistory" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_UpdateImportHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateImportHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_DeleteEntity_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteEntity" />
+  </wsdl:message>
+  <wsdl:message name="IApiRpc_DeleteEntity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteEntityResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IApiRpc">
+    <wsdl:operation name="UpdateEsrPersonRecords">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateEsrPersonRecords" message="tns:IApiRpc_UpdateEsrPersonRecords_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateEsrPersonRecordsResponse" message="tns:IApiRpc_UpdateEsrPersonRecords_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPersons">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/GetAllPersons" message="tns:IApiRpc_GetAllPersons_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/GetAllPersonsResponse" message="tns:IApiRpc_GetAllPersons_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEsrLocationRecords">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateEsrLocationRecords" message="tns:IApiRpc_UpdateEsrLocationRecords_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateEsrLocationRecordsResponse" message="tns:IApiRpc_UpdateEsrLocationRecords_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEsrLocationRecord">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/GetEsrLocationRecord" message="tns:IApiRpc_GetEsrLocationRecord_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/GetEsrLocationRecordResponse" message="tns:IApiRpc_GetEsrLocationRecord_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEsrOrganisations">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateEsrOrganisations" message="tns:IApiRpc_UpdateEsrOrganisations_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateEsrOrganisationsResponse" message="tns:IApiRpc_UpdateEsrOrganisations_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEsrOrganisation">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/GetEsrOrganisation" message="tns:IApiRpc_GetEsrOrganisation_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/GetEsrOrganisationResponse" message="tns:IApiRpc_GetEsrOrganisation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEsrPositions">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateEsrPositions" message="tns:IApiRpc_UpdateEsrPositions_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateEsrPositionsResponse" message="tns:IApiRpc_UpdateEsrPositions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEsrPosition">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/GetEsrPosition" message="tns:IApiRpc_GetEsrPosition_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/GetEsrPositionResponse" message="tns:IApiRpc_GetEsrPosition_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountFromVpd">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/GetAccountFromVpd" message="tns:IApiRpc_GetAccountFromVpd_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/GetAccountFromVpdResponse" message="tns:IApiRpc_GetAccountFromVpd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEsrTrust">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateEsrTrust" message="tns:IApiRpc_UpdateEsrTrust_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateEsrTrustResponse" message="tns:IApiRpc_UpdateEsrTrust_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateImportLog">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/CreateImportLog" message="tns:IApiRpc_CreateImportLog_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/CreateImportLogResponse" message="tns:IApiRpc_CreateImportLog_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateImportLog">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateImportLog" message="tns:IApiRpc_UpdateImportLog_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateImportLogResponse" message="tns:IApiRpc_UpdateImportLog_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateImportHistory">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/CreateImportHistory" message="tns:IApiRpc_CreateImportHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/CreateImportHistoryResponse" message="tns:IApiRpc_CreateImportHistory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateImportHistory">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateImportHistory" message="tns:IApiRpc_UpdateImportHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/UpdateImportHistoryResponse" message="tns:IApiRpc_UpdateImportHistory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEntity">
+      <wsdl:input wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/DeleteEntity" message="tns:IApiRpc_DeleteEntity_InputMessage" />
+      <wsdl:output wsaw:Action="http://software-europe.com/ApiRpc/2013/02/IApiRpc/DeleteEntityResponse" message="tns:IApiRpc_DeleteEntity_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

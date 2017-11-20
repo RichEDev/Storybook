@@ -1,0 +1,1 @@
+ALTER TABLE [dbo].[organisations] ADD  CONSTRAINT [DF_organisations_archived]  DEFAULT ((0)) FOR [IsArchived]

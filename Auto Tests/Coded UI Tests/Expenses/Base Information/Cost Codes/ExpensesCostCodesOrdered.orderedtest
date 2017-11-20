@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="expensescostcodesordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\expenses\base information\cost codes\expensescostcodesordered.orderedtest" id="5e115e30-f507-437c-addf-ef735e0f8fbf" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Expenses" />
+    <TestCategoryItem TestCategory="Nightly Build" />
+    <TestCategoryItem TestCategory="BuildServerTest" />
+  </TestCategory>
+  <TestLinks>
+    <TestLink id="0b869060-f8ca-acbc-80cc-0cc2813bf2d2" name="CostCodesSuccessfullyCreateNewCostCode" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="6f1621ca-15e4-26e6-d41d-268f45e028af" name="CostCodesSuccessfullyEditCostCode" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="a2455abf-9c46-1b77-841a-d6e6ff9e5cf3" name="CostCodesSuccessfullyArchiveCostCode" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="2e65c4db-387a-84cc-e504-3eb667ce360a" name="CostCodesSuccessfullyUnarchiveCostCode" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="a2455abf-9c46-1b77-841a-d6e6ff9e5cf3" name="CostCodesSuccessfullyArchiveCostCode" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="b12c2b08-4f0f-2c8b-c3ad-0953ddb0bb39" name="CostCodesSuccessfullyDeleteCostCode" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

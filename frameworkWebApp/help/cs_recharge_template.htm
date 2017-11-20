@@ -1,0 +1,110 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - Recharge Template</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Recharge Template</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>The recharge template screen is the key section where exactly how an individual 
+					products' costs is to be divided up and recharged between the other parties.</p>
+				<p>For each contract product, the individual parties who are to be recharged a 
+					proportion of the product cost, can be added to the template. The parties 
+					recharged for a proportion of the costs may differ between individual products, 
+					so by enabling the parties to be defined per product, this flexibility is 
+					provided.</p>
+				<p>Once the recargable parties have been added, how the recharge costs are 
+					proportioned can be specified.</p>
+				<p>The ability to specify a percentage surcharge per recharge line is also 
+					provided.</p>
+				<p>The actual generation of recharge payment entries within Framework, will be 
+					created according to the recharge template specification defined here.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1"> Proportioning 
+				of Costs
+			</div>
+			<div class="help_body_text" id="1">
+				<p>The recharge proportion can be defined in three ways on a per party / product 
+					basis.</p>
+				<p>These are: -</p>
+				<p>
+					<table align="center" class="inner">
+						<tr>
+							<th width="120" class="inner">
+								Proportion Type</th>
+							<th width="300" class="inner">
+								Description</th>
+						</tr>
+						<tr>
+							<td align="center" width="120" class="inner">Percentage (%)</td>
+							<td width="300" class="inner">A percentage of the cost of the product on the active 
+								contract will be calculated depending on the Current Maintenance cost of the 
+								contract.<br>
+								Therefore, any change in the annual cost of the product will be reflected in 
+								the amount recharged.</td>
+						</tr>
+						<tr>
+							<td align="center" width="120" class="inner">Fixed Amount</td>
+							<td width="300" class="inner">A static amount of money can be specified in this 
+								box. Regardless of any change in contractual cost of the product, the recharge 
+								amount will remain the same.</td>
+						</tr>
+						<tr>
+							<td width="120" align="center" class="inner"><i>n</i> Units</td>
+							<td width="300" class="inner">If the product can be measured in a number of unit 
+								(e.g. Metres, Users, Sites, MIPS etc.), then the recharge can be specified as a 
+								number of these units.<br>
+								The recharge will then automatically calculate what proportion of the total 
+								number of units for the product that this represents and calculate the recharge 
+								amount accordingly.</td>
+						</tr>
+					</table>
+				</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

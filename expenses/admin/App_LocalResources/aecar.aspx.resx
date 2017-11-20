@@ -1,0 +1,720 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="chkactiveResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkactiveResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkfuelcardResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkfuelcardResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbcartypeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbinsurancecheckedbyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbmileageResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbmotcheckedbyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbservicecheckedbyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbtaxcheckedbyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdcancelResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdcancelResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdokResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdokResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CompareValidator1Resource1.ErrorMessage" xml:space="preserve">
+    <value>The Start Odometer Reading you have entered is invalid.</value>
+  </data>
+  <data name="CompareValidator1Resource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="CompareValidator1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compendResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a valid end date</value>
+  </data>
+  <data name="compendResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compendResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compinsuranceexpiryResource1.ErrorMessage" xml:space="preserve">
+    <value>The insurance expiry date you have entered is invalid</value>
+  </data>
+  <data name="compinsuranceexpiryResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compinsuranceexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compinsurancelastcheckedResource1.ErrorMessage" xml:space="preserve">
+    <value>The Insurance Last Checked date you have entered is invalid</value>
+  </data>
+  <data name="compinsurancelastcheckedResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compinsurancelastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compmotexpiryResource1.ErrorMessage" xml:space="preserve">
+    <value>The MOT expiry date you have entered is invalid</value>
+  </data>
+  <data name="compmotexpiryResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compmotexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compmotlastcheckedResource1.ErrorMessage" xml:space="preserve">
+    <value>The MOT Last Checked date you have entered is invalid</value>
+  </data>
+  <data name="compmotlastcheckedResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compmotlastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compserviceexpiryResource1.ErrorMessage" xml:space="preserve">
+    <value>The service expiry date you have entered is invalid</value>
+  </data>
+  <data name="compserviceexpiryResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compserviceexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compservicelastcheckedResource1.ErrorMessage" xml:space="preserve">
+    <value>The Service Last Checked date you have entered is invalid</value>
+  </data>
+  <data name="compservicelastcheckedResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compservicelastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compstartodoResource1.ErrorMessage" xml:space="preserve">
+    <value>The End Odometer Reading you have entered is invalid.</value>
+  </data>
+  <data name="compstartodoResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compstartodoResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compstartResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a valid Start Date</value>
+  </data>
+  <data name="compstartResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compstartResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="comptaxexpiryResource1.ErrorMessage" xml:space="preserve">
+    <value>The tax expiry date you have entered is invalid</value>
+  </data>
+  <data name="comptaxexpiryResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="comptaxexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="comptaxlastcheckedResource1.ErrorMessage" xml:space="preserve">
+    <value>The Tax Last Checked date you have entered is invalid</value>
+  </data>
+  <data name="comptaxlastcheckedResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="comptaxlastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dtendResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dtendResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dtstartResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dtstartResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgendResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgendResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imginsuranceexpiryResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imginsuranceexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imginsurancelastcheckedResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imginsurancelastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgmotexpiryResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgmotexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgmotlastcheckedResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgmotlastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgserviceexpiryResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgserviceexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgservicelastcheckedResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgservicelastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgstartResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgstartResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgtaxexpiryResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgtaxexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgtaxlastcheckedResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="imgtaxlastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label1Resource1.Text" xml:space="preserve">
+    <value>General Details</value>
+  </data>
+  <data name="Label1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label2Resource1.Text" xml:space="preserve">
+    <value>Mileage Details</value>
+  </data>
+  <data name="Label2Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label3Resource1.Text" xml:space="preserve">
+    <value>Start / End Date of Car Usage</value>
+  </data>
+  <data name="Label3Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblactiveResource1.Text" xml:space="preserve">
+    <value>Car is active:</value>
+  </data>
+  <data name="lblactiveResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblcartypeResource1.Text" xml:space="preserve">
+    <value>Engine Type:</value>
+  </data>
+  <data name="lblcartypeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblendodometerResource1.Text" xml:space="preserve">
+    <value>End Odometer Reading:</value>
+  </data>
+  <data name="lblendodometerResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblendResource1.Text" xml:space="preserve">
+    <value>End Date:</value>
+  </data>
+  <data name="lblendResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblfuelcardResource1.Text" xml:space="preserve">
+    <value>Odometer Reading Required:</value>
+  </data>
+  <data name="lblfuelcardResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblinsurancecheckedbyResource1.Text" xml:space="preserve">
+    <value>Checked By:</value>
+  </data>
+  <data name="lblinsurancecheckedbyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblinsurancedetailsResource1.Text" xml:space="preserve">
+    <value>Insurance Details</value>
+  </data>
+  <data name="lblinsurancedetailsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblinsurancedocumentResource1.Text" xml:space="preserve">
+    <value>Document:</value>
+  </data>
+  <data name="lblinsurancedocumentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblinsuranceexpiryResource1.Text" xml:space="preserve">
+    <value>Expiry Date:</value>
+  </data>
+  <data name="lblinsuranceexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblinsurancelastcheckedResource1.Text" xml:space="preserve">
+    <value>Last Checked:</value>
+  </data>
+  <data name="lblinsurancelastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblinsurancenumberResource1.Text" xml:space="preserve">
+    <value>Insurance Number:</value>
+  </data>
+  <data name="lblinsurancenumberResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmakeResource1.Text" xml:space="preserve">
+    <value>Make:</value>
+  </data>
+  <data name="lblmakeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmileageResource1.Text" xml:space="preserve">
+    <value>Vehicle Journey Rate Category:</value>
+  </data>
+  <data name="lblmileageResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmodelResource1.Text" xml:space="preserve">
+    <value>Model:</value>
+  </data>
+  <data name="lblmodelResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmotcheckedbyResource1.Text" xml:space="preserve">
+    <value>Checked By:</value>
+  </data>
+  <data name="lblmotcheckedbyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmotdetailsResource1.Text" xml:space="preserve">
+    <value>MOT Details</value>
+  </data>
+  <data name="lblmotdetailsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmotdocumentResource1.Text" xml:space="preserve">
+    <value>Document:</value>
+  </data>
+  <data name="lblmotdocumentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmotexpiryResource1.Text" xml:space="preserve">
+    <value>Expiry Date:</value>
+  </data>
+  <data name="lblmotexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmotlastcheckedResource1.Text" xml:space="preserve">
+    <value>Last Checked:</value>
+  </data>
+  <data name="lblmotlastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmottestnumberResource1.Text" xml:space="preserve">
+    <value>MOT Test Number:</value>
+  </data>
+  <data name="lblmottestnumberResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblodometerResource1.Text" xml:space="preserve">
+    <value>Start Odometer Reading:</value>
+  </data>
+  <data name="lblodometerResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblregnoResource1.Text" xml:space="preserve">
+    <value>Registration No:</value>
+  </data>
+  <data name="lblregnoResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblservicecheckedbyResource1.Text" xml:space="preserve">
+    <value>Checked By:</value>
+  </data>
+  <data name="lblservicecheckedbyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblservicedetailsResource1.Text" xml:space="preserve">
+    <value>Service Details</value>
+  </data>
+  <data name="lblservicedetailsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblservicedocumentResource1.Text" xml:space="preserve">
+    <value>Document:</value>
+  </data>
+  <data name="lblservicedocumentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblserviceexpiryResource1.Text" xml:space="preserve">
+    <value>Expiry Date:</value>
+  </data>
+  <data name="lblserviceexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblservicelastcheckedResource1.Text" xml:space="preserve">
+    <value>Last Checked:</value>
+  </data>
+  <data name="lblservicelastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblstartResource1.Text" xml:space="preserve">
+    <value>Start Date:</value>
+  </data>
+  <data name="lblstartResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbltaxcheckedbyResource1.Text" xml:space="preserve">
+    <value>Checked By:</value>
+  </data>
+  <data name="lbltaxcheckedbyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbltaxdetailsResource1.Text" xml:space="preserve">
+    <value>Tax Details</value>
+  </data>
+  <data name="lbltaxdetailsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbltaxdocumentResource1.Text" xml:space="preserve">
+    <value>Document:</value>
+  </data>
+  <data name="lbltaxdocumentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbltaxexpirydateResource1.Text" xml:space="preserve">
+    <value>Expiry Date:</value>
+  </data>
+  <data name="lbltaxexpirydateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbltaxlastcheckedResource1.Text" xml:space="preserve">
+    <value>Last Checked:</value>
+  </data>
+  <data name="lbltaxlastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbludfsResource1.Text" xml:space="preserve">
+    <value>User Defined Fields</value>
+  </data>
+  <data name="lbludfsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ListItemResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ListItemResource1.Value" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ListItemResource2.Text" xml:space="preserve">
+    <value>Petrol</value>
+  </data>
+  <data name="ListItemResource2.Value" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="ListItemResource3.Text" xml:space="preserve">
+    <value>Diesel</value>
+  </data>
+  <data name="ListItemResource3.Value" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="ListItemResource4.Text" xml:space="preserve">
+    <value>LPG</value>
+  </data>
+  <data name="ListItemResource4.Value" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="litodoResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="reqmakeResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter the make of this car</value>
+  </data>
+  <data name="reqmakeResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="reqmakeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="reqmodelResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter the model of this car</value>
+  </data>
+  <data name="reqmodelResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="reqmodelResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="reqregResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter the registration number of this car</value>
+  </data>
+  <data name="reqregResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="reqregResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbludfResource1.Caption" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbludfResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtendodometerResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtendodometerResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtinsuranceexpiryResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtinsuranceexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtinsurancelastcheckedResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtinsurancelastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtinsurancenumberResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtinsurancenumberResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtmakeResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtmakeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtmodelResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtmodelResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtmotexpiryResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtmotexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtmotlastcheckedResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtmotlastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtmottestnumberResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtmottestnumberResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtodometerResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtodometerResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtregnoResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtregnoResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtserviceexpiryResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtserviceexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtservicelastcheckedResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtservicelastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txttaxexpiryResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txttaxexpiryResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txttaxlastcheckedResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txttaxlastcheckedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ValidationSummary1Resource1.HeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ValidationSummary1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+</root>

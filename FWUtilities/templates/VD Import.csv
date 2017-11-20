@@ -1,0 +1,21 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+supplier_details,subAccountId,SubAccount,S,50,N,Y,F,accountsSubAccounts.subAccountId,accountsSubAccounts.Description,
+supplier_details,supplierName,Supplier Name,S,100,Y,Y,N,,,
+supplier_details,categoryId,Supplier Category,S,50,N,N,Y,[supplier_categories].[categoryId],[supplier_categories].[Description],
+supplier_details,statusId,Supplier Status,S,50,N,N,Y,[supplier_status].[statusId],[supplier_status].[Description],
+supplier_details,annual_turnover,Annual Turnover,F,,N,N,N,,,0
+supplier_details,supplier_currency,Supplier Currency,S,50,N,N,Y,[currencyView].[currencyId],[currencyView].[currencyName],
+supplier_details,numberofemployees,Number of Employees,N,,N,N,N,,,0
+supplier_details,financialStatusLastChecked,Financial Status Last Checked Date,D,,N,N,N,,,
+supplier_details,weburl,Supplier Web Address,S,50,N,N,N,,,
+supplier_details,internalStaffContactId,Internal Contact,S,50,N,N,Y,[employees].[employeeId],dbo.getEmployeeFullName(employeeId),
+supplier_details,financial_statusId,Last Financial Status,S,50,N,N,Y,[financial_status].[statusId],[financial_status].[description],
+supplier_addresses,switchboard,Switchboard,S,30,N,N,N,,,
+supplier_addresses,fax,Fax,S,30,N,N,N,,,
+supplier_addresses,address_title,Address Title,S,250,N,N,N,,,
+supplier_addresses,addr_line1,Address Line 1,S,150,N,N,N,,,
+supplier_addresses,addr_line2,Address Line 2,S,150,N,N,N,,,
+supplier_addresses,town,Town / City,S,150,N,N,N,,,
+supplier_addresses,county,County,S,150,N,N,N,,,
+supplier_addresses,postcode,Post Code,S,10,N,N,N,,,
+supplier_addresses,countryid,Country,S,50,N,N,Y,[countryView].[countryid],[countryView].[country],

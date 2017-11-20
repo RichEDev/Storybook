@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/Framework/FWEmailServer" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/Framework/FWEmailServer" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/Framework/FWEmailServer">
+      <s:element name="RequestAuthToken">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RequestAuthTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RequestAuthTokenResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoAuditCleardown">
+        <s:complexType />
+      </s:element>
+      <s:element name="DoAuditCleardownResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DoReviewEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="runDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="daysahead" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoReviewEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DoReviewEmailResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmailType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toAddr" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fromAddr" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Body" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendEmailResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+      <s:element name="boolean" type="s:boolean" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RequestAuthTokenSoapIn">
+    <wsdl:part name="parameters" element="tns:RequestAuthToken" />
+  </wsdl:message>
+  <wsdl:message name="RequestAuthTokenSoapOut">
+    <wsdl:part name="parameters" element="tns:RequestAuthTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="DoAuditCleardownSoapIn">
+    <wsdl:part name="parameters" element="tns:DoAuditCleardown" />
+  </wsdl:message>
+  <wsdl:message name="DoAuditCleardownSoapOut">
+    <wsdl:part name="parameters" element="tns:DoAuditCleardownResponse" />
+  </wsdl:message>
+  <wsdl:message name="DoReviewEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:DoReviewEmail" />
+  </wsdl:message>
+  <wsdl:message name="DoReviewEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:DoReviewEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:SendEmail" />
+  </wsdl:message>
+  <wsdl:message name="SendEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:SendEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="RequestAuthTokenHttpPostIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RequestAuthTokenHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="DoAuditCleardownHttpPostIn" />
+  <wsdl:message name="DoAuditCleardownHttpPostOut" />
+  <wsdl:message name="DoReviewEmailHttpPostIn">
+    <wsdl:part name="runDate" type="s:string" />
+    <wsdl:part name="daysahead" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DoReviewEmailHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="SendEmailHttpPostIn">
+    <wsdl:part name="EmailType" type="s:string" />
+    <wsdl:part name="toAddr" type="s:string" />
+    <wsdl:part name="fromAddr" type="s:string" />
+    <wsdl:part name="Subject" type="s:string" />
+    <wsdl:part name="Body" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendEmailHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="FWEmailServerSoap">
+    <wsdl:operation name="RequestAuthToken">
+      <wsdl:input message="tns:RequestAuthTokenSoapIn" />
+      <wsdl:output message="tns:RequestAuthTokenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DoAuditCleardown">
+      <wsdl:input message="tns:DoAuditCleardownSoapIn" />
+      <wsdl:output message="tns:DoAuditCleardownSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DoReviewEmail">
+      <wsdl:input message="tns:DoReviewEmailSoapIn" />
+      <wsdl:output message="tns:DoReviewEmailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendEmail">
+      <wsdl:input message="tns:SendEmailSoapIn" />
+      <wsdl:output message="tns:SendEmailSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="FWEmailServerHttpPost">
+    <wsdl:operation name="RequestAuthToken">
+      <wsdl:input message="tns:RequestAuthTokenHttpPostIn" />
+      <wsdl:output message="tns:RequestAuthTokenHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DoAuditCleardown">
+      <wsdl:input message="tns:DoAuditCleardownHttpPostIn" />
+      <wsdl:output message="tns:DoAuditCleardownHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DoReviewEmail">
+      <wsdl:input message="tns:DoReviewEmailHttpPostIn" />
+      <wsdl:output message="tns:DoReviewEmailHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendEmail">
+      <wsdl:input message="tns:SendEmailHttpPostIn" />
+      <wsdl:output message="tns:SendEmailHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="FWEmailServerSoap" type="tns:FWEmailServerSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RequestAuthToken">
+      <soap:operation soapAction="http://tempuri.org/Framework/FWEmailServer/RequestAuthToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoAuditCleardown">
+      <soap:operation soapAction="http://tempuri.org/Framework/FWEmailServer/DoAuditCleardown" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoReviewEmail">
+      <soap:operation soapAction="http://tempuri.org/Framework/FWEmailServer/DoReviewEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendEmail">
+      <soap:operation soapAction="http://tempuri.org/Framework/FWEmailServer/SendEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="FWEmailServerSoap12" type="tns:FWEmailServerSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RequestAuthToken">
+      <soap12:operation soapAction="http://tempuri.org/Framework/FWEmailServer/RequestAuthToken" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoAuditCleardown">
+      <soap12:operation soapAction="http://tempuri.org/Framework/FWEmailServer/DoAuditCleardown" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoReviewEmail">
+      <soap12:operation soapAction="http://tempuri.org/Framework/FWEmailServer/DoReviewEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendEmail">
+      <soap12:operation soapAction="http://tempuri.org/Framework/FWEmailServer/SendEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="FWEmailServerHttpPost" type="tns:FWEmailServerHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="RequestAuthToken">
+      <http:operation location="/RequestAuthToken" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoAuditCleardown">
+      <http:operation location="/DoAuditCleardown" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="DoReviewEmail">
+      <http:operation location="/DoReviewEmail" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendEmail">
+      <http:operation location="/SendEmail" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FWEmailServer">
+    <wsdl:port name="FWEmailServerSoap" binding="tns:FWEmailServerSoap">
+      <soap:address location="http://localhost/xmas2010/framework/FWEmailServer.asmx" />
+    </wsdl:port>
+    <wsdl:port name="FWEmailServerSoap12" binding="tns:FWEmailServerSoap12">
+      <soap12:address location="http://localhost/xmas2010/framework/FWEmailServer.asmx" />
+    </wsdl:port>
+    <wsdl:port name="FWEmailServerHttpPost" binding="tns:FWEmailServerHttpPost">
+      <http:address location="http://localhost/xmas2010/framework/FWEmailServer.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

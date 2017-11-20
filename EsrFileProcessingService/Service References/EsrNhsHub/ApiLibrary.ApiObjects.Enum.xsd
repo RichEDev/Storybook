@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ApiLibrary.ApiObjects.Enum" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ApiLibrary.ApiObjects.Enum" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:simpleType name="EsrHubStatus.EsrHubTransferStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Success" />
+      <xs:enumeration value="ValidationFailedNoHeader" />
+      <xs:enumeration value="ValidationFailedNoFooter" />
+      <xs:enumeration value="ValidationFailedRecordCount" />
+      <xs:enumeration value="ValidationFailedWrongFormat" />
+      <xs:enumeration value="ValidationFailedByteCount" />
+      <xs:enumeration value="NhsVpdNotFound" />
+      <xs:enumeration value="ValidationWrongSequenceNumber">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="EsrHubStatus.EsrHubTransferStatus" nillable="true" type="tns:EsrHubStatus.EsrHubTransferStatus" />
+</xs:schema>

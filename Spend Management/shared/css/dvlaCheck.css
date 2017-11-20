@@ -1,0 +1,22 @@
+﻿.modalBackground {
+            background-color: Black;
+            filter: alpha(opacity=90);
+            opacity: 0.8;
+        }
+
+        .modalPopup {
+            background-color: #FFFFFF;
+            width: 485px;
+            height: 370px;
+            border: black 2px solid;
+        }
+        .sectiontitle-inline {
+            margin: 0px;
+            border: none;
+        }
+        .sectiontitle-textarea{width: 450px; padding: 10px; height: 250px; border: #999999 solid 1px; margin-top: 0px; text-align: left; overflow: scroll; overflow-x: hidden;}
+
+        .checkboxsection {
+            float: left; margin-left: 5px; margin-top: 10px; width: 100%;
+        }
+        .sectionitle-botton{float: left; margin-left: 0px; margin-top: 10px;}

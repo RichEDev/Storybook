@@ -1,0 +1,97 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Framework Help - Product Details</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="fwhelp.css" type="text/css" />
+
+    <script language="javascript" type="text/javascript">
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+    </script>
+
+</head>
+<body class="help_page" onload="window.resizeTo(800,600)">
+    <div class="help_page_title">
+        <a onclick="closewindow();">
+            <img src="../images/exithelp.gif" alt="Close Help Window" /></a> Product Details</div>
+    <div class="help_section">
+        <div class="help_section_title">
+            Overview
+        </div>
+        <div class="help_overview">
+            Contracts, on the whole, have some tangible element that is serviced or delivered
+            by the contract agreement. These are generically known within the Framework application
+            as Products.<br />
+            <br />
+            Framework is designed to manage the individual deliverable items covered by the
+            contract and these can be maintained via the Contract Products section of the Contract
+            Summary pages.<br />
+            <br />
+            Product Details is the administration area of the application where the individual
+            items can be defined for use within the application.
+            <br />
+            <br />
+            <b>To add a new Product</b>, simply click the <i>Add</i> link in the page options
+            panel from the product details screen. A blank product page will be displayed.
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img src="../buttons/open.gif" onclick="toggle('1');" id="img1" alt="Expand Topic" />
+            Locate an existing Product
+        </div>
+        <div class="help_body_text" id="1">
+            On accessing the Product Details page, the filter options are displayed on the screen.<br />
+            <br />
+            <b>Product Filter</b> allows a wildcard value to be typed in the box supplied. Clicking
+            the icon will search and return all products that contain the search sting <i>anywhere</i>
+            in its name.<br />
+            <br />
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img id="img2" alt="Expand Topic" onclick="toggle('2');" src="../buttons/open.gif" />
+            Update or Delete a Product
+        </div>
+        <div class="help_body_text" id="2">
+            If the product being sought appears in the list, simply click the edit icon (<img
+                alt="Edit" src="../icons/edit.gif" />) to the left of the product and it will
+            be displayed in detail for modification.<br />
+            <br />
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_comments">
+            * If you do not find a topic outlined in the help which is relevant to your enquiry
+            then please contact your administrator
+        </div>
+    </div>
+    <div>
+    </div>
+</body>
+</html>

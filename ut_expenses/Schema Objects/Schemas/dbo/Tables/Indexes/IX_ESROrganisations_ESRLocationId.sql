@@ -1,0 +1,1 @@
+﻿create index [IX_ESROrganisations_ESRLocationId] on dbo.ESROrganisations (ESRLocationId)

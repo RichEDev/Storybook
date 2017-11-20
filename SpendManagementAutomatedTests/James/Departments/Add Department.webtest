@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebTest Name="Add Department" Id="9a83d2ca-6fab-4ed2-abb4-b41379b5c0cf" Owner="" Priority="0" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="0" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="" StopOnError="False">
+  <Items>
+    <Request Method="GET" Version="1.1" Url="https://www2.sel-expenses.com/" ThinkTime="11" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="https://www2.sel-expenses.com/shared/logon.aspx?ReturnUrl=%2fdefault.aspx">
+      <ExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractHiddenFields, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="1" DisplayName="Extract Hidden Fields" Description="Extract all hidden fields from the response and place them into the test context.">
+          <RuleParameters>
+            <RuleParameter Name="Required" Value="True" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+          </RuleParameters>
+        </ExtractionRule>
+      </ExtractionRules>
+      <CorrelationExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam1.ReturnUrl" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="?ReturnUrl=" />
+            <RuleParameter Name="EndsWith" Value="&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam1.hiddenInputToUpdateATBuffer_CommonToolkitScripts" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="dex=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot; cla" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </CorrelationExtractionRules>
+    </Request>
+    <Request Method="POST" Version="1.1" Url="https://www2.sel-expenses.com/shared/logon.aspx" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="https://www2.sel-expenses.com/home.aspx">
+      <QueryStringParameters>
+        <QueryStringParameter Name="ReturnUrl" Value="%2fdefault.aspx" RecordedValue="%2fdefault.aspx" CorrelationBinding="{{QueryStringParam1.ReturnUrl}}" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+      <FormPostHttpBody>
+        <FormPostParameter Name="__EVENTTARGET" Value="{{$HIDDEN1.__EVENTTARGET}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTARGUMENT" Value="{{$HIDDEN1.__EVENTARGUMENT}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATE" Value="{{$HIDDEN1.__VIEWSTATE}}" RecordedValue="/wEPDwUKLTQwMzcyMzI3Mw9kFgJmD2QWAgIDD2QWAgIBDxYCHgRUZXh0BVVMb2dvbiB0byA8c3BhbiBjbGFzcz0iZXhwZW5zZXMiPmV4cGVuc2VzPC9zcGFuPjxzcGFuIGNsYXNzPSJleHBlbnNlczIwMDgiPjIwMTA8L3NwYW4+ZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAQUbY3RsMDAkcGFnZUNvbnRlbnRzJGJ0bkxvZ29u3mcRE5QSfIlo5OJa2w+W3bEiqzw=" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$pageContents$txtCompanyID" Value="sel_test" RecordedValue="sel_test" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$pageContents$txtUsername" Value="james" RecordedValue="james" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$pageContents$txtPassword" Value="Password1" RecordedValue="Password1" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="hiddenInputToUpdateATBuffer_CommonToolkitScripts" Value="1" RecordedValue="1" CorrelationBinding="{{FormPostParam1.hiddenInputToUpdateATBuffer_CommonToolkitScripts}}" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$pageContents$btnLogon.x" Value="38" RecordedValue="38" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$pageContents$btnLogon.y" Value="14" RecordedValue="14" CorrelationBinding="" UrlEncode="True" />
+      </FormPostHttpBody>
+    </Request>
+    <Request Method="GET" Version="1.1" Url="https://www2.sel-expenses.com/adminmenu.aspx" ThinkTime="5" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" />
+    <Request Method="GET" Version="1.1" Url="https://www2.sel-expenses.com/categorymenu.aspx" ThinkTime="4" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" />
+    <Request Method="GET" Version="1.1" Url="https://www2.sel-expenses.com/shared/admin/admindepartments.aspx" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" />
+    <Request Method="POST" Version="1.1" Url="https://urs.microsoft.com/urs.asmx" ThinkTime="242" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="">
+      <Headers>
+        <Header Name="SOAPAction" Value="&quot;http://Microsoft.STS.STSWeb/Lookup&quot;" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="MSPRU-Client-Key" Value="FHKb9JQ06W8SSMZlUwCSzw%3d%3d" RecordedValue="FHKb9JQ06W8SSMZlUwCSzw%3d%3d" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="MSPRU-Patented-Lock" Value="QnViOCrYYDI%3d" RecordedValue="QnViOCrYYDI%3d" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+      <StringHttpBody ContentType="text/xml; charset=utf-8" InsertByteOrderMark="False">PABzAG8AYQBwADoARQBuAHYAZQBsAG8AcABlACAAeABtAGwAbgBzADoAcwBvAGEAcAA9ACIAaAB0AHQAcAA6AC8ALwBzAGMAaABlAG0AYQBzAC4AeABtAGwAcwBvAGEAcAAuAG8AcgBnAC8AcwBvAGEAcAAvAGUAbgB2AGUAbABvAHAAZQAvACIAIAB4AG0AbABuAHMAOgB4AHMAaQA9ACIAaAB0AHQAcAA6AC8ALwB3AHcAdwAuAHcAMwAuAG8AcgBnAC8AMgAwADAAMQAvAFgATQBMAFMAYwBoAGUAbQBhAC0AaQBuAHMAdABhAG4AYwBlACIAIAB4AG0AbABuAHMAOgB4AHMAZAA9ACIAaAB0AHQAcAA6AC8ALwB3AHcAdwAuAHcAMwAuAG8AcgBnAC8AMgAwADAAMQAvAFgATQBMAFMAYwBoAGUAbQBhACIAIAB4AG0AbABuAHMAOgBzAG8AYQBwAGUAbgBjAD0AIgBoAHQAdABwADoALwAvAHMAYwBoAGUAbQBhAHMALgB4AG0AbABzAG8AYQBwAC4AbwByAGcALwBzAG8AYQBwAC8AZQBuAGMAbwBkAGkAbgBnAC8AIgA+ADwAcwBvAGEAcAA6AEIAbwBkAHkAPgA8AEwAbwBvAGsAdQBwACAAeABtAGwAbgBzAD0AIgBoAHQAdABwADoALwAvAE0AaQBjAHIAbwBzAG8AZgB0AC4AUwBUAFMALgBTAFQAUwBXAGUAYgAvACIAPgA8AHIAIABzAG8AYQBwAGUAbgBjADoAYQByAHIAYQB5AFQAeQBwAGUAPQAiAHgAcwBkADoAcwB0AHIAaQBuAGcAWwAxAF0AIgA+ADwAcwB0AHIAaQBuAGcAPgBoAHQAdABwAHMAOgAvAC8AdwB3AHcAMgAuAHMAZQBsAC0AZQB4AHAAZQBuAHMAZQBzAC4AYwBvAG0ALwBzAGgAYQByAGUAZAAvAGEAZABtAGkAbgAvAGEAZABtAGkAbgBkAGUAcABhAHIAdABtAGUAbgB0AHMALgBhAHMAcAB4ADwALwBzAHQAcgBpAG4AZwA+ADwALwByAD4APABJAEQAPgB7AEIAMwBCAEIANQBCAEIAQQAtAEUANwBEADUALQA0ADAAQQBCAC0AQQAwADQAMQAtAEEANQBCADEAQwAwAEIAMgA2AEMAOABGAH0APAAvAEkARAA+ADwAdgAgAHMAbwBhAHAAZQBuAGMAOgBhAHIAcgBhAHkAVAB5AHAAZQA9ACIAeABzAGQAOgBzAHQAcgBpAG4AZwBbADUAXQAiAD4APABzAHQAcgBpAG4AZwA+ADcALgAwAC4ANgAwADAANAAuADYAPAAvAHMAdAByAGkAbgBnAD4APABzAHQAcgBpAG4AZwA+ADcALgAwADAALgA1ADcAMwAwAC4AMQAxADwALwBzAHQAcgBpAG4AZwA+ADwAcwB0AHIAaQBuAGcAPgA3AC4AMAAuADYAMAAwADEALgAxADgAMAAwADAAPAAvAHMAdAByAGkAbgBnAD4APABzAHQAcgBpAG4AZwA+ADYALgAwAC4ANgAwADAAMQAuADEALgAwADwALwBzAHQAcgBpAG4AZwA+ADwAcwB0AHIAaQBuAGcAPgBlAG4ALQBnAGIAPAAvAHMAdAByAGkAbgBnAD4APAAvAHYAPgA8AC8ATABvAG8AawB1AHAAPgA8AC8AcwBvAGEAcAA6AEIAbwBkAHkAPgA8AC8AcwBvAGEAcAA6AEUAbgB2AGUAbABvAHAAZQA+AA==</StringHttpBody>
+    </Request>
+    <Request Method="GET" Version="1.1" Url="https://www2.sel-expenses.com/shared/admin/aedepartment.aspx" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="">
+      <ExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractHiddenFields, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="1" DisplayName="Extract Hidden Fields" Description="Extract all hidden fields from the response and place them into the test context.">
+          <RuleParameters>
+            <RuleParameter Name="Required" Value="True" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+          </RuleParameters>
+        </ExtractionRule>
+      </ExtractionRules>
+    </Request>
+    <Request Method="POST" Version="1.1" Url="https://urs.microsoft.com/urs.asmx" ThinkTime="11" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="">
+      <Headers>
+        <Header Name="SOAPAction" Value="&quot;http://Microsoft.STS.STSWeb/Lookup&quot;" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="MSPRU-Client-Key" Value="jdblTn41sYy7LTeukPljdg%3d%3d" RecordedValue="jdblTn41sYy7LTeukPljdg%3d%3d" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="MSPRU-Patented-Lock" Value="KcoHUKqCnU8%3d" RecordedValue="KcoHUKqCnU8%3d" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+      <StringHttpBody ContentType="text/xml; charset=utf-8" InsertByteOrderMark="False">PABzAG8AYQBwADoARQBuAHYAZQBsAG8AcABlACAAeABtAGwAbgBzADoAcwBvAGEAcAA9ACIAaAB0AHQAcAA6AC8ALwBzAGMAaABlAG0AYQBzAC4AeABtAGwAcwBvAGEAcAAuAG8AcgBnAC8AcwBvAGEAcAAvAGUAbgB2AGUAbABvAHAAZQAvACIAIAB4AG0AbABuAHMAOgB4AHMAaQA9ACIAaAB0AHQAcAA6AC8ALwB3AHcAdwAuAHcAMwAuAG8AcgBnAC8AMgAwADAAMQAvAFgATQBMAFMAYwBoAGUAbQBhAC0AaQBuAHMAdABhAG4AYwBlACIAIAB4AG0AbABuAHMAOgB4AHMAZAA9ACIAaAB0AHQAcAA6AC8ALwB3AHcAdwAuAHcAMwAuAG8AcgBnAC8AMgAwADAAMQAvAFgATQBMAFMAYwBoAGUAbQBhACIAIAB4AG0AbABuAHMAOgBzAG8AYQBwAGUAbgBjAD0AIgBoAHQAdABwADoALwAvAHMAYwBoAGUAbQBhAHMALgB4AG0AbABzAG8AYQBwAC4AbwByAGcALwBzAG8AYQBwAC8AZQBuAGMAbwBkAGkAbgBnAC8AIgA+ADwAcwBvAGEAcAA6AEIAbwBkAHkAPgA8AEwAbwBvAGsAdQBwACAAeABtAGwAbgBzAD0AIgBoAHQAdABwADoALwAvAE0AaQBjAHIAbwBzAG8AZgB0AC4AUwBUAFMALgBTAFQAUwBXAGUAYgAvACIAPgA8AHIAIABzAG8AYQBwAGUAbgBjADoAYQByAHIAYQB5AFQAeQBwAGUAPQAiAHgAcwBkADoAcwB0AHIAaQBuAGcAWwAxAF0AIgA+ADwAcwB0AHIAaQBuAGcAPgBoAHQAdABwAHMAOgAvAC8AdwB3AHcAMgAuAHMAZQBsAC0AZQB4AHAAZQBuAHMAZQBzAC4AYwBvAG0ALwBzAGgAYQByAGUAZAAvAGEAZABtAGkAbgAvAGEAZQBkAGUAcABhAHIAdABtAGUAbgB0AC4AYQBzAHAAeAA8AC8AcwB0AHIAaQBuAGcAPgA8AC8AcgA+ADwASQBEAD4AewBCADMAQgBCADUAQgBCAEEALQBFADcARAA1AC0ANAAwAEEAQgAtAEEAMAA0ADEALQBBADUAQgAxAEMAMABCADIANgBDADgARgB9ADwALwBJAEQAPgA8AHYAIABzAG8AYQBwAGUAbgBjADoAYQByAHIAYQB5AFQAeQBwAGUAPQAiAHgAcwBkADoAcwB0AHIAaQBuAGcAWwA1AF0AIgA+ADwAcwB0AHIAaQBuAGcAPgA3AC4AMAAuADYAMAAwADQALgA2ADwALwBzAHQAcgBpAG4AZwA+ADwAcwB0AHIAaQBuAGcAPgA3AC4AMAAwAC4ANQA3ADMAMAAuADEAMQA8AC8AcwB0AHIAaQBuAGcAPgA8AHMAdAByAGkAbgBnAD4ANwAuADAALgA2ADAAMAAxAC4AMQA4ADAAMAAwADwALwBzAHQAcgBpAG4AZwA+ADwAcwB0AHIAaQBuAGcAPgA2AC4AMAAuADYAMAAwADEALgAxAC4AMAA8AC8AcwB0AHIAaQBuAGcAPgA8AHMAdAByAGkAbgBnAD4AZQBuAC0AZwBiADwALwBzAHQAcgBpAG4AZwA+ADwALwB2AD4APAAvAEwAbwBvAGsAdQBwAD4APAAvAHMAbwBhAHAAOgBCAG8AZAB5AD4APAAvAHMAbwBhAHAAOgBFAG4AdgBlAGwAbwBwAGUAPgA=</StringHttpBody>
+    </Request>
+    <Request Method="POST" Version="1.1" Url="https://www2.sel-expenses.com/shared/admin/aedepartment.aspx" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="https://www2.sel-expenses.com/shared/admin/admindepartments.aspx">
+      <FormPostHttpBody>
+        <FormPostParameter Name="__EVENTTARGET" Value="{{$HIDDEN1.__EVENTTARGET}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTARGUMENT" Value="{{$HIDDEN1.__EVENTARGUMENT}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATE" Value="{{$HIDDEN1.__VIEWSTATE}}" RecordedValue="/wEPDwUKLTI2MDU2OTIxNw8WBh4JYWNjb3VudGlkAu8BHgplbXBsb3llZWlkAqmnAR4MZGVwYXJ0bWVudGlkZhYCZg8PFgQfAALvAR8BAqmnAWQWAgIDDxYCHgZvbmxvYWRkFgQCAQ8WAh4EVGV4dAVhPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KYm9keQp7CmJhY2tncm91bmQ6IHVybCgvaW1hZ2VzL3N1Ym1lbnVfYmcuanBnKSByZXBlYXQteSAwJSAwJTsKfQo8L3N0eWxlPmQCAw9kFhQCBg8PFggeCENzc0NsYXNzBQtzdWJtZW51aXRlbR4LTmF2aWdhdGVVcmwFIH4vaGVscF90ZXh0L2RlZmF1bHRfY3NoLmh0bSMxMDIxHgZUYXJnZXQFBl9ibGFuax4EXyFTQgICZGQCCA8WAh8EBYABPHN0eWxlIHR5cGUidGV4dC9jc3MiPgojbG9nb2Rpdgp7CmJhY2tncm91bmQ6IHRyYW5zcGFyZW50IHVybCgvaW1hZ2VzL2ppZ3NhdzEuZ2lmKSBuby1yZXBlYXQgdG9wIHJpZ2h0OyBoZWlnaHQ6IDYxcHg7Cn0KPC9zdHlsZT5kAgoPFgIfBAXJATxhIGhyZWY9ImphdmFzY3JpcHQ6c2hvd3BvbGljeSgnL3BvbGljeS5hc3B4Jyk7Ij5Db21wYW55IFBvbGljeTwvYT4mbmJzcDsmbmJzcDt8Jm5ic3A7Jm5ic3A7PGEgaHJlZj0iL2hlbHBtZW51LmFzcHgiPkhlbHAgJmFtcDsgU3VwcG9ydDwvYT4mbmJzcDsmbmJzcDt8Jm5ic3A7Jm5ic3A7PGEgaHJlZj0iamF2YXNjcmlwdDpleGl0KCk7Ij5FeGl0PC9hPmQCCw88KwAFAQAPFgIeB1Zpc2libGVoZGQCDA8WAh8EBVlQbGVhc2UgY2xpY2sgc2F2ZSBhdCB0aGUgYm90dG9tIG9mIHRoZSBwYWdlIHRvIHNhdmUgeW91ciBjaGFuZ2VzLCBvdGhlcndpc2UsIGNsaWNrIGNhbmNlbGQCDQ8WAh8EBTA8c3Ryb25nPkphbWVzIExsb3lkPC9zdHJvbmc+IHwgMDcgU2VwdGVtYmVyIDIwMDlkAg4PFgIfBAUORGVwYXJ0bWVudDpOZXdkAg8PFgIfBAUSRGVwYXJ0bWVudCBEZXRhaWxzZAIRD2QWAgIODw9kFgIeB29uY2xpY2sFKmlmICh2YWxpZGF0ZWZvcm0obnVsbCkgPT0gZmFsc2UpIHtyZXR1cm47fWQCFw9kFgICAQ9kFgICAQ8WAh8EBYQVPGRpdiBpZD0idGFza3N0b2NvbXBsZXRlZ3JpZCI+PHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiIGxhbmd1YWdlPSJqYXZhc2NyaXB0Ij4KdmFyIHRhc2tzdG9jb21wbGV0ZWdyaWRfQ29sdW1ucyA9IG5ldyBBcnJheSgpOwp2YXIgdGFza3N0b2NvbXBsZXRlZ3JpZF9Db2x1bW5fYjE4ODVjNzhfMjY2Y180NWUyXzkzZmRfMGQwNWU4OTRhM2VlX3ZhbHVlTGlzdCA9IG5ldyBBcnJheSgpOwp0YXNrc3RvY29tcGxldGVncmlkX0NvbHVtbnMucHVzaCh0cnVlLCdiMTg4NWM3OC0yNjZjLTQ1ZTItOTNmZC0wZDA1ZTg5NGEzZWUnLHRhc2tzdG9jb21wbGV0ZWdyaWRfQ29sdW1uX2IxODg1Yzc4XzI2NmNfNDVlMl85M2ZkXzBkMDVlODk0YTNlZV92YWx1ZUxpc3QpOwp2YXIgdGFza3N0b2NvbXBsZXRlZ3JpZF9Db2x1bW5fNTY1Nzg4MDVfM2YyMF80OGVjX2IxNThfNjMyZWQ1YTRkMGVlX3ZhbHVlTGlzdCA9IG5ldyBBcnJheSgpOwp0YXNrc3RvY29tcGxldGVncmlkX0NvbHVtbnMucHVzaChmYWxzZSwnNTY1Nzg4MDUtM2YyMC00OGVjLWIxNTgtNjMyZWQ1YTRkMGVlJyx0YXNrc3RvY29tcGxldGVncmlkX0NvbHVtbl81NjU3ODgwNV8zZjIwXzQ4ZWNfYjE1OF82MzJlZDVhNGQwZWVfdmFsdWVMaXN0KTsKdmFyIHRhc2tzdG9jb21wbGV0ZWdyaWRfQ29sdW1uXzZjY2YxOGIwXzYzMzNfNGUzZl9hZDVhX2I1NjI0YjRkNmJjN192YWx1ZUxpc3QgPSBuZXcgQXJyYXkoKTsKdGFza3N0b2NvbXBsZXRlZ3JpZF9Db2x1bW5zLnB1c2godHJ1ZSwnNmNjZjE4YjAtNjMzMy00ZTNmLWFkNWEtYjU2MjRiNGQ2YmM3Jyx0YXNrc3RvY29tcGxldGVncmlkX0NvbHVtbl82Y2NmMThiMF82MzMzXzRlM2ZfYWQ1YV9iNTYyNGI0ZDZiYzdfdmFsdWVMaXN0KTsKdmFyIHRhc2tzdG9jb21wbGV0ZWdyaWRfQ29sdW1uXzA5Y2MxYjczXzkzZGJfNDRmZV84NWU4Xzc4NzQ3MTljNWY2Yl92YWx1ZUxpc3QgPSBuZXcgQXJyYXkoKTsKdGFza3N0b2NvbXBsZXRlZ3JpZF9Db2x1bW5zLnB1c2goZmFsc2UsJzA5Y2MxYjczLTkzZGItNDRmZS04NWU4LTc4NzQ3MTljNWY2YicsdGFza3N0b2NvbXBsZXRlZ3JpZF9Db2x1bW5fMDljYzFiNzNfOTNkYl80NGZlXzg1ZThfNzg3NDcxOWM1ZjZiX3ZhbHVlTGlzdCk7CnZhciB0YXNrc3RvY29tcGxldGVncmlkX0NvbHVtbl8zYzhlOTYwYl81ZmYyXzQzZDBfYTRlMF85NmUzNTc1NDVhZGFfdmFsdWVMaXN0ID0gbmV3IEFycmF5KCk7CnRhc2tzdG9jb21wbGV0ZWdyaWRfQ29sdW1ucy5wdXNoKHRydWUsJzNjOGU5NjBiLTVmZjItNDNkMC1hNGUwLTk2ZTM1NzU0NWFkYScsdGFza3N0b2NvbXBsZXRlZ3JpZF9Db2x1bW5fM2M4ZTk2MGJfNWZmMl80M2QwX2E0ZTBfOTZlMzU3NTQ1YWRhX3ZhbHVlTGlzdCk7CnZhciB0YXNrc3RvY29tcGxldGVncmlkX0V2ZW50Q29sdW1ucyA9IG5ldyBBcnJheSgpOwp0YXNrc3RvY29tcGxldGVncmlkX0V2ZW50Q29sdW1ucy5wdXNoKCdWaWV3JywnJywnL3NoYXJlZC9pbWFnZXMvaWNvbnMvMTYvcGxhaW4vem9vbV9pbi5wbmcnLCdqYXZhc2NyaXB0OmdldFRhc2tSZWdhcmRpbmdSZWNvcmQoe3JlZ2FyZGluZ0FyZWF9LHtyZWdhcmRpbmdJZH0pOycsJ0dvIHRvIHJlY29yZCcpOwp2YXIgdGFza3N0b2NvbXBsZXRlZ3JpZF9GaWx0ZXJzID0gbmV3IEFycmF5KCk7CnZhciB0YXNrc3RvY29tcGxldGVncmlkX0RldGFpbHMgPSBuZXcgQXJyYXkoKTsKdGFza3N0b2NvbXBsZXRlZ3JpZF9EZXRhaWxzLnB1c2goInRhc2tzdG9jb21wbGV0ZWdyaWQiLGZhbHNlLCIiLGZhbHNlLCIiLGZhbHNlLDIwLHRydWUsZmFsc2UsJzU2NTc4ODA1LTNmMjAtNDhlYy1iMTU4LTYzMmVkNWE0ZDBlZScsdGFza3N0b2NvbXBsZXRlZ3JpZF9Db2x1bW5zLCczMDgxODhjYS1lNWVlLTQ3NjktYTI1YS03ZDE5Y2ZiYjg0MjMnLGZhbHNlLCcnLCcnLCdBc2NlbmRpbmcnLCd0YXNrSWQnLHRydWUsdGFza3N0b2NvbXBsZXRlZ3JpZF9GaWx0ZXJzLHRhc2tzdG9jb21wbGV0ZWdyaWRfRXZlbnRDb2x1bW5zLHRydWUsJ0NoZWNrQm94Jyk7CmFyckdyaWRzLnB1c2godGFza3N0b2NvbXBsZXRlZ3JpZF9EZXRhaWxzKTsKPC9zY3JpcHQ+Cjx0YWJsZSBpZD0idGJsX3Rhc2tzdG9jb21wbGV0ZWdyaWQiIGNsYXNzPSJkYXRhdGJsIj48dHI+PHRoPjxpbnB1dCB0eXBlPSJjaGVja2JveCIgaWQ9InNlbGVjdEFsbHRhc2tzdG9jb21wbGV0ZWdyaWQiIG9uY2xpY2s9InNlbGVjdEFsbE9uR3JpZCgndGFza3N0b2NvbXBsZXRlZ3JpZCcpOyIgLz48dGg+PGltZyBhbHQ9IlZpZXciIHNyYz0iL3NoYXJlZC9pbWFnZXMvaWNvbnMvMTYvcGxhaW4vem9vbV9pbi5wbmciIC8+PC90aD48dGg+VGFzayBTdWJqZWN0PC90aD48dGg+VGFzayBEdWUgRGF0ZTwvdGg+PC90cj48dHIgaWQ9InRibF90YXNrc3RvY29tcGxldGVncmlkX2VtcHR5dGV4dCI+PHRkIGNsYXNzPSJyb3cxIiBjb2xzcGFuPSI0IiBhbGlnbj0iY2VudGVyIj5UaGVyZSBhcmUgY3VycmVudGx5IG5vIHRhc2tzIGF3YWl0aW5nIGNvbXBsZXRpb248L3RkPjwvdHI+PC90YWJsZT48ZGl2IGlkPSJ0YXNrc3RvY29tcGxldGVncmlkX2Zvb3RlciIgY2xhc3M9ImNHcmlkUGFnaW5hdGlvbiI+PHNwYW4gaWQ9InRhc2tzdG9jb21wbGV0ZWdyaWRfcGFnZXJDb250YWluZXIiIHN0eWxlPSJ3aWR0aDogMjYwcHg7IG1hcmdpbi1yaWdodDogMjBweDsgZGlzcGxheTogaW5saW5lLWJsb2NrOyI+PC9zcGFuPjwvZGl2PjwvZGl2PmQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgIFF2N0bDAwJGNvbnRlbnRtYWluJGNtZG9rBRtjdGwwMCRjb250ZW50bWFpbiRjbWRjYW5jZWyN/keD4IJBIPXfSGqJVTrnlu/wTA==" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$contentmain$txtdepartment" Value="Test" RecordedValue="Test" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$contentmain$vcDepartment_ClientState" Value="{{$HIDDEN1.ctl00$contentmain$vcDepartment_ClientState}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$contentmain$txtdescription" Value="Description" RecordedValue="Description" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="hiddenInputToUpdateATBuffer_CommonToolkitScripts" Value="1" RecordedValue="1" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$contentmain$cmdok.x" Value="25" RecordedValue="25" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$contentmain$cmdok.y" Value="17" RecordedValue="17" CorrelationBinding="" UrlEncode="True" />
+      </FormPostHttpBody>
+    </Request>
+  </Items>
+  <ValidationRules>
+    <ValidationRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ValidateResponseUrl, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DisplayName="Response URL" Description="Validates that the response URL after redirects are followed is the same as the recorded response URL.  QueryString parameters are ignored." Level="Low" />
+  </ValidationRules>
+</WebTest>

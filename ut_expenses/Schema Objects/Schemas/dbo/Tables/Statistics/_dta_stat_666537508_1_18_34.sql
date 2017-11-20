@@ -1,0 +1,1 @@
+﻿CREATE STATISTICS [_dta_stat_666537508_1_18_34] ON [dbo].[savedexpenses]([expenseid], [claimid], [tempallow])

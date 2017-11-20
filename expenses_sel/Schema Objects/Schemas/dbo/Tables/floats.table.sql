@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[floats] (
+    [floatid]      INT             IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [employeeid]   INT             NOT NULL,
+    [currencyid]   INT             NULL,
+    [float]        MONEY           NOT NULL,
+    [name]         NVARCHAR (50)   NOT NULL,
+    [reason]       NVARCHAR (4000) NULL,
+    [requiredby]   DATETIME        NULL,
+    [approved]     BIT             NOT NULL,
+    [approver]     INT             NOT NULL,
+    [exchangerate] FLOAT           NOT NULL,
+    [stage]        TINYINT         NOT NULL,
+    [rejected]     BIT             NOT NULL,
+    [rejectreason] NVARCHAR (4000) NULL,
+    [disputed]     BIT             NOT NULL,
+    [dispute]      NVARCHAR (4000) NULL,
+    [paid]         BIT             NOT NULL,
+    [datepaid]     DATETIME        NULL,
+    [issuenum]     INT             NULL,
+    [basecurrency] INT             NULL,
+    [settled]      BIT             NOT NULL,
+    [CreatedOn]    DATETIME        NULL,
+    [CreatedBy]    INT             NULL,
+    [ModifiedOn]   DATETIME        NULL,
+    [ModifiedBy]   INT             NULL
+);
+

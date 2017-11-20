@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[userdefined_employees]
+    ADD CONSTRAINT [PK_userdefined_employees] PRIMARY KEY CLUSTERED ([employeeid] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

@@ -1,0 +1,15 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+productDetails,subAccountId,SubAccount,S,50,N,Y,F,accountsSubAccounts.subAccountId,accountsSubAccounts.Description,
+productDetails,productCode,Product Code,S,50,N,N,N,,,
+productDetails,productName,Product Name,S,70,Y,Y,N,,,
+productDetails,description,Product Description,S,1024,N,N,N,,,
+productDetails,productCategoryId,Product Category,S,50,N,N,Y,[productCategories].[categoryId],[productCategories].[Description],
+productDetails,installedVersionNumber,Installed Version Number,S,50,N,N,N,,,
+productDetails,dateInstalled,Date Installed,D,,N,N,N,,,
+productDetails,availableVersionNumber,Available Version Number,S,50,N,N,N,,,
+productDetails,numLicencedCopies,Number Of Licenced Copies,N,,N,N,N,,,0
+productDetails,userCode,User Code,S,50,N,N,N,,,
+productDetails,licenceExpires,Licence Expires,D,,N,N,N,,,
+productDetails,notifyId,Notify,S,50,N,N,N,employees.employeeid,dbo.getEmployeeFullName(employeeId),
+productDetails,renewalType,Renewal Type,S,50,N,N,Y,[licenceRenewalTypes].[renewalType],[licenceRenewalTypes].[description],
+productDetails,notifyDays,No Days prior to Notify,N,,N,N,N,,,0

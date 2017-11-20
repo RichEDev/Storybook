@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="frameworkmydetailsordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\framework\my details\frameworkmydetailsordered.orderedtest" id="ab29f8d6-34b7-4eb8-8e5a-416069e34189" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <TestLinks>
+    <TestLink id="54aa76a5-53f4-730c-4774-b8cefb9dba00" name="MyDetailsSuccessfullyVerifyFrameworkPageAttributesAreDisplayedAndNonFrameworkAttributesAreHidden" storage="..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

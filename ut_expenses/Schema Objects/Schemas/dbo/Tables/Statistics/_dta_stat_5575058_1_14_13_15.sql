@@ -1,0 +1,1 @@
+﻿CREATE STATISTICS [_dta_stat_5575058_1_14_13_15] ON [dbo].[claims_base]([claimid], [stage], [checkerid], [submitted])

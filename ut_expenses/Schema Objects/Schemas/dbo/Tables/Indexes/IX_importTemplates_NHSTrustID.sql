@@ -1,0 +1,1 @@
+﻿CREATE INDEX [IX_importTemplates_NHSTrustID] ON dbo.importTemplates (NHSTrustID)

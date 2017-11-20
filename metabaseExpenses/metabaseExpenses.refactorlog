@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="681bf371-51ee-4e08-8d68-6cc4101d37a3" ChangeDateTime="11/22/2012 08:35:05">
+    <Property Name="ElementName" Value="[dbo].[mobileDeviceTypes].[AppStore]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[mobileDeviceTypes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Type" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="141a699a-d9e6-4284-bc08-137fee2c8e6e" ChangeDateTime="11/22/2012 08:35:34">
+    <Property Name="ElementName" Value="[dbo].[mobileDeviceTypes].[Type]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[mobileDeviceTypes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="mobileDeviceOSType" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0841daf2-2699-4694-bf32-d469542c0045" ChangeDateTime="11/23/2012 09:17:37">
+    <Property Name="ElementName" Value="[dbo].[mobileDeviceOSTypes].[mobileDevicesOSTypeId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[mobileDeviceOSTypes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="mobileDeviceOSTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="577e88a7-dd0e-420b-8f44-8cfec9905b9d" ChangeDateTime="04/23/2013 10:24:38">
+    <Property Name="ElementName" Value="[dbo].[fields_base].[IsForeignKey]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[fields_base]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="isForeignKey" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bc0bf5e2-3ca3-4de6-992b-ce651cb2e3e9" ChangeDateTime="05/02/2013 15:41:46">
+    <Property Name="ElementName" Value="[dbo].[jointables_base].[jointableid]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[jointables_base]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="jointableid_old" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6038c21b-e5a0-441c-b8d8-15ae07099f5e" ChangeDateTime="05/02/2013 15:43:05">
+    <Property Name="ElementName" Value="[dbo].[joinbreakdown_base].[joinbreakdownid]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[joinbreakdown_base]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="joinbreakdownid_old" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c78eda7e-d4e6-49d2-a1f9-e19bfa0ceaaf" ChangeDateTime="05/02/2013 15:43:16">
+    <Property Name="ElementName" Value="[dbo].[joinbreakdown_base].[jointableid]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[joinbreakdown_base]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="jointableid_old" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="70f0cc94-248b-46ff-a8bf-a11af7fcc626" ChangeDateTime="07/04/2013 09:30:02">
+    <Property Name="ElementName" Value="[dbo].[registeredUsersHostnames].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[registeredUsersHostnames]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="accountid" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="001a0e1b-4f99-4f20-8c7f-2e92a7eec946" ChangeDateTime="11/26/2013 14:53:56">
+    <Property Name="ElementName" Value="[dbo].[global_countries].[postcodeAnywhereSupport]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[global_countries]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="postcodeAnywhereEnabled" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="31549d88-9d5a-4c04-a379-72b579eb05a6" ChangeDateTime="01/11/2014 13:45:07">
+    <Property Name="ElementName" Value="[dbo].[registeredusers].[addressDistanceLookupEnableCoordinates]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[registeredusers]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="addressInternationalLookupsAndCoordinates" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="03ad0f1b-2ec5-4700-b375-d46b495475d8" ChangeDateTime="09/30/2014 09:14:48">
+    <Property Name="ElementName" Value="[dbo].[reports].[[module]]]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[reports]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="module" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c0211175-4a3d-491d-9c6d-b2afcfbbdcd2" ChangeDateTime="03/08/2017 10:42:04">
+    <Property Name="ElementName" Value="[dbo].[registeredusers].[DVLALookUpKey ]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[registeredusers]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DVLALookUpKey" />
+  </Operation>
+</Operations>

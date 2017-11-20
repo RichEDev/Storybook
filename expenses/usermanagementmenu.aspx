@@ -1,0 +1,2 @@
+<%@ Page Language="C#" MasterPageFile="~/menu.master" AutoEventWireup="true" Inherits="usermanagementmenu" Title="Untitled Page" Codebehind="usermanagementmenu.aspx.cs" EnableSessionState="ReadOnly" %>
+<%@ MasterType VirtualPath="~/menu.master" %>

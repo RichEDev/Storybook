@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[card_transactions_barclaycard_enhanced] (
+    [transactionid]   INT            NOT NULL,
+    [company_number]  NVARCHAR (8)   NULL,
+    [invoice_number]  NVARCHAR (50)  NULL,
+    [airline_code]    NVARCHAR (50)  NULL,
+    [cardholder_name] NVARCHAR (50)  NULL,
+    [reference2]      NVARCHAR (50)  NULL,
+    [reference3]      NVARCHAR (50)  NULL,
+    [reference4]      NVARCHAR (50)  NULL,
+    [reference5]      NVARCHAR (50)  NULL,
+    [reference6]      NVARCHAR (50)  NULL,
+    [reference7]      NVARCHAR (50)  NULL,
+    [reference8]      NVARCHAR (50)  NULL,
+    [reference9]      NVARCHAR (50)  NULL,
+    [reference10]     NVARCHAR (50)  NULL,
+    [route]           NVARCHAR (50)  NULL,
+    [destination]     NVARCHAR (50)  NULL,
+    [tvluk]           NVARCHAR (1)   NULL,
+    [tvlclass]        NVARCHAR (50)  NULL,
+    [departure_date]  DATETIME       NULL,
+    [ticketnumber]    NVARCHAR (50)  NULL,
+    [passengername]   NVARCHAR (200) NULL,
+    [comment]         NVARCHAR (200) NULL
+);
+

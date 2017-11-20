@@ -1,0 +1,21 @@
+<CardTemplate Name="O2 356" FileType="XLS" NumberHeaderRecords="15" NumberFooterRecords="2">
+<Fields Type="CardTransaction" UniqueValue="trans">
+<Field Name="Date" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="dd/MM/yyyy hh:mm:ss"/>
+<Field Name="TelephoneNumber" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="20"/>
+<Field Name="UserName" MappedTable="card_transactions" MappedField="reference" FieldType="S" MaxLength="50"/>
+<Field Name="CostCentre" MappedTable="card_transactions_ref_o2tel_356" Label="Cost Centre" MappedField="cost_centre" FieldType="S" MaxLength="50"/>
+<Field Name="TariffDescription" MappedTable="card_transactions" MappedField="description" FieldType="S" MaxLength="50"/>
+<Field Name="NumberofCalls" MappedTable="card_transactions_ref_o2tel_356" Label="Number of Calls" MappedField="number_calls" FieldType="N" MaxLength="10"/>
+<Field Name="TotalDuration" MappedTable="card_transactions_ref_o2tel_356" Label="Duration" MappedField="duration" FieldType="S" MaxLength="10"/>
+<Field Name="Volume" MappedTable="card_transactions_ref_o2tel_356" Label="Volume" MappedField="volume" FieldType="N" MaxLength="15"/>
+<Field Name="LineRental" MappedTable="card_transactions_ref_o2tel_356" Label="Line Rental" MappedField="line_rental" FieldType="C"/>
+<Field Name="UsageChargesvateligible" MappedTable="card_transactions_ref_o2tel_356" Label="Usage VAT Eligible" MappedField="usage_charges_vat_eligible" FieldType="C"/>
+<Field Name="UsageChargesvatexempt" MappedTable="card_transactions_ref_o2tel_356" Label="Usage VAT Exempt" MappedField="usage_charges_vat_exempt" FieldType="C"/>
+<Field Name="OtherCharges" MappedTable="card_transactions_ref_o2tel_356" Label="Other Charges" MappedField="other_charges" FieldType="C"/>
+<Field Name="Net" MappedTable="card_transactions_ref_o2tel_356" Label="Net Amount" MappedField="net" FieldType="C"/>
+<Field Name="VAT" MappedTable="card_transactions_ref_o2tel_356" Label="VAT" MappedField="vat" FieldType="C"/>
+<Field Name="TotalCost" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C"/>
+<Field Name="CurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" DefaultValue="GBP" CurrencyType="alpha"/>
+<Field Name="CountryCode" MappedTable="card_transactions" MappedField="country_code" FieldType="S" DefaultValue="GB" CountryType="alpha"/>
+</Fields>
+</CardTemplate>

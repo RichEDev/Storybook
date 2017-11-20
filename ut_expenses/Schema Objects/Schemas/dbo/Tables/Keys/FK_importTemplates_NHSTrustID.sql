@@ -1,0 +1,1 @@
+﻿ALTER TABLE importTemplates ADD CONSTRAINT [FK_importTemplates_NHSTrustID] FOREIGN KEY (NHSTrustID) REFERENCES esrTrusts (trustID) ON DELETE CASCADE

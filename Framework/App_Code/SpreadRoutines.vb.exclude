@@ -1,0 +1,507 @@
+Imports FWBase
+Imports FarPoint.Web
+
+
+Namespace Framework2006
+
+
+Public Module SpreadRoutines
+    Public Enum RechargeCols
+        Delete_Button = 0
+        ID_Field = 1
+        Association_ID = 2
+        Entity = 3
+        Maintenance = 4
+        Quantity = 5
+        Unit_Desc = 6
+        Apportion_By = 7
+        Portion = 8
+        Recharge = 9
+        Surcharge_Type = 10
+        Surcharge = 11
+        Final_Recharge = 12
+    End Enum
+
+    Public Enum RechargeDataCols
+        Delete_Button = 0
+        ConProd_ID = 1
+        Item_ID = 2
+        Client = 3
+        Recharge_Period = 4
+        Recharge_Amount = 5
+    End Enum
+
+    Public Enum SavingsCols
+        ID_Field = 0
+        Contract_ID = 1
+        Saving_Date = 2
+        Reference = 3
+        RechargeEntity = 4
+        Amount = 5
+        Comment = 6
+        LoggedByUser = 7
+        LoggedByTime = 8
+    End Enum
+
+    Public Sub LoadSpreadStyles(ByRef sprObj As Spread.FpSpread)
+        Dim s As Spread.NamedStyle
+
+        s = New Spread.NamedStyle
+
+        SetDefault(s)
+        With s
+            .Name = "SpreadHeader"
+            .Font.Bold = True
+            .BackColor = Color.FromArgb(&H97CE8B) ' #ffff99 as per <th> stylesheet
+            .HorizontalAlign = HorizontalAlign.Center
+            .Border.BorderSize = 1
+            .Border.BorderColor = Color.Black
+            .Border.BorderStyle = BorderStyle.Solid
+            .Margin = New Spread.Inset(3, 3, 3, 3)
+        End With
+
+        sprObj.NamedStyles.Add(s)
+
+        s = New Spread.NamedStyle
+
+        SetDefault(s)
+        With s
+            .Name = "LockedCells"
+            .Font.Bold = False
+            .BackColor = Color.Silver 'Color.FromArgb(&HE0E0E0) '#E0E0E0
+            .HorizontalAlign = HorizontalAlign.Center
+            .Border.BorderStyle = BorderStyle.Solid
+            .Border.BorderSize = 1
+            .Border.BorderColor = Color.Black
+            .Margin = New Spread.Inset(3, 3, 3, 3)
+        End With
+
+        sprObj.NamedStyles.Add(s)
+
+        s = New Spread.NamedStyle
+        SetDefault(s)
+        With s
+            .Name = "BasicCell"
+            .Font.Bold = False
+            .BackColor = Color.White
+            .Border.BorderStyle = BorderStyle.Solid
+            .Border.BorderSize = 1
+            .Border.BorderColor = Color.Black
+            .Margin = New Spread.Inset(3, 3, 3, 3)
+        End With
+
+        sprObj.NamedStyles.Add(s)
+
+        s = New Spread.NamedStyle
+        SetDefault(s)
+        With s
+            .Name = "DataCell"
+            .Font.Bold = False
+            .BackColor = Color.White
+            .Border.BorderStyle = BorderStyle.Solid
+            .Border.BorderSize = 1
+            .Border.BorderColor = Color.Black
+            .Margin = New Spread.Inset(3, 3, 3, 3)
+        End With
+
+        sprObj.NamedStyles.Add(s)
+
+        s = New Spread.NamedStyle
+        SetDefault(s)
+        With s
+            .Name = "Footer"
+            .Font.Bold = False
+            .BackColor = Color.Silver
+            .Border.BorderStyle = BorderStyle.Solid
+            .Border.BorderSize = 1
+            .Border.BorderColor = Color.Black
+            .Margin = New Spread.Inset(3, 3, 3, 3)
+        End With
+
+        sprObj.NamedStyles.Add(s)
+    End Sub
+
+    Private Sub SetDefault(ByRef s As Spread.NamedStyle)
+        s.Font.Name = "Arial"
+        s.Font.Size = FontUnit.Point(8)
+        s.ForeColor = Color.Black
+        s.Border.BorderStyle = BorderStyle.None
+    End Sub
+
+    Public Sub SetupRechargeColumns(ByRef sprObj As Spread.FpSpread, ByVal db As DBConnection, ByVal curId As Integer, ByVal activeSheet As Integer, ByVal rs As RechargeSettings)
+        Dim percentile As Double
+
+        LoadSpreadStyles(sprObj)
+
+        'sprObj.Sheets.Count = activeSheet + 1
+        sprObj.ActiveSheetViewIndex = activeSheet
+        sprObj.EditModeReplace = True
+        sprObj.CommandBar.Visible = False
+        'sprObj.CommandBar.ButtonType = Spread.ButtonType.PushButton
+        sprObj.ColumnHeader.DefaultStyleName = "BasicCell"
+        sprObj.ColumnHeader.Height = 50
+        sprObj.CommandBar.BackColor = Color.Silver
+        sprObj.Rows.Default.Height = 30
+        sprObj.Rows.Default.VerticalAlign = VerticalAlign.Middle
+        sprObj.ActiveSheetView.PageSize = 20
+        sprObj.Pager.PageCount = 10
+        sprObj.Pager.Position = Spread.PagerPosition.Top
+        sprObj.Pager.Mode = Spread.PagerMode.Both
+        sprObj.Pager.Align = HorizontalAlign.Center
+
+
+        Dim ninfo As New System.Globalization.NumberFormatInfo
+        ninfo = GetCurrencyFormat(db, curId)
+
+        percentile = sprObj.Width.Value / 100
+
+        With sprObj.ActiveSheetView
+            .DefaultStyleName = "BasicCell"
+            .Protect = True
+            .ColumnCount = RechargeCols.Final_Recharge + 1
+            .RowCount = 500 ' reduce this after to no. clients + 1
+            .AutoCalculation = True
+            .AllowDelete = False
+            .AllowInsert = False
+
+            .Columns(RechargeCols.Association_ID).Label = "Recharge Id"
+            .Columns(RechargeCols.Association_ID).CellType = New Spread.IntegerCellType
+            .SetColumnVisible(RechargeCols.Association_ID, False)
+            .Columns(RechargeCols.Association_ID).Width = 0
+
+            .Columns(RechargeCols.ID_Field).Label = "Entity Id"
+            .Columns(RechargeCols.ID_Field).CellType = New Spread.IntegerCellType
+            .Columns(RechargeCols.ID_Field).HorizontalAlign = HorizontalAlign.Center
+            .SetColumnVisible(RechargeCols.ID_Field, False)
+            .Columns(RechargeCols.ID_Field).Width = 0
+
+            .Columns(RechargeCols.Delete_Button).Label = " "
+            Dim imgcell As New Spread.ButtonCellType
+            imgcell.ButtonType = Spread.ButtonType.ImageButton
+            imgcell.ImageUrl = "./buttons/delete_small.gif"
+            imgcell.Text = "Remove this client from recharge"
+
+            .Columns(RechargeCols.Delete_Button).CellType = imgcell
+            .Columns(RechargeCols.Delete_Button).HorizontalAlign = HorizontalAlign.Center
+            .Columns(RechargeCols.Delete_Button).Width = (4 * percentile)
+
+            .Columns(RechargeCols.Entity).CellType = New Spread.TextCellType ' client
+            .Columns(RechargeCols.Entity).HorizontalAlign = HorizontalAlign.Center
+            .Columns(RechargeCols.Entity).Label = rs.ReferenceAs
+            .Columns(RechargeCols.Entity).Width = (12 * percentile)
+
+            Dim mv As New Spread.GeneralCellType
+            mv.NumberFormat = ninfo
+            mv.FormatString = "C"
+            .Columns(RechargeCols.Maintenance).CellType = mv ' maint val
+            .Columns(RechargeCols.Maintenance).HorizontalAlign = HorizontalAlign.Right
+            .Columns(RechargeCols.Maintenance).Label = "Maint. Value"
+            .Columns(RechargeCols.Maintenance).Width = (10 * percentile)
+
+            .Columns(RechargeCols.Quantity).CellType = New Spread.IntegerCellType ' qty
+            .Columns(RechargeCols.Quantity).HorizontalAlign = HorizontalAlign.Center
+            .Columns(RechargeCols.Quantity).Label = "Quantity"
+            .Columns(RechargeCols.Quantity).Width = (8 * percentile)
+
+            .Columns(RechargeCols.Unit_Desc).CellType = New Spread.TextCellType ' unit desc
+            .Columns(RechargeCols.Unit_Desc).HorizontalAlign = HorizontalAlign.Center
+            .Columns(RechargeCols.Unit_Desc).Label = "Unit Desc."
+            .Columns(RechargeCols.Unit_Desc).Width = (10 * percentile)
+
+            Dim lbStr(3) As String
+            Dim lbVals(3) As String
+            Dim x As Integer
+
+            For x = 0 To 2
+                lbVals(x) = Str(x)
+                lbStr(x) = [Enum].GetName(GetType(RechargeApportionType), x)
+            Next
+
+            .Columns(RechargeCols.Apportion_By).CellType = New Spread.ComboBoxCellType(lbStr, lbVals) ' apportion type
+            .Columns(RechargeCols.Apportion_By).HorizontalAlign = HorizontalAlign.Center
+            .Columns(RechargeCols.Apportion_By).Label = "Apportion by"
+            .Columns(RechargeCols.Apportion_By).Width = (10 * percentile)
+
+            .Columns(RechargeCols.Portion).CellType = New Spread.DoubleCellType ' portion
+            .Columns(RechargeCols.Portion).HorizontalAlign = HorizontalAlign.Center
+            .Columns(RechargeCols.Portion).Label = "Portion"
+            .Columns(RechargeCols.Portion).Width = (6 * percentile)
+
+            Dim rv As New Spread.GeneralCellType
+            rv.NumberFormat = ninfo
+            rv.FormatString = "C"
+            .Columns(RechargeCols.Recharge).CellType = rv ' recharge val (formula)
+            .Columns(RechargeCols.Recharge).HorizontalAlign = HorizontalAlign.Right
+            .Columns(RechargeCols.Recharge).Label = "Recharge Value"
+            .Columns(RechargeCols.Recharge).Width = (10 * percentile)
+
+            ReDim lbVals(2)
+            ReDim lbStr(2)
+
+            For x = 0 To 1
+                lbVals(x) = Str(x)
+                lbStr(x) = [Enum].GetName(GetType(SurchargeType), x)
+            Next
+
+            .Columns(RechargeCols.Surcharge_Type).CellType = New Spread.ComboBoxCellType(lbStr, lbVals) ' surcharge type
+            .Columns(RechargeCols.Surcharge_Type).HorizontalAlign = HorizontalAlign.Center
+            .Columns(RechargeCols.Surcharge_Type).Label = "Surcharge Type"
+            .Columns(RechargeCols.Surcharge_Type).Width = (10 * percentile)
+
+            .Columns(RechargeCols.Surcharge).CellType = New Spread.DoubleCellType ' surcharge (%)
+            .Columns(RechargeCols.Surcharge).HorizontalAlign = HorizontalAlign.Center
+            .Columns(RechargeCols.Surcharge).Label = "Surcharge"
+            .Columns(RechargeCols.Surcharge).Width = (8 * percentile)
+
+            Dim fc As New Spread.GeneralCellType
+            fc.NumberFormat = ninfo
+            fc.FormatString = "C"
+            .Columns(RechargeCols.Final_Recharge).CellType = fc ' final charge
+            .Columns(RechargeCols.Final_Recharge).HorizontalAlign = HorizontalAlign.Right
+            .Columns(RechargeCols.Final_Recharge).Label = "Final Charge"
+            .Columns(RechargeCols.Final_Recharge).Width = (10 * percentile)
+
+            ' turn off the row indicators
+            .RowHeader.Visible = False
+
+            .ColumnHeader.DefaultStyleName = "SpreadHeader"
+        End With
+    End Sub
+
+    Public Sub SetupDataColumns(ByRef sprObj As Spread.FpSpread, ByVal db As DBConnection, ByVal curId As Integer, ByVal activeSheet As Integer, ByVal rs As RechargeSettings)
+        Dim percentile As Double
+
+        LoadSpreadStyles(sprObj)
+
+        'sprObj.Sheets.Count = activeSheet + 1
+        sprObj.ActiveSheetViewIndex = activeSheet
+        sprObj.EditModeReplace = True
+        sprObj.CommandBar.Visible = False
+        'sprObj.CommandBar.ButtonType = Spread.ButtonType.PushButton
+        sprObj.ColumnHeader.DefaultStyleName = "BasicCell"
+        sprObj.CommandBar.BackColor = Color.Silver
+        sprObj.ActiveSheetView.PageSize = 20
+        sprObj.Pager.PageCount = 10
+        sprObj.Pager.Position = Spread.PagerPosition.Top
+        sprObj.Pager.Mode = Spread.PagerMode.Both
+        sprObj.Pager.Align = HorizontalAlign.Center
+
+        percentile = sprObj.Width.Value / 100
+
+        Dim ninfo As New System.Globalization.NumberFormatInfo
+        ninfo = GetCurrencyFormat(db, curId)
+
+        With sprObj.ActiveSheetView
+            .DefaultStyleName = "BasicCell"
+            .Protect = True
+            .ColumnCount = RechargeDataCols.Recharge_Amount + 1
+            .RowCount = 500 ' reduce this after to no. clients + 1
+            .AutoCalculation = True
+            .AllowDelete = False
+            .AllowInsert = False
+
+            .Columns(RechargeCols.Delete_Button).Label = " "
+            Dim imgcell As New Spread.ButtonCellType
+            imgcell.ButtonType = Spread.ButtonType.ImageButton
+            imgcell.ImageUrl = "./buttons/delete_small.gif"
+            imgcell.Text = "Remove this client from recharge"
+
+            .Columns(RechargeDataCols.Delete_Button).CellType = imgcell
+            .Columns(RechargeDataCols.Delete_Button).HorizontalAlign = HorizontalAlign.Center
+            .Columns(RechargeDataCols.Delete_Button).Width = (4 * percentile)
+
+            .Columns(RechargeDataCols.ConProd_ID).Label = "Contract-Product Id"
+            .Columns(RechargeDataCols.ConProd_ID).CellType = New Spread.IntegerCellType
+            .Columns(RechargeDataCols.ConProd_ID).HorizontalAlign = HorizontalAlign.Center
+            .SetColumnVisible(RechargeDataCols.ConProd_ID, False)
+            .Columns(RechargeDataCols.ConProd_ID).Width = 0
+
+            .Columns(RechargeDataCols.Item_ID).Label = "Recharge Item Id"
+            .Columns(RechargeDataCols.Item_ID).CellType = New Spread.IntegerCellType
+            .Columns(RechargeDataCols.Item_ID).HorizontalAlign = HorizontalAlign.Center
+            .SetColumnVisible(RechargeDataCols.Item_ID, False)
+            .Columns(RechargeDataCols.Item_ID).Width = 0
+
+            .Columns(RechargeDataCols.Client).CellType = New Spread.TextCellType ' client
+            .Columns(RechargeDataCols.Client).HorizontalAlign = HorizontalAlign.Center
+            .Columns(RechargeDataCols.Client).Label = rs.ReferenceAs
+            .Columns(RechargeDataCols.Client).Width = (30 * percentile) ' was 200
+
+            Dim dc As New Spread.DateTimeCellType
+            dc.FormatString = "dd/MM/yyyy"
+            dc.ErrorMessage = "Invalid Date!!"
+            .Columns(RechargeDataCols.Recharge_Period).CellType = dc ' recharge period
+            .Columns(RechargeDataCols.Recharge_Period).HorizontalAlign = HorizontalAlign.Center
+            .Columns(RechargeDataCols.Recharge_Period).Label = "Recharge Period"
+            .Columns(RechargeDataCols.Recharge_Period).Width = (30 * percentile) 'was 150
+
+            Dim mv As New Spread.GeneralCellType
+            mv.NumberFormat = ninfo
+            mv.FormatString = "C"
+            .Columns(RechargeDataCols.Recharge_Amount).CellType = mv ' recharge amount
+            .Columns(RechargeDataCols.Recharge_Amount).HorizontalAlign = HorizontalAlign.Right
+            .Columns(RechargeDataCols.Recharge_Amount).Label = "Recharge Amount"
+            .Columns(RechargeDataCols.Recharge_Amount).Width = (30 * percentile) ' was 200
+
+            ' turn off the row indicators
+            .RowHeader.Visible = False
+
+            .ColumnHeader.DefaultStyleName = "SpreadHeader"
+        End With
+    End Sub
+
+    Public Function GetCurrencyFormat(ByVal db As DBConnection, ByVal curId As Integer) As System.Globalization.NumberFormatInfo
+        Dim cf As New System.Globalization.NumberFormatInfo
+
+        db.FWDb("R2", "Codes - Currency", "Currency Id", curId)
+        If db.FWDb2Flag = True Then
+            With cf
+                .CurrencyDecimalDigits = Val(db.FWDbFindVal("Decimal Digits", 2))
+                .CurrencyDecimalSeparator = db.FWDbFindVal("Decimal Separator", 2)
+                .CurrencyGroupSeparator = db.FWDbFindVal("Group Symbol", 2)
+                .CurrencySymbol = db.FWDbFindVal("Currency Symbol", 2)
+            End With
+        End If
+
+        GetCurrencyFormat = cf
+    End Function
+
+        Public Function SetupSavingsGrid(ByVal db As DBConnection, ByVal fws As cFWSettings, ByRef sprObj As FarPoint.Web.Spread.FpSpread, ByVal conId As Integer, ByVal rs As RechargeSettings, ByVal collRE As System.Collections.SortedList) As Boolean
+            Try
+                Dim curId As Integer
+
+                LoadSpreadStyles(sprObj)
+
+                With sprObj
+                    .ActiveSheetViewIndex = 0
+                    .EditModeReplace = True
+                    .CommandBar.Visible = False
+                    .ActiveSheetView.PageSize = 20
+                    .Pager.PageCount = 10
+                    .Pager.Position = Spread.PagerPosition.Top
+                    .Pager.Mode = Spread.PagerMode.Both
+                    .Pager.Align = HorizontalAlign.Center
+
+                    'sprObj.CommandBar.ButtonType = Spread.ButtonType.PushButton
+                    .ColumnHeader.DefaultStyleName = "BasicCell"
+                    .CommandBar.BackColor = Color.Silver
+                    .Sheets(0).GridLineColor = Color.Black
+                    .Sheets(0).GridLines = GridLines.Both
+
+                    db.FWDb("R3", "contract_details", "Contract Id", conId)
+                    If db.FWDb3Flag = True Then
+                        curId = Val(db.FWDbFindVal("Contract Currency", 3))
+                    Else
+                        curId = 0
+                    End If
+
+                    Dim ninfo As New System.Globalization.NumberFormatInfo
+                    ninfo = GetCurrencyFormat(db, curId)
+
+                    With sprObj.ActiveSheetView
+                        .DefaultStyleName = "BasicCell"
+                        .Protect = True
+                        .ColumnCount = SavingsCols.LoggedByTime + 1
+                        .RowCount = 500 ' reduce this after to no. clients + 1
+                        .AutoCalculation = True
+                        .AllowDelete = True
+                        .AllowInsert = True
+                        .OperationMode = Spread.OperationMode.Normal
+
+                        .Columns(SavingsCols.ID_Field).Label = "Savings Id"
+                        .Columns(SavingsCols.ID_Field).CellType = New Spread.IntegerCellType
+                        .Columns(SavingsCols.ID_Field).HorizontalAlign = HorizontalAlign.Center
+                        .SetColumnVisible(SavingsCols.ID_Field, False)
+                        .Columns(SavingsCols.ID_Field).Width = 0
+
+                        .Columns(SavingsCols.Contract_ID).Label = "Contract Id"
+                        .Columns(SavingsCols.Contract_ID).CellType = New Spread.IntegerCellType
+                        .Columns(SavingsCols.Contract_ID).HorizontalAlign = HorizontalAlign.Center
+                        .SetColumnVisible(SavingsCols.Contract_ID, False)
+                        .Columns(SavingsCols.Contract_ID).Width = 0
+
+                        Dim dc As New Spread.DateTimeCellType
+                        dc.FormatString = "dd/MM/yyyy"
+                        dc.ErrorMessage = "Invalid Date!!"
+                        .Columns(SavingsCols.Saving_Date).CellType = dc ' saving date
+                        .Columns(SavingsCols.Saving_Date).HorizontalAlign = HorizontalAlign.Center
+                        .Columns(SavingsCols.Saving_Date).Label = "Date of Saving"
+                        .Columns(SavingsCols.Saving_Date).Width = 110
+
+                        .Columns(SavingsCols.Reference).CellType = New Spread.TextCellType
+                        .Columns(SavingsCols.Reference).HorizontalAlign = HorizontalAlign.Center
+                        .Columns(SavingsCols.Reference).Label = "Reference"
+                        .Columns(SavingsCols.Reference).Width = 110
+
+                        If fws.glUseRechargeFunction = True Then
+                            Dim lst As New Spread.ComboBoxCellType
+                            Dim x As Integer
+                            Dim lstItems As String()
+                            Dim lstValues As String()
+                            ReDim lstItems(collRE.Count)
+                            ReDim lstValues(collRE.Count)
+
+                            For x = 1 To collRE.Count
+                                lstItems(x) = collRE.GetByIndex(x - 1)
+                                lstValues(x) = collRE.GetKey(x - 1)
+                            Next
+                            lst.Items = lstItems
+                            lst.Values = lstValues
+                            .Columns(SavingsCols.RechargeEntity).CellType = lst
+                            .Columns(SavingsCols.RechargeEntity).HorizontalAlign = HorizontalAlign.Center
+                            .Columns(SavingsCols.RechargeEntity).Label = "Recharge " & rs.ReferenceAs
+                            .Columns(SavingsCols.RechargeEntity).Width = 110
+                        Else
+                            .Columns(SavingsCols.RechargeEntity).CellType = New Spread.TextCellType
+                            .Columns(SavingsCols.RechargeEntity).Width = 0
+                            .SetColumnVisible(SavingsCols.RechargeEntity, False)
+                        End If
+
+                        Dim mv As New Spread.GeneralCellType
+                        mv.NumberFormat = ninfo
+                        mv.FormatString = "C"
+                        .Columns(SavingsCols.Amount).CellType = mv ' saving amount
+                        .Columns(SavingsCols.Amount).HorizontalAlign = HorizontalAlign.Right
+                        .Columns(SavingsCols.Amount).Label = "Saving Amount"
+                        .Columns(SavingsCols.Amount).Width = 150
+
+                        Dim txt As New Spread.TextCellType
+                        txt.Multiline = True
+                        txt.AllowWrap = True
+                        .Columns(SavingsCols.Comment).CellType = txt
+                        .Columns(SavingsCols.Comment).HorizontalAlign = HorizontalAlign.Left
+                        .Columns(SavingsCols.Comment).Label = "Comments"
+                        .Columns(SavingsCols.Comment).Width = 180
+
+                        .Columns(SavingsCols.LoggedByUser).CellType = New Spread.TextCellType
+                        .Columns(SavingsCols.LoggedByUser).HorizontalAlign = HorizontalAlign.Center
+                        .Columns(SavingsCols.LoggedByUser).Label = "Logged By"
+                        .Columns(SavingsCols.LoggedByUser).Width = 110
+
+                        Dim tc As New Spread.DateTimeCellType
+                        tc.FormatString = "dd/MM/yyyy hh:mm:ss"
+                        tc.ErrorMessage = "Invalid Date Time!!"
+                        .Columns(SavingsCols.LoggedByTime).CellType = tc
+                        .Columns(SavingsCols.LoggedByTime).HorizontalAlign = HorizontalAlign.Center
+                        .Columns(SavingsCols.LoggedByTime).Label = "Logged Date"
+                        .Columns(SavingsCols.LoggedByTime).Width = 110
+
+                        ' turn off the row indicators
+                        .RowHeader.Visible = False
+
+                        .ColumnHeader.DefaultStyleName = "SpreadHeader"
+                    End With
+                End With
+
+
+
+                SetupSavingsGrid = True
+
+            Catch ex As Exception
+                SetupSavingsGrid = False
+            End Try
+
+        End Function
+End Module
+
+End Namespace

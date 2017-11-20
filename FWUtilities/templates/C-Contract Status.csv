@@ -1,0 +1,4 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+codes_contractstatus,subAccountId,Repository SubAccount,S,50,N,Y,F,accountsSubAccounts.subAccountId,accountsSubAccounts.Description,
+codes_contractstatus,StatusDescription,,S,50,Y,Y,N,,,
+codes_contractstatus,IsArchive,isArchive Status?,X,,N,N,N,,,0

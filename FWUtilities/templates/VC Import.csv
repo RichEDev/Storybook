@@ -1,0 +1,16 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+supplier_contacts,supplierId,Supplier Name,S,100,N,Y,Y,[supplier_details].[supplierId],[supplier_details].[supplierName],
+supplier_contacts,contactName,Contact Name,S,200,N,Y,N,,,
+supplier_contacts,position,Position,S,200,N,N,N,,,
+supplier_contacts,switchboard,(Business) Telephone,S,30,N,N,N,,,
+supplier_contacts,mobile,Mobile,S,50,N,N,N,,,
+supplier_contacts,fax,(Business) Fax,S,50,N,N,N,,,
+supplier_contacts,email,Email,S,300,Y,N,N,,,
+supplier_contacts,addr_line1,(Business) Address 1,S,150,N,N,N,,,
+supplier_contacts,addr_line2,(Business) Address 2,S,150,N,N,N,,,
+supplier_contacts,town,(Business) Town / City,S,150,N,N,N,,,
+supplier_contacts,county,(Business) County,S,150,N,N,N,,,
+supplier_contacts,postcode,(Business) Post Code,S,10,N,N,N,,,
+supplier_contacts,countryid,(Business) Country,S,50,N,N,Y,[countryView].[countryid],[countryView].[country],
+supplier_contacts,comments,Comments,S,1024,N,N,N,,,
+supplier_contacts,main_contact?,Main Contact,X,,N,N,N,,,0

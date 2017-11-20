@@ -1,0 +1,649 @@
+% FW Update.dat file
+% 14/09/2006
+# 000018 000019
+
+% Migrate all tables to new names for replication compatibility
+EXEC sp_rename 'Attachments','attachments'
+*
+EXEC sp_rename 'Audit Log','audit_log'
+*
+EXEC sp_rename 'Code Tables','code_tables'
+*
+EXEC sp_rename 'Codes - Account Codes','codes_accountcodes'
+*
+EXEC sp_rename 'Codes - Contract Category','codes_contractcategory'
+*
+EXEC sp_rename 'Codes - Contract Status','codes_contractstatus'
+*
+EXEC sp_rename 'Codes - Contract Type','codes_contracttype'
+*
+EXEC sp_rename 'Codes - Currency','codes_currency'
+*
+EXEC sp_rename 'Codes - Financial Status','codes_financialstatus'
+*
+EXEC sp_rename 'Codes - Inflator Metrics','codes_inflatormetrics'
+*
+EXEC sp_rename 'Codes - Invoice Frequency Type','codes_invoicefrequencytype'
+*
+EXEC sp_rename 'Codes - Invoice Status Type','codes_invoicestatustype'
+*
+EXEC sp_rename 'Codes - Licence Renewal Type','codes_licencerenewaltype'
+*
+EXEC sp_rename 'Codes - Note Category','codes_notecategory'
+*
+EXEC sp_rename 'Codes - Product Category','codes_productcategory'
+*
+EXEC sp_rename 'Codes - Platform Type','codes_platformtype'
+*
+EXEC sp_rename 'Codes - Recharge Entity','codes_rechargeentity'
+*
+EXEC sp_rename 'Codes - Units','codes_units'
+*
+EXEC sp_rename 'Codes - Sales Tax','codes_salestax'
+*
+EXEC sp_rename 'Codes - Sites','codes_sites'
+*
+EXEC sp_rename 'Codes - Term Type','codes_termtype'
+*
+EXEC sp_rename 'Codes - User Field Grouping','codes_userfieldgrouping'
+*
+EXEC sp_rename 'Contract Details','contract_details'
+*
+EXEC sp_rename 'Contract - Forecast Details','contract_forecastdetails'
+*
+EXEC sp_rename 'Contract - Forecast Products','contract_forecastproducts'
+*
+EXEC sp_rename 'Contract Notes','contract_notes'
+*
+EXEC sp_rename 'Contract - Notification','contract_notification'
+*
+EXEC sp_rename 'Contract - Product Details','contract_productdetails'
+*
+EXEC sp_rename 'Contract - Product Details - Calloff','contract_productdetails_calloff'
+*
+EXEC sp_rename 'Contract - Product Details - Recharge','contract_productdetails_recharge'
+*
+EXEC sp_rename 'Contract - Product-History','contract_producthistory'
+*
+EXEC sp_rename 'Contract - Product-Platforms','contract_productplatforms'
+*
+EXEC sp_rename 'Contract - Product Information','contract_productinformation'
+*
+EXEC sp_rename 'Email Schedule','email_schedule'
+*
+EXEC sp_rename 'Email Templates','email_templates'
+*
+EXEC sp_rename 'Favourite Reports','favourite_reports'
+*
+EXEC sp_rename 'FWParams', 'fwparams'
+*
+EXEC sp_rename 'Invoice Details','invoice_details'
+*
+EXEC sp_rename 'Invoice Log','invoice_log'
+*
+EXEC sp_rename 'Invoice Notes','invoice_notes'
+*
+EXEC sp_rename 'Invoice - Product Details','invoice_productdetails'
+*
+EXEC sp_rename 'Link Definitions','link_definitions'
+*
+EXEC sp_rename 'Link Matrix','link_matrix'
+*
+EXEC sp_rename 'Location','location'
+*
+EXEC sp_rename 'MIME Headers','mime_headers'
+*
+EXEC sp_rename 'Product Details','product_details'
+*
+EXEC sp_rename 'Product Notes','product_notes'
+*
+EXEC sp_rename 'Product Usage','product_usage'
+*
+EXEC sp_rename 'Product Vendors','product_vendors'
+*
+EXEC sp_rename 'Recharge Associations','recharge_associations'
+*
+EXEC sp_rename 'Saved Reports','saved_reports'
+*
+EXEC sp_rename 'Savings', 'savings'
+*
+EXEC sp_rename 'Security', 'security'
+*
+EXEC sp_rename 'Security History','security_history'
+*
+EXEC sp_rename 'Security Locations', 'security_locations'
+*
+EXEC sp_rename 'Staff Details','staff_details'
+*
+EXEC sp_rename 'Standard Reports','standard_reports'
+*
+EXEC sp_rename 'Sublocations', 'sublocations'
+*
+EXEC sp_rename 'System-DBJoins','system_dbjoins'
+*
+EXEC sp_rename 'System Parameters','system_parameters'
+*
+EXEC sp_rename 'UBQ Libraries','ubq_libraries'
+*
+EXEC sp_rename 'UBQ Locations','ubq_locations'
+*
+EXEC sp_rename 'UBQ Product Association','ubq_productassociation'
+*
+EXEC sp_rename 'UBQ Products','ubq_products'
+*
+EXEC sp_rename 'UBQ Product Vendors','ubq_productvendors'
+*
+EXEC sp_rename 'UBQ Vendor Association','ubq_vendorassociation'
+*
+EXEC sp_rename 'UBQ Vendors','ubq_vendors'
+*
+EXEC sp_rename 'UBQ Version','ubq_version'
+*
+EXEC sp_rename 'UF Grouping Categories','uf_groupingcategories'
+*
+EXEC sp_rename 'UF Group Allocation','uf_groupallocation'
+*
+EXEC sp_rename 'User Field Values','user_fieldvalues'
+*
+EXEC sp_rename 'User Fields','user_fields'
+*
+EXEC sp_rename 'User Help Docs','user_helpdocs'
+*
+EXEC sp_rename 'User Roles','user_roles'
+*
+EXEC sp_rename 'User Roles - Tabs','user_roles_tabs'
+*
+EXEC sp_rename 'Vendor Addresses','vendor_addresses'
+*
+EXEC sp_rename 'Vendor Categories','vendor_categories'
+*
+EXEC sp_rename 'Vendor Contact Notes','vendorcontact_notes'
+*
+EXEC sp_rename 'Vendor Details','vendor_details'
+*
+EXEC sp_rename 'Vendor Notes','vendor_notes'
+*
+EXEC sp_rename 'Vendor Status','vendor_status'
+*
+EXEC sp_rename 'Version Registry','version_registry'
+*
+EXEC sp_rename 'Version Registry CallOff','version_registry_calloff'
+*
+EXEC sp_rename 'Version History','version_history'
+*
+--EXEC sp_rename 'contract_productdetails.[Contract-Product Id]', 'Contract_Product_Id', 'COLUMN'
+--GO
+
+% ---------- Tables and Indices ----------
+
+% ------------ attachments ------------
+ALTER TABLE dbo.[attachments]
+ALTER COLUMN [Description] varchar(100)
+*
+
+% --------- attachment_audience -------------
+CREATE TABLE dbo.[attachment_audience]
+(
+	[Audience Id] int IDENTITY PRIMARY KEY,
+	[Attachment Id] int,
+	[Audience Type] int,
+	[Access Id] int
+)
+*
+
+% --------- contract_audience ---------
+CREATE TABLE dbo.[contract_audience]
+(
+	[Audience Id] int IDENTITY PRIMARY KEY,
+	[Contract Id] int,
+	[Audience Type] int,
+	[Access Id] int
+)
+*
+
+% -------------- contract_history ------------
+CREATE TABLE dbo.[contract_history]
+(
+	[History Id] int IDENTITY PRIMARY KEY,
+	[Contract Id] int,
+	[Action Date] datetime NOT NULL DEFAULT(getdate()),
+	[Action] varchar(20),
+	[Modifier Name] varchar(100),
+	[User Id] int,
+	[Change Field] varchar(100),
+	[PreVal] varchar(100),
+	[PostVal] varchar(100),
+	[SummaryTab] int
+)
+*
+
+% ----------- contract_notes -------------
+ALTER TABLE dbo.[contract_notes]
+ALTER COLUMN [Created By] nvarchar(60)
+*
+
+% ----------- contract_notification ---------
+ALTER TABLE dbo.[contract_notification]
+ADD [IsTeam] INT NOT NULL DEFAULT(0)
+*
+
+% ----------- email_schedule ----------------
+ALTER TABLE dbo.[email_schedule]
+ADD [Run Location Id] INT NOT NULL DEFAULT(0)
+*
+
+% ---------- fwparams --------------
+ALTER TABLE dbo.[fwparams]
+ADD [Editable] smallint NOT NULL DEFAULT(0)
+*
+
+% --------- invoice_notes -------------
+ALTER TABLE dbo.[invoice_notes]
+ALTER COLUMN [Created By] nvarchar(60)
+*
+
+% ---------- link_matrix ---------------
+ALTER TABLE dbo.[link_matrix]
+ADD [Primary Link] int NOT NULL DEFAULT(0)
+*
+
+% ----------- location_access --------------
+CREATE TABLE dbo.[location_access]
+(
+	[Access Id] int IDENTITY PRIMARY KEY,
+	[Location Id] int,
+	[User Id] int,
+	[Last Contract Id] int,
+	[Last Report] varchar(100),
+	[Last Report Type] int
+)
+*
+
+% ------------- product_details -----------
+ALTER TABLE dbo.[product_details]
+ALTER COLUMN [Licence Expires] datetime
+*
+
+ALTER TABLE dbo.[product_details]
+ALTER COLUMN [Date Installed] datetime
+*
+
+ALTER TABLE dbo.[product_notes]
+ALTER COLUMN [Created By] nvarchar(60)
+*
+
+ALTER TABLE dbo.[saved_reports]
+ALTER COLUMN [HeaderText] varchar(50)
+*
+
+ALTER TABLE dbo.[security]
+ADD [Position] varchar(100)
+*
+
+ALTER TABLE dbo.[security]
+ADD [Icon Size] int NOT NULL DEFAULT(48)
+*
+
+ALTER TABLE dbo.[security]
+ALTER COLUMN [Full Name] varchar(60)
+*
+
+UPDATE [security] SET [Position] = '' WHERE [Position] IS NULL
+*
+
+ALTER TABLE dbo.[staff_details]
+ADD [Position] varchar(100)
+*
+
+UPDATE [staff_details] SET [Position] = '' WHERE [Position] IS NULL
+*
+
+CREATE TABLE dbo.[teams]
+(
+	[Team Id] int IDENTITY PRIMARY KEY,
+	[Location Id] int,
+	[Team Name] varchar(50),
+	[Team Description] varchar(250),
+	[Team Type] int
+)
+*
+
+CREATE TABLE dbo.[team_members]
+(
+	[Team Id] int,
+	[Member Id] int
+)
+*
+
+ALTER TABLE dbo.[vendor_notes]
+ALTER COLUMN [Created By] nvarchar(60)
+*
+
+
+ALTER TABLE dbo.[vendorcontact_notes]
+ALTER COLUMN [Created By] nvarchar(60)
+*
+
+ALTER TABLE dbo.[user_fields]
+ADD [Mandatory] smallint NOT NULL DEFAULT(0)
+*
+
+% ---------- Views / Functions ----------
+CREATE FUNCTION dbo.GetTeamMembers (@teamID INT)  
+RETURNS varchar(200) AS  
+BEGIN 
+
+DECLARE @teamType INT
+DECLARE @member VARCHAR(100)
+DECLARE @memberList VARCHAR(200)
+DECLARE @temp_memberList VARCHAR(200)
+DECLARE @scolon VARCHAR(2)
+SET @scolon = ''
+SET @memberList = ''
+SET @temp_memberList = ''
+SET @teamType = (SELECT [Team Type] FROM [teams] WHERE [Team Id] = @teamID)
+IF(@teamType = 0)
+BEGIN
+	DECLARE loop_cursor CURSOR FOR
+	SELECT [Staff Name] FROM [staff_details] WHERE [Staff Id] IN (SELECT [Member Id] FROM [team_members] WHERE [Team Id] = @teamID)
+	OPEN loop_cursor
+	FETCH NEXT FROM loop_cursor INTO @member
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		SET @temp_memberList = @memberList
+		SET @memberList = @temp_memberList + @scolon + RTRIM(LTRIM(@member))
+		SET @scolon = '; '
+		FETCH NEXT FROM loop_cursor INTO @member
+	END
+	CLOSE loop_cursor
+	DEALLOCATE loop_cursor
+END
+ELSE
+BEGIN
+	DECLARE loop_cursor CURSOR FOR
+	SELECT [Full Name] FROM [security] WHERE [User Id] IN (SELECT [Member Id] FROM [team_members] WHERE [Team Id] = @teamID)
+	OPEN loop_cursor
+	FETCH NEXT FROM loop_cursor INTO @member
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		SET @temp_memberList = @memberList
+		SET @memberList = @temp_memberList + @scolon + RTRIM(LTRIM(@member))
+		SET @scolon = '; '
+		FETCH NEXT FROM loop_cursor INTO @member
+	END
+	CLOSE loop_cursor
+	DEALLOCATE loop_cursor
+END
+RETURN(@memberList)
+ 
+END
+*
+
+CREATE FUNCTION dbo.CheckContractAccess (@userID INT, @contractID INT)  
+RETURNS int AS  
+BEGIN
+DECLARE @AccessCount INT
+
+SET @AccessCount = (
+	SELECT COUNT(*) AS [AccessCount] FROM [contract_audience] WHERE [Contract Id] = @contractID AND 
+	(
+		([Audience Type] = 0 AND [Access Id] = @userID) 
+		OR 
+		([Audience Type] = 1 AND [Access Id] IN 
+			(SELECT [Team Id] FROM [teams] WHERE [Team Type] = 1 AND @userID IN
+				(SELECT [Member Id] FROM [team_members] WHERE [Access Id] = [Team Id])
+			)
+		)
+	)
+)
+
+IF(@AccessCount = 0)
+BEGIN
+	-- Check that any restrictions exist
+	DECLARE @tmpCount INT
+	SET @tmpCount = (SELECT COUNT(*) FROM [contract_audience] WHERE [Contract Id] = @contractID)
+	IF(@tmpCount = 0)
+	BEGIN
+		-- no restrictions exist, so permit
+		SET @AccessCount = 999
+	END
+END
+
+RETURN(@AccessCount) 
+END
+*
+
+CREATE FUNCTION dbo.CheckAttachmentAccess (@attachmentID INT, @userID INT)  
+RETURNS int AS  
+BEGIN
+DECLARE @AccessCount INT
+
+SET @AccessCount = (
+	SELECT COUNT(*) AS [AccessCount] FROM [attachment_audience] WHERE [Attachment Id] = @attachmentID AND 
+	(
+		([Audience Type] = 0 AND [Access Id] = @userID) 
+		OR 
+		([Audience Type] = 1 AND [Access Id] IN 
+			(SELECT [Team Id] FROM [teams] WHERE [Team Type] = 1 AND @userID IN
+				(SELECT [Member Id] FROM [team_members] WHERE [Access Id] = [Team Id])
+			)
+		)
+	)
+)
+
+IF(@AccessCount = 0)
+BEGIN
+	-- Check that any restrictions exist
+	DECLARE @tmpCount INT
+	SET @tmpCount = (SELECT COUNT(*) FROM [attachment_audience] WHERE [Attachment Id] = @attachmentID)
+	IF(@tmpCount = 0)
+	BEGIN
+		-- no restrictions exist, so permit
+		SET @AccessCount = 999
+	END
+END
+
+RETURN(@AccessCount) 
+END
+*
+
+CREATE FUNCTION dbo.GetNotifyRecipients (@contractId INT, @locationId INT)  
+RETURNS @outTable TABLE ([Member Name] nvarchar(100), [Email] nvarchar(250))
+BEGIN 
+
+DECLARE @resTable TABLE ([Member Name] nvarchar(100), [Email] nvarchar(250))
+DECLARE @NotifyId INT
+DECLARE @Is_A_Team INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Staff Id],[IsTeam] FROM [contract_notification] WHERE [Contract Id] = @contractId
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @NotifyId, @Is_A_Team
+WHILE @@FETCH_STATUS = 0
+	BEGIN
+		IF(@Is_A_Team = 0)
+		BEGIN
+			-- Must be an individual
+			INSERT @resTable
+			SELECT [Staff Name],[Email Address] FROM [staff_details] WHERE [Staff Id] = @NotifyId AND [Location Id] = @locationId
+		END
+		ELSE
+		BEGIN
+			-- Must be a team of people
+			INSERT @resTable
+			SELECT [staff_details].[Staff Name],[staff_details].[Email Address] FROM [team_members] 
+			INNER JOIN [staff_details] ON [staff_details].[Staff Id] = [team_members].[Member Id]
+			WHERE [Team Id] = @NotifyId
+		END
+	FETCH NEXT FROM loop_cursor INTO @NotifyId, @Is_A_Team
+	END
+	
+	CLOSE loop_cursor
+	DEALLOCATE loop_cursor
+
+	INSERT @outTable
+	SELECT [Member Name],[Email] FROM @resTable
+	RETURN
+END
+*
+
+CREATE FUNCTION dbo.GetNotifyString (@contractID INT)  
+RETURNS varchar(200) AS  
+BEGIN 
+
+DECLARE @IsATeam INT
+DECLARE @memberID INT
+DECLARE @member VARCHAR(100)
+DECLARE @memberList VARCHAR(200)
+DECLARE @temp_memberList VARCHAR(200)
+DECLARE @scolon VARCHAR(2)
+DECLARE @typeTag VARCHAR(2)
+
+SET @scolon = ''
+SET @memberList = ''
+SET @temp_memberList = ''
+SET @typeTag = ''
+
+DECLARE loop_cursor CURSOR FOR
+SELECT [Staff Id],[IsTeam] FROM [contract_notification] WHERE [Contract Id] = @contractID
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @memberID,@IsATeam
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	SET @temp_memberList = @memberList
+	IF(@IsATeam = 1)
+	BEGIN
+		SET @member = (SELECT [Team Name] FROM [teams] WHERE [Team Id] = @memberID)
+		SET @typeTag = '**'
+	END
+	ELSE
+	BEGIN
+		SET @member = (SELECT [Staff Name] FROM [staff_details] WHERE [Staff Id] = @memberID)
+		SET @typeTag = ''
+	END
+
+	SET @memberList = @temp_memberList + @scolon + @typeTag + RTRIM(LTRIM(@member))
+	SET @scolon = '; '
+
+	FETCH NEXT FROM loop_cursor INTO @memberID,@IsATeam
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+
+RETURN(@memberList)
+END
+*
+
+% ---------- Procedures ----------
+DECLARE @locId INT
+DECLARE @rec_count INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Location Id] FROM [location]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @locId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'VENDOR_STATUS_ENFORCED')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'VENDOR_STATUS_ENFORCED','1',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'CONCAT_MANDATORY')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'CONCAT_MANDATORY','1',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'CONTRACT_NUM_GEN')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'CONTRACT_NUM_GEN','0',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'CONTRACT_NUM_SEQ')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'CONTRACT_NUM_SEQ','1',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'VENDOR_LASTFINSTATUS_ENABLED')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'VENDOR_LASTFINSTATUS_ENABLED','1',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'VENDOR_LASTFINCHECK_ENABLED')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'VENDOR_LASTFINCHECK_ENABLED','1',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'VENDOR_FYE_ENABLED')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'VENDOR_FYE_ENABLED','1',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'VENDOR_NUMEMPLOYEES_ENABLED')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'VENDOR_NUMEMPLOYEES_ENABLED','1',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'VENDOR_TURNOVER_ENABLED')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'VENDOR_TURNOVER_ENABLED','1',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'VENDOR_INTCONTACT_ENABLED')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'VENDOR_INTCONTACT_ENABLED','1',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [fwparams] WHERE [Location Id] = @locId AND [Param] = 'VENDOR_CAT_TITLE')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [fwparams] ([Location Id],[Param],[Value],[Editable]) VALUES (@locId,'VENDOR_CAT_TITLE','Supplier Category',1)
+END
+
+FETCH NEXT FROM loop_cursor INTO @locId
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+% Update any existing parameters that are editable
+UPDATE [fwparams] SET [Editable] = 1 WHERE [Param] IN ('CONCAT_TITLE','INFLATOR_ACTIVE','INVFREQ_ACTIVE','TERMTYPE_ACTIVE','VALUE_COMMENTS','CONDESC_TITLE','CONDESC_SHORT_TITLE')
+*
+
+% Modify accessible tabs - Lose two obsolete and move others up
+DELETE FROM [user_roles_tabs] WHERE [Tab Id] IN (8,9)
+*
+UPDATE [user_roles_tabs] SET [Tab Id] = 6 WHERE [Tab Id] = 7
+*
+UPDATE [user_roles_tabs] SET [Tab Id] = 7 WHERE [Tab Id] = 10
+*
+UPDATE [user_roles_tabs] SET [Tab Id] = 8 WHERE [Tab Id] = 11
+*
+
+DELETE FROM [user_roles_tabs] WHERE [Tab Id] IN (9,10,11)
+*
+
+% Update with some new MIME types
+INSERT INTO [mime_headers] ([File Extension],[Mime Header])
+VALUES('SXW','application/vnd.sun.xml.writer')
+*
+
+INSERT INTO [mime_headers] ([File Extension],[Mime Header])
+VALUES('SXC','application/vnd.sun.xml.calc')
+*
+
+ INSERT INTO [mime_headers] ([File Extension],[Mime Header])
+VALUES('SXI','application/vnd.sun.xml.impress')
+*
+
+INSERT INTO [mime_headers] ([File Extension],[Mime Header])
+VALUES('SXD','application/vnd.sun.xml.draw')
+*

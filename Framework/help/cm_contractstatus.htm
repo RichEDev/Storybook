@@ -1,0 +1,96 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - Contract Status</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Contract Status</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>It is common for contracts to be at differing stages of their life cycle. A 
+					majority are likely to be currently active and in effect, whereas others may be 
+					discontinued, expired or even in the process of being initiated.</p>
+				<p>Contract Status allows contracts to be tagged in this way. Each definition 
+					allows the specification of whether the definition implies that a contract is 
+					considered active or inactive. This then allows those contracts considered 
+					inactive to be ignored, by default, by Summary Portal queries.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1"> Required 
+				Information
+			</div>
+			<div class="help_body_text" id="1">
+				<p>The following items of information are required for a Contract Status 
+					definition: -</p>
+				<p>
+					<table class="inner" align="center" width="600">
+						<tr>
+							<th class="inner" width="200">
+								Field</th>
+							<th class="inner" width="100">
+								Type</th>
+							<th class="inner" width="300">
+								Description</th>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Contract Status</td>
+							<td class="inner" align="center">Text</td>
+							<td class="inner">This is the definition by which the Contract Status is to be 
+								referred.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Is Archived State?</td>
+							<td class="inner" align="center">Check Box</td>
+							<td class="inner">This is, by default, <u>not</u> checked. By checking the box you 
+								are indicating that any contract tagged with this status is considered archived 
+								/ inactive / obsolete and will not be used in default searches.</td>
+						</tr>
+					</table>
+				</p>
+				<p>On successful update, you will be returned to the definitions list screen.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

@@ -1,0 +1,2384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C089D20B-65F6-45B3-B952-8B167531F55B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>expenses</RootNamespace>
+    <AssemblyName>expenses</AssemblyName>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <SignAssembly>false</SignAssembly>
+    <TargetFrameworkProfile />
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>
+    </DocumentationFile>
+    <CodeAnalysisRuleSet>BasicCorrectnessRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU'">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisRuleSet>expenses.Production.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <!-- Customizable Output Directory Opt-In for TFS Build (web application projects) -->
+  <!--<PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+    <OutDir>$(TeamBuildOutDir)</OutDir>
+  </PropertyGroup>-->
+  <!--<Target Name="PublishWebSites" AfterTargets="Publish">
+    <ItemGroup Label="ItemsForDeploymment">
+      <Folders Include="$(publishUrl)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Folders)" DestinationFiles="@(Folders->'$(TeamBuildOutDir)\_PublishedWebsites\$(MSBuildProjectName)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
+  </Target>-->
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=4.1.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="AjaxMin">
+      <HintPath>..\..\..\References\AjaxMin.dll</HintPath>
+    </Reference>
+    <Reference Include="Configuration.Core, Version=1.1.2.28033, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Configuration.Core.1.1.2.28033\lib\net461\Configuration.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Configuration.Interface, Version=1.1.2.28032, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Configuration.Interface.1.1.2.28032\lib\net461\Configuration.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.Web.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.Web.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.Documents.Excel.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.Documents.Excel.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.Misc.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.Misc.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.Shared.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.Shared.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebCalcManager.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebCalcManager.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebChart.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebChart.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebGauge.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebGauge.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebGrid.ExcelExport.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebGrid.ExcelExport.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebGrid.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebGrid.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebListbar.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebListbar.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebNavigator.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebNavigator.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebTab.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebTab.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebToolbar.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebToolbar.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebCombo.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.WebCombo.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebDataInput.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.WebDataInput.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebDateChooser.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.WebDateChooser.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebHtmlEditor.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.WebHtmlEditor.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebSchedule.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.WebSchedule.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="NewRelic.Api.Agent, Version=6.7.67.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewRelic.Agent.Api.6.7.67.0\lib\NewRelic.Api.Agent.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.0.7.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.0.7\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web, Version=4.0.7.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.4.0.7\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Chart.Wpf, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Chart.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Compression.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Compression.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Core, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.DocIO.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.DocIO.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.DocToPdfConverter.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.DocToPdfConverter.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.EJ.ReportViewer, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.EJ.ReportViewer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Gauge.Wpf, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Gauge.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Grid.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Grid.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Linq.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Linq.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.OfficeChart.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.OfficeChart.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Olap.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Olap.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Pdf.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.PdfViewer.Windows, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.PdfViewer.Windows.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.SfMaps.Wpf, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.SfMaps.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Shared.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Web, Version=13.2400.0.29, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Shared.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Wpf, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Shared.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Tools.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.XlsIO.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Extensions.Design" />
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.2\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="Microsoft.JScript">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="--app_offline.htm" />
+    <Content Include="App_Themes\CorporateDiligenceTheme\CorporateDiligenceTheme.css" />
+    <Content Include="App_Themes\GreenLightTheme\GreenLightTheme.css" />
+    <Content Include="App_Themes\GreenLightWorkforceTheme\GreenLightWorkforceTheme.css" />
+    <Content Include="AuthenticationService.svc" />
+    <Content Include="card_templates\Allstar Fuel Card 348.xml" />
+    <Content Include="card_templates\Allstar Fuel Card 348A.xml" />
+    <Content Include="card_templates\Allstar Fuel Card 356.xml" />
+    <Content Include="card_templates\Allstar Fuel Card.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="card_templates\Arval Fuel Card 341.xml" />
+    <Content Include="card_templates\Barclaycard 357.xml" />
+    <Content Include="card_templates\Barclaycard 377.xml" />
+    <Content Include="card_templates\Barclaycard VCF4.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="card_templates\Egencia 356.xml" />
+    <Content Include="card_templates\Lloyds TSB Credit Card.xml" />
+    <Content Include="card_templates\O2 356.xml" />
+    <Content Include="card_templates\RBS Credit Card 356.xml" />
+    <Content Include="card_templates\RBS Credit Card 384.xml" />
+    <Content Include="card_templates\RBS Purchase Card MC.xml" />
+    <Content Include="EnvelopeManagement.aspx" />
+    <Content Include="favicon.ico" />
+    <Content Include="GreenLightAdminMenu.aspx" />
+    <Content Include="help_text\Content\Claimant Guide\EnvelopeAttachmentInstructions.txt" />
+    <Content Include="icons\32\new\mail.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\32\new\mail_reply_all.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\32\new\scroll.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\48\Plain\document_connection.gif" />
+    <Content Include="icons\48\Plain\elements_selection.gif" />
+    <Content Include="icons\48\Plain\mobile.gif" />
+    <Content Include="icons\48\Plain\policeman_bobby.gif" />
+    <Content Include="icons\48\Plain\user_bankaccount.png" />
+    <Content Include="icons\48\Plain\user_mobilephone.png" />
+    <Content Include="icons\48\Shadow\document_connection.gif" />
+    <Content Include="icons\48\Shadow\elements_selection.gif" />
+    <Content Include="icons\48\Shadow\mobile.gif" />
+    <Content Include="icons\48\Shadow\policeman_bobby.gif" />
+    <Content Include="icons\48\Shadow\user_bankaccount.png" />
+    <Content Include="icons\48\Shadow\user_mobilephone.png" />
+    <Content Include="menu.master" />
+    <Content Include="Old_App_WebReferences\com\domyexpenses\www\teamfound.disco" />
+    <Content Include="Old_App_WebReferences\tfs\teamfound.disco" />
+    <Content Include="buttons\b_ctrl_down.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\b_ctrl_up.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\cancel_up.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\close.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\dleft_up.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\dright_up.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\left_up.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\open.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\pagebutton_changedetails.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\pagebutton_finish.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\pagebutton_next.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\pagebutton_previous.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\pagebutton_search.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\right_up.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\timeline_event1.gif" />
+    <Content Include="buttons\timeline_event10.gif" />
+    <Content Include="buttons\timeline_event10_sel.gif" />
+    <Content Include="buttons\timeline_event11.gif" />
+    <Content Include="buttons\timeline_event11_sel.gif" />
+    <Content Include="buttons\timeline_event12.gif" />
+    <Content Include="buttons\timeline_event12_sel.gif" />
+    <Content Include="buttons\timeline_event13.gif" />
+    <Content Include="buttons\timeline_event13_sel.gif" />
+    <Content Include="buttons\timeline_event14.gif" />
+    <Content Include="buttons\timeline_event14_sel.gif" />
+    <Content Include="buttons\timeline_event15.gif" />
+    <Content Include="buttons\timeline_event15_sel.gif" />
+    <Content Include="buttons\timeline_event1_sel.gif" />
+    <Content Include="buttons\timeline_event2.gif" />
+    <Content Include="buttons\timeline_event2_sel.gif" />
+    <Content Include="buttons\timeline_event3.gif" />
+    <Content Include="buttons\timeline_event3_sel.gif" />
+    <Content Include="buttons\timeline_event4.gif" />
+    <Content Include="buttons\timeline_event4_sel.gif" />
+    <Content Include="buttons\timeline_event5.gif" />
+    <Content Include="buttons\timeline_event5_sel.gif" />
+    <Content Include="buttons\timeline_event6.gif" />
+    <Content Include="buttons\timeline_event6_sel.gif" />
+    <Content Include="buttons\timeline_event7.gif" />
+    <Content Include="buttons\timeline_event7_sel.gif" />
+    <Content Include="buttons\timeline_event8.gif" />
+    <Content Include="buttons\timeline_event8_sel.gif" />
+    <Content Include="buttons\timeline_event9.gif" />
+    <Content Include="buttons\timeline_event9_sel.gif" />
+    <Content Include="buttons\timeline_left.gif" />
+    <Content Include="buttons\timeline_middle.gif" />
+    <Content Include="buttons\timeline_right.gif" />
+    <Content Include="buttons\update_up.gif" />
+    <Content Include="Default.aspx" />
+    <Content Include="icons\16\Plain\arrow_down_blue.png" />
+    <Content Include="icons\16\Plain\arrow_up_blue.png" />
+    <Content Include="icons\16\Plain\column.png" />
+    <Content Include="icons\16\Plain\column_add.png" />
+    <Content Include="icons\16\Plain\folder.png" />
+    <Content Include="icons\16\Plain\folder_closed.png" />
+    <Content Include="icons\16\Plain\funnel_add.png" />
+    <Content Include="icons\16\Plain\nav_plain_blue.png" />
+    <Content Include="icons\16\Plain\nav_plain_red.png" />
+    <Content Include="icons\24\plain\arrow_left_green.gif" />
+    <Content Include="icons\24\plain\arrow_left_green_grey.gif" />
+    <Content Include="icons\24\plain\arrow_right_green.gif" />
+    <Content Include="icons\24\plain\arrow_right_green_grey.gif" />
+    <Content Include="icons\24\plain\delete2.gif" />
+    <Content Include="icons\24\plain\delete2_grey.gif" />
+    <Content Include="icons\24\plain\document_attachment.png" />
+    <Content Include="icons\24\plain\view.png" />
+    <Content Include="icons\24\shadow\arrow_left_green.gif" />
+    <Content Include="icons\24\shadow\arrow_right_green.gif" />
+    <Content Include="icons\24\shadow\delete2.gif" />
+    <Content Include="icons\48\Plain\approve_advance.gif" />
+    <Content Include="icons\48\Plain\at.gif" />
+    <Content Include="icons\48\Plain\branch.gif" />
+    <Content Include="icons\48\Plain\branch_rotated.gif" />
+    <Content Include="icons\48\Plain\budget_holder.gif" />
+    <Content Include="icons\48\Plain\calendar.gif" />
+    <Content Include="icons\48\Plain\car_compact_blue.gif" />
+    <Content Include="icons\48\Plain\cashier.gif" />
+    <Content Include="icons\48\Plain\chart.gif" />
+    <Content Include="icons\48\Plain\components.gif" />
+    <Content Include="icons\48\Plain\cost_codes.gif" />
+    <Content Include="icons\48\Plain\creditcards.gif" />
+    <Content Include="icons\48\Plain\cubes.gif" />
+    <Content Include="icons\48\Plain\currency_pound.gif" />
+    <Content Include="icons\48\Plain\data_edit.gif" />
+    <Content Include="icons\48\Plain\data_find.gif" />
+    <Content Include="icons\48\Plain\data_lock.gif" />
+    <Content Include="icons\48\Plain\data_preferences.gif" />
+    <Content Include="icons\48\Plain\document_info.gif" />
+    <Content Include="icons\48\Plain\document_into.gif" />
+    <Content Include="icons\48\Plain\document_lock.gif" />
+    <Content Include="icons\48\Plain\document_out.gif" />
+    <Content Include="icons\48\Plain\earth.gif" />
+    <Content Include="icons\48\Plain\earth_location.gif" />
+    <Content Include="icons\48\Plain\earth_view.gif" />
+    <Content Include="icons\48\Plain\elements1.gif" />
+    <Content Include="icons\48\Plain\exchange.gif" />
+    <Content Include="icons\48\Plain\exit.gif" />
+    <Content Include="icons\48\Plain\export2.gif" />
+    <Content Include="icons\48\Plain\find.gif" />
+    <Content Include="icons\48\Plain\flag_blue.gif" />
+    <Content Include="icons\48\Plain\folder_document.gif" />
+    <Content Include="icons\48\Plain\form_yellow.gif" />
+    <Content Include="icons\48\Plain\gear_preferences.gif" />
+    <Content Include="icons\48\Plain\houses.gif" />
+    <Content Include="icons\48\Plain\index.gif" />
+    <Content Include="icons\48\Plain\index_preferences.gif" />
+    <Content Include="icons\48\Plain\key1_preferences.gif" />
+    <Content Include="icons\48\Plain\lock_preferences.gif" />
+    <Content Include="icons\48\Plain\lock_view.gif" />
+    <Content Include="icons\48\Plain\money2.gif" />
+    <Content Include="icons\48\Plain\monitor_preferences.gif" />
+    <Content Include="icons\48\Plain\note.gif" />
+    <Content Include="icons\48\Plain\office-building.gif" />
+    <Content Include="icons\48\Plain\outbox.gif" />
+    <Content Include="icons\48\Plain\palette.gif" />
+    <Content Include="icons\48\Plain\photo_scenery.gif" />
+    <Content Include="icons\48\Plain\preferences.gif" />
+    <Content Include="icons\48\Plain\presentation_chart.gif" />
+    <Content Include="icons\48\Plain\printer2.gif" />
+    <Content Include="icons\48\Plain\printer_preferences.gif" />
+    <Content Include="icons\48\Plain\question_and_answer.gif" />
+    <Content Include="icons\48\Plain\satellite_dish.gif" />
+    <Content Include="icons\48\Plain\server_mail.gif" />
+    <Content Include="icons\48\Plain\server_preferences.gif" />
+    <Content Include="icons\48\Plain\table_selection_row.gif" />
+    <Content Include="icons\48\Plain\table_sql_add.gif" />
+    <Content Include="icons\48\Plain\thread.gif" />
+    <Content Include="icons\48\Plain\user1.gif" />
+    <Content Include="icons\48\Plain\user1_add.gif" />
+    <Content Include="icons\48\Plain\user1_find.gif" />
+    <Content Include="icons\48\Plain\user1_information.gif" />
+    <Content Include="icons\48\Plain\user1_monitor.gif" />
+    <Content Include="icons\48\Plain\user1_preferences.gif" />
+    <Content Include="icons\48\Plain\user1_view.gif" />
+    <Content Include="icons\48\Plain\users2.gif" />
+    <Content Include="icons\48\Shadow\approve_advance.gif" />
+    <Content Include="icons\48\Shadow\at.gif" />
+    <Content Include="icons\48\Shadow\branch.gif" />
+    <Content Include="icons\48\Shadow\branch_rotated.gif" />
+    <Content Include="icons\48\Shadow\budget_holder.gif" />
+    <Content Include="icons\48\Shadow\calendar.gif" />
+    <Content Include="icons\48\Shadow\car_compact_blue.gif" />
+    <Content Include="icons\48\Shadow\cashier.gif" />
+    <Content Include="icons\48\Shadow\chart.gif" />
+    <Content Include="icons\48\Shadow\components.gif" />
+    <Content Include="icons\48\Shadow\cost_codes.gif" />
+    <Content Include="icons\48\Shadow\creditcards.gif" />
+    <Content Include="icons\48\Shadow\cubes.gif" />
+    <Content Include="icons\48\Shadow\currency_pound.gif" />
+    <Content Include="icons\48\Shadow\data_edit.gif" />
+    <Content Include="icons\48\Shadow\data_find.gif" />
+    <Content Include="icons\48\Shadow\data_lock.gif" />
+    <Content Include="icons\48\Shadow\data_preferences.gif" />
+    <Content Include="icons\48\Shadow\document_info.gif" />
+    <Content Include="icons\48\Shadow\document_into.gif" />
+    <Content Include="icons\48\Shadow\document_lock.gif" />
+    <Content Include="icons\48\Shadow\document_out.gif" />
+    <Content Include="icons\48\Shadow\earth.gif" />
+    <Content Include="icons\48\Shadow\earth_location.gif" />
+    <Content Include="icons\48\Shadow\earth_view.gif" />
+    <Content Include="icons\48\Shadow\elements1.gif" />
+    <Content Include="icons\48\Shadow\exchange.gif" />
+    <Content Include="icons\48\Shadow\exit.gif" />
+    <Content Include="icons\48\Shadow\export2.gif" />
+    <Content Include="icons\48\Shadow\find.gif" />
+    <Content Include="icons\48\Shadow\flag_blue.gif" />
+    <Content Include="icons\48\Shadow\folder_document.gif" />
+    <Content Include="icons\48\Shadow\form_yellow.gif" />
+    <Content Include="icons\48\Shadow\gear_preferences.gif" />
+    <Content Include="icons\48\Shadow\houses.gif" />
+    <Content Include="icons\48\Shadow\index.gif" />
+    <Content Include="icons\48\Shadow\index_preferences.gif" />
+    <Content Include="icons\48\Shadow\key1_preferences.gif" />
+    <Content Include="icons\48\Shadow\lock_preferences.gif" />
+    <Content Include="icons\48\Shadow\lock_view.gif" />
+    <Content Include="icons\48\Shadow\money2.gif" />
+    <Content Include="icons\48\Shadow\monitor_preferences.gif" />
+    <Content Include="icons\48\Shadow\note.gif" />
+    <Content Include="icons\48\Shadow\office-building.gif" />
+    <Content Include="icons\48\Shadow\outbox.gif" />
+    <Content Include="icons\48\Shadow\palette.gif" />
+    <Content Include="icons\48\Shadow\photo_scenery.gif" />
+    <Content Include="icons\48\Shadow\preferences.gif" />
+    <Content Include="icons\48\Shadow\presentation_chart.gif" />
+    <Content Include="icons\48\Shadow\printer2.gif" />
+    <Content Include="icons\48\Shadow\printer_preferences.gif" />
+    <Content Include="icons\48\Shadow\question_and_answer.gif" />
+    <Content Include="icons\48\Shadow\satellite_dish.gif" />
+    <Content Include="icons\48\Shadow\server_mail.gif" />
+    <Content Include="icons\48\Shadow\server_preferences.gif" />
+    <Content Include="icons\48\Shadow\table_selection_row.gif" />
+    <Content Include="icons\48\Shadow\table_sql_add.gif" />
+    <Content Include="icons\48\Shadow\thread.gif" />
+    <Content Include="icons\48\Shadow\user1.gif" />
+    <Content Include="icons\48\Shadow\user1_add.gif" />
+    <Content Include="icons\48\Shadow\user1_find.gif" />
+    <Content Include="icons\48\Shadow\user1_information.gif" />
+    <Content Include="icons\48\Shadow\user1_monitor.gif" />
+    <Content Include="icons\48\Shadow\user1_preferences.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\48\Shadow\user1_view.gif" />
+    <Content Include="icons\48\Shadow\users2.gif" />
+    <Content Include="icons\about.gif" />
+    <Content Include="icons\about.png" />
+    <Content Include="icons\about_blue.gif" />
+    <Content Include="icons\cal.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\delete2.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\delete2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\delete2_blue.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\document_attachment.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\document_attachment.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\document_attachment_blue.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\document_delete.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\document_edit.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\document_edit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\document_edit_blue.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\edit.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\edit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\edit_blue.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\find.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\folder_into.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\folder_into.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\folder_into_blue.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\folder_lock.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\folder_lock.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\folder_lock_blue.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\help2.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\help2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\history2.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\history2_blue.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\redo.gif" />
+    <Content Include="icons\redo.png" />
+    <Content Include="icons\redo_blue.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\replace2.gif" />
+    <Content Include="icons\replace2.png" />
+    <Content Include="icons\replace2_blue.gif" />
+    <Content Include="icons\star_yellow.gif" />
+    <Content Include="icons\star_yellow.png" />
+    <Content Include="icons\undo.gif" />
+    <Content Include="icons\undo.png" />
+    <Content Include="icons\undo_blue.gif" />
+    <Content Include="icons\view.gif" />
+    <Content Include="icons\view.png" />
+    <Content Include="icons\view_blue.gif" />
+    <Content Include="icons\zoom_in.gif" />
+    <Content Include="images\arrow_black.gif" />
+    <Content Include="images\bg_people.jpg" />
+    <Content Include="images\btn_down.gif" />
+    <Content Include="images\btn_up.gif" />
+    <Content Include="images\dot.gif" />
+    <Content Include="images\header_off.gif" />
+    <Content Include="images\header_on.gif" />
+    <Content Include="images\jigsaw.gif" />
+    <Content Include="images\jigsaw1.gif" />
+    <Content Include="images\line_bg.gif" />
+    <Content Include="images\loginbg.gif" />
+    <Content Include="images\logon_button.gif" />
+    <Content Include="images\logon_help.gif" />
+    <Content Include="images\logon_panel.gif" />
+    <Content Include="images\menu.js" />
+    <Content Include="images\menu_off.gif" />
+    <Content Include="images\menu_on.gif" />
+    <Content Include="images\newlogo.gif" />
+    <Content Include="images\newlogolong.gif" />
+    <Content Include="images\newlogolong.jpg" />
+    <Content Include="images\newlogoround.jpg" />
+    <Content Include="images\selogo.gif" />
+    <Content Include="images\selogo.JPG" />
+    <Content Include="images\spacer.gif" />
+    <Content Include="images\styles.css" />
+    <Content Include="images\sub_header_off.gif" />
+    <Content Include="images\sub_header_on.gif" />
+    <Content Include="images\sub_menu.gif" />
+    <Content Include="images\whitearrow_down.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\whitearrow_up.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Themes\GreenLightTheme\DataGrid.skin" />
+    <Content Include="App_Themes\GreenLightTheme\menu.skin" />
+    <Content Include="App_Themes\GreenLightTheme\UltraWebGrid.skin" />
+    <Content Include="App_Themes\CorporateDiligenceTheme\UltraWebGrid.skin" />
+    <Content Include="App_Themes\GreenLightWorkforceTheme\menu.skin" />
+    <Content Include="App_Themes\GreenLightWorkforceTheme\UltraWebGrid.skin" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="qeform.aspx" />
+    <Content Include="ReceiptManagement.aspx" />
+    <Content Include="TorchMenu.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="log4net.Debug.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+    </None>
+    <None Include="log4net.Production.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="log4net.Automated Build.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+    </None>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Web.CorporateDiligence.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Mobile.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Automated Build.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="webServices\svcAddEditExpenses.asmx" />
+    <Content Include="webServices\svcDutyOfCare.asmx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="admin\admincategories.aspx.cs">
+      <DependentUpon>admincategories.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\admincategories.aspx.designer.cs">
+      <DependentUpon>admincategories.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\adminfaqs.aspx.cs">
+      <DependentUpon>adminfaqs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\adminfaqs.aspx.designer.cs">
+      <DependentUpon>adminfaqs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\adminfloats.aspx.cs">
+      <DependentUpon>adminfloats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\adminfloats.aspx.designer.cs">
+      <DependentUpon>adminfloats.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\admingroups.aspx.cs">
+      <DependentUpon>admingroups.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\admingroups.aspx.designer.cs">
+      <DependentUpon>admingroups.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\adminitemroles.aspx.cs">
+      <DependentUpon>adminitemroles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\adminitemroles.aspx.designer.cs">
+      <DependentUpon>adminitemroles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\adminp11d.aspx.cs">
+      <DependentUpon>adminp11d.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\adminp11d.aspx.designer.cs">
+      <DependentUpon>adminp11d.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\adminpolicy.aspx.cs">
+      <DependentUpon>adminpolicy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\adminpolicy.aspx.designer.cs">
+      <DependentUpon>adminpolicy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\adminqeforms.aspx.cs">
+      <DependentUpon>adminqeforms.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\adminqeforms.aspx.designer.cs">
+      <DependentUpon>adminqeforms.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\aebroadcastmessage.aspx.cs">
+      <DependentUpon>aebroadcastmessage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\aebroadcastmessage.aspx.designer.cs">
+      <DependentUpon>aebroadcastmessage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\aecategory.aspx.cs">
+      <DependentUpon>aecategory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\aecategory.aspx.designer.cs">
+      <DependentUpon>aecategory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\aecorporatecard.aspx.cs">
+      <DependentUpon>aecorporatecard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\aecorporatecard.aspx.designer.cs">
+      <DependentUpon>aecorporatecard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\aefaq.aspx.cs">
+      <DependentUpon>aefaq.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\aefaq.aspx.designer.cs">
+      <DependentUpon>aefaq.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\aefaqcategory.aspx.cs">
+      <DependentUpon>aefaqcategory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\aefaqcategory.aspx.designer.cs">
+      <DependentUpon>aefaqcategory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\aefilterrule.aspx.cs">
+      <DependentUpon>aefilterrule.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\aefilterrule.aspx.designer.cs">
+      <DependentUpon>aefilterrule.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\aefloat.aspx.cs">
+      <DependentUpon>aefloat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\aefloat.aspx.designer.cs">
+      <DependentUpon>aefloat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\aegroup.aspx.cs">
+      <DependentUpon>aegroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\aegroup.aspx.designer.cs">
+      <DependentUpon>aegroup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\aeitemrole.aspx.cs">
+      <DependentUpon>aeitemrole.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\aeitemrole.aspx.designer.cs">
+      <DependentUpon>aeitemrole.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\aep11d.aspx.cs">
+      <DependentUpon>aep11d.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\aep11d.aspx.designer.cs">
+      <DependentUpon>aep11d.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\aeqeform.aspx.cs">
+      <DependentUpon>aeqeform.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\aeqeform.aspx.designer.cs">
+      <DependentUpon>aeqeform.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\aestage.aspx.cs">
+      <DependentUpon>aestage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\aestage.aspx.designer.cs">
+      <DependentUpon>aestage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\broadcastmessages.aspx.cs">
+      <DependentUpon>broadcastmessages.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\broadcastmessages.aspx.designer.cs">
+      <DependentUpon>broadcastmessages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\changeadvance.aspx.cs">
+      <DependentUpon>changeadvance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\changeadvance.aspx.designer.cs">
+      <DependentUpon>changeadvance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\companylogo.aspx.cs">
+      <DependentUpon>companylogo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\companylogo.aspx.designer.cs">
+      <DependentUpon>companylogo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\corporate_cards.aspx.cs">
+      <DependentUpon>corporate_cards.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\corporate_cards.aspx.designer.cs">
+      <DependentUpon>corporate_cards.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\editstatement.aspx.cs">
+      <DependentUpon>editstatement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\editstatement.aspx.designer.cs">
+      <DependentUpon>editstatement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\filterrules.aspx.cs">
+      <DependentUpon>filterrules.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\filterrules.aspx.designer.cs">
+      <DependentUpon>filterrules.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\import_statement.aspx.cs">
+      <DependentUpon>import_statement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\import_statement.aspx.designer.cs">
+      <DependentUpon>import_statement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\migratecardocuments.aspx.cs">
+      <DependentUpon>migratecardocuments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\migratecardocuments.aspx.designer.cs">
+      <DependentUpon>migratecardocuments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\printout.aspx.cs">
+      <DependentUpon>printout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\printout.aspx.designer.cs">
+      <DependentUpon>printout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\qeformdesign.aspx.cs">
+      <DependentUpon>qeformdesign.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\qeformdesign.aspx.designer.cs">
+      <DependentUpon>qeformdesign.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\qepage.aspx.cs">
+      <DependentUpon>qepage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\qepage.aspx.designer.cs">
+      <DependentUpon>qepage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\rejectadvance.aspx.cs">
+      <DependentUpon>rejectadvance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\rejectadvance.aspx.designer.cs">
+      <DependentUpon>rejectadvance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\settledadvances.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>settledadvances.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\settledadvances.aspx.designer.cs">
+      <DependentUpon>settledadvances.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\statements.aspx.cs">
+      <DependentUpon>statements.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\statements.aspx.designer.cs">
+      <DependentUpon>statements.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\topupadvance.aspx.cs">
+      <DependentUpon>topupadvance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\topupadvance.aspx.designer.cs">
+      <DependentUpon>topupadvance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\transaction_viewer.aspx.cs">
+      <DependentUpon>transaction_viewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\transaction_viewer.aspx.designer.cs">
+      <DependentUpon>transaction_viewer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\unallocatedcardnumbers.ascx.cs">
+      <DependentUpon>unallocatedcardnumbers.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\unallocatedcardnumbers.ascx.designer.cs">
+      <DependentUpon>unallocatedcardnumbers.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\unallocated_cards.aspx.cs">
+      <DependentUpon>unallocated_cards.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\unallocated_cards.aspx.designer.cs">
+      <DependentUpon>unallocated_cards.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\expenses.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>expenses.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\expenses.en-US.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>expenses.en-US.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Bootstrap\ActionContext.cs" />
+    <Compile Include="Bootstrap\BootstrapAccount.cs" />
+    <Compile Include="Bootstrap\Bootstraper.cs" />
+    <Compile Include="Bootstrap\DependencyAttributePropertySelectionBehavior.cs" />
+    <Compile Include="Bootstrap\IActionContext.cs" />
+    <Compile Include="Bootstrap\SelfRegistrationIdentityContext.cs" />
+    <Compile Include="Bootstrap\WebIdentityContext.cs" />
+    <Compile Include="EnvelopeManagement.aspx.cs">
+      <DependentUpon>EnvelopeManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EnvelopeManagement.aspx.designer.cs">
+      <DependentUpon>EnvelopeManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="expensesConnect.aspx.cs">
+      <DependentUpon>expensesConnect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="expensesConnect.aspx.designer.cs">
+      <DependentUpon>expensesConnect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="expensesSvc.asmx.cs">
+      <DependentUpon>expensesSvc.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GreenLightAdminMenu.aspx.cs">
+      <DependentUpon>GreenLightAdminMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GreenLightAdminMenu.aspx.designer.cs">
+      <DependentUpon>GreenLightAdminMenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\about.aspx.cs">
+      <DependentUpon>about.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\about.aspx.designer.cs">
+      <DependentUpon>about.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\addreview.aspx.cs">
+      <DependentUpon>addreview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\addreview.aspx.designer.cs">
+      <DependentUpon>addreview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\aeadvancereq.aspx.cs">
+      <DependentUpon>aeadvancereq.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\aeadvancereq.aspx.designer.cs">
+      <DependentUpon>aeadvancereq.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\aeholiday.aspx.cs">
+      <DependentUpon>aeholiday.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\aeholiday.aspx.designer.cs">
+      <DependentUpon>aeholiday.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\delegates.aspx.cs">
+      <DependentUpon>delegates.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\delegates.aspx.designer.cs">
+      <DependentUpon>delegates.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\directory.aspx.cs">
+      <DependentUpon>directory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\directory.aspx.designer.cs">
+      <DependentUpon>directory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\direntry.aspx.cs">
+      <DependentUpon>direntry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\direntry.aspx.designer.cs">
+      <DependentUpon>direntry.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\disputeadvance.aspx.cs">
+      <DependentUpon>disputeadvance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\disputeadvance.aspx.designer.cs">
+      <DependentUpon>disputeadvance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\employeeproxy.aspx.cs">
+      <DependentUpon>employeeproxy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\employeeproxy.aspx.designer.cs">
+      <DependentUpon>employeeproxy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\faqs.aspx.cs">
+      <DependentUpon>faqs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\faqs.aspx.designer.cs">
+      <DependentUpon>faqs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\holidays.aspx.cs">
+      <DependentUpon>holidays.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\holidays.aspx.designer.cs">
+      <DependentUpon>holidays.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\myadvances.aspx.cs">
+      <DependentUpon>myadvances.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\myadvances.aspx.designer.cs">
+      <DependentUpon>myadvances.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\reviewdetails.aspx.cs">
+      <DependentUpon>reviewdetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\reviewdetails.aspx.designer.cs">
+      <DependentUpon>reviewdetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\reviews.aspx.cs">
+      <DependentUpon>reviews.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\reviews.aspx.designer.cs">
+      <DependentUpon>reviews.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\review_thanks.aspx.cs">
+      <DependentUpon>review_thanks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\review_thanks.aspx.designer.cs">
+      <DependentUpon>review_thanks.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="information\selectmultiple.aspx.cs">
+      <DependentUpon>selectmultiple.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="information\selectmultiple.aspx.designer.cs">
+      <DependentUpon>selectmultiple.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="logon.aspx.cs">
+      <DependentUpon>logon.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="logon.aspx.designer.cs">
+      <DependentUpon>logon.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="menu.master.cs">
+      <DependentUpon>menu.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="menu.master.designer.cs">
+      <DependentUpon>menu.master</DependentUpon>
+    </Compile>
+    <Compile Include="Old_App_Code\cMenuStructure.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Old_App_Code\cViewGroups.cs" />
+    <Compile Include="Old_App_Code\admin\cProviders.cs" />
+    <Compile Include="Old_App_Code\admin\cFaqs.cs" />
+    <Compile Include="Old_App_Code\admin\cQeForms.cs" />
+    <Compile Include="Old_App_Code\cItemBuilder.cs" />
+    <Compile Include="adminmenu.aspx.cs">
+      <DependentUpon>adminmenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adminmenu.aspx.designer.cs">
+      <DependentUpon>adminmenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="advanceallocation.aspx.cs">
+      <DependentUpon>advanceallocation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="advanceallocation.aspx.designer.cs">
+      <DependentUpon>advanceallocation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aeclaim.aspx.cs">
+      <DependentUpon>aeclaim.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aeclaim.aspx.designer.cs">
+      <DependentUpon>aeclaim.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aehotel.aspx.cs">
+      <DependentUpon>aehotel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aehotel.aspx.designer.cs">
+      <DependentUpon>aehotel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageInitializerModule.cs" />
+    <Compile Include="qeform.aspx.cs">
+      <DependentUpon>qeform.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qeform.aspx.designer.cs">
+      <DependentUpon>qeform.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiptManagement.aspx.cs">
+      <DependentUpon>ReceiptManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReceiptManagement.aspx.designer.cs">
+      <DependentUpon>ReceiptManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="broadcastProvider.aspx.designer.cs">
+      <DependentUpon>broadcastProvider.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="categorymenu.aspx.designer.cs">
+      <DependentUpon>categorymenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="claimsmenu.aspx.designer.cs">
+      <DependentUpon>claimsmenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="codesplit.aspx.designer.cs">
+      <DependentUpon>codesplit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="deletereason.aspx.designer.cs">
+      <DependentUpon>deletereason.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dispute.aspx.designer.cs">
+      <DependentUpon>dispute.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="encryptpws.aspx.designer.cs">
+      <DependentUpon>encryptpws.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="expform.master.designer.cs">
+      <DependentUpon>expform.master</DependentUpon>
+    </Compile>
+    <Compile Include="exportmenu.aspx.designer.cs">
+      <DependentUpon>exportmenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="exptemplate.master.designer.cs">
+      <DependentUpon>exptemplate.master</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="home.aspx.designer.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="hotelsearch.aspx.designer.cs">
+      <DependentUpon>hotelsearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mydetailsmenu.aspx.designer.cs">
+      <DependentUpon>mydetailsmenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aeexpense.aspx.designer.cs">
+      <DependentUpon>aeexpense.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="notesprovider.aspx.designer.cs">
+      <DependentUpon>notesprovider.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="odometerreading.aspx.designer.cs">
+      <DependentUpon>odometerreading.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="broadcastProvider.aspx.cs">
+      <DependentUpon>broadcastProvider.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="categorymenu.aspx.cs">
+      <DependentUpon>categorymenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="claimsmenu.aspx.cs">
+      <DependentUpon>claimsmenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="codesplit.aspx.cs">
+      <DependentUpon>codesplit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="deletereason.aspx.cs">
+      <DependentUpon>deletereason.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dispute.aspx.cs">
+      <DependentUpon>dispute.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="encryptpws.aspx.cs">
+      <DependentUpon>encryptpws.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="expform.master.cs">
+      <DependentUpon>expform.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="exportmenu.aspx.cs">
+      <DependentUpon>exportmenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="exptemplate.master.cs">
+      <DependentUpon>exptemplate.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="home.aspx.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="hotelsearch.aspx.cs">
+      <DependentUpon>hotelsearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mydetailsmenu.aspx.cs">
+      <DependentUpon>mydetailsmenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aeexpense.aspx.cs">
+      <DependentUpon>aeexpense.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="notesprovider.aspx.cs">
+      <DependentUpon>notesprovider.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="odometerreading.aspx.cs">
+      <DependentUpon>odometerreading.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="policy.aspx.cs">
+      <DependentUpon>policy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="policy.aspx.designer.cs">
+      <DependentUpon>policy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="policymenu.aspx.cs">
+      <DependentUpon>policymenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="policymenu.aspx.designer.cs">
+      <DependentUpon>policymenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SubCatDates.cs" />
+    <Compile Include="TorchMenu.aspx.cs">
+      <DependentUpon>TorchMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TorchMenu.aspx.designer.cs">
+      <DependentUpon>TorchMenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="webServices\receipts.asmx.cs">
+      <DependentUpon>receipts.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="webServices\svcAddEditExpenses.asmx.cs">
+      <DependentUpon>svcAddEditExpenses.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="webServices\svcDutyOfCare.asmx.cs">
+      <DependentUpon>svcDutyOfCare.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Content Include="App.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Properties\AssemblyInfo.cs.orig" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="qelst.aspx.cs">
+      <DependentUpon>qelst.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qelst.aspx.designer.cs">
+      <DependentUpon>qelst.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qeprintout.aspx.cs">
+      <DependentUpon>qeprintout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qeprintout.aspx.designer.cs">
+      <DependentUpon>qeprintout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="restricted.aspx.cs">
+      <DependentUpon>restricted.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="restricted.aspx.designer.cs">
+      <DependentUpon>restricted.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="searchmenu.aspx.cs">
+      <DependentUpon>searchmenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="searchmenu.aspx.designer.cs">
+      <DependentUpon>searchmenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="setupview.aspx.cs">
+      <DependentUpon>setupview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="setupview.aspx.designer.cs">
+      <DependentUpon>setupview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="tailoringmenu.aspx.cs">
+      <DependentUpon>tailoringmenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="tailoringmenu.aspx.designer.cs">
+      <DependentUpon>tailoringmenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="usermanagementmenu.aspx.cs">
+      <DependentUpon>usermanagementmenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="usermanagementmenu.aspx.designer.cs">
+      <DependentUpon>usermanagementmenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="viewclaim.aspx.cs">
+      <DependentUpon>viewclaim.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="viewclaim.aspx.designer.cs">
+      <DependentUpon>viewclaim.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\tfsintegrator\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <None Include="Web.Production.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="admin\settledadvances.aspx" />
+    <EmbeddedResource Include="App_GlobalResources\expenses.en-US.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>expenses.en-US.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="card_templates\CardTemplate.xsd" />
+    <None Include="Old_App_Code\DBConnection.cs.exclude" />
+    <Content Include="adminmenu.aspx" />
+    <Content Include="admin\admincategories.aspx" />
+    <Content Include="admin\adminfaqs.aspx" />
+    <Content Include="admin\adminfloats.aspx" />
+    <Content Include="admin\admingroups.aspx" />
+    <Content Include="admin\adminitemroles.aspx" />
+    <Content Include="admin\adminp11d.aspx" />
+    <Content Include="admin\adminpolicy.aspx" />
+    <Content Include="admin\adminqeforms.aspx" />
+    <Content Include="admin\aebroadcastmessage.aspx" />
+    <Content Include="admin\aecategory.aspx" />
+    <Content Include="admin\aefaq.aspx" />
+    <Content Include="admin\aefaqcategory.aspx" />
+    <Content Include="admin\aefloat.aspx" />
+    <Content Include="admin\aegroup.aspx" />
+    <Content Include="admin\aeitemrole.aspx" />
+    <Content Include="admin\aep11d.aspx" />
+    <Content Include="admin\aeqeform.aspx" />
+    <Content Include="admin\aestage.aspx" />
+    <Content Include="admin\broadcastmessages.aspx" />
+    <Content Include="admin\changeadvance.aspx" />
+    <Content Include="admin\companylogo.aspx" />
+    <Content Include="admin\licences.htm" />
+    <Content Include="admin\printout.aspx" />
+    <Content Include="admin\qeformdesign.aspx" />
+    <Content Include="admin\qepage.aspx" />
+    <Content Include="admin\rejectadvance.aspx" />
+    <Content Include="admin\topupadvance.aspx" />
+    <Content Include="advanceallocation.aspx" />
+    <Content Include="aeclaim.aspx" />
+    <Content Include="aehotel.aspx" />
+    <Content Include="broadcastProvider.aspx" />
+    <Content Include="callback.js" />
+    <Content Include="categorymenu.aspx" />
+    <Content Include="claimsmenu.aspx" />
+    <Content Include="codesplit.aspx" />
+    <Content Include="CustomFunctions.js" />
+    <Content Include="default.htm" />
+    <Content Include="deletereason.aspx" />
+    <Content Include="dispute.aspx" />
+    <Content Include="encryptpws.aspx" />
+    <Content Include="exportmenu.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="home.aspx" />
+    <Content Include="hotelsearch.aspx" />
+    <Content Include="icons\16\Plain\column.gif" />
+    <Content Include="icons\16\Plain\column_add.gif" />
+    <Content Include="icons\16\Plain\column_constant.gif" />
+    <Content Include="icons\16\Plain\column_function.gif" />
+    <Content Include="icons\16\Plain\folder.gif" />
+    <Content Include="icons\16\Plain\folder_closed.gif" />
+    <Content Include="icons\16\Plain\folder_lock.gif" />
+    <Content Include="icons\16\Plain\folder_out.gif" />
+    <Content Include="images\submenu_bg.jpg" />
+    <Content Include="information\about.aspx" />
+    <Content Include="information\addreview.aspx" />
+    <Content Include="information\aeadvancereq.aspx" />
+    <Content Include="information\aeholiday.aspx" />
+    <Content Include="information\delegates.aspx" />
+    <Content Include="information\directory.aspx" />
+    <Content Include="information\direntry.aspx" />
+    <Content Include="information\disputeadvance.aspx" />
+    <Content Include="information\employeeproxy.aspx" />
+    <Content Include="information\faqs.aspx" />
+    <Content Include="information\holidays.aspx" />
+    <Content Include="information\myadvances.aspx" />
+    <Content Include="information\reviewdetails.aspx" />
+    <Content Include="information\reviews.aspx" />
+    <Content Include="information\review_thanks.aspx" />
+    <Content Include="information\selectmultiple.aspx" />
+    <Content Include="mydetailsmenu.aspx" />
+    <Content Include="aeexpense.aspx" />
+    <Content Include="notesprovider.aspx" />
+    <Content Include="odometerreading.aspx" />
+    <Content Include="policy.aspx" />
+    <Content Include="policymenu.aspx" />
+    <Content Include="qelst.aspx" />
+    <Content Include="qeprintout.aspx" />
+    <Content Include="restricted.aspx" />
+    <Content Include="searchmenu.aspx" />
+    <Content Include="setupview.aspx" />
+    <Content Include="tailoringmenu.aspx" />
+    <Content Include="usermanagementmenu.aspx" />
+    <Content Include="validate.js" />
+    <Content Include="viewclaim.aspx" />
+    <None Include="Old_App_WebReferences\com\domyexpenses\www\teamfound.discomap" />
+    <None Include="Old_App_WebReferences\com\domyexpenses\www\teamfound.wsdl" />
+    <None Include="Old_App_WebReferences\tfs\teamfound.discomap" />
+    <None Include="Old_App_WebReferences\tfs\teamfound.wsdl" />
+    <None Include="buttons\.MySCMServerInfo" />
+    <None Include="buttons\logon panel - 5.psd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="expform.master" />
+    <Content Include="exptemplate.master" />
+    <None Include="icons\.MySCMServerInfo" />
+    <None Include="images\.MySCMServerInfo" />
+    <None Include="images\logon panel - 2.psd" />
+    <None Include="images\logon panel - 3.psd" />
+    <None Include="images\logon panel.psd" />
+    <None Include="images\Thumbs.db" />
+    <Content Include="menu.master" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="web.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="admin\adminExpensesConnectUsers.aspx" />
+    <Content Include="admin\aecorporatecard.aspx" />
+    <Content Include="admin\aefilterrule.aspx" />
+    <Content Include="admin\App_LocalResources\addingexpenses.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminallowances.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminbudget.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\admincategories.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\admincostcodes.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\admincountries.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\admincurrencies.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\admindepartments.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminemails.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminemployees.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminfaqs.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminfloats.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\admingroups.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminitemroles.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminmileage.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminp11d.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminpolicy.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminprojectcodes.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminqeforms.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminreasons.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminroles.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminsubcats.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminteams.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminuserdefined.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\adminuserdefinelist.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aeallowance.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aebroadcastmessage.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aebudget.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aecar.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aecategory.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aecorporatecard.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aecostcode.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aecountry.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aecurrencymonth.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aecurrencymonthly.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aecurrencyrange.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aecurrencyranges.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aecurrencystatic.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aedepartment.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aeemailsuffix.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aeemployee.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aefaq.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aefaqcategory.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aefloat.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aegroup.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aeitemrole.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aemileage.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aep11d.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aeprojectcode.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aeqeform.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aereason.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aerole.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aestage.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aesubcat.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aeteam.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aeuserdefined.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\aeuserdefinelist.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\attachcardoc.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\auditlog.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\broadcastmessages.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\changeadvance.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\colours.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\companydetails.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\companylogo.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\emailsuffixes.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\emplogon.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\exporthistory.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\flagslimits.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\generaloptions.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\mainadmin.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\mailserver.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\passwordoptions.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\printout.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\qeformdesign.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\qepage.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\regionalsettings.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\rejectadvance.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\selectemployee.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\settledadvances.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\splitsubcats.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\topupadvance.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\unallocatedcc.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="admin\App_LocalResources\unallocatedpc.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <EmbeddedResource Include="aehotel.aspx.resx">
+      <DependentUpon>aehotel.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Content Include="admin\corporate_cards.aspx" />
+    <Content Include="admin\editstatement.aspx" />
+    <Content Include="admin\filterrules.aspx" />
+    <Content Include="admin\import_statement.aspx" />
+    <Content Include="admin\migratecardocuments.aspx" />
+    <Content Include="admin\statements.aspx" />
+    <Content Include="admin\transaction_viewer.aspx" />
+    <Content Include="admin\unallocatedcardnumbers.ascx" />
+    <Content Include="admin\unallocated_cards.aspx" />
+    <Content Include="App_GlobalResources\expenses.resx">
+      <SubType>Designer</SubType>
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>expenses.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_Themes\ExpensesThemeNew\ExpensesThemeNew.css" />
+    <Content Include="App_Themes\ExpensesTheme\ExpensesTheme.css" />
+    <Content Include="App_Themes\FrameworkTheme\Framework.css" />
+    <Content Include="App_Themes\FrameworkTheme\logon_buttons\help.gif" />
+    <Content Include="App_Themes\FrameworkTheme\logon_buttons\logon.gif" />
+    <Content Include="App_Themes\FrameworkTheme\logon_buttons\logon_close.gif" />
+    <Content Include="App_Themes\FrameworkTheme\logon_buttons\logon_panel.gif" />
+    <Content Include="App_Themes\SmartDTheme\SmartDTheme.css" />
+    <Content Include="buttons\button_forgotten_details.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\button_logon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\button_lost_password.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\button_self_registration.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="buttons\pagebutton_activate.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="card_templates\AMEX Daily Text.xml" />
+    <Content Include="card_templates\AMEX Monthly Text.xml" />
+    <Content Include="card_templates\AMEX Monthly XLS.xml" />
+    <Content Include="card_templates\Barclaycard Enhanced.xml" />
+    <Content Include="card_templates\Barclaycard.xml" />
+    <Content Include="card_templates\Diners Card.xml" />
+    <Content Include="card_templates\Fuel Card xls.xml" />
+    <Content Include="card_templates\MBNA Credit Card.xml" />
+    <Content Include="card_templates\Premier Inn XLS.xml" />
+    <Content Include="card_templates\RBS Purchase Card.xml" />
+    <Content Include="card_templates\RBS Credit Card.xml" />
+    <Content Include="expensesConnect.aspx" />
+    <Content Include="expensesSvc.asmx" />
+    <Content Include="blank.htm" />
+    <Content Include="icons\16\earth.png" />
+    <Content Include="icons\16\Plain\add2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\Plain\car_sedan_blue.png" />
+    <Content Include="icons\16\Plain\creditcards.png" />
+    <Content Include="icons\16\Plain\delete2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\Plain\disk_blue.png" />
+    <Content Include="icons\16\Plain\earth2.png" />
+    <Content Include="icons\16\Plain\elements_selection.png" />
+    <Content Include="icons\16\Plain\export1.png" />
+    <Content Include="icons\16\Plain\find.png" />
+    <Content Include="icons\16\Plain\tooltip.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\Plain\undo.png" />
+    <Content Include="icons\16\Plain\zoom_in.png" />
+    <Content Include="icons\32\Plain\document_attachment.png" />
+    <Content Include="icons\48\Plain\autolog.gif" />
+    <Content Include="icons\48\Plain\books.png" />
+    <Content Include="icons\48\Plain\book_red.png" />
+    <Content Include="icons\48\Plain\calendar_preferences.gif" />
+    <Content Include="icons\48\Plain\car_compact_green.gif" />
+    <Content Include="icons\48\Plain\car_sedan_green.gif" />
+    <Content Include="icons\48\Plain\expensesConnect.gif" />
+    <Content Include="icons\48\Plain\document_add.png" />
+    <Content Include="icons\48\Plain\document_edit.png" />
+    <Content Include="icons\48\Plain\document_ok.png" />
+    <Content Include="icons\48\Plain\document_time.png" />
+    <Content Include="icons\48\Plain\document_warning.png" />
+    <Content Include="icons\48\Plain\folder_add.png" />
+    <Content Include="icons\48\Plain\folder_document.png" />
+    <Content Include="icons\48\Plain\folder_edit.png" />
+    <Content Include="icons\48\Plain\folder_preferences.png" />
+    <Content Include="icons\48\Plain\help2.gif" />
+    <Content Include="icons\48\Plain\import2.gif" />
+    <Content Include="icons\48\Plain\mail.gif" />
+    <Content Include="icons\48\Plain\mail_server.gif" />
+    <Content Include="icons\48\Plain\rubberstamp.png" />
+    <Content Include="icons\48\Plain\scroll_ok.gif" />
+    <Content Include="icons\48\Plain\trafficlight_green.gif" />
+    <Content Include="icons\48\Plain\window_dialog.gif" />
+    <Content Include="icons\48\Shadow\autolog.gif" />
+    <Content Include="icons\48\Shadow\books.png" />
+    <Content Include="icons\48\Shadow\book_red.png" />
+    <Content Include="icons\48\Shadow\calendar_preferences.gif" />
+    <Content Include="icons\48\Shadow\car_compact_green.gif" />
+    <Content Include="icons\48\Shadow\car_sedan_green.gif" />
+    <Content Include="icons\48\Shadow\document_add.png" />
+    <Content Include="icons\48\Shadow\document_edit.png" />
+    <Content Include="icons\48\Shadow\document_ok.png" />
+    <Content Include="icons\48\Shadow\document_time.png" />
+    <Content Include="icons\48\Shadow\document_warning.png" />
+    <Content Include="icons\48\Shadow\folder_add.png" />
+    <Content Include="icons\48\Shadow\folder_document.png" />
+    <Content Include="icons\48\Shadow\folder_edit.png" />
+    <Content Include="icons\48\Shadow\folder_preferences.png" />
+    <Content Include="icons\48\Shadow\expensesConnect.gif" />
+    <Content Include="icons\48\Shadow\help2.gif" />
+    <Content Include="icons\48\Shadow\import2.gif" />
+    <Content Include="icons\48\Shadow\mail.gif" />
+    <Content Include="icons\48\Shadow\mail_server.gif" />
+    <Content Include="icons\48\Shadow\rubberstamp.png" />
+    <Content Include="icons\48\Shadow\scroll_ok.gif" />
+    <Content Include="icons\48\Shadow\trafficlight_green.gif" />
+    <Content Include="icons\48\Shadow\window_dialog.gif" />
+    <Content Include="icons\user1_add.png" />
+    <Content Include="icons\warning.png" />
+    <Content Include="icons\zoom_in_blue.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\breadcrumb_background.png" />
+    <Content Include="images\button_forgotten_details.png" />
+    <Content Include="images\button_logon.png" />
+    <Content Include="images\button_signup.png" />
+    <Content Include="images\expenses-png74.png" />
+    <Content Include="images\expenses.ico" />
+    <Content Include="images\expenses_logo_74_74.png" />
+    <Content Include="images\greencrosssmall.png" />
+    <Content Include="images\grey_gradient.png" />
+    <Content Include="images\helpicon.png" />
+    <Content Include="images\infragisticsheaderbg.jpg" />
+    <Content Include="images\inputpanelbg.jpg" />
+    <Content Include="images\inputtd_bg.jpg" />
+    <Content Include="images\jigsaw.png" />
+    <Content Include="images\login_header_bg.png" />
+    <Content Include="images\page_header_background.png" />
+    <Content Include="images\redarrowsmall.png" />
+    <Content Include="images\side_panel_header_background.png" />
+    <Content Include="images\spacer.png" />
+    <Content Include="images\ttarrow.png" />
+    <Content Include="images\ttarrowex.png" />
+    <Content Include="images\vertical_dotted.png" />
+    <Content Include="information\App_LocalResources\about.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\addreview.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\aeadvancereq.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\aeholiday.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\changeofdetails.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\delegates.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\directory.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\direntry.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\disputeadvance.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\employeeproxy.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\faqs.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\holidays.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\myadvances.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\mydetails.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\reviewdetails.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\reviews.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="information\App_LocalResources\selectmultiple.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\aecardupload.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\advanceallocation.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\aeclaim.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\aeexpense.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\aepurchasecardupload.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\attachreceipt.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\carduploads.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ccassign.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ccflaggeditems.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ccmatch.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ccstatement.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\changepassword.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\checkexpenselist.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\checkpaylist.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\claimsummary.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\codesplit.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\deletereason.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\dispute.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\expform.master.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\exptemplate.master.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\faq.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\flaggeditems.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\forgotpassword.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\hotelsearch.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\logon.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\none.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\odometerreading.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\pcmatch.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\print.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\purchasecardassign.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\purchasecardsflaggeditems.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\purchasecarduploads.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\qeform.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\qelst.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\qeprintout.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\qeupload.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\register.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\register_success.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\restricted.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\returnexpenses.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\setupview.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\submitclaim.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\submitted.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\viewclaim.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\viewcurrent.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <EmbeddedResource Include="licenses.licx" />
+    <Content Include="logon.aspx" />
+    <Content Include="logos\205.gif" />
+    <Content Include="scripts\addingexpenses.js" />
+    <Content Include="App_Themes\ExpensesTheme\DataGrid.skin" />
+    <Content Include="App_Themes\ExpensesTheme\menu.skin" />
+    <Content Include="App_Themes\ExpensesThemeNew\DataGrid.skin" />
+    <Content Include="App_Themes\ExpensesThemeNew\menu.skin" />
+    <Content Include="App_Themes\ExpensesThemeNew\UltraWebGrid.skin" />
+    <Content Include="App_Themes\FrameworkTheme\UltraWebGrid.skin" />
+    <Content Include="App_Themes\SmartDTheme\UltraWebGrid.skin" />
+    <Content Include="webServices\receipts.asmx" />
+    <None Include="Web References\tfsintegrator\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\tfsintegrator\svcErrors.disco" />
+    <None Include="Web References\tfsIntegrator\svcErrors.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
+      <Project>{69860ce5-949c-47f0-8fda-65c0a74171c8}</Project>
+      <Name>BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CacheDataAccess\CacheDataAccess.csproj">
+      <Project>{14f70e37-b7c3-4c0c-94b7-cf8788e14abb}</Project>
+      <Name>CacheDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{85dfc378-171e-46c8-9c54-74cbe66368ac}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SELCloud\SELCloud.csproj">
+      <Project>{02441bad-714d-483d-acde-dde2a29bee85}</Project>
+      <Name>SELCloud</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spend Management\Spend Management.csproj">
+      <Project>{1CBFD8EC-F67C-4425-A10C-97BFC7501045}</Project>
+      <Name>Spend Management</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementLibrary\SpendManagementLibrary.csproj">
+      <Project>{9BDAA543-AC54-47A1-8BDD-C7BF34F2F005}</Project>
+      <Name>SpendManagementLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementHelpers\SpendManagementHelpers.csproj">
+      <Project>{F12FBA1A-995D-429F-A9A5-E54FB0AE536F}</Project>
+      <Name>SpendManagementHelpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLDataAccess\SQLDataAccess.csproj">
+      <Project>{d1de01ae-fe1f-4d65-b57b-08ca4e10d747}</Project>
+      <Name>SQLDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{c417335b-7be1-45ae-8274-c0b65829c4fc}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://localhost/TFSIntegrator/svcErrors.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\tfsintegrator\</RelPath>
+      <UpdateFromURL>http://localhost/TFSIntegrator/svcErrors.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>expenses_tfsIntegrator_svcErrors</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="help_text\Content\Administration_Guide\1. Introduction\Introduction\" />
+    <Folder Include="help_text\Content\Administration_Guide\2. Change Administration Menu\2.1 Base Information\" />
+    <Folder Include="help_text\Content\Administration_Guide\2. Change Administration Menu\2.2 Policy Information\" />
+    <Folder Include="help_text\Content\Administration_Guide\2. Change Administration Menu\2.3 User Management\" />
+    <Folder Include="help_text\Content\Administration_Guide\2. Change Administration Menu\2.4 Tailoring\" />
+    <Folder Include="help_text\Content\Administration_Guide\2. Change Administration Menu\2.5 System Options\" />
+    <Folder Include="help_text\Content\Administration_Guide\2. Change Administration Menu\2.6 Imports and Exports\" />
+    <Folder Include="help_text\Content\Administration_Guide\3. Employee Expenses\" />
+    <Folder Include="help_text\Content\Administration_Guide\4. Check and Pay Expenses\" />
+    <Folder Include="help_text\Content\Administration_Guide\5. Icon Descriptions\" />
+    <Folder Include="help_text\Content\Administration_Guide\6. HTML Hints and Tips\" />
+    <Folder Include="help_text\Content\Administration_Guide\7. Adding and Editing Information\" />
+    <Folder Include="help_text\Content\Administration_Guide\8 Other Details\" />
+    <Folder Include="help_text\Content\Administration_Guide\Change Administration Menu\2.6 Imports and Exports\" />
+    <Folder Include="help_text\Content\Administration_Guide\Change Administration Menu\Base Information\" />
+    <Folder Include="help_text\Content\Administration_Guide\Change Administration Menu\Imports and Exports\" />
+    <Folder Include="help_text\Content\Administration_Guide\Change Administration Menu\Policy Information\" />
+    <Folder Include="help_text\Content\Administration_Guide\Change Administration Menu\System Options\" />
+    <Folder Include="help_text\Content\Administration_Guide\Change Administration Menu\Tailoring\" />
+    <Folder Include="help_text\Content\Administration_Guide\Change Administration Menu\User Management\" />
+    <Folder Include="help_text\Content\Administration_Guide\Introduction\" />
+    <Folder Include="help_text\Content\Administration_Guide\UserReports\" />
+    <Folder Include="help_text\Content\Resources\Images\Administration_Guide\" />
+    <Folder Include="help_text\Content\Resources\Images\Claimant Guide\" />
+    <Folder Include="help_text\Content\Resources\Images\UserReports\" />
+    <Folder Include="help_text\Content\Resources\Stylesheets\" />
+    <Folder Include="help_text\Content\Resources\TableStyles\" />
+    <Folder Include="help_text\Content\SkinSupport\" />
+    <Folder Include="help_text\Data\SkinDefault\" />
+    <Folder Include="help_text\Data\SkinexpensesSkin\" />
+    <Folder Include="help_text\Skin\Images\" />
+    <Folder Include="Old_App_Code\reports\" />
+    <Folder Include="receipts\" />
+    <Folder Include="uploads\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="AfterCompile" Condition="exists('log4net.$(Configuration).config')">
+    <!-- Generate transformed app config in the intermediate directory -->
+    <TransformXml Source="log4net.config" Destination="$(IntermediateOutputPath)log4net.config" Transform="log4net.$(Configuration).config" />
+    <!-- Force build process to use the transformed configuration file from now on. -->
+    <ItemGroup>
+      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)log4net.config">
+        <TargetPath>log4net.config</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+  </Target>
+</Project>

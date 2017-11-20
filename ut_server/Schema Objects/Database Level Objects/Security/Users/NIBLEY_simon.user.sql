@@ -1,0 +1,2 @@
+﻿CREATE USER [NIBLEY\simon] FOR LOGIN [NIBLEY\simon];
+

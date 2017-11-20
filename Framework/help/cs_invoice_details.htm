@@ -1,0 +1,135 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - [Invoice Details]</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Invoice Details</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>The Invoice Details section allows the storing on any invoices issued or 
+					received that relate to the current contract to be stored.</p>
+				<p>By storing any invoice information relating to the contract, not only is 
+					reporting capabilities enhanced, but it is possible to retain a history of what 
+					the costs of the contract are over a prolonged period (e.g. cost increases over 
+					consecutive terms of the contract).</p>
+				<div class="help_tip">
+					<b>TIP:</b> By Default, only active invoices are displayed. Use Invoice Status 
+					drop-down list to display archived or all.
+				</div>
+				<p><b>NOTE: </b>The functionality provided in the invoice details section does not 
+					aim to replace any financial systems, merely enables the storage of particular 
+					contract related invoices.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1"> Key Fields
+			</div>
+			<div class="help_body_text" id="1">
+				<p>
+					<table class="inner" align="center" width="500">
+						<tr>
+							<th class="inner" width="150">
+								Field Name</th>
+							<th class="inner" width="350">
+								Definition</th>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Invoice Status</td>
+							<td class="inner"><p>The status of the invoice is selected from a drop-down list and 
+									the options are defined by your organisation.</p>
+								<p>Each invoice status definition can have either a 'live' or 'archived' state. By 
+									default, only the 'live' invoices are displayed.</p>
+								<div class="help_tip">
+									<b>TIP:</b> If you don't select a status, it will be not be displayed as 
+									'live'. It will only display when 'Both' is selected from the status filter 
+									drop-down list.
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">PO Max Value<br>
+								and<br>
+								Invoice Amount</td>
+							<td class="inner"><p>Only monetary amounts will be permitted in these fields. 
+									Validators will indicate if the values entered are invalid in any way.</p>
+							</td>
+						</tr>
+					</table>
+				</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('2');" id="img2"> Invoice 
+				Breakdown
+			</div>
+			<div class="help_body_text" id="2">
+				<p>Once a invoice has been added, it is possible to detail how the invoice amount 
+					is broken down. It may be that the invoice incorporates more than one contract 
+					product.</p>
+				<p>By clicking the 'breakdown' link at the bottom of the screen, you are 
+					transferred to the invoice breakdown section where the proportions of the 
+					invoice can be detailed.</p>
+				<p><b>NOTE: </b>On returning from the breakdown screen, the invoice amount is 
+					automatically updated with the sum total of the breakdown elements.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('3');" id="img3"> Invoice Status 
+				History
+			</div>
+			<div class="help_body_text" id="3">
+				<p>The status of the invoice can be used to trace its lifecycle from receipt/issue 
+					to payment. For instance, an invoice may have to follow a specific sign-off 
+					procedure, prior to payment. Changing the status of the invoice would enable 
+					this to be logged.</p>
+				<p>The Invoice Status link transfers you to a screen that displays a history of 
+					these status transitions. The status history is read only and cannot be 
+					modified.</p>
+				<p>On deletion of an invoice, all status history will also be deleted for the 
+					deleted invoice.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+	</body>
+</html>

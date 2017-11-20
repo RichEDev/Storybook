@@ -1,0 +1,1 @@
+﻿CREATE STATISTICS [_dta_stat_85575343_12_1] ON [dbo].[costcodes]([OwnerBudgetHolderId], [costcodeid])

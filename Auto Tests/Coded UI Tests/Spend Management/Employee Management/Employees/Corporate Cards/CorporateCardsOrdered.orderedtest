@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="corporatecardsordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\spend management\employee management\employees\corporate cards\corporatecardsordered.orderedtest" id="6b9fb872-bd4b-40fb-93dd-c3afc31a855a" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <TestLinks>
+    <TestLink id="2ac9bb7e-de1b-3b09-e241-524d8d36ea11" name="CorporateCardsSuccessfullyAddCorporateCardToEmployee" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="2df2ac2b-cfac-e3f8-5ae5-c9a54003ae84" name="CorporateCardsUnsuccessfullyAddCorporateCardToEmployeeWhereDuplicatDetailsUsed" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="17e08afa-3e04-088b-e530-142447f58b03" name="CorporateCardsSuccessfullyEditCorporateCardOnEmployee" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="c4428767-7543-2bfe-1ef5-044d7fd56ba6" name="CorporateCardsSuccessfullyAddSecondCorporateCardToEmployee" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="e6a39b4d-939a-605e-d9af-1a026f473de3" name="CorporateCardsSuccessfullyDeleteCorporateCardToEmployee" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

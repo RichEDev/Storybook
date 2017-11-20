@@ -1,0 +1,219 @@
+<%@ Master Language="C#" AutoEventWireup="true" Inherits="Spend_Management.AuthenticatedUser" CodeBehind="AuthenticatedUser.master.cs" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<%@ Register Src="~/shared/usercontrols/subAccountPopup.ascx" TagName="subAccountPopup" TagPrefix="subAccountPopup" %>
+<%@ Register Src="~/shared/usercontrols/TopScripts.ascx" TagName="top_scripts" TagPrefix="uc1" %>
+<%@ Register Src="~/shared/usercontrols/Header.ascx" TagName="header" TagPrefix="uc2" %>
+<%@ Register Src="~/shared/usercontrols/BottomScripts.ascx" TagName="bottom_scripts" TagPrefix="uc4" %>
+<%@ Register Src="~/shared/usercontrols/SideBar.ascx" TagName="sideMenu" TagPrefix="uc5" %>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+       <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+    <link id="favLink" runat="server" rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link id="jQueryCss" runat="server" type="text/css" href="/static/js/jQuery/jquery-ui-1.9.2.custom.css" rel="Stylesheet" />
+    <title><asp:Literal ID="litpagetitle" runat="server" meta:resourcekey="litpagetitleResource1"/> <asp:Literal ID="litSubPageTitle" runat="server"/></title>
+     <uc1:top_scripts ID="css_scripts" runat="server" />
+    <script language="javascript" type="text/javascript">
+        var contentID = "ctl00_contentmain_";
+
+        function fwexit()
+        {
+            if (confirm('Are you sure you want to log out?'))
+            {
+                if (theme == 'SmartDTheme')
+                {
+                    document.location.href = "/shared/logon.aspx?sd=1";
+                }
+                else
+                {
+                    document.location.href = "/shared/logon.aspx?sd=0";
+                }
+            }
+        }
+
+        function exit()
+        {
+            if (confirm('Are you sure you want to log out?'))
+            {
+                switch (theme)
+                {
+                    case 'SmartDTheme':
+                        document.location.href = '/shared/logon.aspx?sd=1';
+                        break;
+                    case 'FrameworkThemeNew':
+                        document.location.href = '/shared/logon.aspx?sd=0';
+                        break;
+                    default:
+                        document.location = appPath + "/shared/process.aspx?process=1";
+                        break;
+                }
+            }
+        }
+
+        function showpolicy(path)
+        {
+            window.open(path, null, 'width=500, height=500, resizable=yes, scrollbars=yes');
+        }
+    </script>
+</head>
+<body runat="server" id="body">
+    <asp:Literal ID="litstyles" runat="server" meta:resourcekey="litstylesResource1"></asp:Literal>
+    <form id="Form1" runat="server">
+    <cc1:ToolkitScriptManager ID="scriptman" runat="server" EnablePageMethods="True">
+        <Services>
+            <asp:ServiceReference Path="~/shared/webServices/svcGrid.asmx" InlineScript="false" />
+            <asp:ServiceReference Path="~/shared/webServices/svcTooltip.asmx" InlineScript="false" />
+        </Services>
+        <Scripts>
+            <asp:ScriptReference Path="~/shared/javascript/minify/sel.main.js" />
+            <asp:ScriptReference Name="common" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.data.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.jsonParse.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
+        </Scripts>
+    </cc1:ToolkitScriptManager>
+    <cc1:ModalPopupExtender ID="mdlMasterPopup" runat="server" OnCancelScript="SEL.MasterPopup.HideMasterPopup();" OnOkScript="SEL.MasterPopup.HideMasterPopup();" BackgroundCssClass="modalMasterBackground" PopupControlID="pnlMasterPopup" TargetControlID="lnkMasterPopup" DropShadow="False">
+    </cc1:ModalPopupExtender>
+    <asp:Panel ID="pnlMasterPopup" runat="server" CssClass="errorModal" Style="display: none; z-index: 16000099;">
+        <div id="divMasterPopup">
+        </div>
+        <div style="padding: 0px 5px 5px 5px;"><img src="/shared/images/buttons/btn_close.png" id="btnMasterPopup" alt="OK" onclick="SEL.MasterPopup.HideMasterPopup();" style="cursor: pointer;" /></div>
+    </asp:Panel>
+    <asp:HyperLink ID="lnkMasterPopup" runat="server" Style="display: none;" Text="&nbsp;" NavigateUrl="javascript:void(0);"></asp:HyperLink>
+    <script type="text/javascript">
+        var tooltipPopupControlExtender = '<% = popuptooltip.ClientID %>';
+        var tooltipPanel = '<% = pnltooltip.ClientID %>';
+        var tooltipDynamicPopulateExtender = '<% = dynpopup.ClientID %>';
+        var tooltipDynamicPopulateExtenderUDF = '<% = dynuserdefinedpopup.ClientID  %>';
+
+        
+    </script>
+         <uc2:header ID="header" runat="server" />
+        <ol ID="sitemap" runat="server" class="breadcrumb">
+                    <asp:Literal id="litBreadcrumb" runat="server"></asp:Literal>
+
+                </ol>
+           <div id="wrapper" class="toggled">
+                 <uc5:sideMenu ID="side_bar" runat="server" />
+                <div class="main-content-area">
+                
+    <div class="submenuholder">
+        <asp:Panel ID="pnlSubMenuHolders" runat="server">
+            <div id="submenu">
+                <div class="panel">
+                    <div class="paneltitle"><asp:Label ID="lblpageoptions" runat="server" Text="Page Options" meta:resourcekey="lblpageoptionsResource1"></asp:Label></div>
+                    <asp:ContentPlaceHolder ID="contentmenu" runat="server"></asp:ContentPlaceHolder>
+                </div>
+                <asp:ContentPlaceHolder ID="contentleft" runat="server"></asp:ContentPlaceHolder>
+            </div>
+        </asp:Panel>
+    </div>
+ <asp:Literal ID="litok" runat="server" meta:resourcekey="litokResource1"></asp:Literal>
+  
+    <div id="maindiv">
+        <asp:Literal ID="litemplogon" runat="server" meta:resourcekey="litemplogonResource1"></asp:Literal>
+        <asp:Literal ID="litPageOptionsOverrideCss" runat="server"></asp:Literal>
+        <asp:ContentPlaceHolder ID="contentmain" runat="server">
+        </asp:ContentPlaceHolder>
+    </div></div></div>
+    <asp:Panel ID="pnltooltip" runat="server">
+    </asp:Panel>
+    <asp:Image ID="imgtooltip" runat="server" Style="display: none;" ImageUrl="~/images/spacer.gif" /><cc1:DynamicPopulateExtender ID="dynpopup" runat="server" TargetControlID="pnltooltip" ServicePath="~/shared/webservices/svcTooltip.asmx" ServiceMethod="getTooltip">
+    </cc1:DynamicPopulateExtender>
+    <cc1:DynamicPopulateExtender ID="dynuserdefinedpopup" runat="server" TargetControlID="pnltooltip" ServicePath="~/shared/webservices/svcTooltip.asmx" ServiceMethod="getUserDefinedTooltip">
+    </cc1:DynamicPopulateExtender>
+    <cc1:PopupControlExtender ID="popuptooltip" runat="server" TargetControlID="imgtooltip" PopupControlID="pnltooltip" Position="Right">
+    </cc1:PopupControlExtender>
+    <asp:Literal runat="server" ID="windowOnError"></asp:Literal>
+    
+    <subAccountPopup:subAccountPopup ID="subAccountModal" runat="server" />
+      
+        <!--Add Scripts to the perticular page-->
+    <uc4:bottom_scripts ID="bottom_scripts" runat="server" />
+    
+    </form>
+    <script language="javascript" type="text/javascript">
+
+        function displayBroadcastMessage(broadcastid, url, page)
+        {
+
+            var xmlRequest;
+            try
+            {
+                xmlRequest = new XMLHttpRequest();
+            }
+            catch (e)
+            {
+                try
+                {
+                    xmlRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                catch (f)
+                {
+                    xmlRequest = null;
+                }
+            }
+            xmlRequest.onreadystatechange = function ()
+            {
+                if (xmlRequest.readyState == 4)
+                {
+                    var broadcast = xmlRequest.responseText;
+                    document.getElementById("broadcastmsg").innerHTML = broadcast;
+                    document.getElementById("broadcastmsg").style.display = 'block';
+                }
+            }
+
+            var dataToSend = "broadcastid=" + broadcastid + "&page=" + page;
+            xmlRequest.open("POST", url, true);
+            //xmlRequest.setRequestHeader("Content-Type","application/x-wais-source");
+            xmlRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xmlRequest.send(dataToSend);
+
+        }
+
+        function displayFlag(claimid, expenseids)
+        {
+
+            var xmlRequest;
+            try
+            {
+                xmlRequest = new XMLHttpRequest();
+            }
+            catch (e)
+            {
+                try
+                {
+                    xmlRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                catch (f)
+                {
+                    xmlRequest = null;
+                }
+            }
+            xmlRequest.onreadystatechange = function ()
+            {
+                if (xmlRequest.readyState == 4)
+                {
+                    var broadcast = xmlRequest.responseText;
+                    document.getElementById("flagmsg").innerHTML = broadcast;
+                    document.getElementById("flagmsg").style.display = 'block';
+                }
+            }
+
+            var dataToSend = "claimid=" + claimid + "&" + expenseids;
+            xmlRequest.open("POST", 'flaggeditems.aspx', true);
+            //xmlRequest.setRequestHeader("Content-Type","application/x-wais-source");
+            xmlRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xmlRequest.send(dataToSend);
+
+        }
+    </script>
+    <div id="broadcastmsg">&nbsp;</div>
+    <div id="flagmsg">&nbsp;</div>
+    <div id="helppanel" style="display: none;"></div>
+    <asp:Literal ID="PageStatistics" runat="server"></asp:Literal>
+</body>
+</html>

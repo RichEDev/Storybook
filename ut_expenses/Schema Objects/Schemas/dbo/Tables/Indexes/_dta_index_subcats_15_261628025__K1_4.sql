@@ -1,0 +1,5 @@
+﻿CREATE NONCLUSTERED INDEX [_dta_index_subcats_15_261628025__K1_4] ON [dbo].[subcats] 
+(
+	[subcatid] ASC
+)
+INCLUDE ( [subcat]) WITH (SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF) ON [PRIMARY]

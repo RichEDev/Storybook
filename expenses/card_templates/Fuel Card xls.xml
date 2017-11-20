@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="Fuel Card xls" FileType="XLS" NumberHeaderRecords="3" NumberFooterRecords="2">
+  <Fields Type="CardTransaction" UniqueValue="trans">
+    <HeaderRecord>
+      <HeaderField>Client Account No:</HeaderField>
+      <HeaderField>800732</HeaderField>
+      <HeaderField>STELJES LTD</HeaderField>
+      <HeaderField>Start Date:</HeaderField>
+      <HeaderField FieldType="D" />
+      <HeaderField>End Date:</HeaderField>
+      <HeaderField FieldType="D" />
+    </HeaderRecord>
+
+    <Field Name="InvoiceCentre" MappedTable="card_transactions_fuel_cards" MappedField="Invoice_Centre" FieldType="S" MaxLength="16" />     
+    <Field Name="CostCentre" MappedTable="card_transactions_fuel_card" MappedField="Cost_centre" FieldType="S" MaxLength="16" />     
+    <Field Name="CardNumber" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="16" />     
+    <Field Name="SystemReg" MappedTable="card_transactions_fuel_card" MappedField="system_reg" FieldType="S" MaxLength="10"/>
+    <Field Name="DriverName" MappedTable="card_transactions_fuel_card" MappedField="driver_name" FieldType="S" MaxLength="50" />
+    <Field Name="Litres" MappedTable="card_transactions_fuel_card" MappedField="litres" FieldType="C" />
+    <Field Name="Net" MappedTable="card_transactions_fuel_card" MappedField="net" FieldType="C" />
+    <Field Name="VAT" MappedTable="card_transactions_fuel_card" MappedField="Vat" FieldType="C" />
+    <Field Name="Gross" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C" />    
+    <Field Name="Transcount" MappedTable="card_transactions_fuel_card" MappedField="Transcount" FieldType="C" />
+    <Field Name="Percent" MappedTable="card_transactions_fuel_card" MappedField="Percent" FieldType="C" />
+    <Field Name="PPL" MappedTable="card_transactions_fuel_card" MappedField="PPL" FieldType="C" />
+    <Field Name="CurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" DefaultValue="GBP" CurrencyType="alpha" /> 
+    <Field Name="CountryCode" MappedTable="card_transactions" MappedField="country_code" FieldType="S" DefaultValue="GB" CountryType="alpha" /> 
+  </Fields>
+</CardTemplate>

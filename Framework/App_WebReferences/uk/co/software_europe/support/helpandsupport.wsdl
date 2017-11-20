@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://support.software-europe.co.uk/helpandsupport/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://support.software-europe.co.uk/helpandsupport/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://support.software-europe.co.uk/helpandsupport/">
+      <s:element name="submitSupportIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProductID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UsersEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ProductUsername" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SupportIssue" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="submitSupportIssueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="submitSupportIssueResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="submitSuggestion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProductID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UsersEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ProductUsername" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Suggestion" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="submitSuggestionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="submitSuggestionResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QuickStartGuides">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProductID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QuickStartGuidesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QuickStartGuidesResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTrainingCourses">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProductID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTrainingCoursesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTrainingCoursesResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BookTrainingCourse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProductID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="courseInstanceID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EmailOfUser" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BookTrainingCourseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="BookTrainingCourseResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UnbookTrainingCourse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProductID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="courseInstanceID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EmailOfUser" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UnbookTrainingCourseResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetMyBookings">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMyBookingsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMyBookingsResult" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetOnlineDemo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OnlineDemoID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOnlineDemoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOnlineDemoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOnlineDemos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProductID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOnlineDemosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOnlineDemosResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="submitSupportIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:submitSupportIssue" />
+  </wsdl:message>
+  <wsdl:message name="submitSupportIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:submitSupportIssueResponse" />
+  </wsdl:message>
+  <wsdl:message name="submitSuggestionSoapIn">
+    <wsdl:part name="parameters" element="tns:submitSuggestion" />
+  </wsdl:message>
+  <wsdl:message name="submitSuggestionSoapOut">
+    <wsdl:part name="parameters" element="tns:submitSuggestionResponse" />
+  </wsdl:message>
+  <wsdl:message name="QuickStartGuidesSoapIn">
+    <wsdl:part name="parameters" element="tns:QuickStartGuides" />
+  </wsdl:message>
+  <wsdl:message name="QuickStartGuidesSoapOut">
+    <wsdl:part name="parameters" element="tns:QuickStartGuidesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTrainingCoursesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTrainingCourses" />
+  </wsdl:message>
+  <wsdl:message name="GetTrainingCoursesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTrainingCoursesResponse" />
+  </wsdl:message>
+  <wsdl:message name="BookTrainingCourseSoapIn">
+    <wsdl:part name="parameters" element="tns:BookTrainingCourse" />
+  </wsdl:message>
+  <wsdl:message name="BookTrainingCourseSoapOut">
+    <wsdl:part name="parameters" element="tns:BookTrainingCourseResponse" />
+  </wsdl:message>
+  <wsdl:message name="UnbookTrainingCourseSoapIn">
+    <wsdl:part name="parameters" element="tns:UnbookTrainingCourse" />
+  </wsdl:message>
+  <wsdl:message name="UnbookTrainingCourseSoapOut">
+    <wsdl:part name="parameters" element="tns:UnbookTrainingCourseResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMyBookingsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMyBookings" />
+  </wsdl:message>
+  <wsdl:message name="GetMyBookingsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMyBookingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOnlineDemoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOnlineDemo" />
+  </wsdl:message>
+  <wsdl:message name="GetOnlineDemoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOnlineDemoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOnlineDemosSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOnlineDemos" />
+  </wsdl:message>
+  <wsdl:message name="GetOnlineDemosSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOnlineDemosResponse" />
+  </wsdl:message>
+  <wsdl:portType name="HelpAndSupportSoap">
+    <wsdl:operation name="submitSupportIssue">
+      <wsdl:input message="tns:submitSupportIssueSoapIn" />
+      <wsdl:output message="tns:submitSupportIssueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="submitSuggestion">
+      <wsdl:input message="tns:submitSuggestionSoapIn" />
+      <wsdl:output message="tns:submitSuggestionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="QuickStartGuides">
+      <wsdl:input message="tns:QuickStartGuidesSoapIn" />
+      <wsdl:output message="tns:QuickStartGuidesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrainingCourses">
+      <wsdl:input message="tns:GetTrainingCoursesSoapIn" />
+      <wsdl:output message="tns:GetTrainingCoursesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BookTrainingCourse">
+      <wsdl:input message="tns:BookTrainingCourseSoapIn" />
+      <wsdl:output message="tns:BookTrainingCourseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UnbookTrainingCourse">
+      <wsdl:input message="tns:UnbookTrainingCourseSoapIn" />
+      <wsdl:output message="tns:UnbookTrainingCourseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMyBookings">
+      <wsdl:input message="tns:GetMyBookingsSoapIn" />
+      <wsdl:output message="tns:GetMyBookingsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOnlineDemo">
+      <wsdl:input message="tns:GetOnlineDemoSoapIn" />
+      <wsdl:output message="tns:GetOnlineDemoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOnlineDemos">
+      <wsdl:input message="tns:GetOnlineDemosSoapIn" />
+      <wsdl:output message="tns:GetOnlineDemosSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HelpAndSupportSoap" type="tns:HelpAndSupportSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="submitSupportIssue">
+      <soap:operation soapAction="http://support.software-europe.co.uk/helpandsupport/submitSupportIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="submitSuggestion">
+      <soap:operation soapAction="http://support.software-europe.co.uk/helpandsupport/submitSuggestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuickStartGuides">
+      <soap:operation soapAction="http://support.software-europe.co.uk/helpandsupport/QuickStartGuides" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrainingCourses">
+      <soap:operation soapAction="http://support.software-europe.co.uk/helpandsupport/GetTrainingCourses" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BookTrainingCourse">
+      <soap:operation soapAction="http://support.software-europe.co.uk/helpandsupport/BookTrainingCourse" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnbookTrainingCourse">
+      <soap:operation soapAction="http://support.software-europe.co.uk/helpandsupport/UnbookTrainingCourse" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMyBookings">
+      <soap:operation soapAction="http://support.software-europe.co.uk/helpandsupport/GetMyBookings" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOnlineDemo">
+      <soap:operation soapAction="http://support.software-europe.co.uk/helpandsupport/GetOnlineDemo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOnlineDemos">
+      <soap:operation soapAction="http://support.software-europe.co.uk/helpandsupport/GetOnlineDemos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="HelpAndSupportSoap12" type="tns:HelpAndSupportSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="submitSupportIssue">
+      <soap12:operation soapAction="http://support.software-europe.co.uk/helpandsupport/submitSupportIssue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="submitSuggestion">
+      <soap12:operation soapAction="http://support.software-europe.co.uk/helpandsupport/submitSuggestion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuickStartGuides">
+      <soap12:operation soapAction="http://support.software-europe.co.uk/helpandsupport/QuickStartGuides" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrainingCourses">
+      <soap12:operation soapAction="http://support.software-europe.co.uk/helpandsupport/GetTrainingCourses" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BookTrainingCourse">
+      <soap12:operation soapAction="http://support.software-europe.co.uk/helpandsupport/BookTrainingCourse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnbookTrainingCourse">
+      <soap12:operation soapAction="http://support.software-europe.co.uk/helpandsupport/UnbookTrainingCourse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMyBookings">
+      <soap12:operation soapAction="http://support.software-europe.co.uk/helpandsupport/GetMyBookings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOnlineDemo">
+      <soap12:operation soapAction="http://support.software-europe.co.uk/helpandsupport/GetOnlineDemo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOnlineDemos">
+      <soap12:operation soapAction="http://support.software-europe.co.uk/helpandsupport/GetOnlineDemos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HelpAndSupport">
+    <wsdl:port name="HelpAndSupportSoap" binding="tns:HelpAndSupportSoap">
+      <soap:address location="http://support.software-europe.co.uk/helpandsupport.asmx" />
+    </wsdl:port>
+    <wsdl:port name="HelpAndSupportSoap12" binding="tns:HelpAndSupportSoap12">
+      <soap12:address location="http://support.software-europe.co.uk/helpandsupport.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

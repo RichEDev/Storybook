@@ -1,0 +1,83 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Report List</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>The Report List screen shows a user all reports that are available to them.</p>
+				<p>Reports within Framework are split into two types, Personal and Global.</p>
+				<p>For added clarity, all reports have a Name (mandatory) and a Description 
+					(optional).</p>
+				<p><b>To execute a report:</b> simply click the hyperlink (underlined) report name 
+					from the list.</p>
+				<p>There is no limit to the number of reports a user can create.
+				</p>
+				<div class="help_tip"><p><b>Note:</b>Once a report has been run, this becomes the user <i>'active'</i>
+						report.</p>
+					<p>Once an active report is established, Select Columns, Criteria or View Current 
+						from the menu will apply to the active report.</p>
+					<p>This will remain the active report until either another report is selected from 
+						the report list or until the user logs out.</p>
+				</div>
+				<p><b><u>Personal Reports</u></b></p>
+				<p>Personal reports are those created by you for your sole use. These reports are 
+					not visible or accessible by any other user of Framework.</p>
+				<p>Each user can create any number of reports which can be recalled and reused at 
+					any time.</p>
+				<p></p>
+				<p><b><u>Global Reports</u></b></p>
+				<p>Any report created by a user can, if their permissions permit, publish a report 
+					for the use of all other Framework users.</p>
+				<p></p>
+				<div class="help_tip">
+					<b>Tip:</b> To improve the flexibility of Global Reports, it is recommended 
+					that the report's criteria be configured for run-time user selection rather 
+					than fixed. Refer to the <a href="select_criteria.htm">Criteria Help</a> for 
+					more information about this
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

@@ -1,0 +1,168 @@
+<html>
+<head>
+    <link rel="stylesheet" href="http://www.expenses-software.com/expenses.css" type="text/css">
+    <title>Expenses</title>
+    <meta name="keywords" content="Expenses, management has traditionally been a manual affair, control your own business">
+    <meta name="description" content="If you have ever tried to record, submit and control your own business expenses or on the other hand been responsible for the management, compliance and payment of your employee's expense accounts then you will know the problems involved.">
+
+    <script language="JavaScript">
+    <!--
+    function toggleVisibility(idName,cellId) {
+      if (document.getElementById(idName).style.display != "none") {
+        document.getElementById(idName).style.display = "none";
+        document.getElementById(cellId).style.background = "transparent";
+      }
+      else {
+        document.getElementById(idName).style.display = "block";
+        document.getElementById(cellId).style.background = "#997700";
+      }
+    }
+    // -->
+    </script>
+    <script language="JavaScript">
+    <!--
+    function hiMe(idName) {
+        document.getElementById(idName).style.color = "#001c69";
+        document.getElementById(idName).style.background = "#ffdd00";
+    }
+    // -->
+    </script>
+    <script language="JavaScript">
+    <!--
+    function loMe(idName) {
+        document.getElementById(idName).style.color = "#ddeeff";
+        document.getElementById(idName).style.background = "transparent";
+    }
+    // -->
+    </script>
+
+</head>
+<body>
+<table width="800" height="100%" cellspacing="0">
+<!-- Page Header cells -->
+    <tr>
+        <td style="text-align: left; vertical-align: top;" colspan="2" height="1">
+            <table cellspacing="0">
+                <tr>
+                    <td rowspan="2" style="background: transparent url(http://www.expenses-software.com/images/side-bar.png) fixed repeat-y top left; text-align: left; vertical-align: top;">
+                        <img src="http://www.expenses-software.com/images/expenses-logo.jpg" alt="Expenses Logo">
+                    </td>
+                    <td width="100%" style="background: transparent url(http://www.expenses-software.com/images/top-bar.png) repeat-x top left; text-align: right; vertical-align: top;">
+                        <a href="http://www.expenses-software.com/privacy.asp"><img src="http://www.expenses-software.com/images/privacy-button.png" alt="Link to Privacy Policy"></a><a href="http://www.expenses-software.com/contactus.asp"><img src="http://www.expenses-software.com/images/emailus-button.png" alt="Send us an e-mail"></a><a href="http://www.expenses-software.com"><img src="http://www.expenses-software.com/images/home-button.png" alt="Link to main page"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">
+                        <table cellspacing="0">
+                            <tr>
+                                <td style="padding-right: 10px;">
+                                    <form name="form1" method="post" action="https://212.43.183.99/expenses/clslogon.asp?wci=onsubmit" target="_blank">
+                                        <img src="http://www.expenses-software.com/images/login-text.png"><br>
+                                        <input type="text" name="company" maxlength="50" style="width: 100px;">
+                                        <input type="text" name="username" maxlength="50" style="width: 100px;">
+                                        <input type="password" name="password" maxlength="50" style="width: 100px;">
+                                        <input type="submit" name="Logon" value="Logon">
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+<!-- end of header -->
+<!-- Body -->
+    <tr>
+        <td style="background: transparent url(http://www.expenses-software.com/images/menu-background.png) no-repeat top left; text-align: left; vertical-align: top;">
+            <!-- ** Menu ** -->
+            <img src="http://www.expenses-software.com/images/blank.gif" width="115" height="45" alt="Menu">
+            <table cellspacing="0">
+                <tr>
+                    <td><a href="http://www.expenses-software.com/index.asp" class="menu">Home</a></td>
+                </tr>
+                <tr>
+                    <td id="mi1c"><span id="mi1" class="menuitem" onclick="toggleVisibility('smi1','mi1c');" onmouseover="hiMe('mi1');" onmouseout="loMe('mi1');">Product Details <img src="http://www.expenses-software.com/images/arrow.gif"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">
+                        <span id="smi1" style="display: none;">
+                            <a href="http://www.expenses-software.com/fulldesc.asp" class="submenu">More Info. <img src="http://www.expenses-software.com/images/arrow2.gif"></a><br>
+                            <a href="http://www.expenses-software.com/expenses-brochure.pdf" class="submenu" target="_blank">Brochure <img src="http://www.expenses-software.com/images/arrow2.gif"></a><br>
+                            <a href="http://www.expenses-software.com/onlinedemos/expenses_logon.htm" class="submenu" target="_blank">Online Demo <img src="http://www.expenses-software.com/images/arrow2.gif"></a><br>
+                            <a href="http://www.expenses-software.com/evaluation.asp" class="submenu">Evaluation <img src="http://www.expenses-software.com/images/arrow2.gif"></a><br>
+                            <a href="https://212.43.183.99/expenses/" class="submenu" target="_blank">Logon <img src="http://www.expenses-software.com/images/arrow2.gif"></a><br>
+                            <a href="http://www.expenses-software.com/faqs.asp" class="submenu">F.A.Q.'s <img src="http://www.expenses-software.com/images/arrow2.gif"></a><br>
+                            <a href="http://www.expenses-software.com/interested.asp" class="submenu">Interested? <img src="http://www.expenses-software.com/images/arrow2.gif"></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.expenses-software.com/aboutus.asp" class="menu">About Us</a></td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.expenses-software.com/contactus.asp" class="menu">Contact Us</a></td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.expenses-software.com/support.asp" class="menu">Support</a></td>
+                </tr>
+            </table>
+            <!-- ** end of menu ** -->
+        </td>
+        <td style="text-align: left; vertical-align: top; padding-left: 5px; padding-right: 10px;">   <!-- Main page content area -->
+<table cellspacing="0">
+  <tr>
+    <td>
+        <span style="color: #001c69; font: bolder 20px Verdana,sans-serif;">Oops, that page cannot be found (404 error).</span><br><br>
+        Please contact the administrator of this website with details of the page you were trying to view <span class="fakeURL" onclick="form404.submit();">here</span>.
+        <form name="form404" action="http://www.expenses-software.com/contactus.asp" method="post">
+            <input type="hidden" name="reason" value="404 error">
+            <input type="hidden" name="details" value="I encountered a broken link on your website whilst looking for . I was coming from the  page.">
+        </form>
+    </td>
+  </tr>
+</table>
+        </td> <!-- end of Main page content area -->
+    </tr>
+<!-- end of body -->
+<!-- hidden stuff for search engines -->
+    <tr>
+        <td colspan="2">
+            <div style="display: none;">
+                <p>
+                    <img src="logo.jpg" alt="Expenses, Expenses management has traditionally been a manual affair, control your own business expenses, ensure that each expense is valid">
+                </p>
+                    <h1 align="center">Expenses</h1>
+                <p>
+                    If you have ever tried to record, submit and control your own business <a href="http://www.expenses-software.com/">expenses</a> or on the other hand been responsible for the management, compliance and payment of your employee's expense accounts then you will know the problems involved.
+                </p>
+                <p>
+                    Expenses management has traditionally been a manual affair.  Each month employees fill in a form, attach their receipts and submit the whole package to their manager for signing off.  Their manager then has to ensure that each expense is valid, correct and complies with the company standards, then sends it on to accounts for payment.
+                </p>
+                <p>
+                    Software Europe have revolutionised this process and brought expense management into the 21st century.
+                </p>
+                <p>
+                    Expenses management is a hassle to every one.  Employees do not like filling out expense forms and finance departments do not like checking them.  It currently costs UK businesses 2.2 billion pounds each year, 500 million of which is the cost of processing.
+                </p>
+                <p>
+                    In an ideal world, expense management would be automated; employees would enter their expenses into a system that makes all the calculations for them, and records the details they have entered.  The expenses would be submitted electronically and the expense administrator notified so then he/she can check them.  The employee would then be notified when the expenses were approved.
+                </p>
+                <p>
+                    <a href="http://www.expenses-software.com/">Expenses</a>
+                </p>
+                <p>
+                    &copy; Copyright 2002 <a href="http://www.expenses-software.com/">Software Europe Ltd</a>
+                </p>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td height="20" style="border-top: 1px solid #001c69;">&nbsp;</td>
+        <td height="20" style="border-top: 1px solid #001c69;">
+            <span class="smallTxt">Copyright &copy; 2002 <a href="http://www.software-europe.co.uk/" target="_blank">Software Europe Ltd</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="privacy.asp">Privacy Policy</a> | <a href="index.asp">Home</a> | <a href="#top">Back to TOP of page</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

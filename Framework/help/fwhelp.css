@@ -1,0 +1,240 @@
+body
+{
+	font: 12px Verdana,sans-serif;
+	color: #666666;
+	background: transparent url(images/side-bar.gif) fixed repeat-y 0 0;
+	padding: 0px;
+	margin: 0px;
+	scrollbar-track-color: #ffffff;
+	scrollbar-arrow-color: #ffffff;
+	scrollbar-face-color: #001c69;
+	scrollbar-3dlight-color: #a09ca9;
+	scrollbar-darkshadow-color: #c0bcc9;
+	scrollbar-highlight-color: #c0bcc9;
+	scrollbar-shadow-color: #ffffff;
+}
+
+table
+{
+	font: 12px Verdana,sans-serif;
+	padding: 0px;
+	margin: 0px;
+	border: 0px solid black;
+	background: transparent;
+}
+td
+{
+	font: 12px Verdana,sans-serif;
+	padding: 0px;
+	margin: 0px;
+	border: 0px solid black;
+	background: transparent;
+}
+
+table.inner, td.inner, th.inner
+{
+    border-right: black 1px solid;
+    padding-right: 5px;
+    border-top: black 1px solid;
+    padding-left: 5px;
+    font-weight: normal;
+    font-size: 8pt;
+    padding-bottom: 3px;
+    border-left: black 1px solid;
+    color: black;
+    padding-top: 3px;
+    border-bottom: black 1px solid;
+    font-family: Arial, Sans-Serif;
+    border-collapse: collapse;
+}
+
+th.inner
+{
+    font-weight: bold;
+}
+
+a:active, a:link, a:visited
+{
+	color: #333333;
+	border: 0px solid white;
+	text-decoration: none;
+	background: transparent;
+	font-weight: bold;
+}
+a:hover
+{
+	color: #001c69;
+	border: 0px solid white;
+	text-decoration: none;
+	background: #ddeeff;
+	font-weight: bold;
+}
+a:active.menu, a:link.menu, a:visited.menu
+{
+	color: #ddeeff;
+	border: 0px solid white;
+	text-decoration: none;
+	background: transparent;
+	font-weight: bold;
+}
+a:hover.menu
+{
+	color: #001c69;
+	border: 0px solid white;
+	text-decoration: none;
+	background: #ffdd00;
+	font-weight: bold;
+}
+a:active.submenu, a:link.submenu, a:visited.submenu
+{
+	color: #ffffff;
+	border: 0px solid white;
+	text-decoration: none;
+	background: transparent;
+	font-weight: bold;
+	padding-left: 10px;
+}
+a:hover.submenu
+{
+	color: #001c69;
+	border: 0px solid white;
+	text-decoration: none;
+	background: #ffdd00;
+	font-weight: bold;
+}
+
+span.menuitem {
+	color: #ddeeff;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+img
+{
+	border: 0px solid white;
+}
+
+input, select, textarea
+{
+	border: 1px solid #666666;
+}
+
+span.fakeURL {
+	color: black;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.heading {
+	font-weight: bold;
+	font-size: 22px;
+}
+
+
+/* Help File Classes */
+
+div.helppage {
+	padding: 25px 40px 25px 40px;
+	width: 600px;
+}
+span.h1 {
+	font-size: 18px;
+	color: #001c69;
+	font-weight: bold;
+	font-variant: smallcaps;
+}
+span.subhead1 {
+	font-size: 16px;
+	color: #001c69;
+	font-weight: bold;
+}
+span.subhead2 {
+	color: #883388;
+	font-weight: bold;
+}
+div.image {
+	padding: 5px;
+	text-align: center;
+	border: 1px solid #999999;
+}
+
+
+body.help_page {
+	font: 12px Verdana,sans-serif;
+	color: #444444;
+	background: white url();
+	padding: 0px;
+	margin: 0px;
+	scrollbar-track-color: #ffffff;
+	scrollbar-arrow-color: #ffffff;
+	scrollbar-face-color: #001c69;
+	scrollbar-3dlight-color: #a09ca9;
+	scrollbar-darkshadow-color: #c0bcc9;
+	scrollbar-highlight-color: #c0bcc9;
+	scrollbar-shadow-color: #ffffff;
+}
+
+div.help_page_title
+{
+	font: 18px Arial, sans-serif;
+	color: #001c69;
+	font-weight: bold;
+	font-variant: smallcaps;
+	background: #ffee99 url(sm_s3_h.gif) no-repeat 0% 50%;
+	padding-left: 30px;
+	margin-bottom: 20px;
+}
+
+div.help_section
+{
+	padding: 5px 40px 5px 40px;
+}
+
+div.help_section_title
+{
+	font: 14px Arial, sans-serif;
+	color: #001c69;
+	font-weight: bold;
+}
+
+div.help_section_title img
+{
+	cursor: hand;
+}
+
+div.help_overview
+{
+	width: 100%;
+	padding: 10px 30px 10px 30px;
+	background-color: #eeeeee;
+	border-top: 1px #999999;
+	border-bottom: 1px #999999;
+	margin-bottom: 20px;
+}
+
+div.help_body_text
+{
+	width: 100%;
+	padding: 10px 30px 10px 30px;
+	background-color: khaki;
+	border-top: 1px solid #000066;
+	filter: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=khaki,endColorStr=#fff9f6);
+	margin-bottom: 20px;
+}
+
+div.help_tip
+{
+	border: 1px dotted #000099;
+	color: #000099;
+	background-color: white;
+	margin: 10px 0px 10px 0px;
+	padding: 5px;
+}
+
+div.help_comments
+{
+	padding: 5px;
+	border: 1px dotted #999999;
+	color: #999999;
+	font: 10px Arial, sans-serif;
+}

@@ -1,0 +1,106 @@
+<%@ Master EnableTheming="true" Language="C#" AutoEventWireup="true" Inherits="menu" Codebehind="menu.master.cs" %>
+<%@ Register Src="~/shared/usercontrols/subAccountPopup.ascx" TagName="subAccountPopup" TagPrefix="subAccountPopup" %>
+<%@ Register Src="~/shared/usercontrols/TopScripts.ascx" TagName="top_scripts" TagPrefix="uc1" %>
+<%@ Register Src="~/shared/usercontrols/Header.ascx" TagName="header" TagPrefix="uc2" %>
+<%@ Register Src="~/shared/usercontrols/Footer.ascx" TagName="footer" TagPrefix="uc3" %>
+<%@ Register Src="~/shared/usercontrols/BottomScripts.ascx" TagName="bottom_scripts" TagPrefix="uc4" %>
+<%@ Register Src="~/shared/usercontrols/SideBar.ascx" TagName="sideMenu" TagPrefix="uc5" %>
+
+<!DOCTYPE html >
+
+<html lang="en">
+<head id="htmlhead" runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link id="favLink" runat="server" rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link id="jQueryCss" runat="server" type="text/css" href="/static/js/jQuery/jquery-ui-1.9.2.custom.css" rel="Stylesheet" />
+    <title>
+        <asp:Literal ID="litpagetitle" runat="server"></asp:Literal></title>
+    <%--    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>--%>
+    <uc1:top_scripts ID="css_scripts" runat="server" />
+
+    <!--Add style / scripts to the perticular page-->
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body runat="server" id="body">
+<asp:Literal ID="litstyles" runat="server"></asp:Literal>
+<div id="pagediv">
+    <form id="form1" runat="server">
+             <cc1:ToolkitScriptManager ID="scriptman" runat="server" EnablePageMethods="True">
+        <Services>
+            <asp:ServiceReference Path="~/shared/webServices/svcGrid.asmx" />
+        </Services>
+        <Scripts>
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.main.js" />
+            <asp:ScriptReference Name="common" />
+            <asp:ScriptReference Path="~/shared/javaScript/sel.menu.js" />
+                    <asp:ScriptReference Path="~/shared/javaScript/minify/sel.data.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.jsonParse.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
+                    <asp:ScriptReference Path="~/shared/javaScript/sel.menumaster.js" />
+        </Scripts>
+        </cc1:ToolkitScriptManager>
+        <cc1:ModalPopupExtender ID="mdlMasterPopup" runat="server" OnCancelScript="SEL.MasterPopup.HideMasterPopup();" OnOkScript="SEL.MasterPopup.HideMasterPopup();" BackgroundCssClass="modalMasterBackground" PopupControlID="pnlMasterPopup" TargetControlID="lnkMasterPopup" DropShadow="False"></cc1:ModalPopupExtender>
+            <asp:Panel ID="pnlMasterPopup" runat="server" CssClass="errorModal" Style="display: none; z-index: 16000099;">
+            <div id="divMasterPopup"></div>
+                <div style="padding: 0px 5px 5px 5px;">
+                    <img src="/shared/images/buttons/btn_close.png" id="btnMasterPopup" alt="OK" onclick="SEL.MasterPopup.HideMasterPopup();" style="cursor: pointer;" /></div>
+        </asp:Panel>
+            <asp:HyperLink ID="lnkMasterPopup" runat="server" Style="display: none;" Text="&nbsp;" NavigateUrl="javascript:void(0);"></asp:HyperLink>
+            <uc2:header ID="header" runat="server" />
+            <asp:Literal runat="server" ID="litBreadCrumbs"></asp:Literal>
+            <div id="wrapper" class="toggled">
+
+                <uc5:sideMenu ID="side_bar" runat="server" />
+        <asp:Literal ID="litemplogon" runat="server"></asp:Literal>
+                <!--Add content to the perticular page-->
+                <asp:ContentPlaceHolder ID="ContentPlaceHolderBody" runat="server"></asp:ContentPlaceHolder>
+        <asp:ContentPlaceHolder ID="menuHeader" runat="server"></asp:ContentPlaceHolder>
+                <asp:Literal runat="server" ID="litmenu"></asp:Literal>
+
+            </div>
+           
+            <!--Add Scripts to the perticular page-->
+            <uc4:bottom_scripts ID="bottom_scripts" runat="server" />
+  
+            <script type="text/javascript">
+
+                $(window).on("load",function(){
+                      //window.onload = function () {
+                    var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+                    var meta = document.createElement('meta');
+                    meta.name = "viewport";
+                    meta.content = "width=" + width;
+
+                    document.getElementsByTagName('head')[0].appendChild(meta);
+                    if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                        document.getElementsByTagName('body')[0].setAttribute("style", "overflow-x:auto");
+                        document.getElementsByClassName('top-header-nav-right')[0].setAttribute("style", "width:600px");
+                    }
+                });
+
+                function changeIcon(name, src) {
+                    document.getElementById("icon" + name).src = src;
+                }
+                function showpolicy(path) {
+                    window.open(path, null, 'width=500, height=500, resizable=yes, scrollbars=yes');
+                }
+                function exit() {
+                    if (confirm('Are you sure you want to log out?')) {
+                        document.location = appPath + "/shared/process.aspx?process=1";
+                    }
+                }
+            </script>
+        <asp:Literal runat="server" ID="windowOnError"></asp:Literal>
+            <subAccountPopup:subAccountPopup ID="subAccountModal" runat="server" />
+            <asp:ContentPlaceHolder ID="scripts" runat="server"></asp:ContentPlaceHolder>
+    </form>
+</div>
+    <div class="footer-menu-master"> <uc3:footer ID="footer" runat="server" /></div>
+</body>
+</html>

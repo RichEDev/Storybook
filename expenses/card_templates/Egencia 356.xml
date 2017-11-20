@@ -1,0 +1,19 @@
+<CardTemplate Name="Egencia 356" FileType="XLS" NumberHeaderRecords="13" NumberFooterRecords="2">
+<Fields Type="CardTransaction" UniqueValue="trans">
+<Field Name="Traveller" MappedTable="card_transactions" MappedField="description" FieldType="S" MaxLength="500"/>
+<Field Name="Email" MappedTable="card_transactions_ref_egenciatravel_356" Label="Traveller Email Address" MappedField="traveller_email" FieldType="S" MaxLength="100"/>
+<Field Name="TransactionType" MappedTable="card_transactions" MappedField="reference" FieldType="S" MaxLength="50"/>
+<Field Name="StartDate" MappedTable="card_transactions_ref_egenciatravel_356" Label="Travel Start Date" MappedField="posting_date" FieldType="D" Format="dd/MM/yyyy HH:mm:ss"/>
+<Field Name="EndDate" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="dd/MM/yyyy HH:mm:ss"/>
+<Field Name="TransactionAmount" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C"/>
+<Field Name="Vendor" MappedTable="card_transactions_ref_egenciatravel_356" Label="Vendor" MappedField="vendor" FieldType="S" MaxLength="100"/>
+<Field Name="InPolicy" MappedTable="card_transactions_ref_egenciatravel_356" Label="In Policy" MappedField="in_policy" FieldType="S" MaxLength="20"/>
+<Field Name="BookingMethod" MappedTable="card_transactions_ref_egenciatravel_356" Label="Booking Method" MappedField="booking_method" FieldType="S" MaxLength="50"/>
+<Field Name="InvoiceCode" MappedTable="card_transactions_ref_egenciatravel_356" Label="Invoice Code" MappedField="invoice_code" FieldType="S" MaxLength="6"/>
+<Field Name="PONumber" MappedTable="card_transactions_ref_egenciatravel_356" Label="Purchase Order Number" MappedField="po_number" FieldType="S" MaxLength="20"/>
+<Field Name="Reason" MappedTable="card_transactions_ref_egenciatravel_356" Label="Reason for Travel" MappedField="reason" FieldType="S" MaxLength="100"/>
+<Field Name="CostCentre" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="20"/>
+<Field Name="CurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" DefaultValue="GBP" CurrencyType="alpha"/>
+<Field Name="CountryCode" MappedTable="card_transactions" MappedField="country_code" FieldType="S" DefaultValue="GB" CountryType="alpha"/>
+</Fields>
+</CardTemplate>

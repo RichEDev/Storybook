@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="AllowancesOrdered" storage="c:\mapping\spend management\spend management_root\spendmanagementautomatedtests\admin\base information\allowances\allowancesordered.orderedtest" id="c9828085-7f19-4992-8f35-271d2afaa1b1" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Execution timeOut="2147483647" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <TestLinks>
+    <TestLink id="55e0e3e6-ce57-cc11-1334-d594cdd555a0" name="AddAllowanceCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="ef37b9dc-8e30-3496-2269-7bb92ad8063e" name="EditAllowanceCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="ed1b9a87-5498-f121-bc02-24a634f4b633" name="DeleteAllowanceCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="55e0e3e6-ce57-cc11-1334-d594cdd555a0" name="AddAllowanceCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="ef37b9dc-8e30-3496-2269-7bb92ad8063e" name="EditAllowanceCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="d40f41f1-d18e-fb21-2694-0c21c9aaba64" name="EditAllowanceRateCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="ed1b9a87-5498-f121-bc02-24a634f4b633" name="DeleteAllowanceCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

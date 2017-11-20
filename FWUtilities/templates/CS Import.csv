@@ -1,0 +1,10 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+savings,subAccountId,Repository Sub-Account,S,50,N,Y,F,accountsSubAccounts.subAccountId,accountsSubAccounts.Description,
+savings,contractId,Owner Contract Description,S,250,N,Y,Y,[contract_details].[contractId],[contract_details].[contractDescription],
+savings,reference,Reference,S,50,N,N,N,,,
+savings,savingDate,Saving Date,D,,N,N,N,,,
+savings,amount,Amount,F,,N,Y,N,,,0
+savings,comment,Comment,S,255,N,N,N,,,
+savings,rechargeEntityId,Recharge Entity,S,50,N,N,Y,[codes_rechargeentity].[entityId],[codes_rechargeentity].[Name],
+savings,loggedByUserId,Logged By User,S,50,N,N,Y,[employees].[employeeId],dbo.getEmployeeFullName(employeeId),
+savings,loggedByTimestamp,Logged Date,D,,N,N,N,,,

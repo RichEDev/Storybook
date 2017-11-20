@@ -1,0 +1,79 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - Vendor Status</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Vendor Status</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>The Vendor Status field definitions are utilised in the vendor details screen.</p>
+				<p>The key use of the field is the enforcement of proper business process. It would 
+					be bad practice to undertake any contract dealings with a Vendor whose status 
+					is not flagged internally as 'approved'. A common method of specifying a status 
+					such as this is with a RAG definition. (i.e. Red, Amber, Green).</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1"> Required 
+				Information
+			</div>
+			<div class="help_body_text" id="1">
+				<p>The primary field is the textual definition by which the Vendor Status is to be 
+					known. This is a mandatory field and duplicate definitions will be rejected.
+				</p>
+				<p>Also provided are a sequence value and a checkbox to signify if a contract can 
+					be added.</p>
+				<p>The sequence value allows the user to dictate the order in which the definitions 
+					appear in the drop down list. It is better that a RAG status appears in the 
+					order Red, Amber, Green as this is the order of validity. Alternatively they 
+					would display in either alphabetical order or even the order in which they were 
+					added in the database (chronologically).</p>
+				<p>The checkbox signifies whether or not a new contract can be added from the 
+					vendor details screen. It therefore allows the enforcement of when and when not 
+					a new contract be added depending on the active vendor status.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

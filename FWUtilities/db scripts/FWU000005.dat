@@ -1,0 +1,184 @@
+% FW Update.dat file
+% 10/08/2000
+# 000005 000006
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Attachments
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+ALTER TABLE [Code Tables]
+    ALTER COLUMN [Code Number] int IDENTITY PRIMARY KEY
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Invoice Status Type
+
+% Codes - Note Category
+ALTER TABLE [Codes - Note Category]
+    ALTER COLUMN [Note Cat Id] int IDENTITY PRIMARY KEY
+
+% Codes - Sales Tax
+
+% Codes - SLD
+ALTER TABLE [Codes - SLD]
+    ALTER COLUMN [SLD Number] int IDENTITY
+
+% Codes - Term Type
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract Classes
+
+% Contract Details
+ALTER TABLE [Codes - SLD]
+    DROP COLUMN [Term]
+ALTER TABLE [Codes - SLD]
+    DROP COLUMN [Cancellation Date]
+ALTER TABLE [Codes - SLD]
+    DROP COLUMN [Review Date]
+ALTER TABLE [Codes - SLD]
+    ADD [Term] int
+ALTER TABLE [Codes - SLD]
+    ADD [Cancellation Date] datetime
+ALTER TABLE [Codes - SLD]
+    ADD [Review Date] datetime
+
+% Contract - Forecast Details
+
+% Contract Notes
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+
+% Contract - Product Platforms
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Export Fields
+
+% Exports
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice Details
+
+% Invoice - Product Details
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Location
+
+% Location Users
+
+% Mail
+
+% Metrics
+ALTER TABLE Metrics
+    ALTER COLUMN [Contracted Value] float
+ALTER TABLE Metrics
+    ALTER COLUMN [Loss] float
+
+% OLAP Cube 02
+
+% OLAP Cube 03	
+
+% Performance
+ALTER TABLE Performance
+    ALTER COLUMN [Actual Value] float
+ALTER TABLE Performance
+    ALTER COLUMN [Loss] float
+
+% Pending Email
+
+% Period Types
+
+% Product Details
+
+% Product Notes
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Schedule
+
+% Security
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Staff Details
+
+% System Parameters
+
+% Target Types
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+
+% Vendor Notes
+
+% Vendor Status
+
+% ---------- Views ----------
+
+% Performance Metrics
+
+% CalView
+
+% EQ Vendor Details
+
+% ---------- Procedures ----------
+
+% SPF003
+

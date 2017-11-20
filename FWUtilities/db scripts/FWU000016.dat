@@ -1,0 +1,304 @@
+% FW Update.dat file
+% 06/12/2005
+# 000016 000017
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Assets
+
+% Attachments
+
+% Audit Log
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Account Codes
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Contract Status
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Inflator Metrics
+
+% Codes - Financial Status
+
+% Codes - Invoice Status Type
+
+% Codes - Licence Renewal Type
+
+% Codes - Note Category
+
+% Codes - Product Category
+
+% Codes - Platform Type
+
+% Codes - Recharge Entity
+
+% Codes - Region
+
+% Codes - Sales Tax
+
+% Codes - Sites
+
+% Codes - SLD
+
+% Codes - Term Type
+
+% Codes - Units
+
+% Codes - User Field Grouping
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract - Forecast Details
+
+% Contract - Forecast Products
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+
+% Contract - Product Details - Recharge
+
+% Contract - Product-History
+
+% Contract - Product Information
+
+% Contract - Product-Platforms
+
+% Contract Classes
+
+% Contract Details
+
+% Contract Notes
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Email Schedule
+
+% Export Fields
+
+% Exports
+
+% Favourite Reports
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice - Product Details
+
+% Invoice Details
+
+% Invoice Log
+
+% Invoice Notes
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Link Definitions
+ALTER TABLE [Link Definitions]
+ADD [Location Id] int
+*
+
+% Link Matrix
+
+% Location
+
+% Mail
+
+% Mail Schedule
+
+% Metrics
+
+% MIME Headers
+
+% Param
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Platform LPars
+
+% Product Details
+
+% Product Notes
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Recharge Associations
+
+% Saved Reports
+
+% Saved Views
+
+% Savings
+
+% Schedule
+
+% Security
+
+% Security History
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Standard Reports
+ALTER TABLE dbo.[Standard Reports]
+ADD [Criteria] varchar(100)
+*
+
+UPDATE [Standard Reports] SET [Criteria] = 'YYMMARVECT', [Report Area] = 2 WHERE [Report Id] IN (1,2)
+*
+
+% Staff Details
+
+% Sublocations
+
+% System-DBJoins
+
+% System Parameters
+
+% UF Group Allocation
+
+% User Field Values
+
+% User Fields
+
+% User Help Docs
+
+% User Roles
+
+% User Roles - Tabs
+CREATE TABLE dbo.[User Roles - Tabs]
+(
+	[Role Id] int,
+	[Tab Id] int,
+	[Access] bit NOT NULL DEFAULT(0)
+)
+*
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+
+% Vendor Contact Notes
+
+% Vendor Notes
+
+% Vendor Regions
+
+% Vendor Status
+ALTER TABLE dbo.[Vendor Status]
+ADD [Deny Contract Add] smallint NOT NULL DEFAULT(0)
+*
+
+% Version Registry
+
+% Version History
+
+% ---------- Views ----------
+
+
+% Performance Metrics
+
+% CalView
+
+% ---------- Procedures ----------
+DECLARE @linkid INT
+DECLARE @locationid INT
+DECLARE @contractid INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Link Id],[Contract Details].[Location Id] FROM [Link Matrix] INNER JOIN [Contract Details] ON [Link Matrix].[Contract Id] = [Contract Details].[Contract Id]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @linkid,@locationid
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	UPDATE [Link Definitions] SET [Location Id] = @locationid WHERE [Link Id] = @linkid
+
+	FETCH NEXT FROM loop_cursor INTO @linkid,@locationid
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+UPDATE [Link Definitions] SET [Location Id] = 0 WHERE [Location Id] IS NULL
+*
+
+UPDATE [Vendor Status] SET [Deny Contract Add] = 0
+*
+
+DECLARE @roleid INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Role Id] FROM [User Roles]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @roleid
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	INSERT INTO [User Roles - Tabs] ([Role Id],[Tab Id],[Access]) VALUES (@roleid,1,1)
+	INSERT INTO [User Roles - Tabs] ([Role Id],[Tab Id],[Access]) VALUES (@roleid,2,1)
+	INSERT INTO [User Roles - Tabs] ([Role Id],[Tab Id],[Access]) VALUES (@roleid,3,1)
+	INSERT INTO [User Roles - Tabs] ([Role Id],[Tab Id],[Access]) VALUES (@roleid,4,1)
+	INSERT INTO [User Roles - Tabs] ([Role Id],[Tab Id],[Access]) VALUES (@roleid,5,1)
+	INSERT INTO [User Roles - Tabs] ([Role Id],[Tab Id],[Access]) VALUES (@roleid,7,1)
+	INSERT INTO [User Roles - Tabs] ([Role Id],[Tab Id],[Access]) VALUES (@roleid,8,1)
+	INSERT INTO [User Roles - Tabs] ([Role Id],[Tab Id],[Access]) VALUES (@roleid,9,1)
+	INSERT INTO [User Roles - Tabs] ([Role Id],[Tab Id],[Access]) VALUES (@roleid,10,1)
+	INSERT INTO [User Roles - Tabs] ([Role Id],[Tab Id],[Access]) VALUES (@roleid,11,1)
+	FETCH NEXT FROM loop_cursor INTO @roleid
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+% End of file

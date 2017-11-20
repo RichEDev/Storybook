@@ -1,0 +1,291 @@
+﻿@{
+    ViewBag.Title = "Expenses API: Overview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<section title="Contents" id="Contents">
+    <header>
+        <h2>Contents</h2>
+    </header>
+    <p>
+        Welcome to the overview section of the website. The following sections are defined below:
+        <br />
+        <ul>
+            <li><a href="#Contents">Contents</a></li>
+            <li><a href="#Expenses">Expenses</a></li>
+            <li><a href="#ApiRole">The API's Role</a></li>
+            <li><a href="#AccessPatterns">Access Patterns</a></li>
+            <li><a href="#Auth">Logging In</a></li>
+            <li><a href="#Limiting">Call Limiting</a></li>
+            <li><a href="#Linking">Relative Links</a></li>
+            <li><a href="#HttpRest">HTTP and REST</a></li>
+        </ul>
+    </p>
+</section>
+
+
+<section class="help-section" title="Expenses" id="Expenses">
+    <header>
+        <h2>Expenses</h2>
+    </header>
+
+    <p>Expenses is an employee expenses system which saves time by allowing your employees to input their claims faster than a traditional paper based method, increase compliance for TAX and VAT and company policy and also realise a reduction in spend from a more efficient process.</p>
+
+    <h4>Cut processing</h4>
+    <p>Increase productivity. Reduce the amount of time spend completing, approving, processing and reimbursing employee expenses by at least 50% for all individuals involved.</p>
+
+    <h4>Ensure policy compliance</h4>
+    <p>Safeguard liabilities. Automatically collect the information required for the accurate treatment of HMRC reporting, Tax and VAT and benefits in kind.</p>
+
+    <h4>Enhance policy management</h4>
+    <p>Tighten controls. Analyse your T&E spend using our extensive reporting suite. Identify spend patterns, drill down to every item and develop policies to further reduce costs.</p>
+
+    <h4>Comply with your corporate social responsibility</h4>
+    <p>Manage your responsibilities. Measure, analyse and define your carbon footprint. Govern your duty of care to employees driving on business.</p>
+
+    <h4>Remove bottlenecks</h4>
+    <p>Free up even more time so your staff can concentrate on what they do best. Farewell to lost receipts and hello to an even smarter solution, Expenses360.</p>
+
+    <footer class="panel-footer">
+        More general information on Spend Management / Expenses can be found <a href="https://knowledgeauth.software-europe.com/kbLogon.aspx" target="_blank" title="Knowledgebase">here</a>.
+    </footer>
+</section>
+
+
+<section class="help-section" title="The API's Role" id="ApiRole">
+    <header>
+        <h2>The API's Role</h2>
+    </header>
+    <p>
+        Spend Management has evolved over the years to handle the ever-growing variety of requirements that our customers have.
+        We have a professional services team that works with every single client to tailor the software to the client’s needs.
+        The employees then use the software through the @ViewBag.ExpensesSite.
+    </p>
+    <p>
+        When you have such a large, flexible and scalable system such as Expenses, clients gradually develop ways of streamlining their use of the software.
+        Examples would be doing batch updates of currencies and exchange rates, or submitting receipts in bulk on the first of the month.
+        Each client is different, and we do our best to build flexible software that will accommodate their needs.
+        However, creating and then maintaining a cloud based website that caters to every client’s specific requirements all at once is nearly impossible.
+        Even building modularly has its drawbacks. This is where the “API” comes in.
+    </p>
+    <p>
+        The Application Programming Interface (API) is a means to allow clients and third parties to integrate with our system by writing their own software.
+        Essentially, we leave open a segment of our system, against which you build your own system.
+        These two systems interact, allowing you to build specific, custom functionality.
+        You can maintain this software yourself, and we can concentrate on adding and improving features and value to the core software.
+    </p>
+    <p>
+        <img alt="The API and web side by side" src="~/Images/Selenity-Diagrams.png" />
+    </p>
+    <p>
+        In our case, the API is created using Microsoft’s <a href="http://www.asp.net/web-api" target="_blank" title="Web API">Web API</a> framework.
+        This gives us a number of benefits:
+        <ul>
+            <li>It uses Hypertext Transfer Protocol (HTTP) – which is the protocol of the world wide web</li>
+            <li>Almost all software languages support HTTP, and a means to read and write objects</li>
+            <li>There are ‘verbs’ – identifiers for common actions in software and data processing</li>
+            <li>The API serves different types of content depending on your preference (XML, JSON etc.)</li>
+            <li>Our API becomes focused on the domain objects themselves, rather than the mechanisms.</li>
+        </ul>
+    </p>
+    <footer class="panel-footer">
+        More general information on Web API can be found <a href="http://www.asp.net/web-api" target="_blank" title="Knowledgebase">here</a>.
+    </footer>
+</section>
+
+
+<section class="help-section" title="Access Patterns" id="AccessPatterns">
+    <header>
+        <h2>Access Patterns</h2>
+    </header>
+    <p>
+        Following on from the HTTP idea, the API has been designed to be controlled in a familiar, developer-friendly way.
+        The domain objects in Expenses (Access Role, Budget Holder, Employee, etc) are mapped to 'Resources' in the API.
+        <br />
+        For each Resource, there are several HTTP verbs, which all perform different operations on the Resource:
+        <ul>
+            <li><span class="verb-label">OPTIONS: </span><code class="verb-example">@(ViewBag.ApiSite)budgetHolders</code> Gets a list of available actions for the resource.</li>
+            <li><span class="verb-label">GET: </span><code class="verb-example">@(ViewBag.ApiSite)budgetHolders</code> Gets a list of all items under this resource.</li>
+            <li><span class="verb-label">GET: </span><code class="verb-example">@(ViewBag.ApiSite)budgetHolders/id</code> Gets either a single resource type if you supply the id, or a list of all if not.</li>
+            <li><span class="verb-label">GET: </span><code class="verb-example">@(ViewBag.ApiSite)budgetHolders/?Label=Ben</code> Finds a resource by a property or combination of properties.</li>
+            <li><span class="verb-label">POST: </span><code class="verb-example">@(ViewBag.ApiSite)budgetHolders</code> Adds a new item to the resource, returning the item with its unique id.</li>
+            <li><span class="verb-label">PUT: </span><code class="verb-example">@(ViewBag.ApiSite)budgetHolders/id</code> Edits a single item with the matching id.</li>
+            <li><span class="verb-label">PATCH: </span><code class="verb-example">@(ViewBag.ApiSite)budgetHolders/id/archive/true</code> Performs minor edits on a resource, such as archiving or activation.</li>
+            <li><span class="verb-label">DELETE: </span><code class="verb-example">@(ViewBag.ApiSite)budgetHolders/id</code> Deletes the resource with this id.</li>
+        </ul>
+        Details of the specific actions and their parameters are detailed in the @Html.ActionLink("Reference Pages", "Reference", null, new { title = "View the API" }),
+    </p>
+    <p>
+        You will need to be logged in and have the appropriate access roles in order to access each part of the API.
+        The areas are restricted in the API as they are in the main expenses cloud site.
+        You must authenticate with the API in order to gain access, which is discussed below.
+    </p>
+    <footer class="panel-footer">
+        Look at the API @Html.ActionLink("here", "Reference", null, new { title = "View the API" }).
+    </footer>
+</section>
+
+
+<section class="help-section" title="Logging In" id="Auth">
+    <header>
+        <h2>Logging In</h2>
+    </header>
+    <p>
+        The API operates a chargeable call system, which means you must be logged in and your account must have credit.
+        You should log in with the same credentials as you would for the website.
+        Furthermore, you must have an Access Role applied which has the API permission set, and permissions for each area of the API that you would like to access.
+        It might be possible that you cannot change your access roles yourself; in which case you must ask your administrator.
+    </p>
+    <p>
+        Logging in generates an AuthToken, which must be supplied in the header of every request.
+        Only the following actions do not require the AuthToken header (these also are NOT chargeable):
+        <ul>
+            <li><span class="verb-label">OPTIONS: </span><code class="verb-example">@(ViewBag.ApiSite)</code></li>
+            <li><span class="verb-label">OPTIONS: </span><code class="verb-example">@(ViewBag.ApiSite){Resource}/Options</code></li>
+            <li><span class="verb-label">GET: </span><code class="verb-example">@(ViewBag.ApiSite)Account/CallSatus/{CompanyId}</code></li>
+            <li><span class="verb-label">POST: </span><code class="verb-example">@(ViewBag.ApiSite)Account/Login</code></li>
+        </ul>
+        You should never give this token to anyone, since API calls are chargeable, and it represents your account.
+        In an effort to minimise risk, calls must be made over HTTPS, and the token expires after @ViewBag.TokenExpiry minutes of non-use.
+        This means that if you don't use the API for this amount of time, you must Login again. You will be notified of the AuthToken failure.
+    </p>
+    <footer class="panel-footer">
+        Change your access roles <a href="@(ViewBag.ExpensesSite)shared/admin/accessRoles.aspx" target="_blank" title="Access Roles">here</a>.
+        <br />
+        Test this login pattern <a href="/Help/Api/POST-Account-Login" target="_blank" title="Login">here</a>.
+    </footer>
+</section>
+
+
+<section class="help-section" title="Call Limiting" id="Limiting">
+    <header>
+        <h2>Call Limiting</h2>
+    </header>
+    <p>
+        As mentioned previously, the API operates a chargeable call system, which decrements the amount of calls you are allowed to make each time you make a call. 
+        You get free calls every day depending on the amount of claims or employees your account is configured to support. 
+        This free call limit resets itself each night at midnight - 00:00 UTC. 
+        On top of the free calls, you can also purchase licensed calls, which never expire on their own. 
+        They only decrement when you make calls and you have run out of free calls for the day. 
+        In order to throttle usage of the API and prevent overloading, there are limits to the amount of calls you can make per minute and per hour.
+        Depending on the amount of claims your users make per month, the number of monthly complimentary API calls varies. The rates are as follows:
+        <ul>
+            <li><span class="verb-label">30-299: </span>50</li>
+            <li><span class="verb-label">300-599: </span>100</li>
+            <li><span class="verb-label">600-999: </span>500</li>
+            <li><span class="verb-label">1000-5999: </span>1000</li>
+            <li><span class="verb-label">> 6000: </span>2500</li>
+        </ul>
+        Further than the amounts above, calls must be pre-purchased.
+    </p>
+    <p>
+
+    </p>
+    <p>
+        Information on your call status is returned in the response to each successful call.
+        This comes in the form of a splittable string.
+        It can also be provided in a more formal structure by calling <strong>"api/Account/CallStatus/{CompanyId}".</strong>
+        Use these values to determine whether or not you can finish a set of calls.
+    </p>
+    <footer class="panel-footer">
+        Test the formal call structure <a href="/Help/Api/GET-Account-CallStatus-company" target="_blank" title="Call Structure">here</a>.
+    </footer>
+</section>
+
+
+<section class="help-section" title="Relative Links" id="Linking">
+    <header>
+        <h2>Relative Links</h2>
+    </header>
+    <p>
+        As a mechanism for change, the API returns a list of links with each response too.
+        For each domain object (Vehicle, Team, Budget Holder etc.) there are a list of links that relate to that object.
+        If those objects contain child domain objects, then those links are also added into the response.
+        These links will change if the resource ever changes, so it makes sense to use these links in your applications.
+        Making a call to any resource with the <strong>OPTIONS</strong> verb will give you back all the links for that resource.
+        <br />
+        An example would look like this:
+        <pre style="white-space: pre">
+[
+    {
+        "Rel":"Options",
+        "Href":"@(ViewBag.ApiSite)Teams",
+        "Title":"OPTIONS:: Links:: The available options for Teams",
+        "IsTemplated":false
+    },
+    {
+        "Rel":"GetAll",
+        "Href":"@(ViewBag.ApiSite)Teams",
+        "Title":"GET:: Links:: Gets single / Gets all / Finds Teams",
+        "IsTemplated":false
+    },
+    {
+        "Rel":"Get",
+        "Href":"@(ViewBag.ApiSite)Teams/{id}",
+        "Title":"GET:: Links:: Gets single / Gets all / Finds Teams",
+        "IsTemplated":true
+    },
+    {
+        "Rel":"Find",
+        "Href":"@(ViewBag.ApiSite)Teams/Find?Label={Label}&Description={Description}&SearchOperator={SearchOperator}",
+        "Title":"GET:: Links:: Gets single / Gets all / Finds Teams",
+        "IsTemplated":true
+    },
+    {
+        "Rel":"Post",
+        "Href":"@(ViewBag.ApiSite)Teams",
+        "Title":"POST:: Links:: Creates new Teams",
+        "IsTemplated":false
+    },
+    {
+        "Rel":"Put",
+        "Href":"@(ViewBag.ApiSite)Teams/{id}",
+        "Title":"PUT:: Links:: Edits single Teams",
+        "IsTemplated":true
+    },
+    {
+        "Rel":"ModifyEmployees",
+        "Href":"@(ViewBag.ApiSite)Teams/{id}/ModifyEmployees",
+        "Title":"PATCH:: Links:: Performs minor edits on Teams",
+        "IsTemplated":true
+    },
+    {
+        "Rel":"Delete",
+        "Href":"@(ViewBag.ApiSite)Teams/{id}",
+        "Title":"DELETE:: Links:: Deletes single Teams",
+        "IsTemplated":true
+    }
+]
+</pre>
+    </p>
+    <footer class="panel-footer">
+        Get a list of EVERY link <a href="/Help/Api/OPTIONS-Options" target="_blank" title="All API Endpoints">here</a>.
+    </footer>
+</section>
+
+
+<section class="help-section" title="HTTP and REST" id="HttpRest">
+    <header>
+        <h2>HTTP and REST</h2>
+    </header>
+    <p>
+        Our Web API uses <a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank" title="REST">REST</a> over <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol" target="_blank" title="HTTP">HTTP</a>.
+        This enables us to open our systems to the largest possible set of clients, and affords us benefits including, but not limited to:
+        <ul>
+            <li>The client-server model.</li>
+            <li>Some integrated security (HTTPS).</li>
+            <li>Common and well known status codes.</li>
+            <li>Custom data over a standard protocol.</li>
+            <li>Content negotiation using Accept headers.</li>
+        </ul>
+        Most, if not all programming languages support some type of HTTP client, and even if not, a socket can be used to interact with the server.
+        This makes our data accessible to the widest possible audience.
+    </p>
+    <footer class="panel-footer">
+        More information on REST can be found <a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank" title="REST">here</a>.
+        <br />
+        More information on HTTP can be found <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol" target="_blank" title="HTTP">here</a>.
+    </footer>
+</section>

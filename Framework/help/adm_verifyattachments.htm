@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+		<title>Framework Help - Verify Attachments</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<link rel="stylesheet" href="fwhelp.css" type="text/css" />
+		<script language="javascript" type="text/javascript">
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window" /></a>
+			Verify Attachments</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+			    The Verify Attachment screen allows an administrator to establish whether all registered attachments exist in
+			    the location specified.
+			    <br /><br />
+			    Should the system be moved to a new location or server it is entirely feasible that documents may be lost or failed to be moved.
+			    <br /><br />
+			    The verify screen validates all links, regardless of which area of data they are attached to. If the link is valid, a green tick (<img src="../Buttons/tick.gif" alt="Tick Image" />) otherwise a 
+			    red cross (<img src="../Buttons/cross.gif" alt="Cross Image" />) is displayed.
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1" alt="Expand Topic" /> Options available for invalid attachments
+			</div>
+			<div class="help_body_text" id="1">
+				<strong>1. Delete Link</strong><br /><br />
+				If the file has been left behind or cannot be located to repair the link, the link can be permanently removed. Once deleted, the attachment
+				will no longer be referenced anywhere within the application.
+				<br /><br />
+				<strong>2. Upload File</strong><br /><br />
+				If the path to the file is incorrect, the file can simply be relocated using the &quot;Upload&quot; hyperlink. The file can then be re-uploaded to the
+				storage location and the path entry is updated.
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<div></div>
+	</body>
+</html>

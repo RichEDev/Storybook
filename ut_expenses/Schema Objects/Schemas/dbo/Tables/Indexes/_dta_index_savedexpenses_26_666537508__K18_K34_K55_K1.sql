@@ -1,0 +1,7 @@
+﻿CREATE NONCLUSTERED INDEX [_dta_index_savedexpenses_26_666537508__K18_K34_K55_K1] ON [dbo].[savedexpenses]
+(
+	[claimid] ASC,
+	[tempallow] ASC,
+	[primaryitem] ASC,
+	[expenseid] ASC
+)WITH (SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF) ON [PRIMARY]

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="~/home.aspx" title="Home"  description="">
+    <siteMapNode title="Change Administrative Settings" url="~/adminmenu.aspx">
+      <siteMapNode url="~/categorymenu.aspx" title="Base Information">
+        <siteMapNode url="~/shared/admin/admincostcodes.aspx" title="Cost Codes"></siteMapNode>
+        <siteMapNode url="~/shared/admin/admincountries.aspx" title="Countries"></siteMapNode>
+      </siteMapNode>      
+    </siteMapNode>
+  </siteMapNode>
+  </siteMap>

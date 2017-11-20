@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[reportcolumns] (
+    [groupby]           BIT              NOT NULL,
+    [sort]              TINYINT          NOT NULL,
+    [order]             INT              NOT NULL,
+    [aggfunction]       TINYINT          NULL,
+    [funcsum]           BIT              NOT NULL,
+    [funcmax]           BIT              NOT NULL,
+    [funcmin]           BIT              NOT NULL,
+    [funcavg]           BIT              NOT NULL,
+    [funccount]         BIT              NOT NULL,
+    [isLiteral]         BIT              NOT NULL,
+    [literalname]       NVARCHAR (50)    NULL,
+    [literalvalue]      NVARCHAR (MAX)   NULL,
+    [length]            INT              NOT NULL,
+    [format]            NVARCHAR (50)    NULL,
+    [removedecimals]    BIT              NOT NULL,
+    [pivottype]         TINYINT          NOT NULL,
+    [pivotorder]        INT              NOT NULL,
+    [runtime]           BIT              NOT NULL,
+    [columntype]        TINYINT          NOT NULL,
+    [hidden]            BIT              NOT NULL,
+    [reportID]          UNIQUEIDENTIFIER NOT NULL,
+    [reportcolumnid]    UNIQUEIDENTIFIER NOT NULL,
+    [fieldID]           UNIQUEIDENTIFIER NULL,
+    [oldreportcolumnid] INT              IDENTITY (1, 1) NOT NULL,
+    [oldreportid]       INT              NULL
+);
+

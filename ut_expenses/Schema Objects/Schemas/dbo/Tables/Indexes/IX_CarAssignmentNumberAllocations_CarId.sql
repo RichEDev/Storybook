@@ -1,0 +1,1 @@
+﻿create index [IX_CarAssignmentNumberAllocations_CarId] on dbo.CarAssignmentNumberAllocations (CarId)

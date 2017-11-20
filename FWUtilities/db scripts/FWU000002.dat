@@ -1,0 +1,772 @@
+% FW Update.dat file
+% 11/01/2000
+# 000002 000003
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+DROP INDEX [Acquisition Vendors].[idxAcqVendors]
+CREATE INDEX [idx001] ON [Acquisition Vendors]
+(
+     [Acquisition Id]
+)
+*
+
+% Acquisition Details
+ALTER TABLE [Acquisition Details]
+ADD [Location Id] int
+ALTER TABLE [Acquisition Details]
+ALTER COLUMN Description varchar(50)
+*
+UPDATE [Acquisition Details]
+SET [Location Id] = 0
+*
+
+% Analysis Rules
+ALTER TABLE [Analysis Rules]
+ADD [Location Id] int
+*
+UPDATE [Analysis Rules]
+SET [Location Id] = 0
+*
+
+% Attachments
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+ALTER TABLE [Clauses]
+ADD [Location Id] int
+ALTER TABLE [Clauses]
+ALTER COLUMN [Clause Description] varchar(50)
+*
+UPDATE [Clauses]
+SET [Location Id] = 0
+*
+
+% Code Tables
+ALTER TABLE [Code Tables]
+ALTER COLUMN [Description] varchar(30)
+*
+
+% Codes - Contract Category
+ALTER TABLE [Codes - Contract Category]
+ADD [Location Id] int
+ALTER TABLE [Codes - Contract Category]
+ALTER COLUMN [Category Description] Varchar(50)
+*
+UPDATE [Codes - Contract Category]
+SET [Location Id] = 0
+*
+
+% Codes - Contract Type
+ALTER TABLE [Codes - Contract Type]
+ADD [Location Id] int
+ALTER TABLE [Codes - Contract Type]
+ALTER COLUMN [Contract Type Description] varchar(50)
+*
+UPDATE [Codes - Contract Type]
+SET [Location Id] = 0
+*
+
+% Codes - Currency
+ALTER TABLE [Codes - Currency]
+ADD [Location Id] int
+ALTER TABLE [Codes - Currency]
+ALTER COLUMN Name varchar(50)
+*
+UPDATE [Codes - Currency]
+SET [Location Id] = 0
+*
+
+% Codes - Invoice Frequency Type
+ALTER TABLE [Codes - Invoice Frequency Type]
+ADD [Location Id] int
+ALTER TABLE [Codes - Invoice Frequency Type]
+ALTER COLUMN [Invoice Frequency Type Desc] varchar(50)
+*
+UPDATE [Codes - Invoice Frequency Type]
+SET [Location Id] = 0
+*
+
+% Codes - Invoice Status Type
+ALTER TABLE [Codes - Invoice Status Type]
+ADD [Location Id] int
+ALTER TABLE [Codes - Invoice Status Type]
+ALTER COLUMN [Invoice Status Type Desc] varchar(50)
+*
+UPDATE [Codes - Invoice Status Type]
+SET [Location Id] = 0
+*
+
+% Codes - Sales Tax
+ALTER TABLE [Codes - Sales Tax]
+ADD [Location Id] int
+ALTER TABLE [Codes - Sales Tax]
+ALTER COLUMN [Sales Tax Description] varchar(50)
+*
+UPDATE [Codes - Sales Tax]
+SET [Location Id] = 0
+*
+
+% Codes - SLD
+ALTER TABLE [Codes - SLD]
+ADD [Location Id] int
+*
+UPDATE [Codes - SLD]
+SET [Location Id] = 0
+*
+
+% Codes - Term Type
+ALTER TABLE [Codes - Term Type]
+ADD [Location Id] int
+ALTER TABLE [Codes - Term Type]
+ALTER COLUMN [Term Type Description] varchar(50)
+*
+UPDATE [Codes - Term Type]
+SET [Location Id] = 0
+*
+
+% Committed Contracts
+
+% Committed Contract Details
+ALTER TABLE [Committed Contracts Details]
+ALTER COLUMN [Metric Description] varchar(50)
+ALTER TABLE [Committed Contracts Details]
+ALTER COLUMN [Metric Value] varchar(50)
+*
+
+% Contacts
+DROP TABLE Contacts
+*
+
+% Contract Classes
+ALTER TABLE [Contract Classes]
+ADD [Location Id] int
+ALTER TABLE [Contract Classes]
+ALTER COLUMN [Class Description] varchar(50)
+ALTER TABLE [Contract Classes]
+ALTER COLUMN Category varchar(50)
+*
+UPDATE [Contract Classes]
+SET [Location Id] = 0
+*
+
+% Contract Details
+ALTER TABLE [Contract Details]
+ADD [Location Id] int
+ALTER TABLE [Contract Details]
+ALTER COLUMN [Contract Description] varchar(50)
+*
+UPDATE [Contract Details]
+SET [Location Id] = 0
+*
+CREATE INDEX idx001 ON [Contract Details]
+(
+     [Contract Description]
+)
+*
+
+% Contract - Forecast Details
+
+% Contract Notes
+CREATE TABLE [Contract Notes]
+(
+     [Note Id]                         int IDENTITY PRIMARY KEY,
+     [Contract Id]                     int,                   -- Pointer to [Product Details]
+      Code                             int,
+      Note                             text,
+      Date                             datetime
+)
+*
+
+% Contract - Notification
+ALTER TABLE [Contract - Notification]
+ADD [Location Id] int
+*
+UPDATE [Contract - Notification]
+SET [Location Id] = 0
+*
+
+% Contract - Product Details
+DROP INDEX [Contract - Product Details].idxConProd1
+DROP INDEX [Contract - Product Details].idxConProd2
+CREATE INDEX idx001 ON [Contract - Product Details]
+(
+     [Contract Id]
+)
+CREATE INDEX idx002 ON [Contract - Product Details]
+(
+     [Product Id]
+)
+*
+
+% Contract - Product Details - Calloff
+CREATE TABLE [Contract - Product Details - Calloff]
+(
+     [CallOff Id]                      int IDENTITY PRIMARY KEY,
+     [Contract-Product Id]             int,                   -- Pointer to [Contract - Product Details]
+     [Location Id]                     int,                   -- Pointer to [Location]
+     [Vendor Id]                       int,                   -- Pointer to [Vendor Details]
+     [Calloff Quantity]                smallint     
+)
+*
+
+% Contract - Product Platforms
+
+% Contract Types
+ALTER TABLE [Contract Types]
+ADD [Location Id] int
+ALTER TABLE [Contract Types]
+ALTER COLUMN [Description] varchar(50)
+*
+UPDATE [Contract Types]
+SET [Location Id] = 0
+*
+
+% Contract Type Clauses
+ALTER TABLE [Contract Type Clauses]
+ALTER COLUMN [Description] varchar(50)
+*
+
+% Data Fields
+
+% Data Tables
+
+% Financials
+ALTER TABLE [Financials]
+ALTER COLUMN [Field Name] varchar(50)
+*
+
+% Import Fields
+
+% Import Mapping
+DROP INDEX [Import Mapping].idxImportMapping
+CREATE INDEX idx001 ON [Import Mapping]
+(
+     [ITable],
+     [IField]
+)
+*
+
+% Imports
+ALTER TABLE [Imports]
+ADD [Location Id] int
+ALTER TABLE [Imports]
+ALTER COLUMN [Description] varchar(50)
+*
+UPDATE [Imports]
+SET [Location Id] = 0
+*
+
+% Invoice Details
+
+% Invoice - Product Details
+
+% Languages
+ALTER TABLE [Languages]
+ALTER COLUMN Description varchar(15)
+*
+
+% Language Texts
+DROP INDEX [Language Texts].idxLangText
+CREATE INDEX idx001 ON [Language Texts]
+(
+     [LCode],
+     [LNum]
+)
+*
+
+% Location
+CREATE TABLE Location
+(
+     [Location Id]                     int IDENTITY PRIMARY KEY,
+     [Description]                     varchar(50)
+)
+*
+SET IDENTITY_INSERT [Location] ON
+INSERT INTO Location 
+    ([Location Id], [Description]) 
+    VALUES (0, 'Local Site')
+*
+SET IDENTITY_INSERT [Location] OFF
+*
+
+% Mail
+
+% Metrics
+
+% Performance
+
+% Pending Email
+ALTER TABLE [Pending Email]
+ALTER COLUMN [Subject] varchar(100)
+*
+
+% Period Types
+ALTER TABLE [Period Types]
+ADD [Location Id] int
+ALTER TABLE [Period Types]
+ALTER COLUMN Description varchar(50)
+*
+UPDATE [Period Types]
+SET [Location Id] = 0
+*
+
+% Product Details
+ALTER TABLE [Product Details]
+ADD [Location Id] int
+ALTER TABLE [Product Details]
+ADD [Calloff Quantity] smallint
+ALTER TABLE [Product Details]
+ALTER COLUMN [Product Name] varchar(50)
+*
+UPDATE [Product Details]
+SET [Location Id] = 0
+*
+
+% Product Notes
+
+% Product Platforms
+ALTER TABLE [Product Platforms]
+ADD [Location Id] int
+ALTER TABLE [Product Platforms]
+ALTER COLUMN Description varchar(50)
+ALTER TABLE [Product Platforms]
+ALTER COLUMN Model varchar(50)
+ALTER TABLE [Product Platforms]
+ALTER COLUMN LPar varchar(50)
+*
+UPDATE [Product Platforms]
+SET [Location Id] = 0
+*
+
+% Product Vendors
+DROP INDEX [Product Vendors].idxProdVendors
+CREATE INDEX idx001 ON [Product Vendors]
+(
+     [Product Id],
+     [Vendor Id]
+)
+*
+
+% Purchase Orders
+
+% Schedule
+DROP INDEX Schedule.idxSchedule
+CREATE INDEX idx001 ON Schedule
+(
+     [Acquisition Id],
+      Phase,
+      Item,
+     [Vendor Id]
+)
+*
+
+% Security
+ALTER TABLE [Security]
+ADD [Location Id] int
+*
+UPDATE [Security]
+SET [Location Id] = 0
+*
+
+% Security Locations
+CREATE TABLE [Security Locations]
+(
+     [Security Location Id]            int IDENTITY PRIMARY KEY,
+     [User Id]                         int,                   -- Pointer to Security
+     [Location Id]                     int,                   -- Pointer to Location 
+     [Access]                          int    
+)
+*
+
+% SLM Classes
+ALTER TABLE [SLM Classes]
+ADD [Location Id] int
+ALTER TABLE [SLM Classes]
+ALTER COLUMN Description varchar(50)
+*
+UPDATE [SLM Classes]
+SET [Location Id] = 0
+*
+
+% SLM Details
+ALTER TABLE [SLM Details]
+ADD [Location Id] int
+ALTER TABLE [SLM Details]
+ALTER COLUMN Description varchar(50)
+*
+UPDATE [SLM Details]
+SET [Location Id] = 0
+*
+
+% Staff Details
+ALTER TABLE [Staff Details]
+ADD [Location Id] int
+ALTER TABLE [Staff Details]
+ALTER COLUMN [Staff Number] varchar(50)
+ALTER TABLE [Staff Details]
+ALTER COLUMN [Staff Name] varchar(50)
+ALTER TABLE [Staff Details]
+ALTER COLUMN [Telephone Number] varchar(50)
+ALTER TABLE [Staff Details]
+ALTER COLUMN [Mobile Number] varchar(50)
+ALTER TABLE [Staff Details]
+ALTER COLUMN [Fax Number] varchar(50)
+ALTER TABLE [Staff Details]
+ALTER COLUMN [Email Address] varchar(50)
+*
+UPDATE [Staff Details]
+SET [Location Id] = 0
+*
+
+% System Parameters
+ALTER TABLE [System Parameters]
+ADD [Location Id] int
+ALTER TABLE [System Parameters]
+ALTER COLUMN [Company Name] varchar(50)
+ALTER TABLE [System Parameters]
+ALTER COLUMN [Address Line 1] varchar(50)
+ALTER TABLE [System Parameters]
+ALTER COLUMN [Address Line 2] varchar(50)
+ALTER TABLE [System Parameters]
+ALTER COLUMN [Address Line 3] varchar(50)
+ALTER TABLE [System Parameters]
+ALTER COLUMN [Address Line 4] varchar(50)
+ALTER TABLE [System Parameters]
+ALTER COLUMN [Address Line 5] varchar(50)
+*
+UPDATE [System Parameters]
+SET [Location Id] = 0
+*
+
+% Target Types
+ALTER TABLE [Target Types]
+ADD [Location Id] int
+ALTER TABLE [Target Types]
+ALTER COLUMN [Description] varchar(50)
+*
+UPDATE [Target Types]
+SET [Location Id] = 0
+*
+
+% Vendor Addresses
+ALTER TABLE [Vendor Addresses]
+ALTER COLUMN [Acct Manager] varchar(50)
+ALTER TABLE [Vendor Addresses]
+ALTER COLUMN [Telephone] varchar(50)
+ALTER TABLE [Vendor Addresses]
+ALTER COLUMN [Fax] varchar(50)
+ALTER TABLE [Vendor Addresses]
+ALTER COLUMN [Email] varchar(50)
+ALTER TABLE [Vendor Addresses]
+ALTER COLUMN [Address Line 1] varchar(50)
+ALTER TABLE [Vendor Addresses]
+ALTER COLUMN [Address Line 2] varchar(50)
+ALTER TABLE [Vendor Addresses]
+ALTER COLUMN [Address Line 3] varchar(50)
+ALTER TABLE [Vendor Addresses]
+ALTER COLUMN [Address Line 4] varchar(50)
+ALTER TABLE [Vendor Addresses]
+ALTER COLUMN [Address Line 5] varchar(50)
+*
+
+% Vendor Categories
+ALTER TABLE [Vendor Categories]
+ADD [Location Id] int
+ALTER TABLE [Vendor Categories]
+ALTER COLUMN [Description] varchar(50)
+*
+UPDATE [Vendor Categories]
+SET [Location Id] = 0
+*
+
+% Vendor Details
+DROP INDEX [Vendor Details].[idxVendorNames]
+*
+ALTER TABLE [Vendor Details]
+ADD [Location Id] int
+ALTER TABLE [Vendor Details]
+ADD [Vendor Type] int
+ALTER TABLE [Vendor Details]
+ALTER COLUMN [Vendor Name] varchar(50)
+ALTER TABLE [Vendor Details]
+ALTER COLUMN [Financial Rating] varchar(50)
+*
+UPDATE [Vendor Details]
+SET [Location Id] = 0
+*
+CREATE INDEX [idx001] ON [Vendor Details]
+(
+     [Vendor Name]
+)
+*
+
+% Vendor Notes
+
+% Vendor Status
+ALTER TABLE [Vendor Status]
+ADD [Location Id] int
+ALTER TABLE [Vendor Status]
+ALTER COLUMN [Description] varchar(50)
+*
+UPDATE [Vendor Status]
+SET [Location Id] = 0
+*
+
+% ---------- Views ----------
+
+% Performance Metrics
+DROP VIEW [Performance Metrics]
+*
+CREATE VIEW [Performance Metrics]
+AS
+SELECT 
+    Metrics.[Contracted Value],
+    Metrics.[Contracted Period],
+    Metrics.Variance [Contracted Variance],
+    Metrics.Loss [Contracted Loss],
+    Performance.[Actual Value],
+    Performance.[Date Stamp],
+    Performance.Variance [Actual Variance],
+    Performance.[Loss Flag],
+    Performance.Loss [Actual Loss],
+    [Contract Details].[Contract Number],
+    [Contract Details].[Contract Description],
+    [Vendor Details].[Vendor Name],
+    [Codes - SLD].[Full Description]    
+FROM Metrics
+LEFT OUTER JOIN Performance
+  ON Performance.[Metric Id] = Metrics.[Metric Id]
+LEFT OUTER JOIN [Contract Details]
+  ON Metrics.[Contract Id] = [Contract Details].[Contract Id]
+LEFT OUTER JOIN [Vendor Details]
+  ON Metrics.[Vendor Id] = [Vendor Details].[Vendor Id]
+LEFT OUTER JOIN [Codes - SLD]
+  ON Metrics.[SLD Type] = [Codes - SLD].[SLD Type]
+ AND Metrics.[SLD Number] = [Codes - SLD].[SLD Number]
+*
+
+% CalView
+DROP VIEW CalView
+*
+SET QUOTED_IDENTIFIER OFF
+SET ANSI_NULLS ON 
+*
+CREATE VIEW CalView
+AS
+SELECT 'A' AS CalKey, [Contract Details].[Contract Id], 
+    [Invoice - Product Details].[Invoice Id], 
+    [Contract Details].[Vendor Id], 
+    [Invoice - Product Details].[Product Id], 
+    [Invoice - Product Details].[Code Type], 
+    [Invoice - Product Details].[Code Number], 
+    [Invoice Details].[Invoice Received Date], 
+    [Codes - Invoice Frequency Type].[Frequency In Months],
+    [Invoice - Product Details].[Product Invoice Amount], 
+    [Invoice Details].[Total Invoice Amount]
+FROM [Contract Details] INNER JOIN
+    [Codes - Invoice Frequency Type] ON 
+    [Contract Details].[Invoice Frequency Type Id] = [Codes - Invoice Frequency Type].[Invoice Frequency Type Id]
+     INNER JOIN
+    [Invoice Details] ON 
+    [Contract Details].[Contract Id] = [Invoice Details].[Contract Id]
+     LEFT OUTER JOIN
+    [Invoice - Product Details] ON 
+    [Invoice Details].[Invoice Id] = [Invoice - Product Details].[Invoice Id]
+UNION
+SELECT 'A' AS CalKey, [Contract Details].[Contract Id], 
+    0 AS InvId, [Contract Details].[Vendor Id], 0 AS PrdId, 
+    0 AS CdType, 0 AS CdNum, 
+    [Contract - Forecast Details].[Payment Date], 
+    [Codes - Invoice Frequency Type].[Frequency In Months],
+    [Contract - Forecast Details].[Forecast Amount],
+    0 As Tia
+FROM [Contract Details] INNER JOIN
+    [Codes - Invoice Frequency Type] ON 
+    [Contract Details].[Invoice Frequency Type Id] = [Codes - Invoice Frequency Type].[Invoice Frequency Type Id]
+    INNER JOIN
+    [Contract - Forecast Details] ON 
+    [Contract Details].[Contract Id] = [Contract - Forecast Details].[Contract Id]
+*
+SET QUOTED_IDENTIFIER  OFF    
+SET ANSI_NULLS  ON 
+*
+% ---------- Procedures ----------
+DROP PROCEDURE SPF001, SPF002, SPF003, SPF004, SPF005, SPF006, SPF007, SPF008
+DROP PROCEDURE SPF009, SPF010, SPF011, SPF012, SPF013, SPF014
+*
+CREATE PROCEDURE [SPF001] 
+    @p1 int
+    AS
+    SELECT [Vendor Details].[Vendor Id],[Vendor Name],[Location Id]
+    FROM [Vendor Details]
+    WHERE [Vendor Details].[Vendor Id] NOT IN
+        (SELECT [Vendor Id] FROM [Acquisition Vendors]
+         WHERE [Acquisition Id] = @p1)
+*
+
+CREATE PROCEDURE [SPF002]
+    @p1 int
+    AS
+    SELECT [Vendor Details].[Vendor Id], [Vendor Name] 
+    FROM [Vendor Details] 
+    JOIN [Acquisition Vendors] 
+    ON [Vendor Details].[Vendor Id] = [Acquisition Vendors].[Vendor Id] 
+    WHERE [Acquisition Id] = @p1
+*
+
+CREATE PROCEDURE [SPF003]
+    @p1 int
+    AS
+    SELECT [Vendor Details].[Vendor Id], [Vendor Name], [Address Line 1],
+           [Address Line 2], [Address Line 3], [Address Line 4], [Address Line 5] 
+    FROM [Vendor Details]
+    JOIN [Acquisition Vendors] 
+    ON [Vendor Details].[Vendor Id] = [Acquisition Vendors].[Vendor Id] 
+    JOIN [Vendor Addresses]
+    ON [Vendor Details].[Primary Address Id] = [Vendor Addresses].[Address Id]
+    WHERE [Acquisition Id] = @p1
+*
+
+CREATE PROCEDURE [SPF004]
+    @p1 int
+    AS
+    SELECT [Vendor Details].[Vendor Id],[Vendor Name],[Location Id]
+    FROM [Vendor Details]
+    WHERE [Vendor Details].[Vendor Id] NOT IN
+        (SELECT [Vendor Id] FROM [Product Vendors]
+         WHERE [Product Id] = @p1)
+*
+
+CREATE PROCEDURE [SPF005]
+    @p1 int
+    AS
+    SELECT [Vendor Details].[Vendor Id], [Vendor Name] 
+    FROM [Vendor Details] 
+    JOIN [Product Vendors] 
+    ON [Vendor Details].[Vendor Id] = [Product Vendors].[Vendor Id] 
+    WHERE [Product Id] = @p1
+*
+
+CREATE PROCEDURE [SPF006]
+    @p1 int,
+    @p2 int
+    AS
+    SELECT [Attachment Id], Directory, Filename, Description
+    FROM Attachments
+    WHERE [Stage Number] = @p1
+    AND [Reference Number] = @p2
+*
+
+CREATE PROCEDURE [SPF007] 
+    @p1 int
+    AS
+    SELECT [Staff Details].[Staff Id],[Staff Name],[Location Id]
+    FROM [Staff Details]
+    WHERE [Staff Details].[Staff Id] NOT IN
+        (SELECT [Staff Id] FROM [Contract - Notification]
+         WHERE [Contract Id] = @p1)
+*
+
+CREATE PROCEDURE [SPF008]
+    @p1 int
+    AS
+    SELECT [Staff Details].[Staff Id], [Staff Name] 
+    FROM [Staff Details] 
+    JOIN [Contract - Notification] 
+    ON [Staff Details].[Staff Id] = [Contract - Notification].[Staff Id] 
+    WHERE [Contract Id] = @p1
+*
+
+CREATE PROCEDURE [SPF009] 
+    @p1 int
+    AS
+    SELECT [Product Platforms].[Platform Id],[Description], LPar, Quantity, [Location Id]
+    FROM [Product Platforms]
+    WHERE [Product Platforms].[Platform Id] NOT IN
+        (SELECT [Platform Id] FROM [Contract - Product-Platforms]
+         WHERE [Contract-Product Id] = @p1)
+*
+
+CREATE PROCEDURE [SPF010]
+    @p1 int
+    AS
+    SELECT [Product Platforms].[Platform Id], [Description], LPar, Quantity
+    FROM [Product Platforms] 
+    JOIN [Contract - Product-Platforms] 
+    ON [Product Platforms].[Platform Id] = [Contract - Product-Platforms].[Platform Id] 
+    WHERE [Contract-Product Id] = @p1
+*
+
+CREATE PROCEDURE [SPF011]
+    @p1 char(2),
+    @p2 int
+    AS
+    SELECT LText
+    FROM [Language Texts]
+    WHERE LCode = @p1
+    AND LNum = @p2
+*
+
+CREATE PROCEDURE [SPF012]
+    @p1 char(16)
+    AS
+    SELECT [Contract Id] 
+    FROM [Contract Details]
+    WHERE [Contract Number] = @p1
+*
+
+CREATE PROCEDURE [SPF013]
+    @p1 char(15)
+    AS
+    SELECT [SLD Number] 
+    FROM [Codes - SLD]
+    WHERE Description = @p1
+*
+
+CREATE PROCEDURE [SPF014]
+    @p1 int,
+    @p2 int
+    AS
+    SELECT [Metrics].[Metric Id],
+           [Metrics].[Contracted Value],
+           [Metrics].[Variance],
+           [Metrics].[Loss],
+           [Metrics].[Contracted Period],
+           [Vendor Details].[Vendor Name],
+           [Vendor Details].[Internal Staff Contact Id],
+           [Contract Details].[Contract Number]
+    FROM Metrics
+    LEFT OUTER JOIN [Vendor Details]
+      ON [Metrics].[Vendor Id] = [Vendor Details].[Vendor Id]
+    LEFT OUTER JOIN [Staff Details]
+      ON [Vendor Details].[Internal Staff Contact Id] = [Staff Details].[Staff Id]
+    LEFT OUTER JOIN [Contract Details]
+      ON [Metrics].[Contract Id] = [Contract Details].[Contract Id]
+    WHERE [SLD Number] = @p1
+    AND [Metrics].[Contract Id] = @p2
+*
+
+CREATE PROCEDURE [SPF015]  
+    @p1 int, 
+    @p2 int  
+    AS 
+    SELECT [Contract - Product Details].[Product Id], 
+           [Contract - Product Details].Quantity, 
+           [Contract Details].[Location Id], 
+           SUM([Contract - Product Details - Calloff].[Calloff Quantity])
+    FROM [Contract - Product Details] 
+    LEFT OUTER JOIN [Contract - Product Details - Calloff]
+    ON [Contract - Product Details].[Contract-Product Id] = [Contract - Product Details - Calloff].[Contract-Product Id]
+    LEFT OUTER JOIN [Contract Details] 
+    ON [Contract - Product Details].[Contract Id] = [Contract Details].[Contract Id]
+    GROUP BY [Contract - Product Details].[Product Id], 
+             [Contract - Product Details].Quantity, 
+             [Contract Details].[Location Id]
+    HAVING ([Contract - Product Details].[Product Id] = @p1) 
+    AND    ([Contract Details].[Location Id] =@p2)
+*

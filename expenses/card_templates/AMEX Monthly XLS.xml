@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="AMEX Monthly XLS" FileType="XLS" NumberHeaderRecords="2" NumberFooterRecords="1">
+  <Fields Type="CardTransaction" UniqueValue="trans">
+    <FooterRecord>
+      <FooterField><![CDATA[&#26;]]></FooterField>
+    </FooterRecord>
+ 
+    <Field Name="RecordType" MappedTable="card_transactions_amex" MappedField="record_type" FieldType="S" MaxLength="1" />
+    <Field Name="CardNumber" MappedTable="card_transactions" Label="Card Number" MappedField="card_number" FieldType="S" MaxLength="15" />
+    <Field Name="Surname" Label="Cardholder Surname" MappedTable="card_transactions_amex" MappedField="surname" FieldType="S" MaxLength="30" DisplayInUnallocatedCardGrid="yes"  />
+    <Field Name="Initials" Label="Cardholder Inital" MappedTable="card_transactions_amex" MappedField="initials" FieldType="S" MaxLength="8" DisplayInUnallocatedCardGrid="yes"  />
+    <Field Name="EmployeeID" MappedTable="card_transactions_amex" MappedField="employee_id" FieldType="S" MaxLength="10" />
+    <Field Name="CostCenter" MappedTable="card_transactions" MappedField="reference" FieldType="S" MaxLength="10" />
+    <Field Name="CorpID" MappedTable="card_transactions_amex" MappedField="corp_id" FieldType="S" MaxLength="6" />
+    <Field Name="ControlNumber" MappedTable="card_transactions_amex" MappedField="control_number" FieldType="S" />
+    <Field Name="BillingDate" MappedTable="card_transactions_amex" MappedField="billing_date" FieldType="D" Format="dd/MM/yyyy hh:mm:ss" />
+    <Field Name="ChargeDate" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="dd/MM/yyyy hh:mm:ss" />
+    <Field Name="SEDescription" MappedTable="card_transactions" MappedField="description" FieldType="S" MaxLength="44" />
+    <Field Name="ChargeDescription" Label="Charge Description" MappedTable="card_transactions_amex" MappedField="charge_description" FieldType="S" MaxLength="70" DisplayInMoreDetailsTable="yes"/>
+    <Field Name="ChargeCode" MappedTable="card_transactions_amex" MappedField="charge_code" FieldType="S" MaxLength="2" />
+    <Field Name="ChargeType" MappedTable="card_transactions_amex" MappedField="charge_type" FieldType="S" MaxLength="10" />
+    <Field Name="CurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" MaxLength="3" CurrencyType="alpha" />
+    <Field Name="ConversionRate" MappedTable="card_transactions" MappedField="exchangerate" FieldType="M" />
+    <Field Name="ChargeAmount" MappedTable="card_transactions" MappedField="original_amount" FieldType="C" />
+    <Field Name="BillingAmount" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C" />
+    <Field Name="SequenceNumer" MappedTable="card_transactions_amex" MappedField="sequence_number" FieldType="S" MaxLength="12" />
+    <Field Name="CountryCode" MappedTable="card_transactions" MappedField="country_code" FieldType="S" DefaultValue="GB" CountryType="alpha" /> 
+  </Fields>
+</CardTemplate>

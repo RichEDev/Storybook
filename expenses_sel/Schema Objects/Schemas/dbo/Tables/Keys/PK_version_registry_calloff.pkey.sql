@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[version_registry_calloff]
+    ADD CONSTRAINT [PK_version_registry_calloff] PRIMARY KEY CLUSTERED ([CallOffId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

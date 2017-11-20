@@ -1,0 +1,158 @@
+﻿@{
+    ViewBag.Title = "Expenses API: Getting Started";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    var accessRolesPage = ViewBag.ExpensesSite + "shared/admin/accessRoles.aspx";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<section title="Contents" id="Contents">
+    <header>
+        <h2>Contents</h2>
+    </header>
+    <p>Welcome to the 'Getting Started' section of the website.</p>
+    <p>
+        The following sections are defined below:
+        <br />
+        <ul>
+            <li><a href="#TestClient">The Test Client</a></li>
+            <li><a href="#MakingRequests">Making Requests</a></li>
+            <li><a href="#AccessRole">Access Role Handling</a></li>
+            <li><a href="#AssignRole">The ApiUser Role</a></li>
+            <li><a href="#Errors">API Errors</a></li>
+        </ul>
+    </p>
+</section>
+
+
+<section class="help-section" title="Test Client" id="TestClient">
+    <header>
+        <h2>Test Client</h2>
+    </header>
+    <p>
+        <a class="float-right help-content-image clearfix" href="~/Images/SEL-TestClient.png" target="_blank"><img src="~/Images/SEL-TestClient.png" alt="The Test Client" /></a>
+        The @Html.ActionLink("API Reference", "Reference", null, new { title = "API Reference" }) page contains a list of all the available endpoints (resources) of the API.
+        Clicking on one of the resource actions will take you to a reference page for that particular resource action.
+        This page will provide the following:
+        <ul>
+            <li>Explain what the action does.</li>
+            <li>Detail the response format in a number of content types.</li>
+            <li>Detail the request format (if it exists) in a number of content types.</li>
+            <li>Detail the request parameters (if they exist).</li>
+            <li>A test client so you can test the API actions...</li>
+        </ul>
+        Clicking the "TestClient" button brings up a dialogue box with the necessary contents to test the action, right from the help page.
+        The response will pop up in another dialogue. You must login first at <a href="/Help/Api/POST-Account-Login" target="_blank" title="Login">POST: Account/Login</a>, with your Expenses credentials.
+        This returns an AuthToken, which must be present in the header of future requests (with the exception of those in the @Html.ActionLink("Overview page", "Overview", null, null, null, "Auth", null, null)).
+    </p>
+    <footer class="panel-footer">
+        Try out the test client to log in <a href="/Help/Api/POST-Account-Login" title="Login" target="_blank">here</a>.
+    </footer>
+</section>
+
+<section class="help-section" title="Making Requests" id="MakingRequests">
+    <header>
+        <h2>Making Requests</h2>
+    </header>
+    <p>
+        The root for all API calls is @ViewBag.ApiSite. This means that for Budget Holders, the resource would be GET: @(ViewBag.ApiSite)BudgetHolders/
+        Aside from the test client included in the Api Reference pages, there are a number of useful external apps and plugins that enable you to test the API.
+        <ul>
+            <li><a href="https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en" title="Postman">Postman</a> (Chrome Extension)</li>
+            <li><a href="https://addons.mozilla.org/en-US/firefox/addon/restclient/" title="RESTClient">RESTClient</a> (Firefox/Safari Extension)</li>
+        </ul>
+        These enable you to save requests and have other useful tools such as pretty formatting of JSON and XML.
+        Using a plugin will speed up your adoption and understanding of the API.
+    </p>
+    <footer class="panel-footer">
+        Try out the test client to log in <a href="/Help/Api/POST-Account-Login" title="Login" target="_blank">here</a>.
+    </footer>
+</section>
+
+<section class="help-section" title="Access Role Handling" id="AccessRole">
+    <header>
+        <h2>Access Role Handling</h2>
+    </header>
+    <p>
+        <a class="float-right help-content-image clearfix" href="~/Images/SEL-AccessRoles.png" target="_blank" title="Access Roles"><img src="~/Images/SEL-AccessRoles.png" alt="Access Roles in Expenses" /></a>
+        The Expenses solution is highly flexible; there are many areas of the product that the majority of users are not able to access.
+        These areas are called "Spend Management Elements".
+        This access is controlled by an elaborate access roles system:
+        <ul>
+            <li>There are a standard set of permissions that correspond to each SpendManagementElement.</li>
+            <li>Each SpendManagementElement permission can have View, Add, Update, and Delete rules.</li>
+            <li>You (or your administrator) can create an AccessRole, and sets of permissions apply to this AccessRole.</li>
+            <li>You can then apply this AccessRole to users.</li>
+            <li>A user can have multiple AccessRoles, and an AccessRole can have many users.</li>
+            <li><code>SpendManagementElement.API</code> is one of these permissions...</li>
+        </ul>
+    </p>
+    <p>
+        So, as an example, you could create roles within the product such as 'Business Support' and 'Accountant':
+        <br /><br />
+        You would assign the permission of SpendManagementElement.IPAddressFiltering (view, add, edit, delete), to the 'Business Support' role, thus enabling any member to define which IP addresses are allowed to access Expenses.
+        <br /><br />
+        You don't want an accountant (however tech savvy) to be able to accidentally ban everyone's computers from accessing Expenses - so ensure the IPAddressFiltering is disabled for the 'Accountant' role.
+        When the accountant accesses Expenses, the menu option for IP Filtering will not be there, and they will not be able to access that section.
+        <br /><br />
+        Similarly, an accountant needs to be able to create and edit currencies, but you might not want business support to do this.
+        So you set the 'Business Support' role's SpendManagementElement.Currencies permission to "View" only.
+        This way, anyone in that role can still see the currenciesl; just not modify the currencies in any way.
+    </p>
+    <footer class="panel-footer">
+        Change your access roles <a href="@accessRolesPage" target="_blank" title="Access Roles">here</a>.
+    </footer>
+</section>
+
+
+<section class="help-section" title="The ApiUser Role" id="AssignRole">
+    <header>
+        <h2>The ApiUser Role</h2>
+    </header>
+    <p>
+        One of the SpendManagementElements (mentioned above) is <code>SpendManagementElement.API</code>
+        This is the permission that enables API access. Only the 'View' rule has any effect.
+        You would need to create this in the Expenses web site, so if it hasn't been created already, then create an AccessRole called ApiUser.
+        Then you can simply assign that role to your user if you are allowed, or ask an administrator if you are not.
+    </p>
+    <p>
+        After that, provided you have the <code>SpendManagementElement.AccessRoles</code> permission in an AccessRole assigned to you, then you can even edit the access roles from within the API!
+        <strong>Be careful!</strong> This feature is powerful! You could quite easily remove your own access to the API, or the AccessRoles section of the API.
+        Be careful too that you do not give everyone else access to parts of the API that they are not allowed to use.
+        With great power comes great responsibility!
+    </p>
+    <footer class="panel-footer">
+        Change your access roles <a href="@accessRolesPage" target="_blank" title="Access Roles">here</a>.
+    </footer>
+</section>
+
+
+<section class="help-section" title="API Errors" id="Errors">
+    <header>
+        <h2>API Errors</h2>
+    </header>
+    <p>
+        Being a Web API, HTTP codes are returned depending on the result of the operation.
+        If something goes wrong, then appropriate error codes are returned where possible.
+        These often just contain a straightforward message and an HTTP error code.
+        Examples of this include:
+        <ul>
+            <li>You have not included the AuthToken in the header</li>
+            <li>Your AuthToken has expired</li>
+            <li>Access Roles prevent you from using an area of the API.</li>
+        </ul>
+        In addition to this, there are errors that arise as a result of incorrect object configuration.
+        Models are checked for accuracy at the beginning of the request, and model errors will be returned if the request is bad.
+        This covers required properties, enum validation, and dependent properties.
+        Once this phase has passed, the objects are validated against other database objects, examples of which could be:
+        <ul>
+            <li>An EmployeeId doesn't return an actual employee</li>
+            <li>A delete of an ExpenseSubCategory fails because it is in use</li>
+            <li>Adding an object fails as one already exists in the database with the same name</li>
+        </ul>
+        These types of errors are returned along with the standard ApiResponse object. These calls are charged.
+    </p>
+    <footer class="panel-footer"></footer>
+</section>

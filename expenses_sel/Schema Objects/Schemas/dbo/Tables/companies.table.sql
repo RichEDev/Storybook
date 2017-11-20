@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[companies] (
+    [companyid]             INT             IDENTITY (1, 1) NOT NULL,
+    [company]               NVARCHAR (250)  NOT NULL,
+    [archived]              BIT             NOT NULL,
+    [comment]               NVARCHAR (4000) NULL,
+    [companycode]           NVARCHAR (50)   NULL,
+    [showfrom]              BIT             NOT NULL,
+    [showto]                BIT             NOT NULL,
+    [CreatedOn]             DATETIME        NULL,
+    [CreatedBy]             INT             NULL,
+    [ModifiedOn]            DATETIME        NULL,
+    [ModifiedBy]            INT             NULL,
+    [address1]              NVARCHAR (250)  NULL,
+    [address2]              NVARCHAR (250)  NULL,
+    [city]                  NVARCHAR (250)  NULL,
+    [county]                NVARCHAR (250)  NULL,
+    [postcode]              NVARCHAR (250)  NULL,
+    [country]               INT             NULL,
+    [parentcompanyid]       INT             NULL,
+    [iscompany]             BIT             NOT NULL,
+    [CacheExpiry]           DATETIME        NULL,
+    [addressCreationMethod] TINYINT         NOT NULL,
+    [isPrivateAddress]      BIT             NOT NULL,
+    [addressLookupDate]     DATETIME        NULL,
+    [subAccountID]          INT             NULL
+);
+

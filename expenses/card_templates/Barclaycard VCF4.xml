@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="Barclaycard VCF4" FileType="Text" Delimiter="\t" >
+	<Fields Type="CardTransaction" UniqueValue="05">
+		<HeaderRecord>
+			<HeaderField FieldType="S" TransactionCode="8" LookupColumnIndex="1" RecordTypeColumnIndex="4" />
+		</HeaderRecord>
+		<FooterRecord>
+			<FooterField FieldType="S" TransactionCode="9" LookupColumnIndex="1" RecordTypeColumnIndex="4" />
+		</FooterRecord>
+		
+		<Field Name="LoadTransactionCode" MappedTable="card_transactions_vcf4" MappedField="LoadTransactionCode" FieldType="S" MaxLength="1"/>
+		<Field Name="AccountNumber" Label="Cardholder Number" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="19"/>
+		<Field Name="PostingDate" MappedTable="card_transactions_vcf4" MappedField="PostingDate" FieldType="D" Format="MM/dd/yyyy" />
+		<Field Name="TransactionReferenceNumber" MappedTable="card_transactions" MappedField="reference" FieldType="S" MaxLength="24" />
+		<Field Name="SequenceNumber" MappedTable="card_transactions_vcf4" MappedField="SequenceNumber" FieldType="S" MaxLength="10" />
+		<Field Name="Period" MappedTable="card_transactions_vcf4" MappedField="Period" FieldType="N" MaxLength="5" />
+		<Field Name="AcquiringBin" MappedTable="card_transactions_vcf4" MappedField="AcquiringBin" FieldType="N" MaxLength="6" />
+		<Field Name="CardAcceptorID" MappedTable="card_transactions_vcf4" MappedField="CardAcceptorID" FieldType="S" MaxLength="26" />
+		<Field Name="SupplierName" MappedTable="card_transactions_vcf4" MappedField="SupplierName" FieldType="S" MaxLength="26" />
+		<Field Name="SupplierCity" MappedTable="card_transactions_vcf4" MappedField="SupplierCity" FieldType="S" MaxLength="14" />
+		<Field Name="SupplierStateProvinceCode" MappedTable="card_transactions_vcf4" MappedField="SupplierStateProvinceCode" FieldType="S" MaxLength="4" />
+		<Field Name="SupplierISOCountryCode" Label="Supplier Country Code" MappedTable="card_transactions" MappedField="country_code" CountryType="numeric3" FieldType="S" MaxLength="5" DisplayInMoreDetailsTable="yes" />
+		<Field Name="SupplierPostalCode" MappedTable="card_transactions_vcf4" MappedField="SupplierPostalCode" FieldType="S" MaxLength="14" />
+		<Field Name="SourceAmount" MappedTable="card_transactions" MappedField="original_amount" FieldType="C" NumDecimalPlaces="2" />
+		<Field Name="BillingAmount" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C" NumDecimalPlaces="2" />
+		<Field Name="SourceCurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="N" CurrencyType="numeric" />
+		<Field Name="MerchantCategoryCode" MappedTable="card_transactions_vcf4" MappedField="MerchantCategoryCode" FieldType="N" MaxLength="4" />
+		<Field Name="TransactionTypeCode" MappedTable="card_transactions_vcf4" MappedField="TransactionTypeCode" FieldType="S" MaxLength="2"/>
+		<Field Name="TransactionDate" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="MM/dd/yyyy" />
+		<Field Name="BillingCurrencyCode" MappedTable="card_transactions_vcf4" MappedField="BillingCurrencyCode" FieldType="N" MaxLength="5"/>
+		<Field Name="TaxAmount" MappedTable="card_transactions_vcf4" MappedField="TaxAmount" FieldType="C" />
+		<Field Name="DisputeAmount" MappedTable="card_transactions_vcf4" MappedField="DisputeAmount" FieldType="C" />
+		<Field Name="DisputeReasonCode" MappedTable="card_transactions_vcf4" MappedField="DisputeReasonCode" FieldType="N" MaxLength="1" />
+		<Field Name="DisputeDate" MappedTable="card_transactions_vcf4" MappedField="DisputeDate" FieldType="D" Format="MM/dd/yyyy" />
+		<Field Name="CommodityCode" MappedTable="card_transactions_vcf4" MappedField="CommodityCode" FieldType="S" MaxLength="4" />
+		<Field Name="SupplierVATNumber" MappedTable="card_transactions_vcf4" MappedField="SupplierVATNumber" FieldType="S" MaxLength="20" />
+		<Field Name="SupplierOrderNumber" MappedTable="card_transactions_vcf4" MappedField="SupplierOrderNumber" FieldType="S" MaxLength="20" />
+		<Field Name="CustomerVATNumber" MappedTable="card_transactions_vcf4" MappedField="CustomerVATNumber" FieldType="S" MaxLength="14" />
+		<Field Name="VATAmount" MappedTable="card_transactions_vcf4" MappedField="VATAmount" FieldType="C" NumDecimalPlaces="2"/>
+		<Field Name="Tax2Amount" MappedTable="card_transactions_vcf4" MappedField="Tax2Amount" FieldType="C" NumDecimalPlaces="2"/>
+		<Field Name="PurchaseIdentificationFormat" MappedTable="card_transactions_vcf4" MappedField="PurchaseIdentificationFormat" FieldType="S" MaxLength="2" />
+		<Field Name="CustomerCodeCRI" MappedTable="card_transactions_vcf4" MappedField="CustomerCodeCRI" FieldType="S" MaxLength="50" />
+		<Field Name="PurchaseIdentification" MappedTable="card_transactions_vcf4" MappedField="PurchaseIdentification" FieldType="S" MaxLength="76" />
+    <Field Name="TransactionTime" MappedTable="card_transactions_vcf4" MappedField="TransactionTime" FieldType="S" MaxLength="4" />
+    <Field Name="TaxAmountIncludedCode" MappedTable="card_transactions_vcf4" MappedField="TaxAmountIncludedCode" FieldType="N" MaxLength="1" />
+		<Field Name="Tax2AmountIncludedCode" MappedTable="card_transactions_vcf4" MappedField="Tax2AmountIncludedCode" FieldType="N" MaxLength="1" />
+		<Field Name="OrderTypeCode" MappedTable="card_transactions_vcf4" MappedField="OrderTypeCode" FieldType="N" MaxLength="2" />
+		<Field Name="MessageIdentifier" MappedTable="card_transactions_vcf4" MappedField="MessageIdentifier" FieldType="S" MaxLength="16" />
+		<Field Name="ProcessorAddendumKey" MappedTable="card_transactions_vcf4" MappedField="ProcessorAddendumKey" FieldType="S" MaxLength="52" />
+		<Field Name="MerchantProfileServiceIdentifier(MPS-ID)" MappedTable="card_transactions_vcf4" MappedField="MerchantProfileServiceIdentifier(MPS-ID)" FieldType="S" MaxLength="12" />
+		<Field Name="UsageCode" MappedTable="card_transactions_vcf4" MappedField="UsageCode" FieldType="N" MaxLength="1" />
+		<Field Name="EnrichedTransactionFlag" MappedTable="card_transactions_vcf4" MappedField="EnrichedTransactionFlag" FieldType="S" MaxLength="2" />
+		<Field Name="BillingAccountNumber" MappedTable="card_transactions_vcf4" MappedField="BillingAccountNumber" FieldType="S" MaxLength="19" />
+		<Field Name="DDANumber" MappedTable="card_transactions_vcf4" MappedField="DDANumber" FieldType="S" MaxLength="15" />
+		<Field Name="DDASavingsNumber" MappedTable="card_transactions_vcf4" MappedField="DDASavingsNumber" FieldType="S" MaxLength="15" />
+		<Field Name="DisputeStatusCode" MappedTable="card_transactions_vcf4" MappedField="DisputeStatusCode" FieldType="S" MaxLength="2" />
+		<Field Name="MatchedIndicator" MappedTable="card_transactions_vcf4" MappedField="MatchedIndicator" FieldType="N" MaxLength="1" />
+		<Field Name="RoutingNumber" MappedTable="card_transactions_vcf4" MappedField="RoutingNumber" FieldType="S" MaxLength="10" />
+		<Field Name="AuthorizationNumber" MappedTable="card_transactions_vcf4" MappedField="AuthorizationNumber" FieldType="S" MaxLength="6" />
+		<Field Name="CardholderTransactionApproval" MappedTable="card_transactions_vcf4" MappedField="CardholderTransactionApproval" FieldType="S" MaxLength="2" />
+		<Field Name="ExtractID" MappedTable="card_transactions_vcf4" MappedField="ExtractID" FieldType="S" MaxLength="15" />
+		<Field Name="MemoPostFlag" MappedTable="card_transactions_vcf4" MappedField="MemoPostFlag" FieldType="N" MaxLength="1" />
+		<Field Name="StatementDate" MappedTable="card_transactions_vcf4" MappedField="StatementDate" FieldType="D" Format="MM/dd/yyyy" />
+		<Field Name="UserData1" MappedTable="card_transactions_vcf4" MappedField="UserData1" FieldType="S" MaxLength="20" />
+		<Field Name="UserData1Description" MappedTable="card_transactions_vcf4" MappedField="UserData1Description" FieldType="S" MaxLength="20" />
+		<Field Name="UserData2" MappedTable="card_transactions_vcf4" MappedField="UserData2" FieldType="S" MaxLength="20" />
+		<Field Name="UserData2Description" MappedTable="card_transactions_vcf4" MappedField="UserData2Description" FieldType="S" MaxLength="20" />
+		<Field Name="UserData3" MappedTable="card_transactions_vcf4" MappedField="UserData3" FieldType="S" MaxLength="20" />
+		<Field Name="UserData3Description" MappedTable="card_transactions_vcf4" MappedField="UserData3Description" FieldType="S" MaxLength="20" />
+		<Field Name="UserData4" MappedTable="card_transactions_vcf4" MappedField="UserData4" FieldType="S" MaxLength="20" />
+		<Field Name="UserData4Description" MappedTable="card_transactions_vcf4" MappedField="UserData4Description" FieldType="S" MaxLength="20" />
+		<Field Name="UserData5" MappedTable="card_transactions_vcf4" MappedField="UserData5" FieldType="S" MaxLength="20" />
+		<Field Name="UserData5Description" MappedTable="card_transactions_vcf4" MappedField="UserData5Description" FieldType="S" MaxLength="20" />
+		<Field Name="VisaCommerceBatchID" MappedTable="card_transactions_vcf4" MappedField="VisaCommerceBatchID" FieldType="S" MaxLength="20" />
+		<Field Name="VisaCommercePaymentInstructionDate" MappedTable="card_transactions_vcf4" MappedField="VisaCommercePaymentInstructionDate" FieldType="D" Format="MM/dd/yyyy" />
+		<Field Name="LineItemMatchedIndicator" MappedTable="card_transactions_vcf4" MappedField="LineItemMatchedIndicator" FieldType="N" MaxLength="1" />
+		<Field Name="IssuerDefinedUsageCode" MappedTable="card_transactions_vcf4" MappedField="IssuerDefinedUsageCode" FieldType="S" MaxLength="2" />
+		<Field Name="Source" MappedTable="card_transactions_vcf4" MappedField="Source" FieldType="S" MaxLength="10" />
+		<Field Name="OptionalField1" MappedTable="card_transactions_vcf4" MappedField="OptionalField1" FieldType="S" MaxLength="256" />
+		<Field Name="OptionalField2" MappedTable="card_transactions_vcf4" MappedField="OptionalField2" FieldType="S" MaxLength="256" />
+		<Field Name="OptionalField3" MappedTable="card_transactions_vcf4" MappedField="OptionalField3" FieldType="S" MaxLength="256" />
+		<Field Name="OptionalField4" MappedTable="card_transactions_vcf4" MappedField="OptionalField4" FieldType="S" MaxLength="256" />
+		<Field Name="ReservedField1" MappedTable="card_transactions_vcf4" MappedField="ReservedField1" FieldType="S" MaxLength="30" />
+		<Field Name="ReservedField2" MappedTable="card_transactions_vcf4" MappedField="ReservedField2" FieldType="S" MaxLength="30" />
+		<Field Name="ReservedField3" MappedTable="card_transactions_vcf4" MappedField="ReservedField3" FieldType="S" MaxLength="30" />
+		<Field Name="ReservedField4" MappedTable="card_transactions_vcf4" MappedField="ReservedField4" FieldType="S" MaxLength="30" />
+	</Fields>
+	<Fields Type="CardCompany" UniqueValue="06">
+		<HeaderRecord>
+			<HeaderField FieldType="S" TransactionCode="8" RecordTypeColumnIndex="4" />
+		</HeaderRecord>
+		<FooterRecord>
+			<FooterField FieldType="S" TransactionCode="9" RecordTypeColumnIndex="4" />
+		</FooterRecord>
+		<Field Name="CompanyName" MappedTable="cardCompanies" MappedField="CompanyName" FieldType="S" MaxLength="80" FieldIndex="2" />
+		<Field Name="CompanyNumber" MappedTable="cardCompanies" MappedField="CompanyNumber" FieldType="S" MaxLength="80" FieldIndex="1" />
+	</Fields>
+</CardTemplate>

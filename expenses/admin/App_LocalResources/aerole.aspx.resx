@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="chkapprovalResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkapprovalResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkauditlogResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkauditlogResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkcheckpayResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkcheckpayResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkcostcodesreadonlyResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkcostcodesreadonlyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkcreditcardResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkcreditcardResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkdepartmentsreadonlyResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkdepartmentsreadonlyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkemplogonResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkemplogonResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkexportsResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkexportsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkprojectcodesreadonlyResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkprojectcodesreadonlyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkpurchasecardsResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkpurchasecardsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkqedesignResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkqedesignResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkreportsreadonlyResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkreportsreadonlyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkreportsResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkreportsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkrolesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chksetupResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chksetupResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkusersetupResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkusersetupResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmbmastersResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdcancelResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdcancelResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdokResource1.AlternateText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdokResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdroledeselResource1.Text" xml:space="preserve">
+    <value>De-select All</value>
+  </data>
+  <data name="cmdroledeselResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cmdroleResource1.Text" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="cmdroleResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compmaxclaimResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a valid value for the maximum claim total</value>
+  </data>
+  <data name="compmaxclaimResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compmaxclaimResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="compminclaimResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a valid value for the minimum claim total</value>
+  </data>
+  <data name="compminclaimResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="compminclaimResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label1Resource1.Text" xml:space="preserve">
+    <value>General Details</value>
+  </data>
+  <data name="Label1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label2Resource1.Text" xml:space="preserve">
+    <value>Role Permissions</value>
+  </data>
+  <data name="Label2Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label3Resource1.Text" xml:space="preserve">
+    <value>Access Permissions</value>
+  </data>
+  <data name="Label3Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label4Resource1.Text" xml:space="preserve">
+    <value>Claim Limits</value>
+  </data>
+  <data name="Label4Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label5Resource1.Text" xml:space="preserve">
+    <value>Claimant Code Allocation</value>
+  </data>
+  <data name="Label5Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label7Resource1.Text" xml:space="preserve">
+    <value>Import Purchase Card statements:</value>
+  </data>
+  <data name="Label7Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblapprovalResource1.Text" xml:space="preserve">
+    <value>Manage and approve advance requests:</value>
+  </data>
+  <data name="lblapprovalResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblauditlogResource1.Text" xml:space="preserve">
+    <value>Search and view the Audit Log</value>
+  </data>
+  <data name="lblauditlogResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblcheckpayResource1.Text" xml:space="preserve">
+    <value>Check and pay expenses:</value>
+  </data>
+  <data name="lblcheckpayResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblcostcodesreadonlyResource1.Text" xml:space="preserve">
+    <value>Claimants cannot amend their designated cost code allocation:</value>
+  </data>
+  <data name="lblcostcodesreadonlyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblcreditcardResource1.Text" xml:space="preserve">
+    <value>Import Credit Card statements:</value>
+  </data>
+  <data name="lblcreditcardResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbldepartmentsreadonlyResource1.Text" xml:space="preserve">
+    <value>Claimants cannot amend their designated department allocation:</value>
+  </data>
+  <data name="lbldepartmentsreadonlyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbldescriptionResource1.Text" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="lbldescriptionResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblemplogonResource1.Text" xml:space="preserve">
+    <value>Logon to other employee accounts:</value>
+  </data>
+  <data name="lblemplogonResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblexportsResource1.Text" xml:space="preserve">
+    <value>Export data and view export history:</value>
+  </data>
+  <data name="lblexportsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmasterroleResource1.Text" xml:space="preserve">
+    <value>Master Role:</value>
+  </data>
+  <data name="lblmasterroleResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmaxclaimResource1.Text" xml:space="preserve">
+    <value>Claimants can not submit a claim if the grand total is above:</value>
+  </data>
+  <data name="lblmaxclaimResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblminclaimResource1.Text" xml:space="preserve">
+    <value>Claimants can not submit a claim if the grand total is below:</value>
+  </data>
+  <data name="lblminclaimResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblmsgResource1.Text" xml:space="preserve">
+    <value>lblmsg</value>
+  </data>
+  <data name="lblmsgResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblnameResource1.Text" xml:space="preserve">
+    <value>Role Name:</value>
+  </data>
+  <data name="lblnameResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblprojectcodesreadonlyResource1.Text" xml:space="preserve">
+    <value>Claimants cannot amend their designated project code allocation:</value>
+  </data>
+  <data name="lblprojectcodesreadonlyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblqedesignResource1.Text" xml:space="preserve">
+    <value>Quick Edit Design:</value>
+  </data>
+  <data name="lblqedesignResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblreportsreadonlyResource1.Text" xml:space="preserve">
+    <value>View read only reports:</value>
+  </data>
+  <data name="lblreportsreadonlyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblreportsResource1.Text" xml:space="preserve">
+    <value>View administrator reports:</value>
+  </data>
+  <data name="lblreportsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblsetupResource1.Text" xml:space="preserve">
+    <value>Modify the set-up of categories and system options:</value>
+  </data>
+  <data name="lblsetupResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblusersetupResource1.Text" xml:space="preserve">
+    <value>Modify the set-up of employees, sign-off groups and roles:</value>
+  </data>
+  <data name="lblusersetupResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optallResource1.Text" xml:space="preserve">
+    <value>This role can access all data</value>
+  </data>
+  <data name="optallResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optgroupsResource1.Text" xml:space="preserve">
+    <value>This role can access data for any employees it is responsible for signing off</value>
+  </data>
+  <data name="optgroupsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="optselectedResource1.Text" xml:space="preserve">
+    <value>This role can access data belonging to the roles selected below</value>
+  </data>
+  <data name="optselectedResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="reqrolenameResource1.ErrorMessage" xml:space="preserve">
+    <value>Please enter a Role Name</value>
+  </data>
+  <data name="reqrolenameResource1.Text" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="reqrolenameResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtactionResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtactionResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtdescriptionResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtdescriptionResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtmaxclaimResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtmaxclaimResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtminclaimResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtminclaimResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtroleidResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtroleidResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtrolenameResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtrolenameResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ValidationSummary1Resource1.HeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ValidationSummary1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+</root>

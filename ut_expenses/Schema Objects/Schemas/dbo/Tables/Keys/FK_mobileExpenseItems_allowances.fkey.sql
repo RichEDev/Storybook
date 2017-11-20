@@ -1,0 +1,1 @@
+﻿ALTER TABLE dbo.mobileExpenseItems ADD CONSTRAINT [FK_mobileExpenseItems_allowances] FOREIGN KEY (allowanceid) REFERENCES allowances (allowanceid)

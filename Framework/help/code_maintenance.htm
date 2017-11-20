@@ -1,0 +1,115 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Framework Help - Definitions</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="fwhelp.css" type="text/css" />
+
+    <script language="javascript" type="text/javascript">
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+    </script>
+
+</head>
+<body class="help_page" onload="window.resizeTo(800,600)">
+    <div class="help_page_title">
+        <a onclick="closewindow();">
+            <img src="../images/exithelp.gif" alt="Close Help Window" /></a> Administration</div>
+    <div class="help_section">
+        <div class="help_section_title">
+            Overview
+        </div>
+        <div class="help_overview">
+            <p>
+                Administration is the area of Framework that allows the core definitions to be defined.
+                These are divided into logical application menu sections.</p>
+            <p>
+                A common screen is displayed, regardless of the actual elements you are viewing.</p>
+            <p>
+                The ability to Edit or Delete an element will depend of the permission granted to
+                the user by their role.</p>
+            <p>
+                On entering the screen, a list of existing definitions will be displayed.</p>
+            <p>
+                <li><b>To Add:</b> Click the 'New' link in the page options panel to the left of the
+                    definition list. You will be transferred to the definition screen where the details
+                    of the element can be entered.</li>
+            </p>
+            <p>
+                <li><b>To Edit:</b> Click the 'Edit' icon (<img src="../icons/edit.gif" alt="Edit" />)
+                    to the left of the definition. You will be transferred to the definition screen
+                    where the detail of the element can be modified.</li>
+            </p>
+            <p>
+                <li><b>To Delete:</b> Click the 'Delete' icon (<img src="../icons/delete2.gif" alt="Delete" />)
+                    to the left of the definition. You will be prompted to confirm deletion. Clicking
+                    'OK' on the dialog box will remove the item from the database permanently.</li>
+            </p>
+            <div class="help_tip">
+                <b>Note:</b> The Deletion of an element will be denied if the element is assigned
+                anywhere within the database.
+            </div>
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img src="../buttons/open.gif" onclick="toggle('1');" id="img1" alt="Expand Topic" />&nbsp;Basic
+            Definitions
+        </div>
+        <div class="help_body_text" id="1">
+            <p>
+                In most cases, the elements defined are within administration are isolated definitions
+                that have varying amounts of accompanying information. The most basic being single
+                field text definitions.</p>
+            <p>
+                As soon as a definition has been added and appears in the list, it will be available
+                for selection by a user.</p>
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img id="img2" alt="Expand Topic" onclick="toggle('2');" src="../buttons/open.gif" />&nbsp;Tiered
+            Definitions
+        </div>
+        <div class="help_body_text" id="2">
+            <p>
+                Tiered Definitions are those that consist of Primary and Secondary definitions.</p>
+            <p>
+                The Primary definition will typically be a collective description that covers the
+                Secondary definitions that appear on selection of the Primary.</p>
+            <p>
+                An example is the Note Category and Type. For every Note Category, multiple Note
+                Types can be defined. (e.g. Category of 'Recent Communication' could have secondary
+                definitions of 'Email','Letter' or 'Telephone Call').</p>
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_comments">
+            * If you do not find a topic outlined in the help which is relevant to your enquiry
+            then please contact your administrator
+        </div>
+    </div>
+</body>
+</html>

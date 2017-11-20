@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="Home.aspx" title="Home"  description="Primary Menu options available as well as high level search options.">
+    <siteMapNode url="SummaryPortal.aspx" title="Advanced Search"  description="Additional Search options beyond the high level options available on the Home Page." />
+    <siteMapNode url="MenuMain.aspx?menusection=admin" title="Administrative Settings"  description="Access the configuration area of Framework.">
+      <siteMapNode url="MenuMain.aspx?menusection=management" title="Data Management" description="Housekeeping and data manipulation tasks">
+        <siteMapNode url="~/admin/reassignconprods.aspx" title="Reassign Contract Products" description="Re-assign contract products to a different contract" />
+        <siteMapNode url="~/admin/reassigncontractsupplier.aspx" title="Reassign Contract Supplier" description="Transfer a contract's primary supplier" />
+        <siteMapNode url="~/admin/oneoffrechargecosts.aspx" title="One-Off Recharge Costs" description="Enter one-off charges against a relationship and recharge entity" />
+        <siteMapNode url="~/admin/recharge_impactanalysis.aspx" title="Recharge Impact Analysis" description="Assess the financial impact of loss of client and, optionally, action it" />
+        <siteMapNode url="~/admin/recharge_paymentgeneration.aspx" title="Recharge Payment Generation" description="Generate recharge payments for multiple contracts in a single action" />
+      </siteMapNode>
+      <siteMapNode url="MenuMain.aspx?menusection=baseinfo" title="Base Information" description="Access base definitions area menu">
+        <siteMapNode url="~/shared/admin/admincurrencies.aspx" title="Currencies"  description="Define and manage Currency options" />
+        <siteMapNode url="~/shared/admin/admincountries.aspx" title="Countries" description="Define and manage Country definitions to be available with the application" />
+        <siteMapNode url="MenuMain.aspx?menusection=contractinfo" title="Contract Configuration Options" description="Configure contract related information elements">
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=109" title="Contract Category"  description="Define and manage contract category options" />
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=111" title="Contract Status"  description="Define and manage Contract Status options" />
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=110" title="Contract Types"  description="Define and manage Contract Type options" />
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=112" title="Inflator Metrics"  description="Define and manage Inflator Metric options" />
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=114" title="Sales Tax"  description="Define and manage Sales Tax options" />
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=113" title="Term Types"  description="Define and manage Term Type options" />
+        </siteMapNode>
+        <siteMapNode url="MenuMain.aspx?menusection=invoiceinfo" title="Invoice Information" description="Configure invoice related information elements">
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=130" title="Invoice Frequencies"  description="Define and manage Invoice Frequency options" />
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=131" title="Invoice Status"  description="Define and manage Invoice Status options" />
+        </siteMapNode>
+        <siteMapNode url="MenuMain.aspx?menusection=productinfo" title="Product and Service Configuration" description="Configure product related information elements">
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=115" title="Licence Renewal Types"  description="Define and manage Licence Renewal Type options" />
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=60" title="Product/Service Categories"  description="Define and manage Product Category options" />
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=136" title="Product Licence Types"  description="Product Licence Types" />
+          <siteMapNode url="ProductDetails.aspx" title="Product/Service Details"  description="Define products and services available for association with a contract relationship.">
+            <siteMapNode url="Associations.aspx?frompage=productdetails" title="Product Associations" description="Association defining where a product or service is available from." />
+            <siteMapNode url="~/contracts/ProductLicences.aspx" title="Product Licences" description="Licence details registered to the currently active product" />
+          </siteMapNode>
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=118" title="Units"  description="Define and manage Unit options" />
+        </siteMapNode>
+        <siteMapNode url="MenuMain.aspx?menusection=sandl" title="Generic Information" description="Configure Sites and Address elements">
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=132" title="SubAccounts"  description="Administer the compartment subaccounts within the Framework database." />
+          <siteMapNode url="~/shared/admin/organisations.aspx" title="Organisations"></siteMapNode>
+          <siteMapNode url="~/shared/admin/addresses.aspx" title="Addresses"></siteMapNode>
+
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=120" title="Task Types" description="Define and manage the different types of tasks available" />
+        </siteMapNode>
+        <siteMapNode url="MenuMain.aspx?menusection=supplierinfo" title="Supplier Configuration" description="Configure supplier related elements">
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=129" title="Financial Status"  description="Define and manage Financial Status options" />
+          <siteMapNode url="~/contracts/admin/basedefinitions.aspx?bdt=55" title="Supplier Status"  description="Define and manage Status options" />
+          <siteMapNode url="~/contracts/admin/baseDefinitions.aspx?bdt=53" title="Supplier Category"  description="Define and manage Category options" />
+        </siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="MenuMain.aspx?menusection=recharge" title="Recharge Configuration" description="Define and manage elements specifically used by the recharge functionality">
+        <siteMapNode url="BaseDefinitions.aspx?item=rechargeentity" title="Recharge Entities" description="Define and maintain the recharge clients / customers">
+          <siteMapNode url="RechargeEntityDefinitions.aspx" title="Manage Recharge Definition" description="Define or modify individual recharge entity definition" />
+        </siteMapNode>
+        <siteMapNode url="BaseDefinitions.aspx?item=accountcodes" title="Account Codes (Recharge)" description="Define and manage account codes used against contract recharge functionality" />
+      </siteMapNode>
+      <siteMapNode url="MenuMain.aspx?menusection=employee" title="Employee Management" description="Administer employees, Framework users and their access roles">
+        <siteMapNode url="~/shared/admin/selectemployee.aspx" title="Employees" description="Search facility to locate employee for administration">
+          <siteMapNode url="~/shared/admin/adminemployees.aspx" title="Employees" description="Define employees for selection in user defined fields, contract owner or nomination for email notification."></siteMapNode>
+        </siteMapNode>
+        <siteMapNode url="shared/admin/accessRoles.aspx" title="Access Roles"  description="Define and maintain Access Roles to determine different levels of access across the system." />
+        <siteMapNode url="~/shared/admin/aeemployee.aspx" title="Employee Management"  description="Define employees permitted to access Framework and assign their access levels." />
+        <siteMapNode url="~/shared/admin/adminteams.aspx" title="Teams" description="Define teams of users or employees for use with email notifications, contract or attachment restrictions etc." />
+        <siteMapNode url="~/shared/admin/adminAudiences.aspx" title="Audiences" description="Apply audience control to records" />
+      </siteMapNode>
+      <siteMapNode url="MenuMain.aspx?menusection=sysoptions" title="System Options" description="Configure primary elements of the application">
+        <siteMapNode url="~/shared/admin/auditlog.aspx" title="Audit Log"  description="View the Audit Log of Activity including Logons, Logon failures, inserts, updates and deletes." />
+        <siteMapNode url="~/shared/admin/AttachmentTypes.aspx" title="Attachment Types"  description="Define and Manage the File Attachment types permitted to be uploaded by Framework including the associated MIME content type definition required by the browser." />
+        <siteMapNode url="~/shared/admin/CustomAttachmentTypes.aspx" title="Custom Attachment Types"  description="Add and edit custom file attachment types, including the associated MIME content type definition required by the browser." />
+        <siteMapNode url="~/shared/admin/adminIPfilters.aspx" title="IP Address Filtering"></siteMapNode>
+        <siteMapNode url="VerifyAttachments.aspx" title="Verify Attachments"  description="Check validity of attachments with Framework and repair / remove where necessary." />
+        <siteMapNode url="~/shared/admin/sso.aspx" title="Single Sign-on"></siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="MenuMain.aspx?menusection=tailoring" title="Tailoring" description="Configure generic elements">
+        <siteMapNode url="VerifyTemplates.aspx" title="Email Templates"  description="Verify and manage Email Templates available to Framework for use by Email notifications." />
+        <siteMapNode url="TieredDefinitions.aspx" title="Note Categories"  description="Define and manage Note Category options" />
+        <siteMapNode url="~/shared/admin/adminuserdefined.aspx" title="Userdefined Fields"  description="Administer and manage user defined fields across the various application areas."></siteMapNode>
+        <siteMapNode url="~/shared/admin/userdefinedOrdering.aspx" title="Userdefined Ordering"></siteMapNode>
+
+        <siteMapNode url="~/shared/admin/userdefinedFieldGroupings.aspx" title="Userdefined Groupings"  description="Define and maintain the User-Defined Field Grouping definitions." />
+        <siteMapNode url="~/shared/admin/tooltips/tooltips.aspx" title="Tooltips" description="Allows the user to override the standard tooltip help for a given element">
+          <siteMapNode url="~/shared/admin/tooltips/edittooltip.aspx" title="Edit Tooltip" description="Edit the selected tooltip to contain customer specific information for the element" />
+        </siteMapNode>
+        <siteMapNode url="~/shared/admin/colours.aspx" title="Colours" description="Modify the colour scheme of the application" />
+        <siteMapNode url="~/shared/admin/accountOptions.aspx" title="General Options"></siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="MenuMain.aspx?menusection=importsexports" title="Imports / Exports" description="Import and Export data">
+        <siteMapNode url="~/shared/importsexports/importdatawizard.aspx" title="Import Data Wizard" description="Import data"/>
+      </siteMapNode>
+      <siteMapNode url="MenuMain.aspx?menusection=torch" title="Torch" description="Create and modify templates for generating customised mail merge report documents. For example, you can create a customised report document to detail spend analysis from contracted spend or employee travel expenses.">
+        <siteMapNode url="~/shared/admin/admindoctemplates.aspx" title="Document Templates" description="Manage document templates for use with Torch functionality.">
+          <siteMapNode url="~/shared/admin/aedoctemplatesassociation.aspx" title="Document Template Associations" description="Manage area associations for document templates.">
+            <siteMapNode url="~/shared/admin/adminadddoctemplateassociation.aspx" title="Add New Document Template Association" description="Add a new area association for a document template." />
+          </siteMapNode>
+        </siteMapNode>
+        <siteMapNode url="~/shared/admin/admindocmergeprojects.aspx" title="Document Configuration" description="Define and configure merge tags for merging into a Microsoft Word document">
+          <siteMapNode url="~/shared/admin/admindocmerge.aspx" title="Document Configuration" description="Step by step creation of a document configuration" />
+        </siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="MenuMain.aspx?menusection=greenlights" title="GreenLight Management">
+        <siteMapNode url="~/shared/admin/custom_entities.aspx" title="GreenLights"></siteMapNode>
+        <siteMapNode url="~/shared/admin/GreenLightViewSwitcher.aspx" title="Menu Management"></siteMapNode>
+      </siteMapNode>
+      
+      <siteMapNode url="~/shared/menu.aspx?area=helpandsupport" title="Help &amp; Support Management">
+        <siteMapNode url="~/shared/admin/adminHelpAndSupportTickets.aspx" title="Support Tickets">
+          <siteMapNode url="~/shared/admin/adminHelpAndSupportTicket.aspx" title="Support Ticket Details"></siteMapNode>
+        </siteMapNode>
+        <siteMapNode url="~/shared/admin/helpInformation.aspx" title="Help &amp; Support Information"></siteMapNode>
+        <siteMapNode url="~/shared/admin/KnowledgeCustomArticles.aspx" title="Knowledge Articles"></siteMapNode>
+      </siteMapNode>
+    
+    </siteMapNode>
+    <siteMapNode url="shared/reports/rptlist.aspx" title="Reports">
+      <siteMapNode url="shared/reports/folders.aspx" title="Report Categories"></siteMapNode>
+      <siteMapNode url="shared/reports/myschedules.aspx" title="My Schedules"></siteMapNode>
+    </siteMapNode>
+    <!-- </siteMapNode> -->
+    <siteMapNode url="FWParams.aspx" title="Framework Parameters" description="Administer the Framework run-time parameters" />
+    <siteMapNode url="DoranaMenu.aspx" title="Dorana Menu"  description="Dorana upload and associations. Inventory Analysis tool integration with Framework.">
+      <siteMapNode url="ImportDorana.aspx" title="Dorana Import"  description="Refresh Dorana Vendors,Product,Libraries using Dorana export file." />
+      <siteMapNode url="DoranaAssociation.aspx" title="Framework->Dorana Association"  description="Perform Framework -> Dorana Associations for Suppliers &amp; Products" />
+    </siteMapNode>
+    <siteMapNode url="~/shared/suppliers.aspx" title="Supplier List"  description="Current supplier and contact information.">
+      <siteMapNode url="~/shared/supplier_details.aspx" title="Relationship Details"  description="Define and Manage business relationship details.">
+      </siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="VendorAdditional.aspx" title="Relationship Additional Details" description="Manage the addition (user-defined) information associated with the current relationship" />
+    <siteMapNode url="ContractSummary.aspx" title="Contract Summary" description="Core contract management suite">
+      <siteMapNode url="ContractSavings.aspx" title="Contract Savings" description="Register any savings achieved against a contract" />
+      <siteMapNode url="LinkManage.aspx" title="Contract Link Management" description="View, create or modify contract link defintions" />
+      <siteMapNode url="VersionRegistry.aspx" title="Version Registry" description="Version registry for products of the current contract">
+        <siteMapNode url="VersionHistory.aspx" title="Version History" description="Historic log of how product version has altered over time" />
+      </siteMapNode>
+      <siteMapNode url="ScheduleAction.aspx" title="Schedule Actions" description="Create, update or merge schedule \ addendums of a contract" />
+      <siteMapNode url="ContractHistory.aspx" title="Contract History" description="Log of change history of the current contract" />
+      <siteMapNode url="ViewStatusHistory.aspx" title="Invoice Status History" description="Log of all changes to the status of a given invoice" />
+      <siteMapNode url="ContractRechargeBreakdown.aspx" title="Recharge Template" description="Details how costs are proportioned between a number of clients for the purposes of recharging the costs">
+        <siteMapNode url="ContractRechargeOnOffLine.aspx" title="Recharge Service Dates" description="Details when recharge items are taken offline for a period of time, therefore not charged" />
+        <siteMapNode url="ContractRechargeBreakdownUF.aspx" title="Recharge Template User Fields" description="User-defined field information associated with a recharge template" />
+      </siteMapNode>
+      <siteMapNode url="ContractRechargeData.aspx" title="Recharge Payments" description="Payments generated by the recharge template for the purposes of recharging costs" />
+    </siteMapNode>
+    <siteMapNode url="SwitchLocation.aspx" title="Change Location"  description="Show or Switch internal repository location" />
+    <siteMapNode url="About.aspx" title="About"  description="View Information about this application installation" />
+    <siteMapNode url="TestPage.aspx" title="Test Page (not for release)"  description="Temporary page that should be distributed to customers" />
+    <siteMapNode url="FWSetup.aspx" title="Framework Setup"  description="Application Connectivity / Configuration" />
+    <siteMapNode url="FWSetupRecharge.aspx" title="Setup Recharge Options"  description="Set primary recharge options." />
+    <siteMapNode url="ImportReportFields.aspx?action=reportfields" title="Import Report Fields"  description="Import Available Report Fields from template file." />
+    <siteMapNode url="ImportReportFields.aspx?action=emailtemplate" title="Upload Email Template"  description="Upload email template file for use by automatic email notification functionality." />
+    <siteMapNode url="ImportReportFields.aspx?action=helptext" title="Upload Help Text" description="Uploads help text from template file" />
+    <siteMapNode url="ImportReportFields.aspx?action=reportfiles" title="Upload Report Fields" description="Upload reporting configuration from template files" />
+    <siteMapNode url="SummaryPortal.aspx?action=dunsexport" title="DUNS Export"  description="Perform DUNS Supplier Export" />
+    <siteMapNode url="ImportReportFields.aspx?action=dunsimport" title="DUNS Import"  description="Import DUNS for Supplier Matching" />
+    <siteMapNode url="UserHelpPaths.aspx" title="User Help Documentation"  description="Define paths to user help documents. These are help documents created by your organisation such as Business Process documentation to support the application use for those fields" />
+    <siteMapNode url="MenuMain.aspx?menusection=mydetails" title="My Details" description="View Options and Settings that relate to the user and their related data">
+      <siteMapNode url="shared/information/MyDetails.aspx" title="Change My Details" description="Allow users to change their personal details and set their preference options" />
+      <siteMapNode url="shared/tasks/MyTasks.aspx" title="My Tasks" description="View tasks currently assigned either directly to you or to a team, of which you are a member">
+        <siteMapNode url="shared/tasks/TaskHistory.aspx" title="Task History" description="View the history of changes for a given task" />
+      </siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="shared/tasks/TaskSummary.aspx" title="Task Summary" description="Summary of tasks assigned to a particular entity record" />
+    <siteMapNode url="shared/viewentities.aspx?entityid=33&amp;viewid=16" title="SmartDiligence Projects" description="SmartDiligence project list">
+    </siteMapNode>
+    <siteMapNode url="shared/viewentities.aspx" title="GreenLight List" description="Bespoke GreenLight primary list">
+      <siteMapNode url="shared/aeentity.aspx" title="Modify GreenLight" description="Add or Edit bespoke GreenLight record" />
+    </siteMapNode>
+    <siteMapNode url="~/shared/helpAndSupport.aspx" title="Help &amp; Support">
+      <siteMapNode url="~/shared/helpAndSupportTicketNew.aspx" title="New Help &amp; Support Ticket"></siteMapNode>
+      <siteMapNode url="~/shared/helpAndSupportTickets.aspx" title="My Tickets">
+        <siteMapNode url="~/shared/helpAndSupportTicket.aspx" title="Help &amp; Support Ticket"></siteMapNode>
+      </siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="shared/notfound.aspx" title="Not Found" description="The page or resource requested could not be found or displayed" />
+    <siteMapNode title="Marketing Information" url="~/shared/admin/LogonMessages.aspx"></siteMapNode>
+    <siteMapNode title="Marketing Message Details " url="~/shared/admin/aeLogonMessages.aspx"></siteMapNode>
+  </siteMapNode>
+</siteMap>

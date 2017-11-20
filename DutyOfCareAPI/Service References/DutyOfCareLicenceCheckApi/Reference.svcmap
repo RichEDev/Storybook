@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="07a90059-8a9c-4532-a665-b0c6a6625246" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://testapi.licencecheck.co.uk/QuickCheck.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="QuickCheck.xsd" MetadataType="Schema" ID="4fee8889-652d-4759-af7f-57a285eb798f" SourceId="1" SourceUrl="http://testapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd3" />
+    <MetadataFile FileName="QuickCheck1.xsd" MetadataType="Schema" ID="e6f01193-cbaf-4fa0-a812-5d3d97bf3ab4" SourceId="1" SourceUrl="http://testapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd1" />
+    <MetadataFile FileName="QuickCheck.wsdl" MetadataType="Wsdl" ID="d5073c00-bebc-4204-812f-33eec93e4e9e" SourceId="1" SourceUrl="http://testapi.licencecheck.co.uk/QuickCheck.svc?wsdl" />
+    <MetadataFile FileName="QuickCheck2.xsd" MetadataType="Schema" ID="9ff7399b-f468-4733-b4bb-13b84632d0ae" SourceId="1" SourceUrl="http://testapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd5" />
+    <MetadataFile FileName="QuickCheck3.xsd" MetadataType="Schema" ID="9cebb3d9-dd0d-42ea-a384-5f6e66d261d1" SourceId="1" SourceUrl="http://testapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd4" />
+    <MetadataFile FileName="QuickCheck1.wsdl" MetadataType="Wsdl" ID="18f66881-c50a-477c-8e4f-c45612696f59" SourceId="1" SourceUrl="http://testapi.licencecheck.co.uk/QuickCheck.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="QuickCheck4.xsd" MetadataType="Schema" ID="fdb7d23c-06ab-4437-99e3-b9e2bcd50758" SourceId="1" SourceUrl="http://testapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd0" />
+    <MetadataFile FileName="QuickCheck.disco" MetadataType="Disco" ID="60477f3d-1701-4de9-9636-283061d71127" SourceId="1" SourceUrl="http://testapi.licencecheck.co.uk/QuickCheck.svc?disco" />
+    <MetadataFile FileName="QuickCheck5.xsd" MetadataType="Schema" ID="94740026-f196-436d-9e51-a44a7b66044a" SourceId="1" SourceUrl="http://testapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

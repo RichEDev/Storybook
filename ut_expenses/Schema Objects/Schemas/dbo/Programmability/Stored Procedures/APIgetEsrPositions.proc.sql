@@ -1,0 +1,60 @@
+﻿CREATE PROCEDURE [dbo].[APIgetEsrPositions]
+	@ESRPositionId bigint 	
+AS
+BEGIN
+	IF @ESRPositionId = 0
+	BEGIN
+		SELECT [ESRPositionId]
+		  ,[EffectiveFromDate]
+		  ,[EffectiveToDate]
+		  ,[PositionNumber]
+		  ,[PositionName]
+		  ,[BudgetedFTE]
+		  ,[SubjectiveCode]
+		  ,[JobStaffGroup]
+		  ,[JobRole]
+		  ,[OccupationCode]
+		  ,[Payscale]
+		  ,[GradeStep]
+		  ,[ISARegulatedPost]
+		  ,[ESROrganisationId]
+		  ,[HiringStatus]
+		  ,[PositionType]
+		  ,[OHProcessingEligible]
+		  ,[EPPFlag]
+		  ,[DeaneryPostNumber]
+		  ,[ManagingDeaneryBody]
+		  ,[WorkplaceOrgCode]
+		  ,[ESRLastUpdateDate]
+		  ,[SubjectiveCodeDescription]
+	  FROM [dbo].[ESRPositions]
+	END
+ELSE
+	BEGIN
+		SELECT [ESRPositionId]
+		  ,[EffectiveFromDate]
+		  ,[EffectiveToDate]
+		  ,[PositionNumber]
+		  ,[PositionName]
+		  ,[BudgetedFTE]
+		  ,[SubjectiveCode]
+		  ,[JobStaffGroup]
+		  ,[JobRole]
+		  ,[OccupationCode]
+		  ,[Payscale]
+		  ,[GradeStep]
+		  ,[ISARegulatedPost]
+		  ,[ESROrganisationId]
+		  ,[HiringStatus]
+		  ,[PositionType]
+		  ,[OHProcessingEligible]
+		  ,[EPPFlag]
+		  ,[DeaneryPostNumber]
+		  ,[ManagingDeaneryBody]
+		  ,[WorkplaceOrgCode]
+		  ,[ESRLastUpdateDate]
+		  ,[SubjectiveCodeDescription]
+	  FROM [dbo].[ESRPositions]
+	  WHERE ESRPositionId = @ESRPositionId
+	END
+END

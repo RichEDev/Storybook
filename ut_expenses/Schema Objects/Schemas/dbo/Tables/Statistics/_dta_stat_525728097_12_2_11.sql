@@ -1,0 +1,1 @@
+﻿CREATE STATISTICS [_dta_stat_525728097_12_2_11] ON [dbo].[savedexpensesFlags]([claimantJustificationDelegateID], [expenseid], [stepNumber])

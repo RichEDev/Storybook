@@ -1,0 +1,16 @@
+﻿/**
+ * Script To Provide Login Parameters
+ */
+public class Script extends IScript
+{
+    /**
+     * Script Initializer
+     */
+    public static function Initialize(e)
+    {
+        e.Context.Add('Server', 'http://testing.sel-expenses.com/');
+        e.Context.Add('Company', 'Lewis');
+        e.Context.Add('Username', 'Lewis');
+        e.Context.Add('Password', '3HUF85k$');
+    }
+}

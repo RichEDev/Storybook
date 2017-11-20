@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DD094627-5136-4F57-AB87-B6A7E1068573}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ApiRpc</RootNamespace>
+    <AssemblyName>ApiRpc</AssemblyName>
+    <OutputPath>bin\</OutputPath>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <IncludeIisSettings>false</IncludeIisSettings>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU'">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(TeamBuildOutDir)\_PublishedWebsites\$(MSBuildProjectName)\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <!-- Customizable Output Directory Opt-In for TFS Build (non-web application projects) -->
+  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+    <OutputPath>$(TeamBuildOutDir)\_PublishedWebsites\$(MSBuildProjectName)\bin\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ApiRpc.svc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiRpc.svc.cs">
+      <DependentUpon>ApiRpc.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\ApiCrud\ApiCrudBase.cs" />
+    <Compile Include="Classes\ApiCrud\ApiCrudList.cs" />
+    <Compile Include="Classes\Code\AccountPropertyCrud.cs" />
+    <Compile Include="Classes\Code\CarVehicleJourneyRateCrud.cs" />
+    <Compile Include="Classes\Code\EmployeeAccessRoleCrud.cs" />
+    <Compile Include="Classes\Code\EmployeeRoleCrud.cs" />
+    <Compile Include="Classes\Code\EmployeesCrud.cs" />
+    <Compile Include="Classes\Code\EntityBase.cs" />
+    <Compile Include="Classes\Code\EsrAddressesCrud.cs" />
+    <Compile Include="Classes\Code\EsrAssignmentCostingCrud.cs" />
+    <Compile Include="Classes\Code\EsrAssignmentsCrud.cs" />
+    <Compile Include="Classes\Code\EsrLocationCrud.cs" />
+    <Compile Include="Classes\Code\EsrOrganisationCrud.cs" />
+    <Compile Include="Classes\Code\EsrPersonsCrud.cs" />
+    <Compile Include="Classes\Code\EsrPhonesCrud.cs" />
+    <Compile Include="Classes\Code\EsrPositionCrud.cs" />
+    <Compile Include="Classes\Code\EsrTrustCrud.cs" />
+    <Compile Include="Classes\Code\EsrVehiclesCrud.cs" />
+    <Compile Include="Classes\Code\FieldCrud.cs" />
+    <Compile Include="Classes\Code\ImportHistoryCrud.cs" />
+    <Compile Include="Classes\Code\ImportLogCrud.cs" />
+    <Compile Include="Classes\Code\EsrAssignmentLocationCrud.cs" />
+    <Compile Include="Classes\Code\ImportTemplateCrud.cs" />
+    <Compile Include="Classes\Code\ImportTemplateMappingCrud.cs" />
+    <Compile Include="Classes\Code\Mapper.cs" />
+    <Compile Include="Classes\Code\UdfCrud.cs" />
+    <Compile Include="Classes\Code\UdfMatchCrud.cs" />
+    <Compile Include="Classes\Code\VehicleJourneyRateCrud.cs" />
+    <Compile Include="Classes\Crud\AccountPropertyApi.cs" />
+    <Compile Include="Classes\Crud\AddressApi.cs" />
+    <Compile Include="Classes\Crud\EmployeeHomeAddressApi.cs" />
+    <Compile Include="Classes\Crud\EmployeeWorkAddressApi.cs" />
+    <Compile Include="Classes\Crud\EsrAddressApi.cs" />
+    <Compile Include="Classes\Crud\AssignmentApi.cs" />
+    <Compile Include="Classes\Crud\AssignmentCostingsApi.cs" />
+    <Compile Include="Classes\Crud\CarApi.cs" />
+    <Compile Include="Classes\Crud\CarAssignmentNumberApi.cs" />
+    <Compile Include="Classes\Crud\CarVehicleJourneyRateApi.cs" />
+    <Compile Include="Classes\Crud\CostCodeApi.cs" />
+    <Compile Include="Classes\Crud\LookupValueApi.cs" />
+    <Compile Include="Classes\Crud\AssignmentLocationApi.cs" />
+    <Compile Include="Classes\Crud\TemplateApi.cs" />
+    <Compile Include="Classes\Crud\VehicleJourneyRateApi.cs" />
+    <Compile Include="Classes\Crud\EmployeeAccessRoleApi.cs" />
+    <Compile Include="Classes\Crud\EmployeeApi.cs" />
+    <Compile Include="Classes\Crud\EmployeeCostCodeApi.cs" />
+    <Compile Include="Classes\Crud\EmployeeRoleApi.cs" />
+    <Compile Include="Classes\Crud\FieldApi.cs" />
+    <Compile Include="Classes\Crud\ImportHistoryApi.cs" />
+    <Compile Include="Classes\Crud\ImportLogApi.cs" />
+    <Compile Include="Classes\Crud\LocationApi.cs" />
+    <Compile Include="Classes\Crud\EsrOrganisationApi.cs" />
+    <Compile Include="Classes\Crud\PersonApi.cs" />
+    <Compile Include="Classes\Crud\PhoneApi.cs" />
+    <Compile Include="Classes\Crud\PositionApi.cs" />
+    <Compile Include="Classes\Crud\TemplateMappingApi.cs" />
+    <Compile Include="Classes\Crud\TrustApi.cs" />
+    <Compile Include="Classes\Crud\UdfApi.cs" />
+    <Compile Include="Classes\Crud\UserDefinedMatchApi.cs" />
+    <Compile Include="Classes\Crud\VehicleApi.cs" />
+    <Compile Include="Interfaces\IApiRpc.cs" />
+    <Compile Include="Interfaces\IDataAccess.cs" />
+    <Compile Include="Properties\ApiRpcAttributes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web.Automated Build.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\API.CRUD\ApiCrud.csproj">
+      <Project>{93196608-0e15-42be-b0ce-1f8d828ee4a1}</Project>
+      <Name>ApiCrud</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApiLibrary\ApiLibrary.csproj">
+      <Project>{203bc15a-e665-46c7-828d-735db3c9224b}</Project>
+      <Name>ApiLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{c417335b-7be1-45ae-8274-c0b65829c4fc}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU'">
+    <PostBuildEvent>
+      MOVE/Y "$(OutDir)*.config" "$(OutDir)..\"
+      MOVE/Y "$(OutDir)*.svc" "$(OutDir)..\"
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

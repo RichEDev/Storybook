@@ -1,0 +1,250 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window" /></a>
+			Schedule Management</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>Should a contract be modified, re-negotiated or have any of it's terms and 
+					conditions changed for whatever reason, then this may result in a new 
+					'schedule' of the contract. The new schedule will supercede the one it is 
+					replacing and will therefore have a different value in the provided 'Schedule 
+					Number' field.</p>
+				<p><b>Note:&nbsp;</b>Depending on the particular action you have actioned, please 
+					expand and refer to the sections below that will outline each scenario in more 
+					detail.</p>
+				<p>Regardless of whether you have actioned a 'New Schedule', 'Updated the current 
+					Schedule' or 'Merged a Schedule', the resultant new contract schedule record 
+					will have it's 'Schedule Number' field suffixed with <i>'/new'</i>.</p>
+				<p>Once a '/new' schedule has been created by the system, the original(s) will have 
+					to be archived manually by the user by changing their 'Contract Status', 
+					otherwise they will remain an active (live) contract.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('6');" id="img6">&nbsp;Add New Schedule
+			</div>
+			<div class="help_body_text" id="6">
+				<p><b><u>When should I use this option?</u></b></p>
+				<p><b>Scenario:</b>&nbsp;A contract has had Terms & Conditions changed or had a new product
+				added to the contract. This will typically incur a new schedule.</p>
+				<p></p>
+				<p><b><u>How do I create a new schedule?</u></b></p>
+				<p></p>
+				<p><li>Access the contract that you wish to create the new schedule for.</li></p>
+				<p><li>Click the 'Add New Schedule' option under the Contract Menu</li></p>
+				<p><li>A duplicate of the schedule will be create with a Schedule Number suffix of <i>/new</i></li></p>
+				<p></p>
+				<p><b><u>What information is duplicated?</u></b></p>
+				<p></p>
+				<p>This option duplicates all the core contract details, contract products, attachments and staff notifies.</p>
+				<div class="help_tip">
+					<b>Tip:</b>&nbsp;If a complete copy of the contract schedule is required (in effect a 'Save As New' action), then
+					the 'Update Schedule' option should be used.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1">&nbsp;Create 
+				Schedule Links
+			</div>
+			<div class="help_body_text" id="1">
+				<p><b><u>When should I use this option?</u></b></p>
+				<p><b>Scenario:</b>&nbsp;You have three contracts already defined within the 
+					database that are schedules of the same contract. They are not currently 
+					'linked' together as part of a schedule chain.</p>
+				<P></P>
+				<p></p>
+				<b><u>How do I create the schedule links?</u></b>
+				<P></P>
+				<P><li>Type a part or all of the 'Contract Description' field to search for.</li></P>
+				<p><li>
+						A second box allows an optional alternative search string should you be 
+						attempting to link to contracts with very different contract descriptions.</li></p>
+				<p><li>
+						Click the 'Search' button</li></p>
+				<p><li>
+						A list of contracts matching the description will be displayed.</li></p>
+				<p><li>
+						Select the contracts to be linked together as part of the schedule chain by 
+						ticking the checkbox to the left of the contract.</li></p>
+				<p><li>
+						Click the 'Create Links' button below the list of contracts.</li></p>
+				<p>A status box will detail the number of contracts added to the new schedule 
+					chain.</p>
+				<div class="help_tip">
+					<b>Note:&nbsp;</b>A minimum of two contracts must be ticked for a successful 
+					schedule chain to be created.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('2');" id="Img2">&nbsp;Merge 
+				Schedules
+			</div>
+			<div class="help_body_text" id="2">
+				<p><b><u>When should I use this option?</u></b></p>
+				<p><b>Scenario:&nbsp;</b>You have two or more contract schedules with a vendor, 
+					each with different products or services. This will typically happen because 
+					the products were purchased at different times.</p>
+				<p>To bring the renewal dates or invoicing to a single transaction, a new schedule 
+					is required that pools the different schedules together under one contract 
+					schedule.</p>
+				<p></p>
+				<p><b><u>What information is carried across during the merge?</u></b></p>
+				<p></p>
+				<p>As part of the merge process, contract detail is taken from the nominated 
+					'Primary' contract.</p>
+				<p>All contract notes, contract products, electronic attachments are duplicated and 
+					merged under the newly created contract.</p>
+				<p></p>
+				<p><b><u>How do I merge my contracts?</u></b></p>
+				<p></p>
+				<p><li>Access any contract that belongs to the schedule chain.</li></p>
+				<p><li>Select 'Merge Schedules' from the menu</li></p>
+				<p><li>All contracts in the schedule chain are then displayed. The row colour indicates 
+						whether they are archived or live contracts.</li></p>
+				<p><li>One schedule has to be nominated as the 'Primary' schedule. This schedule will 
+						have its core contract detail used for the new schedule being created.</li></p>
+				<p><li>All other contracts that are to be merged, should be selected by ticking the box 
+						in the second column.</li></p>
+				<p><li>Click 'Perform Merge' to action the merge process.</li></p>
+				<div class="help_tip">
+					<b>Note:</b>&nbsp;The 'Primary' schedule <u>must</u> be one of the contracts 
+					selected for merging otherwise the merge process will not proceed.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('3');" id="Img3">&nbsp;Update 
+				Schedule
+			</div>
+			<div class="help_body_text" id="3">
+				<p><b><u>When should I use this option?</u></b></p>
+				<p><b>Scenario:</b>&nbsp;You have three contracts already defined within the 
+					database that are schedules of the same contract. They are not currently 
+					'linked' together as part of a schedule chain.</p>
+				<P></P>
+				<p><b><u>What does 'Update Schedule' do?</u></b></p>
+				<P></P>
+				<p>This option will perform a complete duplication of the selected schedule, 
+					leaving the duplicate copy with a <i>/new</i> suffix after the schedule number.</p>
+				<p>All contract details, associated products, notes, invoices, attachments and 
+					forecasts are carried across to the new schedule.</p>
+				<p><b><u>How does this differ from 'Add New Schedule'?</u></b></p>
+				<p>'Add New Schedule' doesn't carry across <i>all</i> associated information. Only 
+					the contract details, contract products and attachments will be carried across. All 
+					financial data remains associated with the original.</p>
+				<p></p>
+				<div class="help_tip">
+					<b>Tip:</b>&nbsp;Update Schedule could also be thought of as a 'Save As New' 
+					function
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('4');" id="Img4">&nbsp;Link 
+				Existing Schedules
+			</div>
+			<div class="help_body_text" id="4">
+				<p><b><u>When should I use this option?</u></b></p>
+				<p><b>Scenario:</b>&nbsp;If you have a series of contract schedules already linked 
+					in a chain, but wish other contracts in the database to be included into the 
+					schedule chain.</p>
+				<p>This option allows the selection and inclusion into the schedule chain of 
+					currently unlinked contracts.</p>
+				<p></p>
+				<p><b><u>How do I add the new schedules to the chain?</u></b></p>
+				<p></p>
+				<p><li>Type a part or all of the 'Contract Description' field to search for.</li></p>
+				<p><li>
+						A second box allows an optional alternative search string should you be 
+						attempting to link to contracts with very different contract descriptions.</li></p>
+				<p><li>
+						Click the 'Search' button</li></p>
+				<p><li>
+						A list of contracts matching the description will be displayed (exluding any 
+						already linked in a chain).</li></p>
+				<p><li>
+						Select the contracts to be linked together as part of the schedule chain by 
+						ticking the checkbox to the left of the contract.</li></p>
+				<p><li>
+						Click the 'Add Links' button below the list of contracts.</li></p>
+				<p>A status box will detail the number of contracts added to the new schedule 
+					chain.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('5');" id="Img5">&nbsp;Remove 
+				Current Schedule Link
+			</div>
+			<div class="help_body_text" id="5">
+				<p><b><u>What does this option do?</u></b></p>
+				<p></p>
+				<p>If a contract schedule is part of a schedule chain, but no longer requires to be 
+					so, this option allows you to exclude the <i>currently selected</i> contract 
+					from the schedule chain.</p>
+				<p></p>
+				<p><b><u>How do I remove the Schedule Link?</u></b></p>
+				<p></p>
+				<p><li>Location the contract schedule to be removed by using the 'Next' and 'Previous' 
+						buttons to navigate.</li></p>
+				<p><li>
+						Click the 'Remove Current Schedule Link' menu option.</li></p>
+				<p><li>
+						Once the screen has refreshed, you will see that the 'Next' and 'Previous' are 
+						no longer present.</li></p>
+				<p><li>
+						The schedule link has been successfully removed and the contract is stand-alone 
+						once more.</li></p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+	</body>
+</html>

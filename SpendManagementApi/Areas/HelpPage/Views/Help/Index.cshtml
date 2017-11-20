@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Expenses API: Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h1>@ViewBag.Title</h1>
+    <p class="lead">Configure expenses clients using the RESTful HTTP API.</p>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Overview</h2>
+        <p>Gain an overview of the expenses system, the role of the API in Spend Management, and the patterns that will assist in accessing the API.</p>
+        <p>@Html.ActionLink("Overview", "Overview", new { Area = "HelpPage", Controller = "Help" }, new { title = "Overview", @class = "btn btn-default", role = "button" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Getting Started</h2>
+        <p>Learn how to make requests to the API, with a further insight into the API's usage, featuring examples to help you hit the ground running.</p>
+        <p>@Html.ActionLink("Getting Started", "GettingStarted", new { Area = "HelpPage", Controller = "Help" }, new { title = "Getting Started", @class = "btn btn-default", role = "button" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>API Reference</h2>
+        <p>Explore the objects and actions within the API, including the request and return types, samples, and a live test client.</p>
+        <p>@Html.ActionLink("Api Reference", "Reference", new { Area = "HelpPage", Controller = "Help" }, new { title = "Overview", @class = "btn btn-default", role = "button" })</p>
+    </div>
+</div>

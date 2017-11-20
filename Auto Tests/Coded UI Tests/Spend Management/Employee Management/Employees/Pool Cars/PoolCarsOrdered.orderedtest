@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="poolcarsordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\spend management\employee management\employees\pool cars\poolcarsordered.orderedtest" id="f27ba837-3f90-4b79-b93c-e42f93cfdb8b" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <TestLinks>
+    <TestLink id="47f976bc-b2b4-01af-00f7-05c418aaf756" name="PoolCarsSuccessfullyAddPoolCarsToEmployeeRecord" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="cf7ae65d-0fce-9d9e-1d25-6cb93b4d66ff" name="PoolCarsSuccessfullyDeletePoolCarsFromEmployeeRecord" storage="..\..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

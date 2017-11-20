@@ -1,0 +1,112 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - Logging On</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			The Framework Logon Page</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>All users of Framework <u>must</u> access the application via the logon screen.</p>
+				<p>A valid username and password must be entered in order for the user to be 
+					successfully authenticated.
+				</p>
+				<p>On successful authentication of a user, their allocated permissions, role and 
+					accessible locations will be obtained from the database.</p>
+				<p>If necessary, Framework can be configured to force expiry of passwords at 
+					predefined intervals. This is standard practice in many organisations and 
+					prevents users from keeping the same passwords for prolonged periods of time.</p>
+				<div class="help_tip"><center>For any assistance with logging on, contact your Framework 
+					Administrator in the first instance.</center></div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1"> Changing your 
+				password
+			</div>
+			<div class="help_body_text" id="1">
+				<p>Should a user require to change their password, they should enter their username 
+					and select the checkbox to indicate that they wish to change their password.</p>
+				<p>Additional fields will then appear below the logon panel.</p>
+				<p><li>Enter your existing password</li>
+					<li>
+						Enter your new password</li>
+					<li>
+						Re-enter your new password to confirm correct entry</li>
+					<li>
+						Type a password hint that can be used at a later date to remind you, should it 
+						be forgotten. <b>Note:&nbsp;</b>This should not be the password itself!</li></p>
+				<div class="help_tip">
+					<b>Note:&nbsp;</b>Beware that if required, the system can be configured to 
+					prevent a user from using a password in their last <i>x</i> number of 
+					passwords. This prevents users from simply alternating between the same two or 
+					three passwords which reduced the security of the individual.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('2');" id="img2"> Forgotten your 
+				password?
+			</div>
+			<div class="help_body_text" id="2">
+				<p>When passwords are defined, a <i>password hint</i> is entered that enables a 
+					reminder to be emailed to the user to help them remember their password.</p>
+				<p>To obtain your password reminder: -
+					<li>
+						Type in your username</li>
+					<li>
+						Click the <b>'Forgotten your password?'</b> link below the password entry box.
+					</li>
+				</p>
+				<p>Your password hint will be emailed to you.</p>
+				<div class="help_tip">
+					<b>Still need help?&nbsp;</b>If the hint still doesn't assist, your password 
+					will have to be overridden. You should contact your Framework Administrator who 
+					can do this for you.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

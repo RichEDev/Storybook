@@ -1,0 +1,105 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Framework Help - User Roles</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="fwhelp.css" type="text/css" />
+
+    <script language="javascript" type="text/javascript">
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+    </script>
+
+</head>
+<body class="help_page" onload="window.resizeTo(800,600)">
+    <div class="help_page_title">
+        <a onclick="closewindow();">
+            <img src="../images/exithelp.gif" alt="Close Help Window" /></a> User Roles</div>
+    <div class="help_section">
+        <div class="help_section_title">
+            Overview
+        </div>
+        <div class="help_overview">
+            It is essential that users of the system are granted access to the areas of the
+            system that are relevant to job they undertake in relation to Framework.<br />
+            <br />
+            The defining of User Roles gives the ability to design profiles that categorise
+            the different users. These roles are then assigned access rights and the areas of
+            the application they are entitled to utilise.
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img src="../buttons/open.gif" onclick="toggle('1');" id="img1" alt="Expand Topic" />
+            Adding a role
+        </div>
+        <div class="help_body_text" id="1">
+            To add a new role to the system, select the &quot;New&quot; on the <b>Page Options</b>
+            panel.<br />
+            <br />
+            Located:<i> Administration > Employee Management > User Roles</i>.<br />
+            <br />
+            Similarly, editing an existing role is achieved by clicking the &quot;Edit&quot;
+            button the role's row. The role detail screen will be displayed and the various
+            access permissions can be chosen.
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img id="img2" alt="Expand Topic" onclick="toggle('2');" src="../buttons/open.gif" />
+            Delete a role
+        </div>
+        <div class="help_body_text" id="2">
+            Clicking the delete button against a corresponding role will prompt the user to
+            confirm the delete action. On clicking &quot;update&quot;, the role will be permanently
+            deleted.<br />
+            <br />
+            Any users that are assigned the deleted role will then have their role re-assigned
+            to the &quot;default role&quot;.
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img id="img3" src="../buttons/open.gif" alt="Expand Topic" onclick="toggle('3');" />Default
+            role</div>
+        <div id="3" class="help_body_text">
+            Only one role can be designated as the Default Role.<br />
+            <br />
+            If a Default Role exists when this option is selected on a new role, then the new
+            role will replace the existing one, effectively removing the setting from the existing
+            Default Role. All new users added to the system will be granted this role unless
+            the user adding the user explicitly selects a different role.</div>
+    </div>
+    <div class="help_section">
+        <div class="help_comments">
+            * If you do not find a topic outlined in the help which is relevant to your enquiry
+            then please contact your administrator
+        </div>
+    </div>
+    <div>
+    </div>
+</body>
+</html>

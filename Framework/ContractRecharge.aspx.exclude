@@ -1,0 +1,73 @@
+<%@ Page Language="vb" AutoEventWireup="false" Inherits="Framework2006.ContractRecharge" CodeFile="ContractRecharge.aspx.vb" %>
+<%@ Register TagPrefix="igtab" Namespace="Infragistics.WebUI.UltraWebTab" Assembly="Infragistics2.WebUI.UltraWebTab.v6.3, Version=6.3.20063.53, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" %>
+<%@ Register TagPrefix="farpoint" Namespace="FarPoint.Web.Spread" Assembly="FarPoint.Web.Spread" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+	<HEAD>
+		<title>Framework - Contract Recharge</title>
+		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR">
+		<meta content="Visual Basic .NET 7.1" name="CODE_LANGUAGE">
+		<meta content="JavaScript" name="vs_defaultClientScript">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<LINK href="FWStyle.css" type="text/css" rel="stylesheet">
+		<script language="javascript">
+            function OpenExcel()
+            {
+                var hiddenID;
+                var IDField;
+                var params;
+                var att_path;
+                var curpos;
+                
+                params = window.location.search;
+
+				// check action=open in url (abbrev. to a=o)
+                curpos = params.indexOf('a=o',0);
+                if(curpos == -1)
+                {
+                    //alert('action= not found');
+                    return;
+                }
+                else
+                {
+                    curpos = params.indexOf('f=',0);
+                    //alert('curpos = ' + curpos);
+                    if(curpos == -1)
+                    {
+                        return;
+                    }
+                    att_path = params.substring(curpos+2);
+                    //alert('att_path= ' + att_path);
+                    window.open('./reports/' + att_path);
+                    return;
+                }
+            }
+		</script>
+	</HEAD>
+	<body onload="OpenExcel();">
+		<form id="Form1" method="post" runat="server">
+			<table class="main" align="center">
+				<tr>
+					<td class="main" align="center"><asp:label id="lblTitle" runat="server" CssClass="screentitle">title</asp:label></td>
+				</tr>
+				<tr>
+					<td class="main" align="center"><igtab:ultrawebtab id="RechargeTabs" runat="server" BorderColor="#006A51" BorderStyle="Solid" BorderWidth="1px"
+							LoadAllTargetUrls="False" AutoPostBack="True">
+							<DefaultTabStyle Height="20px" BorderWidth="1px" BorderColor="#006A51" BorderStyle="Solid" BackColor="#97CE8B"></DefaultTabStyle>
+							<RoundedImage SelectedImage=".\layout\ig_tab_green2.gif" NormalImage=".\layout\ig_tab_green1.gif"
+								FillStyle="LeftMergedWithCenter"></RoundedImage>
+							<SelectedTabStyle Font-Bold="True"></SelectedTabStyle>
+							<Tabs>
+								<igtab:Tab Key="RechargeDetailTab" Text="Recharge Details"></igtab:Tab>
+								<igtab:Tab Key="RechargeTemplateTab" Text="Recharge Template"></igtab:Tab>
+								<igtab:Tab Key="RechargePaymentsTab" Text="Recharge Payments"></igtab:Tab>
+							</Tabs>
+						</igtab:ultrawebtab></td>
+				</tr>
+				<tr>
+					<td class="main" align="center"></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</HTML>

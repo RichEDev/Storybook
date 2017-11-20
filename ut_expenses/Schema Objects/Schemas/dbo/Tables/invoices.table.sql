@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[invoices] (
+    [invoiceID]        INT            IDENTITY (1, 1) NOT NULL,
+    [purchaseOrderID]  INT            NULL,
+    [contractID]       INT            NULL,
+    [supplierID]       INT            NULL,
+    [invoiceNumber]    NVARCHAR (150) NULL,
+    [poNumber]         VARCHAR (30)   NULL,
+    [poStartDate]      DATETIME       NULL,
+    [poExpiryDate]     DATETIME       NULL,
+    [poMaxValue]       FLOAT          NOT NULL,
+    [receivedDate]     DATETIME       NULL,
+    [dueDate]          DATETIME       NULL,
+    [totalAmount]      FLOAT          NULL,
+    [salesTaxRate]     INT            NULL,
+    [invoiceStatus]    INT            NULL,
+    [invoiceState]     INT            NULL,
+    [comment]          NVARCHAR (MAX) NULL,
+    [paidDate]         DATETIME       NULL,
+    [coverPeriodEnd]   DATETIME       NULL,
+    [paymentReference] VARCHAR (25)   NULL,
+    [createdBy]        INT            NOT NULL,
+    [createdOn]        DATETIME       NOT NULL,
+    [modifiedBy]       INT            NULL,
+    [modifiedOn]       DATETIME       NULL,
+    [financePeriod]    SMALLINT       NULL
+);
+

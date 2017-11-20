@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[supplier_details] (
+    [supplierid]                 INT            IDENTITY (1, 1) NOT NULL,
+    [suppliername]               NVARCHAR (150) NULL,
+    [primary_addressid]          INT            NULL,
+    [statusid]                   INT            NULL,
+    [categoryid]                 INT            NULL,
+    [annual_turnover]            FLOAT          NOT NULL,
+    [supplier_currency]          INT            NULL,
+    [numberofemployees]          INT            NULL,
+    [financial_ye]               SMALLINT       NULL,
+    [financial_statusid]         INT            NULL,
+    [weburl]                     NVARCHAR (250) NULL,
+    [createdon]                  DATETIME       NULL,
+    [createdby]                  INT            NULL,
+    [modifiedon]                 DATETIME       NULL,
+    [modifiedby]                 INT            NULL,
+    [suppliercode]               NVARCHAR (50)  NULL,
+    [subaccountid]               INT            NULL,
+    [CacheExpiry]                DATETIME       NULL,
+    [internalContact]            NVARCHAR (250) NULL,
+    [financialStatusLastChecked] DATETIME       NULL,
+    [supplierEmail]              NVARCHAR (300) NULL,
+    [isSupplier]                 BIT            NOT NULL,
+    [isReseller]                 BIT            NOT NULL,
+    [internalStaffContactId]     INT            NULL
+);
+

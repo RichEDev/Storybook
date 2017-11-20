@@ -1,0 +1,4 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+codes_invoicefrequencytype,subAccountId,Repository SubAccount,S,50,N,Y,F,accountsSubAccounts.subAccountId,accountsSubAccounts.Description,
+codes_invoicefrequencytype,invoiceFrequencyTypeDesc,Frequency Description,S,50,Y,Y,N,,,
+codes_invoicefrequencytype,frequencyInMonths,Frequency in Months,N,,N,Y,N,,,1

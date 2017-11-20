@@ -1,0 +1,117 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - User Field Groupings</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			User Field Groupings</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>User Field Groupings are the headings that are required in order to create 
+					"collections" of user defined fields pertaining to a common topic or theme.</p>
+				<p>In order for these groupings to be displayed selectively, contract categories 
+					should be defined in advance if possible. If they are not, these grouping 
+					definitions will have to be revisited as the default is that the groupings are 
+					deselected for all categories.</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1"> Required 
+				Information
+			</div>
+			<div class="help_body_text" id="1">
+				<div align="center">
+					<p>The following elements of information are required as part of the definition 
+						detail: -
+					</p>
+					<table class="inner" align="center" width="600" ID="Table1">
+						<tr>
+							<th class="inner" width="200">
+								Field Required</th>
+							<th class="inner" width="400">
+								Description</th>
+						</tr>
+						<tr>
+							<td class="inner" align="center">User Field Grouping</td>
+							<td class="inner">This field is the title or name of the grouping that you wish to 
+								collate the user defined fields by.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Sequence</td>
+							<td class="inner">The sequence field allows the explicit order of the groupings to 
+								be defined. All groupings will be sorted by sequence prior to being output.</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Grouping Area</td>
+							<td class="inner">Grouped user defined fields can be created in three main areas.
+								<li>
+									Additional Contract Details</li>
+								<li>
+									Contract Products</li>
+								<li>
+									Recharge Facility (assuming this is activated)</li></td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Category to Display for?</td>
+							<td class="inner">A list of contract categories are displayed in a table.<br>
+								<br>
+								Ticking the box at the side of each category will mean that, for every contract 
+								tagged as belonging to that category, will have this grouped collection of 
+								fields displayed.<br>
+								<br>
+								This allows only those fields relevant to particular categories of contracts 
+								being display, thus hiding those fields that may cause confusion.<br>
+								<br>
+								If many fields are defined, a barage of fields being displayed to the user can 
+								be therefore be avoided.<br>
+								<br>
+								<b>Note: </b>'Select All' and 'Deselect All' buttons are provided to speed the 
+								process where many categories are defined.</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

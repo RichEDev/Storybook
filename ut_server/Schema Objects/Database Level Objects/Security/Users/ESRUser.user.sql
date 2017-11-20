@@ -1,0 +1,2 @@
+﻿CREATE USER [ESRUser] FOR LOGIN [ESRUser];
+

@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[userdefined] (
+    [userdefineid]   INT              IDENTITY (1, 1) NOT NULL,
+    [attribute_name] NVARCHAR (100)   NULL,
+    [fieldtype]      TINYINT          NOT NULL,
+    [specific]       BIT              NOT NULL,
+    [mandatory]      BIT              NOT NULL,
+    [description]    NVARCHAR (4000)  NULL,
+    [order]          INT              NOT NULL,
+    [CreatedOn]      DATETIME         NULL,
+    [CreatedBy]      INT              NULL,
+    [ModifiedOn]     DATETIME         NULL,
+    [ModifiedBy]     INT              NULL,
+    [tooltip]        NVARCHAR (4000)  NULL,
+    [display_name]   NVARCHAR (100)   NOT NULL,
+    [maxlength]      INT              NULL,
+    [format]         TINYINT          NULL,
+    [defaultvalue]   NVARCHAR (50)    NULL,
+    [fieldid]        UNIQUEIDENTIFIER NOT NULL,
+    [tableid]        UNIQUEIDENTIFIER NULL,
+    [groupID]        INT              NULL,
+    [archived]       BIT              NOT NULL,
+    [precision]      TINYINT          NULL,
+    [allowSearch]    BIT              NOT NULL,
+    [hyperlinkText]  NVARCHAR (MAX)   NULL,
+    [hyperlinkPath]  NVARCHAR (MAX)   NULL,
+    [relatedTable]   UNIQUEIDENTIFIER NULL
+);
+

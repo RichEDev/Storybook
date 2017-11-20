@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="MBNA Credit Card" FileType="XLS" NumberHeaderRecords="1" NumberFooterRecords="1">
+  <Fields Type="CardTransaction" UniqueValue="trans">
+    <Field Name="AccountNumber" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="20" />    
+    <Field Name="AccountHolderName" MappedTable="card_transactions_mbna" MappedField="Name" FieldType="S" MaxLength="50" />
+    <Field Name="TransactionDate" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="dd/MM/yyyy hh:mm:ss" />
+    <Field Name="PostingDate" MappedTable="card_transactions_mbna" MappedField="posting_date" FieldType="D" Format="dd/MM/yyyy hh:mm:ss" />
+    <Field Name="BillingAmount" MappedTable="card_transactions" MappedField="transaction_amount" FieldType="C" />    
+    <Field Name="MerchantName" MappedTable="card_transactions" MappedField="description" FieldType="S" MaxLength="50" />
+    <Field Name="MerchantTown" MappedTable="card_transactions_mbna" MappedField="Merchant_town" FieldType="S" MaxLength="50" />
+    <Field Name="CurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" DefaultValue="GBP" CurrencyType="alpha" /> 
+    <Field Name="CountryCode" MappedTable="card_transactions" MappedField="country_code" FieldType="S" DefaultValue="GB" CountryType="alpha" /> 
+  </Fields>
+</CardTemplate>

@@ -1,0 +1,2 @@
+<%@ Page Language="C#" MasterPageFile="~/menu.master" AutoEventWireup="true" Inherits="reports_tailoringmenu" Title="Untitled Page" Codebehind="tailoringmenu.aspx.cs" EnableSessionState="ReadOnly" %>
+<%@ MasterType VirtualPath="~/menu.master" %>

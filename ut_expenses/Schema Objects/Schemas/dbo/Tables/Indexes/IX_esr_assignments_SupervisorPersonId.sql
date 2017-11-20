@@ -1,0 +1,1 @@
+﻿create index [IX_esr_assignments_SupervisorPersonId] on dbo.esr_assignments (SupervisorPersonId)

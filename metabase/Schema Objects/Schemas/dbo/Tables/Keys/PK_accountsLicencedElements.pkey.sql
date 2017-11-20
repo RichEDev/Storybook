@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[accountsLicencedElements]
+    ADD CONSTRAINT [PK_accountsLicencedElements] PRIMARY KEY CLUSTERED ([accountID] ASC, [elementID] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

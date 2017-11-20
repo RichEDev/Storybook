@@ -1,0 +1,16 @@
+﻿/**
+ *
+ */
+public class Script extends IScript
+{
+    /**
+     * Script Initializer
+     */
+    public static function Initialize()
+    {
+        this.Context.Add('Server', 'http://testing.sel-expenses.com/');
+        this.Context.Add('Company', 'Lewis');
+        this.Context.Add('Username', 'Lewis');
+        this.Context.Add('Password', '3HUF85k$');
+    }
+}

@@ -1,0 +1,178 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - [Contract Details : Inflator Metric]</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+	
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Contract Details - Inflator Metric</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview" id="DIV1">
+				The purpose of the Inflator metric is to specify or cap the amount by which the 
+				cost of a contract can increase by year on year.<br>
+				<br>
+				The most common type of Inflator Metric is the RPI (Retail Price Index).<br>
+				<br>
+				This, and any other metric you wish to use, can be defined in the Code 
+				Maintenance section by any user with sufficient access rights.<br>
+				<br>
+				If you do not have access to the Code Maintenance, speak to your Framework 
+				administrator and they will be able to assist.
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="Img1">&nbsp;Forecast Type
+			</div>
+			<div class="help_body_text" id="1">
+				The forecast types available are: -<br>
+				<br>
+				<table class="inner" align="center" cellspacing="0" ID="Table1">
+					<tr height="30">
+						<th class="inner" width="180">
+							<b>Forecast Type</b></th>
+						<th class="inner" width="200" nowrap>
+							<b>Explanation</b></th>
+					</tr>
+					<tr height="30">
+						<td class="inner" align="center">Product £ v Inflator</td>
+						<td class="inner">Next period maintenance will be forecasted using the <i>lesser</i>
+							of the Product Cost and the Current Maintenance with the selected inflator 
+							applied.</td>
+					</tr>
+					<tr height="30">
+						<td class="inner" align="center">Inflator Only</td>
+						<td class="inner">Next period maintenance will be forecasted using only the Current 
+							Maintenance with the selected inflator applied.<br>
+							<br>
+							This is particularly useful where a contract is a year-on-year payment with an 
+							inflation cap applied (e.g. annual rental).</td>
+					</tr>
+					<tr height="30">
+						<td class="inner" align="center">Staged Payments</td>
+						<td class="inner"><center><p><b><i>Option not presently available</i></b></p>
+							</center>
+							<p>
+								Allows fixed payments to be specified for certain periods of time.</p>
+							<p>
+								This will allow payments to be forecasted of £1000, £2000, £3000 over a 3 year 
+								period.</p>
+							<p>
+								After this period, the forecasting will resort back to the default of Product £ 
+								v Inflator.</p>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('2');" id="img2">&nbsp;Maintenance 
+				Type
+			</div>
+			<div class="help_body_text" id="2">
+				Typical clauses within a contract may state that: -<br>
+				<br>
+				<center><i>'the maintenance will not increase by more than the RPI or 5%, whichever is 
+						the greater.'</i></center>
+				<br>
+				To accomodate clauses such as this, Framework has integrated the ability of 
+				specifying comparison calculations that allow the specification of two values 
+				and then using the correct one in the final analysis.<br>
+				<br>
+				Standard inflation values can also be specified that then do not perform the 
+				comparison.<br>
+				<br>
+				The maintenance types available are: -<br>
+				<br>
+				<table class="inner" align="center" cellspacing="0">
+					<tr height="30">
+						<th class="inner" width="180">
+							<b>Maintenance Type</b></th>
+						<th class="inner" width="200" nowrap>
+							<b>Explanation</b></th>
+					</tr>
+					<tr height="30">
+						<td class="inner" align="center">Single Inflator (<i>x</i> entry only)</td>
+						<td class="inner">Comparison between two values is ignored. Uses <i>x</i> value 
+							regardless.</td>
+					</tr>
+					<tr height="30">
+						<td class="inner" align="center">Greater inflator of <i>x</i> &amp; <i>y</i></td>
+						<td class="inner">Performs comparison between values specified in <i>x</i> &amp; <i>y</i>
+							boxes<br>
+							and uses the higher of the two results.</td>
+					</tr>
+					<tr height="30">
+						<td class="inner" align="center">Lesser inflator of <i>x</i> &amp; <i>y</i></td>
+						<td class="inner">Performs comparison between values specified in <i>x</i> &amp; <i>y</i>
+							boxes<br>
+							and uses the lower of the two results.</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('3');" id="img3"> <i>x</i> and <i>y</i>
+				Values
+			</div>
+			<div class="help_body_text" id="3">
+				A drop-down list against the <i>x</i> and <i>y</i> values provides all metrics 
+				defined.<br>
+				<br>
+				In addition to this a '%' option is available that allows the specification of 
+				just a percentage value.<br>
+				This should be specified in the edit box to the right of the drop-down list.<br>
+				<br>
+				Any inflator detail specified in <i>y</i> will be ignored if 'Single Inflator' 
+				is selected as the maintenance type.<br>
+				<br>
+				<div class="help_tip">
+					<b>TIP:</b> The edit box to the right of the inflator is only required if the 
+					metric selected specifies an additional percentage is to be specified (e.g. 
+					RPI+%).
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

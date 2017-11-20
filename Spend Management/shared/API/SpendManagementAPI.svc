@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Spend_Management.SpendManagementAPI" CodeBehind="SpendManagementAPI.svc.cs" Factory="System.ServiceModel.Activation.ServiceHostFactory" %>

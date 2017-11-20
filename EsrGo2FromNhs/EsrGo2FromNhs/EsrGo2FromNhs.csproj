@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CBD7A122-F909-4D9B-91F2-A18C0F0FAA4E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EsrGo2FromNhs</RootNamespace>
+    <AssemblyName>EsrGo2FromNhs</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Automated Build\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <!-- Customizable Output Directory Opt-In for TFS Build (non-web application projects) -->
+  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+    <OutputPath>$(TeamBuildOutDir)\_PublishedServices\$(MSBuildProjectName)</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiLog.cs" />
+    <Compile Include="Base\Log.cs" />
+    <Compile Include="Base\LogDbConnection.cs" />
+    <Compile Include="Base\Logger.cs" />
+    <Compile Include="Base\LogRecord.cs" />
+    <Compile Include="Crud\EsrAssignmentLocationCrud.cs" />
+    <Compile Include="Crud\ImportTemplateCrud.cs" />
+    <Compile Include="Enum\DataAccessMethod.cs" />
+    <Compile Include="Enum\DataAccessMethodReturnDefault.cs" />
+    <Compile Include="Enum\EsrAddressType.cs" />
+    <Compile Include="Enum\EsrHubStatus.cs" />
+    <Compile Include="ESR\EsrAddressRecord.cs" />
+    <Compile Include="ESR\EsrAssignmentCostingRecord.cs" />
+    <Compile Include="ESR\EsrAssignmentLocation.cs" />
+    <Compile Include="ESR\EsrAssignmentRecord.cs" />
+    <Compile Include="ESR\EsrFile.cs" />
+    <Compile Include="ESR\EsrFileInfo.cs" />
+    <Compile Include="ESR\EsrHeaderRecord.cs" />
+    <Compile Include="ESR\EsrLocationRecord.cs" />
+    <Compile Include="ESR\EsrOrganisationRecord.cs" />
+    <Compile Include="ESR\EsrPersonRecord.cs" />
+    <Compile Include="ESR\EsrPhoneRecord.cs" />
+    <Compile Include="ESR\EsrPositionRecord.cs" />
+    <Compile Include="ESR\EsrTrailerRecord.cs" />
+    <Compile Include="ESR\EsrVehicleRecord.cs" />
+    <Compile Include="ApiRpc.cs" />
+    <Compile Include="ApiService.cs" />
+    <Compile Include="Crud\AccountPropertyCrud.cs" />
+    <Compile Include="Crud\CarVehicleJourneyRateCrud.cs" />
+    <Compile Include="Crud\EmployeeAccessRoleCrud.cs" />
+    <Compile Include="Crud\EmployeeRoleCrud.cs" />
+    <Compile Include="Crud\EmployeesCrud.cs" />
+    <Compile Include="Crud\EntityBase.cs" />
+    <Compile Include="Crud\EsrAddressesCrud.cs" />
+    <Compile Include="Crud\EsrAssignmentCostingCrud.cs" />
+    <Compile Include="Crud\EsrAssignmentsCrud.cs" />
+    <Compile Include="Crud\EsrLocationCrud.cs" />
+    <Compile Include="Crud\EsrOrganisationCrud.cs" />
+    <Compile Include="Crud\EsrPersonsCrud.cs" />
+    <Compile Include="Crud\EsrPhonesCrud.cs" />
+    <Compile Include="Crud\EsrPositionCrud.cs" />
+    <Compile Include="Crud\EsrTrustCrud.cs" />
+    <Compile Include="Crud\EsrVehiclesCrud.cs" />
+    <Compile Include="Crud\FieldCrud.cs" />
+    <Compile Include="Crud\ImportHistoryCrud.cs" />
+    <Compile Include="Crud\ImportLogCrud.cs" />
+    <Compile Include="Crud\ImportTemplateMappingCrud.cs" />
+    <Compile Include="Crud\Mapper.cs" />
+    <Compile Include="Crud\UdfCrud.cs" />
+    <Compile Include="Crud\UdfMatchCrud.cs" />
+    <Compile Include="Crud\VehicleJourneyRateCrud.cs" />
+    <Compile Include="ApiDbConnection.cs" />
+    <Compile Include="Crud\DataAccess.cs" />
+    <Compile Include="Crud\DataAccessFactory.cs" />
+    <Compile Include="Crud\LogDbConnection.cs" />
+    <Compile Include="Crud\Logger.cs" />
+    <Compile Include="Crud\DataClassBaseApi.cs" />
+    <Compile Include="Base\ApiExceptionBase.cs" />
+    <Compile Include="Enum\ApiRecordTypes.cs" />
+    <Compile Include="Base\ApiResult.cs" />
+    <Compile Include="Base\DataClassAttribute.cs" />
+    <Compile Include="Base\DataClassBase.cs" />
+    <Compile Include="Base\UserDefinedFields.cs" />
+    <Compile Include="ESR\EsrAddress.cs" />
+    <Compile Include="ESR\EsrAssignment.cs" />
+    <Compile Include="ESR\EsrAssignmentCostings.cs" />
+    <Compile Include="ESR\EsrElement.cs" />
+    <Compile Include="ESR\EsrElementFields.cs" />
+    <Compile Include="ESR\EsrElementSubCat.cs" />
+    <Compile Include="ESR\EsrLocation.cs" />
+    <Compile Include="ESR\EsrOrganisation.cs" />
+    <Compile Include="ESR\EsrPerson.cs" />
+    <Compile Include="ESR\EsrPhone.cs" />
+    <Compile Include="ESR\EsrPosition.cs" />
+    <Compile Include="ESR\EsrRecordTypes.cs" />
+    <Compile Include="ESR\EsrTrust.cs" />
+    <Compile Include="ESR\EsrVehicle.cs" />
+    <Compile Include="Spend_Management\Account.cs" />
+    <Compile Include="Spend_Management\AccountProperty.cs" />
+    <Compile Include="Spend_Management\Address.cs" />
+    <Compile Include="Spend_Management\Car.cs" />
+    <Compile Include="Spend_Management\CarAssignmentNumberAllocation.cs" />
+    <Compile Include="Spend_Management\CarVehicleJourneyRate.cs" />
+    <Compile Include="Spend_Management\CostCode.cs" />
+    <Compile Include="Spend_Management\Employee.cs" />
+    <Compile Include="Spend_Management\EmployeeAccessRole.cs" />
+    <Compile Include="Spend_Management\EmployeeCostcode.cs" />
+    <Compile Include="Spend_Management\EmployeeHomeAddress.cs" />
+    <Compile Include="Spend_Management\EmployeeRole.cs" />
+    <Compile Include="Spend_Management\EmployeeWorkAddress.cs" />
+    <Compile Include="Spend_Management\Field.cs" />
+    <Compile Include="Spend_Management\importHistory.cs" />
+    <Compile Include="Spend_Management\ImportLog.cs" />
+    <Compile Include="Spend_Management\Lookup.cs" />
+    <Compile Include="Spend_Management\Organisation.cs" />
+    <Compile Include="Spend_Management\StaticMapping.cs" />
+    <Compile Include="Spend_Management\Template.cs" />
+    <Compile Include="Spend_Management\TemplateMapping.cs" />
+    <Compile Include="Spend_Management\UserDefinedField.cs" />
+    <Compile Include="Spend_Management\UserDefinedMatchField.cs" />
+    <Compile Include="Spend_Management\VehicleJourneyRate.cs" />
+    <Compile Include="EsrApi.cs" />
+    <Compile Include="EsrFileProcessor.cs" />
+    <Compile Include="EsrRecordProcessor.cs" />
+    <Compile Include="FileNameAndRows.cs" />
+    <Compile Include="Interfaces\IApi.cs" />
+    <Compile Include="Interfaces\IEsrApi.cs" />
+    <Compile Include="Interfaces\IEsrFileProcessor.cs" />
+    <Compile Include="Interfaces\IApiDbConnection.cs" />
+    <Compile Include="Interfaces\IApiLog.cs" />
+    <Compile Include="Interfaces\IApiRpc.cs" />
+    <Compile Include="Interfaces\IDataAccess.cs" />
+    <Compile Include="EsrGo2FromNhsService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EsrGo2FromNhsService.Designer.cs">
+      <DependentUpon>EsrGo2FromNhsService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Utilities\Utilities.csproj">
+      <Project>{c417335b-7be1-45ae-8274-c0b65829c4fc}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

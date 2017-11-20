@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://www.checkmydrivinglicence.com/quickcheckapi" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="QuickCheck" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import namespace="http://www.checkmydrivinglicence.com/quickcheckapi" location="http://testapi.licencecheck.co.uk/QuickCheck.svc?wsdl=wsdl0" />
+  <wsdl:types />
+  <wsdl:binding name="BasicHttpBinding_IQuickCheck" type="i0:IQuickCheck">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DriverNumberBuild">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/DriverNumberBuild" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DriverNumberRegEx">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/DriverNumberRegEx" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GuidRegEx">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GuidRegEx" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SimplePing">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/SimplePing" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ValidateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckLicence">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/CheckLicence" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLicenceData">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetLicenceData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDriverCheckCount">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetDriverCheckCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCategoryRestrictionCodes">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetCategoryRestrictionCodes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLicenceCategories">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetLicenceCategories" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEndorsementCodes">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetEndorsementCodes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastLicenceCheckDate">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetLastLicenceCheckDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessageCodes">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetMessageCodes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnEntitlementInformationFromCode">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnEntitlementInformationFromCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnEntitlementDetailsFromCode">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnEntitlementDetailsFromCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLicenceEndorsementExplanation">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceEndorsementExplanation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLicence">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicence" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnRevoked">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnRevoked" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnRiskLicences">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnRiskLicences" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnDisqualifiedLicences">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnDisqualifiedLicences" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLicenceAsJson">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceAsJson" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLicenceAsXml">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceAsXml" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateMandate">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GenerateMandate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValidMandateInForce">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/IsValidMandateInForce" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HasDriverGivenEConsent">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/HasDriverGivenEConsent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MandateExpiryDate">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/MandateExpiryDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InvalidateMandate">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/InvalidateMandate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsMandateApproved">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/IsMandateApproved" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllCompanyDrivers">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllCompanyDrivers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateSystemDriver">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/CreateSystemDriver" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ArchiveStoredDriver">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ArchiveStoredDriver" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateSystemDriverPartial">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/CreateSystemDriverPartial" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RejectedMandates">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/RejectedMandates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcknowledgeReceiptOfRejectedMandates">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AcknowledgeReceiptOfRejectedMandates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateStoredDriverDetails">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateStoredDriverDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestConsent">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/RequestConsent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendPinNumber">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/SendPinNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendConsentPin">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/SendConsentPin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendConsentPinWithMessage">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/SendConsentPinWithMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateConsentPin">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ValidateConsentPin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateConsentEmailSentDate">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateConsentEmailSentDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateConsentDriverResponsedDate">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateConsentDriverResponsedDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MarkConsentGranted">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/MarkConsentGranted" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MarkTachoOrCPCConsentGiven">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/MarkTachoOrCPCConsentGiven" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateConsentMismatch">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateConsentMismatch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConsentExpiryDate">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetConsentExpiryDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResponseExpiryDate">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetResponseExpiryDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDatePinValidated">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateDatePinValidated" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateEConsentPersonalDetails">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ValidateEConsentPersonalDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InvalidateConsent">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/InvalidateConsent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HasDriverOptedOutOfEConsent">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/HasDriverOptedOutOfEConsent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableCredits">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetAvailableCredits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCreditUsage">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetCreditUsage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllValidLicences">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicences" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllValidLicencesCount">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicencesCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllValidLicencesBetweenDates">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicencesBetweenDates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllAccountCompanyCodes">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllAccountCompanyCodes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestVehicleLookup">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/RequestVehicleLookup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemainingVehicleLookUpCredits">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/RemainingVehicleLookUpCredits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewCompany">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/CreateNewCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateExistingCompany">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateExistingCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestSmsService">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/TestSmsService" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestCircuit">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/TestCircuit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InvalidateEConsentBySecurityCode">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/InvalidateEConsentBySecurityCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLicenceDetails">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnDriverRisk">
+      <soap:operation soapAction="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnDriverRisk" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="QuickCheck">
+    <wsdl:port name="BasicHttpBinding_IQuickCheck" binding="tns:BasicHttpBinding_IQuickCheck">
+      <soap:address location="http://testapi.licencecheck.co.uk/QuickCheck.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

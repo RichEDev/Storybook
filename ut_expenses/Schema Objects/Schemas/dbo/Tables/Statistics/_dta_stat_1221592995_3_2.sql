@@ -1,0 +1,1 @@
+﻿CREATE STATISTICS [_dta_stat_1221592995_3_2] ON [dbo].[ExpenseValidationResults]([CriterionId], [ExpenseId])

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="~/home.aspx" title="Home"  description="">
+    <siteMapNode url="~/information/holidays.aspx" title="Holidays"></siteMapNode>
+    <siteMapNode url="~/CustomMenu.aspx" title="Custom Menu"></siteMapNode>
+    <siteMapNode title="Add New Expenses" url="aeexpense.aspx"></siteMapNode>
+    <siteMapNode title="Quick Entry Forms" url="qelst.aspx">
+      <siteMapNode title="Quick Entry Form" url="qeform.aspx"></siteMapNode>
+    </siteMapNode>
+    <siteMapNode title="My Claims" url="~/claimsmenu.aspx">
+      <siteMapNode url="~/expenses/claimsummary.aspx?claimtype=1" title="Current Claims">
+        <siteMapNode url="aeclaim.aspx" title="Add / Edit Claim"></siteMapNode>
+        
+      </siteMapNode>
+      <siteMapNode url="~/expenses/claimsummary.aspx?claimtype=2" title="Submitted Claims"></siteMapNode>
+      <siteMapNode url="~/expenses/claimsummary.aspx?claimtype=3" title="Previous Claims"></siteMapNode>
+      <siteMapNode url="~/expenses/claimViewer.aspx" title="Claim Viewer"></siteMapNode>
+      <siteMapNode url="viewcurrent.aspx" title="Current Claims">
+
+      </siteMapNode>
+      <siteMapNode url="submitted.aspx" title="Submitted Claims">
+        <siteMapNode url="~/setupview.aspx?" title="Set-Up View"></siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="previous.aspx" title="Previous Claims"></siteMapNode>
+      
+
+    </siteMapNode>
+    <siteMapNode url="~/expenses/ClaimSelector.aspx" title="Claim Viewer"></siteMapNode>
+    <siteMapNode url="~/mydetailsmenu.aspx" title="My Details">
+      <siteMapNode url="~/shared/information/mydetails.aspx" title="Change My Details">
+        <siteMapNode url="~/shared/information/changeofdetails.aspx" title="Change of Details"></siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="~/shared/information/myMobileDevices.aspx" title="My Mobile Devices" description="Create and maintain your mobile devices" />
+      <siteMapNode url="~/shared/information/MyBankAccounts.aspx" title="My Bank Accounts" description="Create and maintain your bank accounts" />
+      <siteMapNode title="Payment History" url="~/shared/information/PaymentHistory.aspx"></siteMapNode>     
+            <siteMapNode url="~/shared/tasks/MyTasks.aspx" title="My Tasks">
+        <siteMapNode url="~/shared/tasks/ViewTask.aspx" title="View Task"></siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="~/information/delegates.aspx" title="My Delegates"></siteMapNode>
+
+    </siteMapNode>
+    <siteMapNode url="~/information/myadvances.aspx" title="My Advances"></siteMapNode>
+    <siteMapNode url="~/policy.aspx" title="View My Company Policy"></siteMapNode>
+    <siteMapNode url="~/information/selectmultiple.aspx" title="View My Claimable Items"></siteMapNode>
+    <siteMapNode url="~/expenses/checkpaylist.aspx" title="Check &amp; Pay Expenses">
+      <siteMapNode url="~/expenses/checkexpenselist.aspx" title="Expense Claim Details"></siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="~/shared/reports/rptlist.aspx" title="Reports">
+      <siteMapNode url="~/shared/reports/folders.aspx" title="Report Categories"></siteMapNode>
+      <siteMapNode url="~/shared/reports/myschedules.aspx" title="My Schedules"></siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="~/shared/helpAndSupport.aspx" title="Help &amp; Support">
+      <siteMapNode url="~/shared/helpAndSupportTicketNew.aspx" title="New Help &amp; Support Ticket"></siteMapNode>
+      <siteMapNode url="~/shared/helpAndSupportTickets.aspx" title="My Tickets">
+        <siteMapNode url="~/shared/helpAndSupportTicket.aspx" title="Help &amp; Support Ticket"></siteMapNode>
+      </siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="~/adminmenu.aspx" title="Administrative Settings">            
+      <siteMapNode url="~/AdministrativeCustomMenu.aspx" title="Custom Menu"></siteMapNode>
+     <siteMapNode url="~/categorymenu.aspx" title="Base Information">
+        <siteMapNode url="~/BaseInformationCustomMenu.aspx" title="Custom Menu"></siteMapNode>
+      <siteMapNode url="~/shared/admin/admincostcodes.aspx" title="Cost Codes"></siteMapNode>
+        <siteMapNode url="~/shared/admin/admincurrencies.aspx" title="Currencies"></siteMapNode>
+        <siteMapNode url="~/shared/admin/admincountries.aspx" title="Countries"></siteMapNode>
+
+        <siteMapNode url="~/shared/admin/organisations.aspx" title="Organisations"></siteMapNode>
+        <siteMapNode url="~/shared/admin/addresses.aspx" title="Addresses"></siteMapNode>
+        
+        <siteMapNode url="~/expenses/admin/adminsubcats.aspx" title="Expense Items">
+          <siteMapNode url="~/expenses/admin/aesubcat.aspx" title="Expense Item"></siteMapNode>
+        </siteMapNode>
+        <siteMapNode url="~/expenses/admin/adminreasons.aspx" title="Reasons"></siteMapNode>
+        <siteMapNode url="~/shared/admin/adminprojectcodes.aspx" title="Project Codes"></siteMapNode>
+        <siteMapNode url="~/admin/adminp11d.aspx" title="P11D Categories"></siteMapNode>
+        <siteMapNode url="~/shared/admin/admindepartments.aspx" title="Departments"></siteMapNode>
+        <siteMapNode url="~/expenses/admin/adminmileage.aspx" title="Vehicle Journey Rate Categories"></siteMapNode>
+        <siteMapNode url="~/expenses/admin/adminVehicleEngineTypes.aspx" title="Vehicle Engine Types"></siteMapNode>
+        <siteMapNode url="~/expenses/admin/adminallowances.aspx" title="Allowances"></siteMapNode>
+        <siteMapNode url="~/admin/admincategories.aspx" title="Expenses Categories"></siteMapNode>
+        <siteMapNode url="~/shared/admin/poolcars.aspx" title="Pool Vehicles"></siteMapNode>
+        <siteMapNode url="~/shared/admin/workflows.aspx" title="Workflows"></siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="~/tailoringmenu.aspx" title="Tailoring">
+        <siteMapNode url="~/TailoringCustomMenu.aspx" title="Custom Menu"></siteMapNode>
+         <siteMapNode url="~/admin/printout.aspx" title="Print-Out"></siteMapNode>
+        <siteMapNode url="~/setupview.aspx?viewid=-1" title="Default View"></siteMapNode>
+        <siteMapNode url="~/setupview.aspx?viewid=-2" title="Default Print View"></siteMapNode>
+        <siteMapNode url="~/admin/colours.aspx" title="Colours"></siteMapNode>
+        <siteMapNode url="~/admin/companylogo.aspx" title="Company Logo"></siteMapNode>
+        <siteMapNode url="~/shared/admin/accountOptions.aspx" title="General Options"></siteMapNode>
+        <siteMapNode url="~/expenses/admin/companydetails.aspx" title="Company Details"></siteMapNode>
+        <siteMapNode url="~/expenses/admin/emailsuffixes.aspx" title="E-mail Suffixes"></siteMapNode>
+        <siteMapNode url="~/shared/admin/adminuserdefined.aspx" title="User Defined Fields">
+        <siteMapNode url="~/admin/adminuserdefinelist.aspx" title="User Defined Field List Items"></siteMapNode>
+        </siteMapNode>
+        <siteMapNode url="~/shared/admin/userdefinedOrdering.aspx" title="User Defined Field Ordering"></siteMapNode>
+        <siteMapNode url="~/shared/admin/userdefinedFieldGroupings.aspx" title="User Defined Groupings"></siteMapNode>
+        <siteMapNode url="~/shared/admin/adminemailtemplates.aspx" title="Email Templates"></siteMapNode>
+        <siteMapNode url="~/admin/adminqeforms.aspx" title="Quick Entry Form Design"></siteMapNode>
+        <siteMapNode url="~/admin/addingexpenses.aspx" title="New Expenses"></siteMapNode>
+        <siteMapNode url="~/admin/filterrules.aspx" title="Filter rules"></siteMapNode>
+
+        <siteMapNode url="~/shared/admin/tooltips/tooltips.aspx" title="User Tooltips" description="Allows the user to override the standard tooltip help for a given element" />
+          <siteMapNode url="~/shared/admin/tooltips/edittooltip.aspx" title="Edit Tooltip" description="Edit the selected tooltip to contain customer specific information for the element" />
+          
+        <siteMapNode url="~/admin/tooltips.aspx" title="Tooltips"></siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="~/policymenu.aspx" title="Policy Information">
+        <siteMapNode url="~/PolicyCustomMenu.aspx" title="Custom Menu"></siteMapNode>
+        <siteMapNode url="~/admin/adminpolicy.aspx" title="Company Policy"></siteMapNode>
+        <siteMapNode url="~/admin/broadcastmessages.aspx" title="Broadcast Messages"></siteMapNode>
+        <siteMapNode url="~/admin/flagslimits.aspx" title="Flags &amp; Limits"></siteMapNode>
+        <siteMapNode url="~/expenses/admin/flags.aspx" title="Flag Management"></siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="~/usermanagementmenu.aspx" title="User Management">
+        <siteMapNode url="~/UserCustomMenu.aspx" title="Custom Menu"></siteMapNode>
+        <siteMapNode url="~/shared/admin/accessroles.aspx" title="Access Roles"></siteMapNode>
+        <siteMapNode url="~/admin/adminitemroles.aspx" title="Item Roles"></siteMapNode>
+        <siteMapNode url="~/admin/admingroups.aspx" title="Groups"></siteMapNode>
+        <siteMapNode url="~/admin/adminExpensesConnectUsers.aspx" title="expensesConnect Users"></siteMapNode>
+        <siteMapNode url="~/shared/admin/selectemployee.aspx" title="Select Employee">
+          <siteMapNode url="~/shared/admin/adminemployees.aspx" title="Employees"></siteMapNode>
+        </siteMapNode>
+        <siteMapNode url="~/shared/admin/adminteams.aspx" title="Teams"></siteMapNode>
+        <siteMapNode url="~/shared/admin/adminbudget.aspx" title="Budget Holders"></siteMapNode>
+        <siteMapNode url="~/shared/admin/adminAudiences.aspx" title="Audiences"></siteMapNode>
+        <siteMapNode url="~/shared/admin/ApprovalMatrices.aspx" title="Approval Matrices"></siteMapNode>
+        <siteMapNode url="~/shared/admin/AuthoriserLevel.aspx" title="Authoriser Levels"></siteMapNode>
+      </siteMapNode>
+      
+      <siteMapNode url="~/shared/admin/viewfundsdetails.aspx" title="View Funds"></siteMapNode>
+      
+      <siteMapNode url="~/shared/menu.aspx?area=systemoptions" title="System Options">
+        <siteMapNode url="~/SystemCustomMenu.aspx" title="Custom Menu"></siteMapNode>
+       <siteMapNode url="~/shared/admin/auditlog.aspx" title="Audit Log"></siteMapNode>        
+        <siteMapNode url="~/shared/admin/adminIPfilters.aspx" title="IP Address Filtering"></siteMapNode>
+        <siteMapNode url="~/shared/admin/AttachmentTypes.aspx" title="Attachment Types"></siteMapNode>
+        <siteMapNode url="~/shared/admin/CustomAttachmentTypes.aspx" title="Custom Attachment Types"></siteMapNode>
+        <siteMapNode url="~/shared/admin/sso.aspx" title="Single Sign-on"></siteMapNode>
+      </siteMapNode>
+
+      <siteMapNode url="~/shared/menu.aspx?area=helpandsupport" title="Help &amp; Support Management">
+        <siteMapNode url="~/shared/admin/adminHelpAndSupportTickets.aspx" title="Support Tickets">
+          <siteMapNode url="~/shared/admin/adminHelpAndSupportTicket.aspx" title="Support Ticket Details"></siteMapNode>
+        </siteMapNode>
+        <siteMapNode url="~/shared/admin/helpInformation.aspx" title="Help &amp; Support Information"></siteMapNode>
+        <siteMapNode url="~/shared/admin/KnowledgeCustomArticles.aspx" title="Knowledge Articles"></siteMapNode>
+      </siteMapNode>
+
+      <siteMapNode url="~/exportmenu.aspx" title="Imports / Exports">
+
+        <siteMapNode url="~/admin/statements.aspx" title="Corporate Card Imports">
+          <siteMapNode url="~/admin/corporate_cards.aspx" title="Corporate Card Providers">
+            <siteMapNode url="~/shared/admin/corporatecardlogs.aspx" title="Corporate Card Logs"></siteMapNode>
+          </siteMapNode>
+          <siteMapNode url="~/admin/unallocated_cards.aspx" title="Unallocated Cards"></siteMapNode>
+          <siteMapNode url="~/admin/import_statement.aspx" title="Import Statement"></siteMapNode>
+          <siteMapNode url="~/admin/transaction_viewer.aspx" title="Transaction Viewer"></siteMapNode>
+        </siteMapNode>
+        
+        <siteMapNode url="~/admin/automatedimports.aspx" title="Automated Imports"></siteMapNode>
+        <siteMapNode url="~/expenses/admin/financialexports.aspx" title="Financial Exports">
+          <siteMapNode url="~/expenses/admin/exporthistory.aspx" title="Export History"></siteMapNode>
+        </siteMapNode>
+
+        <siteMapNode url="~/shared/importsexports/importhistory.aspx" title="Import History"></siteMapNode>
+        <siteMapNode url="~/expenses/nhs/trusts.aspx" title="NHS Trust Details">
+          <siteMapNode url="~/expenses/nhs/ESRElementMappings.aspx" title="ESR Element Mappings">
+            <siteMapNode url="~/expenses/nhs/aeESRElementMapping.aspx" title="ESR Element Mapping"></siteMapNode>
+          </siteMapNode>
+        </siteMapNode>
+        <siteMapNode url="~/shared/importsexports/importTemplates.aspx" title="Import Templates">
+          <siteMapNode url="~/shared/importsexports/aeImportTemplate.aspx" title="Import Template"></siteMapNode>
+        </siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="~/GreenLightAdminMenu.aspx" title="GreenLight Management">
+        <siteMapNode url="~/shared/admin/custom_entities.aspx" title="GreenLights"></siteMapNode>
+          <siteMapNode url="~/shared/admin/CustomMenu.aspx" title="Custom Menu Structure"></siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="~/TorchMenu.aspx" title="Torch">
+        <siteMapNode url="~/shared/admin/admindocmergeprojects.aspx" title="Document Configurations"></siteMapNode>
+        <siteMapNode url="~/shared/admin/admindoctemplates.aspx" title="Document Templates"></siteMapNode>
+      </siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="~/searchmenu.aspx" title="Search">
+      <siteMapNode url="~/information/reviews.aspx" title="Hotel Reviews">
+        <siteMapNode url="~/information/reviewdetails.aspx" title="Hotel Details"></siteMapNode>
+      </siteMapNode>
+      <siteMapNode url="~/information/directory.aspx" title="Employee Directory">
+        <siteMapNode url="~/information/direntry.aspx" title="Directory Entry"></siteMapNode>
+      </siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="~/shared/admin/emplogon.aspx" title="Delegate Logon"></siteMapNode>
+    <siteMapNode url="~/admin/adminfloats.aspx" title="Advances">
+      <siteMapNode url="~/admin/settledadvances.aspx" title="Settled Advances" />
+    </siteMapNode>
+    <siteMapNode title="expensesConnect" url="~/expensesConnect.aspx"></siteMapNode>
+    <siteMapNode title="Summary" url="~/shared/viewentities.aspx"></siteMapNode>
+    <siteMapNode title="CustomMenuIcons" url="~/shared/ViewCustomMenu.aspx">
+      <siteMapNode title="DVLA Lookup Consent" url="~/shared/information/DrivingLicenceLookupConsent.aspx"></siteMapNode>
+    </siteMapNode>
+    <siteMapNode title="Marketing Information" url="~/shared/admin/LogonMessages.aspx"></siteMapNode>
+    <siteMapNode title="Marketing Message Details " url="~/shared/admin/aeLogonMessages.aspx"></siteMapNode>
+  </siteMapNode>
+</siteMap>

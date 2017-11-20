@@ -1,0 +1,1 @@
+﻿alter table dbo.ESRLocations add constraint [DF_ESRLocations_PayslipDeliveryPoint] default('N') for PayslipDeliveryPoint

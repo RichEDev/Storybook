@@ -1,0 +1,446 @@
+% FW Update.dat file
+% 10/03/2006
+# 000017 000018
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Assets
+
+% Attachments
+ALTER TABLE dbo.[Attachments]
+ADD [Attached By] varchar(30)
+*
+
+% Audit Log
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Account Codes
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Contract Status
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Inflator Metrics
+
+% Codes - Financial Status
+
+% Codes - Invoice Status Type
+
+% Codes - Licence Renewal Type
+
+% Codes - Note Category
+
+% Codes - Product Category
+
+% Codes - Platform Type
+
+% Codes - Recharge Entity
+
+% Codes - Region
+
+% Codes - Sales Tax
+
+% Codes - Sites
+
+% Codes - SLD
+
+% Codes - Term Type
+
+% Codes - Units
+
+% Codes - User Field Grouping
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract - Forecast Details
+
+% Contract - Forecast Products
+
+% Contract - Notification
+
+% Contract - Product Details
+ALTER TABLE [Contract - Product Details]
+ADD [Archive Status] int DEFAULT(0)
+*
+
+UPDATE [Contract - Product Details] SET [Archive Status] = 0
+*
+
+ALTER TABLE [Contract - Product Details]
+ADD [Archive Date] datetime
+*
+
+ALTER TABLE [Contract - Product Details]
+ADD [Created Date] datetime
+*
+
+% Contract - Product Details - Calloff
+
+% Contract - Product Details - Recharge
+ALTER TABLE dbo.[Contract - Product Details - Recharge]
+ADD [One Off Charge] int NOT NULL DEFAULT(0)
+*
+
+ALTER TABLE dbo.[Contract - Product Details - Recharge]
+ADD [Recharge Entity Id] int
+*
+
+ALTER TABLE dbo.[Contract - Product Details - Recharge]
+ADD [Contract-Product Id] int
+*
+
+% Contract - Product-History
+
+% Contract - Product Information
+
+% Contract - Product-Platforms
+
+% Contract Classes
+
+% Contract Details
+ALTER TABLE dbo.[Contract Details]
+ADD [Created Date] datetime
+*
+
+% Contract Notes
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Email Schedule
+ALTER TABLE [Email Schedule]
+ADD [Template Id] int
+*
+
+% Email Templates
+CREATE TABLE dbo.[Email Templates]
+(
+	[Template Id] int IDENTITY PRIMARY KEY,
+	[Template Name] nvarchar(50),
+	[Template Type] int NOT NULL DEFAULT(0),
+	[Template Path] nvarchar(200),
+	[Template Filename] nvarchar(50)
+)
+*
+
+% Export Fields
+
+% Exports
+
+% Favourite Reports
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice - Product Details
+
+% Invoice Details
+
+% Invoice Log
+
+% Invoice Notes
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Link Definitions
+
+% Link Matrix
+
+% Location
+
+% Mail
+
+% Mail Schedule
+
+% Metrics
+
+% MIME Headers
+
+% Param
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Platform LPars
+
+% Product Details
+
+% Product Notes
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Recharge Associations
+ALTER TABLE [Recharge Associations]
+ADD [Support Start Date] datetime
+*
+
+ALTER TABLE [Recharge Associations]
+ADD [Warranty End Date] datetime
+*
+
+ALTER TABLE [Recharge Associations]
+ADD [Post Warranty Apportion Id] int NOT NULL DEFAULT(0)
+*
+
+ALTER TABLE [Recharge Associations]
+ADD [Post Warranty Portion] float NOT NULL DEFAULT(0)
+*
+
+ALTER TABLE [Recharge Associations]
+ADD [Support End Date] datetime
+*
+
+% Saved Reports
+
+% Saved Views
+
+% Savings
+
+% Schedule
+
+% Security
+ALTER TABLE dbo.[Security]
+ALTER COLUMN [User Name] varchar(50)
+*
+
+% Security History
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Standard Reports
+
+% Staff Details
+
+% Sublocations
+
+% System-DBJoins
+
+% System Parameters
+ALTER TABLE [System Parameters]
+ADD [Dorana] varchar(128)
+*
+
+% Ubiquity Product Assocations
+CREATE TABLE dbo.[UBQ Product Association]
+(
+	[Association Id] int IDENTITY PRIMARY KEY,
+	[FW Product Id] int NOT NULL,
+	[UBQ Product Id] int NOT NULL
+)
+*
+
+% Ubiquity Dorana Product Locations
+CREATE TABLE dbo.[UBQ Locations]
+(
+	[UBQ Instance Id] int IDENTITY PRIMARY KEY,
+	[Vendor Id] int NOT NULL,
+	[Product Id] int NOT NULL,
+	[Library Id] int,
+	[Version Id] int,
+	[UBQ Location] nvarchar(100),
+	[UBQ Last Used] datetime
+)
+*
+
+% Ubiquity Dorana Libraries
+CREATE TABLE dbo.[UBQ Libraries]
+(
+	[Library Id] int IDENTITY PRIMARY KEY,
+	[Product Id] int NOT NULL,
+	[UBQ Library Name] nvarchar(250)
+)
+*
+
+% Ubiquity Dorana Products
+CREATE TABLE dbo.[UBQ Products]
+(
+	[Product Id] int IDENTITY PRIMARY KEY,
+	[UBQ Product Name] nvarchar(100),
+	[UBQ Option] nvarchar(100),
+	[Mapped] smallint NOT NULL DEFAULT(0)
+)
+*
+
+% Ubiquity Dorana Product Vendors
+CREATE TABLE dbo.[UBQ Product Vendors]
+(
+	[Product Vendor Id] int IDENTITY PRIMARY KEY,
+	[Vendor Id] int NOT NULL,
+	[Product Id] int NOT NULL
+)
+*
+
+% Ubiquity Vendor Assocations
+CREATE TABLE dbo.[UBQ Vendor Association]
+(
+	[Association Id] int IDENTITY PRIMARY KEY,
+	[FW Vendor Id] int NOT NULL,
+	[UBQ Vendor Id] int NOT NULL
+)
+*
+
+% Ubiquity Dorana Vendors
+CREATE TABLE dbo.[UBQ Vendors]
+(
+	[Vendor Id] int IDENTITY PRIMARY KEY,
+	[UBQ Vendor Name] nvarchar(100),
+	[Mapped] smallint NOT NULL DEFAULT(0)
+)
+*
+
+% Ubiquity Product versions
+CREATE TABLE dbo.[UBQ Version]
+(
+	[Version Id] int IDENTITY PRIMARY KEY,
+	[Product Id] int NOT NULL,
+	[UBQ Version] nvarchar(44)
+)
+*
+
+% UF Group Allocation
+
+% User Field Values
+
+% User Fields
+
+% User Help Docs
+
+% User Roles
+ALTER TABLE [User Roles]
+ADD [Dorana] bit NOT NULL DEFAULT(0)
+*
+% User Roles - Tabs
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+
+% Vendor Contact Notes
+
+% Vendor Notes
+
+% Vendor Regions
+
+% Vendor Status
+
+% Version Registry
+
+% Version History
+
+% ---------- Views ----------
+
+
+% Performance Metrics
+
+% CalView
+
+% ---------- Procedures ----------
+DECLARE @locId INT
+DECLARE @rec_count INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [Location Id] FROM [Location]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @locId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [FWParams] WHERE [Location Id] = @locId AND [Param] = 'CONCAT_TITLE')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [FWParams] ([Location Id],[Param],[Value]) VALUES (@locId,'CONCAT_TITLE','Contract Category')
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [FWParams] WHERE [Location Id] = @locId AND [Param] = 'INFLATOR_ACTIVE')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [FWParams] ([Location Id],[Param],[Value]) VALUES (@locId,'INFLATOR_ACTIVE',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [FWParams] WHERE [Location Id] = @locId AND [Param] = 'INVFREQ_ACTIVE')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [FWParams] ([Location Id],[Param],[Value]) VALUES (@locId,'INVFREQ_ACTIVE',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [FWParams] WHERE [Location Id] = @locId AND [Param] = 'TERMTYPE_ACTIVE')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [FWParams] ([Location Id],[Param],[Value]) VALUES (@locId,'TERMTYPE_ACTIVE',1)
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [FWParams] WHERE [Location Id] = @locId AND [Param] = 'VALUE_COMMENTS')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [FWParams] ([Location Id],[Param],[Value]) VALUES (@locId,'VALUE_COMMENTS','(ex VAT)')
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [FWParams] WHERE [Location Id] = @locId AND [Param] = 'CONDESC_TITLE')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [FWParams] ([Location Id],[Param],[Value]) VALUES (@locId,'CONDESC_TITLE','Contract Description')
+END
+
+SET @rec_count = (SELECT COUNT(*) AS [Cnt] FROM [FWParams] WHERE [Location Id] = @locId AND [Param] = 'CONDESC_SHORT_TITLE')
+IF(@rec_count = 0)
+BEGIN
+INSERT INTO [FWParams] ([Location Id],[Param],[Value]) VALUES (@locId,'CONDESC_SHORT_TITLE','Description')
+END
+FETCH NEXT FROM loop_cursor INTO @locId
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+INSERT INTO dbo.[Standard Reports] ([Report Id],[Report Name],[Report Description],[Report Area],[Criteria])
+VALUES (4,'Recharge Cost by Customer','Show the recharge cost for a given customer from a defined date',3,'YYMMARVERC')
+*
+% End of file

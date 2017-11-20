@@ -1,0 +1,182 @@
+<%@ Master Language="VB" Inherits="frameworkWebApp.FWMenu" Codebehind="FWMenu.master.vb" %>
+<%@ Register Src="~/FWSubAccountPopup.ascx" TagName="subAccountPopup" TagPrefix="subAccountPopup" %>
+<%@ Register Src="~/shared/usercontrols/TopScripts.ascx" TagName="top_scripts" TagPrefix="uc1" %>
+<%@ Register Src="~/shared/usercontrols/Header.ascx" TagName="header" TagPrefix="uc2" %>
+<%@ Register Src="~/shared/usercontrols/Footer.ascx" TagName="footer" TagPrefix="uc3" %>
+<%@ Register Src="~/shared/usercontrols/BottomScripts.ascx" TagName="bottom_scripts" TagPrefix="uc4" %>
+<%@ Register Src="~/shared/usercontrols/SideBar.ascx" TagName="sideMenu" TagPrefix="uc5" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link id="favLink" runat="server" rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link id="jQueryCss" runat="server" type="text/css" href="/static/js/jQuery/jquery-ui-1.9.2.custom.css" rel="Stylesheet" />
+     <title>Framework from Selenity Ltd.</title>
+    <%--    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>--%>
+    <uc1:top_scripts ID="css_scripts" runat="server" />
+
+    <!--Add style / scripts to the perticular page-->
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <script language="javascript" type="text/javascript">
+    	var theme;
+ 
+    function changeIcon (name, src)
+    {
+        document.getElementById("icon" + name).src = src;
+    }
+
+    function exit() {
+    	var otherparams = '';
+    	switch (theme) {
+    	    case "SmartDTheme":
+    	        otherparams = '&sd=1';
+    	        break;
+    	    case "FrameworkTheme":
+    	        otherparams = '&sd=0';
+    	        break;
+    	    default:
+    	        break;
+    	}
+
+    	if (confirm('Are you sure you want to log out?')) {
+    			window.location.href = appPath + '/shared/logon.aspx?action=logout' + otherparams;
+    	}
+    }
+    </script>
+
+</head>
+<body runat="server" id="body">
+    <form id="form1" runat="server">
+    <cc1:ToolkitScriptManager ID="scriptman" runat="server" >
+        <Services>
+            <asp:ServiceReference Path="~/shared/webServices/svcGrid.asmx" InlineScript="false" />
+            <asp:ServiceReference Path="~/shared/webServices/svcTooltip.asmx" InlineScript="false" />
+        </Services>
+        <Scripts>
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.main.js" />
+            <asp:ScriptReference Name="common" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.jsonParse.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/sel.menumaster.js" />
+        </Scripts>
+    </cc1:ToolkitScriptManager>
+    <asp:Literal ID="litstyles" runat="server"></asp:Literal>
+
+    <cc1:ModalPopupExtender ID="mdlMasterPopup" runat="server" OnCancelScript="SEL.MasterPopup.HideMasterPopup();" OnOkScript="SEL.MasterPopup.HideMasterPopup();" BackgroundCssClass="modalMasterBackground" PopupControlID="pnlMasterPopup" TargetControlID="lnkMasterPopup" DropShadow="False"></cc1:ModalPopupExtender>
+    <asp:Panel ID="pnlMasterPopup" runat="server" CssClass="errorModal" style="display:none;z-index:16000099;">
+        <div id="divMasterPopup"></div>
+        <div style="padding: 0px 5px 5px 5px;"><img src="/shared/images/buttons/btn_close.png" id="btnMasterPopup" alt="OK" onclick="SEL.MasterPopup.HideMasterPopup();" style="cursor: pointer;" /></div>
+    </asp:Panel>
+    <asp:HyperLink ID="lnkMasterPopup" runat="server" style="display: none;" Text="&nbsp;" NavigateUrl="javascript:void(0);"></asp:HyperLink>
+
+    <div id="pagediv">
+        <uc2:header ID="header" runat="server" />
+            <asp:Literal runat="server" ID="litBreadCrumbs"></asp:Literal>
+               <div id="wrapper" class="toggled">
+
+                <uc5:sideMenu ID="side_bar" runat="server" />
+                <asp:Literal ID="litemplogon" runat="server"></asp:Literal>
+                <!--Add content to the perticular page-->
+                <asp:ContentPlaceHolder ID="ContentPlaceHolderBody" runat="server"></asp:ContentPlaceHolder>
+                <asp:ContentPlaceHolder ID="menuHeader" runat="server"></asp:ContentPlaceHolder>
+                <asp:Literal runat="server" ID="litmenu"></asp:Literal>
+
+              </div>
+                <!--Add Scripts to the perticular page-->
+                <uc4:bottom_scripts ID="bottom_scripts" runat="server" />   
+        <div id="righthandcontent">
+            <asp:ContentPlaceHolder ID="RHcontent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </div>
+    <script language="javascript" type="text/javascript">
+        function displayBroadcastMessage(url, datatosendVal)
+        {           
+            var xmlRequest;
+			try
+			{
+				xmlRequest = new XMLHttpRequest();
+			}
+			catch (e)
+			{	
+				try
+				{
+					xmlRequest = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				catch (f)
+				{
+					xmlRequest = null;
+				}
+			}
+			xmlRequest.onreadystatechange = function()
+			{
+			    if (xmlRequest.readyState == 4)
+			    {
+			        var broadcast = xmlRequest.responseText;
+			        if (broadcast == 'empty' || broadcast == '')
+			        {
+			            document.getElementById("broadcastmsg").style.display = 'none';
+			        }
+			        else
+			        {
+			            //alert(broadcast);
+			            //alert('header = @' + broadcast.substring(4,10) + '@');
+			            if(broadcast.substring(0,20) == 'ContractSummary.aspx')
+			            {
+			                window.location.href=broadcast;
+			            }
+			            else if(broadcast.substring(4,10) == '<html>')
+			            {
+			                // must have timed out, so is going to FWLogon.aspx with a return url
+			                //var cur_url = document.location;
+			                //alert('current URL = ' + cur_url);
+			                window.location.href='logon.aspx';
+			            }
+			            else
+			            {
+			                document.getElementById("broadcastmsg").innerHTML = broadcast;
+			                document.getElementById("broadcastmsg").style.display = 'block';
+			            }
+			        }
+			    }
+			}
+			
+			var dataToSend = datatosendVal;
+			xmlRequest.open("POST",url,true);
+			//xmlRequest.setRequestHeader("Content-Type","application/x-wais-source");
+			xmlRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xmlRequest.send(dataToSend);
+			
+        }
+    </script>
+
+    <div id="broadcastmsg">&nbsp;</div>
+
+
+    <asp:Literal runat="server" ID="windowOnError"></asp:Literal>
+    <subAccountPopup:subAccountPopup ID = "subAccountModal" runat="server" />
+
+    		<asp:Panel ID="pnltooltip" runat="server"></asp:Panel>
+		<asp:Image ID="imgtooltip" runat="server" Style="display:none;"  ImageUrl="~/images/spacer.gif" /><cc1:DynamicPopulateExtender ID="dynpopup" runat="server" TargetControlID="pnltooltip" ServicePath="~/shared/webservices/svcTooltip.asmx" ServiceMethod="getTooltip"></cc1:DynamicPopulateExtender>
+        <cc1:DynamicPopulateExtender ID="dynuserdefinedpopup" runat="server" TargetControlID="pnltooltip" ServicePath="~/shared/webservices/svcTooltip.asmx" ServiceMethod="getUserDefinedTooltip"></cc1:DynamicPopulateExtender>
+        <cc1:PopupControlExtender ID="popuptooltip" runat="server" TargetControlID="imgtooltip" PopupControlID="pnltooltip" Position="Right" ></cc1:PopupControlExtender>	
+            <script language="javascript" type="text/javascript">
+                var tooltipPopupControlExtender = '<% = popuptooltip.ClientID %>';
+                var tooltipPanel = '<% = pnltooltip.ClientID %>';
+                var tooltipDynamicPopulateExtender = '<% = dynpopup.ClientID %>';
+                var tooltipDynamicPopulateExtenderUDF = '<% = dynuserdefinedpopup.ClientID  %>';
+        </script>
+    </form>
+    <div class="footer-menu-master"> <uc3:footer ID="footer" runat="server" /></div>
+</body>
+
+</html>

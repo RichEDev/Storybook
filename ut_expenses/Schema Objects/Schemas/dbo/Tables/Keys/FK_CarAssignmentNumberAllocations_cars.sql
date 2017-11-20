@@ -1,0 +1,1 @@
+﻿alter table dbo.CarAssignmentNumberAllocations add constraint [FK_CarAssignmentNumberAllocations_cars] foreign key (CarId) references cars (carid) on delete cascade

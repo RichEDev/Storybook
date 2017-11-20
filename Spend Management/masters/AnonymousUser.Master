@@ -1,0 +1,355 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="Spend_Management.AnonymousUser" Codebehind="AnonymousUser.Master.cs" EnableTheming="false" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<%@ Register Src="~/shared/usercontrols/TopScripts.ascx" TagName="top_scripts" TagPrefix="uc1" %>
+<%@ Register Src="~/shared/usercontrols/Footer.ascx" TagName="footer" TagPrefix="uc3" %>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Untitled Page</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" media="screen" href="~/shared/css/layout.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="~/shared/css/styles.aspx" />
+    <link id="jQueryCss" runat="server" type="text/css" href="/static/js/jQuery/jquery-ui-1.9.2.custom.css" rel="Stylesheet" />
+    <link id="jQuerySelAddressCss" runat="server" type="text/css" href="/shared/css/jquery-selui-address.css" rel="Stylesheet" />
+    <script ID="json2" type="text/javascript" src="/static/js/json2.js"></script>
+    <script ID="jquery" type="text/javascript" src="/static/js/jQuery/jquery-1.9.1.min.js"></script>
+    <script ID="jqueryui" type="text/javascript" src="/static/js/jQuery/jquery-ui-1.9.2.custom.min.js"></script>
+    <uc1:top_scripts ID="css_scripts" runat="server" />
+    <asp:ContentPlaceHolder ID="head" runat="server" Visible="False" >
+    </asp:ContentPlaceHolder>
+
+<style type="text/css">
+
+* html #sitecontainer {
+height: 100%;
+
+}
+.tooltipcontainer .tooltipcontent {
+    background-color: transparent;
+}
+html, body {
+	margin: 0px;
+	height: 100%;
+	font-family: Arial;
+	font-size: 12px;
+}
+
+#sitecontainer {
+	height: 100%;
+	width: 100%;
+}
+
+#companylogodiv {
+	height: 61px;
+	text-align: right;
+	margin-bottom: 1px;
+
+}
+
+
+#pageheaderdiv {
+	height: 43px;
+	background-repeat: no-repeat;
+	font-family: Arial;
+	font-size: 20px;
+	padding-left: 35px;
+	line-height: 43px;
+
+}
+
+#pageheaderuserinfodiv {
+	font-size: 11px;
+	font-weight: bold;
+	position: absolute;
+	text-align: right;
+	right: 10px;
+	line-height: 43px;
+	vertical-align: top;
+	
+}
+
+#pagecontainerdiv {
+	margin-top: 1px;
+	width:100%;
+	height: 100%;
+}
+
+#pagesubpaneldiv {
+	margin-top: 32px;
+	width: 150px;
+	float: left;
+	height: 100%;
+	min-height: 100%;
+}	
+
+#pagecontent {
+
+
+}
+
+.pagesubpanelheader {
+	height: 27px;
+	line-height: 27px;
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+    background-image: none !important;
+}
+
+.greygradient {
+	background-image: url('/shared/images/grey_gradient.png');
+	background-repeat: repeat-x;
+	font-size: 12px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+#information {
+    border-top: none !important;
+	padding: 10px;
+}
+
+#logincontainer {
+	float:right;
+	width: 100%;
+	text-align: center;
+	height:100%;
+}
+
+#logonform {
+	margin: 0 auto;
+	margin-top: 50px;
+	width: 370px;
+	text-align: center;
+	background-image: url('/shared/images/grey_gradient.png');
+	background-repeat: repeat-x;
+	font-size: 10px;
+
+	padding-bottom: 20px;
+
+}
+
+#login input 
+{
+	width: 131px;
+}
+
+#maincontentdiv 
+{
+	margin-left: 60px;
+    width: 800px;
+    margin: 0 auto;
+	margin-top: 20px;
+	font-size: 12px;
+}
+
+#loginfooter {
+	font-family: Arial;
+	font-size: 12px;
+	float: left; 
+	text-align: left;
+	width: 270px;
+}
+
+#titlegradient {
+	width: 370px;
+	height: 18px;
+	line-height: 18px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+#forgottendetailsdiv {
+	text-align: center;
+}
+
+
+.btnLogon 
+{
+	float: right;
+}
+
+.buttonimg {
+	margin-top: 5px;
+}
+
+.reqfield { 
+	font-weight: bold;
+	font-size: 12px;	
+}
+
+.inputtext { 
+	font-size: 12px;
+}
+.expenses {
+	font-weight: bold;
+	font-style: italic;
+}
+
+.expenses2008 
+{
+	font-weight: bold;
+}
+
+.errortext 
+{
+	font-weight: bold;
+    font-size: 12px;
+    padding: 6px;
+}
+
+.informationmessageheader 
+{
+    font-weight: bold;	
+}
+
+.informationmessage
+{
+    margin-bottom: 10px;
+}
+
+td 
+{
+	font-size: 12px;
+}
+
+img 
+{
+	border: 0px;
+}
+
+.hiddendiv {
+display: none;
+}
+
+.visablediv {
+   display:block;
+   position: absolute;
+   top: 155px;
+   left: 115px;
+}
+
+
+.stooltipcontainer {
+    z-index: 999;
+    margin-left: 14px;
+    margin-top: 9px;
+    overflow: hidden;
+    width: 220px;
+}
+
+.stooltiparrow {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    background-image: url('/shared/images/ttarrowex.png');
+    background-repeat: no-repeat;
+    width: 10px;
+}
+
+.stooltipcontent {
+    position: absolute;
+    left: 23px; top: 12px;
+    font-family: arial;
+    font-size: 12px;
+    width: 200px;
+}
+
+iframe {
+	display:none;
+	display:block;
+	position:absolute;
+	top:15;
+	left:15;
+	z-index:-1;
+	filter:mask();
+	width:350px;
+	height:500px;
+}
+</style>
+
+
+</head>
+<body>
+    <form id="form1" runat="server">
+            <script language="javascript" type="text/javascript">
+                var contentID = "ctl00_pageContents_";
+                var tooltipPopupControlExtender = '<% = popuptooltip.ClientID %>';
+                var tooltipPanel = '<% = pnltooltip.ClientID %>';
+                var tooltipDynamicPopulateExtender = '<% = dynpopup.ClientID %>';
+                var tooltipDynamicPopulateExtenderUDF = '<% = dynuserdefinedpopup.ClientID  %>';    
+    </script>
+    <asp:Literal runat="server" ID="litStyles"></asp:Literal>
+    <cc1:ToolkitScriptManager ID="scriptman" runat="server">
+        <Scripts>
+            <asp:ScriptReference Path="~/shared/javascript/minify/sel.main.js" />
+            <asp:ScriptReference Name="common" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.jsonParse.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
+     
+        </Scripts>
+        <Services>
+            <asp:ServiceReference Path="~/shared/webServices/svcTooltip.asmx" InlineScript="false" />
+            <asp:ServiceReference Path="~/shared/webServices/svcGrid.asmx" InlineScript="false" />
+        </Services>
+    </cc1:ToolkitScriptManager>
+   
+              
+                <div class="main-content-area">
+     <div id="sitecontainer">
+		
+	<div id="pageheaderdiv"><asp:Literal ID="litPageTitle" runat="server"></asp:Literal>
+		<span id="pageheaderuserinfodiv">&nbsp;</span>
+	</div>
+	
+	<div id="pagesubpaneldiv">
+		<div class="greygradient">
+			<div id="forgottendetailsdiv">
+            <asp:HyperLink ID="hlForgottenDetails" runat="server" NavigateUrl="~/shared/logon.aspx#forgottenDetails"><img src="images/buttons/button_forgotten_details.png" class="buttonimg" height="26" width="108" alt="Forgotten Details" /></asp:HyperLink>
+            <span id="selfregbutton" runat="server"><a href="/shared/register.aspx" title="Register"><img src="images/buttons/button_self_registration.png" class="buttonimg" height="26" width="108" alt="Self Registration" /></a></span>
+			</div>
+		</div>
+        <asp:Panel ID="pnlInformation" runat="server" Visible="false">
+                <div class="pagesubpanelheader">Information</div>
+		        <div id="information"><asp:Literal ID="litInformationText" runat="server"></asp:Literal></div>
+        </asp:Panel>
+
+	</div>
+
+	<!--<div id="pagecontainerdiv">-->
+		<!--<div id="pagecontent">-->
+		<asp:ContentPlaceHolder ID="pageContents" runat="server"></asp:ContentPlaceHolder>
+			            <!--</div>-->
+		        
+
+
+		<!--</div>-->
+	<!--</div>-->
+    </div>	</div>
+
+<asp:Panel ID="pnltooltip" runat="server">
+            </asp:Panel>
+			<asp:Image ID="imgtooltip" runat="server" Style="display:none;" ImageUrl="~/shared/images/spacer.gif" /><cc1:DynamicPopulateExtender
+                ID="dynpopup" runat="server" TargetControlID="pnltooltip" ServicePath="~/shared/webservices/svcTooltip.asmx" ServiceMethod="getTooltip">
+            </cc1:DynamicPopulateExtender>
+    <cc1:DynamicPopulateExtender
+                ID="dynuserdefinedpopup" runat="server" TargetControlID="pnltooltip" ServicePath="~/shared/webservices/svcTooltip.asmx" ServiceMethod="getUserDefinedTooltip">
+            </cc1:DynamicPopulateExtender>
+        <cc1:PopupControlExtender ID="popuptooltip" runat="server" TargetControlID="imgtooltip" PopupControlID="pnltooltip" Position="Right" ></cc1:PopupControlExtender>
+            <cc1:ModalPopupExtender ID="mdlMasterPopup" runat="server" OnCancelScript="SEL.MasterPopup.HideMasterPopup();" OnOkScript="SEL.MasterPopup.HideMasterPopup();" BackgroundCssClass="modalMasterBackground" PopupControlID="pnlMasterPopup" TargetControlID="lnkMasterPopup" DropShadow="False"></cc1:ModalPopupExtender>
+        <asp:Panel ID="pnlMasterPopup" runat="server" CssClass="errorModal" style="display:none;z-index:16000099;">
+        <div id="divMasterPopup"></div>
+        <div style="padding: 0px 5px 5px 5px;"><img src="/shared/images/buttons/btn_close.png" id="btnMasterPopup" alt="OK" onclick="SEL.MasterPopup.HideMasterPopup();" style="cursor: pointer;" /></div>
+        </asp:Panel>
+        <asp:HyperLink ID="lnkMasterPopup" runat="server" style="display: none;" Text="&nbsp;" NavigateUrl="javascript:void(0);"></asp:HyperLink>
+     <uc3:footer ID="footer" runat="server" />
+        <!--Add Scripts to the perticular page-->
+        	<asp:ContentPlaceHolder ID="scripts" runat="server"></asp:ContentPlaceHolder>
+    </form>
+    <asp:Literal ID="PageStatistics" runat="server"></asp:Literal>
+</body>
+</html>

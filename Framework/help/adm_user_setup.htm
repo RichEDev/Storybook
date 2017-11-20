@@ -1,0 +1,149 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Framework Help - User Setup</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="fwhelp.css" type="text/css" />
+
+    <script language="javascript" type="text/javascript">
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+    </script>
+
+</head>
+<body class="help_page" onload="window.resizeTo(800,600)">
+    <div class="help_page_title">
+        <a onclick="closewindow();">
+            <img src="../images/exithelp.gif" alt="Close Help Window" /></a> User Setup</div>
+    <div class="help_section">
+        <div class="help_section_title">
+            Overview
+        </div>
+        <div class="help_overview">
+            <p>
+                The User Setup screen displays an overview of all user currently defined for access
+                to Framework.</p>
+            <p>
+                A user must be defined before they can gain access to Framework. The level of access
+                permissions they have is determined by the role they are assigned.</p>
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img id="img1" alt="Expand Topic" onclick="toggle('1');" src="../buttons/open.gif" />
+            Information displayed
+        </div>
+        <div class="help_body_text" id="1">
+            <p>
+                <table class="inner" align="center" width="500">
+                    <tr>
+                        <th width="150" class="inner">
+                            Element</th>
+                        <th width="350" class="inner">
+                            Description</th>
+                    </tr>
+                    <tr>
+                        <td class="inner" align="center">
+                            Edit / Delete</td>
+                        <td class="inner">
+                            Clicking the edit or delete button to the left of the definition will allow modification,
+                            or removal, of the user logon.</td>
+                    </tr>
+                    <tr>
+                        <td class="inner" align="center">
+                            Unfreeze</td>
+                        <td class="inner">
+                            If a user logon fails due to incorrect password entry consecutively in excess of
+                            the nominated allowance, the user logon is frozen for security. Clicking this 'unfreeze'
+                            button will reactivate the logon.</td>
+                    </tr>
+                    <tr>
+                        <td class="inner" align="center">
+                            Login Id</td>
+                        <td class="inner">
+                            This is the actual logon id of the user.</td>
+                    </tr>
+                    <tr>
+                        <td class="inner" align="center">
+                            Full Name</td>
+                        <td class="inner">
+                            A logon id may not clearly identify who the user is. The full name field allows
+                            the proper name of the user to be logged against the identity. This is required
+                            for clarification and also in the Audit Log.</td>
+                    </tr>
+                    <tr>
+                        <td class="inner" align="center">
+                            Position</td>
+                        <td class="inner">
+                            The job title or role of the user listed.</td>
+                    </tr>
+                    <tr>
+                        <td class="inner" align="center">
+                            Role Assigned</td>
+                        <td class="inner">
+                            The role currently assigned the to user. The role is what defines the permissions
+                            afforded to the user.</td>
+                    </tr>
+                    <tr>
+                        <td class="inner" align="center">
+                            Logon Count</td>
+                        <td class="inner">
+                            Each time a user logs on to Framework, the counter is incremented. This is a simple
+                            method of tracking who uses Framework most frequently.</td>
+                    </tr>
+                </table>
+            </p>
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img alt="Expand Topic" src="../buttons/open.gif" onclick="toggle('2');" />
+            Reset counters</div>
+        <div class="help_body_text">
+            Logon counts provide an indication as to the level of activity of each of the users
+            within Framework.<br />
+            <br />
+            The counter continues unchanged until a user resets the counts. This can be done
+            by simply clicking the Reset Counters link in the page options panel.
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_tip">
+            <b>To Add a New User: </b>To add a new user, click the 'New' button. You will be
+            transferred to the User Setup Detail where full details of the new user will have
+            to be specified.
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_comments">
+            * If you do not find a topic outlined in the help which is relevant to your enquiry
+            then please contact your administrator
+        </div>
+    </div>
+    <div>
+    </div>
+</body>
+</html>

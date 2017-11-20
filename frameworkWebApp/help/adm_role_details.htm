@@ -1,0 +1,94 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Framework Help - User Role Detail</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="fwhelp.css" type="text/css" />
+
+    <script language="javascript" type="text/javascript">
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+    </script>
+
+</head>
+<body class="help_page" onload="window.resizeTo(800,600)">
+    <div class="help_page_title">
+        <a onclick="closewindow();">
+            <img src="../images/exithelp.gif" alt="Close Help Window" /></a> User Role Detail</div>
+    <div class="help_section">
+        <div class="help_section_title">
+            Overview
+        </div>
+        <div class="help_overview">
+            Each role consists of multiple permissions that can be granted or not granted to
+            the user assigned the role.<br />
+            <br />
+            Once the elements have been updated or selected as required, click the update button
+            to apply the selections. To abandon modification at any time, click the Cancel button
+            at the bottom of the screen.
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img src="../buttons/open.gif" onclick="toggle('1');" id="img1" alt="Expand Topic" />
+            Role detail and permissions
+        </div>
+        <div class="help_body_text" id="1">
+            A role name <i>must</i> is a mandatory field and must be unique. Two role with the
+            same name will not be permitted. The description field allow a more expansive explanation
+            of the role to be provided.<br />
+            <br />
+            The permissions section of the role detail are the individual permissions that can
+            be granted to a user. Any box clicked (containing a tick) has that permission granted.<br />
+            <br />
+            This section consists of three columns. The first is the name to the permission
+            option followed by the check box for granting that permission. The final column
+            contains a description briefly explaining what the permissions' actions will be.
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_section_title">
+            <img id="img2" alt="Expand Topic" onclick="toggle('2');" src="../buttons/open.gif" />
+            Contract tabs accessible
+        </div>
+        <div class="help_body_text" id="2">
+            The contract summary pages are divided into eight (six if recharge functionality
+            is disabled) screen areas. Each role can be granted permission to access these sections.<br />
+            <br />
+            Any section that the role is not granted access to will not see the section available
+            in the navigation panel on the contract summary screen.
+        </div>
+    </div>
+    <div class="help_section">
+        <div class="help_comments">
+            * If you do not find a topic outlined in the help which is relevant to your enquiry
+            then please contact your administrator
+        </div>
+    </div>
+    <div>
+    </div>
+</body>
+</html>

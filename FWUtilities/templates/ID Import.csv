@@ -1,0 +1,17 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+invoices,subAccountId,Repository SubAccount,S,50,N,Y,F,accountsSubAccounts.subAccountId,accountsSubAccounts.Description,
+invoices,contractId,Owner Contract Description,S,250,N,Y,Y,[contract_details].[contractId],[contract_details].[contractDescription],
+invoices,invoiceNumber,Invoice Number,S,150,N,N,N,,,
+invoices,receivedDate,Invoice Received Date,D,,N,N,N,,,
+invoices,dueDate,Invoice Due Date,D,,N,N,N,,,
+invoices,totalAmount,Total Invoice Amount,F,,N,N,N,,,0
+invoices,salesTaxRate,Sales Tax Rate,S,50,N,N,Y,[codes_salestax].[salesTaxId],[codes_salestax].[salesTaxDescription],
+invoices,invoiceStatus,Invoice Status,S,50,N,N,Y,[invoicestatustype].[invoiceStatusTypeId],[invoicestatustype].[description],
+invoices,comment,Comment,T,,N,N,N,,,
+invoices,paidDate,Invoice Paid Date,D,,N,N,N,,,
+invoices,paymentReference,Payment Reference,S,25,N,N,N,,,
+invoices,poNumber,PO Number,S,30,N,N,N,,,
+invoices,poStartDate,PO Start Date,D,,N,N,N,,,
+invoices,poExpiryDate,PO Expiry Date,D,,N,N,N,,,
+invoices,poMaxValue,PO Max Value,F,,N,N,N,,,0
+invoices,coverPeriodEnd,Cover Period End,D,,N,N,N,,,

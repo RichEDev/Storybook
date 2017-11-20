@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="cmdCancelResource1.AlternateText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="cmdCancelResource1.ToolTip" xml:space="preserve">
+    <value>Abort action</value>
+  </data>
+  <data name="cmdOKResource1.AlternateText" xml:space="preserve">
+    <value>Analyse</value>
+  </data>
+  <data name="cmdOKResource1.ToolTip" xml:space="preserve">
+    <value>Perform analysis to check where selected item is assigned for recharge</value>
+  </data>
+  <data name="cmdUpdateResource1.AlternateText" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="cmdUpdateResource1.ToolTip" xml:space="preserve">
+    <value>Confirm action and commit change to database</value>
+  </data>
+  <data name="igResultsGridResource1.Caption" xml:space="preserve">
+    <value />
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.AddNewBox.Prompt" xml:space="preserve">
+    <value>Add...</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.AllString" xml:space="preserve">
+    <value>(All)</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.ContainsString" xml:space="preserve">
+    <value>Contains</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.DoesNotContainString" xml:space="preserve">
+    <value>Does Not Contain</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.DoesNotEndWithString" xml:space="preserve">
+    <value>Does Not End With</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.DoesNotStartWithString" xml:space="preserve">
+    <value>Does Not Start With</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.EmptyString" xml:space="preserve">
+    <value>(Empty)</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.EndsWithString" xml:space="preserve">
+    <value>Ends With</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.EqualsString" xml:space="preserve">
+    <value>Equals</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.GreaterThanOrEqualsString" xml:space="preserve">
+    <value>Greater Than Or Equals</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.GreaterThanString" xml:space="preserve">
+    <value>Greater Than</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.LessThanOrEqualsString" xml:space="preserve">
+    <value>Less Than Or Equals</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.LessThanString" xml:space="preserve">
+    <value>Less Than</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.LikeString" xml:space="preserve">
+    <value>Like</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.NonEmptyString" xml:space="preserve">
+    <value>(NonEmpty)</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.NotEqualsString" xml:space="preserve">
+    <value>Not Equals</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.NotLikeString" xml:space="preserve">
+    <value>Not Like</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.FilterOptionsDefault.StartsWithString" xml:space="preserve">
+    <value>Starts With</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.GroupByBox.Prompt" xml:space="preserve">
+    <value>Drag a column header here to group by that column</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.Pager.NextText" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="igResultsGridResource1.DisplayLayout.Pager.PrevText" xml:space="preserve">
+    <value>Prev</value>
+  </data>
+  <data name="igResultsGridResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblEndDateResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblEndDateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblRechargeClientResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblRechargeClientResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblStatusResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblStatusResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblSupportEndDateResource1.Text" xml:space="preserve">
+    <value>Apply Termination Date for Support</value>
+  </data>
+  <data name="lblSupportEndDateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PageResource1.Title" xml:space="preserve">
+    <value>Recharge Impact Analysis</value>
+  </data>
+  <data name="panelResultsResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panelResultsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="reqClientResource1.ErrorMessage" xml:space="preserve">
+    <value>Field is mandatory</value>
+  </data>
+  <data name="reqClientResource1.Text" xml:space="preserve">
+    <value>**</value>
+  </data>
+  <data name="reqClientResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtEndDateResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtEndDateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtRechargeClientResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtRechargeClientResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.AllString" xml:space="preserve">
+    <value>(All)</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.ContainsString" xml:space="preserve">
+    <value>Contains</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.DoesNotContainString" xml:space="preserve">
+    <value>Does Not Contain</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.DoesNotEndWithString" xml:space="preserve">
+    <value>Does Not End With</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.DoesNotStartWithString" xml:space="preserve">
+    <value>Does Not Start With</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.EmptyString" xml:space="preserve">
+    <value>(Empty)</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.EndsWithString" xml:space="preserve">
+    <value>Ends With</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.EqualsString" xml:space="preserve">
+    <value>Equals</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.GreaterThanOrEqualsString" xml:space="preserve">
+    <value>Greater Than Or Equals</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.GreaterThanString" xml:space="preserve">
+    <value>Greater Than</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.LessThanOrEqualsString" xml:space="preserve">
+    <value>Less Than Or Equals</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.LessThanString" xml:space="preserve">
+    <value>Less Than</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.LikeString" xml:space="preserve">
+    <value>Like</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.NonEmptyString" xml:space="preserve">
+    <value>(NonEmpty)</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.NotEqualsString" xml:space="preserve">
+    <value>Not Equals</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.NotLikeString" xml:space="preserve">
+    <value>Not Like</value>
+  </data>
+  <data name="UltraGridBandResource1.FilterOptions.StartsWithString" xml:space="preserve">
+    <value>Starts With</value>
+  </data>
+</root>

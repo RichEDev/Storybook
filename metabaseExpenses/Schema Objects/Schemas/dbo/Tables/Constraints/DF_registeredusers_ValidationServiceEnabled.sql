@@ -1,0 +1,1 @@
+﻿ALTER TABLE [dbo].[registeredusers] ADD  CONSTRAINT [DF_registeredusers_ValidationServiceEnabled]  DEFAULT ((-20)) FOR [ValidationServiceEnabled]

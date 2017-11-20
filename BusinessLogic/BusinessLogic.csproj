@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{69860CE5-949C-47F0-8FDA-65C0A74171C8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BusinessLogic</RootNamespace>
+    <AssemblyName>BusinessLogic</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>BusinessLogic.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>BusinessLogic.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU'">
+    <OutputPath>bin\Automated Build\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>BusinessLogic.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\Production\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>BusinessLogic.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Configuration.Interface, Version=1.1.2.28032, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Configuration.Interface.1.1.2.28032\lib\net461\Configuration.Interface.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccessRoles\AccessRole.cs" />
+    <Compile Include="AccessRoles\ElementAccessCollection.cs" />
+    <Compile Include="AccessRoles\ElementAccessCollections.cs" />
+    <Compile Include="AccessRoles\ElementAccessLevel.cs" />
+    <Compile Include="AccessRoles\ExpensesAccessRole.cs" />
+    <Compile Include="AccessRoles\IAccessLevel.cs" />
+    <Compile Include="AccessRoles\IAccessRole.cs" />
+    <Compile Include="AccessRoles\IExpensesAccessRole.cs" />
+    <Compile Include="AccessRoles\ReportsAccess\AllDataReportsAccess.cs" />
+    <Compile Include="AccessRoles\ReportsAccess\EmployeesResponsibleFor.cs" />
+    <Compile Include="AccessRoles\ReportsAccess\IReportsAccess.cs" />
+    <Compile Include="AccessRoles\ReportsAccess\ISelectedAccessRoles.cs" />
+    <Compile Include="AccessRoles\ReportsAccess\LinkedAccessRoleCollection.cs" />
+    <Compile Include="AccessRoles\ReportsAccess\LinkedAccessRoleCollections.cs" />
+    <Compile Include="AccessRoles\ReportsAccess\ReportingAccess.cs" />
+    <Compile Include="AccessRoles\ReportsAccess\SelectedAccessRoles.cs" />
+    <Compile Include="Accounts\Account.cs" />
+    <Compile Include="Cache\AccountCacheKey.cs" />
+    <Compile Include="Cache\CacheKey.cs" />
+    <Compile Include="Cache\IAccountCacheKey.cs" />
+    <Compile Include="Cache\ICache.cs" />
+    <Compile Include="Cache\ICacheKey.cs" />
+    <Compile Include="Cache\IMetabaseCacheKey.cs" />
+    <Compile Include="Cache\MetabaseCacheKey.cs" />
+    <Compile Include="Databases\DatabaseCatalogue.cs" />
+    <Compile Include="Databases\DatabaseServer.cs" />
+    <Compile Include="Accounts\Elements\ModuleElements.cs" />
+    <Compile Include="Accounts\Elements\Element.cs" />
+    <Compile Include="Accounts\Elements\IElement.cs" />
+    <Compile Include="Accounts\IAccount.cs" />
+    <Compile Include="Databases\IDatabaseCatalogue.cs" />
+    <Compile Include="Databases\IDatabaseServer.cs" />
+    <Compile Include="DataConnections\IDataFactoryCustom.cs" />
+    <Compile Include="Cache\GetByCustom.cs" />
+    <Compile Include="Dependency.cs" />
+    <Compile Include="CustomEntities\AccessRoles\CustomEntityElementAccessLevel.cs" />
+    <Compile Include="CustomEntities\AccessRoles\CustomEntityAccessWrapper.cs" />
+    <Compile Include="CustomEntities\AccessRoles\CustomEntityElementAccessLevelCollection.cs" />
+    <Compile Include="CustomEntities\AccessRoles\CustomEntityFormAccess.cs" />
+    <Compile Include="CustomEntities\AccessRoles\CustomEntityFormAccessCollection.cs" />
+    <Compile Include="CustomEntities\AccessRoles\CustomEntityViewAccess.cs" />
+    <Compile Include="CustomEntities\AccessRoles\CustomEntityViewAccessCollection.cs" />
+    <Compile Include="CustomEntities\CustomEntityFieldRepository.cs" />
+    <Compile Include="CustomFields\CustomFieldRepository.cs" />
+    <Compile Include="Databases\MetabaseCatalogue.cs" />
+    <Compile Include="DataConnections\DataParameters.cs" />
+    <Compile Include="DataConnections\ICustomerDataConnection.cs" />
+    <Compile Include="DataConnections\IDataConnection.cs" />
+    <Compile Include="DataConnections\IDataFactory.cs" />
+    <Compile Include="DataConnections\IDelete.cs" />
+    <Compile Include="DataConnections\IEnumerate.cs" />
+    <Compile Include="DataConnections\IGetAll.cs" />
+    <Compile Include="DataConnections\IGetBy.cs" />
+    <Compile Include="DataConnections\IMetabaseDataConnection.cs" />
+    <Compile Include="DataConnections\ISave.cs" />
+    <Compile Include="Employees\IEmployee.cs" />
+    <Compile Include="Fields\FieldRepository.cs" />
+    <Compile Include="Fields\FieldSource.cs" />
+    <Compile Include="Fields\Type\Base\Field.cs" />
+    <Compile Include="Guard.cs" />
+    <Compile Include="DataConnections\IDataFactoryArchivable.cs" />
+    <Compile Include="Identity\IdentityProvider.cs" />
+    <Compile Include="Identity\IIdentityContextProvider.cs" />
+    <Compile Include="Identity\IIdentityProvider.cs" />
+    <Compile Include="Identity\UserIdentity.cs" />
+    <Compile Include="JoinVia\IJoinVia.cs" />
+    <Compile Include="ProjectCodes\IProjectCodeWithUserDefinedFields.cs" />
+    <Compile Include="ProjectCodes\ProjectCodeWithUserDefinedFields.cs" />
+    <Compile Include="RepositoryBase.cs" />
+    <Compile Include="Fields\FieldFactory.cs" />
+    <Compile Include="Fields\IFieldFactory.cs" />
+    <Compile Include="Fields\Type\AmountField.cs" />
+    <Compile Include="Fields\Type\Attributes\AllowImportAttribute.cs" />
+    <Compile Include="Fields\Type\Attributes\CanTotalAttribute.cs" />
+    <Compile Include="Fields\Type\Attributes\CustomEntityField.cs" />
+    <Compile Include="Fields\Type\Attributes\CustomField.cs" />
+    <Compile Include="Fields\Type\Attributes\FieldAttributes.cs" />
+    <Compile Include="Fields\Type\Attributes\ForeignKeyAttribute.cs" />
+    <Compile Include="Fields\Type\Attributes\GenListAttribute.cs" />
+    <Compile Include="Fields\Type\Attributes\IdFieldAttribute.cs" />
+    <Compile Include="Fields\Type\Attributes\IFieldAttribute.cs" />
+    <Compile Include="Fields\Type\Attributes\MandatoryAttribute.cs" />
+    <Compile Include="Fields\Type\Attributes\NormalViewAttribute.cs" />
+    <Compile Include="Fields\Type\Attributes\PrintOutAttribute.cs" />
+    <Compile Include="Fields\Type\Attributes\RelabelAttribute.cs" />
+    <Compile Include="Fields\Type\Attributes\UseForLookupAttribute.cs" />
+    <Compile Include="Fields\Type\Attributes\WorkflowSearchAttribute.cs" />
+    <Compile Include="Fields\Type\Attributes\WorkflowUpdateAttribute.cs" />
+    <Compile Include="Fields\Type\Base\BooleanField.cs" />
+    <Compile Include="Fields\Type\Base\DateTimeField.cs" />
+    <Compile Include="Fields\Type\Base\IField.cs" />
+    <Compile Include="Fields\Type\Base\IntegerField.cs" />
+    <Compile Include="Fields\Type\Base\LongField.cs" />
+    <Compile Include="Fields\Type\Base\NumericField.cs" />
+    <Compile Include="Fields\Type\Base\StringField.cs" />
+    <Compile Include="Fields\Type\Base\VarBinaryField.cs" />
+    <Compile Include="Fields\Type\CurrencyField.cs" />
+    <Compile Include="Fields\Type\DateField.cs" />
+    <Compile Include="Fields\Type\Base\DecimalField.cs" />
+    <Compile Include="Fields\Type\FloatField.cs" />
+    <Compile Include="Fields\Type\FunctionCurrency.cs" />
+    <Compile Include="Fields\Type\FunctionDecimalField.cs" />
+    <Compile Include="Fields\Type\FunctionIntegerField.cs" />
+    <Compile Include="Fields\Type\FunctionStringField.cs" />
+    <Compile Include="Fields\Type\FunctionUnique.cs" />
+    <Compile Include="Fields\Type\Base\GuidField.cs" />
+    <Compile Include="Fields\Type\LargeText.cs" />
+    <Compile Include="Fields\Type\MoneyField.cs" />
+    <Compile Include="Fields\Type\NumberField.cs" />
+    <Compile Include="Fields\Type\StaticField.cs" />
+    <Compile Include="Fields\Type\TimeField.cs" />
+    <Compile Include="Fields\Type\UniqueField.cs" />
+    <Compile Include="Fields\Type\ValueList\BooleanFieldValueList.cs" />
+    <Compile Include="Fields\Type\ValueList\CustomEntityFieldListValuesRepository.cs" />
+    <Compile Include="Fields\Type\ValueList\CustomFieldListValuesRepository.cs" />
+    <Compile Include="Fields\Type\ValueList\FieldListValuesRepository.cs" />
+    <Compile Include="Fields\Type\ValueList\GuidFieldValueList.cs" />
+    <Compile Include="Fields\Type\ValueList\IFieldListValuesRepository.cs" />
+    <Compile Include="Fields\Type\ValueList\IFieldValueList.cs" />
+    <Compile Include="Fields\Type\ValueList\IntegerFieldValueList.cs" />
+    <Compile Include="Fields\Type\ValueList\StringFieldValueList.cs" />
+    <Compile Include="Fields\Type\ValueList\UserDefinedFieldListValuesRepository.cs" />
+    <Compile Include="FinancialYears\FinancialYearRepository.cs" />
+    <Compile Include="Interfaces\IArchivable.cs" />
+    <Compile Include="Interfaces\IAuditable.cs" />
+    <Compile Include="Interfaces\IIdentifier.cs" />
+    <Compile Include="JoinVia\IJoinViaInnerJoin.cs" />
+    <Compile Include="JoinVia\IJoinViaPart.cs" />
+    <Compile Include="JoinVia\JoinVia.cs" />
+    <Compile Include="JoinVia\JoinViaPart.cs" />
+    <Compile Include="JoinVia\JoinViaPartField.cs" />
+    <Compile Include="JoinVia\JoinViaPartRelatedTable.cs" />
+    <Compile Include="JoinVia\JoinViaParts.cs" />
+    <Compile Include="JoinVia\JoinViaPartTable.cs" />
+    <Compile Include="Fields\Type\ListItemValues.cs" />
+    <Compile Include="ProductModules\CorporateDilligenceProductModule.cs" />
+    <Compile Include="ProductModules\ExpensesProductModule.cs" />
+    <Compile Include="ProductModules\FrameworkProductModule.cs" />
+    <Compile Include="ProductModules\GreenLightProductModule.cs" />
+    <Compile Include="ProductModules\GreenLIghtWorkForceProductModule.cs" />
+    <Compile Include="ProductModules\IProductModule.cs" />
+    <Compile Include="ProductModules\NullProductModule.cs" />
+    <Compile Include="ProductModules\ProductModule.cs" />
+    <Compile Include="ProjectCodes\IProjectCode.cs" />
+    <Compile Include="ProjectCodes\ProjectCode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tables\TableRepository.cs" />
+    <Compile Include="Tables\Type\CustomEntityTable.cs" />
+    <Compile Include="Tables\Type\CustomTable.cs" />
+    <Compile Include="Tables\Type\ICustomTable.cs" />
+    <Compile Include="Tables\Type\ITable.cs" />
+    <Compile Include="Tables\Type\MetabaseTable.cs" />
+    <Compile Include="UserDefinedFields\IUserDefineable.cs" />
+    <Compile Include="UserDefinedFields\IUserDefinedField.cs" />
+    <Compile Include="UserDefinedFields\IUserDefinedFieldValues.cs" />
+    <Compile Include="UserDefinedFields\UserdefinedAttribute.cs" />
+    <Compile Include="UserDefinedFields\UserDefinedFieldRepository.cs" />
+    <Compile Include="UserDefinedFields\UserDefinedFieldValueCollection.cs" />
+    <Compile Include="UserDefinedFields\UserDefinedFieldValueRepository.cs" />
+    <Compile Include="UserDefinedFields\UserDefinedFieldValues.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{85dfc378-171e-46c8-9c54-74cbe66368ac}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{C417335B-7BE1-45AE-8274-C0B65829C4FC}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BusinessLogic.ruleset" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

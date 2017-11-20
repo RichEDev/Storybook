@@ -1,0 +1,18 @@
+@using System.Collections.ObjectModel
+@using System.Web.Http.Description
+@using System.Threading
+@using SpendManagementApi.Areas.HelpPage;
+@model System.Web.Http.Controllers.HttpParameterDescriptor
+
+        <tr>
+            <td class="parameter-name"><b>@Model.ParameterName</b></td>
+            <td class="parameter-documentation">
+                @if (Model.ParameterType.FullName.Contains("SpendManagementApi.Models"))
+                {
+                    @Html.ActionLink(@Model.ParameterType.Name, "TypeInformation", "Help", null, null, @Model.ParameterType.Name, null, new { title = @Model.ParameterType, target = "_blank" })
+                }
+                else
+                {
+                    @Model.ParameterType.Name
+                }
+        </tr>

@@ -1,0 +1,263 @@
+% FW Update.dat file
+% 10/09/2004
+# 000014 000015
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Assets
+
+% Attachments
+
+% Audit Log
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Contract Status
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Inflator Metrics
+
+% Codes - Financial Status
+
+% Codes - Invoice Status Type
+
+% Codes - Licence Renewal Type
+
+% Codes - Note Category
+
+% Codes - Platform Type
+
+% Codes - Region
+
+% Codes - Sales Tax
+
+% Codes - SLD
+
+% Codes - Term Type
+
+% Codes - Units
+
+% Codes - User Field Grouping
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract - Forecast Details
+
+% Contract - Forecast Products
+
+% Contract - Notification
+
+% Contract - Product Details
+ALTER TABLE [Contract - Product Details]
+ADD [Price Paid] float NOT NULL DEFAULT(0)
+*
+
+% Contract - Product Details - Calloff
+
+% Contract - Product-History
+
+% Contract - Product-Platforms
+
+% Contract Classes
+
+% Contract Details
+
+% Contract Notes
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Email Schedule
+CREATE TABLE dbo.[Email Schedule]
+(
+	[Schedule Id] int IDENTITY PRIMARY KEY,
+	[Email Type] int NOT NULL DEFAULT(0),
+	[Email Param] varchar(30),
+	[Email Frequency] int,
+	[Frequency Param] int,
+	[Next Run Date] datetime,
+	[Run Time] varchar(8)
+)
+*
+
+% Export Fields
+
+% Exports
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice - Product Details
+
+% Invoice Details
+
+% Invoice Log
+
+% Invoice Notes
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Link Definitions
+IF EXISTS (SELECT TABLE_NAME
+           FROM INFORMATION_SCHEMA.TABLES
+           WHERE TABLE_NAME = 'Link Definitions')
+    DROP TABLE dbo.[Link Definitions]
+*
+
+CREATE TABLE dbo.[Link Definitions]
+(
+  [Link Id] int IDENTITY PRIMARY KEY,
+  [Link Definition] varchar(50),
+  [Is Schedule Link] int NOT NULL DEFAULT(0)
+)
+*
+
+% Link Matrix
+IF EXISTS (SELECT TABLE_NAME
+           FROM INFORMATION_SCHEMA.TABLES
+           WHERE TABLE_NAME = 'Link Matrix')
+    DROP TABLE dbo.[Link Matrix]
+*
+
+CREATE TABLE dbo.[Link Matrix]
+(
+  [Link Id] int,
+  [Contract Id] int,
+  [Is Archived] int NOT NULL DEFAULT(0)
+)
+*
+
+% Location
+
+% Mail
+
+% Mail Schedule
+
+% Metrics
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Platform LPars
+
+% Product Details
+
+% Product Notes
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Saved Reports
+
+% Saved Views
+
+% Schedule
+
+% Security
+
+% Security History
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Staff Details
+
+% Sublocations
+
+% System-DBJoins
+
+% System Parameters
+
+% UF Grouping Categories
+CREATE TABLE dbo.[UF Grouping Categories]
+(
+	[Contract Category Id] int,
+	[UF Grouping Id] int
+)
+*
+
+% User Field Values
+
+% User Fields
+
+% User Help Docs
+
+% User Roles
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+
+% Vendor Contact Notes
+
+% Vendor Notes
+
+% Vendor Regions
+
+% Vendor Status
+ALTER TABLE [Vendor Status]
+ADD [Sequence] int NOT NULL DEFAULT(0)
+*
+
+% Version Registry
+
+% Version History
+
+% ---------- Views ----------
+
+
+% Performance Metrics
+
+% CalView
+
+% ---------- Procedures ----------
+
+% End of file

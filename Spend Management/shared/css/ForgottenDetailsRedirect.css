@@ -1,0 +1,38 @@
+﻿  img {
+        max-width: 300px;
+      padding-top: 75px;
+      }
+      
+      div {
+        text-align: center;
+      }
+      
+      #launch {
+        font-size: 16pt;
+        color: #FFF;
+        background: #4AB8DE;
+        border-radius: 4px;
+        padding: 12px 20px 14px; 
+      }
+      
+      .desc {
+        padding: 20px;
+        font-size: 18px;
+        line-height: 24px;
+      }
+      
+      body {
+        -webkit-transition: background-color .2s ease-out;
+        -moz-transition: background-color .2s ease-out;
+        -o-transition: background-color .2s ease-out;
+        transition: background-color .2s ease-out;
+        background-color: #004990;
+        -webkit-font-smoothing: antialiased;
+        color: #FFF;
+        font: 20px/20px "Maison Neue", "HelveticaNeue", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+      }
+
+      #buttonSpacing {
+        display: block;
+        padding: 40px 0px 0px 0px;
+      }

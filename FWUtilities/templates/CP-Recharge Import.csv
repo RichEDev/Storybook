@@ -1,0 +1,7 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+contract_productdetails_recharge,Recharge Id,Recharge Element,S,50,N,Y,Y,,,
+contract_productdetails_recharge,Recharge Period,Recharge Period,D,,N,Y,N,,,
+contract_productdetails_recharge,Recharge Amount,Recharge Amount,F,,N,Y,N,,,0
+contract_productdetails_recharge,Contract-Product Id,Link to Contract Product,H,,Y,Y,R2,[contract_productdetails].[Contract-Product Id],[Contract Id]~[Product Id],
+contract_productdetails_recharge,Contract-Product Id,Contract Desc. To Link to,S,250,Y,Y,L1,[contract_details].[Contract Id],[contract_details].[Contract Description],
+contract_productdetails_recharge,Contract-Product Id,Product Name to link to,S,70,Y,Y,L2,[product_details].[Product Id],[product_details].[Product Name],

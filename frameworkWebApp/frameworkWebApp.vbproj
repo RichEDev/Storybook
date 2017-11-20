@@ -1,0 +1,1600 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{191E8D27-AE54-4668-BAD1-69A2D1EC9192}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>frameworkWebApp</RootNamespace>
+    <AssemblyName>frameworkWebApp</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MyType>Custom</MyType>
+    <UseIISExpress>false</UseIISExpress>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicCorrectnessRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>frameworkWebApp.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Automated Build|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <!-- Customizable Output Directory Opt-In for TFS Build (web application projects) -->
+  <!--<PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+    <OutDir>$(TeamBuildOutDir)</OutDir>
+    <NoWarn>42353,42354,42355</NoWarn>
+  </PropertyGroup>-->
+  <!--<Target Name="PublishWebSites" AfterTargets="Publish">
+    <ItemGroup Label="ItemsForDeploymment">
+      <Folders Include="$(publishUrl)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Folders)" DestinationFiles="@(Folders->'$(TeamBuildOutDir)\_PublishedWebsites\$(MSBuildProjectName)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
+  </Target>-->
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=4.1.7.123, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.Web.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.Web.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.Misc.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.Misc.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.Shared.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.Shared.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebCalcManager.v11.1">
+      <HintPath>..\..\..\references\Infragistics4.WebUI.UltraWebCalcManager.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebChart.v11.1">
+      <HintPath>..\..\..\references\Infragistics4.WebUI.UltraWebChart.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebGrid.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebGrid.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebNavigator.v11.1">
+      <HintPath>..\..\..\references\Infragistics4.WebUI.UltraWebNavigator.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebTab.v11.1">
+      <HintPath>..\..\..\references\Infragistics4.WebUI.UltraWebTab.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.UltraWebToolbar.v11.1">
+      <HintPath>..\..\..\references\Infragistics4.WebUI.UltraWebToolbar.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebCombo.v11.1">
+      <HintPath>..\..\..\references\Infragistics4.WebUI.WebCombo.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebDataInput.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.WebDataInput.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebDateChooser.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.WebDateChooser.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebHtmlEditor.v11.1">
+      <HintPath>..\..\..\references\Infragistics4.WebUI.WebHtmlEditor.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebSchedule.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\References\Infragistics4.WebUI.WebSchedule.v11.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Chart.Wpf, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Chart.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Compression.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Compression.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Core, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.DocIO.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.DocIO.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.DocToPdfConverter.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.DocToPdfConverter.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.EJ.ReportViewer, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.EJ.ReportViewer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Gauge.Wpf, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Gauge.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Grid.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Grid.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Linq.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Linq.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.OfficeChart.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.OfficeChart.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Olap.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Olap.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Pdf.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.PdfViewer.Windows, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.PdfViewer.Windows.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.SfMaps.Wpf, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.SfMaps.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Shared.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Web, Version=13.2400.0.29, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Shared.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Wpf, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Shared.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Tools.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.XlsIO.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.2\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Entity">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Collections.Specialized" />
+    <Import Include="System.Configuration" />
+    <Import Include="System.Text" />
+    <Import Include="System.Text.RegularExpressions" />
+    <Import Include="System.Web" />
+    <Import Include="System.Web.Caching" />
+    <Import Include="System.Web.SessionState" />
+    <Import Include="System.Web.Security" />
+    <Import Include="System.Web.Profile" />
+    <Import Include="System.Web.UI" />
+    <Import Include="System.Web.UI.WebControls" />
+    <Import Include="System.Web.UI.WebControls.WebParts" />
+    <Import Include="System.Web.UI.HtmlControls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="--app_offline.htm" />
+    <Content Include="About.aspx" />
+    <Content Include="App_Themes\ExpensesThemeNew\ExpensesThemeNew.css" />
+    <Content Include="App_Themes\FrameworkTheme\Framework.css" />
+    <Content Include="App_Themes\FrameworkTheme\logon_buttons\help.gif" />
+    <Content Include="App_Themes\FrameworkTheme\logon_buttons\logon.gif" />
+    <Content Include="App_Themes\FrameworkTheme\logon_buttons\logon_close.gif" />
+    <Content Include="App_Themes\FrameworkTheme\logon_buttons\logon_panel.gif" />
+    <Content Include="App_Themes\GreenLightTheme\GreenLightTheme.css" />
+    <Content Include="App_Themes\SmartDTheme\SmartDTheme.css" />
+    <Content Include="App_Themes\GreenLightWorkforceTheme\GreenLightWorkforceTheme.css" />
+    <Content Include="Associations.aspx" />
+    <Content Include="Attachments.aspx" />
+    <Content Include="Backup.aspx" />
+    <Content Include="blank.htm" />
+    <Content Include="Buttons\button_forgotten_details.gif" />
+    <Content Include="Buttons\button_logon.gif" />
+    <Content Include="Buttons\cancel.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Buttons\check.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Buttons\close.gif" />
+    <Content Include="Buttons\cross.gif" />
+    <Content Include="Buttons\delete2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Buttons\dleft arrow.gif" />
+    <Content Include="Buttons\edit.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Buttons\export.gif" />
+    <Content Include="Buttons\finish.gif" />
+    <Content Include="Buttons\help.gif" />
+    <Content Include="Buttons\information.gif" />
+    <Content Include="Buttons\left arrow.gif" />
+    <Content Include="Buttons\navigate_left2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Buttons\navigate_right2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Buttons\next.gif" />
+    <Content Include="Buttons\ok.gif" />
+    <Content Include="Buttons\old framework\button_forgotten_details.gif" />
+    <Content Include="Buttons\old framework\button_logon.gif" />
+    <Content Include="Buttons\old framework\cancel.gif" />
+    <Content Include="Buttons\old framework\ok.gif" />
+    <Content Include="Buttons\old framework\pagebutton_finish.gif" />
+    <Content Include="Buttons\old framework\pagebutton_next.gif" />
+    <Content Include="Buttons\old framework\pagebutton_previous.gif" />
+    <Content Include="Buttons\old framework\pagebutton_search.gif" />
+    <Content Include="Buttons\old framework\page_close.gif" />
+    <Content Include="Buttons\old framework\update.gif" />
+    <Content Include="Buttons\open.gif" />
+    <Content Include="Buttons\pagebutton_finish.gif" />
+    <Content Include="Buttons\pagebutton_next.gif" />
+    <Content Include="Buttons\pagebutton_previous.gif" />
+    <Content Include="Buttons\pagebutton_search.gif" />
+    <Content Include="Buttons\page_close.gif" />
+    <Content Include="Buttons\page_close.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Buttons\previous.gif" />
+    <Content Include="Buttons\printer.gif" />
+    <Content Include="Buttons\redo.png" />
+    <Content Include="Buttons\refresh.gif" />
+    <Content Include="Buttons\refresh.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Buttons\right arrow.gif" />
+    <Content Include="Buttons\search.gif" />
+    <Content Include="Buttons\tick.gif" />
+    <Content Include="Buttons\timeline_event1.gif" />
+    <Content Include="Buttons\timeline_event10.gif" />
+    <Content Include="Buttons\timeline_event10_sel.gif" />
+    <Content Include="Buttons\timeline_event11.gif" />
+    <Content Include="Buttons\timeline_event11_sel.gif" />
+    <Content Include="Buttons\timeline_event12.gif" />
+    <Content Include="Buttons\timeline_event12_sel.gif" />
+    <Content Include="Buttons\timeline_event13.gif" />
+    <Content Include="Buttons\timeline_event13_sel.gif" />
+    <Content Include="Buttons\timeline_event14.gif" />
+    <Content Include="Buttons\timeline_event14_sel.gif" />
+    <Content Include="Buttons\timeline_event15.gif" />
+    <Content Include="Buttons\timeline_event15_sel.gif" />
+    <Content Include="Buttons\timeline_event1_sel.gif" />
+    <Content Include="Buttons\timeline_event2.gif" />
+    <Content Include="Buttons\timeline_event2_sel.gif" />
+    <Content Include="Buttons\timeline_event3.gif" />
+    <Content Include="Buttons\timeline_event3_sel.gif" />
+    <Content Include="Buttons\timeline_event4.gif" />
+    <Content Include="Buttons\timeline_event4_sel.gif" />
+    <Content Include="Buttons\timeline_event5.gif" />
+    <Content Include="Buttons\timeline_event5_sel.gif" />
+    <Content Include="Buttons\timeline_event6.gif" />
+    <Content Include="Buttons\timeline_event6_sel.gif" />
+    <Content Include="Buttons\timeline_event7.gif" />
+    <Content Include="Buttons\timeline_event7_sel.gif" />
+    <Content Include="Buttons\timeline_event8.gif" />
+    <Content Include="Buttons\timeline_event8_sel.gif" />
+    <Content Include="Buttons\timeline_event9.gif" />
+    <Content Include="Buttons\timeline_event9_sel.gif" />
+    <Content Include="Buttons\timeline_left.gif" />
+    <Content Include="Buttons\timeline_middle.gif" />
+    <Content Include="Buttons\timeline_right.gif" />
+    <Content Include="Buttons\update.gif" />
+    <Content Include="callback.js" />
+    <Content Include="ContractHistory.aspx" />
+    <Content Include="ContractProductInfo.aspx" />
+    <Content Include="ContractRechargeBreakdown.aspx" />
+    <Content Include="ContractRechargeBreakdownUF.aspx" />
+    <Content Include="ContractRechargeBreakdownUF.aspx.cs" />
+    <Content Include="ContractRechargeData.aspx" />
+    <Content Include="ContractRechargeOnOffLine.aspx" />
+    <Content Include="ContractRechargeOnOffLine.aspx.cs" />
+    <Content Include="ContractSavings.aspx" />
+    <Content Include="ContractSummary.aspx" />
+    <Content Include="ContractSummaryScript.js" />
+    <Content Include="Default.aspx" />
+    <Content Include="favicon.ico" />
+    <Content Include="Framework2006.sln" />
+    <Content Include="FWEmailServer.asmx" />
+    <Content Include="FWParams.aspx" />
+    <Content Include="FWSetupRecharge.aspx" />
+    <Content Include="FWSubAccountPopup.ascx" />
+    <Content Include="FWTasksPopupSummary.ascx" />
+    <Content Include="Global.asax" />
+    <Content Include="help\Adding a contract.htm" />
+    <Content Include="help\adm_auditlog.htm" />
+    <Content Include="help\adm_employee_teams.htm" />
+    <Content Include="help\adm_parameters.htm" />
+    <Content Include="help\adm_role_details.htm" />
+    <Content Include="help\adm_uf_grouping.htm" />
+    <Content Include="help\adm_user_roles.htm" />
+    <Content Include="help\adm_user_setup.htm" />
+    <Content Include="help\adm_user_setup_detail.htm" />
+    <Content Include="help\adm_user_teams.htm" />
+    <Content Include="help\adm_verifyattachments.htm" />
+    <Content Include="help\cd_inflator_metric.htm" />
+    <Content Include="help\cd_link_manage.htm" />
+    <Content Include="help\cm_contractcategory.htm" />
+    <Content Include="help\cm_contractstatus.htm" />
+    <Content Include="help\cm_contracttype.htm" />
+    <Content Include="help\cm_currency.htm" />
+    <Content Include="help\cm_financialstatus.htm" />
+    <Content Include="help\cm_inflatormetrics.htm" />
+    <Content Include="help\cm_invoicefrequencytype.htm" />
+    <Content Include="help\cm_invoicestatustype.htm" />
+    <Content Include="help\cm_licencerenewaltype.htm" />
+    <Content Include="help\cm_location.htm" />
+    <Content Include="help\cm_productcategory.htm" />
+    <Content Include="help\cm_salestax.htm" />
+    <Content Include="help\cm_ufgrouping.htm" />
+    <Content Include="help\cm_vendorstatus.htm" />
+    <Content Include="help\code_maintenance.htm" />
+    <Content Include="help\cs_additional_con_detail.htm" />
+    <Content Include="help\cs_contract_detail.htm" />
+    <Content Include="help\cs_contract_history.htm" />
+    <Content Include="help\cs_contract_products.htm" />
+    <Content Include="help\cs_contract_recharge.htm" />
+    <Content Include="help\cs_contract_savings.htm" />
+    <Content Include="help\cs_generate_forecasts.htm" />
+    <Content Include="help\cs_invoice_details.htm" />
+    <Content Include="help\cs_invoice_forecasts.htm" />
+    <Content Include="help\cs_link_contracts.htm" />
+    <Content Include="help\cs_manage_schedules.htm" />
+    <Content Include="help\cs_notes_summary.htm" />
+    <Content Include="help\cs_recharge_payments.htm" />
+    <Content Include="help\cs_recharge_products.htm" />
+    <Content Include="help\cs_recharge_template.htm" />
+    <Content Include="help\fwhelp.css" />
+    <Content Include="help\help_template.htm" />
+    <Content Include="help\logon_help.htm" />
+    <Content Include="help\Notes.htm" />
+    <Content Include="help\product_details.htm" />
+    <Content Include="help\reporting.htm" />
+    <Content Include="help\report_list.htm" />
+    <Content Include="help\select_columns.htm" />
+    <Content Include="help\select_criteria.htm" />
+    <Content Include="help\summary_portal.htm" />
+    <Content Include="help\table_maintenance.htm" />
+    <Content Include="help\tm_product_details.htm" />
+    <Content Include="help\unavailable_help_template.htm" />
+    <Content Include="help\vd_contacts.htm" />
+    <Content Include="help\vd_contact_detail.htm" />
+    <Content Include="help\vendor_details.htm" />
+    <Content Include="help\version_registry.htm" />
+    <Content Include="Home.aspx" />
+    <Content Include="icons\16\plain\arrow_down_green.gif" />
+    <Content Include="icons\16\plain\arrow_up_green.gif" />
+    <Content Include="icons\16\plain\calendar.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\clipboard.gif" />
+    <Content Include="icons\16\plain\clipboard.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\column.gif" />
+    <Content Include="icons\16\plain\column_add.gif" />
+    <Content Include="icons\16\plain\column_constant.gif" />
+    <Content Include="icons\16\plain\column_function.gif" />
+    <Content Include="icons\16\plain\document_attachment.gif" />
+    <Content Include="icons\16\plain\document_attachment.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\document_exchange.gif" />
+    <Content Include="icons\16\plain\document_exchange.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\document_refresh.gif" />
+    <Content Include="icons\16\plain\export.gif" />
+    <Content Include="icons\16\plain\find.gif" />
+    <Content Include="icons\16\plain\find.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\folder.gif" />
+    <Content Include="icons\16\plain\folder_closed.gif" />
+    <Content Include="icons\16\plain\folder_lock.gif" />
+    <Content Include="icons\16\plain\folder_lock.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\folder_out.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\folder_out.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\form_green.gif" />
+    <Content Include="icons\16\plain\form_green.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\funnel_add.gif" />
+    <Content Include="icons\16\plain\history.gif" />
+    <Content Include="icons\16\plain\history.png" />
+    <Content Include="icons\16\plain\lock.gif" />
+    <Content Include="icons\16\plain\lock_open.gif" />
+    <Content Include="icons\16\plain\nav_plain_blue.gif" />
+    <Content Include="icons\16\plain\nav_plain_red.gif" />
+    <Content Include="icons\16\plain\paperclip.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\paperclip.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\preferences.gif" />
+    <Content Include="icons\16\plain\preferences.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\tooltip.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\view.gif" />
+    <Content Include="icons\16\plain\view.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\16\plain\window_earth.gif" />
+    <Content Include="icons\16\plain\zoom_in.gif" />
+    <Content Include="icons\16\plain\zoom_in.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\24\plain\at.gif" />
+    <Content Include="icons\24\plain\box_preferences.gif" />
+    <Content Include="icons\24\plain\briefcase.gif" />
+    <Content Include="icons\24\plain\briefcase2.gif" />
+    <Content Include="icons\24\plain\businessman.gif" />
+    <Content Include="icons\24\plain\businessman2.gif" />
+    <Content Include="icons\24\plain\businessman_delete.gif" />
+    <Content Include="icons\24\plain\calendar_preferences.gif" />
+    <Content Include="icons\24\plain\cashier.gif" />
+    <Content Include="icons\24\plain\certificate_information.gif" />
+    <Content Include="icons\24\plain\chart.gif" />
+    <Content Include="icons\24\plain\creditcards.gif" />
+    <Content Include="icons\24\plain\currency_pound.gif" />
+    <Content Include="icons\24\plain\data_edit.gif" />
+    <Content Include="icons\24\plain\data_preferences.gif" />
+    <Content Include="icons\24\plain\date-time.gif" />
+    <Content Include="icons\24\plain\debug.gif" />
+    <Content Include="icons\24\plain\delete2.gif" />
+    <Content Include="icons\24\plain\delete2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\24\plain\document.gif" />
+    <Content Include="icons\24\plain\document_certificate.gif" />
+    <Content Include="icons\24\plain\document_check.gif" />
+    <Content Include="icons\24\plain\document_connection.gif" />
+    <Content Include="icons\24\plain\document_edit.gif" />
+    <Content Include="icons\24\plain\document_gear.gif" />
+    <Content Include="icons\24\plain\document_into.gif" />
+    <Content Include="icons\24\plain\document_pinned.gif" />
+    <Content Include="icons\24\plain\document_refresh.gif" />
+    <Content Include="icons\24\plain\document_refresh.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\24\plain\document_time.gif" />
+    <Content Include="icons\24\plain\document_warning.gif" />
+    <Content Include="icons\24\plain\earth_location.gif" />
+    <Content Include="icons\24\plain\elements_selection.gif" />
+    <Content Include="icons\24\plain\exit.gif" />
+    <Content Include="icons\24\plain\find.gif" />
+    <Content Include="icons\24\plain\form_green.gif" />
+    <Content Include="icons\24\plain\gear_replace.gif" />
+    <Content Include="icons\24\plain\handshake.gif" />
+    <Content Include="icons\24\plain\help.gif" />
+    <Content Include="icons\24\plain\id_card.gif" />
+    <Content Include="icons\24\plain\index_preferences.gif" />
+    <Content Include="icons\24\plain\money.gif" />
+    <Content Include="icons\24\plain\money2.gif" />
+    <Content Include="icons\24\plain\office-building.gif" />
+    <Content Include="icons\24\plain\palette.gif" />
+    <Content Include="icons\24\plain\percent.gif" />
+    <Content Include="icons\24\plain\policeman_bobby.gif" />
+    <Content Include="icons\24\plain\preferences.gif" />
+    <Content Include="icons\24\plain\product.gif" />
+    <Content Include="icons\24\plain\scroll_ok.gif" />
+    <Content Include="icons\24\plain\server_client.gif" />
+    <Content Include="icons\24\plain\server_into.gif" />
+    <Content Include="icons\24\plain\server_out.gif" />
+    <Content Include="icons\24\plain\server_preferences.gif" />
+    <Content Include="icons\24\plain\tape_measure1.gif" />
+    <Content Include="icons\24\plain\text_ok.gif" />
+    <Content Include="icons\24\plain\thread.gif" />
+    <Content Include="icons\24\plain\toolbox.gif" />
+    <Content Include="icons\24\plain\trafficlight_green.gif" />
+    <Content Include="icons\24\plain\trafficlight_red.gif" />
+    <Content Include="icons\24\plain\transform.gif" />
+    <Content Include="icons\24\plain\user1.gif" />
+    <Content Include="icons\24\plain\user1_information.gif" />
+    <Content Include="icons\24\plain\user1_monitor.gif" />
+    <Content Include="icons\24\plain\user1_preferences.gif" />
+    <Content Include="icons\24\plain\user1_refresh.gif" />
+    <Content Include="icons\24\plain\users2.gif" />
+    <Content Include="icons\24\plain\users3_preferences.gif" />
+    <Content Include="icons\24\plain\users4.gif" />
+    <Content Include="icons\24\plain\window_dialog.gif" />
+    <Content Include="icons\24\shadow\at.gif" />
+    <Content Include="icons\24\shadow\box_preferences.gif" />
+    <Content Include="icons\24\shadow\briefcase.gif" />
+    <Content Include="icons\24\shadow\briefcase2.gif" />
+    <Content Include="icons\24\shadow\businessman.gif" />
+    <Content Include="icons\24\shadow\businessman2.gif" />
+    <Content Include="icons\24\shadow\businessman_delete.gif" />
+    <Content Include="icons\24\shadow\calendar_preferences.gif" />
+    <Content Include="icons\24\shadow\cashier.gif" />
+    <Content Include="icons\24\shadow\certificate_information.gif" />
+    <Content Include="icons\24\shadow\chart.gif" />
+    <Content Include="icons\24\shadow\creditcards.gif" />
+    <Content Include="icons\24\shadow\currency_pound.gif" />
+    <Content Include="icons\24\shadow\data_edit.gif" />
+    <Content Include="icons\24\shadow\data_preferences.gif" />
+    <Content Include="icons\24\shadow\date-time.gif" />
+    <Content Include="icons\24\shadow\debug.gif" />
+    <Content Include="icons\24\shadow\delete2.gif" />
+    <Content Include="icons\24\shadow\document.gif" />
+    <Content Include="icons\24\shadow\document_certificate.gif" />
+    <Content Include="icons\24\shadow\document_check.gif" />
+    <Content Include="icons\24\shadow\document_connection.gif" />
+    <Content Include="icons\24\shadow\document_edit.gif" />
+    <Content Include="icons\24\shadow\document_gear.gif" />
+    <Content Include="icons\24\shadow\document_into.gif" />
+    <Content Include="icons\24\shadow\document_pinned.gif" />
+    <Content Include="icons\24\shadow\document_time.gif" />
+    <Content Include="icons\24\shadow\document_warning.gif" />
+    <Content Include="icons\24\shadow\earth_location.gif" />
+    <Content Include="icons\24\shadow\elements_selection.gif" />
+    <Content Include="icons\24\shadow\exit.gif" />
+    <Content Include="icons\24\shadow\find.gif" />
+    <Content Include="icons\24\shadow\form_green.gif" />
+    <Content Include="icons\24\shadow\gear_replace.gif" />
+    <Content Include="icons\24\shadow\handshake.gif" />
+    <Content Include="icons\24\shadow\help.gif" />
+    <Content Include="icons\24\shadow\id_card.gif" />
+    <Content Include="icons\24\shadow\index_preferences.gif" />
+    <Content Include="icons\24\shadow\money.gif" />
+    <Content Include="icons\24\shadow\money2.gif" />
+    <Content Include="icons\24\shadow\office-building.gif" />
+    <Content Include="icons\24\shadow\palette.gif" />
+    <Content Include="icons\24\shadow\percent.gif" />
+    <Content Include="icons\24\shadow\policeman_bobby.gif" />
+    <Content Include="icons\24\shadow\preferences.gif" />
+    <Content Include="icons\24\shadow\product.gif" />
+    <Content Include="icons\24\shadow\scroll_ok.gif" />
+    <Content Include="icons\24\shadow\server_client.gif" />
+    <Content Include="icons\24\shadow\server_into.gif" />
+    <Content Include="icons\24\shadow\server_out.gif" />
+    <Content Include="icons\24\shadow\server_preferences.gif" />
+    <Content Include="icons\24\shadow\tape_measure1.gif" />
+    <Content Include="icons\24\shadow\text_ok.gif" />
+    <Content Include="icons\24\shadow\thread.gif" />
+    <Content Include="icons\24\shadow\toolbox.gif" />
+    <Content Include="icons\24\shadow\trafficlight_green.gif" />
+    <Content Include="icons\24\shadow\trafficlight_red.gif" />
+    <Content Include="icons\24\shadow\transform.gif" />
+    <Content Include="icons\24\shadow\user1.gif" />
+    <Content Include="icons\24\shadow\user1_information.gif" />
+    <Content Include="icons\24\shadow\user1_monitor.gif" />
+    <Content Include="icons\24\shadow\user1_preferences.gif" />
+    <Content Include="icons\24\shadow\user1_refresh.gif" />
+    <Content Include="icons\24\shadow\users2.gif" />
+    <Content Include="icons\24\shadow\users3_preferences.gif" />
+    <Content Include="icons\24\shadow\users4.gif" />
+    <Content Include="icons\24\shadow\window_dialog.gif" />
+    <Content Include="icons\48\plain\at.gif" />
+    <Content Include="icons\48\plain\books.png" />
+    <Content Include="icons\48\plain\box_preferences.gif" />
+    <Content Include="icons\48\plain\briefcase.gif" />
+    <Content Include="icons\48\plain\briefcase2.gif" />
+    <Content Include="icons\48\plain\businessman.gif" />
+    <Content Include="icons\48\plain\businessman2.gif" />
+    <Content Include="icons\48\plain\businessman_delete.gif" />
+    <Content Include="icons\48\plain\calendar_preferences.gif" />
+    <Content Include="icons\48\plain\cashier.gif" />
+    <Content Include="icons\48\plain\certificate_information.gif" />
+    <Content Include="icons\48\plain\chart.gif" />
+    <Content Include="icons\48\plain\creditcards.gif" />
+    <Content Include="icons\48\plain\currency_pound.gif" />
+    <Content Include="icons\48\plain\data_edit.gif" />
+    <Content Include="icons\48\plain\data_find.gif" />
+    <Content Include="icons\48\plain\data_preferences.gif" />
+    <Content Include="icons\48\plain\date-time.gif" />
+    <Content Include="icons\48\plain\debug.gif" />
+    <Content Include="icons\48\plain\document.gif" />
+    <Content Include="icons\48\plain\document_certificate.gif" />
+    <Content Include="icons\48\plain\document_check.gif" />
+    <Content Include="icons\48\plain\document_connection.gif" />
+    <Content Include="icons\48\plain\document_edit.gif" />
+    <Content Include="icons\48\plain\document_gear.gif" />
+    <Content Include="icons\48\plain\document_into.gif" />
+    <Content Include="icons\48\plain\document_ok.png" />
+    <Content Include="icons\48\plain\document_pinned.gif" />
+    <Content Include="icons\48\plain\document_time.gif" />
+    <Content Include="icons\48\plain\document_warning.gif" />
+    <Content Include="icons\48\plain\earth_location.gif" />
+    <Content Include="icons\48\plain\earth_view.gif" />
+    <Content Include="icons\48\plain\elements_selection.gif" />
+    <Content Include="icons\48\plain\exchange.gif" />
+    <Content Include="icons\48\plain\exit.gif" />
+    <Content Include="icons\48\plain\eye.png" />
+    <Content Include="icons\48\plain\find.gif" />
+    <Content Include="icons\48\plain\form_green.gif" />
+    <Content Include="icons\48\plain\gear_preferences.gif" />
+    <Content Include="icons\48\plain\gear_replace.gif" />
+    <Content Include="icons\48\plain\handshake.gif" />
+    <Content Include="icons\48\plain\help.gif" />
+    <Content Include="icons\48\plain\help2.gif" />
+    <Content Include="icons\48\plain\id_card.gif" />
+    <Content Include="icons\48\plain\import2.gif" />
+    <Content Include="icons\48\plain\index_preferences.gif" />
+    <Content Include="icons\48\plain\key1_preferences.gif" />
+    <Content Include="icons\48\plain\money.gif" />
+    <Content Include="icons\48\plain\money2.gif" />
+    <Content Include="icons\48\plain\office-building.gif" />
+    <Content Include="icons\48\plain\palette.gif" />
+    <Content Include="icons\48\plain\percent.gif" />
+    <Content Include="icons\48\plain\policeman_bobby.gif" />
+    <Content Include="icons\48\plain\preferences.gif" />
+    <Content Include="icons\48\plain\product.gif" />
+    <Content Include="icons\48\plain\product2.gif" />
+    <Content Include="icons\48\plain\product2.png" />
+    <Content Include="icons\48\plain\question_and_answer.gif" />
+    <Content Include="icons\48\plain\scroll_ok.gif" />
+    <Content Include="icons\48\plain\server_client.gif" />
+    <Content Include="icons\48\plain\server_into.gif" />
+    <Content Include="icons\48\plain\server_out.gif" />
+    <Content Include="icons\48\plain\server_preferences.gif" />
+    <Content Include="icons\48\plain\tape_measure1.gif" />
+    <Content Include="icons\48\plain\text_ok.gif" />
+    <Content Include="icons\48\plain\thread.gif" />
+    <Content Include="icons\48\plain\toolbox.gif" />
+    <Content Include="icons\48\plain\torch.png" />
+    <Content Include="icons\48\plain\trafficlight_green.gif" />
+    <Content Include="icons\48\plain\trafficlight_green.png" />
+    <Content Include="icons\48\plain\trafficlight_red.gif" />
+    <Content Include="icons\48\plain\transform.gif" />
+    <Content Include="icons\48\plain\user1.gif" />
+    <Content Include="icons\48\plain\user1_information.gif" />
+    <Content Include="icons\48\plain\user1_monitor.gif" />
+    <Content Include="icons\48\plain\user1_preferences.gif" />
+    <Content Include="icons\48\plain\user1_refresh.gif" />
+    <Content Include="icons\48\plain\users2.gif" />
+    <Content Include="icons\48\plain\users3_preferences.gif" />
+    <Content Include="icons\48\plain\users4.gif" />
+    <Content Include="icons\48\plain\window_dialog.gif" />
+    <Content Include="icons\48\shadow\at.gif" />
+    <Content Include="icons\48\shadow\books.png" />
+    <Content Include="icons\48\shadow\box_preferences.gif" />
+    <Content Include="icons\48\shadow\briefcase.gif" />
+    <Content Include="icons\48\shadow\briefcase2.gif" />
+    <Content Include="icons\48\shadow\businessman.gif" />
+    <Content Include="icons\48\shadow\businessman2.gif" />
+    <Content Include="icons\48\shadow\businessman_delete.gif" />
+    <Content Include="icons\48\shadow\calendar_preferences.gif" />
+    <Content Include="icons\48\shadow\cashier.gif" />
+    <Content Include="icons\48\shadow\certificate_information.gif" />
+    <Content Include="icons\48\shadow\chart.gif" />
+    <Content Include="icons\48\shadow\creditcards.gif" />
+    <Content Include="icons\48\shadow\currency_pound.gif" />
+    <Content Include="icons\48\shadow\data_edit.gif" />
+    <Content Include="icons\48\shadow\data_find.gif" />
+    <Content Include="icons\48\shadow\data_preferences.gif" />
+    <Content Include="icons\48\shadow\date-time.gif" />
+    <Content Include="icons\48\shadow\debug.gif" />
+    <Content Include="icons\48\shadow\document.gif" />
+    <Content Include="icons\48\shadow\document_certificate.gif" />
+    <Content Include="icons\48\shadow\document_check.gif" />
+    <Content Include="icons\48\shadow\document_connection.gif" />
+    <Content Include="icons\48\shadow\document_edit.gif" />
+    <Content Include="icons\48\shadow\document_gear.gif" />
+    <Content Include="icons\48\shadow\document_into.gif" />
+    <Content Include="icons\48\shadow\document_ok.png" />
+    <Content Include="icons\48\shadow\document_pinned.gif" />
+    <Content Include="icons\48\shadow\document_time.gif" />
+    <Content Include="icons\48\shadow\document_warning.gif" />
+    <Content Include="icons\48\shadow\earth_location.gif" />
+    <Content Include="icons\48\shadow\earth_view.gif" />
+    <Content Include="icons\48\shadow\elements_selection.gif" />
+    <Content Include="icons\48\shadow\exchange.gif" />
+    <Content Include="icons\48\shadow\exit.gif" />
+    <Content Include="icons\48\shadow\eye.png" />
+    <Content Include="icons\48\shadow\find.gif" />
+    <Content Include="icons\48\shadow\form_green.gif" />
+    <Content Include="icons\48\shadow\gear_preferences.gif" />
+    <Content Include="icons\48\shadow\gear_replace.gif" />
+    <Content Include="icons\48\shadow\handshake.gif" />
+    <Content Include="icons\48\shadow\help.gif" />
+    <Content Include="icons\48\shadow\help2.gif" />
+    <Content Include="icons\48\shadow\id_card.gif" />
+    <Content Include="icons\48\shadow\import2.gif" />
+    <Content Include="icons\48\shadow\index_preferences.gif" />
+    <Content Include="icons\48\shadow\key1_preferences.gif" />
+    <Content Include="icons\48\shadow\money.gif" />
+    <Content Include="icons\48\shadow\money2.gif" />
+    <Content Include="icons\48\shadow\office-building.gif" />
+    <Content Include="icons\48\shadow\palette.gif" />
+    <Content Include="icons\48\shadow\percent.gif" />
+    <Content Include="icons\48\shadow\policeman_bobby.gif" />
+    <Content Include="icons\48\shadow\preferences.gif" />
+    <Content Include="icons\48\shadow\product.gif" />
+    <Content Include="icons\48\shadow\product2.gif" />
+    <Content Include="icons\48\shadow\product2.png" />
+    <Content Include="icons\48\shadow\question_and_answer.gif" />
+    <Content Include="icons\48\shadow\scroll_ok.gif" />
+    <Content Include="icons\48\shadow\server_client.gif" />
+    <Content Include="icons\48\shadow\server_into.gif" />
+    <Content Include="icons\48\shadow\server_out.gif" />
+    <Content Include="icons\48\shadow\server_preferences.gif" />
+    <Content Include="icons\48\shadow\tape_measure1.gif" />
+    <Content Include="icons\48\shadow\text_ok.gif" />
+    <Content Include="icons\48\shadow\thread.gif" />
+    <Content Include="icons\48\shadow\toolbox.gif" />
+    <Content Include="icons\48\shadow\torch.png" />
+    <Content Include="icons\48\shadow\trafficlight_green.gif" />
+    <Content Include="icons\48\shadow\trafficlight_red.gif" />
+    <Content Include="icons\48\shadow\transform.gif" />
+    <Content Include="icons\48\shadow\user1.gif" />
+    <Content Include="icons\48\shadow\user1_information.gif" />
+    <Content Include="icons\48\shadow\user1_monitor.gif" />
+    <Content Include="icons\48\shadow\user1_preferences.gif" />
+    <Content Include="icons\48\shadow\user1_refresh.gif" />
+    <Content Include="icons\48\shadow\users2.gif" />
+    <Content Include="icons\48\shadow\users3_preferences.gif" />
+    <Content Include="icons\48\shadow\users4.gif" />
+    <Content Include="icons\48\shadow\window_dialog.gif" />
+    <Content Include="icons\delete2.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\delete2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\delete2_blue.gif" />
+    <Content Include="icons\edit.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\edit.png" />
+    <Content Include="icons\edit_blue.gif" />
+    <Content Include="icons\framework_user.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\arrow_black.gif" />
+    <Content Include="images\arrow_left.gif" />
+    <Content Include="images\arrow_right.gif" />
+    <Content Include="images\arrow_right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\attachment-flashing.gif" />
+    <Content Include="images\attachment.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\breadcrumb_background_green.png" />
+    <Content Include="images\button_forgotten_details.png" />
+    <Content Include="images\button_logon.png" />
+    <Content Include="images\button_signup.png" />
+    <Content Include="images\exithelp.gif" />
+    <Content Include="images\export.gif" />
+    <Content Include="images\framework_logo.gif" />
+    <Content Include="images\FWLogo.jpg" />
+    <Content Include="images\grey_gradient.png" />
+    <Content Include="images\information.gif" />
+    <Content Include="images\infragisticsheaderbg.png" />
+    <Content Include="images\inputpanelbg.png" />
+    <Content Include="images\inputtd_bg.png" />
+    <Content Include="images\loading.gif" />
+    <Content Include="images\login_header_bg.png" />
+    <Content Include="images\page_header_background.png" />
+    <Content Include="images\paperclip.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\pinsent linear 61.jpg" />
+    <Content Include="images\pinsent linear 61.png" />
+    <Content Include="images\pinsent-black.png" />
+    <Content Include="images\printer.gif" />
+    <Content Include="images\selogo-green.png" />
+    <Content Include="images\side_panel_header_background.png" />
+    <Content Include="images\smartdfiller.jpg" />
+    <Content Include="images\SmartDiligence2.jpg" />
+    <Content Include="images\SmartDiligence2.png" />
+    <Content Include="images\SmartDiligenceblack.png" />
+    <Content Include="images\spacer.gif" />
+    <Content Include="images\spacer.png" />
+    <Content Include="images\submenu_bg.jpg" />
+    <Content Include="images\ttarrow.png" />
+    <Content Include="images\vertical_dotted.png" />
+    <Content Include="images\wait.gif" />
+    <Content Include="images\whitearrow_down.gif" />
+    <Content Include="images\whitearrow_up.gif" />
+    <Content Include="ImportReportFields.aspx" />
+    <Content Include="InvoiceForecastBU.aspx" />
+    <Content Include="InvoiceForecastGenerate.aspx" />
+    <Content Include="javascript\userdefined.js" />
+    <Content Include="layout\ig_tab_green1.gif" />
+    <Content Include="layout\ig_tab_green2.gif" />
+    <Content Include="layout\ig_tab_greenb1.gif" />
+    <Content Include="layout\ig_tab_greenb2.gif" />
+    <Content Include="layout\selogo.JPG" />
+    <Content Include="LinkedContracts.aspx" />
+    <Content Include="LinkManage.aspx" />
+    <Content Include="logos\205.gif" />
+    <Content Include="MaintCalc.aspx" />
+    <Content Include="MenuMain.aspx" />
+    <Content Include="ProductDetails.aspx" />
+    <Content Include="RechargeEntityDefinitions.aspx" />
+    <Content Include="RechargeScript.js" />
+    <Content Include="ScheduleAction.aspx" />
+    <Content Include="ScheduleManage.aspx" />
+    <Content Include="App_Themes\GreenLightTheme\DataGrid.skin" />
+    <Content Include="App_Themes\GreenLightTheme\menu.skin" />
+    <Content Include="App_Themes\GreenLightTheme\UltraWebGrid.skin" />
+    <Content Include="App_Themes\GreenLightWorkforceTheme\DataGrid.skin" />
+    <Content Include="App_Themes\GreenLightWorkforceTheme\menu.skin" />
+    <Content Include="App_Themes\GreenLightWorkforceTheme\UltraWebGrid.skin" />
+    <Content Include="log4net.config" />
+    <None Include="log4net.Debug.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+    </None>
+    <None Include="log4net.Production.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="log4net.Automated Build.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+    </None>
+    <None Include="My Project\DataSources\System.Data.DataSet.datasource" />
+    <Content Include="SetAudience.aspx" />
+    <Content Include="SummaryPortal.aspx" />
+    <Content Include="svcAutoComplete.asmx" />
+    <Content Include="TieredDefinitions.aspx" />
+    <Content Include="UFSearch.aspx" />
+    <Content Include="UserHelpPaths.aspx" />
+    <Content Include="UserSetup.aspx" />
+    <Content Include="UserSetupDetail.aspx" />
+    <Content Include="VerifyAttachments.aspx" />
+    <Content Include="VerifyTemplates.aspx" />
+    <Content Include="VersionCallOff.aspx" />
+    <Content Include="VersionHistory.aspx" />
+    <Content Include="VersionRegistry.aspx" />
+    <Content Include="ViewAttachment.aspx" />
+    <Content Include="ViewHistory.aspx" />
+    <Content Include="ViewNotes.aspx" />
+    <Content Include="ViewSingleNote.aspx" />
+    <Content Include="ViewStatusHistory.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="My Project\PublishProfiles\FolderProfile.pubxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <Content Include="Web.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Web.Automated Build.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Web.Production.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="About.aspx.designer.vb">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="About.aspx.vb">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_GlobalResources\MaintAnalysis.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MaintAnalysis.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\MonthlyBudget.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MonthlyBudget.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\spendmanagement.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>spendmanagement.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\SupplierBreakdown.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SupplierBreakdown.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Associations.aspx.designer.vb">
+      <DependentUpon>Associations.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Associations.aspx.vb">
+      <DependentUpon>Associations.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Attachments.aspx.designer.vb">
+      <DependentUpon>Attachments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Attachments.aspx.vb">
+      <DependentUpon>Attachments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Backup.aspx.designer.vb">
+      <DependentUpon>Backup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Backup.aspx.vb">
+      <DependentUpon>Backup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="code\cEmail.vb" />
+    <Compile Include="code\cHelp.vb" />
+    <Compile Include="code\cStandardReports.vb" />
+    <Compile Include="code\MigrationRoutines.vb" />
+    <Compile Include="code\ReportRoutines.vb" />
+    <Compile Include="code\ScheduleRoutines.vb" />
+    <Compile Include="code\SearchRoutines.vb" />
+    <Compile Include="code\StandardReportRoutines.vb" />
+    <Compile Include="code\SummaryRoutines.vb" />
+    <Compile Include="code\UFRoutines.vb" />
+    <Compile Include="code\UltraRoutines.vb" />
+    <Compile Include="ContractHistory.aspx.designer.vb">
+      <DependentUpon>ContractHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ContractHistory.aspx.vb">
+      <DependentUpon>ContractHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContractProductInfo.aspx.designer.vb">
+      <DependentUpon>ContractProductInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ContractProductInfo.aspx.vb">
+      <DependentUpon>ContractProductInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContractRechargeBreakdown.aspx.designer.vb">
+      <DependentUpon>ContractRechargeBreakdown.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ContractRechargeBreakdown.aspx.vb">
+      <DependentUpon>ContractRechargeBreakdown.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContractRechargeData.aspx.designer.vb">
+      <DependentUpon>ContractRechargeData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ContractRechargeData.aspx.vb">
+      <DependentUpon>ContractRechargeData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContractSavings.aspx.designer.vb">
+      <DependentUpon>ContractSavings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ContractSavings.aspx.vb">
+      <DependentUpon>ContractSavings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContractSummary.aspx.designer.vb">
+      <DependentUpon>ContractSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ContractSummary.aspx.vb">
+      <DependentUpon>ContractSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.vb">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.vb">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FWEmailServer.asmx.vb">
+      <DependentUpon>FWEmailServer.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FWMaster.master.designer.vb">
+      <DependentUpon>FWMaster.master</DependentUpon>
+    </Compile>
+    <Compile Include="FWMaster.master.vb">
+      <DependentUpon>FWMaster.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FWMenu.master.designer.vb">
+      <DependentUpon>FWMenu.master</DependentUpon>
+    </Compile>
+    <Compile Include="FWMenu.master.vb">
+      <DependentUpon>FWMenu.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FWParams.aspx.designer.vb">
+      <DependentUpon>FWParams.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FWParams.aspx.vb">
+      <DependentUpon>FWParams.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FWSetupRecharge.aspx.designer.vb">
+      <DependentUpon>FWSetupRecharge.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FWSetupRecharge.aspx.vb">
+      <DependentUpon>FWSetupRecharge.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FWSubAccountPopup.ascx.designer.vb">
+      <DependentUpon>FWSubAccountPopup.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FWSubAccountPopup.ascx.vb">
+      <DependentUpon>FWSubAccountPopup.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FWTasksPopupSummary.ascx.designer.vb">
+      <DependentUpon>FWTasksPopupSummary.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FWTasksPopupSummary.ascx.vb">
+      <DependentUpon>FWTasksPopupSummary.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.vb">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home.aspx.vb">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ImportReportFields.aspx.designer.vb">
+      <DependentUpon>ImportReportFields.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ImportReportFields.aspx.vb">
+      <DependentUpon>ImportReportFields.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InvoiceForecastBU.aspx.designer.vb">
+      <DependentUpon>InvoiceForecastBU.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceForecastBU.aspx.vb">
+      <DependentUpon>InvoiceForecastBU.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InvoiceForecastGenerate.aspx.designer.vb">
+      <DependentUpon>InvoiceForecastGenerate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceForecastGenerate.aspx.vb">
+      <DependentUpon>InvoiceForecastGenerate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinkedContracts.aspx.designer.vb">
+      <DependentUpon>LinkedContracts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LinkedContracts.aspx.vb">
+      <DependentUpon>LinkedContracts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinkManage.aspx.designer.vb">
+      <DependentUpon>LinkManage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LinkManage.aspx.vb">
+      <DependentUpon>LinkManage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MaintCalc.aspx.designer.vb">
+      <DependentUpon>MaintCalc.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MaintCalc.aspx.vb">
+      <DependentUpon>MaintCalc.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MenuMain.aspx.designer.vb">
+      <DependentUpon>MenuMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MenuMain.aspx.vb">
+      <DependentUpon>MenuMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="ProductDetails.aspx.designer.vb">
+      <DependentUpon>ProductDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDetails.aspx.vb">
+      <DependentUpon>ProductDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RechargeEntityDefinitions.aspx.designer.vb">
+      <DependentUpon>RechargeEntityDefinitions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RechargeEntityDefinitions.aspx.vb">
+      <DependentUpon>RechargeEntityDefinitions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ScheduleAction.aspx.designer.vb">
+      <DependentUpon>ScheduleAction.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduleAction.aspx.vb">
+      <DependentUpon>ScheduleAction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ScheduleManage.aspx.designer.vb">
+      <DependentUpon>ScheduleManage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduleManage.aspx.vb">
+      <DependentUpon>ScheduleManage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SetAudience.aspx.designer.vb">
+      <DependentUpon>SetAudience.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SetAudience.aspx.vb">
+      <DependentUpon>SetAudience.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SummaryPortal.aspx.designer.vb">
+      <DependentUpon>SummaryPortal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SummaryPortal.aspx.vb">
+      <DependentUpon>SummaryPortal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="svcAutoComplete.vb">
+      <DependentUpon>svcAutoComplete.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TieredDefinitions.aspx.designer.vb">
+      <DependentUpon>TieredDefinitions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TieredDefinitions.aspx.vb">
+      <DependentUpon>TieredDefinitions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UFSearch.aspx.designer.vb">
+      <DependentUpon>UFSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UFSearch.aspx.vb">
+      <DependentUpon>UFSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserHelpPaths.aspx.designer.vb">
+      <DependentUpon>UserHelpPaths.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserHelpPaths.aspx.vb">
+      <DependentUpon>UserHelpPaths.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserSetup.aspx.designer.vb">
+      <DependentUpon>UserSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserSetup.aspx.vb">
+      <DependentUpon>UserSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserSetupDetail.aspx.designer.vb">
+      <DependentUpon>UserSetupDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserSetupDetail.aspx.vb">
+      <DependentUpon>UserSetupDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VerifyAttachments.aspx.designer.vb">
+      <DependentUpon>VerifyAttachments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VerifyAttachments.aspx.vb">
+      <DependentUpon>VerifyAttachments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VerifyTemplates.aspx.designer.vb">
+      <DependentUpon>VerifyTemplates.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VerifyTemplates.aspx.vb">
+      <DependentUpon>VerifyTemplates.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VersionCallOff.aspx.designer.vb">
+      <DependentUpon>VersionCallOff.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VersionCallOff.aspx.vb">
+      <DependentUpon>VersionCallOff.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VersionHistory.aspx.designer.vb">
+      <DependentUpon>VersionHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VersionHistory.aspx.vb">
+      <DependentUpon>VersionHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VersionRegistry.aspx.designer.vb">
+      <DependentUpon>VersionRegistry.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VersionRegistry.aspx.vb">
+      <DependentUpon>VersionRegistry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewAttachment.aspx.designer.vb">
+      <DependentUpon>ViewAttachment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewAttachment.aspx.vb">
+      <DependentUpon>ViewAttachment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewHistory.aspx.designer.vb">
+      <DependentUpon>ViewHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewHistory.aspx.vb">
+      <DependentUpon>ViewHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewNotes.aspx.designer.vb">
+      <DependentUpon>ViewNotes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewNotes.aspx.vb">
+      <DependentUpon>ViewNotes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewSingleNote.aspx.designer.vb">
+      <DependentUpon>ViewSingleNote.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewSingleNote.aspx.vb">
+      <DependentUpon>ViewSingleNote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewStatusHistory.aspx.designer.vb">
+      <DependentUpon>ViewStatusHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewStatusHistory.aspx.vb">
+      <DependentUpon>ViewStatusHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <None Include="My Project\AssemblyInfo.vb.orig" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\MyExtensions\MyWebExtension.vb">
+      <VBMyExtensionTemplateID>Microsoft.VisualBasic.Web.MyExtension</VBMyExtensionTemplateID>
+      <VBMyExtensionTemplateVersion>1.0.0.0</VBMyExtensionTemplateVersion>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\MaintAnalysis.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>MaintAnalysis.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\MonthlyBudget.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>MonthlyBudget.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\spendmanagement.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>spendmanagement.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\SupplierBreakdown.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SupplierBreakdown.designer.vb</LastGenOutput>
+    </Content>
+    <EmbeddedResource Include="licenses.licx" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Themes\ExpensesThemeNew\DataGrid.skin" />
+    <Content Include="App_Themes\ExpensesThemeNew\menu.skin" />
+    <Content Include="App_Themes\ExpensesThemeNew\UltraWebGrid.skin" />
+    <Content Include="App_Themes\FrameworkTheme\DataGrid.skin" />
+    <Content Include="App_Themes\FrameworkTheme\menu.skin" />
+    <Content Include="App_Themes\FrameworkTheme\UltraWebGrid.skin" />
+    <Content Include="App_Themes\SmartDTheme\DataGrid.skin" />
+    <Content Include="App_Themes\SmartDTheme\menu.skin" />
+    <Content Include="App_Themes\SmartDTheme\UltraWebGrid.skin" />
+    <None Include="ContractRecharge.aspx.exclude" />
+    <None Include="ContractRecharge.aspx.vb.exclude" />
+    <None Include="ContractRechargeList.aspx.exclude" />
+    <None Include="ContractRechargeList.aspx.vb.exclude" />
+    <Content Include="FWMaster.master" />
+    <Content Include="FWMenu.master" />
+    <None Include="layout\pivot template.xlt" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FWAttachments\" />
+    <Folder Include="Web References\uk\co\software_europe\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FWClasses\FWClasses.csproj">
+      <Project>{88E92370-7FEF-4289-878E-FC449E5C6D38}</Project>
+      <Name>FWClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FWDatabase\FWBase.vbproj">
+      <Project>{b8180338-c8c2-4de1-be2e-6ff35d33dc6a}</Project>
+      <Name>FWBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spend Management\Spend Management.csproj">
+      <Project>{1cbfd8ec-f67c-4425-a10c-97bfc7501045}</Project>
+      <Name>Spend Management</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementHelpers\SpendManagementHelpers.csproj">
+      <Project>{F12FBA1A-995D-429F-A9A5-E54FB0AE536F}</Project>
+      <Name>SpendManagementHelpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpendManagementLibrary\SpendManagementLibrary.csproj">
+      <Project>{9BDAA543-AC54-47A1-8BDD-C7BF34F2F005}</Project>
+      <Name>SpendManagementLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\</OutputPath>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>2668</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+           <IISUrl>http://teamdc.framework.localhost/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="AfterCompile" Condition="exists('log4net.$(Configuration).config')">
+    <!-- Generate transformed app config in the intermediate directory -->
+    <TransformXml Source="log4net.config" Destination="$(IntermediateOutputPath)log4net.config" Transform="log4net.$(Configuration).config" />
+    <!-- Force build process to use the transformed configuration file from now on. -->
+    <ItemGroup>
+      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)log4net.config">
+        <TargetPath>log4net.config</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+  </Target>
+</Project>

@@ -1,0 +1,462 @@
+Imports FWBase
+
+
+Namespace Framework2006
+
+
+Partial Class ContractRechargeList
+    Inherits System.Web.UI.Page
+
+#Region " Web Form Designer Generated Code "
+
+    'This call is required by the Web Form Designer.
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    End Sub
+    Protected WithEvents hypUpdate As New LinkButton
+    Protected WithEvents cmdUpdate As New ImageButton
+
+
+    Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
+        'CODEGEN: This method call is required by the Web Form Designer
+        'Do not modify it using the code editor.
+        InitializeComponent()
+    End Sub
+
+#End Region
+
+    Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Dim isEdit As Boolean
+        Dim userinfo As UserInfo
+
+        userinfo = Session("UserInfo")
+        isEdit = False
+
+        If Me.IsPostBack = False Then
+            Dim strHTML As System.Text.StringBuilder
+            Dim strTableContent As System.Text.StringBuilder
+            Dim sql As System.Text.StringBuilder
+            Dim db As New cFWDBConnection
+            Dim numConProds As Integer
+            Dim action, reqUFields As String
+            Dim UFields(100) As UFCollection
+            Dim script As System.Text.StringBuilder
+
+            db.DBOpen(Application("FWSettings"))
+
+            action = LCase(Request.QueryString("action"))
+            Select Case action
+                Case "edit"
+                    Dim editID As String
+                    editID = Request.QueryString("id")
+                    If editID <> "" Then
+                        litEditFields.Text = DisplayForEdit(db, editID)
+                        isEdit = True
+                    End If
+
+                Case Else
+
+            End Select
+
+            ' get dataset of user fields for the recharge grouping
+            db.FWDb("R3", "Contract Details", "Contract Id", Session("ActiveContract"))
+            If db.FWDb3Flag = True Then
+                sql = New System.Text.StringBuilder
+                sql.Append("SELECT [User Fields].*,[Codes - User Field Grouping].[Grouping Sequence],[Codes - User Field Grouping].[Grouping Description] " & vbNewLine)
+                sql.Append("FROM [User Fields] " & vbNewLine)
+                sql.Append("INNER JOIN [Codes - User Field Grouping] ON [Codes - User Field Grouping].[UF Group Id] = [User Fields].[Group Id] " & vbNewLine)
+                sql.Append("WHERE [AppArea] = " & Trim(Str(AppAreas.RECHARGE_GROUPING)) & " AND [Group Id] IN (SELECT [UF Grouping Id] FROM [UF Group Allocation] WHERE [Category Id] = " & Trim(db.FWDbFindVal("Category Id", 3)) & ") " & vbNewLine)
+                sql.Append("ORDER BY [Grouping Sequence],[Field Sequence]")
+                db.RunSQL(sql.ToString, db.glDBWorkI)
+
+                Dim drow As DataRow
+                Dim idx As Integer
+                idx = 0
+                reqUFields = ""
+
+                For Each drow In db.glDBWorkI.Tables(0).Rows
+                    reqUFields += ",[UF" & Trim(Str(drow.Item("User Field Id"))) & "]"
+                    UFields(idx).UF_DBFieldName = "UF" & Trim(Str(drow.Item("User Field Id")))
+                    UFields(idx).UF_FieldName = drow.Item("Field Name")
+                    UFields(idx).UF_FieldNumber = drow.Item("User Field Id")
+                    UFields(idx).UF_FieldGroupingName = Trim(drow.Item("Grouping Description"))
+                    UFields(idx).UF_FieldType = Trim(Str(drow.Item("Field Type")))
+                    idx += 1
+                Next
+                ReDim Preserve UFields(idx - 1)
+            End If
+
+            sql = New System.Text.StringBuilder
+            sql.Append("SELECT [Contract-Product Id],[Contract - Product Details].[Currency Id],[Codes - Currency].[Base],[Product Details].[Product Name],[Maintenance Value],[Quantity],[Codes - Units].[Unit Description]" & Trim(reqUFields) & " FROM [Contract - Product Details] ")
+            sql.Append("LEFT OUTER JOIN [Product Details] ON [Contract - Product Details].[Product Id] = [Product Details].[Product Id] ")
+            sql.Append("LEFT OUTER JOIN [Codes - Units] ON [Contract - Product Details].[Unit Id] = [Codes - Units].[Unit Id] ")
+            sql.Append("LEFT OUTER JOIN [Codes - Currency] ON [Contract - Product Details].[Currency Id] = [Codes - Currency].[Currency Id] ")
+            sql.Append("WHERE [Contract Id] = " & Trim(Str(Session("ActiveContract"))))
+            db.RunSQL(sql.ToString, db.glDBWorkA)
+
+            numConProds = db.glNumRowsReturned
+
+            strTableContent = New System.Text.StringBuilder
+            strTableContent.Append(GetContractProductList(db, db.glDBWorkA, numConProds, userinfo, UFields))
+
+            'If userinfo.xMax < 1200 Then
+            '    strHTML = "<div class=""panel_lowres_small"">" & vbNewLine
+            'Else
+            '    strHTML = "<div class=""panel_hires_small"">" & vbNewLine
+            'End If
+
+            ' java for collapsing <div>
+            script = New System.Text.StringBuilder
+            script.Append("<script language=""JavaScript"">" & vbNewLine)
+            script.Append("function toggleRechargeSubList(idName)" & vbNewLine)
+            script.Append("{" & vbNewLine)
+            script.Append("if (document.getElementById(idName).style.display != ""block"")" & vbNewLine)
+            script.Append("{" & vbNewLine)
+            script.Append("document.getElementById(idName).style.display = ""block"";" & vbNewLine)
+            script.Append("}" & vbNewLine)
+            script.Append("else" & vbNewLine)
+            script.Append("{" & vbNewLine)
+            script.Append("document.getElementById(idName).style.display = ""none"";" & vbNewLine)
+            script.Append("}" & vbNewLine)
+            script.Append("return;" & vbNewLine)
+            script.Append("}" & vbNewLine)
+            script.Append("document.write('<style>.sublist { display: none }</style>');" & vbNewLine)
+            script.Append("</script>" & vbNewLine)
+
+            strHTML = New System.Text.StringBuilder
+            strHTML.Append("<table class=""main"" align=""center"" width=""550"">" & vbNewLine)
+            strHTML.Append("<tr>" & vbNewLine)
+            strHTML.Append("<td class=""main"">&nbsp;</td>" & vbNewLine)   ' + image for collapsable <div>
+            strHTML.Append("<th class=""data"" width=""50""><b>Edit</b></th>" & vbNewLine)
+            strHTML.Append("<th class=""data"" width=""150""><b>Product Name</b></th>" & vbNewLine)
+            strHTML.Append("<th class=""data"" width=""150""><b>Maintenance Value</b></th>" & vbNewLine)
+            strHTML.Append("<th class=""data"" width=""100""><b>Quantity</b></th>" & vbNewLine)
+            strHTML.Append("<th class=""data"" width=""100""><b>Units</b></th>" & vbNewLine)
+            strHTML.Append("</tr>" & vbNewLine)
+
+            strHTML.Append(strTableContent)
+
+            strHTML.Append("</table>")
+            'strHTML += "</div>"
+
+            strHTML.Append(vbNewLine)
+            strHTML.Append(script)
+
+            litConProdList.Text = strHTML.ToString
+        End If
+
+        Select Case userinfo.ViewType
+            Case ViewType.Basic
+                hypUpdate.CssClass = "linkbutton"
+                hypUpdate.Text = "Update"
+                hypUpdate.ToolTip = "Commit changes to the database"
+                hypUpdate.Attributes.Add("onmouseover", "window.status='Commit changes to the database';return true;")
+                hypUpdate.Attributes.Add("onmouseout", "window.status='Done';")
+                holderUpdateButton.Controls.Add(hypUpdate)
+
+                hypUpdate.Visible = isEdit
+
+            Case Else
+                cmdUpdate.ImageUrl = "./buttons/update.gif"
+                cmdUpdate.AlternateText = "Update"
+                cmdUpdate.ToolTip = "Commit changes to the database"
+                cmdUpdate.Attributes.Add("onmouseover", "window.status='Commit changes to the database';return true;")
+                cmdUpdate.Attributes.Add("onmouseout", "window.status='Done';")
+                holderUpdateButton.Controls.Add(cmdUpdate)
+
+                cmdUpdate.Visible = isEdit
+        End Select
+    End Sub
+
+    Private Function GetContractProductList(ByVal db As DBConnection, ByVal dset As DataSet, ByVal numRows As Integer, ByVal ui As UserInfo, ByVal UFields() As UFCollection) As String
+        Dim baseCurrencyId As Integer
+        Dim sql As String
+        Dim tmpStr As String
+        Dim tmpVal As Double
+        Dim tmpId As Integer
+        Dim retStr As New System.Text.StringBuilder
+        Dim rechargeFieldHTML As String
+
+        ' get base currency info
+        db.FWDb("R2", "Codes - Currency", "Location Id", ui.ActiveLocation, "Base", "Y")
+        If db.FWDb2Flag = True Then
+            baseCurrencyId = Val(db.FWDbFindVal("Currency Id", 2))
+        Else
+            baseCurrencyId = 0
+        End If
+
+        Dim drow As DataRow
+
+        If numRows > 0 Then
+            For Each drow In dset.Tables(0).Rows
+                rechargeFieldHTML = GetCollapseUFData(db, drow, UFields)
+
+                retStr.Append("<tr>" & vbNewLine)
+                If rechargeFieldHTML.Length > 0 Then
+                    retStr.Append("<td class=""main"" align=""center""><a href=""javascript:toggleRechargeSubList('" & Trim(drow.Item("Contract-Product Id")) & "');""><img src=""./images/plus.gif"" /></a></td>")
+                    retStr.Append("<td class=""data"" width=""50"" align=""center""><a class=""hyperlink"" href=""ContractRechargeList.aspx?action=edit&id=" & Trim(Str(drow.Item("Contract-Product Id"))) & """>Edit</a></td>" & vbNewLine)
+                Else
+                    retStr.Append("<td class=""main"">&nbsp;</td>" & vbNewLine)
+                    retStr.Append("<td class=""data"" width=""50"" align=""center"">&nbsp;</td>" & vbNewLine)
+                End If
+
+                retStr.Append("<td class=""data"" width=""150"" align=""center"">" & drow.Item("Product Name") & "</td>" & vbNewLine)
+                If IsDBNull(drow.Item("Maintenance Value")) = True Then
+                    tmpVal = 0
+                Else
+                    tmpVal = drow.Item("Maintenance Value")
+                End If
+
+                If IsDBNull(drow.Item("Currency Id")) = True Then
+                    tmpId = 0
+                Else
+                    tmpId = drow.Item("Currency Id")
+                End If
+
+                Dim tmpBase As String
+                If IsDBNull(drow.Item("Base")) = True Then
+                    tmpBase = "N"
+                Else
+                    tmpBase = drow.Item("Base")
+                End If
+
+                If tmpBase = "Y" Then
+                    retStr.Append("<td class=""data"" width=""150"" align=""center"">" & FormatCurrency(db, tmpVal, tmpId) & "</td>" & vbNewLine)
+                Else
+                    retStr.Append("<td class=""not_base_currency_border"" width=""150"" align=""center"" title=""Value in base currency is " & FormatCurrency(db, ConvertToBaseCurrency(db, tmpVal, tmpId), baseCurrencyId) & """>" & FormatCurrency(db, tmpVal, tmpId) & "</td>" & vbNewLine)
+                End If
+
+                If IsDBNull(drow.Item("Quantity")) = True Then
+                    tmpId = 0
+                Else
+                    tmpId = drow.Item("Quantity")
+                End If
+                retStr.Append("<td class=""data"" width=""100"" align=""center"">" & Trim(Str(tmpId)) & "</td>" & vbNewLine)
+
+                If IsDBNull(drow.Item("Unit Description")) = True Then
+                    tmpStr = ""
+                Else
+                    tmpStr = drow.Item("Unit Description")
+                End If
+                retStr.Append("<td class=""data"" width=""100"" align=""center"">" & tmpStr & "</td>" & vbNewLine)
+                retStr.Append("</tr>" & vbNewLine)
+
+                ' if user fields exist under the contract products, then display in collapsable <div>
+                If rechargeFieldHTML.Length > 0 Then
+                    retStr.Append("<tr>" & vbNewLine)
+                    retStr.Append("<td class=""main"" align=""center"" colspan=""6"">" & vbNewLine)
+                    retStr.Append("<div id=""" & Trim(drow.Item("Contract-Product Id")) & """ class=""sublist"">" & vbNewLine)
+                    retStr.Append(rechargeFieldHTML)
+                    retStr.Append("</div></td></tr>" & vbNewLine)
+                End If
+            Next
+        Else
+            retStr.Append("<tr><td class=""main"">&nbsp;</td><td class=""data"" align=""center"" colspan=""5"">No contract products exist for recharge</td></tr>")
+        End If
+
+        GetContractProductList = retStr.ToString
+    End Function
+
+    Private Function DisplayForEdit(ByVal db As DBConnection, ByVal editID As String) As String
+        Dim ui As UserInfo
+        Dim groupingsExist, hasAnyFields, hasFields As Boolean
+        Dim sql As System.Text.StringBuilder
+        Dim strHTML As New System.Text.StringBuilder
+        Dim tabIndex As Integer
+        Dim drow1 As DataRow
+
+        ui = Session("UserInfo")
+        db.DBOpen(Application("FWSettings"))
+
+        groupingsExist = False
+        hasAnyFields = False
+
+        strHTML.Append("<table class=""main"" align=""center"">" & vbNewLine)
+        strHTML.Append("<tr>" & vbNewLine)
+        strHTML.Append("<td class=""main"" align=""center"">" & vbNewLine)
+
+        ' get a dataset containing the different additional field groupings, with only those allocated for
+        ' display with the current contract category
+        db.FWDb("R2", "Contract Details", "Contract Id", Session("ActiveContract"))
+        sql = New System.Text.StringBuilder
+        If db.FWDb2Flag = True Then
+            sql.Append("SELECT [Codes - User Field Grouping].* FROM [Codes - User Field Grouping] ")
+            sql.Append("INNER JOIN [UF Group Allocation] ON [UF Group Allocation].[UF Grouping Id] = [Codes - User Field Grouping].[UF Group Id] ")
+            sql.Append("WHERE [UF Group Allocation].[Category Id] = " & Trim(db.FWDbFindVal("Category Id", 2)) & " AND [UF Grouping Area] = " & Trim(Str(AppAreas.RECHARGE_GROUPING)) & " ")
+            sql.Append("ORDER BY [Grouping Sequence]")
+        Else
+            sql.Append("SELECT * FROM [Codes - User Field Grouping] ORDER BY [Grouping Sequence]")
+        End If
+
+        db.RunSQL(sql.ToString, db.glDBWorkA)
+
+        ' get the current contract record from [Contract Details]
+        If Val(editID) > "0" Then
+            sql = New System.Text.StringBuilder
+            sql.Append("SELECT [Product Name] FROM [Product Details] INNER JOIN [Contract - Product Details] ON [Contract - Product Details].[Product Id] = [Product Details].[Product Id] WHERE [Contract-Product Id] = " & Trim(editID))
+            db.RunSQL(sql.ToString, db.glDBWorkC)
+
+            If db.glNumRowsReturned > 0 Then
+                lblTitle.Text = "Edit fields for " & Trim(db.GetFieldValue(db.glDBWorkC, "Product Name", 0))
+            Else
+                lblTitle.Text = "Edit fields"
+            End If
+        End If
+
+        tabIndex = 1
+
+        strHTML.Append("<table class=""main"" align=""center"" width=""" & TOTAL_4COLSPX & """>" & vbNewLine)
+
+        Dim sql2 As System.Text.StringBuilder
+        Dim cellIdx As Integer
+        Dim drow2 As DataRow
+        Dim strDataValue As String
+        Dim strDataHTML As System.Text.StringBuilder
+        Dim tmpFieldName As String
+
+        db.FWDb("R3", "Contract - Product Details", "Contract-Product Id", editID)
+        If db.FWDb3Flag = True Then
+            For Each drow1 In db.glDBWorkA.Tables(0).Rows
+                hasFields = False
+                groupingsExist = True
+
+                strHTML.Append("<tr>" & vbNewLine)
+                strHTML.Append("<td class=""main"" colspan=""4"" align=""left"" width=""" & TOTAL_4COLSPX & """><b><u>" & drow1.Item("Grouping Description") & "</b></u></td>")
+                strHTML.Append("</tr><tr>" & vbNewLine)
+                strHTML.Append("<td class=""main"" colspan=""4"" width=""" & TOTAL_4COLSPX & """ height=""10"">&nbsp;</td>" & vbNewLine)
+                strHTML.Append("</tr>")
+
+                sql2 = New System.Text.StringBuilder
+                sql2.Append("SELECT * FROM [User Fields] WHERE [AppArea] = " & Trim(Str(AppAreas.RECHARGE_GROUPING)))
+                sql2.Append(" AND [Group Id] = " & Trim(drow1.Item("UF Group Id")) & " ORDER BY [Field Sequence]")
+                db.RunSQL(sql2.ToString, db.glDBWorkB)
+
+                cellIdx = 0
+
+                strHTML.Append("<tr>" & vbNewLine)
+
+                For Each drow2 In db.glDBWorkB.Tables(0).Rows
+                    hasAnyFields = True
+                    cellIdx = cellIdx + 1
+                    tabIndex = tabIndex + 1
+                    If cellIdx = 3 Then
+                        cellIdx = 1
+                        strHTML.Append("</tr><tr>" & vbNewLine)
+                    End If
+
+                    tmpFieldName = "UF" & CStr(drow2.Item("User Field Id")).Trim
+
+                    strDataValue = db.FWDbFindVal(tmpFieldName, 3)
+                    strDataHTML = New System.Text.StringBuilder
+
+                    Select Case drow2.Item("Field Type")
+                        Case UserFieldType.Character, UserFieldType.Number, UserFieldType.Float
+                            strDataHTML.Append("<INPUT class=""datatext"" style=""width: 140px;"" type=text tabindex=" & tabIndex.ToString.Trim & " name=""" & tmpFieldName & """ value=""" & strDataValue & """ />" & vbNewLine)
+
+                        Case UserFieldType.DateField
+                            If strDataValue <> "" Then
+                                If IsDate(strDataValue) = True Then
+                                    strDataValue = Format(CDate(strDataValue), cDef.DATE_FORMAT)
+                                End If
+                            End If
+                            strDataHTML.Append("<INPUT class=""datatext"" style=""width: 140px;"" type=text tabindex=" & tabIndex.ToString.Trim & " name=""" & tmpFieldName & """ value=""" & strDataValue & """ />" & vbNewLine)
+
+                        Case UserFieldType.Checkbox
+                            strDataHTML.Append("<INPUT class=""datalabel"" style=""width: 140px;"" type=checkbox tabindex=" & tabIndex.ToString.Trim & " name=""" & tmpFieldName & """" & IIf(strDataValue = "1", " checked", "") & " />" & vbNewLine)
+
+                        Case UserFieldType.DDList
+                            strDataHTML.Append(GetDDListData(db, drow2.Item("User Field Id"), strDataValue, tabIndex))
+
+                        Case UserFieldType.Text
+                            strDataHTML.Append("<TEXTAREA class=""datatext"" name=""" & tmpFieldName & """ style=""width: " & CStr(140 - 16).Trim & "px;""")
+                            If ui.permAmend = False Then
+                                strDataHTML.Append(" readonly")
+                            End If
+                            strDataHTML.Append(">")
+                            strDataHTML.Append(strDataValue)
+                            strDataHTML.Append("</TEXTAREA>" & vbNewLine)
+                            strDataHTML.Append("<a onclick=""javascript:doTextEntry('" & tmpFieldName & "'," & editID & "," & AppAreas.RECHARGE_GROUPING & ");"" onmouseover=""window.status='Modify extended text entry';return true;"" onmouseout=""window.status='Done';"">")
+                            strDataHTML.Append("<img src=""./buttons/edit.gif"" />")
+                            strDataHTML.Append("</a>")
+
+                        Case UserFieldType.StaffName_Ref, UserFieldType.Site_Ref, UserFieldType.RechargeClient_Ref, UserFieldType.RechargeAcc_Code
+                            strDataHTML.Append(GetRefListData(db, ui, CType(drow2.Item("Field Type"), UserFieldType), drow2.Item("User Field Id"), strDataValue, tabIndex))
+
+                        Case Else
+                            strDataHTML.Append("<i>Unknown Field Type Defined</i>")
+                    End Select
+
+                    strHTML.Append("<th class=""data"" align=""right"" width=""" & DEFAULT_COLPX & """><b>" & drow2.Item("Field Name") & " :</b></th>" & vbNewLine)  ' label
+                    strHTML.Append("<td class=""data"" width=""" & DEFAULT_COLPX & """>")
+                    strHTML.Append(strDataHTML)
+                    strHTML.Append("</td>" & vbNewLine) ' data
+
+                    hasFields = True
+                Next
+
+                If hasFields = False Then
+                    strHTML.Append("<td class=""data"" colspan=""4"" width=""" & TOTAL_4COLSPX & """ align=""center"">No User Fields defined for this grouping.</td>" & vbNewLine)
+                Else
+                    ' pad row with any remaining cells (mod by 3)
+                    Dim x As Integer
+
+                    For x = 1 To (2 - cellIdx)
+                        strHTML.Append("<td class=""data"" width=""" & DEFAULT_COLPX & """>&nbsp;</td>" & vbNewLine)
+                        strHTML.Append("<td class=""data"" width=""" & DEFAULT_COLPX & """>&nbsp;</td>" & vbNewLine)
+                    Next
+                End If
+
+                strHTML.Append("</tr>" & vbNewLine)
+                strHTML.Append("<tr><td class=""main"" colspan=""4"" width=""" & TOTAL_4COLSPX & """ height=""20"">&nbsp;</td></tr>" & vbNewLine)
+            Next
+
+            If groupingsExist = False Then
+                strHTML.Append("<tr>" & vbNewLine)
+                strHTML.Append("<td class=""boldlabel"" align=""center"">No User Defined Fields by Contract Grouping are defined.</td>" & vbNewLine & "</tr>" & vbNewLine)
+            End If
+        Else
+            strHTML.Append("<tr>" & vbNewLine)
+            strHTML.Append("<td class=""boldlabel"" align=""center"">Retrieval of Contract Product data from database returned nothing.</td>" & vbNewLine & "</tr>" & vbNewLine)
+        End If
+
+        strHTML.Append("</table>" & vbNewLine)
+
+        strHTML.Append("</td></tr>" & vbNewLine)
+        strHTML.Append("</table>" & vbNewLine)
+
+        DisplayForEdit = strHTML.ToString
+    End Function
+
+    Private Sub doUpdate()
+        Dim editID As Integer
+        Dim ui As UserInfo
+            Dim fws As cFWSettings
+
+        ui = Session("UserInfo")
+        fws = Application("FWSettings")
+
+        editID = Request.QueryString("id")
+        If editID > 0 Then
+            Dim db As New cFWDBConnection
+
+            db.DBOpen(fws,false)
+
+            DoGroupedFieldUpdate(db, Me, fws, ui, editID, AppAreas.RECHARGE_GROUPING)
+
+            db.DBClose()
+            db = Nothing
+
+            Response.Redirect("ContractRechargeList.aspx", True)
+        End If
+    End Sub
+
+    Private Sub cmdUpdate_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdUpdate.Click
+        doUpdate()
+    End Sub
+
+    Private Sub hypUpdate_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles hypUpdate.Click
+        doUpdate()
+    End Sub
+End Class
+
+End Namespace

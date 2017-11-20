@@ -1,0 +1,398 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SmartDLogon.Master.cs" Inherits="SmartDThemeTemplate.SmartDLogon" EnableTheming="false" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+
+<!--[if lt IE 7 ]>  <html class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]>     <html class="ie ie7"> <![endif]-->
+<!--[if IE 8 ]>     <html class="ie ie8"> <![endif]-->
+<!--[if IE 9 ]>     <html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9 ]>  <html class="ie">     <![endif]-->
+<!--[if !(IE)]><!--><html class="">   <!--<![endif]-->
+<head runat="server">
+    <link id="favLink" runat="server" rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <title>SmartDiligence logon</title>
+    <asp:ContentPlaceHolder ID="head" runat="server" Visible="False">
+    </asp:ContentPlaceHolder>
+        <script language="javascript" type="text/javascript">
+    var contentID = "ctl00_pageContents_";
+    function showTooltip(evt, controlID, helpID)
+        {
+            var e=(evt)?evt:window.event;
+            
+            if (window.event) {
+                e.cancelBubble=true;
+            } else {
+                e.stopPropagation();
+            }
+            
+            populateTooltip(helpID);
+            $find('ctl00_popuptooltip')._popupBehavior._parentElement = document.getElementById(controlID);
+            $find("ctl00_popuptooltip").showPopup();
+        }
+        
+        function populateTooltip(helpID)
+        {
+            var behaviour = $find('ctl00_dynpopup');
+            if (behaviour)
+            {
+                behaviour.populate(helpID);
+            }
+        }
+        
+       
+        
+        function showUserDefinedTooltip(controlID, helpID, accountID)
+        {
+            event.cancelBubble = true;
+            populateUserDefinedTooltip(helpID, accountID);
+            $find('ctl00_popuptooltip')._popupBehavior._parentElement = document.getElementById(controlID);
+            $find("ctl00_popuptooltip").showPopup();
+        }
+        
+        function populateUserDefinedTooltip(helpID, accountID)
+        {
+            var behaviour = $find('ctl00_dynuserdefinedpopup');
+            if (behaviour)
+            {
+                behaviour.populate(helpID + ',' + accountID);
+            }
+        }
+    </script>
+<style type="text/css">
+
+* html #sitecontainer {
+height: 100%;
+
+}
+
+html, body {
+	margin: 0px;
+	height: 100%;
+	font-family: Arial;
+	font-size: 12px;
+    background-color: #ffffff;
+}
+
+#sitecontainer {
+	height: 100%;
+	width: 100%;
+	background-color: #ffffff;
+
+}
+
+#companylogodiv {
+	height: 100px;
+	background-color: #08181E;
+	text-align: Left;
+	background-image: url('images/pinsent-black.png');
+	background-position: left;
+	background-repeat: no-repeat;
+
+}
+
+#breadcrumbdiv {
+
+	height: 16px;
+	background-color: #C7114A;
+	background-repeat: no-repeat;
+	border: 1px solid #C7114A;
+	font-family: Arial;
+	font-size: 11px;
+	padding-left: 35px;
+	color: #C7114A;
+}
+
+#pagecontainerdiv {
+	margin-top: 1px;
+	width:100%;
+	height: 100%;
+	background-color: #ffffff;
+}
+
+#pagesubpaneldiv {
+	margin-top: 1px;
+	background-color: #EEEEEE;
+	width: 150px;
+	float: left;
+	height: 100%;
+	min-height: 100%;
+	border-top: 1px solid #08181E;
+	border-right: 1px solid #08181E;
+}	
+
+#pagecontent {
+
+
+}
+
+.pagesubpanelheader {
+	background-color: #C7114A;
+	height: 27px;
+	line-height: 27px;
+	width: 100%;
+	color: #ffffff;
+	text-align: center;
+	font-weight: bold;
+
+}
+
+.greygradient {
+	background-image: url('images/grey_gradient.png');
+	background-repeat: repeat-x;
+	background-color: #ffffff;
+	color: #08181E;
+	font-size: 12px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-top: 1px solid #08181E;
+	border-bottom: 1px solid #08181E;
+}
+
+#information {
+	border-top: 1px solid #000000;
+	padding: 10px;
+}
+
+#logincontainer {
+	float:right;
+	width: 100%;
+	text-align: center;
+	height:100%;
+}
+
+#logonform {
+	margin: 0 auto;
+	margin-top: 50px;
+	width: 370px;
+	text-align: center;
+	background-image: url('images/grey_gradient.png');
+	background-repeat: repeat-x;
+	background-color: #ffffff;
+	border: 1px solid #08181E;
+	color: #C7C6C6;
+	font-size: 10px;
+
+	padding-bottom: 20px;
+
+}
+
+#logonImage
+{
+	margin: 0 auto;
+	margin-top: 50px;
+	text-align: center;
+	background-image: url('images/Smartdiligence2.jpg');
+	background-repeat: no-repeat;
+	background-color: #ffffff;
+	width:444px;
+	height:61px;
+}
+
+#login input 
+{
+	width: 131px;
+}
+
+#maincontentdiv 
+{
+	margin-left: 60px;
+    width: 800px;
+    margin: 0 auto;
+	margin-top: 20px;
+	color: #08181E;
+	font-size: 12px;
+}
+
+#loginfooter {
+	font-family: Arial;
+	font-size: 12px;
+	color: #08181E;
+	float: left; 
+	text-align: left;
+	width: 270px;
+}
+
+#titlegradient {
+	background-color: #C7C6C6;
+	background-repeat: repeat-x;
+	width: 370px;
+	height: 18px;
+	line-height: 18px;
+	text-align: center;
+	border-bottom: 1px solid #08181E;
+	margin-bottom: 20px;
+}
+
+#forgottendetailsdiv {
+	text-align: center;
+}
+
+
+.btnLogon 
+{
+	float: right;
+}
+
+.buttonimg {
+	margin-top: 5px;
+}
+
+.reqfield { 
+	font-weight: bold;
+	color: #08181E;
+	font-size: 12px;	
+}
+
+.inputtext { 
+	border: 1px solid #08181E;
+	font-size: 12px;
+}
+.expenses {
+	font-weight: bold;
+	font-style: italic;
+}
+
+.expenses2008 
+{
+	font-weight: bold;
+}
+
+.errortext 
+{
+	font-weight: bold;
+    color: #FF0000;
+    font-size: 12px;
+    padding: 6px;
+}
+
+.informationmessageheader 
+{
+    font-weight: bold;	
+}
+
+.informationmessage
+{
+    margin-bottom: 10px;
+}
+
+td 
+{
+	font-size: 12px;
+}
+
+img 
+{
+	border: 0px;
+}
+
+a 
+{
+    color: #08181E;
+}
+
+.hiddendiv {
+display: none;
+}
+
+.visablediv {
+   display:block;
+   position: absolute;
+   top: 155px;
+   left: 115px;
+}
+
+
+.stooltipcontainer {
+    z-index: 999;
+    margin-left: 14px;
+    margin-top: 9px;
+    overflow: hidden;
+    width: 220px;
+}
+
+.stooltiparrow {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    background-image: url('/images/ttarrowex.png');
+    background-repeat: no-repeat;
+    width: 10px;
+}
+
+.stooltipcontent {
+    position: absolute;
+    left: 23px; top: 12px;
+    background-color: #C7114A;
+    border: solid 1px #C7114A;
+    padding: 5px;
+    color: #ffffff;
+    font-family: arial;
+    font-size: 12px;
+    width: 200px;
+}
+
+iframe {
+	display:none;
+	display:block;
+	position:absolute;
+	top:15;
+	left:15;
+	z-index:-1;
+	filter:mask();
+	width:350px;
+	height:500px;
+}
+</style>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+    <cc1:ToolkitScriptManager ID="ScriptManager1" runat="server" />
+    
+     
+   <div id="sitecontainer">
+	<div id="companylogodiv"></div>
+	<div id="breadcrumbdiv"></div>
+
+	
+	
+	<div id="pagesubpaneldiv">
+		<div class="greygradient">
+			<div id="forgottendetailsdiv">
+            <a href="forgottendetails.aspx" title="Forgotten Details"><img src="buttons/button_forgotten_details.gif" class="buttonimg" height="26" width="108" alt="Forgotten Details" /></a>
+			</div>
+		</div>
+        <asp:Panel ID="pnlInformation" runat="server" Visible="false">
+                <div class="pagesubpanelheader">Information</div>
+		        <div id="information"><asp:Literal ID="litInformationText" runat="server"></asp:Literal></div>
+        </asp:Panel>
+
+	</div>
+	<!--<div id="pagecontainerdiv">-->
+		<!--<div id="pagecontent">-->
+		<asp:ContentPlaceHolder ID="pageContents" runat="server"></asp:ContentPlaceHolder>
+			            <!--</div>-->
+		        
+
+
+		<!--</div>-->
+	<!--</div>-->
+    </div>
+<div>
+<asp:Panel ID="pnltooltip" runat="server">
+            </asp:Panel></div>
+			<asp:Image ID="imgtooltip" runat="server" Style="display:none;" ImageUrl="~/images/spacer.gif" /><cc1:DynamicPopulateExtender
+                ID="dynpopup" runat="server" TargetControlID="pnltooltip" ServicePath="~/svcTooltip.asmx" ServiceMethod="getTooltip">
+            </cc1:DynamicPopulateExtender>
+    <cc1:DynamicPopulateExtender
+                ID="dynuserdefinedpopup" runat="server" TargetControlID="pnltooltip" ServicePath="~/svcTooltip.asmx" ServiceMethod="getUserDefinedTooltip">
+            </cc1:DynamicPopulateExtender>
+        <cc1:PopupControlExtender ID="popuptooltip" runat="server" TargetControlID="imgtooltip" PopupControlID="pnltooltip" Position="Right" ></cc1:PopupControlExtender>
+    </form>
+    <asp:Literal ID="PageStatistics" runat="server"></asp:Literal>
+</body>
+</html>

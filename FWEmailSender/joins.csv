@@ -1,0 +1,14 @@
+1,LEFT JOIN [supplier_details] ON [contract_details].[supplierId] = [supplier_details].[supplierId],supplier_details
+2,LEFT JOIN [contract_productdetails] ON [contract_productdetails].[contractId] = [contract_details].[contractId],contract_productdetails
+3,LEFT JOIN [productDetails] ON [contract_productdetails].[productId] = [productDetails].[productId],productDetails
+4,LEFT JOIN [contract_notification] ON [contract_notification].[contractId] = [contract_details].[contractId],contract_notification
+5,LEFT JOIN [employees] ON [employees].[employeeId] = [contract_details].[contractOwner],employees
+6,LEFT JOIN [contract_notification] AS [Contract-Not] ON [Contract-Not].[employeeId] = [employees].[employeeId],contract_notification
+7,LEFT JOIN [supplier_addresses] ON [supplier_addresses].[addressId] = [supplier_details].[primaryAddressId],supplier_addresses
+8,LEFT JOIN [codes_contractcategory] ON [contract_details].[categoryId] = [codes_contractcategory].[categoryId] ,codes_contractcategory
+9,LEFT JOIN [codes_contracttype] ON [codes_contracttype].[contractTypeId] = [contract_details].[contractTypeId],codes_contracttype
+10,LEFT JOIN [productDetails] ON [productDetails].[productId] = [productLicences].[productId],productDetails
+11,LEFT JOIN [licenceRenewalTypes] ON [licenceRenewalTypes].[renewalType] = [product_licences].[renewalType],licenceRenewalTypes
+12,LEFT JOIN [contract_details] ON [contract_details].[contractId] = [contract_forecastdetails].[contractId],contract_details
+13,LEFT JOIN [productCategories] ON [productCategories].[categoryId] = [productDetails].[productCategoryId],productCategories
+14,LEFT JOIN [employees] ON [employees].[employeeId] = [product_licences].[notifyId],employees

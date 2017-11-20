@@ -1,0 +1,1 @@
+﻿alter table dbo.CarAssignmentNumberAllocations add constraint [PK_CarAssignmentNumberAllocations] primary key (ESRVehicleAllocationId)

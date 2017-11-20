@@ -1,0 +1,6 @@
+﻿CREATE TYPE [dbo].[IntPK] AS TABLE
+(
+	[c1] [int] NOT NULL,
+	PRIMARY KEY CLUSTERED  ( [c1] ASC )
+	WITH (IGNORE_DUP_KEY = ON)
+)

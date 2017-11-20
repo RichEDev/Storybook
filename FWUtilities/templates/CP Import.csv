@@ -1,0 +1,14 @@
+Core Table,Field,Alt Description,Type,Max Size,Unique?,Mandatory,Ref Field,Link Ref,Link Match,Default If Blank
+contract_productdetails,subAccountId,Repository SubAccount,S,50,N,Y,F,accountsSubAccounts.subAccountId,accountsSubAccounts.Description,
+contract_productdetails,contractId,Contract Desc. To Link to,S,250,Y,Y,Y,[contract_details].[contractId],[contract_details].[contractDescription],
+contract_productdetails,productId,Product Name,S,70,N,Y,Y,[productDetails].[ProductId],[productDetails].[ProductName],
+contract_productdetails,productValue,Product Value,F,,N,N,N,,,0
+contract_productdetails,currencyId,Currency,S,50,N,N,Y,[currencyview].[currencyId],[currencyview].[currencyName],
+contract_productdetails,salesTaxRate,Sales Tax Rate,S,50,N,N,Y,[codes_salestax].[salesTaxId],[codes_salestax].[salesTaxDescription],
+contract_productdetails,maintenanceValue,Maintenance Value,F,,N,N,N,,,0
+contract_productdetails,maintenancePercent,Maintenance Percent,F,,N,N,N,,,0
+contract_productdetails,unitCost,Unit Cost,F,,N,N,N,,,0
+contract_productdetails,quantity,Quantity,N,,N,N,N,,,0
+contract_productdetails,unitId,Unit Type Description,S,50,N,N,Y,[codes_units].[unitId],[codes_units].[unitDescription],
+contract_productdetails,projectedSaving,Projected Saving,F,,N,N,N,,,0
+contract_productdetails,pricePaid,Price Paid,F,,N,N,N,,,0

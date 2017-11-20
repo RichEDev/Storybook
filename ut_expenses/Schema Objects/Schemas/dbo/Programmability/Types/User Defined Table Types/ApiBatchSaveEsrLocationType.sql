@@ -1,0 +1,23 @@
+﻿CREATE TYPE [dbo].[ApiBatchSaveEsrLocationType] AS TABLE (
+    [ESRLocationId]            BIGINT         NULL,
+    [LocationCode]             NVARCHAR (500) NULL,
+    [Description]              NVARCHAR (500) NULL,
+    [InactiveDate]             DATETIME       NULL,
+    [AddressLine1]             NVARCHAR (500) NULL,
+    [AddressLine2]             NVARCHAR (500) NULL,
+    [AddressLine3]             NVARCHAR (500) NULL,
+    [Town]                     NVARCHAR (500) NULL,
+    [County]                   NVARCHAR (500) NULL,
+    [Postcode]                 NVARCHAR (500) NULL,
+    [Country]                  NVARCHAR (500) NULL,
+    [Telephone]                NVARCHAR (500) NULL,
+    [Fax]                      NVARCHAR (500) NULL,
+    [PayslipDeliveryPoint]     NVARCHAR (500) NULL,
+    [SiteCode]                 NVARCHAR (500) NULL,
+    [WelshLocationTranslation] NVARCHAR (500) NULL,
+    [WelshAddress1]            NVARCHAR (500) NULL,
+    [WelshAddress2]            NVARCHAR (500) NULL,
+    [WelshAddress3]            NVARCHAR (500) NULL,
+    [WelshTownTranslation]     NVARCHAR (500) NULL,
+    [ESRLastUpdate]            DATETIME       NULL);
+

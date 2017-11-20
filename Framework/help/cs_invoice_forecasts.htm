@@ -1,0 +1,129 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - [Invoice Forecasts]</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+			
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,600)">
+		<div class="help_page_title"><a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>
+			Invoice Forecast Details</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Overview
+			</div>
+			<div class="help_overview">
+				<p>The Forecast tab provides the capability to store known payments (or expected 
+					invoices) for a given contract.</p>
+				<p>These can either be entered individully or generated for the whole term of the 
+					contract automatically.</p>
+				<div class="help_hint">
+					<b>HINT: </b>An automated email notification is available that will notify of 
+					overdue invoices. The forecasts specified in this section can be used to detect 
+					such expected payments that have not been invoiced. This is particularly 
+					important for pro-active management of budgets.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1"> Forecast 
+				Functionality
+			</div>
+			<div class="help_body_text" id="1">
+				<p>
+					<table class="inner" align="center" width="500">
+						<tr>
+							<th class="inner" width="150">
+								Function</th>
+							<th class="inner" width="350">
+								Description</th>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Move</td>
+							<td class="inner"><p>For each invoice forecast added to the system, an additional 
+									action call 'Move' also appears to the left of the forecast detail. The action 
+									that this will result in is that the entry will be transferred from being a 
+									forecast to an actual invoice.</p>
+								<p>On clicking the 'Move' button, you will be transferred to the invoices tab of 
+									the contract summary and the details from the forecast will be automatically 
+									populated into the invoice. The remaining fields of the invoice can be filled 
+									in and the 'Update' button clicked.</p>
+								<p>What happens on updating the invoice depends on how the system's 'Keep 
+									Forecasts' option has been configured :-</p>
+								<div class="help_tip">
+									<b>If 'Keep Forecasts' = Yes</b> then the invoice will be added to the system 
+									and the forecast entry will remain untouched in the forecasts screen.
+								</div>
+								<center><b>OR</b></center>
+								<div class="help_tip">
+									<b>If 'Keep Forecasts' = No</b> then the forecast entry will be removed on 
+									successfull entry of the invoice.
+								</div>
+								<p>The forecast will have to be kept if the Variance or Budget reports are to be 
+									used from the Standard Reports.</p>
+							</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Generate</td>
+							<td class="inner">
+								<p>The generate function allow quick creation of all required forecasts for a given 
+									contract period.</p>
+								<p>On selecting the option, the numbmer of forecasts dictated by the invoice 
+									frequency and duration of the contract are created.</p>
+								<p>The date range required for can be reduced or extended freely. Clicking the OK 
+									button will add the forecasts to the system.</p>
+								<p><b>NOTE: </b>An equal breakdown of costs between the contract products will also 
+									be generated along with the individual forecast items.</p>
+							</td>
+						</tr>
+						<tr>
+							<td class="inner" align="center">Breakdown</td>
+							<td class="inner">
+								<p>Once a forecast has been entered, a product / amount breakdown button is 
+									enabled. This will enable the amount for the period to be divided into portions 
+									between the products assigned to the contract.</p>
+								<p><b>NOTE: </b>On returning from the breakdown screen, the forecast amount is 
+									automatically updated with the sum total of the breakdown elements.</p>
+							</td>
+						</tr>
+					</table>
+				</p>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

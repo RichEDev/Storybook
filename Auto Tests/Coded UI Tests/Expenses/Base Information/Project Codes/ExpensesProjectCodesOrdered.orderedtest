@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="ExpensesProjectCodesOrdered" storage="c:\projects\spend management\main\auto tests\coded ui tests\expenses\base information\project codes\expensesprojectcodesordered.orderedtest" id="ef25635a-cd02-4ca2-96d3-12c3336b89e5" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+    <TestCategoryItem TestCategory="Expenses" />
+  </TestCategory>
+  <TestLinks>
+    <TestLink id="45b70296-76a3-2c35-a4bc-a2fdc39bc89c" name="ProjectCodesSuccessfullyCreateProjectCode" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="1f75d57a-a482-5ff3-3bf3-edc9c453f4fd" name="ProjectCodesUnsuccessfullyCreateDuplicateProjectCode" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="0a1955ba-1da9-b79c-84d5-824737d5ea30" name="ProjectCodesSuccessfullyEditProjectCode" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="b6dab609-3160-d3e4-e2a0-fa1a48c78dff" name="ProjectCodesSuccessfullyArchiveProjectCode" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="05e35603-f8f6-e546-0768-6ea4c0873f05" name="ProjectCodesSuccessfullyUnarchiveProjectCode" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="b55019b8-4e25-a1c7-ab57-ea0bf26ca08a" name="ProjectCodesSuccessfullyDeleteProjectCode" storage="..\..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

@@ -1,0 +1,182 @@
+% FW Update.dat file
+% 06/10/2000
+# 000007 000008
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Attachments
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Invoice Status Type
+
+% Codes - Note Category
+
+% Codes - Sales Tax
+
+% Codes - SLD
+
+% Codes - Term Type
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract Classes
+
+% Contract Details
+ALTER TABLE [Contract Details]
+    ALTER COLUMN [Contract Description] varchar(100)
+*
+
+% Contract - Forecast Details
+
+% Contract Notes
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+
+% Contract - Product Platforms
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Export Fields
+
+% Exports
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice Details
+
+% Invoice - Product Details
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Location
+
+% Location Users
+
+% Mail
+
+% Metrics
+
+% OLAP Cube 02
+ALTER TABLE [OLAP Cube 02]
+    ALTER COLUMN [Vendor Name] varchar(100)
+*
+ALTER TABLE [OLAP Cube 02]
+    ALTER COLUMN [Contract Description] varchar(100)
+*
+
+% OLAP Cube 03	
+ALTER TABLE [OLAP Cube 03]
+    ALTER COLUMN [Vendor Name] varchar(100)
+*
+ALTER TABLE [OLAP Cube 03]
+    ALTER COLUMN [Contract Description] varchar(100)
+*
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Product Details
+
+% Product Notes
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Schedule
+
+% Security
+
+% Security Locations
+
+% SLM Classes
+
+% SLM Details
+
+% Staff Details
+
+% System Parameters
+
+% Target Types
+
+% Vendor Addresses
+ALTER TABLE [Vendor Addresses]
+    ADD Switchboard   varchar(50)
+*
+ALTER TABLE [Vendor Addresses]
+    ADD Mobile       varchar(50)
+*
+
+% Vendor Categories
+
+% Vendor Details
+ALTER TABLE [Vendor Details]
+    ALTER COLUMN [Vendor Name] varchar(100)
+*
+
+% Vendor Notes
+
+% Vendor Status
+
+% ---------- Views ----------
+
+% Performance Metrics
+
+% CalView
+
+% EQ Vendor Details
+
+% ---------- Procedures ----------
+
+% SPF003
+

@@ -1,0 +1,3771 @@
+﻿/* Modal layout */
+
+
+.errorModal {
+    border-width: 1px;
+    border-style: solid;
+}
+.errorModalSubject {
+    padding: 5px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    font-weight: bold;
+    font-size: 14px;
+}
+    
+.errorModalBody {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    font-size: 12px;
+}
+
+
+/* tooltips layout  */
+.tooltipcontainer {
+	width: auto;
+	position: absolute;
+	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;;
+	font-size: 12px;
+}
+
+.tooltipcontainer .tooltipcontent
+{
+	width: 215px;
+	padding: 5px;
+	line-height: 18px;
+}
+
+.tooltipicon
+{
+    vertical-align: middle;
+	cursor: help;
+}
+/* tooltips layout ends */
+
+/* Logon Page */
+
+ #logonpage 
+ {
+  font-size: 12px;
+  font-family: Arial, Verdana, Helvetica, SunSans-Regular, Sans-Serif;
+  padding:0px;
+  margin:0px;
+  min-height: 580px;
+  min-width: 780px;
+}
+#logonpage #breadcrumbbar 
+{
+	position: absolute;
+	top: 15px;
+	width: 100%;
+	height: 17px;
+	background-repeat: no-repeat;
+	text-align: right;
+}
+
+#logonpage #breadcrumbbar a 
+{
+	font-weight: bold;
+}
+
+#logonpage #pagetitlebar 
+{
+	position: absolute;
+	top: 33px;
+	width: 100%;
+	height: 43px;
+	line-height: 43px;
+	font-size: 18pt;	
+	font-weight: bold;
+	background-repeat: no-repeat;
+}
+#logonpage #pagetitle {
+	margin-left: 50px;
+}
+#logonpage #logonoutercontainer { 	
+  position:absolute;
+  top: 50%; 
+  left: 50%;
+  text-align: left;
+  padding: 0px;
+}
+#logonpage #logonoutershadow {
+
+}
+#logonpage #logoninnercontainer
+{
+	position: relative;
+	height: 216px;
+	margin-top: 3px;
+	width: 550px;
+	margin-left: 3px;	
+	background-repeat: no-repeat;
+}
+#logonpage #logonleftpanel
+{
+	padding-left: 20px;
+	padding-top: 6px;
+	width: 374px;
+}
+#logonpage #logonrightpanel
+{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 153px;
+	height: 200px;
+	padding-top: 17px;
+	text-align: center;
+}
+#logonpage #logonForm label 
+{
+	display: block;
+	float: left;
+	padding-top: 4px;
+	font-weight: bold;
+	width: 130px;
+}
+#logonpage #logonForm p, h1 {
+  margin: 0px; 
+  padding: 10px; 
+}
+#logonpage #logonleftpanel .formrow 
+{
+	position: relative;
+	display: block;
+	padding-top: 9px;
+	padding-bottom: 4px;
+	width: 100%;
+}
+#logonpage #logonleftpanel #rememberdetailsdisclaimer
+{
+	font-size: 11px;
+	float: left;
+	width: 225px;
+}
+#logonpage #logonleftpanel #logonbutton
+{
+		width: 64px;
+		
+	position: absolute;
+	bottom: 20px;
+	right: 225px;
+}
+
+#logonpage #logonleftpanel .logontooltip
+{
+		position: absolute;
+		right: 55px;
+}
+
+#logonpage #logonleftpanel .divider
+{
+	text-align: left;
+	font-size: 11px;
+	height: 20px;
+	line-height: 20px;
+}
+
+#logonpage #logonleftpanel .dividerfiller 
+{
+	width: 303px;
+}
+#logonpage #logonrightpanel .productlogo
+{
+	margin-bottom: 15px;
+    _behavior: url(/shared/css/iepngfix.htc);
+}
+
+#logonpage #logonrightpanel .buttonimage 
+{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	cursor: pointer;
+}
+#logonpage #informationcontainer 
+{
+	height: 90px;
+	overflow: auto;
+	margin: 2px 5px 0px 3px;
+}
+#logonpage #informationcontainer h4 {
+	padding: 3px 3px 3px 6px;
+	margin: 0px;
+	font-weight: normal;
+	font-size: 12px;
+}
+
+#logonpage #informationcontainer p {
+	padding: 3px 3px 3px 5px;
+}
+
+#logonpageimage 
+{
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  height: 780px;
+  width: 450px;
+}
+
+#forgottenDetailsButtons 
+{
+	padding-top: 5px;
+}
+
+#forgottenDetailsIntro 
+{
+	padding-bottom: 15px;
+}	
+
+#forgottenDetailsMessage 
+{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.modalMasterBackground 
+{
+    background-color: Gray;
+    filter:alpha(opacity=70);  
+	opacity:0.7;
+	z-index: 9000;
+}
+
+/* HTML CSS Buttons */
+.buttonContainer
+{
+	cursor: pointer;
+	
+	cursor: hand;
+	height: 27px;
+	background-position: right top;
+	background-repeat: no-repeat;
+	padding-right: 2px;
+	padding-left: 4px;
+	display: inline-block;
+	border: 0px;
+	margin-right: 7px;
+	vertical-align: top;
+    *display: inline; /* IE7 hack, see Task 66409 */
+    zoom: 1; /* IE7 hack see, Task 66409 */
+}
+
+.buttonContainer .buttonInner
+{
+   
+    background-color: transparent;
+	cursor: pointer;
+	cursor: hand;
+	background-position: left top;
+	background-repeat: no-repeat;
+	height: 27px;
+	line-height: 25px;
+	display: inline-block;
+	padding-left: 14px;
+	padding-right: 14px;
+	font-weight: normal;
+	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	text-decoration: none;
+	border: 0px;
+	margin-left: -4px;
+}
+
+.buttonContainer input.buttonInner { padding-left: 7px; padding-right: 7px; }
+
+.buttonContainer:hover .buttonInner { background-position: left -155px; }
+
+/* smaller version of the CSS button for "filter", etc. */
+span.smallbuttonContainer 
+{
+	cursor: pointer;
+	cursor: hand;
+	height: 22px;
+	background-position: right top;
+	background-repeat: no-repeat;
+	padding-right: 2px;
+	display: inline-block;
+	border: 0px;
+	margin-right: 7px;
+}
+
+span.smallbuttonContainer .smallbuttonInner
+{
+    background-image: none;
+    background-color: transparent;     
+	cursor: pointer;
+	cursor: hand;
+	background-position: left top;
+	background-repeat: no-repeat;
+	height: 22px;
+	line-height: 21px;
+	display: inline-block;
+	padding-left: 12px;
+	padding-right: 12px;
+	font-weight: normal;
+	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	text-decoration: none;
+	border: 0px;
+}
+
+span.smallbuttonContainer input.smallbuttonInner { padding-left: 6px; padding-right: 6px; }
+span.smallbuttonContainer:hover { background-position: right -34px; }
+span.smallbuttonContainer:hover .smallbuttonInner { background-position: left -34px; }
+/* HTML CSS Buttons end */
+
+
+/* SM Field Layouts */
+/* START */
+
+
+.sm_panel
+{
+    min-width: 850px;
+    padding: 5px;
+    font-size: 13px;
+}
+
+.sm_panel .sectiontitle 
+{
+	font-size: 14px;
+	font-weight: bold;
+    border-top-width: 1px;
+    border-top-style: solid;
+	border-bottom-width: 2px;
+    border-bottom-style: solid;
+	padding: 1px 2px 2px 5px;
+	margin-top: 2px;
+	margin-bottom: 8px;
+}
+
+.sm_panel label 
+{
+    height: auto;
+    padding: 1px;
+	font-size: 13px;
+	width: 170px;
+    text-align: right;
+    line-height: 20px;
+    vertical-align: middle;
+	display: inline-block;
+}
+
+.sm_panel .mandatory
+{
+	font-weight: 600!important;
+}
+
+.sm_panel select 
+{    
+    padding-left: 5px;
+    width: 162px;
+}
+
+.sm_panel .onecolumn span, .sm_panel .onecolumnsmall span, .sm_panel .onecolumnlarge span, 
+.sm_panel .twocolumn span, .sm_panel .inputs span 
+{
+    vertical-align: top; /* This is needed to cascade over ExpensesThemeNew */
+    height: auto;
+}
+
+.sm_panel .twocolumn 
+{
+    vertical-align: top;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom-width: 1px;
+    border-bottom-style: dashed;
+}
+
+.sm_panel .twocolumn span 
+{
+    line-height: 16px;    
+}
+
+.sm_panel span img 
+{
+    padding-top: 0px;    
+}
+
+.sm_panel .twocolumn .inputs
+{
+    display: inline-block;
+    width: 180px;
+    margin-bottom: 5px;
+}
+
+.sm_panel .twocolumn .inputs input
+{
+   
+    margin-left: 6px;
+    padding: 3px;
+    width: 165px;
+}
+
+.sm_panel .twocolumn .inputs .buttonContainer input
+{
+    margin-top: 0;
+    margin-left: -4px;
+    padding-left: 9px;
+    width: auto;
+    height: 27px;
+    line-height: 20px;
+}
+
+.sm_panel .twocolumn .inputs select
+{
+    margin-left: 6px;
+    padding: 3px;
+    width: 175px;
+    font-size: 12px;
+
+}
+
+.sm_panel .twocolumn span.padded
+{
+    margin-left: 6px;
+}
+
+.sm_panel.singlecolumn
+{
+    width: 520px;
+    min-width: 520px
+}
+
+.sm_panel.singlecolumn .twocolumn .inputs
+{
+    width: 270px;
+}
+
+.sm_panel.singlecolumn .twocolumn .inputs.padded
+{
+    width: 264px;
+}
+
+.sm_panel .smallTimeField
+{
+    margin-left: 0px !important;
+    width: 55px !important;
+}
+
+.sm_panel .smallDateField 
+{
+    width: 87px !important;    
+}
+
+.sm_panel .inputicon img
+{
+    cursor: pointer;
+    cursor: hand;
+}
+
+.sm_panel .inputtooltipfield, .sm_panel .inputvalidatorfield, .sm_panel .inputicon
+{
+    margin-top: 2px;
+    width: 20px;
+    display: inline-block;
+    text-align: center;
+    line-height: 28px;
+    height: 28px;
+    -moz-inline-box;
+}
+
+.sm_panel .onecolumnpanel .inputicon, .sm_panel .onecolumnpanel .inputtooltipfield, .sm_panel .onecolumnpanel .inputvalidatorfield
+{
+    display: none; /* Do not display input icons for Comment Fields */
+}
+
+.sm_panel .inputmultiplevalidatorfield
+{
+    margin-top: 2px;
+    width: 5px;
+    display: inline-block;
+    text-align: center;
+    line-height: 28px;
+    overflow: hidden;
+    -moz-inline-box;
+}
+
+.sm_panel .spacerpanel 
+{
+    width: 409px; 
+    height: 26px; 
+    padding-bottom: 8px; 
+    display: inline-block;    
+}
+
+    .sm_panel .onecolumnpanel {
+        /*width: 780px;*/
+	margin-bottom: 8px;
+	border-width: 1px;
+    border-style: solid;
+	padding: 10px;
+        border-color: #ccc;
+}
+.sm_panel .onecolumn, .sm_panel .onecolumnlarge, .sm_panel .onecolumnsmall
+{
+    vertical-align: top;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom-width: 1px;
+    border-bottom-style: dashed;
+}
+
+.sm_panel .onecolumn textarea 
+{
+    margin-top: 1px;
+    padding-left: 5px;
+    padding-top: 5px;
+    width: 579px;
+	height: 60px;
+	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 13px;
+}
+
+.sm_panel .onecolumn select
+{	
+	height: 100%;
+}
+
+.sm_panel .onecolumn select, .sm_panel .onecolumnsmall select 
+{
+    margin-top: 1px;
+	width: 587px;
+    padding: 3px;
+}
+
+.sm_panel .onecolumn .inputs, .sm_panel .onecolumnlarge .inputs, .sm_panel .onecolumnsmall .inputs, #tabsGeneral .sm_panel .onecolumnsmall .inputs
+{
+    display: inline-block;
+    width: 580px;
+    height: 70px;
+    padding-left: 6px;
+    margin-bottom: 5px;
+    -moz-inline-box;
+}
+
+.sm_panel .onecolumnlarge .inputs 
+{
+    height: 260px;
+}
+
+.sm_panel .onecolumnlarge .rtePanel, .sm_panel .onecolumnlarge .rtePanelReadOnly
+{
+    line-height: normal;
+    border-style: solid;
+    border-width: 1px;
+    margin-top: 2px;
+    height: 235px;
+    width: 571px;
+    overflow: auto;
+}
+
+.sm_panel .onecolumnlarge .rtePanelReadOnly
+{    
+    height: 258px;
+}
+
+.sm_panel .onecolumnsmall .inputs 
+{
+    height: 28px;
+    margin-top: 1px; /* This is needed to cascade over ExpensesThemeNew */ 
+}
+
+.sm_panel .onecolumnsmall input
+{    
+    margin-top: 1px;
+    padding-left: 5px;
+    width: 578px;
+    height: 20px;
+}
+
+.sm_panel span.inputs span.lookupdisplayvalue
+{
+    width: 158px;
+    display: inline-block;
+    margin-top: 1px;
+    margin-left: 12px;
+}
+
+/* EVERYTHING BELOW IS FOR THE FORM DESIGNER - TO BE UPDATED */
+
+.sm_field input { width: 166px; }
+.sm_field select { width: 172px; }
+.sm_field_wide input { width: 591px; }
+.sm_field_wide select { width: 597px; }
+.sm_field_tall textarea { width: 591px; height: 42px; }
+
+.sm_button
+{
+	height: 24px;
+	border: 1px solid transparent;
+	vertical-align: top;
+	cursor: pointer;
+	cursor: hand;
+	margin: 2px;
+    display: inline-block;
+    -moz-inline-box;
+}
+
+.sm_button span
+{
+	margin: 4px;
+	vertical-align: middle;
+	font-weight: bold;
+    display: inline-block;
+    -moz-inline-box;
+}
+
+.sm_tabheader
+{
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    color: #fff!important;
+    background-color: #19a2e6!important;
+    border: 1px solid #19A2E6;
+    margin-left: 5px;
+	position: relative;
+	display: inline-block;
+	padding: 1px 0px 2px 0px;
+    -moz-inline-box;   
+}
+
+.sm_tabheader_middle
+{
+	display: inline-block;
+	line-height: 21px;
+	vertical-align: top;
+    padding: 0px 0px 0px 3px;
+	cursor: pointer;
+	cursor: hand;
+	-moz-inline-box;
+}
+
+.sm_title
+{
+    border-width: 1px;
+    border-style: solid;
+    padding: 1px 2px 2px 2px;
+    margin: 2px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.sm_comment
+{
+	vertical-align: middle;
+	margin-bottom: 2px;
+	border-style: solid;
+	border-width: 1px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	overflow: hidden;
+    position: relative;
+    margin: 2px;
+    display: inline-block;
+    width: 800px;
+    -moz-inline-box;
+}
+
+.sm_field_comment
+{    
+	vertical-align: middle;
+	margin-bottom: 2px;
+	display: inline-block;
+	border-width: 1px;
+	border-style: solid;
+	padding-left: 10px;
+	width: 805px;
+	height: 40px;
+	line-height: 40px;	
+}
+
+.sm_field_grid
+{   
+    position: relative; 	
+	width: 827px;
+	display: inline-block;
+	margin-bottom: 2px;
+	height: 72px;
+}
+
+/* Field Heights */
+.sm_field, .sm_field_wide { height: 34px; }
+.sm_field_tall { height: 70px; }
+.sm_field_taller { height: 118px; }
+/* Field Widths */
+.sm_field { width: 410px; }
+.sm_field_wide, .sm_field_tall, .sm_field_taller { width: 825px; }
+/* Structure */
+.sm_field, .sm_field_wide, .sm_field_tall, .sm_field_taller
+{
+	overflow: hidden;
+    position: relative;
+    margin-bottom: 2px;
+    padding: 0;
+    display: inline-block;
+    -moz-inline-box;
+}
+
+.sm_input, .sm_icon, .sm_tooltip, .sm_validators
+{
+    vertical-align: top;
+    display: inline-block;
+    -moz-inline-box;
+}
+
+.sm_field .sm_input, .sm_field .sm_icon, .sm_field .sm_tooltip, .sm_field .sm_validators { height: 26px; }
+
+.sm_field_wide .sm_input, .sm_field_wide .sm_icon, .sm_field_wide .sm_tooltip, .sm_field_wide .sm_validators { height: 26px; }
+
+.sm_field_tall .sm_input, .sm_field_tall .sm_icon, .sm_field_tall .sm_tooltip, .sm_field_tall .sm_validators { height: 54px; }
+
+.sm_field_taller .sm_input, .sm_field_taller .sm_icon, .sm_field_taller .sm_tooltip, .sm_field_taller .sm_validators { height: 110px; }
+
+.sm_input, .sm_icon, .sm_tooltip, .sm_validators
+{
+    padding: 1px;
+}
+.sm_field .sm_input
+{
+    width: 179px;
+    margin-left: 2px;
+}
+.sm_field_wide .sm_input, .sm_field_tall .sm_input, .sm_field_taller .sm_input
+{
+    width: 604px;
+}
+.sm_icon
+{
+	width: 26px;
+}
+.sm_tooltip
+{
+	width: 26px;
+}
+.sm_validators
+{
+	width: 10px;
+}
+.sm_buttons
+{
+	width: 850px;
+}
+
+.sm_field, .sm_field_comment, .sm_field_grid, .sm_field_spacer, .sm_field_tall, .sm_field_taller, .sm_field_wide { position: relative; }
+
+.sm_availablefield_linkedfield
+{
+    width: 198px;
+    font-style: italic;
+    font-size: 11px;
+    vertical-align: top;
+    line-height: 16px;
+}
+
+.mandatory
+{
+	font-weight: 600!important;
+}
+
+/* END */
+/* SM Field Layouts*/
+
+
+/*
+ * Software Europe Extensions to jQueryUI CSS
+ * START
+ */
+
+/* dock button */
+.ui-dialog .ui-dialog-titlebar-dock { position: absolute; right: 23px; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-dock span { display: block; margin: 1px; }
+.ui-dialog .ui-dialog-titlebar-dock:hover, .ui-dialog .ui-dialog-titlebar-dock:focus { padding: 0; }
+/* undock button */
+.ui-dialog .ui-dialog-titlebar-restore { position: absolute; right: 23px; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-restore span { display: block; margin: 1px; }
+.ui-dialog .ui-dialog-titlebar-restore:hover, .ui-dialog .ui-dialog-titlebar-restore:focus { padding: 0; }
+/* expand button */
+.ui-dialog .ui-dialog-titlebar-expand { position: absolute; right: 2px; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-expand span { display: block; margin: 1px; }
+.ui-dialog .ui-dialog-titlebar-expand:hover, .ui-dialog .ui-dialog-titlebar-expand:focus { padding: 0; }
+/* collapse button */
+.ui-dialog .ui-dialog-titlebar-collapse { position: absolute; right: 2px; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-collapse span { display: block; margin: 1px; }
+.ui-dialog .ui-dialog-titlebar-collapse:hover, .ui-dialog .ui-dialog-titlebar-collapse:focus { padding: 0; }
+/* dockleft button */
+.ui-dialog .ui-dialog-titlebar-dockleft { position: absolute; right: 2px; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-dockleft span { display: block; margin: 1px; }
+.ui-dialog .ui-dialog-titlebar-dockleft:hover, .ui-dialog .ui-dialog-titlebar-dockleft:focus { padding: 0; }
+/* dockright button */
+.ui-dialog .ui-dialog-titlebar-dockright { position: absolute; right: 2px; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-dockright span { display: block; margin: 1px; }
+.ui-dialog .ui-dialog-titlebar-dockright:hover, .ui-dialog .ui-dialog-titlebar-dockright:focus { padding: 0; }
+
+/* ui-multiselect */
+.ui-multiselect { border-left: solid 1px; border-right: solid 1px; font-size: 0.8em; border-color:#969696; }
+.ui-multiselect ul { -moz-user-select: none; border-bottom: 1px solid; border-color: #969696; }
+.ui-multiselect li { margin: 0; padding: 0; cursor: default; line-height: 20px; height: 20px; font-size: 11px; list-style: none; }
+.ui-multiselect li a { color: #999; text-decoration: none; padding: 0; display: block; float: left; cursor: pointer;}
+.ui-multiselect li.ui-draggable-dragging { padding-left: 10px; }
+
+.ui-multiselect div.selected { position: relative; padding: 0; margin: 0; border: 0; float:left; }
+.ui-multiselect ul.selected { position: relative; padding: 0; overflow: auto; overflow-x: hidden; background: #fff; margin: 0; list-style: none; position: relative; width: 100%; }
+.ui-multiselect ul.selected li { }
+
+.ui-multiselect div.available { position: relative; padding: 0; margin: 0; border: 0; float:left; border-right: 1px dotted; border-color: #506dab;}
+.ui-multiselect ul.available { position: relative; padding: 0; overflow: auto; overflow-x: hidden; background: #fff; margin: 0; list-style: none; width: 100%; }
+.ui-multiselect ul.available li { padding-left: 10px; }
+ 
+.ui-multiselect .ui-state-default { border: none; margin-bottom: 1px; position: relative; padding-left: 20px;}
+.ui-multiselect .ui-state-hover { border: none; }
+.ui-multiselect .ui-widget-header {border: none; font-size: 11px; margin-bottom: 1px;}
+ 
+.ui-multiselect .add-all { float: right; padding: 7px;}
+.ui-multiselect .remove-all { float: right; padding: 7px;}
+.ui-multiselect .search { float: left; padding: 4px;}
+.ui-multiselect .count { float: left; padding: 7px;}
+
+.ui-multiselect li span.ui-icon-arrowthick-2-n-s { position: absolute; left: 2px; }
+.ui-multiselect li a.action { position: absolute; right: 2px; top: 2px; }
+ 
+.ui-multiselect input.search, #divFilterList .filter-search { height: 14px; padding: 1px; opacity: 0.5; margin: 4px; width: 150px; }  
+#divFilterList .filter-search
+ {
+    margin: 6px;
+    position: absolute;
+    border: 1px solid #aaaaaa;
+    color: #222222; 
+    border-radius: 5px;
+    z-index: 10000;
+    font-size: 1em;
+}
+/* end multiselect */
+
+/* datepicker */
+.ui-datepicker-trigger { width: 16px;position: absolute;top: 436px; }
+/* end datepicker */
+
+/*
+ * START
+ * Timepicker stylesheet
+ * Highly inspired from datepicker
+ * FG - Nov 2010 - Web3R 
+ *
+ * version 0.0.3 : Fixed some settings, more dynamic
+ * version 0.0.4 : Removed width:100% on tables
+ * version 0.1.1 : set width 0 on tables to fix an ie6 bug
+ */
+
+.ui-timepicker-inline { display: inline; }
+
+#ui-timepicker-div { padding: 0.2em; }
+.ui-timepicker-table { display: inline-table; width: 0; }
+.ui-timepicker-table table { margin:0.15em 0 0 0; border-collapse: collapse; }
+
+.ui-timepicker-hours, .ui-timepicker-minutes { padding: 0.2em;  }
+
+.ui-timepicker-table .ui-timepicker-title { line-height: 1.8em; text-align: center; }
+.ui-timepicker-table td { padding: 0.1em; width: 2.2em; }
+.ui-timepicker-table th.periods { padding: 0.1em; width: 2.2em; }
+
+/* span for disabled cells */
+.ui-timepicker-table td span {
+	display:block;
+    padding:0.2em 0.3em 0.2em 0.5em;
+    width: 1.2em;
+
+    text-align:right;
+    text-decoration:none;
+}
+/* anchors for clickable cells */
+.ui-timepicker-table td a {
+    display:block;
+    padding:0.2em 0.3em 0.2em 0.5em;
+    width: 1.2em;
+    cursor: pointer;
+    text-align:right;
+    text-decoration:none;
+}
+
+
+/* buttons and button pane styling */
+.ui-timepicker .ui-timepicker-buttonpane {
+    background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0;
+}
+.ui-timepicker .ui-timepicker-buttonpane button { margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
+/* The close button */
+.ui-timepicker .ui-timepicker-close { float: right }
+
+/* the now button */
+.ui-timepicker .ui-timepicker-now { float: left; }
+
+/* the deselect button */
+.ui-timepicker .ui-timepicker-deselect { float: left; }
+
+/*
+ * END
+ * Timepicker stylesheet
+ */
+
+/* 
+ * START
+ * jquery.pnotify CSS Overrides
+ * These rules are also defined in ExpensesThemeNew.css etc because this file isn't linked in pages where pnotify is used (home, submit claim).
+ */
+div.ui-pnotify-text {
+    padding: 7px 0 0 0;
+    
+}
+div.ui-pnotify-title {
+    line-height: 16px;
+}
+
+/* 
+ * END
+ * jquery.pnotify css overrides 
+ */
+
+/* jquery button styling */
+div.ui-dialog-buttonset button.jQueryUIButton {
+    background-color: #19A2E6;
+    font: 13px 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    line-height: 17px;
+    text-decoration: none;
+    margin: 7px;
+    padding: 5px 8px;
+    border: none;
+    user-select: none;
+    white-space: pre;
+}
+
+/* END
+ * Software Europe Extensions to jQuery CSS
+ */
+ 
+ 
+/* Custom Entity Administration */
+/* START */
+
+#loadingArea 
+{
+    display: block;
+    width: 200px;
+    height: 100px;    
+    position: absolute;        
+    text-align: center;
+    line-height: 100px;
+    font-size: 14pt;            
+    border-style: solid;
+    border-width: 2px;
+}
+
+.infoHelpArea
+{
+    border-width: 2px;
+    border-style: solid;
+    display: none;    
+    margin-top: 1px;
+	position: fixed;
+	padding: 6px;
+	width: 300px;     
+}
+
+.securityComment 
+{
+    border-width: 2px;
+    border-style: solid;
+    margin-top: 1px;
+	position: fixed;
+	padding: 6px;
+	width: 300px;         
+    display: block; 
+    position: relative; 
+    width: 561px; 
+}
+
+/* Form Designer */
+/* START */
+
+#popupFormOptions .sm_btn, #formTabs .sm_btn, #formTabs .sm_form_editor_section_btn
+{
+	cursor: pointer;
+	cursor: hand;
+	padding: 0px 5px 0px 5px;
+}
+
+#tabBar .sm_form_editor_tab_btn 
+{
+    cursor: pointer;
+	cursor: hand;
+	padding: 0px 5px 1px 5px;
+	vertical-align: middle;
+}
+
+#add_new_tab .sm_form_editor_tab_btn
+{
+	cursor: pointer;
+	cursor: hand;
+	padding: 0px 3px 1px 0px;
+	vertical-align: middle;
+}
+
+#formTabs .sm_form_editor_section_btn
+{
+	display: block;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+
+#formTabs .sm_controls
+{
+	position: absolute;
+	border-style: dashed;
+	border-width: 2px;
+	display: block;
+	right: 0px;
+	top: 0px;
+	padding: 1px 0px 1px 0px;
+	-moz-inline-box;
+}
+
+#formTabs .sm_sectiontitle_img
+{
+	position: absolute;
+	display: block;
+	right: 0px;
+	top: 0px;
+	-moz-inline-box;
+}
+
+#tabBar .sm_tabheader, #tabBar .sm_tabheader_middle 
+{
+    cursor: pointer;
+	cursor: hand;
+}
+
+#formTabs .sm_field_spacer, #dragFieldHolder .sm_field_spacer
+{
+    vertical-align: top;
+    text-align: center;
+	margin-left: 0px;
+	margin-right: 4px;
+	margin-bottom: 4px;
+	display: inline-block;
+	border-width: 1px;
+	border-style: solid;
+	line-height: 30px;
+    width: 404px;
+	height: 30px;
+}
+
+#formTabs .richTextBox, #dragFieldHolder .richTextBox
+{
+    display: inline-block;
+    width: 575px;
+    height: 65px;
+    overflow: hidden;
+    border: 1px solid black;
+    background-color: white;
+}
+
+#availableFields
+{
+    overflow: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+}
+
+#availableFields .ui-draggable
+{
+    border-width: 0px;
+    border-style: none;
+    border-bottom-width: 1px;
+    border-bottom-style: dashed;
+    padding: 10px 0px;
+    display: block;
+    height: auto;
+    width: auto;            
+    line-height: normal;
+}
+
+#availableFieldDoms
+{
+    display:none;    
+}
+
+#formDesignContents .placeholder-highlight 
+{    
+    border-width: 2px;
+    border-style: solid;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin: 2px;
+}
+
+#formTabs .placeholder-highlight-fields
+{    
+    border-width: 2px;
+    border-style: solid;
+    margin: 2px;    
+    display: inline-block;
+    line-height: normal;
+}
+
+#formTabs .sectionsortables
+{
+    min-height: 30px;
+    padding-bottom: 10px;
+}
+
+#spacerArea .sm_field_spacer
+{
+    display: inline-block;
+    width: 250px;
+    border-width: 1px;
+    border-style: solid;    
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 5px;    
+}
+
+#spacerAreaText
+{
+    display: inline-block;
+    width: 170px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#spacerDragHandle
+{
+    display: inline-block;
+    height: 30px;
+    vertical-align: middle;
+    padding-left: 5px;
+    padding-right: 15px;
+}
+
+#formTabs .sm_form_field_options, #popupFormOptions.sm_form_field_options
+{
+	margin-top: 1px;	
+	border-width: 1px;
+	border-style: solid;
+	border-top-width: 4px;
+	position: absolute;
+	top: 0px;
+	right: 10px;
+	display: block;
+	padding: 0px 6px;
+	white-space: nowrap;
+    -moz-inline-box;        
+}
+
+#formTabs .sm_form_field_options img, #popupFormOptions.sm_form_field_options img
+{
+    padding: 5px 6px 5px 6px;
+}
+
+#formTabs .sm_comment .sectionsortables
+{
+	vertical-align: middle;
+	margin-bottom: 2px;
+	border-width: 1px;
+	border-style: solid;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	overflow: hidden;
+    position: relative;
+    margin: 2px;
+    display: inline-block;
+    width: 800px;
+    -moz-inline-box;
+}
+
+#pnlDefaultText .richTextModal
+{
+    height: 430px;
+    width: 820px;
+}
+
+#pnlDefaultText .richTextField
+{
+    height: 300px;
+}
+
+#pnlDefaultText .richTextField label
+{
+    cursor: auto !important;
+    height: 300px;
+}
+
+/* The following style is needed to make the rich text editor display properly in all browsers */
+#pnlDefaultText .ajax__htmleditor_editor_container
+{
+    height: 200px !important;
+}
+
+/* END */
+/* Form Designer */
+
+/* Views */
+/* START */
+
+#tcPopupListItemContainer
+{
+    position: absolute;   
+    border-style: solid;
+    border-width: 2px;
+    max-height: 220px;
+    width: 200px;
+    display: none;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+#tcPopupListItemContainer .popupListItems
+{
+    display: block;
+    border-bottom-style: dashed;
+    border-bottom-width: 1px;            
+    padding: 7px 3px;
+    text-align: center;
+}
+
+#divFilterList .multiselect-add { width: 16px; height: 16px; }
+#divFilterList .multiselect-delete { width: 16px; height: 16px; }
+
+
+
+#vakata-dragged.jstree-default 
+{         
+    border-style: solid;
+    border-width: 2px;
+    padding: 6px;
+}
+
+#selectedIconSpan
+{
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    position: absolute;
+    padding: 10px;
+    border-width: 1px;
+    border-style: solid;
+    opacity: 0.9;
+    margin-top: 4px;
+    margin-left: 4px;
+    border-radius: 6px;
+}
+
+#selectedIconInfo
+{  
+    position: absolute;
+    margin-left: 90px;
+    line-height: 25px;    
+    padding-top: 12px;
+}
+
+#selectedIconName
+{
+    display: block;
+    overflow: hidden;
+}
+
+#viewCustomIconContainer
+{        
+    border-width: 1px;
+    border-style: solid;
+    height: 238px;    
+}
+
+#viewIconResults
+{
+    position: absolute;    
+    width: 720px;    
+    margin-left: 90px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+#viewIconResults .iconContainer
+{
+    width: 72px;
+    height: 74px;
+    display: inline-block;
+    position: relative;
+    text-align: left;
+}
+
+#viewIconResults .viewPreviewIcon
+{
+    position: absolute;
+    cursor: pointer;
+    cursor: hand;
+}
+
+#iconResultsLeft, #iconResultsRight
+{    
+    height: 238px;
+    width: 80px;
+    line-height: 228px;
+    text-align: center;
+    float: right;
+    font-size: 20pt;
+    font-weight: bold;
+    cursor: pointer;
+    cursor: hand;
+}
+
+#iconResultsLeft
+{
+    position: absolute;
+}
+
+#iconResultsRight
+{
+    float: right;
+}
+
+#iconResultsHeader
+{
+    height: 80px;
+    border-width: 1px;
+    border-style: solid;
+    border-bottom: none;
+}
+
+#iconSearchBox
+{
+    float: right;
+    margin-right: 4px;
+    opacity: 0.8;
+}
+
+#iconSearchBox .searchBox
+{
+    height: 20px;
+    width: 320px;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 6px;
+    padding-top: 2px;
+    margin-top: 50px;
+}
+
+#iconSearchBox .searchButton
+{
+    height: 16px;
+    width: 16px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    cursor: hand;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 54px;
+}
+
+#iconSearchButton
+{
+    margin-left: 301px;
+}
+
+#iconSearchRemoveButton
+{       
+    margin-left: 3px;
+    display: none;
+}
+
+/* END */
+/* Views */
+
+
+/* END */
+/* Custom Entity Administration */
+div.speech   
+{
+    width: 150px;
+    border-radius: 5px;
+    box-shadow: 6px 6px 0px #666;
+    display: inline-block;
+    padding: 10px 18px;
+    position: relative;
+    vertical-align: top;
+    float: right;    
+    margin: 5px 20px 5px 45px;
+    left: 216px;
+    top: -111px;
+}  
+div.speech:before  
+{  
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -9px;
+    top: 11px;
+    border: 5px solid;
+}
+
+
+/* only single-line, element must have a width */
+.ellide
+{
+    display: initial !important;
+    text-overflow: ellipsis;
+}
+
+
+/* Receipt Processing */
+/* START */
+
+#loadingContainer
+{
+    position: absolute;
+    top: 250px;
+    left: 275px;
+}
+
+.no-close .ui-dialog-titlebar-close 
+{
+    display: none;
+}
+
+#confirmationMessage
+{
+    margin-top: 15px;
+    height: 50px;
+    width: 290px;
+}
+
+#confirmationButtons
+{
+    margin-top: 20px;
+}
+
+/* Load the ajax spinner off the page, so it is ready when we come to use it */
+#loadingContainer.offPage
+{
+    display: block;
+    top: -500px;
+    left: -500px;
+}
+
+.receiptProcessBox 
+{
+    margin: 30px 0 20px 30px;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    width: 400px;
+    height: 100%;
+    font-size: 20pt;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#sendReceiptBox:hover, #alreadyAttachedBox:hover
+{
+    cursor: pointer;
+    cursor: hand;
+}
+
+#envelopeNumberBox, #referenceNumberBox
+{
+    display: none;
+    height: 380px;    
+}
+
+#referenceNumberBox
+{
+    height: 400px;
+}
+
+#envelopeInfo .receiptProcessImg 
+{
+    height: 128px;
+    width: 128px;
+    vertical-align: top;
+    margin-top: 25px;
+}
+
+#sendReceiptBox .receiptProcessImg, #alreadyAttachedBox .receiptProcessImg
+{
+    _behavior: url(/shared/css/iepngfix.htc);
+}
+
+#envelopeInfo .receiptProcessHeader
+{
+    display: block;
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+#envelopeInfo .receiptProcessText
+{
+    display: block;
+    height: 70px;
+    margin-top: 20px;
+    font-size: 12pt;
+    overflow: hidden;
+    padding: 0 25px 10px 25px;    
+}
+
+#envelopeNumberBox .receiptProcessText
+{
+    padding-bottom: 25px;
+} 
+
+#referenceNumberBox .receiptProcessText
+{
+    height: 80px;
+} 
+
+#envelopeNumberBox .receiptProcessInputContainer
+{
+    display: block;
+    height: 65px;    
+    text-align: left;
+}
+
+#envelopeNumberBox .receiptProcessInput 
+{
+    width: 250px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    font-size: 20pt;
+    margin-left: 75px;
+    text-transform: uppercase;
+}
+
+#envelopeNumberBox .receiptProcessInput::-ms-clear /* IE10 'Clear button' fix */
+{
+    display: none;
+}
+
+#envelopeNumberBox .receiptProcessInput.invalidEntry
+{
+    border-style: solid;
+    border-width: 3px;
+    font-weight: bold;
+    margin-left: 74px;
+}
+
+#envelopeNumberBox .receiptProcessInput.addRow
+{
+    font-size: 12pt;
+    font-style: italic;
+    text-transform: none;
+}
+
+#envelopeNumberBox .deleteEnvelopeNumber
+{
+    display: none;
+    position: relative;
+    vertical-align: top;
+    left: -41px;
+    top: 3px;
+    padding: 9px 10px 10px 12px;
+    background-color: #ffffff;
+    *top: -5px;        
+    *padding: 0;
+    *margin: 9px 10px 10px 12px;    
+}
+
+    #envelopeNumberBox .deleteEnvelopeNumber:hover
+    {
+        cursor: pointer;
+        cursor: hand;
+    }
+
+#referenceNumber
+{
+    display: inline-block;
+    width: 240px;
+    height: 45px;
+    margin-top: 20px;
+    line-height: 45px;
+    border-radius: 4px;
+    opacity: 0.9;
+}
+
+#buttonContainer
+{
+    display: block;
+    background-repeat: no-repeat;
+    margin-left: 30px;
+    margin-bottom: 20px;
+	
+}
+
+#envelopeProcessNextButton 
+{
+    display: none;
+    margin-left: 265px;
+}
+
+#envelopeProcessCancelButton 
+{
+    display: inline-block;
+    width: 65px;
+}
+
+/* END */
+/* Receipt Processing */
+
+/* Expense Item Receipts START */
+
+#attachedReceipts .emptyMessage 
+{
+    display: none;
+}
+
+#attachedReceipts ul 
+{
+    display: inline-block;
+    padding: 0;
+}
+
+#attachedReceipts ul li 
+{
+    list-style: none;
+    float: left;
+    margin: 0 10px 10px 0;
+    position: relative;
+    height: 130px;
+}
+
+#attachedReceipts ul li a 
+{
+    display: block;
+}
+
+#attachedReceipts ul li img 
+{
+    height: 128px;
+}
+
+#attachedReceipts ul li a.deleteReceipt 
+{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+}
+
+#cboxLoadedContent .noPreview 
+{
+    width: 360px;
+    height: 180px;
+    padding: 20px;
+    text-align: center;
+}
+
+#cboxLoadedContent .noPreview a {
+    text-decoration: none;
+}
+
+#cboxLoadedContent .noPreview a:hover {
+    text-decoration: underline;
+}
+
+div#cboxOverlay 
+{
+    _position: absolute;
+}
+
+a.receiptOther {
+    width: 128px;
+}
+
+.noReceiptImage 
+{
+    height: 128px;
+    width: 128px;
+    margin: auto;
+    
+    cursor: pointer;
+}
+
+/* Expense Item Receipts END */
+
+/* Claim level Receipts START */
+
+div.claimReceipts {
+    width: 798px;
+    height: 24px;
+    padding: 14px 10px 16px 40px;
+}
+
+
+/* Claim level Receipts END */
+/* System health page */
+/* START */
+
+#healthTitle
+{    
+    height: 50px;
+    margin-top: 20px;
+    margin-left: 5%;
+    width: 75%;
+    min-width: 600px;
+    font-size: 30px;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 0 10px 0 10px;
+    box-shadow: 6px 6px 10px lightgray;
+}
+
+#healthPage .informationBlock
+{
+    display: block;
+    height: 100%;
+    margin: 30px 5% 0 5%;
+    width: 75%;
+    min-width: 600px;
+    border-radius: 4px;
+}
+
+#healthPage .title
+{
+    height: 30px;
+    margin-left: 20px;
+    line-height: 30px;
+    font-size: 20px;
+}
+
+#healthPage .healthInfoNode
+{
+    display: block;
+    margin: 20px;
+    margin-bottom: 0;
+    font-size: 16px;
+    word-wrap: break-word;
+}
+
+#healthPage .btn
+{
+    margin-left: 15px;
+}
+
+#healthPage .showHideButton
+{
+    display: none;
+    margin-left: 15px;
+}
+
+#healthPage .showHideButton:hover
+{
+    cursor: pointer;
+}
+
+#cacheKeyInformation .healthInfoNode:hover
+{
+    cursor: pointer;
+}
+
+#cacheKeyInformation .nodeInformation
+{
+    display: block;
+    margin: 10px 0 0 25px;
+    font-weight: normal;
+}
+
+/* END */
+/* System health page */
+
+
+.autocompletecombo-text,
+.autocompletecombo-select,
+.autocompletecombo-icon
+{
+    vertical-align: middle;
+}
+.autocompletecombo-icon
+{
+    margin-left: 2px;
+}
+
+optgroup {
+    border-width: 1px;
+}
+
+
+tr.grid-subheading, tr.grid-subheading>th {
+    height: 16px !important;
+}
+
+th.grid-subheading-column {
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 0;
+    border-style: solid;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+input.addresses-outbound, input.addresses-return, td.addresses-outbound>input, td.addresses-return>input {
+    width: 70px;
+    vertical-align: middle;
+}
+img.addresses-deletedistance {
+    vertical-align: middle;
+    padding: 3px;
+}
+
+td.addresses-outbound, td.addresses-return {
+    white-space: nowrap;
+}
+
+tbody#tbodyNewRecommendedDistance > tr > td
+{
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+input[type="text"][readonly="readonly"], input.recommendeddistance {
+    background: #eeeeee !important;
+      border: #ccc solid 1px;
+}
+
+.selui-button-add {
+    display: inline-block;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    vertical-align: middle;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.selui-button-add .btn {
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+.loading {
+    visibility: hidden;
+    display: inline-block;
+    width: 16px;
+    margin: 0;
+    height: 16px;
+    background: transparent url(/shared/images/ajax-loader.gif) no-repeat;
+}
+
+.warning {
+    visibility: hidden;
+    float: right;
+    width: 16px;
+    margin-top: 6px;
+    height: 16px;
+    background: transparent url('/static/icons/16/plain/warning.png') no-repeat;
+    position: inherit;
+}
+
+.nodistancewarning {
+    position: absolute;
+}
+
+
+.error-comment {
+    padding: 10px;
+    margin: 0 0 4px 0;
+}
+
+tr.template {
+    opacity: 0.4;
+}
+
+.recommendeddistance, .mileagegridtable input[data-field='numpassengers']{
+    width: 50px;
+}
+
+.userentereddistance {
+    width: 60px;
+    margin-right: 0 !important;
+}
+
+td.distance {
+    width: auto;
+}
+
+table.mileagegrid tbody td {
+    vertical-align: top;
+    padding: 4px 0 4px 0;
+}
+
+table.mileagegrid {
+    margin-bottom: 20px;
+    border-spacing: 0; /* necessary not to have white gaps in the help row */
+}
+
+table.mileagegrid+.returntostart {
+    margin-top: -18px; /* gap below the mileage grid, but want returntostart link to appear as part of it*/
+}
+
+.returntostarticon {
+    background: url('/static/icons/16/new-icons/return.png') no-repeat;
+    width: 20px;
+    height: 16px;
+    cursor: default;
+    margin: 0px 5px -5px 0px;
+    background-size: 16px 16px;
+}
+
+.returntostart {
+    margin-bottom: 10px;
+}
+
+table.mileagegrid tr.titles {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+input[type=checkbox] {
+    height: 13px;
+    margin-right: 10px;
+    width: 15px;
+}
+
+table.mileagegrid tbody input[type='checkbox'] {
+    display: block;
+    margin: 0 auto 0 auto;
+    margin-top: 6px;
+}
+
+table.mileagegrid tbody input[type='text'] {
+    border: 1px solid #bfbfbf;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  height: 17px;
+  padding: 2px;
+  font-size: 12px;
+    padding-left: 5px;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+table.mileagegrid tr.titles div {
+    padding-left: 5px;
+    padding-right: 5px;
+    white-space: nowrap;
+    text-align: center!important;
+}
+
+.carandjourneyrate {
+    margin-top: 10px;
+}
+
+.carandjourneyrate * {
+    vertical-align: top;
+}
+
+.carandjourneyrate select {
+    width: 158px;
+  border: 1px solid #bfbfbf;
+    margin-top: 2px;
+  margin-bottom: 2px;
+  padding: 3px;
+    height: 25px;
+  font-size: 12px;
+    margin-right: 10px;
+}
+
+
+
+.helplinkouter {
+    margin-top: 20px;
+}
+
+
+
+ .addnewvehicleouter {
+    display: inline-block !important;
+   margin: 4px 5px 5px 5px;
+}
+
+
+.waitingtobeapproved.hidden {
+    display: none !important;
+}
+
+.mileagerownum {
+    width: 55px;
+    height: 21px;
+    font-size: 1.25em;
+    font-weight: bold;
+    position: relative;
+    top: 4px;
+    margin-right: 5px;
+}
+
+.mileagegriddialog {
+    display: none;
+    padding: 1px 3px 5px 3px !important;
+    min-height: 0 !important;
+    cursor: default;
+    margin-bottom: 10px;
+}
+
+.passengersdialog {
+    position: absolute !important;
+}
+
+.passengersdialoginner {
+    overflow: hidden !important;
+}
+
+.passengersdialoginner .sectiontitle span {
+}
+
+.passengersdialoginner .sectiontitle {
+}
+
+.passengersdialogbuttons {
+    margin-top: 35px;
+	
+	background-repeat:no-repeat;
+	
+	
+}
+
+.passengersdialog .ui-dialog-titlebar {
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+.passengersdialog .ui-dialog-titlebar-close {
+    display: none;
+}
+
+.passengersclick {
+    margin: 3px 3px 0px 8px;
+}
+
+.passengersclick span, .returntostart span, .showhelplink {
+    vertical-align: top;
+    display: inline-block;
+    color: #19a2e6;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.deleterow {
+    background: url('/static/icons/16/new-icons/delete_small.png') no-repeat;
+    width: 11px;
+    height: 11px;
+    cursor: pointer;
+    margin: 5px 5px 5px 5px;
+
+}
+
+/*TODO:Manish*/
+.mileagegridtable input[type='text'][readonly='readonly'] {
+    border-top-style: solid;
+    border-left-style: solid;
+    border-color: lightgray;
+    width: 60px;
+}
+
+.cantfind {
+    margin-top: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.mileagecomment, .passengersinfocomment, .nodistancecomment, .hometoofficecomment {
+    display: none;
+    position: absolute;
+    margin: 2px 0 0 3px;
+    z-index: 100;
+}
+
+.nodistancecomment, .hometoofficecomment {
+    padding: 10px;
+    max-width: 400px;
+}
+
+.mileagecomment {
+    padding: 10px;
+    max-width: 400px;
+}
+
+.passengersinfocomment {
+    padding: 5px;
+    width: auto;
+    text-align: left;
+    font-weight: bold;
+}
+
+.mileagegridtable .mileagecomment {
+    margin: -22px 0 0 3px !important;
+}
+
+.helptext {
+    display: none;
+    position: relative;
+    left: 0;
+    top: 0;
+    margin: 0;
+}
+
+.helptext span {
+    width: auto !important; 
+    padding: 10px;
+    display: inline-block;
+
+}
+
+.helpindicator {
+    width: 0 !important;
+    height: 0 !important;
+    margin-left: -32px;
+    margin-bottom: 22px;
+    display: none;
+    position: relative;
+    left: 400px;
+    top: -44px;
+    z-index: -1;
+    font-size: 62px;
+}
+
+.mileagegridtable tr.help td {
+    padding: 0;
+}
+
+
+.mileagegridtable tr.template td {
+    border: none;
+}
+
+.mileagegridtable th.passengersheader {
+    margin-right: 5px;
+}
+
+
+.mileagegridtable th div {
+    text-align: center;
+      color: #fff;
+    font-weight: normal;
+}
+
+.mapicon {
+    display: inline-block;
+    background: url('/static/icons/16/new-icons/map.png') no-repeat;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: 0px 5px -5px 0px;
+}
+
+/*TODO:Manish Need height or width increase 16px to 20px*/
+.helplinkicon {
+    display: inline-block;
+    background: url('../../shared/images/icons/16/Plain/tooltip.png') no-repeat;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: 0px 5px -5px 0px;
+}
+
+.hometoofficewarningicon, .waitingtobeapprovedicon {
+    display: inline-block;
+    background: url('/static/icons/16/new-icons/information2.png') no-repeat;
+    width: 20px;
+    height: 20px;
+    cursor: default;
+    margin: 0px 5px -5px 0px;
+}
+
+.showmaplink {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.passengersinfoicon {
+    background: url('/static/icons/16/plain/passenger.png') no-repeat;
+    width: 16px;
+    height: 16px;
+    cursor: default;
+    float: right;
+    margin-left: 10px;
+}
+.addnewvehicleicon {
+    background: url('/shared/images/icons/16/plain/add2.png') no-repeat;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    cursor: default;
+}
+
+.passengersinfoicon+span, .passengersinfocomment {
+    float: right;
+}
+
+.link {
+  vertical-align: top;
+    display: inline-block;
+  color: #19a2e6;
+    text-decoration: underline;
+    cursor: pointer;
+  font-size: 14px;
+}
+
+.binoculars {
+    vertical-align: middle;
+    margin-right: 2px;
+}
+
+th.heavybulky div, input.numpassengers {
+    margin-left: 10px !important;
+}
+
+
+.addnewvehiclelink {
+    margin-left: 5px !important;
+}
+
+.custompassengerdialog {
+    overflow: hidden;
+}
+
+.custompassengerdialoginner .textlabel {
+    padding: 4px;
+}
+
+.hometoofficewarninglabel {
+   vertical-align: top;
+  display: inline-block;
+  color: #19a2e6;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.hometoofficewarningcell {
+    padding-bottom: 10px;
+}
+
+.custompassengerdialoginner {
+    overflow: hidden !important;
+    padding-left: 0px !important;
+    padding-top: 2px !important
+}
+
+.custompassengerdialoginner div.twocolumn {
+    white-space: nowrap; /* IE can be a bit funny about padding and unnecessarily puts the input on another line*/
+    overflow: visible;
+} 
+
+.mapping-listvalue, .mapping-formid {
+    display: none;
+}
+
+.cgridnew-icon, .datatbl-icon {
+    width: 24px;
+    text-align: center;
+}
+
+.formpanel .inputs ul.radio {
+    margin: 0;
+    padding: 0;
+}
+
+.formpanel .inputs ul.radio li {
+    list-style: none;
+    width: auto;
+    display: inline;
+    vertical-align: middle;
+}
+.formpanel .inputs ul.radio >li:first-child {
+    margin-right:10px ;
+}
+.formpanel .inputs ul.radio.stacked li {
+    display: block;
+    margin: 0 0 2px 0;
+}
+
+.formpanel .inputs ul.radio input[type=radio] {
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin: 0;
+    top: 2px;
+}
+
+.ie7 .formpanel .inputs ul.radio input[type=radio] {
+    top: 4px;
+    *overflow: hidden;
+}
+
+.formpanel .inputs ul.radio label {
+    width: auto;
+    line-height: normal;
+    padding: 0px 0 0 20px;
+}
+
+.formpanel .inputs ul.radio.large label {
+    font-size: 12px;
+}
+
+.formpanel .inputs.checkboxAgreement input[type=checkbox] {
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin: 0 0 0 171px;
+    top: -1px;
+    display: inline;
+    float: left;
+}
+
+.formpanel .inputs.checkboxAgreement {
+    width: auto;
+}
+
+.formpanel .inputs.checkboxAgreement div {
+    float: left;
+    width: 564px;
+}
+
+.formpanel .inputs.checkboxAgreement label {
+    width: auto;
+    line-height: normal;
+    background: none;
+    border: none;
+    color: #000;
+    padding: 0 0 0 4px;
+}
+
+.formpanel .onecolumn .inputs.readonly {
+    height: 76px;
+    overflow-y: auto;
+}
+
+.formpanel .hidden {
+    display: none;
+}
+
+ .formpanel .onecolumn .inputicon a img{
+     padding-bottom: 5px;
+ }
+
+ .formpanel .onecolumn .inputtooltipfield > img {
+    padding-bottom: 5px;
+}
+
+ .formpanel .cmbfilter {
+     margin-left: 102px;
+    width: 173px;
+ }
+
+/* Help & Support */
+.searchResults {
+    width: 97%;
+    margin: 14px 0 0 34px;
+}
+
+.searchResults ul {
+    padding: 4px 0 0 0;
+    margin: 0;
+}
+
+.searchResults ul li {
+    list-style: none;
+    margin: 0;
+    cursor: pointer;
+    padding: 6px;
+    border-bottom: 1px solid #DDD;
+    background-color: #FAFAFA;
+}
+
+.searchResults ul li:hover {
+    background-color: #F5F5F5;
+}
+
+.searchResults .searchResult {
+    min-height: 50px;
+    padding: 0 0 0 52px;
+    background-repeat: no-repeat;
+}
+
+.searchResults .KnowledgeCustomArticle {
+    background-image: url("/static/icons/48/plain/thought.png");
+}
+
+.searchResults .Articles__kav {
+    background-image: url("/static/icons/48/plain/contract.png");
+}
+
+.searchResults .Walkthrough_Guide__kav {
+    background-image: url("/static/icons/48/plain/step.png");
+}
+
+.searchResults .Online_Demo__kav {
+    background-image: url("/static/icons/48/plain/film.png");
+}
+
+.searchResults .Feature_Overview__kav {
+    background-image: url("/static/icons/48/plain/component_green.png");
+}
+
+.searchResults .Frequently_Asked_Question__kav {
+    background-image: url("/static/icons/48/plain/question_and_answer.png");
+}
+
+
+.searchResults .title {
+    text-decoration: none;
+}
+
+.searchResults .publishedOn {
+    color: #666;
+}
+
+.searchResults .summary {
+    margin: 0;
+}
+
+.articleTitle {
+    height: 68px;
+    font-size: 14pt;
+    color: #FFF;
+    background-color: #004990;
+    margin: 0 0 10px 0;
+    padding: 8px;
+}
+
+.articleBody {
+    height: 400px;
+    padding: 4px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.ticketComments ul, .ticketAttachments ul {
+    padding: 0;
+    margin: 0;
+}
+
+.ticketComments ul li, .ticketAttachments ul li {
+    list-style: none;
+}
+
+.ticketComments span.commentContact {
+    font-weight: bold;
+}
+
+.ticketComments p.commentBody {
+    margin: 2px 0 6px 0;
+}
+
+.ticketAttachments ul li {
+    margin: 2px 0 0 0;
+}
+
+#attachmentDownloadFrame {
+    display: none;
+}
+
+/* help and support */
+        
+div.helpAndSupport {
+    
+    background-repeat: no-repeat;
+    background-position: -74px -135px;
+    min-height: 400px;
+   
+    margin-bottom:20px;
+   
+}
+
+div.helpAndSupport > div {
+   
+}
+
+div.helpAndSupport > div.welcome {
+    width: 100%;
+    color: #444;
+    background-color: #FFF;
+}
+
+div.helpAndSupport div.searchForm {
+    margin: 10px 0 4px 0;
+    height: 30px;
+}
+
+div.helpAndSupport > div.additionalSupport {
+    background-color: #FFF;
+    border-bottom: 1px solid #DDD;
+    border-top: 1px solid #DDD;
+    background-color: #FAFAFA;
+    width: 764px;
+    margin: 14px 0 0 34px;
+    padding: 8px;
+}
+
+div.helpAndSupport div.searchForm input[type=text] {
+    padding: 3px;
+    font-size: 16px;
+    width:80%;
+    float: left;
+}
+
+.ie7 div.helpAndSupport div.searchForm input[type=text], .ie6 div.helpAndSupport div.searchForm input[type=text] {
+    width: 670px;
+}
+
+div.helpAndSupport div.searchForm span.buttonContainer {
+    float: left;
+    margin-right: 0;
+    margin-left:20px;
+}
+        
+div.helpAndSupportQuestions {
+   
+    margin-top: 14px;
+}
+
+div.helpAndSupportQuestions li {
+    list-style: none;
+}
+
+div.helpAndSupportQuestions ul {
+    padding: 0;
+    margin: 0;
+}
+
+div.helpAndSupportQuestions > ul {
+    border-top: 1px solid #DDD;
+}
+
+div.helpAndSupportQuestions > ul > li {
+    padding: 8px;
+    color: #444;
+    background-color: #FAFAFA;
+    border-left: #ddd solid 1px;
+    border-bottom: 1px solid #DDD;
+    cursor: pointer;
+      border-right: #ddd solid 1px;
+}
+
+div.helpAndSupportQuestions > ul > li:hover {
+    background-color: #F5F5F5;
+}
+
+div.helpAndSupportQuestions > ul > li.active {
+    color: #333;
+    
+    cursor: default;
+}
+
+div.helpAndSupportQuestions > ul > li > span {
+    font-size: 16px;
+    padding: 0 0 0 24px;
+    background: url('/static/icons/custom/16/control_play.png') no-repeat 0 1px;
+}
+
+div.helpAndSupportQuestions > ul > li.active > span {
+    background-image: url('/static/icons/custom/16/control_play_down.png');
+}
+
+div.helpAndSupportQuestions > ul > li > ul {
+    display: none;
+    margin: 2px 0 0 24px;
+}
+
+div.helpAndSupportQuestions > ul > li > ul > li {
+    padding: 8px 0;
+}
+
+div.helpAndSupportQuestions > ul > li > ul > li > a, div.knowledgeRedirectMessage a, div.ticketRedirectMessage a {
+    font-size: 12px;
+    color: #333;
+}
+
+div.knowledgeRedirectMessage, div.ticketRedirectMessage {
+    display: none;
+    margin: 4px 0 4px 0;
+}
+
+
+
+/* OldIE hack to persuade the browser to honour any cell widths in a table (that has no defined width and contains other cells that also don't have defined widths */
+.ie7 table.wideExpenseItem, .ie8 table.wideExpenseItem {
+    width: 1000px;
+    table-layout: fixed;
+}
+
+/* Torch Grouping UI Start */
+#torchContainer {
+    max-height: 320px;
+    overflow: auto;
+    position: relative;
+}
+
+.torchGroupingConnectable, .torchSortingConnectable, .torchFilteringConnectable, .torchSortedColumnConnectable {
+    list-style-type: none; 
+    margin: 0;
+    margin-top: 20px;
+    padding: 0; 
+    margin-bottom: 10px; 
+    min-height: 200px;
+    width: 340px;
+    -moz-min-width: 340px;
+    -ms-min-width: 340px;
+    -o-min-width: 340px;
+    -webkit-min-width: 340px;
+    min-width: 340px; 
+    border-width: 1px; 
+    border-style: solid; 
+    display: inline-block; 
+    *display: inline; 
+    background-repeat: no-repeat; 
+    position: relative; 
+    vertical-align: top; 
+    cursor: pointer;
+    -ms-border-radius: 10px;
+    border-radius: 10px; 
+    zoom: 1;
+    _behavior: url(/shared/css/iepngfix.htc);
+    box-shadow: 6px 6px 10px #C0C0C0;
+      *float: left;
+}
+
+.torchGroupingConnectable li, .torchSortingConnectable li, .torchFilteringConnectable li, .torchSortedColumnConnectable li{ 
+    margin: 5px;
+    padding: 5px;
+    width: 315px;
+    *width: 280px;
+    border-color: #ffffff;
+    -ms-border-radius: 10px;
+    border-radius: 10px;
+    border-width: 1px; 
+    text-align: center;
+    border-style: solid;
+}
+
+.torchGroupingConnectable li span, .torchSortingConnectable li span, .torchFilteringConnectable li span, .torchSortedColumnConnectable li span {
+    position: absolute;
+
+}
+
+.groupingHeader {
+    font-weight: normal !important;
+    font-size: 14pt;
+    align-content: center !important;
+    border: none !important;
+    cursor:default;
+}
+
+.torchContainer {
+    align-content: center;
+}
+
+#groupingHelp  {
+    display: inline-block;
+    *float: left;
+    width: 90px;
+    margin-top: 65px;
+    position: relative;
+    text-align: center;
+    align-content: center !important;
+    font-size: 9pt;
+    background: none !important;
+    border: none;
+    color: #313679;
+    padding-left: 0px;
+}
+
+.switchIcon {
+    width: 50px !important;
+    height: 40px !important;
+    display: inline-block !important;
+    border: none !important; 
+    vertical-align: central;
+}
+
+#imgGroupingHelp, #imgSortingHelp, #imgFilteringHelp, #imgSortedColumnHelp {
+    float: none !important;
+    padding-right: 5px;
+    height: 25px !important;
+    width:25px !important;
+}
+
+.highlight {  
+    background-color:#666666;
+    margin: 5px; 
+    height: 20px;
+}
+
+.switcherArrows {
+    float: left;
+}
+
+li.noColumns {
+     display:none;
+     border: none !important;
+}
+
+.switcherIconLayout {
+    display: block;
+    padding-bottom: 30px;
+    padding-top: 130px;
+    height: 25px;     
+}
+
+.hideButtons {
+    visibility: hidden !important;
+}
+/* Torch Grouping UI End */
+.fieldList { 
+	min-height: 90%;
+    width: 120px;
+	}
+  .dropper { 
+	min-height: 90%;
+  }
+
+.icon, .sorticon, .deleteicon, .hideIcon {
+    padding-left: 2px;
+    display: inline-block;
+    *display: inline;
+    height: 100%;
+    *height: auto;
+    cursor: pointer;
+    zoom: 1;
+}
+.iconContainer {
+    display: inline-block;
+    *display: inline;
+}
+.fieldDetail {
+    float: right;
+}
+.fieldDisabled {
+    -ms-opacity: 0.35;
+    filter: alpha(opacity=35);
+    opacity: 0.35;
+}
+
+.accordionheader {
+    padding: 10px 10px 10px 10px;
+    border: 1px solid rgb(170, 170, 170);
+    overflow: hidden; 
+    zoom: 1;
+    height: 80px;
+    text-align: left;
+    white-space: nowrap;
+}
+.selectedField, .selectedCriteria {
+    list-style-type: none; 
+    margin: 0;
+    margin-top: 4px;
+    padding: 0;
+    padding-right: 2px;
+    margin-bottom: 4px;
+    margin-right: 2px;
+    border-width: 1px; 
+    border-style: solid; 
+    display: inline-block; 
+    *display: inline; 
+    background-repeat: no-repeat; 
+    vertical-align: top; 
+    -ms-border-radius: 10px;
+    border-radius: 10px; 
+    zoom: 1;
+    _behavior: url(/shared/css/iepngfix.htc);
+    -webkit-box-shadow: 6px 6px 10px #C0C0C0;
+    -ms-box-shadow: 6px 6px 10px #C0C0C0;
+    box-shadow: 6px 6px 10px #C0C0C0;
+    /**float: right;*/
+    max-width: 145px;
+}
+
+.selectedCriteria {
+    max-width: 270px;
+    width: 270px;
+}
+.selectedFieldName, .criteriaName {
+    -moz-min-width: 145px;
+    -ms-min-width: 145px;
+    -o-min-width: 145px;
+    -webkit-min-width: 145px;
+    min-width: 145px;
+    padding-left: 6px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+.field {
+    width: 100px;
+}
+.number {
+    background-color: #D49091;
+    color: black;
+}
+.time {
+    background-color: #9290D4;
+    color: black;
+}
+.date {
+    background-color: #90D4C5;
+    color: black;
+}
+.string {
+    background-color: #9AD490;
+    color: black;
+}
+.arguments, .argumentsNumeric {
+    background-color: #F3FF73;
+    color: black;
+}
+.boolean {
+    background-color: rgb(169,169,169);
+    color: black;
+}
+.usedField {
+    background-color: #F3FF73;
+    color: black;
+}
+.numberInput, .stringInput {
+    width: 98%;
+}
+.hiddenTreeItem {
+    visibility: hidden;
+    height: 0;
+    padding: 0 !important;
+}
+#menuOwner {
+    padding-bottom: 6px;
+    height: 480px;
+    height: 50vh;
+}
+
+#menuHolder .easytree-container , #menuOwner .easytree-container{
+    border: none !important;
+}
+
+/* General styles */
+
+#odometerReadings { table-layout:fixed; }
+#odometerReadings th { color: #4A65A0; font-weight: bold; }
+#odometerReadings td { color: #4A65A0; text-align: center; }
+#odometerReadings .car { text-align: left; white-space: nowrap; }
+#odometerReadings .license { text-transform: uppercase; }
+#odometerReadings td input { border: 1px solid #999999;  }
+#odometerReadings td { padding: 5px; line-height: 30px;  }
+#odometerReadings th {line-height: 30px;  }
+#odometerReadings td { border-bottom: 1px dashed #cccccc; }
+#odometerReadings .bottom { border-bottom: 0px; }
+.odometerReadingsBusinessMileage {color: #4A65A0; font-weight: bold;}
+
+#flagMessage { width: 100%; background-color: }
+
+
+
+/*********start Custom menu style*****************************/
+
+        .dummy {
+            width: 330px;
+            float: left;
+            margin-top: 50px;
+            margin-left: 50px;
+            height: 500px;
+            margin-right: 30px;
+            overflow-x: scroll;
+        }
+
+            .dummy img {
+                width: 20px !important;
+            }
+
+        .right-section {
+            background: #EDEDED none repeat scroll 0% 0%;
+            width: 60%;
+            height: 461px;
+            float: left;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+            .right-section img {
+                width: 20px;
+                height: 20px;
+                float: left;
+            }
+
+            .right-section span {
+                float: left;
+                margin-top: 2px;
+                margin-left: 13px;
+                margin-right: 10px;
+                height: 45px;
+                font-size: 13px;
+            }
+
+            .right-section div {
+                float: left;
+            }
+
+        .treeviwe2 {
+            background: #F2F4F8  none repeat scroll 0% 0%;
+            width: 566px;
+            border: 1px solid rgb(0, 0, 0);
+            height: 422px;
+            overflow: scroll;
+            left: 210px !important;
+            top: 165px;
+        }
+
+            .treeviwe2 img {
+                width: 25px !important;
+                height: 25px !important;
+            }
+
+        .iconResultsLeft:hover, .iconResultsRight:hover {
+            font-size: 38px !important;
+        }
+
+
+          
+
+        .not-active {
+            pointer-events: none;
+            cursor: default;
+            color: #ccc !important;
+        }
+
+        .active {
+            cursor: pointer;
+            color: #ccc;
+        }
+
+        .ShowControl {
+            display: none;
+        }
+
+          .easytree-exp-n span.easytree-expander, .easytree-exp-nl span.easytree-expander {
+      background-image : url(/static/icons/16/new-icons/list-item.png);
+      background-position: 0 !important;
+    cursor: default;
+  }
+
+   .easytree-exp-e .easytree-expander, .easytree-exp-el .easytree-expander  {
+       background-image : url(/static/icons/16/new-icons/minus.png);
+    background-position: 0 !important;
+   }
+
+    .easytree-exp-c .easytree-expander, .easytree-exp-cl .easytree-expander  {
+       background-image : url(/static/icons/16/new-icons/plus.png);
+    background-position: 0 !important;
+   }
+
+     .isLazy .easytree-expander  {
+       background-image : url(/static/icons/16/new-icons/pluspending.png);
+          background-position: 0 !important;
+   }
+    .easytree-exp-n .easytree-expander  {
+    background-position: 0 !important;
+   }
+
+
+/*********end Custom menu style*****************************/
+
+/*********start Custom Entity style*************************/
+
+        input[type="text"][readonly="readonly"], input.recommendeddistance {
+    background: #ffffff !important;
+}
+        .modalcontentssmall {
+            height: 380px;
+            position: static !important;
+}
+        .input-disabled {background-color:#ffffff !important;border:1px solid #ABADB3;padding:2px 1px;}
+         .treeviwe2 {
+        
+             background: #F2F4F8 none repeat scroll 0% 0%;
+             width: 566px;
+             border: 1px solid rgb(0, 0, 0);
+             height: 300px;
+             overflow: scroll;
+             left: 210px !important;
+             top: 165px;
+         }
+        .treeviwe2 img{
+            width: 25px !important;
+            height: 25px !important;
+        }
+        .iconResultsLeft:hover, .iconResultsRight:hover {
+            font-size: 38px !important;
+        }
+/*********end Custom Entity style***************************/
+/*.ui-dialog{
+	left:647px !important;
+	}*/
+/*custom menu structure*/
+
+#viewCustomMenuIconContainer {
+    border-width: 1px;
+    border-style: solid;
+    height: 245px;
+    border-color: #999999;
+}
+
+#viewCustomMenuIconResults {
+    position: absolute;
+    width: 591px;
+    margin-left: 67px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+#viewCustomMenuIconResults .iconContainer {
+    width: 59px;
+    height: 69px;
+    display: inline-block;
+    position: relative;
+    text-align: left;
+}
+
+.tooltipCustomMenu img {
+    padding: 3px;
+    cursor: pointer;
+}
+
+.clearMenu {
+    float: right;
+    cursor: pointer;
+}
+
+
+.divMenu {
+    width: 566px;
+}
+
+.divMenu span {
+    float: left;
+}
+
+
+.colorPicker {
+    float: right;
+    cursor: pointer;
+}
+
+
+.divColorPicker {
+    width: 566px;
+}
+
+.divColorPicker span {
+    float: left;
+}
+
+.modalpopup #baseTree {
+    height:250px; 
+    width: 250px; 
+    overflow-x: auto; 
+    overflow-y: auto; 
+    margin-bottom: -10px;
+}
+
+
+.modalpanelOpacityControl {
+   zoom: 1;
+    opacity: 0.7;
+}
+
+#tabs img.viewPreviewIcon {
+    width: 42px;
+    height: 42px;
+        cursor: pointer;
+}
+
+#tabs #viewCustomMenuIconResults .iconContainer {
+    width: 53px;
+    height: 63px;
+}
+
+#tabs #viewCustomMenuIconResults {
+    margin-left: 80px;
+    width: 74%;
+}
+
+#tabs #iconResultsLeft, #iconResultsRight {
+    width: 100px;
+}
+.menuPreLoader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  margin: -16px 0 0 -16px;
+  z-index: 100;
+}
+
+#tabs .onecolumnsmall input {
+    width:83%
+}
+
+#tabs .onecolumnsmall .inputs {
+    width:63%
+}
+
+#tabs .onecolumn .inputs {
+    width:63%
+}
+
+#tabs .onecolumn textarea {
+        width:83%
+}
+.breadcrumbtitle {
+    text-decoration: none;
+}
+
+.customMenuEditor {
+    border-width: 0px; padding-right: 0;
+}
+
+#tooltipCustomMenuHolder img {
+    padding-left: 6px;
+}
+
+#tabs #iconSearchArea {
+    max-width: 735px;
+}
+
+#tabs #viewCustomMenuIconContainer {
+    max-width: 735px;
+}
+
+/* add edit reports */
+#divCalculation {
+    min-width: 500px;
+    min-height: 340px;
+    overflow:hidden;
+}
+.treeview_left_main{
+	width:265px;
+	border:#dcdcdc solid 1px;
+    float: left;
+} 
+.right_main {
+    margin-left: 265px;
+}
+
+.treeview_top{
+	width:245px;
+	height:65px;
+	background:#ececec;
+	padding:10px;
+}
+.treeview_top h4{
+	width:150px;
+	float:left;
+	height:30px;
+	color:#333333;
+	padding-top:5px;
+}
+.treeview_top_button{
+	width:30px;
+	float:right;
+	height:30px;
+	border:#999999 solid 1px;
+}
+.treeview_top_button img{
+	padding:6px;
+	cursor:pointer;
+	border:none;
+}
+.treeview_top input{
+    width: 213px;
+    float: left;
+    border: #bbbbbb solid 1px;
+    height: 26px;
+    margin-top: 4px;
+    background: url(/static/icons/16/new-icons/search-icon.png) #FFFFFF 2% 50%;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    color: #333;
+}
+.treeview_listitem{
+	float:left;
+	width:245px;
+	height:300px;
+	margin:10px;
+}
+.right_table_main{
+	width:78%;
+	float:left;
+	height:350px;
+	border:#dcdcdc solid 1px;
+	overflow-x: hidden;
+}
+.right_table_main_header{
+width:100%;
+height:30px;
+background:#ececec;
+}
+.right_table_main_header h4{
+	padding-left: 15px;
+    padding-top: 6px;
+    float: left;
+    height: 30px;
+    color: #333333;
+}
+
+.table-criteria{
+	
+	float:left;
+	padding:10px;
+}
+.table-criteria table {
+	color:#666;
+	width:100%;
+	font-size:12px;
+	border:#ccc 1px solid;
+}
+.table-criteria table th {
+	border-bottom: 1px solid #cccccc;
+    background: #e5e5e5;
+    padding: 5px;
+	text-align: left;
+	font-weight: normal;
+    color: #333333;
+}
+
+.table-criteria table tr td {
+	padding: 0px;
+    background: #fafafa;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+}
+.table-criteria select {
+	border:#e6e6e6 solid 1px;
+	width:130px;
+
+}
+.Field-name{
+	width: 320px;
+    border: #e6e6e6 solid 1px;
+    height: 15px;
+    color: #999999;
+    padding-top: 2px;
+    padding-left: 5px;
+	background: #fff;
+}
+.value-box{
+	width: 44px;
+    border: #e6e6e6 solid 1px;
+    height: 15px;
+    color: #999999;
+    padding-top: 2px;
+    padding-left: 5px;
+	background: #fff;
+}
+.add-section a{
+	color:#6a77f7;
+	font-size:12px;
+	margin-left:12px;
+}
+.slide-top-main{
+	width:100%;
+	height:8px;
+	background:url(../images/slide-top.png);
+	background-repeat:repeat-x;
+	margin-top:22px;
+}
+.slide-top-icon{
+	width:12px;
+	height:8px;
+	margin:0 auto;
+}
+.slide-top-icon img{
+	    float: left;
+}
+.Remove-all-columns a{
+	float:right;
+	color:#6a77f7;
+	font-size:12px;
+	margin-right:12px;
+	margin-top:5px;
+}
+.inputpaneltitle {
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: #53b9ec solid 2px;
+    margin-bottom: 10px;
+}
+.Preview-table-main{
+	margin:10px;
+	float:left;
+	width:98%;
+}
+.Preview-table-main p{
+	font-size:12px;
+	color:#666666;
+	margin: 0px;
+}
+
+.table-Preview table {
+	color:#666;
+	width:100%;
+	margin-left:10px;
+	font-size:12px;
+	border:#ccc 1px solid;
+}
+.table-Preview table th {
+	border-bottom: 1px solid #cccccc;
+    background: #e5e5e5;
+    padding: 5px;
+	text-align: left;
+	font-weight: normal;
+    color: #333333;
+	border-right:1px solid #cccccc;
+}
+.table-Preview table th img{
+    float: right;
+    padding: 3px;
+	margin-left:2px;
+}
+.table-Preview table tr td {
+	padding: 0px;
+    background: #fafafa;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+	border-bottom: 1px solid #eaeaea;
+}
+
+  .tabs {
+      min-height: 200px;
+      float: left;
+      width: 100%;
+  }
+#spacer {
+	display: inline-block;
+    *display: inline;
+    min-height: 90%;
+    width: 265px;
+  }
+
+.searching {
+    -ms-opacity: .3;
+    opacity: .3;
+}
+
+
+.divMenu {
+    width: 566px;
+}
+
+#previewColumnHeaderMenu {
+    max-width: 200px;
+    min-width: 160px;
+}
+
+
+.colorPicker {
+    float: right;
+    cursor: pointer;
+}
+
+
+.divColorPicker {
+    width: 566px;
+}
+
+.divColorPicker span {
+    float: left;
+}
+
+.modalpopup #baseTree {
+    height: 250px;
+    width: 250px;
+    overflow-x: auto;
+    overflow-y: auto;
+    margin-bottom: -10px;
+}
+#previewColumnHeaderMenu, #previewColumnHeaderMenu .ui-corner-all {
+    border-radius: 0 !important;
+}
+
+#previewColumnHeaderMenu .ui-state-focus {
+    border-color: #ddd !important;
+    background-image: none !important;
+    background-color: #ddd !important;
+}
+
+#previewColumnHeaderMenu .preview-menu-item-hide .ui-icon, .ejsel-hide-icon {
+    background-image: url("/static/icons/16/new-icons/spy.png") !important;
+}
+
+#previewColumnHeaderMenu .preview-menu-item-count .ui-icon, .ejsel-count-icon {
+    background-image: url("/static/icons/16/new-icons/GreenPlus.png") !important;
+}
+
+#previewColumnHeaderMenu .preview-menu-item-avg .ui-icon, .ejsel-avg-icon {
+    background-image: url("/static/icons/16/new-icons/moon_half.png") !important;
+}
+
+#previewColumnHeaderMenu .preview-menu-item-sum .ui-icon, .ejsel-sum-icon {
+    background-image: url("/static/icons/16/new-icons/spreadsheet_sum.png") !important;
+}
+
+#previewColumnHeaderMenu .preview-menu-item-max .ui-icon, .ejsel-max-icon {
+    background-image: url("/static/icons/16/new-icons/sort_up.png") !important;
+}
+
+#previewColumnHeaderMenu .preview-menu-item-min .ui-icon, .ejsel-min-icon {
+    background-image: url("/static/icons/16/new-icons/sort_down.png") !important;
+}
+
+#previewColumnHeaderMenu .preview-menu-item-delete .ui-icon-delete {
+    background-image: url("/static/icons/16/new-icons/delete.png") !important;
+}
+
+.iconDisabled {
+      -ms-opacity: 0.35;
+      filter: alpha(opacity=35);
+      opacity: 0.35;
+  }
+
+.selectedMenuItem {
+    border: 1px solid #ddd;
+    background-color: #efefef;
+    margin: 0 0 0 -2px;
+    width: 100%;
+    display: inline-block;
+}
+
+.reportsButtons {
+    clear: left;
+}
+  .easytree-exp-n span.easytree-expander, .easytree-exp-nl span.easytree-expander {
+      background-image : url(/static/icons/16/new-icons/list-item.png);
+      background-position: 0 !important;
+    cursor: default;
+  }
+
+   .easytree-exp-e .easytree-expander, .easytree-exp-el .easytree-expander  {
+       background-image : url(/static/icons/16/new-icons/minus.png);
+    background-position: 0 !important;
+   }
+
+    .easytree-exp-c .easytree-expander, .easytree-exp-cl .easytree-expander  {
+       background-image : url(/static/icons/16/new-icons/plus.png);
+    background-position: 0 !important;
+   }
+
+     .isLazy .easytree-expander  {
+       background-image : url(/static/icons/16/new-icons/pluspending.png);
+          background-position: 0 !important;
+   }
+    .easytree-exp-n .easytree-expander  {
+    background-position: 0 !important;
+   }
+
+html.ie7 #divMenuHolder, html.ie8 #divMenuHolder {
+    overflow: hidden;
+}
+
+#previewInstructions {
+    padding: 0 0 10px 0;
+}
+
+#previewWindow {
+     padding: 10px 0 0 10px;
+}
+
+#previewColumnHeaderMenu {
+    width: 240px;
+}
+
+#tabs #viewCustomMenuIconResults {
+    max-width: 575px;
+}
+
+#maindiv .nToManyRelationshipModalPopUp {
+    top: 25px !important;
+}
+
+#audienceSelectionGrid {
+max-height: 375px;
+overflow-y: auto;
+}
+
+.fixedFormButtons {
+    position: fixed;
+}
+
+.main-content-area-padding {
+    padding-bottom: 85px;
+}
+
+.floatingButtons {
+    border: 1px #ccc solid;
+    padding: 2px 0 2px 5px;
+    margin-left: 5px;
+    background: #fff;
+    bottom: 0%;
+    float: left;
+}
+
+.floatEnd {
+    bottom: 6%;
+}
+
+:-ms-fullscreen, :root .floatEnd {   
+    bottom: 1%;
+}
+
+  .logonform table tbody tr {
+            height: auto;
+        }
+
+.colorHolder{
+        width: 19px; height: 19px; border: 1px solid #000; margin: 0 3px 2px 3px; display: inline-block;
+}
+
+.logonform .onecolumnsmall .inputs{
+     width:577px;
+}
+
+.logonform .onecolumnsmall input{
+    width:575px;
+}
+
+.logonform .twocolumn label, .logonform .onecolumnsmall label {
+    width: 155px;
+}
+
+ .logonIconDetailsWrapper, .logonBackgroundDetailsWrapper{
+    width: 300px;
+    display: inline-block;
+    margin-left: 2px;
+}
+
+ .removeIconHolder {
+     cursor: pointer;
+     color: #003768;
+     text-decoration: underline;
+ }
+
+ .hideElement {
+     display: none;
+ }
+
+/*REPORTS CSS*/
+.e-grid {
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+	font-size: 12px !important;
+}
+
+.e-grid .e-groupdroparea {
+    font-size: 14px;
+}
+
+#removeColumnIcon{
+    position:absolute;
+}
+
+.e-dragclone {
+    font-size: 20px !important;
+}
+
+.buttonInner:focus {
+    outline: none;
+}
+
+.dropTarget {
+    padding: 20px 30px 30px 30px;
+    height: 30px;
+    border: 1px solid rgb(236, 236, 236);
+    text-align: center;
+    color: rgb(236, 236, 236);
+    font-size: 28px;
+}
+
+.dropTargetGridFont {
+    font-size: 40px;
+}
+
+#previewLoadingText {
+   font-weight: normal;
+    margin-left: 25px;
+    background: #fff;
+    padding: 4px 20px;
+    border-radius: 10px;
+}
+
+.hasGroupCriteria {
+text-align: center;
+margin-right: 10px;
+}
+
+.andor{
+    width:65px;
+    border: 1px solid #d3d3d3;
+    background: #e6e6e6;
+    font-weight: normal;
+    color: #555555;
+    cursor:pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.inputs textarea.AutoCompleteAttribute {
+    height: 33px;
+}
+
+.autoCompleteSearchResults{
+    display:inline-block;
+    width: 320px;
+    white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;
+}
+
+.s-hidden {
+    visibility:hidden;
+    padding-right:10px;
+}
+.AutoComboselect {
+    cursor:pointer;
+    display:inline-block;
+    position:absolute;
+    font:12px 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color:black;
+    border:1px #ccc;
+    max-width: 168px;
+    margin: auto;
+    margin-top: -10px;
+    border-image: initial;
+    box-sizing: border-box;
+}
+.AutoCombostyledSelect {
+    position: absolute;
+    height: auto;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: white;
+    padding: 3px 3px 3px 6px;   
+    max-width: 167px;
+    margin: auto;
+    font: 12px 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    border-image: initial;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+}
+.AutoCombostyledSelect:after {
+    content:"";
+    width:0;
+    height:0;
+    border:4px solid transparent;
+    border-color:black transparent transparent transparent;
+    position:absolute;
+    top:9px;
+    right:6px;
+
+}
+.AutoCombostyledSelect:active, .AutoCombostyledSelect.active {
+    max-width: 166px;
+    margin: auto;
+}
+.AutoCombooptions {
+    display:none;
+    width: 335px;
+    position: relative;
+    right:0;
+    z-index:10;
+    line-height: normal;
+    margin:0 0;
+    padding:0 0;
+    height: auto;
+    list-style:none;
+    border:1px solid #ccc;
+    background-color:white;
+    -webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.AutoCombooptions li {
+    padding:0 6px;
+    margin:0 0;
+    padding:0 5px;
+      z-index:10;
+    color: #003768;
+}
+.AutoCombooptions li:hover {
+     background-color: #efefef;
+}
+
+.AutoComboMargin {
+    margin-top: 4px;
+    vertical-align: middle;
+}
+
+#gridNewItemRoles .fillspan {
+    margin: 0 5px;
+    width: 70px;
+    padding: 0 0 0 5px;
+}
+
+#gridNewItemRoles .itemRoleWidth {
+    width: 110px;
+}
+
+.centered {
+    text-align: center;
+}
+
+#consentInfoPlaceholder #loader {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: block;
+}
+
+#consentInfoPlaceholder > p.large {
+    font-size: 14pt;
+}
+
+div#DetailConfirmationModal input[type='text'][readonly='readonly'] {
+    background-color: rgb(235, 235, 228) !important;
+}
+/* Class which can be added to a jQuery UI dialog to hide the close buttons */
+.ui-no-close-button .ui-dialog-titlebar-close {
+    display: none
+}
+
+.attachmentLookUpDisplayField {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #003768;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div > textarea#txtAreaViewLogs {
+    resize: vertical;
+    height: 500px;
+    width: 87%;
+    margin: 10px 0 4px 0;
+}

@@ -1,0 +1,1 @@
+﻿ALTER TABLE dbo.mobileDevices ADD CONSTRAINT [FK_mobileDevices_createdBy_employees] FOREIGN KEY (createdBy) REFERENCES employees (employeeid)

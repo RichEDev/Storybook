@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Mappings>
+	<Instructions StartRow="14" SheetName="Instructions" SheetIndex="0">
+		<ColumnField Name="Section" ColumnRef="2" FieldType="S" MaxLength="" IsUnique="false" IsMandatory="false" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Required" ColumnRef="4" FieldType="X" MaxLength="" IsUnique="false" IsMandatory="false" LinkRef="" LinkMatch="" /> 
+	</Instructions>
+	<Countries StartRow="11" SheetName="Countries" SheetIndex="2">
+		<ColumnField Name="Country" ColumnRef="1" FieldType="S" MaxLength="" IsUnique="true" IsMandatory="true" LinkRef="[global_countries].[globalcountryid]" LinkMatch="[global_countries].[country]" />
+		<ColumnField Name="Do you incur expenses from this country?" ColumnRef="3" FieldType="X" MaxLength="" IsUnique="false" IsMandatory="true" LinkRef="" LinkMatch="" /> 
+	</Countries>
+	<Currencies StartRow="11" SheetName="Currencies" SheetIndex="3">
+		<ColumnField Name="Currency" ColumnRef="1" FieldType="S" MaxLength="" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Do you incur expenses using this currency?" ColumnRef="4" FieldType="X" MaxLength="" IsUnique="false" IsMandatory="true" LinkRef="" LinkMatch="" /> 
+	</Currencies>
+	<Departments StartRow="11" SheetName="Departments" SheetIndex="4">
+		<ColumnField Name="Department Code" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Department Code Description" ColumnRef="2" FieldType="S" MaxLength="4000" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" /> 
+	</Departments>
+	<CostCodes StartRow="11" SheetName="Cost Codes" SheetIndex="5">
+		<ColumnField Name="Cost Code" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Cost Code Description" ColumnRef="2" FieldType="S" MaxLength="4000" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" /> 
+	</CostCodes>
+	<ProjectCodes StartRow="11" SheetName="Project Codes" SheetIndex="6">
+		<ColumnField Name="Project Code" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Project Code Description" ColumnRef="2" FieldType="S" MaxLength="2000" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" /> 
+	</ProjectCodes>
+	<Reasons StartRow="11" SheetName="Reasons" SheetIndex="7">
+		<ColumnField Name="Reason" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Reason Description" ColumnRef="2" FieldType="S" MaxLength="4000" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" /> 
+	</Reasons>
+	<P11dCategories StartRow="11" SheetName="P11d Categories" SheetIndex="8">
+		<ColumnField Name="P11d Category Description" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+	</P11dCategories>
+	<ItemRoles StartRow="11" SheetName="Item Roles" SheetIndex="9">
+		<ColumnField Name="Item Role Description" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+	</ItemRoles>
+	<ExpenseCategories StartRow="11" SheetName="Expense Categories" SheetIndex="10">
+		<ColumnField Name="Expense Category Description" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+	</ExpenseCategories>
+	<ExpenseItems StartRow="12" SheetName="Expense Items" SheetIndex="11">
+		<ColumnField Name="Master Category" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Expense Items" ColumnRef="2" FieldType="S" MaxLength="50" IsUnique="True" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Abbreviation" ColumnRef="3" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Expense Item Role" ColumnRef="4" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Account Code" ColumnRef="5" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Alternate Account Code" ColumnRef="6" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Reimbursable" ColumnRef="7" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Applicable" ColumnRef="8" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Rate" ColumnRef="9" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Percentage Reclaimed" ColumnRef="10" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Comments to be shown to claimants" ColumnRef="11" FieldType="S" MaxLength="4000" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="P11d Category" ColumnRef="12" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Total entered as" ColumnRef="13" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="True" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Calculation Type" ColumnRef="14" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="True" LinkRef="" LinkMatch="" />
+		<ColumnField Name="This expense is an allowance" ColumnRef="15" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="True" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Allowance Amount" ColumnRef="16" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+	</ExpenseItems>
+	<VehicleJourneyRates StartRow="11" SheetName="Vehicle Journey Rates" SheetIndex="12">
+		<ColumnField Name="Category Name" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Threshold (Annual)" ColumnRef="2" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Before Threshold Petrol" ColumnRef="3" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="After Threshold Petrol" ColumnRef="4" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Amount for VAT Petrol" ColumnRef="5" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Before Threshold Diesel" ColumnRef="6" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="After Threshold Diesel" ColumnRef="7" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Amount for VAT Diesel" ColumnRef="8" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Before Threshold LPG" ColumnRef="9" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="After Threshold LPG" ColumnRef="10" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Amount for VAT LPG" ColumnRef="11" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Passenger 1" ColumnRef="12" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Other Passengers" ColumnRef="13" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+	</VehicleJourneyRates>
+	<AccessRoles StartRow="11" SheetName="Access Roles" SheetIndex="13">
+		<ColumnField Name="Access Role Description" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Access Role Type" ColumnRef="2" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+	</AccessRoles>
+	<EmployeeDetails StartRow="11" SheetName="Employee Details" SheetIndex="14">
+		<ColumnField Name="Username" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Title" ColumnRef="2" FieldType="S" MaxLength="20" IsUnique="false" IsMandatory="false" LinkRef="" LinkMatch="" />
+		<ColumnField Name="First Name" ColumnRef="3" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Middle Names" ColumnRef="4" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Surname" ColumnRef="5" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Maiden Name" ColumnRef="6" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Password Key Send on Date" ColumnRef="7" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Position" ColumnRef="8" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Email Address" ColumnRef="9" FieldType="S" MaxLength="500" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Phone Number" ColumnRef="10" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Mobile Number" ColumnRef="11" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Pager Number" ColumnRef="12" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Payroll Number" ColumnRef="13" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Purchase Ledger No" ColumnRef="14" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Access Role 1" ColumnRef="15" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="True" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Access Role 2" ColumnRef="16" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Access Role 3" ColumnRef="17" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Item Role 1" ColumnRef="18" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Item Role 2" ColumnRef="19" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Item Role 3" ColumnRef="20" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Home Location" ColumnRef="21" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Home Line 1" ColumnRef="22" FieldType="S" MaxLength="256" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Home City" ColumnRef="23" FieldType="S" MaxLength="256" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Home Postcode" ColumnRef="24" FieldType="S" MaxLength="32" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Home Country" ColumnRef="25" FieldType="S" MaxLength="250" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Home Telephone Number" ColumnRef="26" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Home Fax Number" ColumnRef="27" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Home Email Address" ColumnRef="28" FieldType="S" MaxLength="500" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Office Location" ColumnRef="29" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Office Line 1" ColumnRef="30" FieldType="S" MaxLength="256" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Office City" ColumnRef="31" FieldType="S" MaxLength="256" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Office Postcode" ColumnRef="32" FieldType="S" MaxLength="32" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Office Country" ColumnRef="33" FieldType="S" MaxLength="250" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Primary Country" ColumnRef="34" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="True" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Primary Currency" ColumnRef="35" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="True" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Gender" ColumnRef="36" FieldType="S" MaxLength="6" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Date of Birth" ColumnRef="37" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="National Insurance Number" ColumnRef="38" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Hire Date" ColumnRef="39" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Termination Date" ColumnRef="40" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Account Holder Name" ColumnRef="41" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Account Number" ColumnRef="42" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Account Type" ColumnRef="43" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Sort Code" ColumnRef="44" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Account Reference" ColumnRef="45" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+	</EmployeeDetails>
+	<EmployeeLineManagers StartRow="11" SheetName="Employee Line Managers" SheetIndex="15">
+		<ColumnField Name="Username" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Line Manager" ColumnRef="2" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+	</EmployeeLineManagers>
+  <ESRAssignments StartRow="11" SheetName="ESR Assignments" SheetIndex="16">
+    <ColumnField Name="Username" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+    <ColumnField Name="ESR Assignment Number" ColumnRef="2" FieldType="S" MaxLength="50" IsUnique="True" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Primary" ColumnRef="3" FieldType="S" MaxLength="3" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+  </ESRAssignments>
+	<Teams StartRow="11" SheetName="Teams" SheetIndex="17">
+		<ColumnField Name="Team Name" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+	</Teams>
+	<TeamAllocation StartRow="11" SheetName="Team Allocation" SheetIndex="18">
+		<ColumnField Name="Team Name" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Username" ColumnRef="2" FieldType="S" MaxLength="50" IsUnique="false" IsMandatory="true" LinkRef="" LinkMatch="" />
+	</TeamAllocation>
+	<BudgetHolders StartRow="11" SheetName="Budget Holders" SheetIndex="19">
+		<ColumnField Name="Budget Holder Name" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Username" ColumnRef="2" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="True" LinkRef="" LinkMatch="" />
+	</BudgetHolders>
+  <SignoffGroups StartRow="21" SheetName="Signoff Groups" SheetIndex="20">
+    <ColumnField Name="One Click Authorisation" ColumnRef="2" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Sign-off Stage" ColumnRef="4" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Signoff Group Name" ColumnRef="5" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Sign-off Type" ColumnRef="6" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Approver" ColumnRef="7" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Rule" ColumnRef="8" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Rule Validation" ColumnRef="9" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="false" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Rule Value" ColumnRef="10" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Involvement" ColumnRef="11" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="If Approver on holiday" ColumnRef="12" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Assign to whom" ColumnRef="13" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Holiday Value" ColumnRef="14" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Email to Approver (Y/N)" ColumnRef="15" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="True" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Email to Claimant (Y/N)" ColumnRef="16" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="True" LinkRef="" LinkMatch="" />
+    <ColumnField Name="Approver Declaration (Y/N)" ColumnRef="17" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="True" LinkRef="" LinkMatch="" />
+  </SignoffGroups>
+	<EmployeeApproval StartRow="11" SheetName="Employee Approval" SheetIndex="21">
+		<ColumnField Name="Username" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Signoff Group Name" ColumnRef="2" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Signoff Group Name (Credit Cards)" ColumnRef="3" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Signoff Group Name (Purchase Cards)" ColumnRef="4" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Signoff Group Name (Advances)" ColumnRef="5" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+	</EmployeeApproval>
+	<EmployeeCodeAllocation StartRow="11" SheetName="Employee Code Allocation" SheetIndex="22">
+		<ColumnField Name="Username" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Department" ColumnRef="2" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="false" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Cost Code" ColumnRef="3" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="false" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Project Code" ColumnRef="4" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="false" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Percentage" ColumnRef="5" FieldType="N" MaxLength="" IsUnique="False" IsMandatory="false" LinkRef="" LinkMatch="" />
+	</EmployeeCodeAllocation>
+	<EmployeeCreditCards StartRow="11" SheetName="Employee Credit Cards" SheetIndex="23">
+		<ColumnField Name="Username" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="true" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Card Type" ColumnRef="2" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Card Provider" ColumnRef="3" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Card Number" ColumnRef="4" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+	</EmployeeCreditCards>
+	<EmployeeCars StartRow="11" SheetName="Employee Cars" SheetIndex="24">
+		<ColumnField Name="Username" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="false" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Car Make" ColumnRef="2" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Car Model" ColumnRef="3" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Registration No" ColumnRef="4" FieldType="S" MaxLength="50" IsUnique="True" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Vehicle Journey Rate Category" ColumnRef="5" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Petrol / Diesel / LPG / Hybrid" ColumnRef="6" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Engine Size (CC)" ColumnRef="7" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Odometer Reading Required?" ColumnRef="8" FieldType="S" MaxLength="" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Start Odometer Reading" ColumnRef="9" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="False" LinkRef="" LinkMatch="" />
+	</EmployeeCars>
+		<PoolCars StartRow="12" SheetName="Pool Cars" SheetIndex="25">
+  <ColumnField Name="Car Make" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+  <ColumnField Name="Car Model" ColumnRef="2" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+  <ColumnField Name="Registration No" ColumnRef="3" FieldType="S" MaxLength="50" IsUnique="True" IsMandatory="true" LinkRef="" LinkMatch="" />
+  <ColumnField Name="Vehicle Journey Rate Category" ColumnRef="4" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+  <ColumnField Name="Petrol / Diesel / LPG / Hybrid" ColumnRef="5" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+  <ColumnField Name="Engine Size (CC)" ColumnRef="6" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+</PoolCars>
+	<PoolCarAllocation StartRow="12" SheetName="Pool Car Allocation" SheetIndex="26">
+		<ColumnField Name="Username" ColumnRef="1" FieldType="S" MaxLength="50" IsUnique="False" IsMandatory="true" LinkRef="" LinkMatch="" />
+		<ColumnField Name="Pool Car Registration Number" ColumnRef="2" FieldType="S" MaxLength="50" IsUnique="false" IsMandatory="true" LinkRef="" LinkMatch="" />
+	</PoolCarAllocation>
+</Mappings>

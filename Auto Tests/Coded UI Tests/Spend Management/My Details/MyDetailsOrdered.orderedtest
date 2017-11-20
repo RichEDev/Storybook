@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="mydetailsordered" storage="c:\projects\spend management\main\auto tests\coded ui tests\spend management\my details\mydetailsordered.orderedtest" id="87b167cd-c60d-4a5c-bc7d-0d6ab7bf1d43" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestCategory>
+    <TestCategoryItem TestCategory="Nightly Build" />
+  </TestCategory>
+  <Execution id="a13afa0a-e76e-4c43-b840-de1a5731bff1" />
+  <TestLinks>
+    <TestLink id="98af5937-f562-8dc2-91dc-0c9a00bd0e56" name="MyDetailsSuccessfullyCancelChangesToMyDetails" storage="..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="a05a3ca8-30e4-4cd8-ca73-146434b6e29d" name="MyDetailsSuccessfullyCancelNotifyAdministratorOfIncorrectDetails" storage="..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="9b20ff8a-5b2b-df65-8174-ed3bd4acb421" name="MyDetailsSuccessfullyChangeDetails" storage="..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="8dc643f5-40ef-0499-1b0d-a957414915fa" name="MyDetailsSuccessfullyChangePassword" storage="..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="26993309-fcae-006c-3e26-6dd1f6772bba" name="MyDetailsSuccessfullyNotifyAdministratorOfIncorrectDetails" storage="..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="70a98e07-57d9-24b4-d30f-102dc1046149" name="MyDetailsSuccessfullySetEmployeeEditPermissionsForMyDetailsPage" storage="..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="86e31969-0b49-fb42-93b2-5f185cd24961" name="MyDetailsSuccessfullyVerifyEmailAddressvalidation" storage="..\..\..\bin\release\auto tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

@@ -1,0 +1,1 @@
+﻿CREATE INDEX [IX_esr_assignments_ESRPersonId] ON dbo.esr_assignments (ESRPersonId)

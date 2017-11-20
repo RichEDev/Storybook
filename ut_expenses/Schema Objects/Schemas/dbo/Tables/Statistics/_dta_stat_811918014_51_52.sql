@@ -1,0 +1,1 @@
+﻿CREATE STATISTICS [_dta_stat_811918014_51_52] ON [dbo].[employees]([groupidcc], [groupidpc])

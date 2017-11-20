@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="OrderedTest1" storage="c:\mapping\spend management\spend management_root\spendmanagementautomatedtests\admin\base information\locations\orderedtest1.orderedtest" id="e2d5abb5-2151-46a5-9405-9a3e7c9488fc" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Css projectStructure="" iteration="" />
+  <Execution timeOut="2147483647" />
+  <Owners>
+    <Owner name="" />
+  </Owners>
+  <TestLinks>
+    <TestLink id="0e054d66-3d52-4fe8-98d3-e546df225b8a" name="AddLocation" storage="addlocation.webtest" type="Microsoft.VisualStudio.TestTools.WebStress.DeclarativeWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="ec150b14-31e8-51d1-1b63-76e18b82f2a6" name="EditLocationCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="e2186d50-ae46-f227-129b-93445430079d" name="DeleteLocationCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="0e054d66-3d52-4fe8-98d3-e546df225b8a" name="AddLocation" storage="addlocation.webtest" type="Microsoft.VisualStudio.TestTools.WebStress.DeclarativeWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="e4252132-d2ec-6fd7-e289-839f9480204b" name="ArchiveLocationCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="ec150b14-31e8-51d1-1b63-76e18b82f2a6" name="EditLocationCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="1745b027-d729-810a-849b-33b5eb6e7455" name="UnArchiveLocationCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="e4252132-d2ec-6fd7-e289-839f9480204b" name="ArchiveLocationCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="e2186d50-ae46-f227-129b-93445430079d" name="DeleteLocationCoded" storage="..\..\..\bin\debug and tests\spendmanagement.automatedtests.dll" type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest,   PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

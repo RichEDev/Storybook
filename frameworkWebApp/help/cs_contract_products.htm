@@ -1,0 +1,196 @@
+<html>
+	<head>
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<title>Framework Help - [Contract Products]</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<link rel="stylesheet" href="fwhelp.css" type="text/css">
+		<script>
+	<!--
+	function toggle(divId)
+	{
+		imgId = 'img' + divId;
+		if(document.getElementById(divId).style.display != 'block')
+		{
+			document.getElementById(divId).style.display = 'block';
+    		document.getElementById(imgId).src = '../buttons/close.gif';
+		}
+		else
+		{
+			document.getElementById(divId).style.display = 'none';
+    		document.getElementById(imgId).src = '../buttons/open.gif';
+
+		}
+	}
+
+	document.write('<style>div.help_body_text { display: none; }</style>');
+	// -->
+	
+	function closewindow()
+	{
+		self.opener=this;
+		self.close();
+	}
+		</script>
+	</head>
+	<body class="help_page" onload="window.resizeTo(800,500)">
+		<div class="help_page_title">
+			<a onclick="closewindow();"><img src="../images/exithelp.gif" alt="Close Help Window"></a>Contract 
+			Product Details
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				Contract related Products / Services
+			</div>
+			<div class="help_overview">
+				A majority of contracts have a product or service that forms the 'deliverable' 
+				of the contract.
+				<br>
+				<br>
+				This section permits the association of the product or service with the 
+				currently active contract.
+				<br>
+				<br>
+				<b>NOTE: </b>Only products available from the contractually selected Vendor can 
+				be added. If the required product does not appear to be available, then the 
+				Product/Vendor association should be checked in the Product definition screen.
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('1');" id="img1"> Standard fields 
+				available
+			</div>
+			<div class="help_body_text" id="1">
+				<table class="inner" align="center" width="500">
+					<tr>
+						<th class="inner" width="150">
+							Field Name</th>
+						<th class="inner" width="350">
+							Explanation</th>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Contract Product</td>
+						<td class="inner">The drop-down list allows selection of the contract product or 
+							service. Only items available are those that are associated with the contract 
+							vendor.<br>
+							<br>
+							<b>NOTE: </b>Selection of the field is mandatory.</td>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Product Value</td>
+						<td class="inner">The product value is the monetary amount on which the maintenance 
+							has been based. This may be the 'list price' of the product / service or simply 
+							the price paid.<br>
+							<br>
+							This value is used in the 'next period maintenance' calculation if the forecast 
+							type 'Product £ v Inflator' is used.</td>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Maintenance Value</td>
+						<td class="inner">The maintenance value is the monetary amount being paid for the 
+							current contract period.<br>
+							<br>
+							This is the value that the contractually permitted inflation amount is applied 
+							to.<br>
+							<br>
+							<b>NOTE: </b>If left blank, this field will be calculated from Product Value 
+							and Maintenance Percent (assuming these values also exist).</td>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Maintenance Percent</td>
+						<td class="inner">Contracts commonly have an annual maintenance amount that is 
+							calculated as a percentage of the Product Value.<br>
+							<br>
+							This field allows the specification of the percentage of the Product Value that 
+							forms the maintenance.<br>
+							<br>
+							This is required when calculating contracts using the forecast type 'Product £ 
+							v Inflator'.
+						</td>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Projected Saving</td>
+						<td class="inner">If it is possible to quantify how much a particular product or 
+							service saves your organisation, then this should be specified here.<br>
+							<br>
+							If the Projected Saving amount is exceeded by the proposed, Next Period 
+							Maintenance, then this is highlighted in the automated email renewal 
+							notification. This acts a 'cost v benefit' indicator for the given product / 
+							service.</td>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Currency</td>
+						<td class="inner">Selecting a currency from the list permits correct management of 
+							contracts' monetary values. Without specifying a currency type, contracts will 
+							not be compared like-for-like with contracts in other currencies.</td>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Units</td>
+						<td class="inner">A contract product may have some limitation quantifier. This may 
+							be a number of users, a particular site or, in the case of mainframe software, 
+							the number MIPs.<br>
+							<br>
+							This list allows the selection of the limitation unit if one is required.</td>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Quantity</td>
+						<td class="inner">This field simply allows the specification of the quantity of the 
+							selected Unit type covered buy the contract.</td>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Unit Cost</td>
+						<td class="inner"><p>Unit Cost is a monetary field enabling the ability to measure the 
+								'cost per unit' of the contract product / service.</p>
+							<p>If left blank, this field will calculate automatically using the unit quantity 
+								selected and the maintenance value.</p>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_section_title">
+				<img src="../buttons/open.gif" onclick="toggle('2');" id="img2"> Other 
+				Functionality
+			</div>
+			<div class="help_body_text" id="2">
+				Once contract product information has been associated against a contract, 
+				further functionality options are enabled.<br>
+				<br>
+				<table class="inner" align="center" width="500">
+					<tr>
+						<th class="inner" width="150">
+							Function</th>
+						<th class="inner" width="350">
+							Description</th>
+					</tr>
+					<tr>
+						<td class="inner" align="center">Version Registry</td>
+						<td class="inner"><p>The functionality provided in the Version Registry is very much 
+								suited to software contracts but can be utilised for other occasions.</p>
+							<p>The Version Registry allows the tracking of multiple types of the same product 
+								or service. A good example is the WindowsT software where multiple versions may 
+								exist within an organisation but all covered by a single contract.</p>
+							<p>WindowsT may be the product, but 98/NT/2000 &amp; XP may exist within the 
+								Version Registry. Refer to the user guide for full details.</p>
+							<p>Select the required product and click 'Version Registry' to access this 
+								functionality.</p>
+						</td>
+					</tr>
+				</table>
+				<div class="help_tip">
+					<b>TIP:</b> A single selector button (radio button) exists on each contract 
+					product. This indicates the current product that is to correspond to the Notes 
+					or Version Registry selection.
+				</div>
+			</div>
+		</div>
+		<div class="help_section">
+			<div class="help_comments">
+				* If you do not find a topic outlined in the help which is relevant to your 
+				enquiry then please contact your administrator
+			</div>
+		</div>
+		<DIV></DIV>
+	</body>
+</html>

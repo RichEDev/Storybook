@@ -1,0 +1,1 @@
+﻿ALTER TABLE [dbo].[flags] ADD  CONSTRAINT [DF_flags_itemRoleInclusionType]  DEFAULT ((1)) FOR [itemRoleInclusionType]

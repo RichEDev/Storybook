@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [NIBLEY\simon]
+    FROM WINDOWS WITH DEFAULT_DATABASE = [master], DEFAULT_LANGUAGE = [us_english];
+

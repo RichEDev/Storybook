@@ -1,0 +1,661 @@
+% FW Update.dat file
+% 06/05/2005
+# 000015 000016
+
+% ---------- Tables and Indices ----------
+
+% Acquisition Vendors
+
+% Acquisition Details
+
+% Analysis Rules
+
+% Assets
+
+% Attachments
+ALTER TABLE [Attachments]
+ADD [Mime Header] varchar(50)
+*
+
+% Audit Log
+
+% Audit Trail
+
+% Calendar
+
+% Clauses
+
+% Code Tables
+
+% Codes - Account Codes
+CREATE TABLE dbo.[Codes - Account Codes]
+(
+	[Code Id] int IDENTITY PRIMARY KEY,
+	[Location Id] int,
+	[Account Code] varchar(20),
+	[Description] varchar(50),
+	[Category Id] int NOT NULL DEFAULT(0)
+)
+*
+
+% Codes - Contract Category
+
+% Codes - Contract Type
+
+% Codes - Contract Status
+
+% Codes - Currency
+
+% Codes - Invoice Frequency Type
+
+% Codes - Inflator Metrics
+
+% Codes - Financial Status
+
+% Codes - Invoice Status Type
+
+% Codes - Licence Renewal Type
+
+% Codes - Note Category
+
+% Codes - Product Category
+CREATE TABLE dbo.[Codes - Product Category]
+(
+     [Category Id] int IDENTITY PRIMARY KEY,
+     [Location Id] int,
+     [Description] varchar(50)
+)
+*
+
+% Codes - Platform Type
+
+% Codes - Recharge Entity
+CREATE TABLE dbo.[Codes - Recharge Entity]
+(
+     [Entity Id]	int IDENTITY PRIMARY KEY,
+     [Location Id]      int,                   -- Pointer to [Location] 
+     [Name]		varchar(50),
+     [Code]		varchar(20),
+     [Shared]	        smallint,
+     [Staff Rep]	int,
+     [Deputy Rep]	int,
+     [Account Mgr]	int,
+     [Service Mgr]	int,
+     [Sector]		varchar(50),
+     [Service Line]	varchar(20),
+     [Notes]		varchar(250),
+     [Closed]		smallint,
+     [Account Code Id]	int,
+     [Date Closed]	datetime,
+     [Date Ceased]	datetime
+)
+*
+
+% Codes - Region
+
+% Codes - Sales Tax
+
+% Codes - Sites
+CREATE TABLE dbo.[Codes - Sites]
+(
+  [Site Id]		int IDENTITY PRIMARY KEY,
+  [Location Id]		int,
+  [Site Code] 		varchar(25),
+  [Site Description]	varchar(100),
+  [Recharge Entity Id]	int,
+  [Address Line 1]	varchar(50),
+  [Address Line 2]	varchar(50),
+  [Town]		varchar(50),
+  [Post Code]		varchar(10)
+)
+*
+
+% Codes - SLD
+
+% Codes - Term Type
+
+% Codes - Units
+
+% Codes - User Field Grouping
+ALTER TABLE dbo.[Codes - User Field Grouping]
+ADD [UF Grouping Area] int NOT NULL DEFAULT(5)
+*
+
+% Committed Contracts
+
+% Committed Contract Details
+
+% Contract - Forecast Details
+
+% Contract - Forecast Products
+
+% Contract - Notification
+
+% Contract - Product Details
+
+% Contract - Product Details - Calloff
+
+% Contract - Product Details - Recharge
+CREATE TABLE dbo.[Contract - Product Details - Recharge]
+(
+	[Recharge Item Id] int IDENTITY PRIMARY KEY,
+	[Recharge Id] int,
+	[Recharge Period] datetime,
+	[Recharge Amount] float NOT NULL DEFAULT(0)
+)
+*
+
+% Contract - Product-History
+
+% Contract - Product Information
+CREATE TABLE dbo.[Contract - Product Information]
+(
+	[Contract Product Id] 	int,
+	[Information]		text
+)
+*
+
+% Contract - Product-Platforms
+
+% Contract Classes
+
+% Contract Details
+
+% Contract Notes
+
+% Contract Types
+
+% Contract Type Clauses
+
+% Data Fields
+
+% Data Tables
+
+% Email Schedule
+
+% Export Fields
+
+% Exports
+
+% Favourite Reports
+CREATE TABLE dbo.[Favourite Reports]
+(
+  [Favourite Id] int IDENTITY PRIMARY KEY,
+  [Location Id] int,
+  [User Id] int,
+  [Standard Report Id] int
+)
+*
+
+% Financials
+
+% Import Fields
+
+% Import Mapping
+
+% Imports
+
+% Invoice - Product Details
+
+% Invoice Details
+
+% Invoice Log
+
+% Invoice Notes
+
+% ITT_RFI Templates
+
+% Languages
+
+% Language Texts
+
+% Link Definitions
+
+% Link Matrix
+
+% Location
+
+% Mail
+
+% Mail Schedule
+
+% Metrics
+
+% MIME Headers
+CREATE TABLE dbo.[MIME Headers]
+(
+	[Mime Id] int IDENTITY PRIMARY KEY,
+	[File Extension] varchar(10),
+	[Mime Header] varchar(50)
+)
+*
+
+% Param
+CREATE TABLE dbo.[FWParams]
+(
+     [Param]       varchar(50),
+     [Location Id] int,
+     [Value]       varchar(50)
+)
+*
+
+% Performance
+
+% Pending Email
+
+% Period Types
+
+% Platform LPars
+
+% Product Details
+ALTER TABLE [Product Details]
+ADD [Product Category Id] int NOT NULL DEFAULT(0)
+*
+
+% Product Notes
+
+% Product Platforms
+
+% Product Usage
+
+% Product Vendors
+
+% Purchase Orders
+
+% Recharge Associations
+
+CREATE TABLE dbo.[Recharge Associations]
+(
+	[Recharge Id]		int IDENTITY PRIMARY KEY,
+	[Recharge Entity Id]	int,
+	[Contract-Product Id]	int,
+	[Apportion Id]		int NOT NULL DEFAULT(0),
+	[Portion]		float NOT NULL DEFAULT(0),
+	[Surcharge]		float NOT NULL DEFAULT(0),
+	[Surcharge Type]	int NOT NULL DEFAULT(0),
+	[Recharge Period]	datetime,
+	[Recharge Amount]	float NOT NULL DEFAULT(0)
+)
+*
+
+% Saved Reports
+
+% Saved Views
+
+% Savings
+CREATE TABLE dbo.[Savings]
+(
+	[Savings Id]		int IDENTITY PRIMARY KEY,
+	[Location Id]		int,
+	[Contract Id]		int,
+	[Reference]		varchar(50),
+	[Saving Date]		datetime,
+	[Amount]		float NOT NULL DEFAULT(0),
+	[Comment]		text,
+	[Recharge Entity Id]	int,
+	[Logged By User Id]	int,
+	[Logged By Timestamp]	datetime
+)
+*
+
+% Schedule
+
+% Security
+ALTER TABLE dbo.[Security]
+ALTER COLUMN [Password] varchar(150)
+*
+
+ALTER TABLE dbo.[Security]
+ADD [Password Method] int NOT NULL DEFAULT(0)
+*
+
+% Security History
+ALTER TABLE dbo.[Security History]
+ALTER COLUMN [Password] varchar(150)
+*
+
+ALTER TABLE [Security History]
+ADD [Password Method] int NOT NULL DEFAULT(0)
+*
+
+% Security Locations
+ALTER TABLE [Security Locations]
+ADD [Role Id] int
+*
+
+% SLM Classes
+
+% SLM Details
+
+% Standard Reports
+CREATE TABLE dbo.[Standard Reports]
+(
+   [Report Id] int PRIMARY KEY,
+   [Report Name] varchar(50),
+   [Report Description] varchar(250),
+   [Report Area] int
+)
+*
+
+% Staff Details
+
+% Sublocations
+
+% System-DBJoins
+ALTER TABLE [System-DBJoins]
+ADD [JoinAlias] varchar(20)
+*
+
+% System Parameters
+
+% UF Group Allocation
+CREATE TABLE dbo.[UF Group Allocation]
+(
+  [Allocation Id] int IDENTITY PRIMARY KEY,
+  [Location Id] int,
+  [UF Grouping Id] int,
+  [Category Id] int
+)
+*
+
+% User Field Values
+
+% User Fields
+
+% User Help Docs
+
+% User Roles
+ALTER TABLE [User Roles]
+ADD [Role View Type] smallint NOT NULL DEFAULT(0)
+*
+
+UPDATE [User Roles] SET [Role View Type] = [View Type]
+*
+
+% Vendor Addresses
+
+% Vendor Categories
+
+% Vendor Details
+
+% Vendor Contact Notes
+
+% Vendor Notes
+
+% Vendor Regions
+
+% Vendor Status
+
+% Version Registry
+
+% Version History
+
+% ---------- Views ----------
+
+
+% Performance Metrics
+
+% CalView
+
+% ---------- Procedures ----------
+
+% Populate standard report detail
+% Report Areas are: -
+% 1 Financial, 2 Recharge, 3 Contract
+INSERT INTO [Standard Reports] ([Report Id],[Report Name],[Report Description],[Report Area])
+VALUES (1,'Monthly Budget Report','Produces detail of budget payment, accruals month on month for a single financial year.<br><b><li> For use when Keep Forecast option is set to Yes</b>',2)
+*
+
+INSERT INTO [Standard Reports] ([Report Id],[Report Name],[Report Description],[Report Area])
+VALUES (2,'Monthly Maintenance Analysis Report','Monthly maintenance analysis by Vendor and Product.',2)
+*
+
+INSERT INTO [Standard Reports] ([Report Id],[Report Name],[Report Description],[Report Area])
+VALUES (3,'Savings Report','Report that displays contractual savings made during a given period',1)
+*
+
+% ADD CURRENT ROLE TO ALL ACCESSIBLE LOCATIONS
+DECLARE @roleid INT
+DECLARE @userid INT
+DECLARE loop_cursor CURSOR FOR
+SELECT [User Id],[Role Id] FROM [Security]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @userid,@roleid
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	UPDATE [Security Locations] SET [Role Id] = @roleid WHERE [User Id] = @userid
+		
+	FETCH NEXT FROM loop_cursor INTO @userid,@roleid
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+% DROP ORIGINAL [Role Id] FROM TABLE [Security]
+ALTER TABLE dbo.[Security]
+DROP COLUMN [Role Id]
+*
+
+% Update unencrypted admin password method
+UPDATE [Security] SET [Password Method] = 99 WHERE [Password] = 'halstead' OR [Password] = 'casablanca'
+*
+
+% Populate defaults into Mime Headers table
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES ('PDF','application/pdf')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('HTM','text/html')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('HTML','text/html')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('XLS','application/x-msexcel')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('DOC','application/msword')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('TXT','text/text')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('JPG','image/jpeg')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('PNG','image/png')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('BMP','image/bitmap')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('GIF','image/gif')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('TIF','image/tiff')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('XML','text/xml')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('DHTML','text/html')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('RTF','application/rtf')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('WMV','video/x-ms-wmv')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('WMA','audio/x-ms-wma')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('MPG','video/mpeg')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('CRD','application/x-mscardfile')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('XLM','application/vnd.ms-excel')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('DOT','application/msword')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('WPS','application/vnd.ms-works')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('HLP','application/winhlp')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('XLA','application/vnd.ms-excel')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('XLT','application/vnd.ms-excel')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('XLC','application/vnd.ms-excel')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('XLW','application/vnd.ms-works')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('MPP','application/vnd.ms-project')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('WKS','application/vnd.ms-works')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('WCM','application/vnd.ms-works')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('PUB','application/x-mspublisher')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('WRI','application/x-mswrite')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('ZIP','application/x-zip-compressed')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('PPS','application/vnd.ms-powerpoint')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('PPT','application/vnd.ms-powerpoint')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('TAR','application/x-tar')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('TGZ','application/x-compressed')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('MID','audio/mid')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('WAV','audio/wav')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('RMI','audio/mid')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('MP3','audio/mpeg')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('GZ','application/x-gzip')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('TIFF','image/tiff')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('JPEG','image/jpeg')
+*
+
+INSERT INTO [MIME Headers] ([File Extension],[Mime Header])
+VALUES('JPE','image/jpeg')
+*
+
+% Ensure that all existing user fields are flagged as such in the [System-DBJoins] table
+UPDATE [System-DBJoins] SET [IsUserDefined] = 1 WHERE [FieldID] > 9999
+*
+
+% Update existing attachments to have Mime Header associated with it.
+DECLARE @att_id INT
+DECLARE @filename_len int
+DECLARE @ext_len int
+DECLARE @filename VARCHAR(100)
+DECLARE @loopIdx INT
+DECLARE @file_ext VARCHAR(10)
+DECLARE loop_cursor CURSOR FOR
+SELECT [Attachment Id],[Filename] FROM [Attachments]
+OPEN loop_cursor
+FETCH NEXT FROM loop_cursor INTO @att_id,@filename
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	SET @loopIdx = LEN(@filename)
+	SET @filename_len = @loopIdx
+
+	WHILE (@loopIdx > 0)
+	BEGIN
+		IF SUBSTRING(@filename,@loopIdx,1) = '.'
+		BEGIN
+			SET @ext_len = @filename_len - @loopIdx
+			SET @file_ext = UPPER(SUBSTRING(@filename,@loopIdx+1,@ext_len))
+			BREAK
+		END
+		SET @loopIdx = @loopIdx - 1
+	END
+
+	PRINT 'Attachment Id = ' + CONVERT(varchar,@att_id)
+	PRINT 'Filename = ' + @filename
+	PRINT 'Extension = ' + @file_ext
+	UPDATE [Attachments] SET [Mime Header] = (SELECT [Mime Header] FROM [Mime Headers] WHERE [File Extension] = @file_ext) WHERE [Attachment Id] = @att_id	
+	FETCH NEXT FROM loop_cursor INTO @att_id,@filename
+END
+CLOSE loop_cursor
+DEALLOCATE loop_cursor
+*
+
+% End of file

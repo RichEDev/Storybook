@@ -1,0 +1,182 @@
+<%@ Master Language="VB" CodeFile="FWMenu.master.vb" Inherits="FWMenu" %>
+<%@ Register Src="~/FWTasksPopupSummary.ascx" TagName="taskSummary" TagPrefix="taskSummary" %>
+<%@ Register Src="~/FWSubAccountPopup.ascx" TagName="subAccountPopup" TagPrefix="subAccountPopup" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <link id="favLink" runat="server" rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <title>Framework from Software (Europe) Ltd.</title>
+
+    <script language="javascript" type="text/javascript">
+    	var theme;
+ 
+    function changeIcon (name, src)
+    {
+        document.getElementById("icon" + name).src = src;
+    }
+
+    function exit() {
+    	var otherparams = '';
+    	switch (theme) {
+    	    case "SmartDTheme":
+    	        otherparams = '&sd=1';
+    	        break;
+    	    case "FrameworkTheme":
+    	        otherparams = '&sd=0';
+    	        break;
+    	    default:
+    	        break;
+    	}
+
+    	if (confirm('Are you sure you wish to exit the application?')) {
+    			window.location.href = appPath + '/shared/logon.aspx?action=logout' + otherparams;
+    	}
+    }
+    </script>
+
+</head>
+<body runat="server" id="body">
+    <form id="form1" runat="server">
+    <cc1:ToolkitScriptManager ID="ScriptManager1" runat="server" >
+        <Services>
+            <asp:ServiceReference Path="~/shared/webServices/svcGrid.asmx" InlineScript="false" />
+            <asp:ServiceReference Path="~/shared/webServices/svcTooltip.asmx" InlineScript="false" />
+        </Services>
+        <Scripts>
+            <asp:ScriptReference Path="~/shared/javaScript/sel.main.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/sel.common.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/jsonParse.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/tooltips.js" />
+        </Scripts>
+    </cc1:ToolkitScriptManager>
+    <asp:Literal ID="litstyles" runat="server"></asp:Literal>
+
+    <cc1:ModalPopupExtender ID="mdlMasterPopup" runat="server" OnCancelScript="SEL.MasterPopup.HideMasterPopup();" OnOkScript="SEL.MasterPopup.HideMasterPopup();" BackgroundCssClass="modalMasterBackground" PopupControlID="pnlMasterPopup" TargetControlID="lnkMasterPopup" DropShadow="False"></cc1:ModalPopupExtender>
+    <asp:Panel ID="pnlMasterPopup" runat="server" CssClass="errorModal" style="display:none;z-index:16000099;">
+        <div id="divMasterPopup"></div>
+        <div style="padding: 0px 5px 5px 5px;"><img src="/shared/images/buttons/btn_close.png" id="btnMasterPopup" alt="OK" onclick="SEL.MasterPopup.HideMasterPopup();" style="cursor: pointer;" /></div>
+    </asp:Panel>
+    <asp:HyperLink ID="lnkMasterPopup" runat="server" style="display: none;" Text="&nbsp;" NavigateUrl="javascript:void(0);"></asp:HyperLink>
+
+    <div id="pagediv">
+        <div id="logodiv">
+            <div class="clientlogo">
+                <asp:Literal ID="litlogo" runat="server"></asp:Literal></div>
+            <div class="applogo">
+                </div>
+        </div>
+        <div id="menudiv">
+            <div class="menubar">
+                <div class="linkbar">
+                    <asp:Literal ID="litlinks" runat="server"></asp:Literal>
+                </div>
+                <asp:SiteMapPath ID="SiteMapPath1" runat="server" Font-Names="Arial" Font-Underline="false" PathSeparator=" : ">
+                    <PathSeparatorStyle Font-Underline="false" />
+                    <CurrentNodeStyle Font-Underline="false" />
+                    <NodeStyle Font-Underline="false" />
+                    <RootNodeStyle Font-Underline="false" />
+                </asp:SiteMapPath>
+            </div>
+        </div>
+        <div id="infodiv">
+            <div class="infobar">
+                <div class="userinfo"><asp:Literal ID="lituser" runat="server"></asp:Literal></div>
+                <span id="pagetitle" class="pagetitle nosubtitle"><asp:Literal ID="litpagetitle" runat="server"></asp:Literal></span>
+            </div>
+        </div>
+        <br />
+        <br />
+        <asp:Literal ID="litemplogon" runat="server"></asp:Literal>
+        <asp:Literal ID="litmenu" runat="server"></asp:Literal>
+        <div id="footerdiv">
+            &copy; 2001-2008 Software (Europe) Ltd. All Rights Reserved
+        </div>
+        <div id="righthandcontent">
+            <asp:ContentPlaceHolder ID="RHcontent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </div>
+
+    <script language="javascript" type="text/javascript">
+        function displayBroadcastMessage(url, datatosendVal)
+        {           
+            var xmlRequest;
+			try
+			{
+				xmlRequest = new XMLHttpRequest();
+			}
+			catch (e)
+			{	
+				try
+				{
+					xmlRequest = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				catch (f)
+				{
+					xmlRequest = null;
+				}
+			}
+			xmlRequest.onreadystatechange = function()
+			{
+			    if (xmlRequest.readyState == 4)
+			    {
+			        var broadcast = xmlRequest.responseText;
+			        if (broadcast == 'empty' || broadcast == '')
+			        {
+			            document.getElementById("broadcastmsg").style.display = 'none';
+			        }
+			        else
+			        {
+			            //alert(broadcast);
+			            //alert('header = @' + broadcast.substring(4,10) + '@');
+			            if(broadcast.substring(0,20) == 'ContractSummary.aspx')
+			            {
+			                window.location.href=broadcast;
+			            }
+			            else if(broadcast.substring(4,10) == '<html>')
+			            {
+			                // must have timed out, so is going to FWLogon.aspx with a return url
+			                //var cur_url = document.location;
+			                //alert('current URL = ' + cur_url);
+			                window.location.href='logon.aspx';
+			            }
+			            else
+			            {
+			                document.getElementById("broadcastmsg").innerHTML = broadcast;
+			                document.getElementById("broadcastmsg").style.display = 'block';
+			            }
+			        }
+			    }
+			}
+			
+			var dataToSend = datatosendVal;
+			xmlRequest.open("POST",url,true);
+			//xmlRequest.setRequestHeader("Content-Type","application/x-wais-source");
+			xmlRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xmlRequest.send(dataToSend);
+			
+        }
+    </script>
+
+    <div id="broadcastmsg">&nbsp;</div>
+
+
+
+    <taskSummary:taskSummary ID="taskSummaryPopup" runat="server" />
+    <subAccountPopup:subAccountPopup ID = "subAccountModal" runat="server" />
+
+    		<asp:Panel ID="pnltooltip" runat="server"></asp:Panel>
+		<asp:Image ID="imgtooltip" runat="server" Style="display:none;"  ImageUrl="~/images/spacer.gif" /><cc1:DynamicPopulateExtender ID="dynpopup" runat="server" TargetControlID="pnltooltip" ServicePath="~/shared/webservices/svcTooltip.asmx" ServiceMethod="getTooltip"></cc1:DynamicPopulateExtender>
+        <cc1:DynamicPopulateExtender ID="dynuserdefinedpopup" runat="server" TargetControlID="pnltooltip" ServicePath="~/shared/webservices/svcTooltip.asmx" ServiceMethod="getUserDefinedTooltip"></cc1:DynamicPopulateExtender>
+        <cc1:PopupControlExtender ID="popuptooltip" runat="server" TargetControlID="imgtooltip" PopupControlID="pnltooltip" Position="Right" ></cc1:PopupControlExtender>	
+            <script language="javascript" type="text/javascript">
+                var tooltipPopupControlExtender = '<% = popuptooltip.ClientID %>';
+                var tooltipPanel = '<% = pnltooltip.ClientID %>';
+                var tooltipDynamicPopulateExtender = '<% = dynpopup.ClientID %>';
+                var tooltipDynamicPopulateExtenderUDF = '<% = dynuserdefinedpopup.ClientID  %>';
+        </script>
+    </form>
+</body>
+</html>

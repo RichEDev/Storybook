@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CardTemplate Name="AMEX Daily Text" FileType="FlatFile" NumberHeaderRecords="0" NumberFooterRecords="0">
+    <Fields Type="CardTransaction" UniqueValue="trans">
+      <Field Name="RecordType" MappedTable="card_transactions_amex_daily" MappedField="record_type" FieldType="S" MaxLength="1" StartPosition="0" EndPosition="1" />
+      <Field Name="RequestingControlAccountNumber" MappedTable="card_transactions_amex_daily" MappedField="Request_account_number" FieldType="S" MaxLength="19" StartPosition="1" EndPosition="20" />
+      <Field Name="RequestingControlAccountName" MappedTable="card_transactions_amex_daily" MappedField="Request_account_name" FieldType="S" MaxLength="35" StartPosition="20" EndPosition="55" />
+      <Field Name="BillingAccountNumber" MappedTable="card_transactions_amex_daily" MappedField="Billing_account_number" FieldType="S" MaxLength="19" StartPosition="55" EndPosition="74" />
+      <Field Name="BillingControlAccountName" MappedTable="card_transactions_amex_daily" MappedField="Billing_account_name" FieldType="S" MaxLength="35" StartPosition="74" EndPosition="109" />
+      <Field Name="FIPSCode" MappedTable="card_transactions_amex_daily" MappedField="FIPS_code" FieldType="S" MaxLength="4" StartPosition="109" EndPosition="113" />
+      <Field Name="CardNumber" MappedTable="card_transactions" MappedField="card_number" FieldType="S" MaxLength="19" StartPosition="113" EndPosition="132" />
+      <Field Name="CardMemberEmbosedName" MappedTable="card_transactions_amex_daily" MappedField="name" FieldType="S" MaxLength="26" StartPosition="132" EndPosition="158" DisplayInUnallocatedCardGrid="yes"/>
+      <Field Name="Employeeid" MappedTable="card_transactions_amex_daily" MappedField="Employeeid" FieldType="S" MaxLength="10" StartPosition="158" EndPosition="168" />
+      <Field Name="CostCentre" MappedTable="card_transactions_amex_daily" MappedField="CostCentre" FieldType="S" MaxLength="10" StartPosition="168" EndPosition="178" />
+      <Field Name="UniversalNumber" MappedTable="card_transactions_amex_daily" MappedField="Universal_number" FieldType="S" MaxLength="25" StartPosition="178" EndPosition="203" />
+      <Field Name="SocialSecurityNumber" MappedTable="card_transactions_amex_daily" MappedField="Social_security_Number" FieldType="S" MaxLength="10" StartPosition="203" EndPosition="213" />
+      <Field Name="LanguageCode" MappedTable="card_transactions_amex_daily" MappedField="Language_Code" FieldType="S" MaxLength="1" StartPosition="213" EndPosition="214" />
+      <Field Name="MasterControlAccount" MappedTable="card_transactions_amex_daily" MappedField="Control_Account" FieldType="S" MaxLength="19" StartPosition="214" EndPosition="233" />
+      <Field Name="SupplierReferenceNumber" MappedTable="card_transactions_amex_daily" MappedField="Suppler_reference_number" FieldType="S" MaxLength="11" StartPosition="233" EndPosition="244" />
+      <Field Name="BilledAmount" MappedTable="card_transactions" MappedField="Transaction_Amount" FieldType="C" MaxLength="16" StartPosition="245" EndPosition="260" NumDecimalPlaces="2" Sign="244"/>
+      <Field Name="BilledCurrencyCode" MappedTable="card_transactions_amex_daily" MappedField="Billed_currency_code" FieldType="S" MaxLength="3" StartPosition="275" EndPosition="278" CurrencyType="numeric" />
+      <Field Name="DecimalPlaceNumber" MappedTable="card_transactions_amex_daily" MappedField="Decimal_Place_Number" FieldType="S" MaxLength="1" StartPosition="278" EndPosition="279" />
+      <Field Name="TransactionAmount" MappedTable="card_transactions" MappedField="original_amount" FieldType="C" MaxLength="15" StartPosition="279" EndPosition="294" NumDecimalPlaces="2" Sign="244"/>
+      <Field Name="LocalCurrencyCode" MappedTable="card_transactions" MappedField="currency_code" FieldType="S" MaxLength="3" StartPosition="309" EndPosition="312" CurrencyType="numeric" />
+      <Field Name="LocalDecimalPlaceNumber" MappedTable="card_transactions_amex_daily" MappedField="Local_Decimal_Place_Number" FieldType="S" MaxLength="1" StartPosition="312" EndPosition="313" />
+      <Field Name="CurrencyExchangeRate" MappedTable="card_transactions_amex_daily" MappedField="Currency_exchange_rate" FieldType="S" MaxLength="15" StartPosition="313" EndPosition="328" />
+      <Field Name="TransactionTypeCode" MappedTable="card_transactions_amex_daily" MappedField="Type_code" FieldType="S" MaxLength="2" StartPosition="328" EndPosition="330" />
+      <Field Name="FinancialCategoryCode" MappedTable="card_transactions_amex_daily" MappedField="Category_Code" FieldType="S" MaxLength="1" StartPosition="330" EndPosition="331" />
+      <Field Name="AccountType" MappedTable="card_transactions_amex_daily" MappedField="Account_Type" FieldType="S" MaxLength="5" StartPosition="331" EndPosition="336" />
+      <Field Name="OriginatingBasicControlAccount" MappedTable="card_transactions_amex_daily" MappedField="Originating_basic_control_account" FieldType="S" MaxLength="19" StartPosition="336" EndPosition="355" />
+      <Field Name="OriginatingCMAccountNumber" MappedTable="card_transactions_amex_daily" MappedField="Originating_CM_account_Number" FieldType="S" MaxLength="19" StartPosition="355" EndPosition="374" />
+      <Field Name="TransactionNumber" MappedTable="card_transactions_amex_daily" MappedField="Transaction_number" FieldType="S" MaxLength="15" StartPosition="374" EndPosition="389" />
+      <Field Name="ChargeDate" MappedTable="card_transactions" MappedField="transaction_date" FieldType="D" Format="yyyyMMdd" MaxLength="8" StartPosition="389" EndPosition="397" />
+      <Field Name="BusinessProcessDate" MappedTable="card_transactions_amex_daily" MappedField="business_process_date" FieldType="D" Format="yyyyMMdd" MaxLength="8" StartPosition="397" EndPosition="405" />
+      <Field Name="BillDate" MappedTable="card_transactions_amex_daily" MappedField="bill_date" FieldType="D" Format="yyyyMMdd" MaxLength="8" StartPosition="405" EndPosition="413" />
+      <Field Name="CMReferenceNumber" MappedTable="card_transactions_amex_daily" MappedField="CM_Reference_number" FieldType="S" MaxLength="17" StartPosition="413" EndPosition="430"  />
+      <Field Name="MISIndustryCode" MappedTable="card_transactions_amex_daily" MappedField="MIS_Industry_code" FieldType="S" MaxLength="2" StartPosition="430" EndPosition="432"  />
+      <Field Name="ROCID" MappedTable="card_transactions_amex_daily" MappedField="ROCID" FieldType="S" MaxLength="13" StartPosition="432" EndPosition="445" />
+      <Field Name="TransactionDescription1" MappedTable="card_transactions" MappedField="description" FieldType="S" MaxLength="42" StartPosition="445" EndPosition="487" />
+      <Field Name="TransactionDescription2" MappedTable="card_transactions_amex_daily" MappedField="description2" FieldType="S" MaxLength="42" StartPosition="487" EndPosition="529" />
+      <Field Name="TransactionDescription3" MappedTable="card_transactions_amex_daily" MappedField="description3" FieldType="S" MaxLength="42" StartPosition="529" EndPosition="571" />
+      <Field Name="TransactionDescription4" MappedTable="card_transactions_amex_daily" MappedField="description4" FieldType="S" MaxLength="42" StartPosition="571" EndPosition="613" />
+      <Field Name="TransactionDescriptionother" MappedTable="card_transactions_amex_daily" MappedField="description_other" FieldType="S" MaxLength="206" StartPosition="613" EndPosition="819" />
+      <Field Name="SENumber" MappedTable="card_transactions_amex_daily" MappedField="SE_Number" FieldType="S" MaxLength="10" StartPosition="819" EndPosition="829" />
+      <Field Name="SEChainCode" MappedTable="card_transactions_amex_daily" MappedField="SE_Chain_Code" FieldType="S" MaxLength="10" StartPosition="829" EndPosition="839" />
+      <Field Name="SEName1" MappedTable="card_transactions_amex_daily" MappedField="SE_Name" FieldType="S" MaxLength="40" StartPosition="839" EndPosition="879" />
+      <Field Name="SEAddress1" MappedTable="card_transactions_amex_daily" MappedField="SE_Address1" FieldType="S" MaxLength="40" StartPosition="879" EndPosition="919" />
+      <Field Name="SEAddress2" MappedTable="card_transactions_amex_daily" MappedField="SE_Address2" FieldType="S" MaxLength="40" StartPosition="919" EndPosition="959" />
+      <Field Name="SEAddress3" MappedTable="card_transactions_amex_daily" MappedField="SE_Address3" FieldType="S" MaxLength="40" StartPosition="959" EndPosition="999" />
+      <Field Name="SECity" MappedTable="card_transactions_amex_daily" MappedField="SE_City" FieldType="S" MaxLength="40" StartPosition="999" EndPosition="1039" />
+      <Field Name="SEState" MappedTable="card_transactions_amex_daily" MappedField="SE_State" FieldType="S" MaxLength="6" StartPosition="1039" EndPosition="1045" />
+      <Field Name="SEPostcode" MappedTable="card_transactions_amex_daily" MappedField="SE_Postcode" FieldType="S" MaxLength="15" StartPosition="1045" EndPosition="1060" />
+      <Field Name="SECountryName" MappedTable="card_transactions" MappedField="country_code" FieldType="S" MaxLength="35" StartPosition="1060" EndPosition="1095"  CountryType="label"  />
+      <Field Name="SECountyCode" MappedTable="card_transactions_amex_daily" MappedField="SE_County_code" FieldType="S" MaxLength="3" StartPosition="1095" EndPosition="1098" />
+      <Field Name="SECorporateStatusCode" MappedTable="card_transactions_amex_daily" MappedField="SE_Corporate_status_Code" FieldType="S" MaxLength="1" StartPosition="1098" EndPosition="1099" />
+      <Field Name="SEPurchasingCardCode" MappedTable="card_transactions_amex_daily" MappedField="SE_Purchasing_card_Code" FieldType="S" MaxLength="2" StartPosition="1099" EndPosition="1101" />
+      <Field Name="SEPurchasingCardOwnerTypeCode" MappedTable="card_transactions_amex_daily" MappedField="SE_Purchasing_card_owner_type_code" FieldType="S" MaxLength="2" StartPosition="1101" EndPosition="1103" />
+      <Field Name="ServiceEstIndustryCode" MappedTable="card_transactions_amex_daily" MappedField="Service_Est_Industry_code" FieldType="S" MaxLength="4" StartPosition="1103" EndPosition="1107" />
+      <Field Name="SESalesTaxCollectedFlag" MappedTable="card_transactions_amex_daily" MappedField="SE_Saes_Tax_Collected_Flag" FieldType="S" MaxLength="1" StartPosition="1107" EndPosition="1108" />
+      <Field Name="ShiptoPostalCode" MappedTable="card_transactions_amex_daily" MappedField="Ship_to_Postal_Code" FieldType="S" MaxLength="15" StartPosition="1108" EndPosition="1123" />
+      <Field Name="CPCShiptoCity" MappedTable="card_transactions_amex_daily" MappedField="CPC_Ship_to_City" FieldType="S" MaxLength="30" StartPosition="1123" EndPosition="1153" />
+      <Field Name="CPCShiptoCountry" MappedTable="card_transactions_amex_daily" MappedField="CPC_Ship_to_Country" FieldType="S" MaxLength="30" StartPosition="1153" EndPosition="1183" />
+      <Field Name="CPCShiptoState" MappedTable="card_transactions_amex_daily" MappedField="CPC_ship_to_State" FieldType="S" MaxLength="6" StartPosition="1183" EndPosition="1189" />
+      <Field Name="DDANumber" MappedTable="card_transactions_amex_daily" MappedField="DDA_Number" FieldType="S" MaxLength="22" StartPosition="1189" EndPosition="1211" />
+      <Field Name="BankRoutingNumber" MappedTable="card_transactions_amex_daily" MappedField="Bank_Routing_Number" FieldType="S" MaxLength="4" StartPosition="1211" EndPosition="1215" />
+      <Field Name="USCMABANumber" MappedTable="card_transactions_amex_daily" MappedField="US_CM_ABA_Number" FieldType="S" MaxLength="4" StartPosition="1215" EndPosition="1219" />
+      <Field Name="SpoolNumber" MappedTable="card_transactions_amex_daily" MappedField="Spool_Number" FieldType="S" MaxLength="22" StartPosition="1219" EndPosition="1241" />
+      <Field Name="FundsAccessLogDate" MappedTable="card_transactions_amex_daily" MappedField="Funds_Access_Log_Date" FieldType="D" Format="yyyyMMdd" MaxLength="8" StartPosition="1241" EndPosition="1249" />
+      <Field Name="FundsAccessLogTime" MappedTable="card_transactions_amex_daily" MappedField="Funds_Access_Log_Time" FieldType="S" MaxLength="8" StartPosition="1249" EndPosition="1257" />
+      <Field Name="MachineNumber" MappedTable="card_transactions_amex_daily" MappedField="Machine_Number" FieldType="S" MaxLength="8" StartPosition="1257" EndPosition="1265" />
+      <Field Name="TerminalLocation" MappedTable="card_transactions_amex_daily" MappedField="Terminal_Location" FieldType="S" MaxLength="40" StartPosition="1265" EndPosition="1305" />
+      <Field Name="NetworkRouteandTransitNUmber" MappedTable="card_transactions_amex_daily" MappedField="Network_Route_and_Transit_number" FieldType="S" MaxLength="10" StartPosition="1305" EndPosition="1315" />
+      <Field Name="TerminalRouteanTransitNumber" MappedTable="card_transactions_amex_daily" MappedField="Terminal_Route_and_Transit_number" FieldType="S" MaxLength="10" StartPosition="1315" EndPosition="1325" />
+      <Field Name="CasBatchNumber" MappedTable="card_transactions_amex_daily" MappedField="Cash_Batch_Number" FieldType="S" MaxLength="6" StartPosition="1325" EndPosition="1331" />
+      <Field Name="DescriptiveFormatIndicator" MappedTable="card_transactions_amex_daily" MappedField="Descriptive_Format_Indicator" FieldType="S" MaxLength="3" StartPosition="1331" EndPosition="1334" />
+      <Field Name="VATTaxPercentage" MappedTable="card_transactions_amex_daily" MappedField="VAT_Tax_Percentage" FieldType="C" MaxLength="5" StartPosition="1334" EndPosition="1339" />
+      <Field Name="CaptureCentreCode" MappedTable="card_transactions_amex_daily" MappedField="Capture_Centre_Code" FieldType="S" MaxLength="1" StartPosition="1339" EndPosition="1340" />
+      <Field Name="MercatorKey" MappedTable="card_transactions_amex_daily" MappedField="Mercator_Key" FieldType="S" MaxLength="21" StartPosition="1340" EndPosition="1361" />
+      <Field Name="TravelFeeIndicator" MappedTable="card_transactions_amex_daily" MappedField="Travel_fee_indicator" FieldType="S" MaxLength="3" StartPosition="1361" EndPosition="1364" />
+      <Field Name="SEABNnumber" MappedTable="card_transactions_amex_daily" MappedField="SE_ABN_number" FieldType="S" MaxLength="19" StartPosition="1364" EndPosition="1383" />
+      <Field Name="SESupplyTaxClass" MappedTable="card_transactions_amex_daily" MappedField="SE_Supply_Tax_Class" FieldType="S" MaxLength="2" StartPosition="1383" EndPosition="1385" />
+      <Field Name="GSTAmount" MappedTable="card_transactions_amex_daily" MappedField="GST_Amount" FieldType="C" MaxLength="16" StartPosition="1385" EndPosition="1401" NumDecimalPlaces="2"  />
+      <Field Name="DecminalIndicator" MappedTable="card_transactions_amex_daily" MappedField="Decimal_Indicator" FieldType="S" MaxLength="1" StartPosition="1401" EndPosition="1401" />
+  </Fields>
+</CardTemplate>

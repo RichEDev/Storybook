@@ -1,0 +1,4 @@
+﻿CREATE TYPE [dbo].[IntPK] AS  TABLE (
+    [c1] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([c1] ASC));
+

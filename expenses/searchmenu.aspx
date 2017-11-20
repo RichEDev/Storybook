@@ -1,0 +1,2 @@
+<%@ Page Language="C#" MasterPageFile="~/menu.master" AutoEventWireup="true" Inherits="searchmenu" Title="Untitled Page" Codebehind="searchmenu.aspx.cs" %>
+<%@ MasterType VirtualPath="~/menu.master" %>
