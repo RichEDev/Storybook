@@ -104,10 +104,6 @@
     <Reference Include="Configuration.Interface, Version=1.1.2.28032, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Configuration.Interface.1.1.2.28032\lib\net461\Configuration.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ErrorLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\ErrorLogger.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net40\HtmlAgilityPack.dll</HintPath>
@@ -178,8 +174,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Ionic.Zip.dll</HintPath>
+      <HintPath>..\packages\Ionic.Zip.1.9.1.8\lib\net40\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.JScript">
       <Private>True</Private>
