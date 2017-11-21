@@ -2754,6 +2754,7 @@ namespace SpendManagementLibrary
     /// <summary>
     /// Class for custom entity field properties at form level
     /// </summary>
+    [Serializable]
     public class cCustomEntityFormField
     {
         private int nFormid;

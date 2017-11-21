@@ -9644,6 +9644,8 @@ namespace Spend_Management
             cCustomEntities clsEntities = new cCustomEntities(user);
             List<cNewGridColumn> columns = new List<cNewGridColumn>();
             cAttribute keyatt = entity.getKeyField();
+           
+
             cAttribute archiveFieldAttribute = entity.GetAttributeByDisplayName("Archived");
             cField archiveField = fields.GetFieldByID(archiveFieldAttribute.fieldid);
             // ID Field Check -- added to see if the view.fields list already contains the keyatt field
@@ -9652,6 +9654,8 @@ namespace Spend_Management
             string attachmentColumn = string.Empty;
             bool containsArchiveField = false;
             cField keyfield = fields.GetFieldByID(keyatt.fieldid);
+            cAttribute formSelectionAttribute = null;
+            
             foreach (cCustomEntityViewField viewField in view.fields.Values)
             {
                 // mobile app requests need to exclude any attributes not for mobile
@@ -9707,17 +9711,9 @@ namespace Spend_Management
                         ((cFieldColumn)columns[columns.Count - 1]).addValueListItem(c.currencyid, clsGCurrencies.getGlobalCurrencyById(c.globalcurrencyid).label);
                     }
                 }
-
-                //if (viewField.Field.FieldType == "AT" && containsAttachmentFieldType == false)
-                //{
-                //    attachmentColumn = viewField.Field.FieldName;
-                //    containsAttachmentFieldType = true;
-                //    //Adds the file name of the attachment to the grid
-                //    var fileName = fields.GetFieldByID(new Guid("7186B7FB-487C-4D4D-A975-799FA423A86C"));
-                //    fileName.Description = viewField.Field.Description;
-                //    columns.Add(new cFieldColumn(fileName, viewField.Field.FieldName + "_Alias"));
-                //}
             }
+
+            
 
             bool bHideCurrencyField = false;
             if (entity.EnableCurrencies && entity.DefaultCurrencyID.HasValue)
@@ -9747,6 +9743,23 @@ namespace Spend_Management
 
             #region Set the sorting of the grid
             cNewGridSort employeeSort = user.Employee.GetNewGridSortOrders().GetBy("grid" + entity.entityid + view.viewid + keyatt.attributeid);
+
+            if (entity.FormSelectionAttributeId.HasValue)
+            {
+                formSelectionAttribute = entity.attributes[entity.FormSelectionAttributeId.Value];
+                columns.Add(new cFieldColumn(fields.GetFieldByID(formSelectionAttribute.fieldid), "AttributeFilter"));
+                SerializableDictionary<string, object> gridInfo = new SerializableDictionary<string, object>();
+                gridInfo.Add("keyfield", keyfield.FieldName);
+                gridInfo.Add("employeeid", user.EmployeeID);
+                gridInfo.Add("accountid", user.AccountID);
+                gridInfo.Add("gridid", clsgrid.GridID);
+                gridInfo.Add("entityid", entity.entityid);
+                gridInfo.Add("view", view.EditFormMappings);
+                clsgrid.InitialiseRowGridInfo = gridInfo;
+                clsgrid.InitialiseRow += new cGridNew.InitialiseRowEvent(clsgrid_InitialiseRowForAttributeFilter);
+                clsgrid.ServiceClassForInitialiseRowEvent = "Spend_Management.cCustomEntities";
+                clsgrid.ServiceClassMethodForInitialiseRowEvent = "clsgrid_InitialiseRowForAttributeFilter";
+            }
 
             // if default sort set for view, use this. Need to let this get overridden by user default though
             if (employeeSort == null && view.SortColumn.FieldID != Guid.Empty)
@@ -9862,6 +9875,8 @@ namespace Spend_Management
 
             clsgrid.EmptyText = "There are currently no " + entity.pluralname + " defined.";
 
+            this.audienceRecStatus = null;
+
             return clsgrid;
         }
 
@@ -9897,6 +9912,8 @@ namespace Spend_Management
             return false;
         }
 
+        private SerializableDictionary<string, object> audienceRecStatus = null;
+
         /// <summary>
         /// Used by <see cref="cGridNew"/> when constructing each row of a grid
         /// </summary>
@@ -9904,11 +9921,12 @@ namespace Spend_Management
         /// <param name="gridInfo">A set of key/value pairs</param>
         void clsgrid_InitialiseRow(cNewGridRow row, Dictionary<string, object> gridInfo)
         {
-            CurrentUser currentUser = cMisc.GetCurrentUser();
+            //CurrentUser currentUser = cMisc.GetCurrentUser();
             // called for each row. Allows checking of audience accessibility
-            cCustomEntities entities = new cCustomEntities(currentUser);
-
-            SerializableDictionary<string, object> audienceRecStatus = entities.GetAudienceRecords((int)gridInfo["entityid"], (int)gridInfo["employeeid"]);
+            if (this.audienceRecStatus == null)
+            {
+                audienceRecStatus = this.GetAudienceRecords((int)gridInfo["entityid"], (int)gridInfo["employeeid"]);
+            }
 
             if (gridInfo.ContainsKey("keyfield") && gridInfo.ContainsKey("gridid"))
             {
@@ -9917,6 +9935,17 @@ namespace Spend_Management
 
             return;
         }
+
+        private void clsgrid_InitialiseRowForAttributeFilter(cNewGridRow row, SerializableDictionary<string, object> gridInfo)
+        {
+            var value = row.getCellByID("AttributeFilter").Value;
+            var view = (List<FormSelectionMapping>)gridInfo["view"];
+            var formId = view.Where(x => x.ListValue.ToString() == value.ToString()).Select(x => x.FormId).First();
+
+
+        }
+
+
 
         /// <summary>
         /// Creates dropdown with greenlight attributes
