@@ -28,12 +28,12 @@ namespace SpendManagementLibrary.JourneyDeductionRules
         /// <summary>
         /// Gets the distance between two addresses, using the overridden (custom) value if there is one, otherwise, looks it up.
         /// </summary>
-        /// <param name="fromAddressId">The start address</param>
-        /// <param name="toAddressId">The endd address</param>
+        /// <param name="fromAddress">The start <see cref="Address"/></param>
+        /// <param name="toAddress">The end <see cref="Address"/></param>
         /// <returns>The distance between the two addresses</returns>
-        public decimal? GetRecommendedOrCustomDistance(int fromAddressId, int toAddressId)
+        public decimal? GetRecommendedOrCustomDistance(Address fromAddress, Address toAddress)
         {
-            return AddressDistance.GetRecommendedOrCustomDistance(fromAddressId, toAddressId, this.useMapPoint, this.mileageCalculationType, this.user);
+            return AddressDistance.GetRecommendedOrCustomDistance(fromAddress, toAddress, this.useMapPoint, this.mileageCalculationType, this.user);
         }
     }
 }

@@ -1,11 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using System.Web;
-using Spend_Management.shared.webServices;
-using System.Runtime.InteropServices;
-using System.Web.Script.Serialization;
-using SpendManagementLibrary.Selectinator;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
     using System;
     using System.Collections;
@@ -20,7 +13,13 @@ namespace Spend_Management
     using System.Web.Script.Services;
     using System.Web.Services;
     using System.Web.UI.WebControls;
-
+    using System.Text.RegularExpressions;
+    using System.Web;
+    using Spend_Management.shared.webServices;
+    using System.Runtime.InteropServices;
+    using System.Web.Script.Serialization;
+    using SpendManagementLibrary.Hotels;
+    using SpendManagementLibrary.Selectinator;
     using AjaxControlToolkit;
     using SpendManagementLibrary;
     using SpendManagementLibrary.Addresses;
@@ -28,8 +27,6 @@ namespace Spend_Management
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Helpers;
     using shared.code;
-
-    using SpendManagementLibrary.Hotels;
 
     /// <summary>
     /// Summary description for auto_complete
@@ -182,6 +179,7 @@ namespace Spend_Management
 
             return tokenInputResults;
         }
+
         /// <summary>
         /// Returns the employee email address and name based on their username or full name
         /// </summary>
@@ -1156,6 +1154,7 @@ namespace Spend_Management
             StringBuilder output = new StringBuilder("<div style=\"padding: 4px; border: 1px solid #000000; background-color: #ffffff;\">");
             cSubcats subcats = new cSubcats(user.AccountID);
             cSubcat subcat = subcats.GetSubcatById(item.subcatid);
+            var addresses = new Addresses(user.AccountID);
 
             if (subcat.EnableHomeToLocationMileage)
             {
@@ -1190,8 +1189,11 @@ namespace Spend_Management
 
                             int workAddressId = workAddress != null ? workAddress.LocationID : 0;
                             int homeAddressId = homeAddress != null ? homeAddress.LocationID : 0;
-                            officetohome = AddressDistance.GetRecommendedOrCustomDistance(workAddressId, homeAddressId, user.AccountID, subAccount.Value, user) ?? 0m;
-                            hometooffice = AddressDistance.GetRecommendedOrCustomDistance(homeAddressId, workAddressId, user.AccountID, subAccount.Value, user) ?? 0m;
+
+                            var homeAddressRef = addresses.GetAddressById(homeAddressId);
+                            var workAddressRef = addresses.GetAddressById(workAddressId);
+                            officetohome = AddressDistance.GetRecommendedOrCustomDistance(workAddressRef, homeAddressRef, user.AccountID, subAccount.Value, user) ?? 0m;
+                            hometooffice = AddressDistance.GetRecommendedOrCustomDistance(homeAddressRef, workAddressRef, user.AccountID, subAccount.Value, user) ?? 0m;
 
                             if (reqmileage.mileUom == MileageUOM.KM)
                             {
@@ -1310,7 +1312,7 @@ namespace Spend_Management
                     decimal? recommendedMiles = null;
                     if (step.startlocation != null && step.endlocation != null)
                     {
-                        recommendedMiles = AddressDistance.GetRecommendedOrCustomDistance(step.startlocation.Identifier, step.endlocation.Identifier, user.AccountID, subAccount.Value, user);
+                        recommendedMiles = AddressDistance.GetRecommendedOrCustomDistance(step.startlocation, step.endlocation, user.AccountID, subAccount.Value, user);
                     }
                     output.Append("<td align=\"right\" class=\"" + rowclass + "\">" + recommendedMiles ?? 0 + "</td>");
                     output.Append("<td align=\"right\" class=\"" + rowclass + "\">" + step.nummiles + "</td>");

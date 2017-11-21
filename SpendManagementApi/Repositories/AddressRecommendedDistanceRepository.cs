@@ -69,7 +69,7 @@
         /// <returns></returns>
         public override AddressRecommendedDistance Get(int id)
         {
-            AddressDistance distance = AddressDistance.GetById(User.AccountID, id);
+            AddressDistanceLookup distance = AddressDistance.GetById(User.AccountID, id);
             if (distance == null)
             {
                 throw new ApiException(ApiResources.ApiErrorRecordDoesntExist, ApiResources.ApiErrorAddressDistanceIdMustBeValid);
@@ -138,7 +138,9 @@
         public decimal? GetRecommendedOrCustomDistance(int originAddressId, int destinationAddressId, int vehicleId = 0)
         {
             cAccountProperties subAccountProperties = this.ActionContext.SubAccounts.getFirstSubAccount().SubAccountProperties;
-            var distance = AddressDistance.GetRecommendedOrCustomDistance(originAddressId, destinationAddressId, subAccountProperties.UseMapPoint, subAccountProperties.MileageCalcType, this.User);
+            var origin = this.ActionContext.Addresses.GetAddressById(originAddressId);
+            var destination = this.ActionContext.Addresses.GetAddressById(destinationAddressId);
+            var distance = AddressDistance.GetRecommendedOrCustomDistance(origin, destination, subAccountProperties.UseMapPoint, subAccountProperties.MileageCalcType, this.User);
 
             if (distance == null)
             {

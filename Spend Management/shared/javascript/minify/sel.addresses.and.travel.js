@@ -153,6 +153,7 @@
 
                             if (response) {
                                 // populate the fields with response values
+                                $(addressPicker).closest('table').data('A' + response.Identifier, response);
                                 $(addressPicker).address("value", response.FriendlyName, response.Identifier);
                                 $(addressPicker).address("reset");
 
