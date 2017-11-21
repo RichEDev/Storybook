@@ -205,6 +205,9 @@
       <DependentUpon>esrNhsHub.edmx</DependentUpon>
     </None>
     <None Include="ESR_File_Service.Release.ruleset" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
