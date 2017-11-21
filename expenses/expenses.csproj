@@ -93,9 +93,8 @@
     <Copy SourceFiles="@(Folders)" DestinationFiles="@(Folders->'$(TeamBuildOutDir)\_PublishedWebsites\$(MSBuildProjectName)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
   </Target>-->
   <ItemGroup>
-    <Reference Include="AjaxControlToolkit, Version=4.1.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\AjaxControlToolkit.dll</HintPath>
+    <Reference Include="AjaxControlToolkit, Version=4.1.7.123, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxControlToolkit.4.1.7.123\lib\net40\AjaxControlToolkit.dll</HintPath>
     </Reference>
     <Reference Include="AutoMapper, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -117,95 +116,62 @@
     <Reference Include="Configuration.Interface, Version=1.1.2.28032, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Configuration.Interface.1.1.2.28032\lib\net461\Configuration.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.Web.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.Web.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.Web.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.Web.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.Documents.Excel.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.Documents.Excel.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.Documents.Excel.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.Documents.Excel.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.Misc.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.Misc.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.Documents.Reports.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.Documents.Reports.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.Shared.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.Shared.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.Misc.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.Misc.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.UltraWebCalcManager.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebCalcManager.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.Shared.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.Shared.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.UltraWebChart.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebChart.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.UltraWebCalcManager.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.UltraWebCalcManager.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.UltraWebGauge.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebGauge.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.UltraWebChart.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.UltraWebChart.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.UltraWebGrid.ExcelExport.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebGrid.ExcelExport.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.UltraWebGauge.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.UltraWebGauge.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.UltraWebGrid.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebGrid.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.UltraWebGrid.ExcelExport.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.UltraWebGrid.ExcelExport.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.UltraWebListbar.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebListbar.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.UltraWebGrid.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.UltraWebGrid.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.UltraWebNavigator.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebNavigator.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.UltraWebListbar.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.UltraWebListbar.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.UltraWebTab.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebTab.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.UltraWebNavigator.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.UltraWebNavigator.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.UltraWebToolbar.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.UltraWebToolbar.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.UltraWebTab.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.UltraWebTab.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.WebCombo.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.WebCombo.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.UltraWebToolbar.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.UltraWebToolbar.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.WebDataInput.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.WebDataInput.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.WebCombo.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.WebCombo.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.WebDateChooser.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.WebDateChooser.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.WebDataInput.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.WebDataInput.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.WebHtmlEditor.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.WebHtmlEditor.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.WebDateChooser.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.WebDateChooser.v11.1.dll</HintPath>
     </Reference>
-    <Reference Include="Infragistics4.WebUI.WebSchedule.v11.1, Version=11.1.20111.2225, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\Infragistics4.WebUI.WebSchedule.v11.1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Infragistics4.WebUI.WebHtmlEditor.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.WebHtmlEditor.v11.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.WebUI.WebSchedule.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.WebSchedule.v11.1.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
