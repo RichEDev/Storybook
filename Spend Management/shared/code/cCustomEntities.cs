@@ -5357,7 +5357,7 @@ namespace Spend_Management
                     taburl += "relviewid=" + c.ViewID + "&";
                 }
 
-                returnurl += entityurl + formurl + recordurl + taburl + "viewid=" + viewid + "&entityid=" + entityid + "&formid=" + formid + "&tabid=" + tabid;
+                returnurl += entityurl + formurl + recordurl + taburl + "viewid=" + viewid + "&entityid=" + entityid + "&formid=" + formid + "&tabid=" + tabid + "&attributeid=0&attributetext=";
                 HttpContext.Current.Response.Redirect(returnurl, true);
             }
         }

@@ -551,7 +551,7 @@ function dynamicButtonsPlacement() {
                                     formId = response.d;
                                 }
 
-                                window.location = "aeentity.aspx?viewid=" + v.viewId + "&entityid=" + v.entityId + "&formid=" + formId + "&tabid=" + v.tabId + "&id=0";
+                                window.location = "aeentity.aspx?viewid=" + v.viewId + "&entityid=" + v.entityId + "&formid=" + formId + "&tabid=" + v.tabId + "&id=0&attributeid=" + listVal + "&attributetext=" + encodeURIComponent(textVal);
 
                                 $f(SEL.CustomEntities.Dom.FormSelectionAttribute.ViewAdd.Modal).hide();
                             }
@@ -566,7 +566,9 @@ function dynamicButtonsPlacement() {
                         var formId = defaultForm,
                             mappings = SEL.CustomEntities.FormSelection.Mappings.Edit,
                             entityId = parseInt(entity, 10),
-                            viewId = parseInt(view, 10);
+                            viewId = parseInt(view, 10),
+                            textVal = null,
+                            listVal = -1;
 
                         if (typeof mappings !== "undefined" && mappings !== null && mappings.length > 0 && !isNaN(entityId) && !isNaN(viewId)) {
                             SEL.Data.Ajax({
@@ -574,11 +576,13 @@ function dynamicButtonsPlacement() {
                                 methodName: "GetFormSelectionAttributeMappedEditFormId",
                                 data: { entityId: entityId, viewId: viewId, id: id },
                                 success: function (response) {
-                                    if ("d" in response && response.d > 0) {
-                                        formId = response.d;
+                                    if ("d" in response && response.d.FormId > 0) {
+                                        formId = response.d.FormId;
+                                        textVal = response.d.TextVal;
+                                        listVal = response.d.ListVal;
                                     }
 
-                                    window.location = "aeentity.aspx?viewid=" + view + "&entityid=" + entity + "&formid=" + formId + "&tabid=" + tab + "&id=" + id;
+                                    window.location = "aeentity.aspx?viewid=" + view + "&entityid=" + entity + "&formid=" + formId + "&tabid=" + tab + "&id=" + id + "&attributeid=" + listVal + "&attributetext=" + encodeURIComponent(textVal);
                                 }
                             });
                         }

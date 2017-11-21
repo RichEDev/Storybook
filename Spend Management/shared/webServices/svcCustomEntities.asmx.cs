@@ -2293,10 +2293,6 @@
 
                         if (formId > 0)
                         {
-                            Session.Add("FormSelectionFormId" + entityId, formId);
-                            Session.Add("FormSelectionViewId" + entityId, viewId);
-                            Session.Add("FormSelectionListValue" + entityId, listValue.Value);
-
                             return formId;
                         }
                     }
@@ -2311,10 +2307,6 @@
 
                         if (formId > 0)
                         {
-                            Session.Add("FormSelectionFormId" + entityId, formId);
-                            Session.Add("FormSelectionViewId" + entityId, viewId);
-                            Session.Add("FormSelectionTextValue" + entityId, textValue);
-
                             return formId;
                         }
                     }
@@ -2330,15 +2322,16 @@
         /// <param name="entityId">The entity</param>
         /// <param name="viewId">The view that the entity is being edited from</param>
         /// <param name="id">The id of the entity record</param>
-        /// <returns>Form id or -1</returns>
+        /// <returns>An instance of a Custom Entity <see cref="CustomEntityFormDetails"/></returns>
         [WebMethod(EnableSession = true)]
-        public int GetFormSelectionAttributeMappedEditFormId(int entityId, int viewId, int id)
+        public CustomEntityFormDetails GetFormSelectionAttributeMappedEditFormId(int entityId, int viewId, int id)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
             cCustomEntities clsentities = new cCustomEntities(currentUser);
             cCustomEntity entity = clsentities.getEntityById(entityId);
             int listVal = 0;
             string textVal = string.Empty;
+            var customEntityFormDetail = new CustomEntityFormDetails(-1, textVal, listVal);
 
             if (entity != null && entity.FormSelectionAttributeId.HasValue)
             {
@@ -2380,11 +2373,10 @@
 
                         if (formId > 0)
                         {
-                            Session.Add("FormSelectionFormId" + entityId, formId);
-                            Session.Add("FormSelectionViewId" + entityId, viewId);
-                            Session.Add("FormSelectionListValue" + entityId, listVal);
-
-                            return formId;
+                            customEntityFormDetail.FormId = formId;
+                            customEntityFormDetail.ListVal = listVal;
+                            customEntityFormDetail.TextVal = textVal;
+                            return customEntityFormDetail;
                         }
                     }
                     else if (attribute.fieldtype == FieldType.Text && textVal != null && view.EditFormMappings.Any(x => x.TextValue.ToUpperInvariant() == textVal.ToUpperInvariant()))
@@ -2398,17 +2390,16 @@
 
                         if (formId > 0)
                         {
-                            Session.Add("FormSelectionFormId" + entityId, formId);
-                            Session.Add("FormSelectionViewId" + entityId, viewId);
-                            Session.Add("FormSelectionTextValue" + entityId, textVal);
-
-                            return formId;
+                            customEntityFormDetail.FormId = formId;
+                            customEntityFormDetail.ListVal = listVal;
+                            customEntityFormDetail.TextVal = textVal;
+                            return customEntityFormDetail;
                         }
                     }
                 }
             }
-
-            return -1;
+            
+            return customEntityFormDetail;
         }
 
         /// <summary>

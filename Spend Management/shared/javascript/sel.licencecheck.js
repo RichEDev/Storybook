@@ -294,8 +294,8 @@
                     serviceName: "svcCustomEntities",
                     methodName: "GetFormSelectionAttributeMappedEditFormId",
                     data: { entityId: data.EntityId, viewId: data.ViewId, id: data.RecordId },
-                    success: function () {
-                        window.location = "/shared/aeentity.aspx?viewid=" + data.ViewId + "&entityid=" + data.EntityId + "&formid=" + data.FormId + "&tabid=0&id=" + data.RecordId;
+                    success: function (response) {
+                        window.location = "/shared/aeentity.aspx?viewid=" + data.ViewId + "&entityid=" + data.EntityId + "&formid=" + data.FormId + "&tabid=0&id=" + data.RecordId + "&attributeid=" + response.d.ListVal + "&attributetext=" + encodeURIComponent(response.d.TextVal);
                     }
                 });
             },
