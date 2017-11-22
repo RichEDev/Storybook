@@ -1,18 +1,18 @@
 ﻿namespace SpendManagementLibrary.Helpers
 {
     /// <summary>
-    /// The convert kilometers to miles.
+    /// A class to convert kilometers to miles.
     /// </summary>
     public static class ConvertKilometersToMiles
     {
         /// <summary>
-        /// The perform of kilometers to miles
+        /// Converts kilometers to miles.
         /// </summary>
         /// <param name="kilometers">
-        /// The kilometer to convert.
+        /// The kilometers to convert.
         /// </param>
         /// <returns>
-        /// The <see cref="decimal"/> converted mileage.
+        /// The <see cref="decimal"/> converted miles.
         /// </returns>
         public static decimal PerformConversion(decimal kilometers)
         {

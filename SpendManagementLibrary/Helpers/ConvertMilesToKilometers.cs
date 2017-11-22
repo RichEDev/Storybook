@@ -1,9 +1,12 @@
 ﻿namespace SpendManagementLibrary.Helpers
 {
+    /// <summary>
+    /// A class to convert miles to kilometers.
+    /// </summary>
     public static class ConvertMilesToKilometers
     {
         /// <summary>
-        /// The perform of kilometers to miles
+        /// Converts miles to kilometers.
         /// </summary>
         /// <param name="miles">
         /// The miles to convert.
