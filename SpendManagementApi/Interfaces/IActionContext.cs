@@ -13,6 +13,7 @@ namespace SpendManagementApi.Interfaces
     using SpendManagementLibrary.Holidays;
     using SpendManagementLibrary.Interfaces;
     using SpendManagementLibrary.Interfaces.Expedite;
+    using SpendManagementLibrary.MobileAppReview;
 
     using Spend_Management.shared.code;
 
@@ -110,11 +111,11 @@ namespace SpendManagementApi.Interfaces
 
         cExpenseItems ExpenseItems { get; set; }
 
-		cFilterRules FilterRules { get; set; }
+        cFilterRules FilterRules { get; set; }
 
         FlagManagement FlagManagement { get; set; }
 
-//**APIiser_Marker**//
+        //**APIiser_Marker**//
 
         int? SubAccountId { get; set; }
 
@@ -124,7 +125,7 @@ namespace SpendManagementApi.Interfaces
 
         SpendManagementLibrary.GeneralOptions.GeneralOptions GeneralOptions { get; set; }
        
-         IManageFunds Fund { get; set; }
+        IManageFunds Fund { get; set; }
 
         /// <summary>
         /// Interface for Payment Service
@@ -190,5 +191,10 @@ namespace SpendManagementApi.Interfaces
         /// Gets or sets an instance of cMisc
         /// </summary>
         cMisc Misc { get; set; }
+
+        /// <summary>
+        /// Gets an instance of <see cref="EmployeeAppReviewPreference"/>
+        /// </summary>
+        EmployeeAppReviewPreference EmployeeAppReviewPreference { get;  }
     }    
 }
