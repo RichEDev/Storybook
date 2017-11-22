@@ -13,12 +13,11 @@ namespace SpendManagementApi.Common
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Holidays;
     using SpendManagementLibrary.Interfaces.Expedite;
+    using GeneralOptions = SpendManagementLibrary.GeneralOptions.GeneralOptions;
     using SpendManagementLibrary.Hotels;
     using SpendManagementLibrary.MobileAppReview;
 
     using Spend_Management.shared.code;
-
-    using GeneralOptions = SpendManagementLibrary.GeneralOptions.GeneralOptions;
 
     internal class ActionContext : IActionContext
     {
@@ -783,7 +782,9 @@ namespace SpendManagementApi.Common
 
         //**APIiser_Marker**//
 
-
+        /// <summary>
+        /// Gets or sets the filter rules.
+        /// </summary>
         public cFilterRules FilterRules
         {
             get
@@ -796,6 +797,9 @@ namespace SpendManagementApi.Common
             }
         }
 
+        /// <summary>
+        /// Gets or sets the flag management.
+        /// </summary>
         public FlagManagement FlagManagement
         {
             get
@@ -808,6 +812,9 @@ namespace SpendManagementApi.Common
             }
         }
 
+        /// <summary>
+        /// Gets or sets the general options.
+        /// </summary>
         public GeneralOptions GeneralOptions
         {
             get
