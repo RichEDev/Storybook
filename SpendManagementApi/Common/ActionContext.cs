@@ -777,9 +777,6 @@ namespace SpendManagementApi.Common
             }
         }
 
-
-        //**APIiser_Marker**//
-
         /// <summary>
         /// Gets or sets the filter rules.
         /// </summary>
