@@ -9644,6 +9644,8 @@ namespace Spend_Management
             cCustomEntities clsEntities = new cCustomEntities(user);
             List<cNewGridColumn> columns = new List<cNewGridColumn>();
             cAttribute keyatt = entity.getKeyField();
+           
+
             cAttribute archiveFieldAttribute = entity.GetAttributeByDisplayName("Archived");
             cField archiveField = fields.GetFieldByID(archiveFieldAttribute.fieldid);
             // ID Field Check -- added to see if the view.fields list already contains the keyatt field
@@ -9652,6 +9654,9 @@ namespace Spend_Management
             string attachmentColumn = string.Empty;
             bool containsArchiveField = false;
             cField keyfield = fields.GetFieldByID(keyatt.fieldid);
+
+            cFieldColumn attributeFilterColumn = null;
+                
             foreach (cCustomEntityViewField viewField in view.fields.Values)
             {
                 // mobile app requests need to exclude any attributes not for mobile
@@ -9707,17 +9712,9 @@ namespace Spend_Management
                         ((cFieldColumn)columns[columns.Count - 1]).addValueListItem(c.currencyid, clsGCurrencies.getGlobalCurrencyById(c.globalcurrencyid).label);
                     }
                 }
-
-                //if (viewField.Field.FieldType == "AT" && containsAttachmentFieldType == false)
-                //{
-                //    attachmentColumn = viewField.Field.FieldName;
-                //    containsAttachmentFieldType = true;
-                //    //Adds the file name of the attachment to the grid
-                //    var fileName = fields.GetFieldByID(new Guid("7186B7FB-487C-4D4D-A975-799FA423A86C"));
-                //    fileName.Description = viewField.Field.Description;
-                //    columns.Add(new cFieldColumn(fileName, viewField.Field.FieldName + "_Alias"));
-                //}
             }
+
+            
 
             bool bHideCurrencyField = false;
             if (entity.EnableCurrencies && entity.DefaultCurrencyID.HasValue)
@@ -9747,6 +9744,25 @@ namespace Spend_Management
 
             #region Set the sorting of the grid
             cNewGridSort employeeSort = user.Employee.GetNewGridSortOrders().GetBy("grid" + entity.entityid + view.viewid + keyatt.attributeid);
+
+            if (entity.FormSelectionAttributeId.HasValue && entity.FormSelectionAttributeId.Value > 0)
+            {
+                var formSelectionAttribute = entity.attributes[entity.FormSelectionAttributeId.Value];
+                attributeFilterColumn = new cFieldColumn(fields.GetFieldByID(formSelectionAttribute.fieldid))
+                {
+                    hidden = true,
+                    Alias = "FilterAttribute"
+                };
+                columns.Add(attributeFilterColumn);
+                SerializableDictionary<string, object> gridInfo = new SerializableDictionary<string, object>();
+                gridInfo.Add("defaultFormId", view.DefaultEditForm.formid);
+                gridInfo.Add("selectionMappings", view.EditFormMappings);
+                gridInfo.Add("columnName", attributeFilterColumn.field.FieldName);
+                clsgrid.InitialiseRowGridInfo = gridInfo;
+                clsgrid.InitialiseRow += new cGridNew.InitialiseRowEvent(clsgrid_InitialiseRowForAttributeFilter);
+                clsgrid.ServiceClassForInitialiseRowEvent = "Spend_Management.cCustomEntities";
+                clsgrid.ServiceClassMethodForInitialiseRowEvent = "clsgrid_InitialiseRowForAttributeFilter";
+            }
 
             // if default sort set for view, use this. Need to let this get overridden by user default though
             if (employeeSort == null && view.SortColumn.FieldID != Guid.Empty)
@@ -9782,13 +9798,15 @@ namespace Spend_Management
             {
                 clsgrid.enableupdating = true;
                 var editMappings = (from mapping in view.EditFormMappings let form = entity.getFormById(mapping.FormId) where form.fields.Count > 0 select mapping).ToList();
-                if (editMappings.Any())
+                if (editMappings.Any() && attributeFilterColumn != null)
                 {
-                    clsgrid.editlink = string.Format("javascript:SEL.CustomEntities.FormSelection.Attribute.ViewEdit({0}, {1}, {2}, {3}, {{{4}}});", entity.entityid, view.viewid, 0, view.DefaultEditForm.formid, keyfield.FieldName);
+                    clsgrid.editlink =
+                        $"aeentity.aspx?entityid={entity.entityid}&viewid={view.viewid}&formid={{{attributeFilterColumn.field.FieldName}}}&id={{{keyfield.FieldName}}}";
                 }
                 else
                 {
-                    clsgrid.editlink = "aeentity.aspx?entityid=" + entity.entityid + "&viewid=" + view.viewid + "&formid=" + view.DefaultEditForm.formid + "&id={" + keyfield.FieldName + "}";
+                    clsgrid.editlink =
+                        $"aeentity.aspx?entityid={entity.entityid}&viewid={view.viewid}&formid={view.DefaultEditForm.formid}&id={{{keyfield.FieldName}}}";
                 }
             }
 
@@ -9806,14 +9824,22 @@ namespace Spend_Management
             if (view.allowapproval)
             {
                 clsgrid.addEventColumn("approverecord", "Approve", string.Format("javascript:approveRecord({{{0}}}, {1});", keyfield.FieldName, entity.entityid), "Approve");
-                //clsgrid.addEventColumn("Reject", "javascript:RejectRecord({" + keyfield.field + "}, " + entity.entityid + ");", "Reject");
                 clsgrid.addEventColumn("rejectrecord", "Reject", string.Format("javascript:RejectReason({{{0}}}, {1});", keyfield.FieldName, entity.entityid), "Reject");
             }
 
             if (entity.AudienceView != AudienceViewType.NoAudience)
             {
                 SerializableDictionary<string, object> audienceRecStatus = clsEntities.GetAudienceRecords(entity.entityid, user.EmployeeID);
-                SerializableDictionary<string, object> gridInfo = new SerializableDictionary<string, object>();
+                SerializableDictionary<string, object> gridInfo = null;
+                if (clsgrid.InitialiseRowGridInfo == null)
+                {
+                    gridInfo = new SerializableDictionary<string, object>();
+                }
+                else
+                {
+                    gridInfo = clsgrid.InitialiseRowGridInfo;
+                }
+                 
                 gridInfo.Add("keyfield", keyfield.FieldName);
                 gridInfo.Add("employeeid", user.EmployeeID);
                 gridInfo.Add("accountid", user.AccountID);
@@ -9917,6 +9943,64 @@ namespace Spend_Management
 
             return;
         }
+
+        /// <summary>
+        /// Change the edit url depending on the value of the filter attribute
+        /// </summary>
+        /// <param name="row">The current <see cref="cNewGridRow"/>instance</param>
+        /// <param name="gridInfo">A <see cref="SerializableDictionary{TKey,TValue}"/>of key and value where the values are;
+        /// 'columnName' - The ID of the AttributeFilter Column
+        /// 'selectionMappings' - An instance of <see cref="List{T}"/>where T is <seealso cref="FormSelectionMapping"/>for the current view
+        /// 'defaultFormId' - The default edit form ID, used if the current value of the filter attribute does not match any of the <seealso cref="FormSelectionMapping"/>values</param>
+        private void clsgrid_InitialiseRowForAttributeFilter(cNewGridRow row, SerializableDictionary<string, object> gridInfo)
+        {
+            var columnName = gridInfo["columnName"].ToString();
+            var value = row.getCellByID(columnName).Value;
+            var selectionMappings = this.GetMappings(gridInfo["selectionMappings"]);
+            gridInfo["selectionMappings"] = selectionMappings;
+            var formId = selectionMappings.Where(x => string.IsNullOrEmpty(x.TextValue) ? x.ListValue.ToString() == value.ToString() : x.TextValue.ToString() == value.ToString()).Select(x => x.FormId).FirstOrDefault();
+            row.getCellByID(columnName).Value = formId > 0 ? formId : gridInfo["defaultFormId"];
+        }
+
+        /// <summary>
+        /// Cast an object returned from "gridInfo" into a <see cref="List{T}"/> of <seealso cref="FormSelectionMapping"/>
+        /// </summary>
+        /// <param name="selectionMappings">The object returned from gridInfo to cast.</param>
+        /// <returns>A <see cref="List{T}"/> of <seealso cref="FormSelectionMapping"/> or null</returns>
+        private List<FormSelectionMapping> GetMappings(object selectionMappings)
+        {
+            if (selectionMappings.GetType() == typeof(List<FormSelectionMapping>))
+            {
+                return (List<FormSelectionMapping>) selectionMappings;
+            }
+
+            if (selectionMappings.GetType() != typeof(object[]))
+            {
+                return null;
+            }
+
+            var result = new List<FormSelectionMapping>();
+
+            var list = (object[]) selectionMappings;
+            foreach (Dictionary<string, object> fields in list)
+            {
+                var item = new FormSelectionMapping
+                {
+                    FormId = int.Parse(fields["FormId"].ToString()),
+                    FormSelectionMappingId = int.Parse(fields["FormSelectionMappingId"].ToString()),
+                    IsAdd = bool.Parse(fields["IsAdd"].ToString()),
+                    ListValue = int.Parse(fields["ListValue"].ToString()),
+                    TextValue = fields["TextValue"].ToString(),
+                    ViewId = int.Parse(fields["ViewId"].ToString())
+                };
+
+                result.Add(item);
+            }
+
+            return result;
+        }
+
+
 
         /// <summary>
         /// Creates dropdown with greenlight attributes
@@ -10318,4 +10402,3 @@ namespace Spend_Management
 
     #endregion
 }
-
