@@ -119,7 +119,7 @@
 
 
         /// <summary>
-        /// The notify approver on deny of consent.
+        /// Sends an email to the dofc approver when an user denies or opts out from lookup consent.
         /// </summary>
         /// <param name="user">
         /// The currently logged in user.
