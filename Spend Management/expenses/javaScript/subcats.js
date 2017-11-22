@@ -75,6 +75,11 @@ function setupEditCalculationDiv() {
         case '8':
             document.getElementById('divCalculation8').style.display = '';
             break;
+        case '10':
+            document.getElementById('divCalculation3').style.display = '';
+            $("#divCalculation3").find("div:not(:first-child)").css("display", "none");
+            document.getElementById('divDoc').style.display = '';
+            break;
     }
 
 }
@@ -126,6 +131,7 @@ function changeCalculationDiv() {
             document.getElementById('divCalculation3').style.display = '';
             document.getElementById((chkenablehometooffice)).checked = false; 
             document.getElementById('divDoc').style.display = '';
+            $("#divCalculation3 div").css("display", "");
             $("#" + txtDeductFixed).val('');
             $('#hometoOfficeOptions').hide();
             $('.hometoOfficeZeroMiles').hide();
@@ -196,6 +202,20 @@ function changeCalculationDiv() {
             document.getElementById(chknodirectors).disabled = false;
             document.getElementById(chkreimbursable).disabled = false;
             document.getElementById('divCalculation8').style.display = '';
+            break;
+        case '10':
+            document.getElementById(chkmileage).checked = false;
+            document.getElementById(chkstaff).checked = false;
+            document.getElementById(chkothers).checked = false;
+            document.getElementById(chknodirectors).checked = false;
+            document.getElementById(chkmileage).disabled = false;
+            document.getElementById(chkstaff).disabled = false;
+            document.getElementById(chkothers).disabled = false;
+            document.getElementById(chknodirectors).disabled = false;
+            document.getElementById(chkreimbursable).disabled = false;
+            document.getElementById('divCalculation3').style.display = '';
+            $("#divCalculation3 div:not(:first-child)").css("display", "none");
+            document.getElementById('divDoc').style.display = '';
             break;
     }
 

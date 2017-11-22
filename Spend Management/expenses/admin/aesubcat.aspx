@@ -204,7 +204,6 @@
         var txtValidatorNotes3 = '<%=txtValidatorNotes3.ClientID %>';
         var chkEnableDoc = '<%=chkEnableDoc.ClientID %>';
         var chkRequireClass1Insurance = '<%=chkRequireClass1Insurance.ClientID %>';
-        
     </script>
 
     <cc1:TabContainer ID="TabContainer1" runat="server">
@@ -320,6 +319,7 @@
                                 <asp:ListItem Value="7" Text="Fixed Allowance"></asp:ListItem>
                                 <asp:ListItem Value="8" Text="Fuel Card Mileage"></asp:ListItem>
                                 <asp:ListItem Value="9" Text="Item Reimburse"></asp:ListItem>
+                                <asp:ListItem Value="10" Text="Fixed Excess Mileage"></asp:ListItem>
                             </asp:DropDownList>
                         </span>
                         <span class="inputicon"></span>
