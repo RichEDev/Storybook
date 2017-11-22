@@ -166,8 +166,6 @@ namespace SpendManagementApi.Common
         /// </summary>
         private cMisc _misc;
 
-        //**APIiser_Marker**//
-
         internal ActionContext(ICurrentUser currentUser)
             : this(currentUser.AccountID, currentUser.EmployeeID, currentUser.CurrentSubAccountId)
         {
