@@ -284,6 +284,18 @@ namespace Spend_Management.expenses.code
         /// Sent to an administrator when an automatic card import fails for some reason.
         /// </summary>
         [Description("56EC0718-A570-4E06-9D41-791D68FFDA11")]
-        SentToAnAdministratorWhenACardImportFails = 38
+        SentToAnAdministratorWhenACardImportFails = 38,
+
+        /// <summary>
+        /// Sent to approver when claimant opts out of consent check.
+        /// </summary>
+        [Description("63F2598D-B6BF-4CC3-9772-B378907E392C")]
+        SentToApproverWhenClaimantOptsOutOfConsentCheck = 39,
+
+        /// <summary>
+        /// Sent to an approver when claimant denies consent check.
+        /// </summary>
+        [Description("5483FCA4-5E65-45EE-BB93-15104E61267C")]
+        SentToApproverWhenClaimantDeniesConsentCheck = 40
     }
 }
