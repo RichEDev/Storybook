@@ -98,6 +98,7 @@
             var audit = new cAuditLog(user.AccountID, user.EmployeeID);
 
             DvlaConsentLookUp.DenyDvlaConsent(user, connection);
+            DvlaConsentLookUp.NotifyApproverOnDenyOfConsent(user);
 
             if (user.Employee.AgreeToProvideConsent.HasValue && user.Employee.AgreeToProvideConsent.Value == true)
             {

@@ -117,6 +117,34 @@
             return employeeConsentDetails;
         }
 
+
+        /// <summary>
+        /// The notify approver on deny of consent.
+        /// </summary>
+        /// <param name="user">
+        /// The currently logged in user.
+        /// </param>
+        public static void NotifyApproverOnDenyOfConsent(CurrentUser user)
+        {
+            var subAccounts = new cAccountSubAccounts(user.AccountID);
+            var subAccount = subAccounts.getFirstSubAccount();
+            var accountProperties = subAccount.SubAccountProperties;
+            var emails = new cEmailTemplates(user.AccountID, user.EmployeeID, string.Empty, 0, Modules.expenses);
+            var teams = new cTeams(user.AccountID, null);
+            int[] recipientsId;
+            if (accountProperties.DutyOfCareApprover.ToUpper() != "LINE MANAGER")
+            {
+                var teamDetails = teams.GetTeamById(int.Parse(accountProperties.DutyOfCareTeamAsApprover));
+                recipientsId = teamDetails.teammembers.ToArray();
+            }
+            else
+            {
+                recipientsId = new[] { Employee.Get(user.EmployeeID, user.AccountID).LineManager };
+            }
+
+            emails.SendMessage(user.Employee.DvlaConsentDate != null ? SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToApproverWhenClaimantOptsOutOfConsentCheck) : SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToApproverWhenClaimantDeniesConsentCheck), user.EmployeeID, recipientsId);
+        }
+
         /// <summary>
         /// Deny dvla consent for logged in user.
         /// </summary>
