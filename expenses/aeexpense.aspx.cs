@@ -3838,7 +3838,7 @@ public partial class aeexpense : System.Web.UI.Page
 
             if (defaultuom == MileageUOM.KM)
             {
-                nummiles = cMileagecats.ConvertKilometresToMiles(nummiles);
+                nummiles = ConvertKilometersToMiles.PerformConversion(nummiles);
             }
 
             if ((fromcompany != null && tocompany != null) || (heavyBulkyEquipment))
@@ -3873,7 +3873,7 @@ public partial class aeexpense : System.Web.UI.Page
 
                     if (defaultuom == MileageUOM.KM)
                     {
-                        details.miles = cMileagecats.ConvertKilometresToMiles(details.miles);
+                        details.miles = ConvertKilometersToMiles.PerformConversion(details.miles);
                     }
 
                     if (details.journeysteps == null || (details.journeysteps != null && details.journeysteps.Count == 0))
