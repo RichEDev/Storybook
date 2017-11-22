@@ -83,7 +83,7 @@ namespace Utilities.DistributedCaching
         {
             try
             {
-                DistributedCache = new MemCache();
+                DistributedCache = new CouchBase();
                 
             }
             catch (Exception e)
