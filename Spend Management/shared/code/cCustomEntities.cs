@@ -9959,7 +9959,7 @@ namespace Spend_Management
             var selectionMappings = this.GetMappings(gridInfo["selectionMappings"]);
             gridInfo["selectionMappings"] = selectionMappings;
             var formId = selectionMappings.Where(x => string.IsNullOrEmpty(x.TextValue) ? x.ListValue.ToString() == value.ToString() : x.TextValue.ToString() == value.ToString()).Select(x => x.FormId).FirstOrDefault();
-            row.getCellByID(columnName).Value = formId > 0 ? formId : gridInfo["defaultFormId"];
+            row.getCellByID("FilterAttribute").Value = formId > 0 ? formId : gridInfo["defaultFormId"];
         }
 
         /// <summary>
