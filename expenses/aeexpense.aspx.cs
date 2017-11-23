@@ -1462,7 +1462,7 @@ public partial class aeexpense : System.Web.UI.Page
             }
             else
             {
-                cell.Text = "";
+                cell.Text = string.Empty;
             }            
             row.Cells.Add(cell);
             cell = new TableCell();
@@ -3404,7 +3404,7 @@ public partial class aeexpense : System.Web.UI.Page
                         {
                             if ((Action) this.ViewState["action"] == Action.Edit)
                             {
-                                if (!txtbox.Text.IsNullOrWhiteSpace() && double.TryParse(txtbox.Text, out double result))
+                                if (txtbox.Text.Length > 0 && double.TryParse(txtbox.Text, out double result))
                                 {
                                     exchangerate = result;
                                     
@@ -3412,8 +3412,15 @@ public partial class aeexpense : System.Web.UI.Page
                                 else
                                 {
                                     object[] arrcur = getExchangeRate((int)ViewState["accountid"], reqemp.EmployeeID, currencyid, date);
-                                    double.TryParse(arrcur[1].ToString(), out result);
-                                    exchangerate = (double?)Session["exchangerate"] ?? result;                                    
+                                    if (arrcur != null)
+                                    {
+                                        double.TryParse(arrcur[1].ToString(), out result);
+                                        exchangerate = (double?) Session["exchangerate"] ?? result;
+                                    }
+                                    else
+                                    {
+                                        exchangerate = (double?)Session["exchangerate"] ?? 
+                                    }                                                                        
                                 }                                                
                             }
                             else

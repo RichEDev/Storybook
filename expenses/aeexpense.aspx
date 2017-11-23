@@ -187,7 +187,7 @@
             var errorMsg = null;
             var editableRateValue = $g("ctl00_contentmain_txtexchangerate").value;
             if (editableRateValue) {
-                if (editableRateValue <= "0") {
+                if (parseFloat(editableRateValue) <= 0) {
                     errorMsg = "Please enter an exchange rate greater than 0.";
                 }
                 if (editableRateValue.trim() === "") {
