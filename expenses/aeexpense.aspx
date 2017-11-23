@@ -182,6 +182,27 @@
             return true;
         }
 
+        function checkExchangeRate() {
+            var errorMsg = null;
+            var editableRateValue = $g("ctl00_contentmain_txtexchangerate").value;
+            if (editableRateValue) {
+                if (editableRateValue <= "0") {
+                    errorMsg = "Please enter an exchange rate greater than 0.";
+                }
+                if (editableRateValue.trim() === "") {
+                    errorMsg = "Please enter an exchange rate.";
+                }
+            }
+            else {
+                errorMsg = "Please enter an exchange rate.";
+            }
+            if (errorMsg) {
+                SEL.MasterPopup.ShowMasterPopup(errorMsg, "Message from " + moduleNameHTML);
+                return false;
+            }
+            return true;
+        }
+
     </script>
 
     <div class="panel">
@@ -245,7 +266,7 @@
     </div>
     <div class="inputpanel">&nbsp;</div>
     <div class="inputpanel">
-        <helpers:CSSButton id="cmdok" runat="server" text="save"  UseSubmitBehavior="True" OnClick="cmdok_Click" OnClientClick="if(!(validateAeExpense())) return false;"/>
+        <helpers:CSSButton id="cmdok" runat="server" text="save"  UseSubmitBehavior="True" OnClick="cmdok_Click" OnClientClick="if(!(validateAeExpense()) || !(checkExchangeRate())) return false;"/>
         &nbsp;&nbsp;<helpers:CSSButton ID="cmdcancel" text="cancel" CausesValidation="False" runat="server"  OnClick="cmdcancel_Click" meta:resourcekey="cmdcancelResource1" />
     </div>
     <asp:Panel ID="pnlAddcar" runat="server" CssClass="modalpanel formpanel" Style="padding: 20px; width: 900px; display: none;">
