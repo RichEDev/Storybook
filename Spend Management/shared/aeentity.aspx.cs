@@ -100,7 +100,7 @@
             Master.UseDynamicCSS = true;
 
             //skips over load events if posted back from the HTML extender AjaxFileUploader
-            if (Request["start"] == null && Request["done"] == null && Request["complete"] == null && (Request.AcceptTypes[0] != "*/*" || Request.Form.Count > 0))
+            if (Request["start"] == null && Request["done"] == null && Request["complete"] == null)
             {
                 int formSelectionListValue = -1;
                 string formSelectionTextValue = null;
