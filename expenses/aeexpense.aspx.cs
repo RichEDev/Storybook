@@ -3419,7 +3419,7 @@ public partial class aeexpense : System.Web.UI.Page
                                     }
                                     else
                                     {
-                                        exchangerate = (double?)Session["exchangerate"] ?? 
+                                        exchangerate = (double) Session["exchangerate"];
                                     }                                                                        
                                 }                                                
                             }
