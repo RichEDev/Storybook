@@ -693,7 +693,7 @@ public class cItemBuilder
                     // this is placed in an else block because the MobileJourneyParser does this step for us
                     foreach (var cJourneyStep in cJourneySteps)
                     {
-                        cJourneyStep.recmiles = AddressDistance.GetRecommendedOrCustomDistance(cJourneyStep.startlocation.Identifier, cJourneyStep.endlocation.Identifier, this.accountid, subAccount, cMisc.GetCurrentUser()) ?? 0m;
+                        cJourneyStep.recmiles = AddressDistance.GetRecommendedOrCustomDistance(cJourneyStep.startlocation, cJourneyStep.endlocation, this.accountid, subAccount, cMisc.GetCurrentUser()) ?? 0m;
                     }
                 }
 

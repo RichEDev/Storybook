@@ -9,7 +9,7 @@
     /// Addresses and distances in Expenses, multiple journey distances can be recorded for two addresses.
     /// To find other pairs, look up addresses by the Address Ids.
     /// </summary>
-    public class AddressRecommendedDistance : BaseExternalType, IApiFrontForDbObject<AddressDistance, AddressRecommendedDistance>
+    public class AddressRecommendedDistance : BaseExternalType, IApiFrontForDbObject<AddressDistanceLookup, AddressRecommendedDistance>
     {
         /// <summary>
         /// The unique Id of this record in the database.
@@ -37,7 +37,7 @@
         /// <param name="dbType">The instance of the data access layer Type to convert from.</param>
         /// <param name="actionContext">The IActionContext.</param>
         /// <returns>An api Type</returns>
-        public AddressRecommendedDistance From(AddressDistance dbType, IActionContext actionContext)
+        public AddressRecommendedDistance From(AddressDistanceLookup dbType, IActionContext actionContext)
         {
             if (dbType == null)
             {
@@ -66,9 +66,9 @@
         /// Converts to a data access layer Type from an api Type.
         /// </summary>
         /// <returns>A data access layer Type</returns>
-        public AddressDistance To(IActionContext actionContext)
+        public AddressDistanceLookup To(IActionContext actionContext)
         {
-            var item = new AddressDistance
+            var item = new AddressDistanceLookup
             {
                 OutboundIdentifier = AddressAId,
                 Outbound = RecommendedDistance,

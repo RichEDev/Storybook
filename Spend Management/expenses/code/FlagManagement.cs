@@ -49,6 +49,11 @@ namespace Spend_Management.expenses.code
         private Dictionary<int, Flag> lstFlags;
 
         /// <summary>
+        /// A private instance of <see cref="Addresses"/>
+        /// </summary>
+        private Addresses _addresses;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="FlagManagement"/> class. 
         /// Initialises the flag management class
         /// </summary>
@@ -713,64 +718,59 @@ namespace Spend_Management.expenses.code
             }
 
             MileageFlaggedItem flaggedItem = null;
-            using (
-                var databaseConnection = connection
-                                         ?? new DatabaseConnection(cAccounts.getConnectionString(this.AccountID)))
+            foreach (cJourneyStep step in item.journeysteps.Values)
             {
-                foreach (cJourneyStep step in item.journeysteps.Values)
+                if (step.startlocation != null && step.endlocation != null)
                 {
-
-                    if (step.startlocation != null && step.endlocation != null)
+                    decimal? recommendedmileage = AddressDistance.GetRecommendedDistance(
+                        currentUser,
+                        step.startlocation,
+                        step.endlocation,
+                        subAccountProperties.MileageCalcType,
+                        account.MapsEnabled);
+                    if (car == null)
                     {
+                        break;
+                    }
 
-                        decimal? recommendedmileage = AddressDistance.GetRecommendedDistance(
-                            currentUser,
-                            step.startlocation.Identifier,
-                            step.endlocation.Identifier,
-                            subAccountProperties.MileageCalcType,
-                            account.MapsEnabled);
-                        if (car == null)
+                    decimal numActualMiles = step.NumActualMiles;
+                    if (car.defaultuom == MileageUOM.KM)
+                    {
+                        recommendedmileage = clsmileagecats.convertMilesToKM(Convert.ToDecimal(recommendedmileage));
+                        numActualMiles = clsmileagecats.convertMilesToKM(Convert.ToDecimal(numActualMiles));
+                    }
+
+
+                    decimal exceeded = 0;
+
+                    if (recommendedmileage.HasValue)
+                    {
+                        exceeded = numActualMiles - recommendedmileage.Value;
+                    }
+
+                    if (exceeded > 0)
+                    {
+                        string comment = "The recommended distance between " + step.startlocation.FriendlyName
+                                         + " and " + step.endlocation.FriendlyName + " has been exceeded by "
+                                         + exceeded + " " + unit + ".";
+
+                        FlagColour flagColour = flag.CheckTolerance(step.NumActualMiles, recommendedmileage.Value);
+                        if (flagColour != FlagColour.None)
                         {
-                            break;
-                        }
-
-                        decimal numActualMiles = step.NumActualMiles;
-                        if (car.defaultuom == MileageUOM.KM)
-                        {
-                            recommendedmileage = clsmileagecats.convertMilesToKM(Convert.ToDecimal(recommendedmileage));
-                            numActualMiles = clsmileagecats.convertMilesToKM(Convert.ToDecimal(numActualMiles));
-                        }
-
-
-                        decimal exceeded = 0;
-
-                        if (recommendedmileage.HasValue)
-                        {
-                            exceeded = numActualMiles - recommendedmileage.Value;
-                        }
-
-                        if (exceeded > 0)
-                        {
-                            string comment = "The recommended distance between " + step.startlocation.FriendlyName
-                                             + " and " + step.endlocation.FriendlyName + " has been exceeded by "
-                                             + exceeded + " " + unit + ".";
-
-                            FlagColour flagColour = flag.CheckTolerance(step.NumActualMiles, recommendedmileage.Value);
-                            if (flagColour != FlagColour.None)
+                            if (flaggedItem == null)
                             {
-                                if (flaggedItem == null)
-                                {
-                                    flaggedItem = new MileageFlaggedItem(
-                                        string.Empty,
-                                        flag.CustomFlagText,
-                                        flag,
-                                        flagColour, flag.FlagTypeDescription, flag.NotesForAuthoriser, flag.AssociatedExpenseItems, flag.Action, flag.CustomFlagText, flag.ClaimantJustificationRequired, false);
-                                    items.Add(flaggedItem);
-                                }
-
-                                flaggedItem.AddFlaggedJourneyStep(step.stepnumber + 1, exceeded, comment, 0);
-                                // falls in to no flag tolerance so don't flag
+                                flaggedItem = new MileageFlaggedItem(
+                                    string.Empty,
+                                    flag.CustomFlagText,
+                                    flag,
+                                    flagColour, flag.FlagTypeDescription, flag.NotesForAuthoriser,
+                                    flag.AssociatedExpenseItems, flag.Action, flag.CustomFlagText,
+                                    flag.ClaimantJustificationRequired, false);
+                                items.Add(flaggedItem);
                             }
+
+                            flaggedItem.AddFlaggedJourneyStep(step.stepnumber + 1, exceeded, comment, 0);
+                            // falls in to no flag tolerance so don't flag
                         }
                     }
                 }
@@ -916,7 +916,7 @@ namespace Spend_Management.expenses.code
                             {
                                 decimal hometolocationdist = step.NumActualMiles;
                                 var workAddress = workAddresses.GetBy(currentUser, item.date, (int?)esrLocationId);
-                                decimal officetolocationdist = AddressDistance.GetRecommendedOrCustomDistance(workAddress != null ? workAddress.LocationID : 0, step.endlocation.Identifier, this.AccountID, subAccount, currentUser) ?? 0;
+                                decimal officetolocationdist = AddressDistance.GetRecommendedOrCustomDistance(this._addresses.GetAddressById(workAddress.LocationID), step.endlocation, this.AccountID, subAccount, currentUser) ?? 0;
 
                                 if (hometolocationdist > 0 && officetolocationdist > 0)
                                 {
@@ -939,7 +939,7 @@ namespace Spend_Management.expenses.code
                             {
                                 decimal hometolocationdist = step.NumActualMiles;
                                 var workAddress = workAddresses.GetBy(currentUser, item.date, (int?)esrLocationId);
-                                decimal officetolocationdist = AddressDistance.GetRecommendedOrCustomDistance(workAddress != null ? workAddress.LocationID : 0, step.startlocation.Identifier, this.AccountID, subAccount, currentUser) ?? 0;
+                                decimal officetolocationdist = AddressDistance.GetRecommendedOrCustomDistance(this._addresses.GetAddressById(workAddress.LocationID), step.startlocation, this.AccountID, subAccount, currentUser) ?? 0;
 
                                 if (hometolocationdist > 0 && officetolocationdist > 0)
                                 {
@@ -2057,6 +2057,7 @@ namespace Spend_Management.expenses.code
         /// </summary>
         private void InitialiseData()
         {
+            this._addresses = new Addresses(this.AccountID);
             this.lstFlags = this.caching.Get(this.AccountID, CacheArea, "0") as Dictionary<int, Flag>
                             ?? this.CacheList();
         }

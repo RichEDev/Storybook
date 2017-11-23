@@ -276,6 +276,7 @@
     <Compile Include="Addresses\AddressDistance.cs" />
     <Compile Include="Addresses\AddressDistanceDTO.AddressPart.cs" />
     <Compile Include="Addresses\AddressDistanceDTO.cs" />
+    <Compile Include="Addresses\AddressDistanceLookup.cs" />
     <Compile Include="Addresses\AddressDistances.cs" />
     <Compile Include="Addresses\Addresses.cs" />
     <Compile Include="Addresses\AddressFilter.cs" />
