@@ -146,15 +146,16 @@ namespace SpendManagementLibrary
         /// </returns>
         public cJourneyStep Clone(List<Address> officeAddresses, int workAdressId, ref cExpenseItem item)
         {
+            
             // validate if the jouney step containing work address is valid for current date - if not set it to default address for that date
-            if (this.startlocation.Identifier == workAdressId
+            if (this.startlocation != null && this.startlocation.Identifier == workAdressId
                 && !officeAddresses.Any(x => x.Identifier == this.startlocation.Identifier))
             {
                 this.startlocation = officeAddresses[0];
                 item.WorkAddressId = this.startlocation.Identifier;
             }
 
-            if (this.endlocation.Identifier == workAdressId
+            if (this.endlocation != null && this.endlocation.Identifier == workAdressId
                 && !officeAddresses.Any(x => x.Identifier == this.endlocation.Identifier))
             {
                 this.endlocation = officeAddresses[0];

@@ -4237,7 +4237,7 @@ public partial class aeexpense : System.Web.UI.Page
                 details.home = chkbox.Checked;
             }
         }
-        if (subcat.calculation == CalculationType.FixedAllowance || subcat.IsRelocationMileage)
+        if (subcat.calculation == CalculationType.FixedAllowance || subcat.IsRelocationMileage || subcat.calculation == CalculationType.ExcessMileage)
         {
             chkbox = (CheckBox)pnl.FindControl("chkallowance" + id);
             if (chkbox != null)
@@ -4248,7 +4248,10 @@ public partial class aeexpense : System.Web.UI.Page
                     if (txtbox.Text != "")
                     {
                         details.quantity = double.Parse(txtbox.Text);
-                        details.total = subcat.allowanceamount * (decimal)details.quantity;
+                        if (subcat.calculation != CalculationType.ExcessMileage)
+                        {
+                            details.total = subcat.allowanceamount * (decimal)details.quantity;
+                        }
                     }
                 }
             }
