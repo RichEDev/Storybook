@@ -9990,7 +9990,7 @@ namespace Spend_Management
                     FormSelectionMappingId = int.Parse(fields["FormSelectionMappingId"].ToString()),
                     IsAdd = bool.Parse(fields["IsAdd"].ToString()),
                     ListValue = int.Parse(fields["ListValue"].ToString()),
-                    TextValue = fields["TextValue"].ToString(),
+                    TextValue = fields["TextValue"] == null ? string.Empty : fields["TextValue"].ToString(),
                     ViewId = int.Parse(fields["ViewId"].ToString())
                 };
 
