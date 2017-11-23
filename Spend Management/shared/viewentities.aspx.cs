@@ -65,12 +65,7 @@ namespace Spend_Management
                         Response.Redirect(ErrorHandlerWeb.MissingRecordUrl, true);
                     }
                 }
-
-                Session.Remove("FormSelectionFormId" + entityid);
-                Session.Remove("FormSelectionViewId" + entityid);
-                Session.Remove("FormSelectionListValue" + entityid);
-                Session.Remove("FormSelectionTextValue" + entityid);
-
+                
                 if (Request.QueryString["viewid"] != null)
                 {
                     if (!Int32.TryParse(Request.QueryString["viewid"], out viewid))

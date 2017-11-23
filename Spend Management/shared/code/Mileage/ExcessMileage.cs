@@ -1,10 +1,11 @@
-﻿using System;
-using SpendManagementLibrary;
-using SpendManagementLibrary.Addresses;
-using SpendManagementLibrary.Employees;
-
-namespace Spend_Management.shared.code.Mileage
+﻿namespace Spend_Management.shared.code.Mileage
 {
+    using SpendManagementLibrary.Helpers;
+    using System;
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Addresses;
+    using SpendManagementLibrary.Employees;
+
     public class ExcessMileage
     {
         /// <summary>
@@ -115,7 +116,7 @@ namespace Spend_Management.shared.code.Mileage
 
             if (car != null && car.defaultuom == MileageUOM.KM)
             {
-                distance = cMileagecats.ConvertMilesToKilometres(distance);
+                distance = ConvertMilesToKilometers.PerformConversion(distance);
             }
 
             return distance;

@@ -800,6 +800,10 @@ namespace SpendManagementLibrary
                             ehr.Append(")");
                             output.Append(ehr);
                         }
+                        else
+                        {
+                            output.Append(" (1 = 2) ");
+                        }
                     }
 
                     break;
