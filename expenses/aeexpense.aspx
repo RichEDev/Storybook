@@ -182,6 +182,7 @@
             return true;
         }
 
+        //Checks to see if the user has entered a valid rate in the exchange rate box. If they have not, they receive the relevant popup, and cannot save until it is corrected.
         function checkExchangeRate() {
             var errorMsg = null;
             var editableRateValue = $g("ctl00_contentmain_txtexchangerate").value;

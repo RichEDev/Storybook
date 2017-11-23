@@ -63,7 +63,7 @@ public partial class aeexpense {
     /// Auto-generated field.
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
-    protected global::Spend_Management.tooltip usrTooltip;
+    protected global::System.Web.UI.UserControl usrTooltip;
     
     /// <summary>
     /// vgAeExpenses control.
@@ -225,7 +225,7 @@ public partial class aeexpense {
     /// Auto-generated field.
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
-    protected global::Spend_Management.aeCars addCar;
+    protected global::System.Web.UI.UserControl addCar;
     
     /// <summary>
     /// lnkAddCar control.
@@ -333,7 +333,7 @@ public partial class aeexpense {
     /// Auto-generated field.
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
-    protected global::Spend_Management.addressDetailsPopup addressDetailsPopup;
+    protected global::System.Web.UI.UserControl addressDetailsPopup;
     
     /// <summary>
     /// mapContainer control.
