@@ -810,11 +810,12 @@
                 {
                     cJourneyStep journey = journeyStep.To(actionContext);
 
-                    if (vehicle.defaultuom == MileageUOM.KM)
+                    if ((!subcat.fromapp && !subcat.toapp) && vehicle.defaultuom == MileageUOM.KM)
                     {
+                        //only convert if claimant has entered mileage as journey step builder takes care of conversion when entering a start, stop and end locations.
                         var miles = ConvertKilometersToMiles.PerformConversion(journey.NumActualMiles);
                         journey.NumActualMiles = miles;
-                        journey.nummiles = miles;
+                        journey.nummiles = miles;                     
                     }
 
                     itemJourneySteps.Add(journeyStep.StepNumber, journey);
