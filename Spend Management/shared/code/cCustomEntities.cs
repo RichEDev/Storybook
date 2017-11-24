@@ -9736,7 +9736,19 @@ namespace Spend_Management
             {
                 columns.Insert(0, new cFieldColumn(keyfield));
             }
-           
+
+            if (entity.FormSelectionAttributeId.HasValue && entity.FormSelectionAttributeId.Value > 0)
+            {
+                var formSelectionAttribute = entity.attributes[entity.FormSelectionAttributeId.Value];
+                attributeFilterColumn = new cFieldColumn(fields.GetFieldByID(formSelectionAttribute.fieldid))
+                {
+                    hidden = true
+                    ,
+                    Alias = "FilterAttribute"
+                };
+
+                columns.Add(attributeFilterColumn);
+            }
 
             cGridNew clsgrid = new cGridNew(user.AccountID, user.EmployeeID, "grid" + entity.entityid + view.viewid + keyatt.attributeid, entity.table, columns);
             clsgrid.KeyField = keyfield.FieldName;
@@ -9747,13 +9759,6 @@ namespace Spend_Management
 
             if (entity.FormSelectionAttributeId.HasValue && entity.FormSelectionAttributeId.Value > 0)
             {
-                var formSelectionAttribute = entity.attributes[entity.FormSelectionAttributeId.Value];
-                attributeFilterColumn = new cFieldColumn(fields.GetFieldByID(formSelectionAttribute.fieldid))
-                {
-                    hidden = true,
-                    Alias = "FilterAttribute"
-                };
-                columns.Add(attributeFilterColumn);
                 SerializableDictionary<string, object> gridInfo = new SerializableDictionary<string, object>();
                 gridInfo.Add("defaultFormId", view.DefaultEditForm.formid);
                 gridInfo.Add("selectionMappings", view.EditFormMappings);
@@ -9801,7 +9806,7 @@ namespace Spend_Management
                 if (editMappings.Any() && attributeFilterColumn != null)
                 {
                     clsgrid.editlink =
-                        $"aeentity.aspx?entityid={entity.entityid}&viewid={view.viewid}&formid={{{attributeFilterColumn.field.FieldName}}}&id={{{keyfield.FieldName}}}";
+                        $"aeentity.aspx?entityid={entity.entityid}&viewid={view.viewid}&formid={{FilterAttribute}}&id={{{keyfield.FieldName}}}";
                 }
                 else
                 {
