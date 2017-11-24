@@ -182,20 +182,23 @@
             return true;
         }
 
-        //Checks to see if the user has entered a valid rate in the exchange rate box. If they have not, they receive the relevant popup, and cannot save until it is corrected.
+        //Checks to see if the user has entered a valid rate in the exchange rate box. If they have not, they receive the relevant popup, and cannot save until it is corrected. 
         function checkExchangeRate() {
             var errorMsg = null;
+            var editableRateVisible = $g("ctl00_contentmain_cellexchinput").style.display;
             var editableRateValue = $g("ctl00_contentmain_txtexchangerate").value;
-            if (editableRateValue) {
-                if (parseFloat(editableRateValue) <= 0) {
-                    errorMsg = "Please enter an exchange rate greater than 0.";
+            if (editableRateVisible !== "none") {
+                if (editableRateValue) {
+                    if (parseFloat(editableRateValue) <= 0) {
+                        errorMsg = "Please enter an exchange rate greater than 0.";
+                    }
+                    if (editableRateValue.trim() === "") {
+                        errorMsg = "Please enter an exchange rate.";
+                    }
                 }
-                if (editableRateValue.trim() === "") {
+                else {
                     errorMsg = "Please enter an exchange rate.";
                 }
-            }
-            else {
-                errorMsg = "Please enter an exchange rate.";
             }
             if (errorMsg) {
                 SEL.MasterPopup.ShowMasterPopup(errorMsg, "Message from " + moduleNameHTML);
