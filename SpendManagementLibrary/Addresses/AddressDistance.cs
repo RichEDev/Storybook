@@ -275,8 +275,8 @@
             //{
             //    return distances;
             //}
-            var originLocator = origin.GetLookupLocator(account.AddressInternationalLookupsAndCoordinates, account.AddressLookupProvider);
-            var destinationLocator = destination.GetLookupLocator(account.AddressInternationalLookupsAndCoordinates, account.AddressLookupProvider);
+            var originLocator = origin.GetLookupLocator(account.AddressInternationalLookupsAndCoordinates, account.AddressLookupProvider).Replace(" ", "");
+            var destinationLocator = destination.GetLookupLocator(account.AddressInternationalLookupsAndCoordinates, account.AddressLookupProvider).Replace(" ", "");
             using (IDBConnection databaseConnection = new DatabaseConnection(account.ConnectionString))
             {
                 databaseConnection.AddWithValue("@ReturnJourney", returnDistance);
