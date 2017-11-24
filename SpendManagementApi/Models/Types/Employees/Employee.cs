@@ -168,6 +168,11 @@ namespace SpendManagementApi.Models.Types.Employees
         /// </summary>
         public List<UserDefinedFieldValue> UserDefinedFields { get; set; }
 
+        /// <summary>
+        /// The excess mileage value for the employee
+        /// </summary>
+        public double ExcessMileage { get; set; }
+
 
         internal static Employee Merge(Employee data, Employee existingEmployee)
         {
@@ -310,7 +315,8 @@ namespace SpendManagementApi.Models.Types.Employees
                            CurrentExpenseItemReference = employee.CurrentReferenceNumber,
                            CurrentClaimReference = employee.CurrentClaimNumber,
                            DvlaConsentDate = employee.DvlaConsentDate,
-                           DriverId = employee.DriverId
+                           DriverId = employee.DriverId,
+                           ExcessMileage = employee.ExcessMileage
             };
         }
 
