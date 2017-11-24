@@ -2028,7 +2028,7 @@ public class cItemBuilder
             cell.Text = "Claim Allowance:";
             if (subcat.calculation == CalculationType.ExcessMileage)
             {
-                cell.Text = "Claim Fixed Excess Mileage";
+                cell.Text = "Claim Fixed Excess Mileage:";
             }
             cell.CssClass = "labeltd";
             row.Cells.Add(cell);
@@ -2036,13 +2036,7 @@ public class cItemBuilder
             cell.CssClass = "inputtd";
             chkbox = new CheckBox();
             chkbox.ID = "chkallowance" + id;
-            if (expenseitem != null)
-            {
-                if (expenseitem.quantity > 0)
-                {
-                    chkbox.Checked = true;
-                }
-            }
+            chkbox.Checked = true;
             cell.Controls.Add(chkbox);
             row.Cells.Add(cell);
 
@@ -2050,14 +2044,6 @@ public class cItemBuilder
             cell.Text = "&nbsp;";
             row.Cells.Add(cell);
 
-            cell = new TableCell();
-
-            lit = new Literal();
-            lit.Text = "<img id=\"imgtooltip263" + id + "\" onclick=\"SEL.Tooltip.Show('640fef2e-0125-4d07-ac22-b9ce6673cebb', 'ex', this);\" src=\"../icons/16/plain/tooltip.png\" alt=\"\" class=\"tooltipicon\"/>";
-            cell.Controls.Add(lit);
-
-
-            row.Cells.Add(cell);
             tbl.Rows.Add(row);
 
             #endregion
@@ -2068,7 +2054,7 @@ public class cItemBuilder
             cell.Text = "Number of Allowances:";
             if (subcat.calculation == CalculationType.ExcessMileage)
             {
-                cell.Text = "Number of Fixed Excess Mileage:";
+                cell.Text = "Number of Journeys:";
             }
             cell.CssClass = "labeltd";
             row.Cells.Add(cell);
@@ -2105,7 +2091,10 @@ public class cItemBuilder
             cell = new TableCell();
 
             lit = new Literal();
-            lit.Text = "<img id=\"imgtooltip264" + id + "\" onclick=\"SEL.Tooltip.Show('79094423-60a4-4672-afe7-31070b1e4084','ex', this);\" src=\"../icons/16/plain/tooltip.png\" alt=\"\" class=\"tooltipicon\"/>";
+            var tooltipid = subcat.calculation == CalculationType.ExcessMileage
+                                ? "BB680AAE-3376-4777-9CAE-F550015593B8"
+                                : "79094423-60a4-4672-afe7-31070b1e4084";
+            lit.Text = "<img id=\"imgtooltip264" + id + "\" onclick=\"SEL.Tooltip.Show('"+ tooltipid +"','ex', this);\" src=\"../icons/16/plain/tooltip.png\" alt=\"\" class=\"tooltipicon\"/>";
             cell.Controls.Add(lit);
 
 
@@ -3771,7 +3760,7 @@ public class cItemBuilder
             {
                 commentLines.Add("<br/>");
             }
-            commentLines.Add("The excess number of miles you are allowed to claim for is " + this.employee.ExcessMileage);
+            commentLines.Add("You are permitted to claim " + this.employee.ExcessMileage + " excess miles on each applicable journey.");
         }
 
         if (subcat.mileageapp && this.accountProperties.BlockTaxExpiry)
