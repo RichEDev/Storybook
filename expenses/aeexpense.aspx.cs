@@ -1456,6 +1456,7 @@ public partial class aeexpense : System.Web.UI.Page
 
             row.Cells.Add(cell);
             cell = new TableCell();
+            cell.ID = "exchangeratemandatory";
             if (showExchangeRateTT == true)
             {
                 cell.Text = "*";
@@ -3402,32 +3403,24 @@ public partial class aeexpense : System.Web.UI.Page
                         txtbox = (TextBox)pnlgeneral.FindControl("txtexchangerate");                        
                         if (transaction == null)
                         {
-                            if ((Action) this.ViewState["action"] == Action.Edit)
+                            double result;
+                            if (txtbox.Text.Length > 0 && double.TryParse(txtbox.Text, out result))
                             {
-                                double result;
-                                if (txtbox.Text.Length > 0 && double.TryParse(txtbox.Text, out result))
-                                {
-                                    exchangerate = result;
-                                    
-                                }
-                                else
-                                {
-                                    object[] arrcur = getExchangeRate((int)ViewState["accountid"], reqemp.EmployeeID, currencyid, date);
-                                    if (arrcur != null)
-                                    {
-                                        double.TryParse(arrcur[1].ToString(), out result);
-                                        exchangerate = (double?) Session["exchangerate"] ?? result;
-                                    }
-                                    else
-                                    {
-                                        exchangerate = (double) Session["exchangerate"];
-                                    }                                                                        
-                                }                                                
+                                exchangerate = result;                                    
                             }
                             else
                             {
-                                exchangerate = (double?)Session["exchangerate"] ?? double.Parse(txtbox.Text);
-                            }                                
+                                object[] arrcur = getExchangeRate((int)ViewState["accountid"], reqemp.EmployeeID, currencyid, date);
+                                if (arrcur != null)
+                                {
+                                    double.TryParse(arrcur[1].ToString(), out result);
+                                    exchangerate = (double?) Session["exchangerate"] ?? result;
+                                }
+                                else
+                                {
+                                    exchangerate = (double) Session["exchangerate"];
+                                }                                                                        
+                            }                                                                            
                         }
                         else
                         {
