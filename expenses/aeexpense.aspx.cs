@@ -1419,8 +1419,6 @@ public partial class aeexpense : System.Web.UI.Page
             {
                 if (Session["exchangerate"] != null)
                 {
-                    //txtbox.Text = expenseitem.exchangerate.ToString();
-
                     txtbox.Text = Session["exchangerate"].ToString();
                 }
             }
@@ -1458,6 +1456,7 @@ public partial class aeexpense : System.Web.UI.Page
 
             row.Cells.Add(cell);
             cell = new TableCell();
+            cell.ID = "exchangeratemandatory";
             if (showExchangeRateTT == true)
             {
                 cell.Text = "*";
