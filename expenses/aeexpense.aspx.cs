@@ -3399,12 +3399,13 @@ public partial class aeexpense : System.Web.UI.Page
                     }
                     else
                     {
-                        txtbox = (TextBox)pnlgeneral.FindControl("txtexchangerate");
+                        txtbox = (TextBox)pnlgeneral.FindControl("txtexchangerate");                        
                         if (transaction == null)
                         {
                             if ((Action) this.ViewState["action"] == Action.Edit)
                             {
-                                if (txtbox.Text.Length > 0 && double.TryParse(txtbox.Text, out double result))
+                                double result;
+                                if (txtbox.Text.Length > 0 && double.TryParse(txtbox.Text, out result))
                                 {
                                     exchangerate = result;
                                     
