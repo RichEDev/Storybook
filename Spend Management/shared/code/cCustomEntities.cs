@@ -9742,8 +9742,7 @@ namespace Spend_Management
                 var formSelectionAttribute = entity.attributes[entity.FormSelectionAttributeId.Value];
                 attributeFilterColumn = new cFieldColumn(fields.GetFieldByID(formSelectionAttribute.fieldid))
                 {
-                    hidden = true
-                    ,
+                    hidden = true,
                     Alias = "FilterAttribute"
                 };
 
