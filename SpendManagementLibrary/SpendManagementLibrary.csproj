@@ -547,6 +547,8 @@
     <Compile Include="Logic Classes\Tables\ITables.cs" />
     <Compile Include="Logic Classes\Tables\SubAccountTables.cs" />
     <Compile Include="MobileAppReview\EmployeeAppReviewPreference.cs" />
+    <Compile Include="MobileAppReview\MobileAppFeedbackCategory.cs" />
+    <Compile Include="MobileAppReview\MobileAppFeedbackCategoryService.cs" />
     <Compile Include="MobileAppReview\PermittedToAskEmployeeForReview.cs" />
     <Compile Include="MobileDeviceNotifications\MobileDeviceStatus.cs" />
     <Compile Include="MobileInformationMessage\MobileInformationMessage.cs" />
@@ -1082,9 +1084,9 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" /> 
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

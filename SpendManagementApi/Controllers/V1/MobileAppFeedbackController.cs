@@ -7,6 +7,7 @@
     using SpendManagementApi.Attributes;
     using SpendManagementApi.Models.Common;
     using SpendManagementApi.Models.Responses;
+    using SpendManagementApi.Models.Responses.AppFeedback;
     using SpendManagementApi.Repositories;
 
     /// <summary>
@@ -54,6 +55,21 @@
         {      
             var response = this.InitialiseResponse<BooleanResponse>();
             response.Item = _repository.DoNotPromptEmployeeForAppReviews();
+            return response;
+        }
+
+        /// <summary>
+        /// Gets the mobile app's active feedback categories
+        /// </summary>
+        /// <returns>
+        /// The <see cref="MobileAppFeedbackCategoriesResponse">MobileAppFeedbackCategoriesResponse</see>
+        /// </returns>
+        [HttpGet, Route("GetMobileAppFeedbackCategories")]
+        [AuthAudit(SpendManagementElement.AccessRoles, AccessRoleType.View)]
+        public MobileAppFeedbackCategoriesResponse GetActiveMobileAppFeedbackCategories()
+        {      
+            var response = this.InitialiseResponse<MobileAppFeedbackCategoriesResponse>();
+            response.List = _repository.GetActiveMobileAppFeedbackCategories();
             return response;
         }
     }

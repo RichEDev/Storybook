@@ -1379,4 +1379,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ImportId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="15daf4b8-2792-4e3e-bec1-fc29b4094456" ChangeDateTime="11/27/2017 15:45:52">
+    <Property Name="ElementName" Value="[dbo].[MobileAppFeedbackCategories].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[MobileAppFeedbackCategories]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CategoryId" />
+  </Operation>
 </Operations>
