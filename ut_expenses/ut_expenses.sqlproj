@@ -7070,6 +7070,7 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_MobileAppEmployeeFeedbackPreferences_employees.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SetNeverPromptEmployeeForReview.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetAddresstoAddressDistanceByPostcode.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\MobileAppFeedbackCategories.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ut_expenses.refactorlog">

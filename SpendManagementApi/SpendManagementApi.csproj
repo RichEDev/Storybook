@@ -258,7 +258,7 @@
     <Compile Include="Controllers\Expedite\V1\FundManagerController.cs" />
     <Compile Include="Controllers\Expedite\V1\PaymentManagerController.cs" />
     <Compile Include="Controllers\Expedite\V1\ReceiptsController.cs" />
-    <Compile Include="Controllers\MobileAppFeedbackController.cs" />
+    <Compile Include="Controllers\V1\MobileAppFeedbackController.cs" />
     <Compile Include="Controllers\V1\AccessRolesController.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\Helper.cs" />
@@ -280,7 +280,9 @@
     <Compile Include="Interfaces\IBasicRepository.cs" />
     <Compile Include="Models\Requests\MobileMetricData\MobileMetricDataRequest.cs" />
     <Compile Include="Models\Requests\MobileMetricData\SetDeviceStatusRequest.cs" />
+    <Compile Include="Models\Responses\AppFeedback\MobileAppFeedbackCategoriesResponse.cs" />
     <Compile Include="Models\Responses\BooleanResponse.cs" />
+    <Compile Include="Models\Types\MobileFeedback\MobileAppFeedbackCategory.cs" />
     <Compile Include="Models\Types\MobileMetricData\MobileMetricData.cs" />
     <Compile Include="Models\Responses\GeneralOptionsDisplayFieldSettingResponse.cs" />
     <Compile Include="Models\Types\GeneralOptionsDisplayFieldSetting.cs" />
