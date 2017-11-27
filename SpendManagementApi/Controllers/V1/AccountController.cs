@@ -26,6 +26,7 @@
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Holidays;
     using SpendManagementLibrary.Mobile;
+    using SpendManagementLibrary.MobileAppReview;
 
     using Spend_Management;
 
@@ -935,7 +936,8 @@
             bool showAdvances = user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.Advances, true) && user.Account.AdvancesEnabled;
             string accountLockedMessage = subAccountProperties.AccountLockedMessage;
             string accountCurrentlyLockedMessage = subAccountProperties.AccountCurrentlyLockedMessage;
-
+            bool canAskForReviews = new EmployeeAppReviewPreference().PermittedToAskEmployeeForReview(user.EmployeeID, user.AccountID);
+      
 
             IAccessRoleElementPermissions bankAccountElementPermissions = DetermineElementAccess.SetElementPermissions(new ElementAccessPermissions(), user, SpendManagementElement.BankAccounts);
 
@@ -1002,7 +1004,8 @@
                 IsMapsEnabled = isMapsEnabled,
                 ShowAdvances = showAdvances,
                 AccountLockedMessage = accountLockedMessage,
-                AccountCurrentlyLockedMessage = accountCurrentlyLockedMessage
+                AccountCurrentlyLockedMessage = accountCurrentlyLockedMessage,
+                CanAskForReviews = canAskForReviews
             };
 
             return response;

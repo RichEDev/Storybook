@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using SpendManagementApi.Models.Types;
-using Spend_Management;
 
 namespace SpendManagementApi.Interfaces
 {
@@ -23,18 +22,9 @@ namespace SpendManagementApi.Interfaces
     /// Represents a typed repository
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IRepository<T> where T : BaseExternalType
+    public interface IRepository<T> : IBasicRepository where T : BaseExternalType
     {
-        /// <summary>
-        /// Gets the current user.
-        /// </summary>
-        ICurrentUser User { get; }
 
-        /// <summary>
-        /// Gets the ActionContext.
-        /// </summary>
-        IActionContext ActionContext { get; }
-        
         /// <summary>
         /// Gets all entries
         /// </summary>
