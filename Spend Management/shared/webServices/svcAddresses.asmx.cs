@@ -161,7 +161,7 @@ namespace Spend_Management.shared.webServices
         /// <param name="accessRoleCheck">A value indicating whether or not an access role check should be performed when saving an address</param>
         /// <returns>The positive identity of the saved address or a negative return code</returns>
         [WebMethod(EnableSession = true), ScriptMethod]
-        public int Save(int addressIdentifier, string addressName, string line1, string line2, string line3, string city, string county, string alpha3CountryCode, string postcode, string latitude, string longitude, string capturePlusIdentifier, bool accountWideFavourite, List<AddressDistance> recommendedDistances, bool accessRoleCheck)
+        public int Save(int addressIdentifier, string addressName, string line1, string line2, string line3, string city, string county, string alpha3CountryCode, string postcode, string latitude, string longitude, string capturePlusIdentifier, bool accountWideFavourite, List<AddressDistanceLookup> recommendedDistances, bool accessRoleCheck)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
             AccessRoleType accessRoleType = addressIdentifier == 0 ? AccessRoleType.Add : AccessRoleType.Edit;
@@ -687,14 +687,14 @@ namespace Spend_Management.shared.webServices
         /// <param name="addressIdentifier">The address to get</param>
         /// <returns>-999 if the user does not have permission, a negative code on error or a positive on success</returns>
         [WebMethod(EnableSession = true), ScriptMethod]
-        public List<AddressDistance> GetRelatedAddressDistances(int addressIdentifier)
+        public List<AddressDistanceLookup> GetRelatedAddressDistances(int addressIdentifier)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
             if (currentUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.Addresses, true, false) == false)
             {
-                return new List<AddressDistance>
+                return new List<AddressDistanceLookup>
                 {
-                    new AddressDistance { DestinationIdentifier = -999 }
+                    new AddressDistanceLookup { DestinationIdentifier = -999 }
                 };
             }
 
@@ -707,11 +707,11 @@ namespace Spend_Management.shared.webServices
         /// <summary>
         /// Gets the distance between two addresses, using the overridden (custom) value if there is one, otherwise, looks it up.
         /// </summary>
-        /// <param name="fromAddressId">The start address</param>
-        /// <param name="toAddressId">The endd address</param>
+        /// <param name="fromAddress">The start <see cref="Address"/></param>
+        /// <param name="toAddress">The endd <see cref="Address"/></param>
         /// <returns>The distance between the two addresses</returns>
         [WebMethod, ScriptMethod]
-        public decimal? GetCustomOrRecommendedDistance(int fromAddressId, int toAddressId)
+        public decimal? GetCustomOrRecommendedDistance(Address fromAddress, Address toAddress)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
 
@@ -720,7 +720,7 @@ namespace Spend_Management.shared.webServices
             var subAccounts = new cAccountSubAccounts(currentUser.AccountID);
             cAccountSubAccount subAccount = subAccounts.getSubAccountById(employee.DefaultSubAccount);
 
-            decimal? distance = AddressDistance.GetRecommendedOrCustomDistance(fromAddressId, toAddressId, currentUser.AccountID, subAccount, currentUser);
+            decimal? distance = AddressDistance.GetRecommendedOrCustomDistance(fromAddress, toAddress, currentUser.AccountID, subAccount, currentUser);
             return distance;
         }
 
@@ -813,12 +813,15 @@ namespace Spend_Management.shared.webServices
         /// <param name="destinationIdentifier">The destination address</param>
         /// <returns>-999 if the user does not have permission, a negative code on error or a positive on success</returns>
         [WebMethod(EnableSession = true), ScriptMethod]
-        public AddressDistance GetAddressDistance(int originIdentifier, int destinationIdentifier)
+        public AddressDistanceLookup GetAddressDistance(int originIdentifier, int destinationIdentifier)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
+            var addresses = new Addresses(currentUser.AccountID);
+            var origin = addresses.GetAddressById(originIdentifier);
+            var destination = addresses.GetAddressById(destinationIdentifier);
             return currentUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.Addresses, true, false) == false
-                ? new AddressDistance { DestinationIdentifier = -999 }
-                : AddressDistance.Get(currentUser.AccountID, originIdentifier, destinationIdentifier);
+                ? new AddressDistanceLookup { DestinationIdentifier = -999 }
+                : AddressDistance.Get(currentUser.Account, origin, destination);
         }
 
         /// <summary>

@@ -298,8 +298,8 @@
                 {
                     // this check is needed to handle the negative identifiers from above for when manual addresses can't be added
                     distanceBetweenFromAndTo = AddressDistance.GetRecommendedOrCustomDistance(
-                        from.Identifier,
-                        to.Identifier,
+                        from,
+                        to,
                         user.AccountID,
                         subAccount,
                         user);

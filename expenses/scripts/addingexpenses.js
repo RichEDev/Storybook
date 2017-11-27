@@ -599,11 +599,13 @@ function getExchangeRateComplete(data) {
             document.getElementById(contentID + 'cellexchinput').style.display = '';
             document.getElementById(contentID + 'txtexchangerate').value = data[1];
             document.getElementById('imgtooltip243').style.display = '';
+            $("#ctl00_contentmain_exchangeratemandatory")[0].innerText = "*";
         } else {
             document.getElementById(contentID + 'cellexchlbl').style.display = 'none';
             document.getElementById(contentID + 'cellexchinput').style.display = 'none';
             document.getElementById(contentID + 'txtexchangerate').value = '1';
             document.getElementById('imgtooltip243').style.display = 'none';
+            $("#ctl00_contentmain_exchangeratemandatory")[0].innerText = "";
         }
     }
 }

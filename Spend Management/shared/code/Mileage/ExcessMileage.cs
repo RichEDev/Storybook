@@ -1,10 +1,11 @@
-﻿using System;
-using SpendManagementLibrary;
-using SpendManagementLibrary.Addresses;
-using SpendManagementLibrary.Employees;
-
-namespace Spend_Management.shared.code.Mileage
+﻿namespace Spend_Management.shared.code.Mileage
 {
+    using SpendManagementLibrary.Helpers;
+    using System;
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Addresses;
+    using SpendManagementLibrary.Employees;
+
     public class ExcessMileage
     {
         /// <summary>
@@ -95,11 +96,13 @@ namespace Spend_Management.shared.code.Mileage
         internal static decimal CalculateRelocationMileageDistance(cCar car, ICurrentUser currentUser, int homeLocationId,
             int oldOffice, cAccountSubAccount subaccount, int currentOfficeId)
         {
+            var addresses = new Addresses(currentUser.AccountID);
+
             var distance1 =
-                AddressDistance.GetRecommendedOrCustomDistance(homeLocationId, oldOffice, currentUser.AccountID, subaccount,
+                AddressDistance.GetRecommendedOrCustomDistance(addresses.GetAddressById(homeLocationId), addresses.GetAddressById(oldOffice), currentUser.AccountID, subaccount,
                     currentUser) ?? 0;
             var distance2 =
-                AddressDistance.GetRecommendedOrCustomDistance(homeLocationId, currentOfficeId, currentUser.AccountID,
+                AddressDistance.GetRecommendedOrCustomDistance(addresses.GetAddressById(homeLocationId), addresses.GetAddressById(currentOfficeId), currentUser.AccountID,
                     subaccount, currentUser) ?? 0;
 
             var distance = distance2 - distance1;
@@ -113,7 +116,7 @@ namespace Spend_Management.shared.code.Mileage
 
             if (car != null && car.defaultuom == MileageUOM.KM)
             {
-                distance = cMileagecats.ConvertMilesToKilometres(distance);
+                distance = ConvertMilesToKilometers.PerformConversion(distance);
             }
 
             return distance;

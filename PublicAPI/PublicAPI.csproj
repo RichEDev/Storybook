@@ -238,7 +238,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>20332</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://development.api.localhost</IISUrl>
+          <IISUrl>http://api.localhost</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

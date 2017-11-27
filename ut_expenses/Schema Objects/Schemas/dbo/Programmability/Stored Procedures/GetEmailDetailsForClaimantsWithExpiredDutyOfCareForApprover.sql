@@ -18,7 +18,7 @@ BEGIN
 	DECLARE @documentname NVARCHAR(Max)
 	DECLARE @attLicenceDvla varchar(50);	
 	Declare @attLicenceTypeId varchar(20) =[dbo].[GetAttributeId] ('CD3164BF-5C67-47F9-AF02-2FA6BB6F0BCE',0);
-	SELECT @attLicenceDvla = cast(valueid as nvarchar(10)) from customEntityAttributeListItems where attributeid = +@attLicenceTypeId  and item = 'Driving Licence (Automatic DVLA Lookup)';
+	SELECT @attLicenceDvla = cast(valueid as nvarchar(10)) from customEntityAttributeListItems where attributeid = +@attLicenceTypeId  and item = 'Driving Licence (Automatic DVLA Check)';
 
 	CREATE TABLE #temp (
 		DocumentName NVARCHAR(MAX)
@@ -91,7 +91,7 @@ WHERE c.employeeid = ' + convert(VARCHAR, @employeeid) + ' AND CAST(vehicle.' + 
 		UNION ALL
         SELECT  ''Photocard driving licence - '' + ' + 
 		@attLicenceNumber + ' as DocumentName, ' + convert(VARCHAR, @reminderdays) + '  as NumberOfDays,  cast(' + '''' + convert(VARCHAR, @expirydate) + '''' + ' as Date) as ExpiryDate  From ' + @drivingLicenceTableId + '
-        where cast(' + @attDrivingExpireDate + ' as Date) = ' + '''' + convert(VARCHAR, @expirydate) + '''' + ' and ' + @attEmployee + ' = ' + convert(VARCHAR, @employeeid) + ' and ' + @attLicenceType + ' = (select valueid from customEntityAttributeListItems where attributeid = ' + @attLicenceTypeValue + ' and item = ''Photocard'') 
+        where cast(' + @attDrivingExpireDate + ' as Date) = ' + '''' + convert(VARCHAR, @expirydate) + '''' + ' and ' + @attEmployee + ' = ' + convert(VARCHAR, @employeeid) + ' and ' + @attLicenceType + ' = (select valueid from customEntityAttributeListItems where attributeid = ' + @attLicenceTypeValue + ' and item = ''DVLA Photocard Licence'') 
 				
 		END
 		'

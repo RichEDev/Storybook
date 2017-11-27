@@ -24,9 +24,16 @@ namespace Spend_Management
 
         private Utilities.DistributedCaching.Cache Cache = new Utilities.DistributedCaching.Cache();
         int accountid = 0;
+
+        /// <summary>
+        /// A private instance of <see cref="Addresses"/>
+        /// </summary>
+        private Addresses _addresses;
+
         public cMileagecats(int nAccountid)
         {
             accountid = nAccountid;
+            this._addresses = new Addresses(nAccountid);
         }
 
         private cMileageCat GetFromDatabase(int id)
@@ -2216,7 +2223,7 @@ namespace Spend_Management
                 {
                     if (journeyStep.startlocation.Identifier == homeAddress.LocationID || journeyStep.endlocation.Identifier == homeAddress.LocationID)
                     {
-                        CalculateHomeStepForJuniorDoctorMileage(expenseitem, ref grandtotal, ref vat, updateOldMiles, subcat, vatCalculation, workAddress, homeAddress, distance, lastOfficialStep, additionalRate);
+                        this.CalculateHomeStepForJuniorDoctorMileage(expenseitem, ref grandtotal, ref vat, updateOldMiles, subcat, vatCalculation, workAddress, homeAddress, distance, lastOfficialStep, additionalRate);
                     }
                     else
                     {
@@ -2243,7 +2250,7 @@ namespace Spend_Management
         /// <param name="distance">An IJourneyDistance object</param>
         /// <param name="lastOfficialStep">The step that has the last "official" flag set.</param>
         /// <param name="additionalRate">The value to be used to add additiional value to the last step.    </param>
-        internal static void CalculateHomeStepForJuniorDoctorMileage(
+        internal void CalculateHomeStepForJuniorDoctorMileage(
             cExpenseItem expenseitem,
             ref decimal grandtotal,
             ref decimal vat,
@@ -2270,8 +2277,8 @@ namespace Spend_Management
             var workToOfficialDistance = workAddress == null
                                              ? null
                                              : distance.GetRecommendedOrCustomDistance(
-                                                 workAddress.LocationID,
-                                                 lastOfficialAddressId);
+                                                this._addresses.GetAddressById(workAddress.LocationID),
+                                                this._addresses.GetAddressById(lastOfficialAddressId));
             if (workToOfficialDistance.HasValue)
             {
                 var maximumMileageAtFullRate = workToOfficialDistance.Value;
@@ -2482,26 +2489,6 @@ namespace Spend_Management
         {
             decimal kmValue = miles * (decimal)1.609344;
             return decimal.Parse(kmValue.ToString("#0.00"));
-        }
-
-        /// <summary>
-        /// Convert a distance in miles to the equivalent distance in kilometres
-        /// </summary>
-        /// <param name="miles">The number of miles</param>
-        /// <returns>The distance in kilometres</returns>
-        public static decimal ConvertMilesToKilometres(decimal miles)
-        {
-            return (miles == 0m) ? 0m : miles * 1.609344m;
-        }
-
-        /// <summary>
-        /// Convert a distance in kilometres to the equivalent distance in miles
-        /// </summary>
-        /// <param name="kilometres">The number of kilometres</param>
-        /// <returns>The distance in miles</returns>
-        public static decimal ConvertKilometresToMiles(decimal kilometres)
-        {
-            return (kilometres == 0m) ? 0m : kilometres / 1.609344m;
         }
 
         public virtual int saveVehicleJourneyRate(cMileageCat mileagecat)
@@ -2790,9 +2777,10 @@ namespace Spend_Management
                     var homeAddress = employee.GetHomeAddresses().GetBy(date);
                     var workAddressId = workAddress != null ? workAddress.LocationID : 0;
                     var homeAddressId = homeAddress != null ? homeAddress.LocationID : 0;
-
-                    officetohome = AddressDistance.GetRecommendedOrCustomDistance(workAddressId, homeAddressId, this.accountid, subAccount, currentUser) ?? 0;
-                    hometooffice = AddressDistance.GetRecommendedOrCustomDistance(homeAddressId, workAddressId, this.accountid, subAccount, currentUser) ?? 0;
+                    var homeAddressRef = this._addresses.GetAddressById(homeAddressId);
+                    var workAddressRef = this._addresses.GetAddressById(workAddressId);
+                    officetohome = AddressDistance.GetRecommendedOrCustomDistance(workAddressRef, homeAddressRef, this.accountid, subAccount, currentUser) ?? 0;
+                    hometooffice = AddressDistance.GetRecommendedOrCustomDistance(homeAddressRef, workAddressRef, this.accountid, subAccount, currentUser) ?? 0;
 
                     if (mileageCategory.mileUom == MileageUOM.KM)
                     {

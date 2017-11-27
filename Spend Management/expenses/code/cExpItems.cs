@@ -50,6 +50,11 @@ namespace Spend_Management
 
         private cStage payBeforeValidateStage;
 
+        /// <summary>
+        /// A private instance of <see cref="Addresses"/>
+        /// </summary>
+        private Addresses _addresses;
+
         #region properties
         public int accountid
         {
@@ -68,6 +73,7 @@ namespace Spend_Management
             clsproperties = clsmisc.GetGlobalProperties(accountid);
 
             fields = new cFields(accountid);
+            this._addresses = new Addresses(accountid);
         }
 
         /// <summary>
@@ -505,16 +511,20 @@ namespace Spend_Management
             {
                 if (employeeHomeLocationId > 0 && baseAddress != null)
                 {
-                    homeToOfficeDistance = AddressDistance.GetRecommendedOrCustomDistance(employeeHomeLocationId, baseAddress.LocationID, currentUser.AccountID, subAccount, currentUser);
-                    officeToHomeDistance = AddressDistance.GetRecommendedOrCustomDistance(baseAddress.LocationID, employeeHomeLocationId, currentUser.AccountID, subAccount, currentUser);
+                    var homeAddressRef = this._addresses.GetAddressById(employeeHomeLocationId);
+                    var baseAddressRef = this._addresses.GetAddressById(baseAddress.LocationID);
+                    homeToOfficeDistance = AddressDistance.GetRecommendedOrCustomDistance(homeAddressRef, baseAddressRef, currentUser.AccountID, subAccount, currentUser);
+                    officeToHomeDistance = AddressDistance.GetRecommendedOrCustomDistance(baseAddressRef, homeAddressRef, currentUser.AccountID, subAccount, currentUser);
                 }
             }
             else
             {
                 if (employeeHomeLocationId > 0 && employeeWorkLocationId > 0)
                 {
-                    homeToOfficeDistance = AddressDistance.GetRecommendedOrCustomDistance(employeeHomeLocationId, employeeWorkLocationId, currentUser.AccountID, subAccount, currentUser);
-                    officeToHomeDistance = AddressDistance.GetRecommendedOrCustomDistance(employeeWorkLocationId, employeeHomeLocationId, currentUser.AccountID, subAccount, currentUser);
+                    var homeAddressRef = this._addresses.GetAddressById(employeeHomeLocationId);
+                    var workAddressRef = this._addresses.GetAddressById(employeeWorkLocationId);
+                    homeToOfficeDistance = AddressDistance.GetRecommendedOrCustomDistance(homeAddressRef, workAddressRef, currentUser.AccountID, subAccount, currentUser);
+                    officeToHomeDistance = AddressDistance.GetRecommendedOrCustomDistance(workAddressRef, homeAddressRef, currentUser.AccountID, subAccount, currentUser);
                 }
             }
 
@@ -671,7 +681,7 @@ namespace Spend_Management
                                 if (step.startlocation.Identifier == employeeHomeLocationID)
                                 {
                                     decimal hometolocationdist = step.nummiles;
-                                    decimal officetolocationdist = AddressDistance.GetRecommendedOrCustomDistance(employeeWorkLocationID, step.endlocation.Identifier, currentUser.AccountID, subAccount, currentUser) ?? 0;
+                                    decimal officetolocationdist = AddressDistance.GetRecommendedOrCustomDistance(this._addresses.GetAddressById(employeeWorkLocationID), step.endlocation, currentUser.AccountID, subAccount, currentUser) ?? 0;
 
                                     if (hometolocationdist <= 0 || officetolocationdist <= 0)
                                     {
@@ -698,7 +708,7 @@ namespace Spend_Management
                                 else if (step.endlocation.Identifier == employeeHomeLocationID)
                                 {
                                     decimal hometolocationdist = step.nummiles;
-                                    decimal officetolocationdist = AddressDistance.GetRecommendedOrCustomDistance(step.startlocation.Identifier, employeeWorkLocationID, currentUser.AccountID, subAccount, currentUser) ?? 0;
+                                    decimal officetolocationdist = AddressDistance.GetRecommendedOrCustomDistance(step.startlocation, this._addresses.GetAddressById(employeeWorkLocationID), currentUser.AccountID, subAccount, currentUser) ?? 0;
 
                                     if (hometolocationdist <= 0 || officetolocationdist <= 0)
                                     {

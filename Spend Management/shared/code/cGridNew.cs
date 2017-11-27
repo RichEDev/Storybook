@@ -2427,7 +2427,7 @@ namespace Spend_Management
                             }
                             else
                             {
-                                linkValue = row.getCellByID(((cFieldColumn)column).ID).Text.ToString().Replace("'", "\'");
+                                linkValue = row.getCellByID(((cFieldColumn)column).Alias).Text.ToString().Replace("'", "\'");
                             }
                             if (((cFieldColumn)column).field == null || ((cFieldColumn)column).field.FieldName == null)
                             {
@@ -2435,7 +2435,7 @@ namespace Spend_Management
                             }
                             else
                             {
-                                link = link.Replace("{" + ((cFieldColumn)column).field.FieldName + "}", linkValue);
+                                link = link.Replace("{" + ((cFieldColumn)column).Alias + "}", linkValue);
                             }
 
                             break;

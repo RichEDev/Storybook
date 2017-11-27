@@ -8,6 +8,7 @@ namespace SpendManagementLibrary.GreenLight
     /// <summary>
     /// The form selection attribute value that corresponds to a particular form choice
     /// </summary>
+    [Serializable]
     public struct FormSelectionMapping
     {
         /// <summary>

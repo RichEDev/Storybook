@@ -2128,7 +2128,8 @@
                                 }
 
                                 this.element.attr("data-office", ui.item.hasClass("office-address"));
-
+                                var table = $(this.element).closest('table');
+                                $(table).data('A' + data.Identifier, data);
                                 this._value(textValue, data.Identifier);
                             }
                         });
@@ -2162,7 +2163,8 @@
             else {
                 this.debug("manual address matched", item);
                 this._trigger("matched", event, item);
-
+                var table = $(this.element).closest('table');
+                $(table).data('A' + item.Identifier, item);
                 var textValue = item.FriendlyName || item.AddressFriendlyName;
                 if (ui.item.hasClass("home-address")) {
                     textValue = SEL.Expenses.Settings.HomeAddressKeyword;
