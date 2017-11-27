@@ -7066,6 +7066,9 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_CorporateCardImportLog_statementId.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SetMobileDeviceStatus.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\MatchCorporateCardTransactionToExpenseItem.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\EmployeeMobileAppReviewPreferences.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_MobileAppEmployeeFeedbackPreferences_employees.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SetNeverPromptEmployeeForReview.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetAddresstoAddressDistanceByPostcode.sql" />
   </ItemGroup>
   <ItemGroup>

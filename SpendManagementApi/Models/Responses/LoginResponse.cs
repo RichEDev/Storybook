@@ -228,5 +228,9 @@ namespace SpendManagementApi.Models.Responses
         /// </summary>
         public string AccountCurrentlyLockedMessage { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether can can ask for a app reviews.
+        /// </summary>
+        public bool CanAskForReviews { get; set; }
     }
 }
