@@ -32,7 +32,7 @@ namespace SpendManagementLibrary.Account
         /// <param name="countryId">The country associated to this account by the user</param>
         /// <param name="archived">Archived status of the bankaccount</param>
         public BankAccount(int bankAccountId, int employeeId, string accountName, string accountNumber,
-            int accountType, string sortCode, string reference, int currencyId, int countryId,bool archived)
+            int accountType, string sortCode, string reference, int currencyId, int countryId,bool archived, string ibanCode= null, string swiftCode = null)
         {
             this.BankAccountId = bankAccountId;
             this.EmployeeId = employeeId;
@@ -44,6 +44,8 @@ namespace SpendManagementLibrary.Account
             this.CurrencyId = currencyId;
             this.CountryId = countryId;
             this.Archived = archived;
+            this.IbanCode = ibanCode;
+            this.SwiftCode = swiftCode;
         }
 
         #region Properties - All properties are get and set for the ajax interface
@@ -90,7 +92,17 @@ namespace SpendManagementLibrary.Account
         /// archived
         /// </summary>
         public bool Archived { get; set; }
-        
+
+        /// <summary>
+        /// Iban code of a bank account
+        /// </summary>
+        public string IbanCode { get; set; }
+
+        /// <summary>
+        /// Swift code of a bank account
+        /// </summary>
+        public string SwiftCode { get; set; }
+
         #endregion
 
         public static string GetRedactedValues(string value, int length)

@@ -24,6 +24,8 @@
             CurrentLoadType: null,
             CurrentBankAccountID: null,
             CurrentEmployeeID: null,
+            ModalWindowIbanCode: null,
+            ModalWindowSwiftCode: null,
             LoadType: { New: 1, Edit: 2 },
             /// <summary>
             /// This should be attached to controls with tooltips and will fetch the tooltip content and attach a 'close' event, the first parameter should be either the database help_text helpid or a custom string to display
@@ -48,6 +50,8 @@
                 this.SortCode = null;
                 this.Reference = null;
                 this.CurrencyId = null;
+                this.IbanCode = null;
+                this.SwiftCode = null;
             },
             SetModalEditBox: function (message) {
                 $g(SEL.BankAccounts.ModalWindow.SpanEditDevice).innerHTML = message;
@@ -69,7 +73,7 @@
                 }
             },
             LoadBankAccountModalComplete: function (bankAccount) {
-                SEL.BankAccounts.SetupModal(bankAccount.AccountName, bankAccount.AccountNumber, bankAccount.AccountType, bankAccount.SortCode, bankAccount.Reference, bankAccount.CurrencyId,bankAccount.CountryId);
+                SEL.BankAccounts.SetupModal(bankAccount.AccountName, bankAccount.AccountNumber, bankAccount.AccountType, bankAccount.SortCode, bankAccount.Reference, bankAccount.CurrencyId,bankAccount.CountryId, bankAccount.IbanCode, bankAccount.SwiftCode);
             },
             LoadPrimaryCountry: function (country) {
                 if (country != 0) {
@@ -97,9 +101,11 @@
                 $ddlSetSelected(SEL.BankAccounts.ModalWindowcmbAccounttype, 0);
                 $g(SEL.BankAccounts.ModalWindowtxtSortCode).value = "";
                 $g(SEL.BankAccounts.ModalWindowtxtReference).value = "";
+                $g(SEL.BankAccounts.ModalWindowIbanCode).value = "";
+                $g(SEL.BankAccounts.ModalWindowSwiftCode).value = "";
                 SEL.Common.Page_ClientValidateReset();
             },
-            SetupModal: function (accountname, accountnumber, accounttype, sortcode, reference, currency, country) {
+            SetupModal: function (accountname, accountnumber, accounttype, sortcode, reference, currency, country, ibanCode, swiftCode) {
 
 
                 if (SEL.BankAccounts.CurrentLoadType === SEL.BankAccounts.LoadType.Edit)
@@ -111,6 +117,14 @@
                 }
                 if (accountname !== null) {
                     $g(SEL.BankAccounts.ModalWindowAccountName).value = accountname;
+                }
+
+                if (ibanCode != null) {
+                    $g(SEL.BankAccounts.ModalWindowIbanCode).value = ibanCode;
+                }
+
+                if (swiftCode != null) {
+                    $g(SEL.BankAccounts.ModalWindowSwiftCode).value = swiftCode;
                 }
 
                 if (accountnumber !== null) {
@@ -180,6 +194,8 @@
                     bankAccount.CurrencyId = $ddlValue(SEL.BankAccounts.ModalWindowddlCurrency);
                     bankAccount.EmployeeID = SEL.BankAccounts.CurrentEmployeeID;
                     bankAccount.CountryId = $ddlValue(SEL.BankAccounts.ModalWindowddlCountry);
+                    bankAccount.IbanCode = $g(SEL.BankAccounts.ModalWindowIbanCode).value;
+                    bankAccount.SwiftCode = $g(SEL.BankAccounts.ModalWindowSwiftCode).value;
 
                     Spend_Management.shared.webServices.svcBankAccounts.SaveBankAccount(bankAccount, SEL.BankAccounts.SaveBankAccountComplete, SEL.BankAccounts.ValidateBankAccountError);
                     return false;

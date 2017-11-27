@@ -132,6 +132,8 @@
             reqDbCon.sqlexecute.Parameters.AddWithValue("@CurrencyId", reqBankAcccount.CurrencyId);
             reqDbCon.sqlexecute.Parameters.AddWithValue("@requestorEmployeeId", reqEmployeeId);
             reqDbCon.sqlexecute.Parameters.AddWithValue("@CountryId", reqBankAcccount.CountryId);
+            reqDbCon.sqlexecute.Parameters.AddWithValue("@SwiftCode", reqBankAcccount.SwiftCode);
+            reqDbCon.sqlexecute.Parameters.AddWithValue("@IbanCode", reqBankAcccount.IbanCode);
 
             reqDbCon.sqlexecute.Parameters.Add("@newBankAccountID", SqlDbType.Int);
             reqDbCon.sqlexecute.Parameters["@newBankAccountID"].Direction = ParameterDirection.ReturnValue;
