@@ -31,9 +31,9 @@ namespace SpendManagementLibrary.Account
         /// <param name="currencyId">The currency associated to this account by the user</param>
         /// <param name="countryId">The country associated to this account by the user</param>
         /// <param name="archived">Archived status of the bankaccount</param>
-        /// <param name="ibanCode">The country associated to this account by the user</param>
+        /// <param name="iban">The country associated to this account by the user</param>
         /// <param name="swiftCode">Archived status of the bankaccount</param>
-        public BankAccount(int bankAccountId, int employeeId, string accountName, string accountNumber, int accountType, string sortCode, string reference, int currencyId, int countryId, bool archived, string ibanCode = null, string swiftCode = null)
+        public BankAccount(int bankAccountId, int employeeId, string accountName, string accountNumber, int accountType, string sortCode, string reference, int currencyId, int countryId, bool archived, string iban = null, string swiftCode = null)
         {
             this.BankAccountId = bankAccountId;
             this.EmployeeId = employeeId;
@@ -45,7 +45,7 @@ namespace SpendManagementLibrary.Account
             this.CurrencyId = currencyId;
             this.CountryId = countryId;
             this.Archived = archived;
-            this.IbanCode = ibanCode;
+            this.Iban = iban;
             this.SwiftCode = swiftCode;
         }
 
@@ -97,7 +97,7 @@ namespace SpendManagementLibrary.Account
         /// <summary>
         /// Iban code of a bank account
         /// </summary>
-        public string IbanCode { get; set; }
+        public string Iban { get; set; }
 
         /// <summary>
         /// Swift code of a bank account

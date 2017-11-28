@@ -24,7 +24,7 @@
             CurrentLoadType: null,
             CurrentBankAccountID: null,
             CurrentEmployeeID: null,
-            ModalWindowIbanCode: null,
+            ModalWindowIban: null,
             ModalWindowSwiftCode: null,
             LoadType: { New: 1, Edit: 2 },
             /// <summary>
@@ -50,7 +50,7 @@
                 this.SortCode = null;
                 this.Reference = null;
                 this.CurrencyId = null;
-                this.IbanCode = null;
+                this.Iban = null;
                 this.SwiftCode = null;
             },
             SetModalEditBox: function (message) {
@@ -73,7 +73,7 @@
                 }
             },
             LoadBankAccountModalComplete: function (bankAccount) {
-                SEL.BankAccounts.SetupModal(bankAccount.AccountName, bankAccount.AccountNumber, bankAccount.AccountType, bankAccount.SortCode, bankAccount.Reference, bankAccount.CurrencyId,bankAccount.CountryId, bankAccount.IbanCode, bankAccount.SwiftCode);
+                SEL.BankAccounts.SetupModal(bankAccount.AccountName, bankAccount.AccountNumber, bankAccount.AccountType, bankAccount.SortCode, bankAccount.Reference, bankAccount.CurrencyId,bankAccount.CountryId, bankAccount.Iban, bankAccount.SwiftCode);
             },
             LoadPrimaryCountry: function (country) {
                 if (country != 0) {
@@ -101,11 +101,11 @@
                 $ddlSetSelected(SEL.BankAccounts.ModalWindowcmbAccounttype, 0);
                 $g(SEL.BankAccounts.ModalWindowtxtSortCode).value = "";
                 $g(SEL.BankAccounts.ModalWindowtxtReference).value = "";
-                $g(SEL.BankAccounts.ModalWindowIbanCode).value = "";
+                $g(SEL.BankAccounts.ModalWindowIban).value = "";
                 $g(SEL.BankAccounts.ModalWindowSwiftCode).value = "";
                 SEL.Common.Page_ClientValidateReset();
             },
-            SetupModal: function (accountname, accountnumber, accounttype, sortcode, reference, currency, country, ibanCode, swiftCode) {
+            SetupModal: function (accountname, accountnumber, accounttype, sortcode, reference, currency, country, iban, swiftCode) {
 
 
                 if (SEL.BankAccounts.CurrentLoadType === SEL.BankAccounts.LoadType.Edit)
@@ -119,8 +119,8 @@
                     $g(SEL.BankAccounts.ModalWindowAccountName).value = accountname;
                 }
 
-                if (ibanCode != null) {
-                    $g(SEL.BankAccounts.ModalWindowIbanCode).value = ibanCode;
+                if (iban != null) {
+                    $g(SEL.BankAccounts.ModalWindowIban).value = iban;
                 }
 
                 if (swiftCode != null) {
@@ -194,7 +194,7 @@
                     bankAccount.CurrencyId = $ddlValue(SEL.BankAccounts.ModalWindowddlCurrency);
                     bankAccount.EmployeeID = SEL.BankAccounts.CurrentEmployeeID;
                     bankAccount.CountryId = $ddlValue(SEL.BankAccounts.ModalWindowddlCountry);
-                    bankAccount.IbanCode = $g(SEL.BankAccounts.ModalWindowIbanCode).value;
+                    bankAccount.Iban = $g(SEL.BankAccounts.ModalWindowIban).value;
                     bankAccount.SwiftCode = $g(SEL.BankAccounts.ModalWindowSwiftCode).value;
 
                     Spend_Management.shared.webServices.svcBankAccounts.SaveBankAccount(bankAccount, SEL.BankAccounts.SaveBankAccountComplete, SEL.BankAccounts.ValidateBankAccountError);

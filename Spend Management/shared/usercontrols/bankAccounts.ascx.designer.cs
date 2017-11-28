@@ -283,22 +283,22 @@ namespace Spend_Management.shared.usercontrols {
         protected global::System.Web.UI.WebControls.CompareValidator rvCountry;
         
         /// <summary>
-        /// lblIbanCode control.
+        /// lblIban control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIbanCode;
+        protected global::System.Web.UI.WebControls.Label lblIban;
         
         /// <summary>
-        /// txtIbanCode control.
+        /// txtIban control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIbanCode;
+        protected global::System.Web.UI.WebControls.TextBox txtIban;
         
         /// <summary>
         /// RegularExpressionValidator1 control.
