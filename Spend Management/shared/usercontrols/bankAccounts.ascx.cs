@@ -190,6 +190,8 @@
             sbJs.Append("SEL.BankAccounts.ModalAccountNumberValidatorID = \"" + this.rfAccountNumber.ClientID + "\";\n");
             sbJs.Append("SEL.BankAccounts.ModalAccountTypeValidatorID = \"" + this.rvAccountType.ClientID + "\";\n");
             sbJs.Append("SEL.BankAccounts.ModalCurrencyValidatorID = \"" + this.rvCurrency.ClientID + "\";\n");
+            sbJs.Append("SEL.BankAccounts.ModalWindowIban = \"" + this.txtIban.ClientID + "\";\n");
+            sbJs.Append("SEL.BankAccounts.ModalWindowSwiftCode = \"" + this.txtSwiftCode.ClientID + "\";\n");
             sbJs.Append("SEL.BankAccounts.CurrentEmployeeID = " + (this.AccountsEmployeeId >= 0 ? this.AccountsEmployeeId.ToString(CultureInfo.InvariantCulture) : reqCurrentUser.EmployeeID.ToString(CultureInfo.InvariantCulture)) + ";\n");
 
             Page.ClientScript.RegisterStartupScript(this.GetType(), "BankAccounVars", sbJs + "\n" + cGridNew.generateJS_init("BankAccountGridVars", new List<string> { gridData[0] }, reqCurrentUser.CurrentActiveModule), true);

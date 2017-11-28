@@ -9,6 +9,8 @@
 	,@CurrencyId INT
 	,@requestorEmployeeId INT
 	,@CountryId INT
+	,@SwiftCode nvarchar(50)
+    ,@Iban nvarchar(50)
 	)
 AS
 BEGIN
@@ -41,6 +43,8 @@ BEGIN
 			,CreatedOn
 			,CreatedBy
 			,CountryId
+			,SwiftCode
+			,Iban
 			)
 		VALUES (
 			@EmployeeId
@@ -53,6 +57,8 @@ BEGIN
 			,GETUTCDATE()
 			,@requestorEmployeeId
 			,@CountryId
+			,dbo.getEncryptedValue(@SwiftCode)
+			,dbo.getEncryptedValue(@Iban)
 			);
 
 		SET @newBankAccountID = @@IDENTITY;
@@ -95,6 +101,8 @@ BEGIN
 			DECLARE @oldCountry NVARCHAR(100);
 			DECLARE @oldReference NVARCHAR(100);
 			DECLARE @FieldId NVARCHAR(2000);
+			DECLARE @OldSwiftCode NVARCHAR(100);
+			DECLARE @OldIban NVARCHAR(100);
 
 			SELECT @FieldId = fieldid
 			FROM fields
@@ -108,6 +116,7 @@ BEGIN
 				,@oldAccountCurrency = CurrencyId
 				,@oldCountry = CountryId
 				,@oldReference = dbo.getDecryptedValue(Reference)
+				,@OldIban = dbo.getDecryptedValue(Iban),@OldSwiftCode = dbo.getDecryptedValue(SwiftCode)
 			FROM BankAccounts
 			WHERE BankAccountId = @BankAccountId;
 
@@ -122,6 +131,8 @@ BEGIN
 				,CurrencyId = @CurrencyId
 				,modifiedOn = GETUTCDATE()
 				,modifiedBy = @requestorEmployeeId
+				,SwiftCode = dbo.getEncryptedValue(@SwiftCode)
+				,Iban = dbo.getEncryptedValue(@Iban)
 			WHERE BankAccountId = @BankAccountId;
 
 			SET @newBankAccountID = @BankAccountId;
@@ -220,6 +231,14 @@ BEGIN
 					,@RecordName
 					,NULL;
 			END
+			 IF @OldIban <> @Iban
+   BEGIN
+    EXEC addUpdateEntryToAuditLog @requestorEmployeeId, null, @BankAccountElement, @BankAccountId, '4C6FF468-A5B5-41E6-94F5-FB2CC7770889', @OldIban, @Iban, @RecordName, null;
+   END
+   IF @OldSwiftCode <> @SwiftCode
+   BEGIN
+    EXEC addUpdateEntryToAuditLog @requestorEmployeeId, null, @BankAccountElement, @BankAccountId, '4C6FF468-A5B5-41E6-94F5-FB2CC7770889', @OldSwiftCode, @SwiftCode, @RecordName, null;
+   END
 		END
 	END
 
