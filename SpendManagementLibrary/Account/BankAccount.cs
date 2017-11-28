@@ -31,8 +31,9 @@ namespace SpendManagementLibrary.Account
         /// <param name="currencyId">The currency associated to this account by the user</param>
         /// <param name="countryId">The country associated to this account by the user</param>
         /// <param name="archived">Archived status of the bankaccount</param>
-        public BankAccount(int bankAccountId, int employeeId, string accountName, string accountNumber,
-            int accountType, string sortCode, string reference, int currencyId, int countryId,bool archived, string ibanCode= null, string swiftCode = null)
+        /// <param name="ibanCode">The country associated to this account by the user</param>
+        /// <param name="swiftCode">Archived status of the bankaccount</param>
+        public BankAccount(int bankAccountId, int employeeId, string accountName, string accountNumber, int accountType, string sortCode, string reference, int currencyId, int countryId, bool archived, string ibanCode = null, string swiftCode = null)
         {
             this.BankAccountId = bankAccountId;
             this.EmployeeId = employeeId;
