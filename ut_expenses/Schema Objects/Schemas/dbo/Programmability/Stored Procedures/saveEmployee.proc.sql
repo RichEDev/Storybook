@@ -62,7 +62,9 @@ CREATE PROCEDURE [dbo].[saveEmployee]
  @notifyClaimUnsubmission BIT, 
  @DvlaConsentDate DATETIME,
  @DriverId INT,
- @ExcessMileage FLOAT 
+ @ExcessMileage FLOAT,
+ @Iban nvarchar(50),
+ @SwiftCode nvarchar(50)
 AS
 BEGIN
 declare @count int;
@@ -80,7 +82,7 @@ declare @count int;
    if @accountnumber<>'' 
    begin
    INSERT INTO [dbo].[BankAccounts]
-           ([EmployeeId],[AccountName],[AccountNumber],[AccountType],[SortCode],[Reference],[CurrencyId],[CreatedOn],[CreatedBy],CountryId) VALUES (@employeeid,dbo.getEncryptedValue(@name),dbo.getEncryptedValue(@accountnumber),@accounttype,dbo.getEncryptedValue(@sortcode),dbo.getEncryptedValue(@reference),@currencyid,@date,@userid,@countryid)
+           ([EmployeeId],[AccountName],[AccountNumber],[AccountType],[SortCode],[Reference],[CurrencyId],[CreatedOn],[CreatedBy],CountryId, SwiftCode, Iban) VALUES (@employeeid,dbo.getEncryptedValue(@name),dbo.getEncryptedValue(@accountnumber),@accounttype,dbo.getEncryptedValue(@sortcode),dbo.getEncryptedValue(@reference),@currencyid,@date,@userid,@countryid, @SwiftCode, @Iban)
    end
 
    if @CUemployeeID = -1
