@@ -10,7 +10,7 @@
 	,@requestorEmployeeId INT
 	,@CountryId INT
 	,@SwiftCode nvarchar(50)
-    ,@IbanCode nvarchar(50)
+    ,@Iban nvarchar(50)
 	)
 AS
 BEGIN
@@ -44,7 +44,7 @@ BEGIN
 			,CreatedBy
 			,CountryId
 			,SwiftCode
-			,IbanCode
+			,Iban
 			)
 		VALUES (
 			@EmployeeId
@@ -58,7 +58,7 @@ BEGIN
 			,@requestorEmployeeId
 			,@CountryId
 			,dbo.getEncryptedValue(@SwiftCode)
-			,dbo.getEncryptedValue(@IbanCode)
+			,dbo.getEncryptedValue(@Iban)
 			);
 
 		SET @newBankAccountID = @@IDENTITY;
@@ -102,7 +102,7 @@ BEGIN
 			DECLARE @oldReference NVARCHAR(100);
 			DECLARE @FieldId NVARCHAR(2000);
 			DECLARE @OldSwiftCode NVARCHAR(100);
-			DECLARE @OldIbanCode NVARCHAR(100);
+			DECLARE @OldIban NVARCHAR(100);
 
 			SELECT @FieldId = fieldid
 			FROM fields
@@ -116,7 +116,7 @@ BEGIN
 				,@oldAccountCurrency = CurrencyId
 				,@oldCountry = CountryId
 				,@oldReference = dbo.getDecryptedValue(Reference)
-				,@OldIbanCode = dbo.getDecryptedValue(IbanCode),@OldSwiftCode = dbo.getDecryptedValue(SwiftCode)
+				,@OldIban = dbo.getDecryptedValue(Iban),@OldSwiftCode = dbo.getDecryptedValue(SwiftCode)
 			FROM BankAccounts
 			WHERE BankAccountId = @BankAccountId;
 
@@ -132,7 +132,7 @@ BEGIN
 				,modifiedOn = GETUTCDATE()
 				,modifiedBy = @requestorEmployeeId
 				,SwiftCode = dbo.getEncryptedValue(@SwiftCode)
-				,IbanCode = dbo.getEncryptedValue(@IbanCode)
+				,Iban = dbo.getEncryptedValue(@Iban)
 			WHERE BankAccountId = @BankAccountId;
 
 			SET @newBankAccountID = @BankAccountId;
@@ -231,9 +231,9 @@ BEGIN
 					,@RecordName
 					,NULL;
 			END
-			 IF @OldIbanCode <> @IbanCode
+			 IF @OldIban <> @Iban
    BEGIN
-    EXEC addUpdateEntryToAuditLog @requestorEmployeeId, null, @BankAccountElement, @BankAccountId, '4C6FF468-A5B5-41E6-94F5-FB2CC7770889', @OldIbanCode, @IbanCode, @RecordName, null;
+    EXEC addUpdateEntryToAuditLog @requestorEmployeeId, null, @BankAccountElement, @BankAccountId, '4C6FF468-A5B5-41E6-94F5-FB2CC7770889', @OldIban, @Iban, @RecordName, null;
    END
    IF @OldSwiftCode <> @SwiftCode
    BEGIN
