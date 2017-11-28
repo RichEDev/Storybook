@@ -1,5 +1,6 @@
 ﻿namespace SpendManagementLibrary.MobileAppReview
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
 
@@ -76,7 +77,16 @@
                 databaseConnection.sqlexecute.Parameters.Clear();
                 databaseConnection.sqlexecute.Parameters.AddWithValue("@FeedbackCategoryID", feedbackCategoryId);
                 databaseConnection.sqlexecute.Parameters.AddWithValue("@Feedback", feedback);
-                databaseConnection.sqlexecute.Parameters.AddWithValue("@Email", email);
+
+                if (email == string.Empty)
+                {
+                    databaseConnection.sqlexecute.Parameters.AddWithValue("@Email", DBNull.Value);
+                }
+                else
+                {
+                    databaseConnection.sqlexecute.Parameters.AddWithValue("@Email", email);
+                }
+
                 databaseConnection.sqlexecute.Parameters.AddWithValue("@MobileMetricId", mobileMetricId);
                 databaseConnection.sqlexecute.Parameters.AddWithValue("@AppVersion", appVersion);
                 databaseConnection.sqlexecute.Parameters.Add("@ReturnValue", SqlDbType.Int);

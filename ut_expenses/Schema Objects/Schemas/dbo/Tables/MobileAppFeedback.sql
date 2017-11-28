@@ -2,10 +2,10 @@
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[FeedbackCategoryId] [int] NOT NULL,
 	[Feedback] [nvarchar](500) NOT NULL,
-	[Email] [nvarchar](100) NOT NULL,
+	[Email] [nvarchar](100) NULL,
 	[MobileMetricId] [int] NOT NULL,
 	[AppVersion] [nvarchar](100) NOT NULL,
-        [DateSubmitted] [DateTime] NOT NULL
+    [DateSubmitted] [DateTime] NOT NULL
  CONSTRAINT [PK_MobileAppFeedback] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
