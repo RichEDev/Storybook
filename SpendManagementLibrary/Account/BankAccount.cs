@@ -95,7 +95,7 @@ namespace SpendManagementLibrary.Account
         public bool Archived { get; set; }
 
         /// <summary>
-        /// Iban code of a bank account
+        /// Iban of a bank account
         /// </summary>
         public string Iban { get; set; }
 
