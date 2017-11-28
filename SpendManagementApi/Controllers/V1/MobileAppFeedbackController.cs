@@ -6,6 +6,7 @@
 
     using SpendManagementApi.Attributes;
     using SpendManagementApi.Models.Common;
+    using SpendManagementApi.Models.Requests.MobileAppFeedback;
     using SpendManagementApi.Models.Responses;
     using SpendManagementApi.Models.Responses.AppFeedback;
     using SpendManagementApi.Repositories;
@@ -50,7 +51,7 @@
         /// <see cref="BooleanResponse">BooleanResponse</see> with the outcome of the action.
         /// </returns>
         [HttpPost, Route("DoNotPromptEmployeeForAppReviews")]
-        [AuthAudit(SpendManagementElement.AccessRoles, AccessRoleType.View)]
+        [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
         public BooleanResponse DoNotPromptEmployeeForAppReviews()
         {      
             var response = this.InitialiseResponse<BooleanResponse>();
@@ -65,11 +66,30 @@
         /// The <see cref="MobileAppFeedbackCategoriesResponse">MobileAppFeedbackCategoriesResponse</see>
         /// </returns>
         [HttpGet, Route("GetMobileAppFeedbackCategories")]
-        [AuthAudit(SpendManagementElement.AccessRoles, AccessRoleType.View)]
+        [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
         public MobileAppFeedbackCategoriesResponse GetActiveMobileAppFeedbackCategories()
         {      
             var response = this.InitialiseResponse<MobileAppFeedbackCategoriesResponse>();
             response.List = _repository.GetActiveMobileAppFeedbackCategories();
+            return response;
+        }
+
+
+        /// <summary>
+        /// Saves the mobile app feedback
+        /// </summary>
+        /// <param name="request">
+        /// The <see cref="MobileAppFeedbackRequest">MobileAppFeedbackRequest</see>
+        /// </param>
+        /// <returns>
+        /// <see cref="BooleanResponse">BooleanResponse</see> with the outcome of the save.
+        /// </returns>
+        [HttpPost, Route("SaveMobileAppFeedback")]
+        [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
+        public BooleanResponse SaveMobileAppFeedback([FromBody] MobileAppFeedbackRequest request)
+        {      
+            var response = this.InitialiseResponse<BooleanResponse>();
+            response.Item = _repository.SaveMobileAppFeedback(request);
             return response;
         }
     }

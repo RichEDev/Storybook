@@ -1,0 +1,2 @@
+﻿ALTER TABLE [dbo].[MobileAppFeedback]  WITH CHECK ADD  CONSTRAINT [FK_MobileAppFeedback_MobileAppFeedbackCategories] FOREIGN KEY([FeedbackCategoryId])
+REFERENCES [dbo].[MobileAppFeedbackCategories] ([CategoryId])
