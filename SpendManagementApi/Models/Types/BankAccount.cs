@@ -70,6 +70,16 @@
         public string Outcome { get; set; }
 
         /// <summary>
+        /// Gets or sets Iban of an account number
+        /// </summary>
+        public string Iban { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Swift code of an account number
+        /// </summary>
+        public string SwiftCode { get; set; }
+
+        /// <summary>
         /// Convert from a data access layer Type to an api Type.
         /// </summary>
         /// <param name="dbType">The instance of the data access layer Type to convert from.</param>
@@ -92,6 +102,8 @@
             this.CurrencyId = dbType.CurrencyId;
             this.CountryId = dbType.CountryId;
             this.Archived = dbType.Archived;
+            this.Iban = dbType.Iban;
+            this.SwiftCode = dbType.SwiftCode;
             return this;
         }
 
@@ -102,7 +114,7 @@
         /// <returns>A data access layer Type</returns>
         public SpendManagementLibrary.Account.BankAccount To(IActionContext actionContext)
         {
-           return new SpendManagementLibrary.Account.BankAccount(this.BankAccountId, this.EmployeeId, this.AccountName, this.AccountNumber, this.AccountType, this.SortCode, this.Reference, this.CurrencyId, this.CountryId,this.Archived);
+           return new SpendManagementLibrary.Account.BankAccount(this.BankAccountId, this.EmployeeId, this.AccountName, this.AccountNumber, this.AccountType, this.SortCode, this.Reference, this.CurrencyId, this.CountryId, this.Archived, this.Iban, this.SwiftCode);
         }
     }
 }
