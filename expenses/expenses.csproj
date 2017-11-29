@@ -24,7 +24,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <SignAssembly>false</SignAssembly>
     <TargetFrameworkProfile />
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>False</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -333,6 +333,9 @@
     <Content Include="favicon.ico" />
     <Content Include="GreenLightAdminMenu.aspx" />
     <Content Include="help_text\Content\Claimant Guide\EnvelopeAttachmentInstructions.txt" />
+    <Content Include="help_text\MobileAppFeedback\MobileAppReviewServiceDeskEmailTemplate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="icons\32\new\mail.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

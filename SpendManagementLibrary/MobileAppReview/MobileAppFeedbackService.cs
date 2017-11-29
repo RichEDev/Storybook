@@ -47,6 +47,40 @@
         }
 
         /// <summary>
+        /// Gets a mobile app feedback category description by its id.
+        /// </summary>
+        /// <param name="categoryId">
+        /// The category id.
+        /// </param>
+        /// <param name="accountId">
+        /// The account id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/> with the feedback category description.
+        /// </returns>
+        public static string GetMobileAppFeedbackCategoryDescriptionById(int categoryId, int accountId)
+        {
+            string description = string.Empty;
+            using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(accountId)))
+            {
+                databaseConnection.sqlexecute.Parameters.Clear();
+                databaseConnection.AddWithValue("@categoryId", categoryId);
+
+                using (IDataReader reader = databaseConnection.GetReader("SELECT Description FROM [MobileAppFeedbackCategories] WHERE [CategoryId] = @categoryId"))
+                {
+                    int descriptionOrd = reader.GetOrdinal("Description");
+
+                    while (reader.Read())
+                    {                   
+                         description = reader.GetString(descriptionOrd);                   
+                    }
+
+                    return description;
+                }
+            }
+        }
+
+        /// <summary>
         /// Save mobile app feedback to the DB.
         /// </summary>
         /// <param name="accountId">
