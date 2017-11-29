@@ -46,6 +46,31 @@
             }
         }
 
+        public static string GetActiveMobileAppFeedbackCategoryDescriptionById(int categoryId, int accountId)
+        {
+            string description = string.Empty;
+            using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(accountId)))
+            {
+                databaseConnection.sqlexecute.Parameters.Clear();
+                using (IDataReader reader = databaseConnection.GetReader(
+                    "SELECT Description FROM [MobileAppFeedbackCategories] WHERE [CategoryId] =" + categoryId))
+                {
+    
+                    int descriptionOrd = reader.GetOrdinal("Description");
+
+                    while (reader.Read())
+                    {
+                    
+                         description = reader.GetString(descriptionOrd);
+
+                    
+                    }
+
+                    return description;
+                }
+            }
+        }
+
         /// <summary>
         /// Save mobile app feedback to the DB.
         /// </summary>

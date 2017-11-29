@@ -63,7 +63,24 @@
         /// </returns>
         public bool SaveMobileAppFeedback(MobileAppFeedbackRequest request)
         {
-           return MobileAppFeedbackService.SaveMobileAppFeedback(this.User.AccountID, request.FeedbackCategoryId, request.Feedback, request.Email, request.MobileMetricId, request.AppVersion);
+
+          var feedbackCategory = MobileAppFeedbackService.GetActiveMobileAppFeedbackCategoryDescriptionById(request.FeedbackCategoryId, User.AccountID);
+
+           MobileAppFeedbackEmailGenerator.SendEmailToServiceDesk(this.User,feedbackCategory , request.Feedback, request.Email, request.AppVersion, request.MobileMetricId);
+
+            //if (MobileAppFeedbackService.SaveMobileAppFeedback(
+            //    this.User.AccountID,
+            //    request.FeedbackCategoryId,
+            //    request.Feedback,
+            //    request.Email,
+            //    request.MobileMetricId,
+            //    request.AppVersion))
+            //{
+            //    //send email here
+            //    return true;
+            //}
+
+            return false;
         }
     }
 }

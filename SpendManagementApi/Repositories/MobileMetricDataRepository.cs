@@ -43,7 +43,7 @@
         /// </returns>
         public int UpdateMetricData(IList<KeyValuePair<string, string>> data)
         {
-            return UpdateMobileMetricData.UpdateDatabase(data, User.AccountID, User.EmployeeID);
+            return MobileMetricDataService.UpdateDatabase(data, User.AccountID, User.EmployeeID);
         }
 
         /// <summary>

@@ -24,7 +24,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <SignAssembly>false</SignAssembly>
     <TargetFrameworkProfile />
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -333,6 +333,7 @@
     <Content Include="favicon.ico" />
     <Content Include="GreenLightAdminMenu.aspx" />
     <Content Include="help_text\Content\Claimant Guide\EnvelopeAttachmentInstructions.txt" />
+    <Content Include="help_text\MobileAppFeedback\MobileAppReviewServiceDeskEmailTemplate.txt" />
     <Content Include="icons\32\new\mail.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2331,7 +2332,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://expenses.localhost</IISUrl>
+          <IISUrl>http://localhost:53587/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
