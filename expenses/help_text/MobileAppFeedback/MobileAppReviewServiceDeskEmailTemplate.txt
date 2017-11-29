@@ -113,24 +113,23 @@
                                                                      <h3>Comments/Suggestions:</h3>
                                                                      [Feedback]
                                                                      <br>
-																	 <br>
-																	 <h3>Other Details:</h3>
-																	  <label>Customer Name: </label> [CustomerName]
-																	 <br>
-																	  <label>Employee Name: </label> [EmployeeName]
-																	 <br>
-                                                                      <label>App Version: </label>[AppVersion]
-																	 <br>
-																	  <label>Mobile Metric ID: </label> [MobileMetricId]
+                                                                     <br>
+                                                                     <h3>Other Details:</h3>
+                                                                     <label>Customer Name: </label> [CustomerName]
+                                                                     <br>
+                                                                     <label>Employee Name: </label> [EmployeeName]
+                                                                     <br>
+                                                                     <label>App Version: </label>[AppVersion]
+                                                                     <br>
+                                                                     <label>Mobile Metric ID: </label> [MobileMetricId]
                                                                      <br>
                                                                      <br>
                                                                   </div>
                                                                   <br>
                                                                   <br>
-													              [EmailReplyStart]
+                                                                  [EmailReplyStart]
                                                                   Please use the link below to reply to the user via email:<br>[Email]
-																  [EmailReplyEnd]
-															
+                                                                  [EmailReplyEnd]
                                                                </td>
                                                             </tr>
                                                          </tbody>
