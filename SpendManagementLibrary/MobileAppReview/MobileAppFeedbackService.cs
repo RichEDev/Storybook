@@ -47,7 +47,7 @@
         }
 
         /// <summary>
-        /// The get  mobile app feedback category description by its id.
+        /// Gets a mobile app feedback category description by its id.
         /// </summary>
         /// <param name="categoryId">
         /// The category id.
@@ -64,14 +64,14 @@
             using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(accountId)))
             {
                 databaseConnection.sqlexecute.Parameters.Clear();
+                databaseConnection.AddWithValue("@categoryId", categoryId);
 
-                using (IDataReader reader = databaseConnection.GetReader("SELECT Description FROM [MobileAppFeedbackCategories] WHERE [CategoryId] =" + categoryId))
+                using (IDataReader reader = databaseConnection.GetReader("SELECT Description FROM [MobileAppFeedbackCategories] WHERE [CategoryId] = @categoryId"))
                 {
                     int descriptionOrd = reader.GetOrdinal("Description");
 
                     while (reader.Read())
-                    {
-                    
+                    {                   
                          description = reader.GetString(descriptionOrd);                   
                     }
 
