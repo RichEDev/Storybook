@@ -309,6 +309,11 @@
 
                         do
                         {
+                            if (reader.IsDBNull(addressDistanceIdentifierOrdinal))
+                            {
+                                return distances;
+                            }
+
                             int identifier = reader.GetInt32(addressDistanceIdentifierOrdinal);
                             decimal customDistance = reader.GetDecimal(customDistanceOrdinal);
                             decimal? fastestDistance =

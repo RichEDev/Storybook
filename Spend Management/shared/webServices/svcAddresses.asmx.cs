@@ -714,14 +714,8 @@ namespace Spend_Management.shared.webServices
         public decimal? GetCustomOrRecommendedDistance(Address fromAddress, Address toAddress)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
-
-            var employees = new cEmployees(currentUser.AccountID);
-            Employee employee = employees.GetEmployeeById(currentUser.EmployeeID);
             var subAccounts = new cAccountSubAccounts(currentUser.AccountID);
-            cAccountSubAccount subAccount = subAccounts.getSubAccountById(employee.DefaultSubAccount);
-
-            decimal? distance = AddressDistance.GetRecommendedOrCustomDistance(fromAddress, toAddress, currentUser.AccountID, subAccount, currentUser);
-            return distance;
+            return AddressDistance.GetRecommendedOrCustomDistance(fromAddress, toAddress, currentUser.AccountID, subAccounts.getSubAccountById(currentUser.Employee.DefaultSubAccount), currentUser);
         }
 
         /// <summary>
