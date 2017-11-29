@@ -34,7 +34,7 @@
                 return false;
             }
 
-            return this.ShouldRandomlyRequestAppReview();
+            return true;
         }
 
         /// <summary>
