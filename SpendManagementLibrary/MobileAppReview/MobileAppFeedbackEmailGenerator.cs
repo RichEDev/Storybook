@@ -44,15 +44,10 @@
         /// The <see cref="bool"/>, whether the action was successful.
         /// </returns>
         public bool SendEmailToServiceDesk(ICurrentUserBase user, string feedbackCategory, string feedback, string email, string appVersion, int mobileMetricId)
-        {
-            cAccountProperties accountProperties = new cAccountSubAccountsBase(user.AccountID).getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
+        {      
             cAccounts accounts = new cAccounts();
             cAccount account = accounts.GetAccountByID(user.AccountID);
- 
-            var fromAddress = "mobileappfeedback@selenity.com";
-            var emailAddress = "teammobile@selenity.com";
-            var subject = "Expenses Mobile feedback received";
-
+         
             var messageBody = MobileAppFeedbackServiceDeskEmailTemplate();
 
             if (messageBody == string.Empty)
@@ -78,9 +73,13 @@
                 .Replace("[CustomerName]", account.companyname)
                 .Replace("[EmployeeName]", user.Employee.FullName);
 
-            MailMessage msg = new MailMessage(fromAddress, emailAddress, subject, messageBody)
-                                  { IsBodyHtml = true };
+            var fromAddress = "mobileappfeedback@selenity.com";
+            var emailAddress = "teammobile@selenity.com";
+            var subject = "Expenses Mobile feedback received";
 
+            MailMessage msg = new MailMessage(fromAddress, emailAddress, subject, messageBody) { IsBodyHtml = true };
+
+            cAccountProperties accountProperties = new cAccountSubAccountsBase(user.AccountID).getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
             EmailSender sender = new EmailSender(accountProperties.EmailServerAddress);
 
             return sender.SendEmail(msg); 
