@@ -46,24 +46,33 @@
             }
         }
 
-        public static string GetActiveMobileAppFeedbackCategoryDescriptionById(int categoryId, int accountId)
+        /// <summary>
+        /// The get  mobile app feedback category description by its id.
+        /// </summary>
+        /// <param name="categoryId">
+        /// The category id.
+        /// </param>
+        /// <param name="accountId">
+        /// The account id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/> with the feedback category description.
+        /// </returns>
+        public static string GetMobileAppFeedbackCategoryDescriptionById(int categoryId, int accountId)
         {
             string description = string.Empty;
             using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(accountId)))
             {
                 databaseConnection.sqlexecute.Parameters.Clear();
-                using (IDataReader reader = databaseConnection.GetReader(
-                    "SELECT Description FROM [MobileAppFeedbackCategories] WHERE [CategoryId] =" + categoryId))
+
+                using (IDataReader reader = databaseConnection.GetReader("SELECT Description FROM [MobileAppFeedbackCategories] WHERE [CategoryId] =" + categoryId))
                 {
-    
                     int descriptionOrd = reader.GetOrdinal("Description");
 
                     while (reader.Read())
                     {
                     
-                         description = reader.GetString(descriptionOrd);
-
-                    
+                         description = reader.GetString(descriptionOrd);                   
                     }
 
                     return description;

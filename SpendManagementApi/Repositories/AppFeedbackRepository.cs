@@ -72,7 +72,7 @@
                 request.AppVersion))
             {
                 //Saved to database, so generate email to service desk.
-                var feedbackCategory = MobileAppFeedbackService.GetActiveMobileAppFeedbackCategoryDescriptionById(request.FeedbackCategoryId, User.AccountID);
+                var feedbackCategory = MobileAppFeedbackService.GetMobileAppFeedbackCategoryDescriptionById(request.FeedbackCategoryId, User.AccountID);
                 bool sendEmailOutcome = new MobileAppFeedbackEmailGenerator().SendEmailToServiceDesk(this.User,feedbackCategory , request.Feedback, request.Email, request.AppVersion, request.MobileMetricId);
                 return sendEmailOutcome;
             }
