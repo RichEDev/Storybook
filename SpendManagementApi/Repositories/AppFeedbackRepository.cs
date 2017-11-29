@@ -62,23 +62,20 @@
         /// The <see cref="bool"/> with the outcome of the action.
         /// </returns>
         public bool SaveMobileAppFeedback(MobileAppFeedbackRequest request)
-        {
-
-          var feedbackCategory = MobileAppFeedbackService.GetActiveMobileAppFeedbackCategoryDescriptionById(request.FeedbackCategoryId, User.AccountID);
-
-           MobileAppFeedbackEmailGenerator.SendEmailToServiceDesk(this.User,feedbackCategory , request.Feedback, request.Email, request.AppVersion, request.MobileMetricId);
-
-            //if (MobileAppFeedbackService.SaveMobileAppFeedback(
-            //    this.User.AccountID,
-            //    request.FeedbackCategoryId,
-            //    request.Feedback,
-            //    request.Email,
-            //    request.MobileMetricId,
-            //    request.AppVersion))
-            //{
-            //    //send email here
-            //    return true;
-            //}
+        {     
+            if (MobileAppFeedbackService.SaveMobileAppFeedback(
+                this.User.AccountID,
+                request.FeedbackCategoryId,
+                request.Feedback,
+                request.Email,
+                request.MobileMetricId,
+                request.AppVersion))
+            {
+                //Saved to database, so generate email to service desk.
+                var feedbackCategory = MobileAppFeedbackService.GetActiveMobileAppFeedbackCategoryDescriptionById(request.FeedbackCategoryId, User.AccountID);
+                bool sendEmailOutcome = new MobileAppFeedbackEmailGenerator().SendEmailToServiceDesk(this.User,feedbackCategory , request.Feedback, request.Email, request.AppVersion, request.MobileMetricId);
+                return sendEmailOutcome;
+            }
 
             return false;
         }

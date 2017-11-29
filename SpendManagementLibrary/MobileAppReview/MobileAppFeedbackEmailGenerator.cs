@@ -1,52 +1,74 @@
 ﻿namespace SpendManagementLibrary.MobileAppReview
 {
-    using System;
+
     using System.IO;
-    using System.Net;
     using System.Net.Mail;
-    using System.Text.RegularExpressions;
     using System.Web;
 
-    public static class MobileAppFeedbackEmailGenerator
+    using BusinessLogic.Cache;
+
+    using Common.Logging;
+
+    /// <summary>
+    /// The mobile app feedback email generator.
+    /// </summary>
+    public class MobileAppFeedbackEmailGenerator
     {
-        public static bool SendEmailToServiceDesk(ICurrentUserBase user, string feedbackCategory, string feedback, string email, string appVersion, int mobileMetricId)
+        /// <summary>
+        /// An instance of <see cref="ILog"/> for logging <see cref="ICache{T,TK}"/> diagnostics and information.
+        /// </summary>
+        private static readonly ILog Log = new LogFactory<MobileAppFeedbackEmailGenerator>().GetLogger();
+
+        /// <summary>
+        /// Generates an email to the service desk with the submitted mobile app feedback.
+        /// </summary>
+        /// <param name="user">
+        /// An instance of <see cref="ICurrentUserBase"/>
+        /// </param>
+        /// <param name="feedbackCategory">
+        /// The feedback category.
+        /// </param>
+        /// <param name="feedback">
+        /// The feedback.
+        /// </param>
+        /// <param name="email">
+        /// The email of the employee providing feedback.
+        /// </param>
+        /// <param name="appVersion">
+        /// The app version.
+        /// </param>
+        /// <param name="mobileMetricId">
+        /// The mobile metric id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>, whether the action was successful.
+        /// </returns>
+        public bool SendEmailToServiceDesk(ICurrentUserBase user, string feedbackCategory, string feedback, string email, string appVersion, int mobileMetricId)
         {
-
             cAccountProperties accountProperties = new cAccountSubAccountsBase(user.AccountID).getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
-
             cAccounts accounts = new cAccounts();
             cAccount account = accounts.GetAccountByID(user.AccountID);
-
-            var emailSender = new EmailSender(accountProperties.EmailServerAddress);
-
+ 
             var fromAddress = "mobileappfeedback@selenity.com";
-            var emailAddress = "richard.edwards@selenity.com";
-            var subject = "Mobile App Feedback Received";
-         
+            var emailAddress = "teammobile@selenity.com";
+            var subject = "Expenses Mobile feedback received";
 
+            var messageBody = MobileAppFeedbackServiceDeskEmailTemplate();
 
-
-            var message = Get();
-
-            if (message == string.Empty)
+            if (messageBody == string.Empty)
             {
-               // log error
+                Log.Error("The mobile app feedback service desk email template text could not be found.");
                 return false;
             }
-
-      
-
+   
             if (email == string.Empty)
             {
-
                 // remove email reply link text from message
-
-                var g = GetStringBetweenCharacters(message, "[EmailReplyStart]", "[EmailReplyEnd]");
-                message = message.Replace(g, "");
+                var replyEmailText = GetStringBetweenEmailReplyTags(messageBody, "[EmailReplyStart]", "[EmailReplyEnd]");
+                messageBody = messageBody.Replace(replyEmailText, "");
             }
-
-            //Get data
-            message = message.Replace("[FeedbackCategory]", feedbackCategory)
+       
+            messageBody = messageBody.Replace("[FeedbackCategory]", feedbackCategory)
                 .Replace("[Feedback]", feedback)
                 .Replace("[AppVersion]", appVersion)
                 .Replace("[Email]", email)
@@ -56,51 +78,65 @@
                 .Replace("[CustomerName]", account.companyname)
                 .Replace("[EmployeeName]", user.Employee.FullName);
 
-            MailMessage msg = new MailMessage(fromAddress, emailAddress, subject.ToString(), message)
+            MailMessage msg = new MailMessage(fromAddress, emailAddress, subject, messageBody)
                                   { IsBodyHtml = true };
-
 
             EmailSender sender = new EmailSender(accountProperties.EmailServerAddress);
 
-            bool emailSent = sender.SendEmail(msg);
-
-      
-
-      //      emailSender.SendEmail(fromAddress, emailAddress, subject, message);
-
-            return true;
+            return sender.SendEmail(msg); 
         }
 
-
-        private static string Get()
+        /// <summary>
+        /// Gets the mobile app feedback service desk email template body text.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="string"/> the template body text.
+        /// </returns>
+        private string MobileAppFeedbackServiceDeskEmailTemplate()
         {
-            string infoUrl = GlobalVariables.GetAppSetting("MobileAppFeedbackServiceDeskEmailTemplate");
-
+           
             //build up path to guideline text
             var directoryInfo = new DirectoryInfo(HttpContext.Current.Server.MapPath("~/")).Parent;
 
             if (directoryInfo != null)
             {
-                var textpath = string.Format("{0}/expenses{1}", directoryInfo.FullName, infoUrl);
-                var t = System.IO.File.ReadAllText(textpath);
+                var templatePath =
+                    $"{directoryInfo.FullName}/expenses/help_text/MobileAppFeedback/MobileAppReviewServiceDeskEmailTemplate.txt";
 
-                return t;
+                return System.IO.File.ReadAllText(templatePath);     
             }
 
             return string.Empty;
         }
 
-
-        public static string GetStringBetweenCharacters(string input, string charFrom, string charTo)
+        /// <summary>
+        /// Gets the string between email reply tags.
+        /// </summary>
+        /// <param name="input">
+        /// The input.
+        /// </param>
+        /// <param name="tagFrom">
+        /// The tag from.
+        /// </param>
+        /// <param name="tagTo">
+        /// The tag to.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/> of text between the two start and end email reply tags.
+        /// </returns>
+        public string GetStringBetweenEmailReplyTags(string input, string tagFrom, string tagTo)
         {
-            int posFrom = input.IndexOf(charFrom) + 16;
-            if (posFrom != -1) //if found char
+            int positionFrom = input.IndexOf(tagFrom) + 16;
+
+            if (positionFrom != -1)
             {
-                int posTo = input.IndexOf(charTo, posFrom + 1);
-                if (posTo != -1) //if found char
+                int positionTp = input.IndexOf(tagTo, positionFrom + 1);
+
+                if (positionTp != -1)
                 {
-                    return input.Substring(posFrom + 1, posTo - posFrom - 1);
+                    return input.Substring(positionFrom + 1, positionTp - positionFrom - 1);
                 }
+
             }
 
             return string.Empty;

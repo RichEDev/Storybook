@@ -554,7 +554,7 @@
     <Compile Include="MobileDeviceNotifications\MobileDeviceStatus.cs" />
     <Compile Include="MobileInformationMessage\MobileInformationMessage.cs" />
     <Compile Include="MobileInformationMessage\MobileInformationMessages.cs" />
-    <Compile Include="MobileMetrics\MobileMetricDataService.cs" />
+    <Compile Include="MobileMetrics\UpdateMobileMetricData.cs" />
     <Compile Include="OnlineCountryInfo.cs" />
     <Compile Include="OnlineGlobalCountryInfo.cs" />
     <Compile Include="Mileage\OdometerReading.cs" />

@@ -9,7 +9,7 @@
     /// <summary>
     /// The update mobile metric data.
     /// </summary>
-    public static class MobileMetricDataService
+    public static class UpdateMobileMetricData
     {
         /// <summary>
         /// Updates the database with the mobile metric data.
@@ -50,35 +50,6 @@
             }
 
             return mobileId;
-        }
-
-        //public static IList<KeyValuePair<string, string>> GetMobileMetricDataForId(int id, int accountId)
-        //{        
-        //    List<KeyValuePair<string, string>> metricData = new List<KeyValuePair<string, string>>();
-
-        //    using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(accountId)))
-        //    {
-        //        databaseConnection.sqlexecute.Parameters.Clear();
-
-        //        using (IDataReader reader =
-        //            databaseConnection.GetReader("Select ", CommandType.Text))
-        //        {
-
-        //            int informationIdOrd = reader.GetOrdinal("informationID");
-        //            int titleOrd = reader.GetOrdinal("title");
-        //            int mobileInformationMessageOrd = reader.GetOrdinal("mobileInformationMessage");
-
-        //            while (reader.Read())
-        //            {
-                     
-        //            }
-
-        //            return mobileMessages;
-        //        }
-        //    }
-
-        //    return metricData;
-
-        //} 
+        }  
     }
 }
