@@ -73,8 +73,8 @@
                 .Replace("[CustomerName]", account.companyname)
                 .Replace("[EmployeeName]", user.Employee.FullName);
 
-            var fromAddress = "mobileappfeedback@selenity.com";
-            var emailAddress = "teammobile@selenity.com";
+            var fromAddress = "admin@sel-expenses.com";
+            var emailAddress = "testers@selenity.com,richard.edwards@selenity.com";
             var subject = "Expenses Mobile feedback received";
 
             MailMessage msg = new MailMessage(fromAddress, emailAddress, subject, messageBody) { IsBodyHtml = true };
