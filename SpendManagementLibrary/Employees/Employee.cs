@@ -1564,8 +1564,23 @@
                 databaseConnection.sqlexecute.Parameters.AddWithValue("@reference", this.BankAccountDetails.AccountReference);
                 databaseConnection.sqlexecute.Parameters.AddWithValue("@currencyid", this.Currency);
                 databaseConnection.sqlexecute.Parameters.AddWithValue("@countryid", this.BankAccountDetails.CountryId);
-                databaseConnection.sqlexecute.Parameters.AddWithValue("@SwiftCode", this.BankAccountDetails.SwiftCode);
-                databaseConnection.sqlexecute.Parameters.AddWithValue("@Iban", this.BankAccountDetails.Iban);
+                if (this.BankAccountDetails.SwiftCode == null)
+                {
+                    databaseConnection.sqlexecute.Parameters.AddWithValue("@SwiftCode", DBNull.Value);
+                }
+                else
+                {
+                    databaseConnection.sqlexecute.Parameters.AddWithValue("@SwiftCode", this.BankAccountDetails.SwiftCode);
+                }
+
+                if (this.BankAccountDetails.Iban == null)
+                {
+                    databaseConnection.sqlexecute.Parameters.AddWithValue("@Iban", DBNull.Value);
+                }
+                else
+                {
+                    databaseConnection.sqlexecute.Parameters.AddWithValue("@Iban", this.BankAccountDetails.Iban);
+                }
 
                 if (this.AuthoriserLevelDetailId == null)
                 {
