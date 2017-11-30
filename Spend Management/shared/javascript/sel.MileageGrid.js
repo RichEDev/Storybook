@@ -555,7 +555,9 @@
                 var td = recommendedDistanceInput.closest("td");
                 var loadingDiv = $(".loading", td);
                 var warning = $(".warning", td);
-
+                if (loadingDiv.css('visibility') === 'visible') {
+                    return;
+                }
                 loadingDiv.css("visibility", "visible");
                 warning.css("visibility", "hidden");
                 $("input[data-field='to_search']", container).css("font-weight", "normal");
