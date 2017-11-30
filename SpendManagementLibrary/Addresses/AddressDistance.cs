@@ -270,17 +270,14 @@
             }
 
 
-            AddressDistanceLookup distances = null; // GetFromCache(account.accountid, origin, destination);
-            //if (distances != null)
-            //{
-            //    return distances;
-            //}
+            AddressDistanceLookup distances = null; 
+
             var originLocator = origin.GetLookupLocator(account.AddressInternationalLookupsAndCoordinates, account.AddressLookupProvider).Replace(" ", "");
             var destinationLocator = destination.GetLookupLocator(account.AddressInternationalLookupsAndCoordinates, account.AddressLookupProvider).Replace(" ", "");
             using (IDBConnection databaseConnection = new DatabaseConnection(account.ConnectionString))
             {
                 databaseConnection.AddWithValue("@ReturnJourney", returnDistance);
-                if (account.AddressInternationalLookupsAndCoordinates)
+                if (origin.Postcode.Replace(" ","") != originLocator)
                 {
                     databaseConnection.AddWithValue("@OriginAddressID", origin.Identifier);
                     databaseConnection.AddWithValue("@DestinationAddressID", destination.Identifier);
