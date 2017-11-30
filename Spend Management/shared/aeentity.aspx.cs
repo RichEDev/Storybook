@@ -84,13 +84,19 @@
         /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
+            Response.AppendHeader("Pragma", "no-cache");
+            Response.CacheControl = "no-cache";
+
             CurrentUser user = cMisc.GetCurrentUser();
             ViewState["accountid"] = user.AccountID;
             ViewState["employeeid"] = user.EmployeeID;
             ViewState["subaccountid"] = user.CurrentSubAccountId;
             cCustomEntities clsentities = new cCustomEntities(user);
             bool isSameScreen = false;
-
             Master.UseDynamicCSS = true;
 
             //skips over load events if posted back from the HTML extender AjaxFileUploader
@@ -191,22 +197,23 @@
                     }
 
                     #region formselectionattribute
-
-                    // if the form was chosen by a formselectionattribute then these session keys should override url/default choice
-                    if (Session["FormSelectionFormId" + entityid] != null && Session["FormSelectionViewId" + entityid] != null && (Session["FormSelectionViewId" + entityid] as int? ?? -1) == viewid)
+                    
+                    if (formid > 0 && viewid > 0)
                     {
-                        formSelectionFormId = Session["FormSelectionFormId" + entityid] as int? ?? -1;
+                        formSelectionFormId = formid;
 
                         if (formSelectionFormId > 0)
                         {
-                            if (Session["FormSelectionListValue" + entityid] != null)
+                            if (Request.QueryString["attributeid"] != null)
                             {
-                                formSelectionListValue = Session["FormSelectionListValue" + entityid] as int? ?? -1;
+                                var attributeId = -1;
+                                int.TryParse(Request.QueryString["attributeid"], out attributeId);
+                                formSelectionListValue = attributeId;
                             }
 
-                            if (Session["FormSelectionTextValue" + entityid] != null)
+                            if (Request.QueryString["attributetext"] != null)
                             {
-                                formSelectionTextValue = Session["FormSelectionTextValue" + entityid] as string;
+                                formSelectionTextValue = Request.QueryString["attributetext"];
                             }
                         }
 
@@ -1422,10 +1429,6 @@
 
             int newRecordID = SaveCustomEntity(entityid, formid);
             this.ClearLock();
-            Session.Remove("FormSelectionFormId" + entityid);
-            Session.Remove("FormSelectionViewId" + entityid);
-            Session.Remove("FormSelectionListValue" + entityid);
-            Session.Remove("FormSelectionTextValue" + entityid);
 
             if (newRecordID > 0)
             {
@@ -1790,11 +1793,7 @@
             var attachments = new cAttachments(currUser.AccountID, currUser.EmployeeID, currUser.CurrentSubAccountId, currUser.isDelegate ? (int?)currUser.Delegate.EmployeeID : null);
             int entityid = (int)ViewState["entityid"];
             attachments.RemoveOrphanAttachmentsOnCustomTables(entityid, currUser.EmployeeID, DateTime.Now);
-
-            Session.Remove("FormSelectionFormId" + entityid);
-            Session.Remove("FormSelectionViewId" + entityid);
-            Session.Remove("FormSelectionListValue" + entityid);
-            Session.Remove("FormSelectionTextValue" + entityid);
+            
             this.ClearLock();
             this.redirectPage(false);
         }
@@ -1818,12 +1817,7 @@
             {
                 this.ClearLock();
             }
-
-            Session.Remove("FormSelectionFormId" + entityid);
-            Session.Remove("FormSelectionViewId" + entityid);
-            Session.Remove("FormSelectionListValue" + entityid);
-            Session.Remove("FormSelectionTextValue" + entityid);
-
+            
             #region Save And New Messages
 
             Panel pnlModal = new Panel();
