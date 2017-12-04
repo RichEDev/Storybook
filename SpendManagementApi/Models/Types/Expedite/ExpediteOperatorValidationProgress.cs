@@ -6,6 +6,11 @@
     public enum ExpediteOperatorValidationProgress
     {
         /// <summary>
+        /// Unable to set progress, so probably already done
+        /// </summary>
+        CannotUpdate = -1,
+
+        /// <summary>
         /// Available for any Expedite Operator  
         /// </summary>
         Available = 0,

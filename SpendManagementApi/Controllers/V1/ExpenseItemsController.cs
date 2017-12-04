@@ -1,7 +1,5 @@
 ﻿namespace SpendManagementApi.Controllers.V1
 {
-    using SpendManagementApi.Models;
-
     using System.Collections.Generic;
     using System.Web.Http;
     using System.Web.Http.Description;
@@ -16,7 +14,8 @@
     using Common.Enums;
     using Utilities;
     using SpendManagementApi.Common;
-
+    using SpendManagementApi.Models;
+    using SpendManagementApi.Models.Types.Expedite;
     /// <summary>
     /// Manages operations on <see cref="ExpenseItem">ExpenseItems</see>.
     /// </summary>
@@ -247,9 +246,10 @@
         [AuthAudit(SpendManagementElement.Api, AccessRoleType.Add)]
         public ExpenseItemResponse UpdateOperatorValidationStatus(int id, int operatorValidationProgress)
         {
-
-            ((ExpenseItemRepository)this.Repository).UpdateOperatorValidationStatus(id, operatorValidationProgress);
-            return this.Get<ExpenseItemResponse>(id);
+            var result = ((ExpenseItemRepository)this.Repository).UpdateOperatorValidationStatus(id, operatorValidationProgress);
+            var expenseItem =  this.Get<ExpenseItemResponse>(id);
+            expenseItem.Item.OperatorValidationProgress = (ExpediteOperatorValidationProgress) result;
+            return expenseItem;
         }
 
         /// <summary>
