@@ -1,4 +1,6 @@
-﻿namespace SpendManagementApi.Repositories.Expedite
+﻿using Common.Logging;
+
+namespace SpendManagementApi.Repositories.Expedite
 {
     using System;
     using System.Collections.Generic;
@@ -7,6 +9,7 @@
     using Interfaces;
     using Models.Requests.Expedite;
     using Models.Types.Expedite;
+    using BusinessLogic.Cache;
     using Utilities;
     using SpendManagementLibrary;
     using SpendManagementLibrary.Interfaces.Expedite;
@@ -24,6 +27,11 @@
     internal class ExpenseValidationResultRepository : BaseRepository<ExpenseValidationResult>, ISupportsActionContext
     {
         private readonly IManageExpenseValidation _data;
+
+        /// <summary>
+        /// An instance of <see cref="ILog"/> for logging <see cref="ICache{T,TK}"/> diagnostics and information.
+        /// </summary>
+        private static readonly ILog Log = new LogFactory<DAL.ExpenseValidationManager>().GetLogger();
 
         /// <summary>
         /// Creates a new EnvelopeRepository with the passed in user.
@@ -107,13 +115,13 @@
         public void AddResultsForExpenseItem(ExpenseItemValidationResults request)
         {
             // ensure the expense exists
-            var expenseItem = TryGetExpenseItem(request.ExpenseItemId);
+            var expenseItem = this.TryGetExpenseItem(request.ExpenseItemId);
 
             // validate progress
-            ValidateExpenseValidationProgress(expenseItem);
+            this.ValidateExpenseValidationProgress(expenseItem);
 
             // get all the criteria for this item
-            var criteria = _data.GetAllSubcatCriteria(expenseItem.subcatid);
+            var criteria = this._data.GetAllSubcatCriteria(expenseItem.subcatid);
 
             // throw if there are not enough results to cover the criteria
             if (request.Results.Count != criteria.Count)
@@ -485,26 +493,52 @@
         /// <param name="expenseItem">The item to check</param>
         private void ValidateExpenseValidationProgress(cExpenseItem expenseItem)
         {
+            if (Log.IsDebugEnabled)
+            {
+                Log.Debug($"Validate Expense Validation Progress for expense item {expenseItem.expenseid}  - Validation Progress Currently {expenseItem.ValidationProgress}");
+            }
+
             // handle errors on the progress of the expense item
             switch (expenseItem.ValidationProgress)
             {
                 case DALEnum.ExpenseValidationProgress.ValidationServiceDisabled:
+                    if (Log.IsWarnEnabled)
+                    {
+                        Log.Warn($"{ApiResources.ApiErrorValidationResultValidationDisabledAccount} for expense id {expenseItem.expenseid}  - Validation Progress Currently {expenseItem.ValidationProgress}");
+                    }
                     throw new InvalidDataException(ApiResources.ApiErrorValidationResultValidationDisabledAccount);
                 case DALEnum.ExpenseValidationProgress.SubcatValidationDisabled:
+                    if (Log.IsWarnEnabled)
+                    {
+                        Log.Warn($"{ApiResources.ApiErrorValidationResultValidationDisabledSubcat} for expense id {expenseItem.expenseid}  - Validation Progress Currently {expenseItem.ValidationProgress}");
+                    }
                     throw new InvalidDataException(ApiResources.ApiErrorValidationResultValidationDisabledSubcat);
                 case DALEnum.ExpenseValidationProgress.StageNotInSignoffGroup:
+                    if (Log.IsWarnEnabled)
+                    {
+                        Log.Warn($"{ApiResources.ApiErrorValidationResultValidationDisabledSignoff} for expense id {expenseItem.expenseid}  - Validation Progress Currently {expenseItem.ValidationProgress}");
+                    }
                     throw new InvalidDataException(ApiResources.ApiErrorValidationResultValidationDisabledSignoff);
                 case DALEnum.ExpenseValidationProgress.CompletedFailed:
                 case DALEnum.ExpenseValidationProgress.CompletedWarning:
                 case DALEnum.ExpenseValidationProgress.CompletedPassed:
                     if (expenseItem.ValidationCount > 0)
                     {
+                        if (Log.IsWarnEnabled)
+                        {
+                            Log.Warn($"{ApiResources.ApiErrorValidationResultValidationCompleted} for expense id {expenseItem.expenseid}  - Validation Progress Currently {expenseItem.ValidationProgress}");
+                        }
                         throw new InvalidDataException(ApiResources.ApiErrorValidationResultValidationCompleted);
                     }
                     break;
                 case DALEnum.ExpenseValidationProgress.NotRequired:
+                case DALEnum.ExpenseValidationProgress.WaitingForClaimant:
+                    if (Log.IsWarnEnabled)
+                    {
+                        Log.Warn($"{ApiResources.ApiErrorValidationResultValidationNotRequired} for expense id {expenseItem.expenseid}  - Validation Progress Currently {expenseItem.ValidationProgress}");
+                    }
                     throw new InvalidDataException(ApiResources.ApiErrorValidationResultValidationNotRequired);
-            }
+ }
         }
 
         #endregion Private
