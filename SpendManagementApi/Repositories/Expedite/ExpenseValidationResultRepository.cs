@@ -1,5 +1,4 @@
-﻿using BusinessLogic.Cache;
-using Common.Logging;
+﻿using Common.Logging;
 
 namespace SpendManagementApi.Repositories.Expedite
 {
@@ -10,6 +9,7 @@ namespace SpendManagementApi.Repositories.Expedite
     using Interfaces;
     using Models.Requests.Expedite;
     using Models.Types.Expedite;
+    using BusinessLogic.Cache;
     using Utilities;
     using SpendManagementLibrary;
     using SpendManagementLibrary.Interfaces.Expedite;
