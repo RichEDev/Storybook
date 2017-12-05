@@ -99,6 +99,8 @@ BEGIN
       delete from savedexpenses where claimid in (select claimid from claims where employeeid = @employeeid);
       exec addDeleteEntryToAuditLog @CUemployeeID, @CUdelegateID, 100, @employeeid, @recordTitle, null;
 
+	  DELETE FROM MobileAppFeedback WHERE MobileMetricId IN (SELECT MobileMetricId FROM MobileMetricData WHERE employeeId = @employeeid);
+
 	  DELETE FROM MobileMetricData WHERE employeeId = @employeeid
 
       delete from claims_base where employeeid = @employeeid;

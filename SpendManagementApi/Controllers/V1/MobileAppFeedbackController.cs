@@ -6,6 +6,7 @@
 
     using SpendManagementApi.Attributes;
     using SpendManagementApi.Models.Common;
+    using SpendManagementApi.Models.Requests.MobileAppFeedback;
     using SpendManagementApi.Models.Responses;
     using SpendManagementApi.Models.Responses.AppFeedback;
     using SpendManagementApi.Repositories;
@@ -70,6 +71,24 @@
         {      
             var response = this.InitialiseResponse<MobileAppFeedbackCategoriesResponse>();
             response.List = _repository.GetActiveMobileAppFeedbackCategories();
+            return response;
+        }
+
+        /// <summary>
+        /// Saves the mobile app feedback request.
+        /// </summary>
+        /// <param name="request">
+        /// The <see cref="MobileAppFeedbackRequest">MobileAppFeedbackRequest</see>
+        /// </param>
+        /// <returns>
+        /// <see cref="BooleanResponse">BooleanResponse</see> with the outcome of the save action.
+        /// </returns>
+        [HttpPost, Route("SaveMobileAppFeedback")]
+        [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
+        public BooleanResponse SaveMobileAppFeedback([FromBody] MobileAppFeedbackRequest request)
+        {      
+            var response = this.InitialiseResponse<BooleanResponse>();
+            response.Item = _repository.SaveMobileAppFeedback(request);
             return response;
         }
     }

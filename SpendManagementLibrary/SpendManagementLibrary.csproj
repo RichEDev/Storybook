@@ -545,7 +545,8 @@
     <Compile Include="Logic Classes\Tables\SubAccountTables.cs" />
     <Compile Include="MobileAppReview\EmployeeAppReviewPreference.cs" />
     <Compile Include="MobileAppReview\MobileAppFeedbackCategory.cs" />
-    <Compile Include="MobileAppReview\MobileAppFeedbackCategoryService.cs" />
+    <Compile Include="MobileAppReview\MobileAppFeedbackEmailGenerator.cs" />
+    <Compile Include="MobileAppReview\MobileAppFeedbackService.cs" />
     <Compile Include="MobileAppReview\PermittedToAskEmployeeForReview.cs" />
     <Compile Include="MobileDeviceNotifications\MobileDeviceStatus.cs" />
     <Compile Include="MobileInformationMessage\MobileInformationMessage.cs" />

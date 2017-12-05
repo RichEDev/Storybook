@@ -278,6 +278,7 @@
     <Compile Include="Controllers\V1\MobileInformationMessagesController.cs" />
     <Compile Include="Controllers\V1\MobileMetricDataController.cs" />
     <Compile Include="Interfaces\IBasicRepository.cs" />
+    <Compile Include="Models\Requests\MobileAppFeedback\MobileAppFeedbackRequest.cs" />
     <Compile Include="Models\Requests\MobileMetricData\MobileMetricDataRequest.cs" />
     <Compile Include="Models\Requests\MobileMetricData\SetDeviceStatusRequest.cs" />
     <Compile Include="Models\Responses\AppFeedback\MobileAppFeedbackCategoriesResponse.cs" />

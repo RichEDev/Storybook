@@ -7070,6 +7070,10 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_MobileAppEmployeeFeedbackPreferences_employees.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SetNeverPromptEmployeeForReview.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\MobileAppFeedbackCategories.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_MobileAppFeedback_MobileAppFeedbackCategories.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_MobileAppFeedback_MobileMetricData.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\MobileAppFeedback.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SaveMobileAppFeedback.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ut_expenses.refactorlog">

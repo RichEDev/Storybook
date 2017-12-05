@@ -332,6 +332,9 @@
     <Content Include="favicon.ico" />
     <Content Include="GreenLightAdminMenu.aspx" />
     <Content Include="help_text\Content\Claimant Guide\EnvelopeAttachmentInstructions.txt" />
+    <Content Include="help_text\MobileAppFeedback\MobileAppReviewServiceDeskEmailTemplate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="icons\32\new\mail.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

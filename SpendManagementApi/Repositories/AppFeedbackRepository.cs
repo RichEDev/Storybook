@@ -4,6 +4,7 @@
     using System.Linq;
 
     using SpendManagementApi.Interfaces;
+    using SpendManagementApi.Models.Requests.MobileAppFeedback;
 
     using SpendManagementLibrary.MobileAppReview;
 
@@ -47,8 +48,37 @@
         /// </returns>
         public List<MobileAppFeedbackCategory> GetActiveMobileAppFeedbackCategories()
         {
-            List<SpendManagementLibrary.MobileAppReview.MobileAppFeedbackCategory> mobileAppFeedbackCategories = MobileAppFeedbackCategoryService.GetActiveMobileAppFeedbackCategories(this.User.AccountID);
+            List<SpendManagementLibrary.MobileAppReview.MobileAppFeedbackCategory> mobileAppFeedbackCategories = MobileAppFeedbackService.GetActiveMobileAppFeedbackCategories(this.User.AccountID);
             return mobileAppFeedbackCategories.Select(mobileAppFeedbackCategory => new MobileAppFeedbackCategory().ToApiType(mobileAppFeedbackCategory, this.ActionContext)).ToList();
+        }
+
+
+        /// <summary>
+        /// Passes the mobile app feedback request to the MobileAppFeedbackService.
+        /// </summary>
+        /// <param name="request">
+        /// The <see cref="MobileAppFeedbackRequest"/>
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/> with the outcome of the action.
+        /// </returns>
+        public bool SaveMobileAppFeedback(MobileAppFeedbackRequest request)
+        {     
+            if (MobileAppFeedbackService.SaveMobileAppFeedback(
+                this.User.AccountID,
+                request.FeedbackCategoryId,
+                request.Feedback,
+                request.Email,
+                request.MobileMetricId,
+                request.AppVersion))
+            {
+                //Saved to database, so generate email to notify service desk.
+                var feedbackCategory = MobileAppFeedbackService.GetMobileAppFeedbackCategoryDescriptionById(request.FeedbackCategoryId, User.AccountID);
+                bool sendEmailOutcome = new MobileAppFeedbackEmailGenerator().SendEmailToServiceDesk(this.User,feedbackCategory , request.Feedback, request.Email, request.AppVersion, request.MobileMetricId);
+                return sendEmailOutcome;
+            }
+
+            return false;
         }
     }
 }
