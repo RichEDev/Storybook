@@ -117,6 +117,18 @@ namespace SpendManagementApi.Repositories.Expedite
             // ensure the expense exists
             var expenseItem = this.TryGetExpenseItem(request.ExpenseItemId);
 
+            var subcat = this.ActionContext.SubCategories.GetSubcatById(expenseItem.subcatid);
+
+            var expenseItemVatable = true;
+
+            var subCatVat = subcat.getVatRateByDate(expenseItem.date);
+            if (subCatVat == null || Math.Abs(subCatVat.vatamount) < 0.001 )
+            {
+                expenseItemVatable = false;
+            }
+
+
+
             // validate progress
             this.ValidateExpenseValidationProgress(expenseItem);
 
@@ -177,8 +189,8 @@ namespace SpendManagementApi.Repositories.Expedite
                 }
                 else
                 {
-                    result.BusinessStatus = _data.DetermineStatusFromReason(criterion.Id, (int)r.Reason);
-                    result.VATStatus = _data.DetermineStatusFromReason(criterion.Id, (int)r.Reason, true, request.Total);
+                    result.BusinessStatus = this._data.DetermineStatusFromReason(criterion.Id, (int)r.Reason);
+                    result.VATStatus = expenseItemVatable ? this._data.DetermineStatusFromReason(criterion.Id, (int)r.Reason, true, request.Total) : DALEnum.ExpenseValidationResultStatus.NotApplicable;
 
                     //Override the existing validation result from "Fail" to "Pass"
                     //Customers with "Allow receipts for a higher value than the expense claimed to pass validation" configured 
@@ -344,8 +356,11 @@ namespace SpendManagementApi.Repositories.Expedite
             var expenseValidationResults = new ExpenseValidationResults();
             ExpenseValidationArea businessResults = this.ProcessValidationArea(results.BusinessResults, "Business ", statusDescriptions);
             ExpenseValidationArea vatResults = this.ProcessValidationArea(results.VatResults, "VAT ", statusDescriptions);
-
-            var expenseValidationAreaResults = new List<ExpenseValidationArea> { businessResults, vatResults };
+            var expenseValidationAreaResults = new List<ExpenseValidationArea> {businessResults};
+            if (vatResults.ValidationCriterionResults.Count > 0)
+            {
+              expenseValidationAreaResults.Add(vatResults);  
+            }
 
             cClaim claim = this.ActionContext.Claims.getClaimById(expense.claimid);
 
