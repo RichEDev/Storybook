@@ -633,6 +633,20 @@ namespace Spend_Management.shared.webServices
                 var countries = new cCountries(account.accountid, subAccount.SubAccountID);
                 var filteredCountries = countries.GetPostcodeAnywhereEnabledCountries();
                 string defaultCountryAlpha3Code = new cGlobalCountries().getGlobalCountryById(countries.getCountryById(subAccount.SubAccountProperties.HomeCountry).GlobalCountryId).Alpha3CountryCode;
+                if (currentUser != null)
+                {
+                    cEmployees employees = new cEmployees(currentUser.AccountID);
+                    Employee employee = employees.GetEmployeeById(currentUser.EmployeeID);
+                    string employeePrimaryAlphaCode = new cGlobalCountries().getGlobalCountryById(countries.getCountryById(employee.PrimaryCountry).GlobalCountryId).Alpha3CountryCode;
+                    foreach (cGlobalCountry filteredCountry in filteredCountries)
+                    {
+                        if (filteredCountry.Alpha3CountryCode == employeePrimaryAlphaCode)
+                        {
+                            defaultCountryAlpha3Code = employeePrimaryAlphaCode;
+                            break;
+                        }
+                    }
+                }                                
 
                 widgetData.Countries = filteredCountries;
                 widgetData.DefaultCountryAlpha3Code = defaultCountryAlpha3Code;
