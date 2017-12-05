@@ -202,8 +202,11 @@
             }
             if (errorMsg) {
                 SEL.MasterPopup.ShowMasterPopup(errorMsg, "Message from " + moduleNameHTML);
+                $("#ctl00_contentmain_exchangeratemandatory")[0].innerText = "*";
+                $("#ctl00_contentmain_exchangeratemandatory")[0].style.color = "red";
                 return false;
             }
+            $("#ctl00_contentmain_exchangeratemandatory")[0].innerText = "";
             return true;
         }
 
