@@ -1050,6 +1050,10 @@
     <None Include="My Project\PublishProfiles\FolderProfile.pubxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Web.Testing.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1066,6 +1070,10 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Web.Production.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.Main.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
