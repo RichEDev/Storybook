@@ -13,12 +13,12 @@ namespace SpendManagementApi.Common
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Holidays;
     using SpendManagementLibrary.Interfaces.Expedite;
-    using GeneralOptions = SpendManagementLibrary.GeneralOptions.GeneralOptions;
     using SpendManagementLibrary.Hotels;
+    using SpendManagementLibrary.MobileAppReview;
 
     using Spend_Management.shared.code;
 
- 
+    using GeneralOptions = SpendManagementLibrary.GeneralOptions.GeneralOptions;
 
     internal class ActionContext : IActionContext
     {
@@ -139,6 +139,8 @@ namespace SpendManagementApi.Common
         private cFloats _Advances;
 
         private DutyOfCareDocuments _dutyOfCareDocuments;
+
+        private EmployeeAppReviewPreference _employeeAppReviewPreference;
 
         /// <summary>
         /// An instance of cCardStatements
@@ -704,12 +706,12 @@ namespace SpendManagementApi.Common
             {
                 return
                     (_emails =
-                     new cEmailTemplates(
-                         AccountId,
-                         CurrentUser.EmployeeID,
-                         string.Empty,
-                         0,
-                         CurrentUser.CurrentActiveModule));
+                         new cEmailTemplates(
+                             AccountId,
+                             CurrentUser.EmployeeID,
+                             string.Empty,
+                             0,
+                             CurrentUser.CurrentActiveModule));
             }
             set
             {
@@ -777,6 +779,7 @@ namespace SpendManagementApi.Common
                 this._expenseItems = value;
             }
         }
+
 
         /// <summary>
         /// Gets or sets the filter rules.
@@ -1028,6 +1031,20 @@ namespace SpendManagementApi.Common
             set
             {
                 this._holidays = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an instance of <see cref="EmployeeAppReviewPreference"/>
+        /// </summary>
+        public EmployeeAppReviewPreference EmployeeAppReviewPreference {
+            get
+            {
+                return this._employeeAppReviewPreference ?? (this._employeeAppReviewPreference = new EmployeeAppReviewPreference());
+            }
+            set
+            {
+                this._employeeAppReviewPreference = value;
             }
         }
     }

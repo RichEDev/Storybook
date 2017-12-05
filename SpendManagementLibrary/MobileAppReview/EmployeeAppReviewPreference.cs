@@ -25,14 +25,34 @@
         public bool PermittedToAskEmployeeForReview(int employeeId, int accountId)
         {
             bool permittedToAskEmployeeForReview = new EmployeeAppStoreReviewPreference().PermittedToAskEmployeeForReview(employeeId, accountId);
-
+            
             if (!permittedToAskEmployeeForReview)
             {
                 return false;
             }
 
-            return this.ShouldRandomlyRequestAppReview();
+            return ShouldRandomlyRequestAppReview();
+
         }
+
+        /// <summary>
+        /// Sets the current employees preference so that they are never prompted to provide an app review
+        /// </summary>
+        /// <param name="employeeId">
+        /// The employee id.
+        /// </param>
+        /// <param name="accountId">
+        /// The account id.
+        /// </param>
+        /// <returns>
+        /// <see cref="bool">bool</see> with the outcome of the action.
+        /// </returns>
+        public bool DoNotPromptEmployeeForAppReviews(int employeeId, int accountId)
+        {
+            bool outcome = new EmployeeAppStoreReviewPreference().SetNeverPromptEmployeeForReview(employeeId, accountId);
+            return outcome;
+        }
+
 
         /// <summary>
         /// Determines if an employee should be selected to provide an app review, with a 1 in 20 chance of returning true.

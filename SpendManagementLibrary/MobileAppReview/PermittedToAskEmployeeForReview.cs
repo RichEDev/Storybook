@@ -3,8 +3,7 @@
     using System.Data;
 
     using SpendManagementLibrary.Helpers;
-    using SpendManagementLibrary.Interfaces;
-    using SpendManagementLibrary.MobileInformationMessage;
+
 
     /// <summary>
     /// A class to return an employees app store review preferences from the database.
@@ -47,6 +46,35 @@
                 }
 
                 return permittedToAskUserForReview;
+            }
+        }
+
+        /// <summary>
+        /// Sets the current employees preference in the database so that they are never prompted to provide an app review.
+        /// </summary>
+        /// <param name="employeeId">
+        /// The employee id.
+        /// </param>
+        /// <param name="accountId">
+        /// The account id.
+        /// </param>
+        /// <returns>
+        /// <see cref="bool">bool</see> with the outcome of the action.
+        /// </returns>
+        public bool SetNeverPromptEmployeeForReview(int employeeId, int accountId)
+        {
+            using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(accountId)))
+            {
+                databaseConnection.sqlexecute.Parameters.Clear();
+                databaseConnection.sqlexecute.Parameters.AddWithValue("@employeeId", employeeId);
+                databaseConnection.sqlexecute.Parameters.Add("@returnValue", SqlDbType.Int);
+                databaseConnection.sqlexecute.Parameters["@returnValue"].Direction = ParameterDirection.ReturnValue;
+
+                databaseConnection.ExecuteProc("SetNeverPromptEmployeeForReview");
+
+                var returnValue = (int)databaseConnection.sqlexecute.Parameters["@returnValue"].Value;
+
+                return returnValue > 0;
             }
         }
     }
