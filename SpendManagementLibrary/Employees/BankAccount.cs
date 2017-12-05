@@ -8,7 +8,7 @@
     [Serializable]
     public class BankAccount
     {
-        public BankAccount(string accountHolderName, string accountNumber, string accountType, string sortCode, string accountReference, int countryId = 0,bool archived=false)
+        public BankAccount(string accountHolderName, string accountNumber, string accountType, string sortCode, string accountReference, int countryId = 0, bool archived = false, string iban = null, string swiftCode = null)
         {
             this.AccountHolderName = accountHolderName;
             this.AccountNumber = accountNumber;
@@ -16,7 +16,8 @@
             this.SortCode = sortCode;
             this.AccountReference = accountReference;
             this.CountryId = countryId;
-
+            this.Iban = iban;
+            this.SwiftCode = swiftCode;
         }
 
         /// <summary>
@@ -48,5 +49,15 @@
         /// Gets or sets the bank country id
         /// </summary>
         public int CountryId { get; set; }
+
+        /// <summary>
+        /// Gets or sets Iban of an account number
+        /// </summary>
+        public string Iban { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Swift code of an account number
+        /// </summary>
+        public string SwiftCode { get; set; }
     }
 }

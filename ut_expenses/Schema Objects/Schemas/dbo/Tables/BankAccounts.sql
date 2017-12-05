@@ -13,6 +13,8 @@
     [ModifiedBy]    INT             NULL,
     [CountryId] INT NULL, 
     [archived] BIT NOT NULL DEFAULT 0, 
+	[SwiftCode] VARBINARY(MAX) NULL,
+	[Iban] VARBINARY(MAX) NULL,
     CONSTRAINT [PK_BankAccounts] PRIMARY KEY CLUSTERED ([BankAccountId] ASC),
     CONSTRAINT [FK_BankAccounts_currencies] FOREIGN KEY ([CurrencyId]) REFERENCES [dbo].[currencies] ([currencyid]) ON DELETE CASCADE,
     CONSTRAINT [FK_BankAccounts_employees] FOREIGN KEY ([EmployeeId]) REFERENCES [dbo].[employees] ([employeeid]) ON DELETE CASCADE

@@ -60,6 +60,8 @@ namespace SpendManagementLibrary.BaseClasses
                         int currencyIdOrd = reader.GetOrdinal("CurrencyId");
                         int countryIdOrd = reader.GetOrdinal("CountryId");
                         int archivedOrd = reader.GetOrdinal("archived");
+                        int ibanOrd = reader.GetOrdinal("Iban");
+                        int swiftCodeOrd = reader.GetOrdinal("SwiftCode");
 
                         while (reader.Read())
                         {
@@ -72,7 +74,9 @@ namespace SpendManagementLibrary.BaseClasses
                             int currencyId = reader.GetInt32(currencyIdOrd);
                             int countryId = reader.GetInt32(countryIdOrd);
                             bool archived = reader.GetBoolean(archivedOrd);
-                            var account = new BankAccount(bankAccountId, employeeId, accountName, accountNumber, accountType, sortCode, reference, currencyId, countryId, archived);
+                            var iban = (!reader.IsDBNull(ibanOrd)) ? reader.GetString(ibanOrd) : string.Empty;
+                            var swiftCode = (!reader.IsDBNull(swiftCodeOrd)) ? reader.GetString(swiftCodeOrd) : string.Empty;
+                            var account = new BankAccount(bankAccountId, employeeId, accountName, accountNumber, accountType, sortCode, reference, currencyId, countryId, archived, iban, swiftCode);
                             lstToCache.Add(bankAccountId, account);
                         }
                         reader.Close();

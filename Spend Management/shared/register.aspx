@@ -509,6 +509,26 @@
                                 </td>
 
                             </tr>
+                            
+                            <tr>
+                                <td class="labeltd">
+                                    <asp:Label AssociatedControlID="txtIban" ID="lblIban" runat="server">IBAN</asp:Label></td>
+                                <td class="inputtd">
+                                    <asp:TextBox ID="txtIban" runat="server" MaxLength="34" onkeydown="SEL.Forms.RunOnEnter(event, SEL.BankAccounts.SaveBankAccountOnEnter);"></asp:TextBox>
+                                    <asp:RegularExpressionValidator runat="server" ID="RegularExpressionValidator1" ErrorMessage="The IBAN specified must be between 5 and 34 characters." ValidationExpression="^.{5,34}$" ControlToValidate="txtIban" Display="None"></asp:RegularExpressionValidator><asp:RegularExpressionValidator runat="server" ID="RegularExpressionValidator4" ErrorMessage="The value you have entered for IBAN is invalid. Only letters and numbers are allowed." ValidationExpression="[a-zA-Z0-9]*$" ControlToValidate="txtIban">*</asp:RegularExpressionValidator>
+                                </td>
+
+                            </tr>
+                            
+                            <tr>
+                                <td class="labeltd">
+                                    <asp:Label AssociatedControlID="txtSwiftCode" ID="lblSwiftCode" runat="server">SWIFT Code</asp:Label></td>
+                                <td class="inputtd">
+                                    <asp:TextBox ID="txtSwiftCode" runat="server" MaxLength="11" onkeydown="SEL.Forms.RunOnEnter(event, SEL.BankAccounts.SaveBankAccountOnEnter);"></asp:TextBox>
+                                    <asp:RegularExpressionValidator runat="server" ID="RegularExpressionValidator2" ErrorMessage="The SWIFT Code specified must be between 8 and 11 characters." ValidationExpression="^.{8,11}$" ControlToValidate="txtSwiftCode" Display="None"></asp:RegularExpressionValidator><asp:RegularExpressionValidator runat="server" ID="RegularExpressionValidator3" ErrorMessage="The value you have entered for SWIFT Code is invalid. Only letters and numbers are allowed." ValidationExpression="[a-zA-Z0-9]*$" ControlToValidate="txtSwiftCode">*</asp:RegularExpressionValidator>
+                                </td>
+
+                            </tr>
                         </table>
                         <asp:Label ID="lblmsgBankDetails" runat="server" Text="Label" Visible="False" ForeColor="Red" ></asp:Label>
                     </div>

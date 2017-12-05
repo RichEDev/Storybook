@@ -1481,6 +1481,8 @@ public partial class register : Page
         string accountNumber = (string.IsNullOrEmpty(this.txtaccountholdernumber.Text) == false ? this.txtaccountholdernumber.Text.Trim() : string.Empty);
         string sortCode = (string.IsNullOrEmpty(this.txtsortcode.Text) == false ? this.txtsortcode.Text.Trim() : string.Empty);
         string accountReference = (string.IsNullOrEmpty(this.txtaccountreference.Text) == false ? this.txtaccountreference.Text.Trim() : string.Empty);
+        var iban = string.IsNullOrEmpty(this.txtIban.Text) == false ? this.txtIban.Text.Trim() : string.Empty;
+        var swiftCode = string.IsNullOrEmpty(this.txtSwiftCode.Text) == false ? this.txtSwiftCode.Text.Trim() : string.Empty;
 
 
         int currencyId = (ddlCurrency.SelectedIndex > 0 ? Convert.ToInt32(ddlCurrency.SelectedValue) : 0);
@@ -1520,7 +1522,7 @@ public partial class register : Page
         Session["currencyId"] = 0;
 
         // Save the new employee
-        var reqEmp = new Employee(accountId, 0, username, encryptedPassword, email, title, firstname, string.Empty, string.Empty, surname, false, false, false, false, 0, 0, DateTime.UtcNow, 0, null, null, new BankAccount(accountName, accountNumber, accountType, sortCode, accountReference, bankCountryId), groupid, extension, mobile, pager, faxno, homeemail, linemanager, advancesgroupid, string.Empty, string.Empty, null, null, null, payroll, position, telno, string.Empty, CreationMethod.SelfRegistration, PasswordEncryptionMethod.RijndaelManaged, true, false, subAccountId, primarycurrency, primarycountry, 0, 0, false, null, null, string.Empty, string.Empty, string.Empty, null, null, null, 1, DateTime.UtcNow, 1, 0, null, false, currency: currencyId);
+        var reqEmp = new Employee(accountId, 0, username, encryptedPassword, email, title, firstname, string.Empty, string.Empty, surname, false, false, false, false, 0, 0, DateTime.UtcNow, 0, null, null, new BankAccount(accountName, accountNumber, accountType, sortCode, accountReference, bankCountryId, iban:iban, swiftCode: swiftCode), groupid, extension, mobile, pager, faxno, homeemail, linemanager, advancesgroupid, string.Empty, string.Empty, null, null, null, payroll, position, telno, string.Empty, CreationMethod.SelfRegistration, PasswordEncryptionMethod.RijndaelManaged, true, false, subAccountId, primarycurrency, primarycountry, 0, 0, false, null, null, string.Empty, string.Empty, string.Empty, null, null, null, 1, DateTime.UtcNow, 1, 0, null, false, currency: currencyId);
         reqEmp.EmployeeID = clsemployees.SaveEmployee(reqEmp, breakdown, new List<int>(), finaludfs);
         var bankValidation = this.ViewState["BankAccountValidation"] as IBankAccountValid;
         if (bankValidation != null)
