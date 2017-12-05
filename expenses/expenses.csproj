@@ -24,7 +24,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <SignAssembly>false</SignAssembly>
     <TargetFrameworkProfile />
-    <UseIISExpress>False</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -766,6 +766,13 @@
     <None Include="Web.Automated Build.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.Main.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.Testing.config">
+      <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="webServices\svcAddEditExpenses.asmx" />
     <Content Include="webServices\svcDutyOfCare.asmx" />
