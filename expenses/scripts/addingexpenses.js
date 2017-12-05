@@ -673,7 +673,20 @@ function cmbcountry_onchange() {
     var numitems = document.getElementById(contentID + 'txtnumitems').value;
     var cmbcountry = document.getElementById(contentID + 'cmbcountry');
     var countryid = cmbcountry.options[cmbcountry.selectedIndex].value;
+    var countryname = $("#ctl00_contentmain_cmbcountry").find("option:selected").text();
 
+    //Calls a service to get the alpha3 code of the selected country, using the response, if successful, to update the address picker widget.
+    SEL.Data.Ajax({        
+        url: "webServices/svcAddEditExpenses.asmx/GetPCAValidAlpha3CodeByCountryId",
+        data: { accountid: accountid, countryid: countryid, countryname: countryname },
+        success: function (response) {
+            var data = response.d;
+            if (data) { //If data is not null the alpha code is valid. If the code is not valid it will default to the company base country.
+                $.address.options.DefaultCountryAlpha3Code = data;
+                $(".ui-sel-tab-countries").attr("style", "background-image: url(\"/static/icons/32/plain/flag_" + countryname.toLowerCase().replace(/ /g, "_") + ".png\") !important;");
+            }                        
+        }
+    });
 
     //stop mileage
     for (var i = 0; i < numitems; i++) {
@@ -692,6 +705,7 @@ function cmbcountry_onchange() {
     }
 
 }
+
 function getHotelDetails(id) {
     var hotel = document.getElementById(contentID + 'txthotel' + id).value;
     SEL.Data.Ajax({
