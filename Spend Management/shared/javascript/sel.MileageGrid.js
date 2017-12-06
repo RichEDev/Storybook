@@ -195,7 +195,8 @@
                     var fromIdControl = $("input[id*='txtfromid']", table);
                     var toIdControl = $("input[id*='txttoid']", table);
                     if (fromIdControl.val() && toIdControl.val()) {
-                        SEL.MileageGrid.calculateMileage(fromIdControl.val(), toIdControl.val(), table);
+                        var widgetTable = $(this).closest('table');
+                        SEL.MileageGrid.calculateMileage($(widgetTable).data('A' + fromIdControl.val()), $(widgetTable).data('A' + toIdControl.val()), table);
                     }
                 });
 
@@ -405,7 +406,8 @@
                 var to = $("input[data-field='to_id']", tr);
                 //are they both filled in?
                 if (from.val() && to.val()) {
-                    SEL.MileageGrid.calculateMileage(from.val(), to.val(), tr);
+                    var widgetTable = $(this).closest('table');
+                    SEL.MileageGrid.calculateMileage($(widgetTable).data('A' + from.val()), $(widgetTable).data('A' + to.val()), tr);
                 }
             },
 
@@ -546,21 +548,33 @@
             },
 
 
-            calculateMileage: function (fromAddressId, toAddressId, container) {
+            calculateMileage: function (fromAddress, toAddress, container) {
                 var recommendedDistanceInput = $("input[data-field='recommendeddistance']", container);
                 var recommendedDistanceDiv = $("div[data-field='recommendeddistance']", container);
                 var userEnteredDistance = $("input[data-field='userentereddistance']", container);
                 var td = recommendedDistanceInput.closest("td");
                 var loadingDiv = $(".loading", td);
                 var warning = $(".warning", td);
-
+                if (loadingDiv.css('visibility') === 'visible') {
+                    return;
+                }
                 loadingDiv.css("visibility", "visible");
                 warning.css("visibility", "hidden");
                 $("input[data-field='to_search']", container).css("font-weight", "normal");
                 $("input[data-field='from_search']", container).css("font-weight", "normal");
 
+                fromAddress.CreatedOn = '';
+                fromAddress.ModifiedOn = '';
+                fromAddress.LookupDate = '';
+                toAddress.CreatedOn = '';
+                toAddress.ModifiedOn = '';
+                toAddress.LookupDate = '';
+                var params = {
+                    fromAddress: fromAddress,
+                    toAddress: toAddress
+                };
                 SEL.Data.Ajax({
-                    data: { "fromAddressId": fromAddressId, "toAddressId": toAddressId },
+                    data: params,
                     methodName: "GetCustomOrRecommendedDistance",
                     serviceName: "svcAddresses",
                     success: function (data) {

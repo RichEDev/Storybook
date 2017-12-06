@@ -3908,7 +3908,7 @@ public partial class aeexpense : System.Web.UI.Page
                     cAccountProperties subAccountProperties = this.ActionContext.Properties;
 
                     // do the return calculation in case it's different from the other direction
-                    decimal? retrievedMileage = AddressDistance.GetRecommendedDistance(this.ActionContext.CurrentUser, endlocation.Identifier, startlocation.Identifier, subAccountProperties.MileageCalcType, this.ActionContext.CurrentUser.Account.MapsEnabled);
+                    decimal? retrievedMileage = AddressDistance.GetRecommendedDistance(this.ActionContext.CurrentUser, endlocation, startlocation, subAccountProperties.MileageCalcType, this.ActionContext.CurrentUser.Account.MapsEnabled);
                     decimal mileage = retrievedMileage.HasValue ? retrievedMileage.Value : 0m;
 
                     if (details.unit == MileageUOM.KM)
@@ -5229,7 +5229,7 @@ public partial class aeexpense : System.Web.UI.Page
 
         if (toAddress != null && fromAddress != null)
         {
-            decimal? manuallyEnteredDistance = AddressDistance.GetCustom(currentUser.AccountID, fromAddress.Identifier, toAddress.Identifier);
+            decimal? manuallyEnteredDistance = AddressDistance.GetCustom(currentUser.Account, fromAddress, toAddress);
 
             // A manually entered distance has been found so return this.
             if (manuallyEnteredDistance.HasValue && manuallyEnteredDistance.Value > 0)
@@ -5251,7 +5251,7 @@ public partial class aeexpense : System.Web.UI.Page
                     cAccount account = new cAccounts().GetAccountByID(currentUser.AccountID);
 
                     distance[0] = 1;
-                    distance[1] = AddressDistance.GetRecommendedDistance(currentUser, fromAddressId, toAddressId, reqProperties.MileageCalcType, account.MapsEnabled);
+                    distance[1] = AddressDistance.GetRecommendedDistance(currentUser, fromAddress, toAddress, reqProperties.MileageCalcType, account.MapsEnabled);
 
                     if (carID == 0)
                     {
