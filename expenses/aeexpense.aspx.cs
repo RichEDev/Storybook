@@ -34,6 +34,7 @@ using BusinessLogic;
 using BusinessLogic.DataConnections;
 using BusinessLogic.ProjectCodes;
 using Common.Logging;
+using expenses.admin;
 using expenses.Bootstrap;
 using SpendManagementLibrary.Employees.DutyOfCare;
 
@@ -496,6 +497,7 @@ public partial class aeexpense : System.Web.UI.Page
         TextBox txtbox;
         RequiredFieldValidator reqval;
         CompareValidator compval;
+        CustomValidator custval;
         DropDownList ddlst;
         AutoCompleteExtender autocomp;
         MaskedEditExtender maskededit;
@@ -857,9 +859,6 @@ public partial class aeexpense : System.Web.UI.Page
 
             cell.Controls.Add(img);
             row.Cells.Add(cell);
-
-
-            CustomValidator custval;
 
             cell = new TableCell { CssClass = "inputtd", ColumnSpan = 2 };
             if ((itemtype == ItemType.Cash && company.mandatory) || (itemtype == ItemType.CreditCard && company.mandatorycc) || (itemtype == ItemType.PurchaseCard && company.mandatorypc))
@@ -1456,16 +1455,15 @@ public partial class aeexpense : System.Web.UI.Page
 
             row.Cells.Add(cell);
             cell = new TableCell();
-
-            compval = new CompareValidator();
-            compval.ControlToValidate = "txtexchangerate";
-            compval.ErrorMessage = "The exchange rate must be greater than 0";
-            compval.Text = "*";
-            compval.Type = ValidationDataType.Double;
-            compval.Operator = ValidationCompareOperator.GreaterThan;
-            compval.ValueToCompare = "0";
-            compval.ValidationGroup = "vgAeExpenses";
-            cell.Controls.Add(compval);
+            cell.ID = "exchangeratemandatory";
+            if (showExchangeRateTT == true)
+            {
+                cell.Text = "*";
+            }
+            else
+            {
+                cell.Text = string.Empty;
+            }            
             row.Cells.Add(cell);
             cell = new TableCell();
             cell.CssClass = "inputtd";
@@ -3401,20 +3399,35 @@ public partial class aeexpense : System.Web.UI.Page
                     }
                     else
                     {
-                        txtbox = (TextBox)pnlgeneral.FindControl("txtexchangerate");
-                        if (txtbox.Text != "")
+                        txtbox = (TextBox)pnlgeneral.FindControl("txtexchangerate");                        
+                        if (transaction == null)
                         {
-                            if (transaction == null)
+                            double result;
+                            if (txtbox.Text.Length > 0 && double.TryParse(txtbox.Text, out result))
                             {
-                                exchangerate = (double?)Session["exchangerate"] ?? double.Parse(txtbox.Text);
+                                exchangerate = result;                                    
                             }
                             else
                             {
-                                exchangerate = (double)Math.Round(transaction.originalamount / transaction.transactionamount, 10, MidpointRounding.AwayFromZero);
-                            }
-
-                            Session["exchangerate"] = exchangerate;
+                                object[] arrcur = getExchangeRate((int)ViewState["accountid"], reqemp.EmployeeID, currencyid, date);
+                                if (arrcur != null)
+                                {
+                                    double.TryParse(arrcur[1].ToString(), out result);
+                                    exchangerate = (double?) Session["exchangerate"] ?? result;
+                                }
+                                else
+                                {
+                                    exchangerate = (double) Session["exchangerate"];
+                                }                                                                        
+                            }                                                                            
                         }
+                        else
+                        {
+                            exchangerate = (double)Math.Round(transaction.originalamount / transaction.transactionamount, 10, MidpointRounding.AwayFromZero);
+                        }
+
+                        Session["exchangerate"] = exchangerate;
+                        
                     }
                 }
             }

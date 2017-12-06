@@ -182,6 +182,34 @@
             return true;
         }
 
+        //Checks to see if the user has entered a valid rate in the exchange rate box. If they have not, they receive the relevant popup, and cannot save until it is corrected. 
+        function checkExchangeRate() {
+            var errorMsg = null;
+            var editableRateVisible = $("#ctl00_contentmain_cellexchinput").is(":visible");
+            var editableRateValue = $g("ctl00_contentmain_txtexchangerate").value;
+            if (editableRateVisible) {
+                if (editableRateValue) {
+                    if (parseFloat(editableRateValue) <= 0) {
+                        errorMsg = "Please enter an exchange rate greater than 0.";
+                    }
+                    if (editableRateValue.trim() === "") {
+                        errorMsg = "Please enter an exchange rate.";
+                    }
+                }
+                else {
+                    errorMsg = "Please enter an exchange rate.";
+                }
+            }
+            if (errorMsg) {
+                SEL.MasterPopup.ShowMasterPopup(errorMsg, "Message from " + moduleNameHTML);
+                $("#ctl00_contentmain_exchangeratemandatory")[0].innerText = "*";
+                $("#ctl00_contentmain_exchangeratemandatory")[0].style.color = "red";
+                return false;
+            }
+            $("#ctl00_contentmain_exchangeratemandatory")[0].innerText = "";
+            return true;
+        }
+
     </script>
 
     <div class="panel">
@@ -245,7 +273,7 @@
     </div>
     <div class="inputpanel">&nbsp;</div>
     <div class="inputpanel">
-        <helpers:CSSButton id="cmdok" runat="server" text="save"  UseSubmitBehavior="True" OnClick="cmdok_Click" OnClientClick="if(!(validateAeExpense())) return false;"/>
+        <helpers:CSSButton id="cmdok" runat="server" text="save"  UseSubmitBehavior="True" OnClick="cmdok_Click" OnClientClick="if(!(validateAeExpense()) || !(checkExchangeRate())) return false;"/>
         &nbsp;&nbsp;<helpers:CSSButton ID="cmdcancel" text="cancel" CausesValidation="False" runat="server"  OnClick="cmdcancel_Click" meta:resourcekey="cmdcancelResource1" />
     </div>
     <asp:Panel ID="pnlAddcar" runat="server" CssClass="modalpanel formpanel" Style="padding: 20px; width: 900px; display: none;">

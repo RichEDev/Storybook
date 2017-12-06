@@ -598,7 +598,7 @@ function getExchangeRateComplete(data) {
             document.getElementById(contentID + 'cellexchlbl').style.display = '';
             document.getElementById(contentID + 'cellexchinput').style.display = '';
             document.getElementById(contentID + 'txtexchangerate').value = data[1];
-            document.getElementById('imgtooltip243').style.display = '';
+            document.getElementById('imgtooltip243').style.display = '';            
         } else {
             document.getElementById(contentID + 'cellexchlbl').style.display = 'none';
             document.getElementById(contentID + 'cellexchinput').style.display = 'none';
