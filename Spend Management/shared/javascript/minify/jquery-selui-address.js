@@ -1887,7 +1887,7 @@
                     line3: "",
                     city: form.find("[name=city]").val(),
                     county: form.find("[name=county]").val(),
-                    alpha3CountryCode: this.options.country || $.address.options.DefaultCountryAlpha3Code,
+                    alpha3CountryCode: $.address.options.DefaultCountryAlpha3Code || this.options.country,
                     postcode: form.find("[name=postcode]").val(),
                     archived: false,
                     latitude: "",
@@ -2014,7 +2014,7 @@
             var selAjaxOptions = {
                 url: this.options.accountId ? this.options.sources.selAutocompleteByAccount : this.options.sources.selAutocomplete,
                 data: {
-                    alpha3CountryCode: this.options.country || $.address.options.DefaultCountryAlpha3Code,
+                    alpha3CountryCode: $.address.options.DefaultCountryAlpha3Code || this.options.country,
                     searchTerm: value,
                     date: date,
                     esrAssignmentId: esrAssignmentId
@@ -2044,7 +2044,7 @@
                     url: this.options.sources.postcodeAnywhereAutocomplete,
                     data: {
                         Key: $.address.options.PostcodeAnywhereKey,
-                        Country: this.options.country || $.address.options.DefaultCountryAlpha3Code,
+                        Country: $.address.options.DefaultCountryAlpha3Code || this.options.country,
                         searchTerm: value
                     }
                 }, this.postcodeAnywhereAjaxOptions))
@@ -2497,7 +2497,7 @@
         // then forces a new search (with the current text) in that country
         switchCountry: function (alpha3CountryCode) {
             if (alpha3CountryCode && alpha3CountryCode != "") {
-                this.options.country = alpha3CountryCode;
+                $.address.options.DefaultCountryAlpha3Code = alpha3CountryCode;
                 var countryName = "";
 
                 for (var i = 0; i < $.address.data.countries.length; i += 1) {

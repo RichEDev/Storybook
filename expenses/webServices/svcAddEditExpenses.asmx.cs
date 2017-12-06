@@ -274,5 +274,29 @@
 
             return assignments.GetAvailableAssignmentListItems(false, date);
         }
+
+
+        /// <summary>
+        /// Gets the defaultalpha3code via the country id. Null if not a valid PCA country
+        /// </summary>
+        /// <param name="countryid">Unique id for the selected country</param>
+        /// <param name="countryname">The name of the selected country</param>
+        [WebMethod(EnableSession = true), ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string GetPCAValidAlpha3CodeByCountryId(int accountid, int countryid, string countryname)
+        {
+            string alpha3Code = string.Empty;
+            CurrentUser user = cMisc.GetCurrentUser();
+            cCountries countries = new cCountries(accountid, user.CurrentSubAccountId);
+            var filteredcountries = countries.GetPostcodeAnywhereEnabledCountries();
+            var selectedcountry = countries.getCountryById(countryid);
+            foreach (cGlobalCountry filteredCountry in filteredcountries)
+            {
+                if (filteredCountry.GlobalCountryId == selectedcountry.GlobalCountryId)
+                {
+                   alpha3Code = new cGlobalCountries().getGlobalCountryById(selectedcountry.GlobalCountryId).Alpha3CountryCode;
+                }
+            }                                       
+            return alpha3Code;
+        }
     }
 }
