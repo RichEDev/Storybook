@@ -1457,14 +1457,7 @@ public partial class aeexpense : System.Web.UI.Page
             row.Cells.Add(cell);
             cell = new TableCell();
             cell.ID = "exchangeratemandatory";
-            if (showExchangeRateTT == true)
-            {
-                cell.Text = "*";
-            }
-            else
-            {
-                cell.Text = string.Empty;
-            }            
+            cell.Text = string.Empty;           
             row.Cells.Add(cell);
             cell = new TableCell();
             cell.CssClass = "inputtd";
