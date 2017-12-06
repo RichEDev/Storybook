@@ -947,7 +947,8 @@ namespace SpendManagementLibrary
         PencePerMileReceipt,
         FixedAllowance,
         FuelCardMileage,
-        ItemReimburse
+        ItemReimburse,
+        ExcessMileage
     }
 
     [Serializable()]

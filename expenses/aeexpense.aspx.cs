@@ -3534,7 +3534,7 @@ public partial class aeexpense : System.Web.UI.Page
         {
 
             subpnl = (Panel)pnlspecific.FindControl("pnl" + i);
-            itemdetails = getSubcatDetails(items[i], i.ToString(), subpnl);
+            itemdetails = getSubcatDetails(items[i], i.ToString(), subpnl, reqemp);
 
             int bankAccountId = 0;
             ddlst = (DropDownList)pnlspecific.FindControl("cmbbankaccount" + i);
@@ -3650,7 +3650,7 @@ public partial class aeexpense : System.Web.UI.Page
                     foreach (int subitem in subcat.subcatsplit)
                     {
                         subpnl = (Panel)pnlspecific.FindControl("pnl" + i + subitem);
-                        itemdetails = getSubcatDetails(subitem, i.ToString() + subitem.ToString(), subpnl);
+                        itemdetails = getSubcatDetails(subitem, i.ToString() + subitem.ToString(), subpnl, reqemp);
 
                         if (itemdetails.total > 0 || itemdetails.miles > 0)
                         {
@@ -3722,7 +3722,7 @@ public partial class aeexpense : System.Web.UI.Page
     }
 
 
-    public sExpenseItemDetails getSubcatDetails(int subcatid, string id, Panel pnl)
+    public sExpenseItemDetails getSubcatDetails(int subcatid, string id, Panel pnl, Employee reqemp)
     {
         ItemType itemtype = (ItemType)ViewState["itemtype"];
         CheckBox chkbox;
@@ -3861,23 +3861,38 @@ public partial class aeexpense : System.Web.UI.Page
             }
         }
 
-        if (subcat.mileageapp)
+        if (subcat.mileageapp || subcat.calculation == CalculationType.ExcessMileage)
         {
             details.unit = defaultuom;
 
-            txtbox = (TextBox)pnl.FindControl("txtmileage" + id);
+            if (subcat.calculation == CalculationType.ExcessMileage)
+            {
+                txtbox = (TextBox)pnl.FindControl("txtallowances" + id);
+            }
+            else
+            {
+                txtbox = (TextBox)pnl.FindControl("txtmileage" + id);
+            }
+            
             if (txtbox != null)
             {
                 if (txtbox.Text != "")
                 {
-                    if (subcat.IsRelocationMileage)
+                    if (subcat.IsRelocationMileage || subcat.calculation == CalculationType.ExcessMileage)
                     {
                         // Dont allow mileage to be claimed if the check box is not checked
                         chkbox = (CheckBox)pnl.FindControl("chkallowance" + id);
 
                         if (chkbox != null)
                         {
-                            details.miles = chkbox.Checked ? decimal.Parse(txtbox.Text) : 0;
+                            if (subcat.calculation == CalculationType.ExcessMileage)
+                            {
+                                details.miles = chkbox.Checked ? decimal.Parse(txtbox.Text) * (decimal)reqemp.ExcessMileage : 0;
+                            }
+                            else
+                            {
+                                details.miles = chkbox.Checked ? decimal.Parse(txtbox.Text) : 0;
+                            }
                         }
                     }
                     else
@@ -3938,7 +3953,7 @@ public partial class aeexpense : System.Web.UI.Page
             }
         }
 
-        if (subcat.calculation == CalculationType.PencePerMile || subcat.calculation == CalculationType.PencePerMileReceipt || subcat.calculation == CalculationType.FuelCardMileage)
+        if (subcat.calculation == CalculationType.PencePerMile || subcat.calculation == CalculationType.PencePerMileReceipt || subcat.calculation == CalculationType.FuelCardMileage || subcat.calculation == CalculationType.ExcessMileage)
         {
             txtbox = (TextBox)pnl.FindControl("txtmileagecat" + id);
             if (txtbox != null)
@@ -4236,7 +4251,7 @@ public partial class aeexpense : System.Web.UI.Page
                 details.home = chkbox.Checked;
             }
         }
-        if (subcat.calculation == CalculationType.FixedAllowance || subcat.IsRelocationMileage)
+        if (subcat.calculation == CalculationType.FixedAllowance || subcat.IsRelocationMileage || subcat.calculation == CalculationType.ExcessMileage)
         {
             chkbox = (CheckBox)pnl.FindControl("chkallowance" + id);
             if (chkbox != null)
@@ -4247,7 +4262,10 @@ public partial class aeexpense : System.Web.UI.Page
                     if (txtbox.Text != "")
                     {
                         details.quantity = double.Parse(txtbox.Text);
-                        details.total = subcat.allowanceamount * (decimal)details.quantity;
+                        if (subcat.calculation != CalculationType.ExcessMileage)
+                        {
+                            details.total = subcat.allowanceamount * (decimal)details.quantity;
+                        }
                     }
                 }
             }
