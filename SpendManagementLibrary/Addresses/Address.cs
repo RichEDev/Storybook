@@ -714,8 +714,10 @@
                 {
                     address.Add(Get(currentUser.AccountID, tmpHomeLocation.LocationID));
                 }
-
-                address[0].FriendlyName = accountProperties.HomeAddressKeyword;
+                if (address.Count > 0) 
+                {
+                    address[0].FriendlyName = accountProperties.HomeAddressKeyword;
+                }
             }
             else if (keyword == accountProperties.WorkAddressKeyword.ToLower() || keyword == "office")
             {
