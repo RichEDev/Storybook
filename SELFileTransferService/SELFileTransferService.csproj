@@ -157,6 +157,14 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Main.config">
+      <DependentUpon>App.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App.Testing.config">
+      <DependentUpon>App.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
