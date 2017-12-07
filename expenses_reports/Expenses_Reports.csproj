@@ -198,6 +198,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Main.config">
+      <DependentUpon>App.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App.Testing.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
