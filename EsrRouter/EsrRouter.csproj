@@ -102,6 +102,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="App.Main.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
     <None Include="App.Release.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
@@ -112,6 +115,9 @@
       <DependentUpon>App.config</DependentUpon>
     </None>
     <None Include="App.Debug.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
+    <None Include="App.Testing.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">

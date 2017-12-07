@@ -270,6 +270,9 @@
       <DependentUpon>App.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
+    <None Include="App.Main.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
     <None Include="App.Release.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
@@ -282,6 +285,10 @@
     </None>
     <None Include="App.Debug.config">
       <DependentUpon>App.config</DependentUpon>
+    </None>
+    <None Include="App.Testing.config">
+      <DependentUpon>App.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Email sender\database.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
