@@ -1382,7 +1382,11 @@ namespace Spend_Management
 
             if (count != 0) return;
 
-            changeStatus(reqclaim, ClaimStatus.ItemCorrectedAwaitingApprover, userid.EmployeeID);
+            // if the claim is not submitted then we don't need to change the status of the claim
+            if (reqclaim.status != ClaimStatus.None)
+            {
+                changeStatus(reqclaim, ClaimStatus.ItemCorrectedAwaitingApprover, userid.EmployeeID);
+            }
 
             if (reqclaim.splitApprovalStage)
             {
