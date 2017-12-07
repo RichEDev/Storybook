@@ -1897,7 +1897,7 @@
                 results.RemoveAll(r => r.Status == ExpenseValidationResultStatus.NotApplicable);
                 
                 builder.AppendFormat(
-                    "<table class='validation-results'><tr class='validation-results-header'><th class='validation-results-label'>Validation Rules</th><th class='validation-results-status'><img src='{0}' alt='Validation Status' title='Validation Status' /></th></tr>",
+                    "<table class='validation-results'><tr class='validation-results-header cGrid'><th class='validation-results-label cGrid'>Validation Rules</th><th class='validation-results-status cGrid'><img src='{0}' alt='Validation Status' title='Validation Status' /></th></tr>",
                     headerIcon);
                 results.ForEach(
                     result =>
