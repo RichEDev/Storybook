@@ -1209,6 +1209,7 @@ namespace SpendManagementApi.Repositories
 
             var primaryCurrencyId = employee.PrimaryCurrency == 0 ? properties.basecurrency : employee.PrimaryCurrency;
             var primaryCountryId = employee.PrimaryCountry == 0 ? properties.homecountry : employee.PrimaryCountry;
+            int employeeGlobalPrimaryCountryId = employee.PrimaryCountry == 0 ? properties.homecountry : countries.getCountryById(primaryCountryId).GlobalCountryId;
 
             IList<Models.Types.Currency> activeCurrencies = new List<Models.Types.Currency>();
 
@@ -1286,6 +1287,7 @@ namespace SpendManagementApi.Repositories
                 EmployeeBankAccounts = bankAccounts,
                 PostCodeAnywhereCountries = pcaCountries,
                 DefaultGlobalCountryId = defaultGlobalCountryId,
+                EmployeeGlobalPrimaryCountryId = employeeGlobalPrimaryCountryId,
                 CanEditCostCode = this.User.CanEditCostCodes,
                 CanEditDepartment = this.User.CanEditDepartments,
                 CanEditProjectCode = this.User.CanEditProjectCodes,

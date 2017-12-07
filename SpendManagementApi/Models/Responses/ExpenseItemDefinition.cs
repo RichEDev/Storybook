@@ -125,6 +125,11 @@
         public int DefaultGlobalCountryId { get; set; }
 
         /// <summary>
+        /// Gets or sets the users default primary country global id
+        /// </summary>
+        public int EmployeeGlobalPrimaryCountryId { get; set; }
+
+        /// <summary>
         /// Gets or sets whether the current user can edit a cost code on an expense
         /// </summary>
         public bool CanEditCostCode { get; set; }
