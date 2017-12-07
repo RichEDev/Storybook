@@ -2797,8 +2797,8 @@ namespace Spend_Management
                     var homeAddress = employee.GetHomeAddresses().GetBy(date);
                     var workAddressId = workAddress != null ? workAddress.LocationID : 0;
                     var homeAddressId = homeAddress != null ? homeAddress.LocationID : 0;
-                    var homeAddressRef = this._addresses.GetAddressById(homeAddressId);
-                    var workAddressRef = this._addresses.GetAddressById(workAddressId);
+                    var homeAddressRef = homeAddressId <= 0 ? null : this._addresses.GetAddressById(homeAddressId);
+                    var workAddressRef = workAddressId <= 0 ? null :  this._addresses.GetAddressById(workAddressId);
                     officetohome = AddressDistance.GetRecommendedOrCustomDistance(workAddressRef, homeAddressRef, this.accountid, subAccount, currentUser) ?? 0;
                     hometooffice = AddressDistance.GetRecommendedOrCustomDistance(homeAddressRef, workAddressRef, this.accountid, subAccount, currentUser) ?? 0;
 

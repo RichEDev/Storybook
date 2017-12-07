@@ -277,7 +277,7 @@
             using (IDBConnection databaseConnection = new DatabaseConnection(account.ConnectionString))
             {
                 databaseConnection.AddWithValue("@ReturnJourney", returnDistance);
-                if (origin.Postcode.Replace(" ","") != originLocator)
+                if (account.AddressInternationalLookupsAndCoordinates)
                 {
                     databaseConnection.AddWithValue("@OriginAddressID", origin.Identifier);
                     databaseConnection.AddWithValue("@DestinationAddressID", destination.Identifier);
