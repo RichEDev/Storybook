@@ -420,7 +420,8 @@ namespace SpendManagementApi.Models.Types.Employees
                     employee.EmployeeDetails.WorkDetails.StartMileageDate,
                     false,
                     dvlaConsentDate: employee.DvlaConsentDate,
-                    driverId: employee.DriverId);
+                    driverId: employee.DriverId,
+                    excessMileage: employee.ExcessMileage);
 
             return convertedEmployee;
         }
