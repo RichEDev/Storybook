@@ -126,6 +126,13 @@ namespace Spend_Management
                 return 0;
             }
 
+            if (subcat.calculation == CalculationType.ExcessMileage)
+            {
+                expitem.journeysteps[0].NumActualMiles = (decimal)expitem.quantity * (decimal)reqemp.ExcessMileage;
+                expitem.journeysteps[0].nummiles = (decimal)expitem.quantity * (decimal)reqemp.ExcessMileage;
+
+            }
+
             cMileagecats clsmileagecats = new cMileagecats(accountid);
 
 
@@ -159,7 +166,7 @@ namespace Spend_Management
                     {
                         //Make sure there is a valid car before allowing to claim mileage
 
-                        if (car == null)
+                        if (car == null) 
                         {
                             return -3;
                         }
@@ -206,11 +213,9 @@ namespace Spend_Management
                             expitem.updateVAT(0, 0, 0);
                             return 0;
                         }
-                        else
-                        {
-                            amountpay = amountpay * (decimal)expitem.quantity;
-                            total = total * (decimal)expitem.quantity;
-                        }
+
+                        amountpay = amountpay * (decimal)expitem.quantity;
+                        total = total * (decimal)expitem.quantity;
                     }
                 }
 
