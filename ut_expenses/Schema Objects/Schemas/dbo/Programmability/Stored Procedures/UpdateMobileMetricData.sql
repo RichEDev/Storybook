@@ -3,23 +3,29 @@
                                                  @Platform   NVARCHAR(10),
                                                  @OSVersion  NVARCHAR(100),
                                                  @AppVersion NVARCHAR(100), 
-					                             @EmployeeId INT)
+												 @EmployeeId INT)
 AS
-  BEGIN
-      DECLARE @Id INT
-      DECLARE @returnId INT
+BEGIN
+      DECLARE @Id AS INT
+      DECLARE @returnId AS INT
 
       SET @Id = (SELECT id
                  FROM   [MobileMetricData]
                  WHERE  [MobileMetricData].deviceid = @DeviceId 
-		         AND    [MobileMetricData].EmployeeId = @EmployeeId)
+				 AND    [MobileMetricData].EmployeeId = @EmployeeId)
 
       IF @Id IS NOT NULL
         BEGIN
             -- Device already exists so update last used column to now
-            UPDATE [MobileMetricData]
-            SET    lastused = Getdate(), OSVersion = @OSVersion, AppVersion = @AppVersion
-            WHERE  [MobileMetricData].Id = @Id
+                UPDATE [MobileMetricData]
+				SET    lastused = Getdate(), OSVersion = @OSVersion, AppVersion = @AppVersion, Active= 1
+				WHERE  [MobileMetricData].Id = @Id;
+
+			-- Set other employees registered to the device to inactive
+				UPDATE mobilemetricdata
+				SET active = 0
+				WHERE deviceid = @DeviceId
+				AND employeeid <> @EmployeeId;
 
             SET @returnId = @Id
         END
@@ -31,18 +37,26 @@ AS
                          [platform],
                          [osversion],
                          [appversion],
-		                 [EmployeeId],
-                         [lastused])
+						 [EmployeeId],
+                         [lastused],
+						 [Active])
             VALUES      (@DeviceId,
                          @Model,
                          @Platform,
                          @OSVersion,
                          @AppVersion,
-		                 @EmployeeId,
-                         Getdate())
+						 @EmployeeId,
+                         Getdate(),
+						 1);
 
             SET @returnId = Scope_identity()
         END
 
-      RETURN @returnId
+	/* Return details based on Return Id */	
+	SELECT	
+		Id, EmployeeId, AllowNotifications, Registered, PushChannel, RegistrationId,RegisteredTag 
+	FROM [MobileMetricData] 
+	WHERE 
+		Id = @returnId;
   END
+  GO

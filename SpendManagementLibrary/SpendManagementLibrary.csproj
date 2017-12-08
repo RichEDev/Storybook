@@ -174,6 +174,9 @@
     <Reference Include="Infragistics4.WebUI.WebSchedule.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
       <HintPath>..\packages\Infragistics.11.1.20111.2238\lib\net40\Infragistics4.WebUI.WebSchedule.v11.1.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.NotificationHubs, Version=2.16.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.9\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -551,9 +554,13 @@
     <Compile Include="MobileAppReview\MobileAppFeedbackEmailGenerator.cs" />
     <Compile Include="MobileAppReview\MobileAppFeedbackService.cs" />
     <Compile Include="MobileAppReview\PermittedToAskEmployeeForReview.cs" />
+    <Compile Include="MobileDeviceNotifications\MobileDeviceInstallation.cs" />
+    <Compile Include="MobileDeviceNotifications\MobileDeviceInstallationService.cs" />
     <Compile Include="MobileDeviceNotifications\MobileDeviceStatus.cs" />
+    <Compile Include="MobileDeviceNotifications\MobileNotificationPlatform.cs" />
     <Compile Include="MobileInformationMessage\MobileInformationMessage.cs" />
     <Compile Include="MobileInformationMessage\MobileInformationMessages.cs" />
+    <Compile Include="MobileMetrics\MobileMetricData.cs" />
     <Compile Include="MobileMetrics\UpdateMobileMetricData.cs" />
     <Compile Include="OnlineCountryInfo.cs" />
     <Compile Include="OnlineGlobalCountryInfo.cs" />

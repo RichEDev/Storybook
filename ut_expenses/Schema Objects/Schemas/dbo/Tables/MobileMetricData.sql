@@ -9,5 +9,10 @@
     [LastUsed] NVARCHAR(100) NOT NULL, 
     [EmployeeId] INT NULL, 
     [Active] BIT NULL, 
-    [AllowNotifications] BIT NULL 
+    [AllowNotifications] BIT NULL, 
+    [Registered] BIT NOT NULL DEFAULT 0, 
+    [PushChannel] NVARCHAR(MAX) NULL, 
+    [RegistrationId] NVARCHAR(100) NULL, 
+    [RegisteredTag] NVARCHAR(50) NULL, 
+    [RegisteredOn] DATETIME NULL 
 )
