@@ -1,12 +1,10 @@
-﻿using System.Linq;
-
-namespace SpendManagementLibrary.MobileMetrics
+﻿namespace SpendManagementLibrary.MobileMetrics
 {
 	using System.Collections.Generic;
 	using System.Data;
 	using Helpers;
 	using MobileDeviceNotifications;
-	using System;
+	using System.Linq;
 
 	/// <summary>
 	/// The update mobile metric data.
@@ -51,12 +49,12 @@ namespace SpendManagementLibrary.MobileMetrics
 
 				while (reader.Read())
 				{
-					int id = reader.GetInt32(idOrd);
-					bool allowNotifications = reader.GetBoolean(allowNotificationsOrd);
-					bool registered = reader.GetBoolean(registeredOrd);
-					string pushChannel = Convert.ToString(reader.GetString(pushChannelOrd));
-					string registrationId = Convert.ToString(reader.GetString(registrationIdOrd));
-					string registeredTag = Convert.ToString(reader.GetString(registeredTagOrd));
+					var id = reader.IsDBNull(idOrd) ? 0 : reader.GetInt32(idOrd);
+					var allowNotifications = !reader.IsDBNull(allowNotificationsOrd) && reader.GetBoolean(allowNotificationsOrd);
+					var registered = !reader.IsDBNull(registeredOrd) && reader.GetBoolean(registeredOrd);
+					var pushChannel = reader.IsDBNull(pushChannelOrd) ? string.Empty : reader.GetString(pushChannelOrd);
+					var registrationId = reader.IsDBNull(registrationIdOrd) ? string.Empty : reader.GetString(registrationIdOrd);
+					var registeredTag = reader.IsDBNull(registeredTagOrd) ? string.Empty : reader.GetString(registeredTagOrd);
 
 					var mobileMetricData = new MobileMetricData(id, employeeId, allowNotifications, registered, pushChannel, registrationId, registeredTag);
 					return mobileMetricData;
@@ -110,12 +108,12 @@ namespace SpendManagementLibrary.MobileMetrics
 
 				while (reader.Read())
 				{
-					int id = reader.GetInt32(idOrd);
-					bool allowNotifications = reader.GetBoolean(allowNotificationsOrd);
-					bool registered = reader.GetBoolean(registeredOrd);
-					string pushChannel = Convert.ToString(reader.GetString(pushChannelOrd));
-					string registrationId = Convert.ToString(reader.GetString(registrationIdOrd));
-					string registeredTag = Convert.ToString(reader.GetString(registeredTagOrd));
+					var id = reader.IsDBNull(idOrd) ? 0 : reader.GetInt32(idOrd);
+					var allowNotifications = !reader.IsDBNull(allowNotificationsOrd) && reader.GetBoolean(allowNotificationsOrd);
+					var registered = !reader.IsDBNull(registeredOrd) && reader.GetBoolean(registeredOrd);
+					var pushChannel = reader.IsDBNull(pushChannelOrd) ? string.Empty : reader.GetString(pushChannelOrd);
+					var registrationId = reader.IsDBNull(registrationIdOrd) ? string.Empty : reader.GetString(registrationIdOrd);
+					var registeredTag = reader.IsDBNull(registeredTagOrd) ? string.Empty : reader.GetString(registeredTagOrd);
 
 					var mobileMetricData = new MobileMetricData(id, employeeId, allowNotifications, registered, pushChannel, registrationId, registeredTag);
 					return mobileMetricData;
