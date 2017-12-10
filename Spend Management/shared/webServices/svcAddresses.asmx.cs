@@ -637,15 +637,18 @@ namespace Spend_Management.shared.webServices
                 {
                     cEmployees employees = new cEmployees(currentUser.AccountID);
                     Employee employee = employees.GetEmployeeById(currentUser.EmployeeID);
-                    string employeePrimaryAlphaCode = new cGlobalCountries().getGlobalCountryById(countries.getCountryById(employee.PrimaryCountry).GlobalCountryId).Alpha3CountryCode;
-                    foreach (cGlobalCountry filteredCountry in filteredCountries)
+                    if (employee.PrimaryCountry != 0)
                     {
-                        if (filteredCountry.Alpha3CountryCode == employeePrimaryAlphaCode)
+                        string employeePrimaryAlphaCode = new cGlobalCountries().getGlobalCountryById(countries.getCountryById(employee.PrimaryCountry).GlobalCountryId).Alpha3CountryCode;
+                        foreach (cGlobalCountry filteredCountry in filteredCountries)
                         {
-                            defaultCountryAlpha3Code = employeePrimaryAlphaCode;
-                            break;
+                            if (filteredCountry.Alpha3CountryCode == employeePrimaryAlphaCode)
+                            {
+                                defaultCountryAlpha3Code = employeePrimaryAlphaCode;
+                                break;
+                            }
                         }
-                    }
+                    }                    
                 }                                
 
                 widgetData.Countries = filteredCountries;
