@@ -36,7 +36,24 @@ SELECT
  SUM(savedexpenses.total) AS total,
  SUM(CASE WHEN itemtype = 1 THEN total ELSE 0 END) AS cash,
  SUM(CASE WHEN itemtype = 2 THEN total ELSE 0 END) AS credit,
- SUM(CASE WHEN itemtype = 3 THEN total ELSE 0 END) AS purchase,
+ SUM(CASE WHEN itemtype = 3 THEN total ELSE 0 END) AS purchase, 
+  CASE (
+  MAX(CASE itemtype WHEN 1 THEN 1 ELSE 0 END) +
+  MAX(CASE itemtype WHEN 2 THEN 3 ELSE 0 END) +
+  MAX(CASE itemtype WHEN 3 THEN 5 ELSE 0 END)
+  )
+  WHEN 1
+   THEN 1
+  WHEN 3
+   THEN 2
+  WHEN 4
+   THEN 2
+  WHEN 5
+   THEN 3
+  WHEN 6
+   THEN 3
+  ELSE 0
+ END AS claimType,
  teamemps.employeeid AS teamemployeeid,
  claims_base.employeeid,
  claims_base.currencyid AS basecurrency,
