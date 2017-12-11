@@ -431,6 +431,24 @@
             return false;
         }
 
+        public bool SendEmailNotificationForExcessMileage(int employeeid, string apiEndPoint)
+        {
+
+            var request = new RestRequest(apiEndPoint, Method.POST)
+            {
+                RequestFormat = DataFormat.Json
+            };
+
+            var response = this.BaseRequest<object>(request, false);
+            if (response.Result.Data != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
         /// <summary>
         /// Calls the API to send an email to a specific employee (contained in the  api End Point).
         /// </summary>
