@@ -206,10 +206,6 @@
                         {
                             formSelectionFormId = formid;
                         }
-                        else
-                        {
-                            formSelectionFormId = -1;
-                        }
 
                         if (formSelectionFormId > 0)
                         {
