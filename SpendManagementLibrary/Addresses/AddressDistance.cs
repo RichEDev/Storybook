@@ -864,6 +864,18 @@
                 return 0;
             }
 
+            var addresses = new Addresses(currentUser.AccountID);
+
+            if (string.IsNullOrEmpty(fromAddress.Postcode))
+            {
+                fromAddress = addresses.GetAddressById(fromAddress.Identifier);
+            }
+
+            if (string.IsNullOrEmpty(toAddress.Postcode))
+            {
+                toAddress = addresses.GetAddressById(toAddress.Identifier);
+            }
+
             decimal? distance = null;
             cAccount account = new cAccounts().GetAccountByID(currentUser.AccountID);
             if (!useMapPoint)
