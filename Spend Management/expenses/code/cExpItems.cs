@@ -126,7 +126,7 @@ namespace Spend_Management
                 return 0;
             }
 
-            if (subcat.calculation == CalculationType.ExcessMileage)
+            if (subcat.calculation == CalculationType.ExcessMileage && expitem.journeysteps.ContainsKey(0))
             {
                 expitem.journeysteps[0].NumActualMiles = (decimal)expitem.quantity * (decimal)reqemp.ExcessMileage;
                 expitem.journeysteps[0].nummiles = (decimal)expitem.quantity * (decimal)reqemp.ExcessMileage;
