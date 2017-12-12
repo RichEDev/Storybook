@@ -200,7 +200,16 @@
                     
                     if (formid > 0 && viewid > 0)
                     {
-                        formSelectionFormId = formid;
+                        var attribute = currentEntity.getAttributeById(currentEntity.FormSelectionAttributeId.Value);
+                        if (currentView.AddFormMappings != null && currentView.AddFormMappings.Any()
+                            && attribute.fieldtype == FieldType.List)
+                        {
+                            formSelectionFormId = formid;
+                        }
+                        else
+                        {
+                            formSelectionFormId = -1;
+                        }
 
                         if (formSelectionFormId > 0)
                         {
