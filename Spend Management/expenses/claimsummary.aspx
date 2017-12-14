@@ -4,8 +4,7 @@
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="contentmenu">
     <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
         <Scripts>
-            <asp:ScriptReference Path="~/shared/javaScript/sel.claims.js?date=20161112" />
-
+            <asp:ScriptReference Path="~/shared/javaScript/sel.claims.js?date=20171214" />
         </Scripts>
 
         <Services>
