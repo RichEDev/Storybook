@@ -191,9 +191,10 @@
                 if (editableRateValue) {
                     if (parseFloat(editableRateValue) <= 0) {
                         errorMsg = "Please enter an exchange rate greater than 0.";
-                    }
-                    if (editableRateValue.trim() === "") {
+                    } else if (editableRateValue.trim() === "") {
                         errorMsg = "Please enter an exchange rate.";
+                    } else {
+                        $("#ctl00_contentmain_exchangeratemandatory")[0].innerText = "";
                     }
                 }
                 else {
@@ -206,7 +207,6 @@
                 $("#ctl00_contentmain_exchangeratemandatory")[0].style.color = "red";
                 return false;
             }
-            $("#ctl00_contentmain_exchangeratemandatory")[0].innerText = "";
             return true;
         }
 
