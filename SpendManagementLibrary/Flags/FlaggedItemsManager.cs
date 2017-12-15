@@ -44,7 +44,7 @@
             this.PageSource = pageSource;
             this.Stage = stage;
             this.ExpenseCollection = new List<ExpenseItemFlagSummary>();
-        }
+        }        
 
         /// <summary>
         /// Initialises a new instance of the <see cref="FlaggedItemsManager"/> class.
@@ -145,6 +145,12 @@
         /// </summary>
         [DataMember]
         private List<ExpenseItemFlagSummary> ExpenseCollection { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the claim can be accessed
+        /// </summary>
+        [DataMember]
+        public bool CanAccessClaim { get; set; }
 
         /// <summary>
         /// Removes any expenses where the flag collection is empty.

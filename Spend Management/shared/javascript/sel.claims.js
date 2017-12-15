@@ -1213,11 +1213,11 @@
                             if (!flags.OnlyDisplayBlockedItems || (flags.OnlyDisplayBlockedItems && flaggedItem.Action == 2)) {
                                 if (flaggedItem.FlaggedJourneySteps != null) {
                                     for (var x = 0; x < flaggedItem.FlaggedJourneySteps.length; x++) {
-                                        SEL.Claims.ClaimViewer.GenerateFlagline(expenseContainer, flaggedItem, expenseLineNumber, flagLineNumber, flags.Authorising, flags.ClaimantName, flags.Claimant, flags.SubmittingClaim, flags.Stage, flags.OnlyDisplayBlockedItems, flaggedItem.FlaggedJourneySteps[x].FlagDescription, expense.ExpenseID, x);
+                                        SEL.Claims.ClaimViewer.GenerateFlagline(expenseContainer, flaggedItem, expenseLineNumber, flagLineNumber, flags.Authorising, flags.CanAccessClaim, flags.ClaimantName, flags.Claimant, flags.SubmittingClaim, flags.Stage, flags.OnlyDisplayBlockedItems, flaggedItem.FlaggedJourneySteps[x].FlagDescription, expense.ExpenseID, x);
                                         flagLineNumber++;
                                     }
                                 } else {
-                                    SEL.Claims.ClaimViewer.GenerateFlagline(expenseContainer, flaggedItem, expenseLineNumber, flagLineNumber, flags.Authorising, flags.ClaimantName, flags.Claimant, flags.SubmittingClaim, flags.Stage, flags.OnlyDisplayBlockedItems, flaggedItem.FlagDescription, expense.ExpenseID, null);
+                                    SEL.Claims.ClaimViewer.GenerateFlagline(expenseContainer, flaggedItem, expenseLineNumber, flagLineNumber, flags.Authorising, flags.CanAccessClaim, flags.ClaimantName, flags.Claimant, flags.SubmittingClaim, flags.Stage, flags.OnlyDisplayBlockedItems, flaggedItem.FlagDescription, expense.ExpenseID, null);
                                     flagLineNumber++;
                                 }
                                 expenseContainer.append("<div class='flagSpacer'></div>");
@@ -1231,7 +1231,7 @@
 
                 },
 
-                GenerateFlagline: function(flagContainer, flaggedItem, expenseLineNumber, flagLineNumber, authorising, claimantName, claimant, submittingClaim, stage, onlyDisplayBlockedItems, flagDescription, expenseID, journeyStepNumber) {
+                GenerateFlagline: function(flagContainer, flaggedItem, expenseLineNumber, flagLineNumber, authorising, canAccessClaim, claimantName, claimant, submittingClaim, stage, onlyDisplayBlockedItems, flagDescription, expenseID, journeyStepNumber) {
 
                     var flagStyle;
                     switch (flaggedItem.FlagColour) {
@@ -1387,26 +1387,23 @@
                         html += "</div>";
                         leftDiv.append(html);
 
-
-                        if (flaggedItem.AuthoriserJustifications.length > 0 && authorising) {
+                        if (flaggedItem.AuthoriserJustifications.length > 0 && (authorising || canAccessClaim)) {
                             html = '';
                             for (var i = 0; i < flaggedItem.AuthoriserJustifications.length; i++) {
                                 var authoriserJustification = flaggedItem.AuthoriserJustifications[i];
-                                if (authoriserJustification.Stage != stage) {
-                                    html += "<div class='justification";
-                                    if (i > 0) {
-                                        html += " additionalJustification";
-                                    }
-                                    html += "'>";
-
-                                    var datestampString = authoriserJustification.DateStamp.replace("/Date(", "").replace(")/", "");
-
-                                    var date = new Date(parseInt(datestampString));
-                                    html += "<div><strong>" + authoriserJustification.FullName + "</strong>&nbsp;<span class='timeago date' title='" + date.toISOString() + "'>" + date + "</span></div>";
-                                    html += "<div>" + authoriserJustification.Justification + "</div>";
-                                    html += "</div>";
-
+                                
+                                html += "<div class='justification";
+                                if (i > 0) {
+                                    html += " additionalJustification";
                                 }
+                                html += "'>";
+
+                                var datestampString = authoriserJustification.DateStamp.replace("/Date(", "").replace(")/", "");
+
+                                var date = new Date(parseInt(datestampString));
+                                html += "<div><strong>" + authoriserJustification.FullName + "</strong>&nbsp;<span class='timeago date' title='" + date.toISOString() + "'>" + date + "</span></div>";
+                                html += "<div>" + authoriserJustification.Justification + "</div>";
+                                html += "</div>";
                             }
                             if (html != '') {
                                 leftDiv.append("<strong>Authoriser Justifications</strong>");

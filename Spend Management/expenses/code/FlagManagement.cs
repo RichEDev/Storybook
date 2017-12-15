@@ -3484,6 +3484,7 @@ namespace Spend_Management.expenses.code
             manager.Claimant = claimant;
             manager.Stage = stage;
             manager.Authorising = pageSource == "CheckAndPay";
+            manager.CanAccessClaim = claims.CheckClaimAndOwnership(claim, cMisc.GetCurrentUser(), false) == ClaimToAccessStatus.Success;
             manager.SubmittingClaim = false;
             manager.OnlyDisplayBlockedItems = false;
 
