@@ -1,5 +1,4 @@
-﻿
-namespace SpendManagementLibrary.Expedite
+﻿namespace SpendManagementLibrary.Expedite
 {
     using SpendManagementLibrary.Mobile;
     using System;
@@ -10,12 +9,20 @@ namespace SpendManagementLibrary.Expedite
     using Enumerators.Expedite;
     using Interfaces.Expedite;
     using Helpers;
+    using BusinessLogic.Cache;
+    using Common.Logging;
 
     /// <summary>
     /// Manages data access for validation.
     /// </summary>
     public class ExpenseValidationManager : IManageExpenseValidation
     {
+
+        /// <summary>
+        /// An instance of <see cref="ILog"/> for logging <see cref="ICache{T,TK}"/> diagnostics and information.
+        /// </summary>
+        private static readonly ILog Log = new LogFactory<ExpenseValidationManager>().GetLogger();
+
         #region SQL / Private Constants / Column Names / Param Keys / Vars
 
         // metabase criterion columns (and fields view join later on)
@@ -214,15 +221,22 @@ namespace SpendManagementLibrary.Expedite
         /// </summary>
         /// <param name="expenseid">The Id of the Expense Item to validate.</param>
         /// <param name="newProgress">The new progress of the expense item.</param>
-        public void UpdateOperatorProgressForExpenseItem(int expenseid, ExpediteOperatorValidationProgress newProgress)
+        public int UpdateOperatorProgressForExpenseItem(int expenseid, ExpediteOperatorValidationProgress newProgress)
         {
            var args = new List<KeyValuePair<string, object>>
                 {
                     new KeyValuePair<string, object>(ParamExpenseId, expenseid),
                     new KeyValuePair<string, object>(ParamExpediteValidationProgress, (int)newProgress)
                 };
-           RunSingleStoredProcedure(StoredProcUpdateExpediteOperatorValidationProgress, args);
-         
+           var result = this.RunSingleStoredProcedure(StoredProcUpdateExpediteOperatorValidationProgress, args);
+            if (Log.IsDebugEnabled)
+            {
+                Log.Debug($"Update Operator Progress For Expense Item {expenseid} to value {newProgress} returned a value of {result}");
+            }
+
+           return result;
+
+
         }
 
         /// <summary>

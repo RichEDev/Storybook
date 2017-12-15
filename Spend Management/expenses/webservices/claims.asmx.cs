@@ -1346,23 +1346,27 @@
 
                 // VAT Accordion
                 results.VatResults = results.VatResults.OrderBy(r => r.Status).ToList();
+                if (results.VatResults.Any(r => r.Status != ExpenseValidationResultStatus.NotApplicable))
+                {
                     compoundResult = results.VatResults.All(x => x.Status != ExpenseValidationResultStatus.Fail);
-                chosenIcon =
-                    string.Format(
-                        compoundResult
-                            ? statusIcons[ExpenseValidationResultStatus.Pass]
-                            : statusIcons[ExpenseValidationResultStatus.Fail],
-                        invalidated ? "_invalid" : string.Empty);
-                chosenDescription = compoundResult
-                                        ? statusDescriptions[ExpenseValidationResultStatus.Pass]
-                                        : statusDescriptions[ExpenseValidationResultStatus.Fail];
-                builder.AppendFormat(
-                    "<h3 class='validation-results-header'><img src='{0}' title='VAT Rule Validation: {1}' alt='VAT Validation {1}'/> <strong>VAT {1}</strong> <img class='validation-results-status' src='{2}' title='Compound Status: {1}' alt='Compound Status: {1}'/></h3><div class='validation-results-container'><div>Receipt validation failures for VAT checks mean that there is a possibility that your company will not be able to claim back the VAT on expense payments.</div><br/>",
-                    ExpediteValidationHelper.VatIcon,
-                    chosenDescription,
-                    chosenIcon);
-                    BuildTableForValidationResultSet(builder, results.VatResults, ExpediteValidationHelper.HeaderIcon);
+                    chosenIcon =
+                        string.Format(
+                            compoundResult
+                                ? statusIcons[ExpenseValidationResultStatus.Pass]
+                                : statusIcons[ExpenseValidationResultStatus.Fail],
+                            invalidated ? "_invalid" : string.Empty);
+                    chosenDescription = compoundResult
+                        ? statusDescriptions[ExpenseValidationResultStatus.Pass]
+                        : statusDescriptions[ExpenseValidationResultStatus.Fail];
+                    builder.AppendFormat(
+                        "<h3 class='validation-results-header'><img src='{0}' title='VAT Rule Validation: {1}' alt='VAT Validation {1}'/> <strong>VAT {1}</strong> <img class='validation-results-status' src='{2}' title='Compound Status: {1}' alt='Compound Status: {1}'/></h3><div class='validation-results-container'><div>Receipt validation failures for VAT checks mean that there is a possibility that your company will not be able to claim back the VAT on expense payments.</div><br/>",
+                        ExpediteValidationHelper.VatIcon,
+                        chosenDescription,
+                        chosenIcon);
+                    this.BuildTableForValidationResultSet(builder, results.VatResults, ExpediteValidationHelper.HeaderIcon);
                     builder.Append("</div>");
+                }
+                    
 
                     // if the employee is the approver
                     if (employee.EmployeeID == claim.checkerid)
@@ -1886,6 +1890,7 @@
         /// <param name="builder">The string builder.</param>
         /// <param name="results">The result set.</param>
         /// <param name="headerIcon">The url to the header icon</param>
+        /// <returns>The number of rows added</returns>
         private void BuildTableForValidationResultSet(
             StringBuilder builder,
             List<ValidationResult> results,

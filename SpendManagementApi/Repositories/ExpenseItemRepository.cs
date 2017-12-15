@@ -1130,10 +1130,10 @@ namespace SpendManagementApi.Repositories
         /// </summary>
         /// <param name="id">Expense Id</param>
         /// <param name="operatorValidationProgress">Expense Validation Progress</param>
-        public void UpdateOperatorValidationStatus(int id, int operatorValidationProgress)
+        public int UpdateOperatorValidationStatus(int id, int operatorValidationProgress)
         {
             var validationManager = new ExpenseValidationManager(User.AccountID);
-            validationManager.UpdateOperatorProgressForExpenseItem(
+            return validationManager.UpdateOperatorProgressForExpenseItem(
                 id,
                 (ExpediteOperatorValidationProgress)operatorValidationProgress);
         }
