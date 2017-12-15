@@ -273,7 +273,7 @@
     </div>
     <div class="inputpanel">&nbsp;</div>
     <div class="inputpanel">
-        <helpers:CSSButton id="cmdok" runat="server" text="save"  UseSubmitBehavior="True" OnClick="cmdok_Click" OnClientClick="if(!(validateAeExpense())) return false;"/>
+        <helpers:CSSButton id="cmdok" runat="server" text="save"  UseSubmitBehavior="True" OnClick="cmdok_Click" OnClientClick="if(!(validateAeExpense()) || !(checkExchangeRate())) return false;"/>
         &nbsp;&nbsp;<helpers:CSSButton ID="cmdcancel" text="cancel" CausesValidation="False" runat="server"  OnClick="cmdcancel_Click" meta:resourcekey="cmdcancelResource1" />
     </div>
     <asp:Panel ID="pnlAddcar" runat="server" CssClass="modalpanel formpanel" Style="padding: 20px; width: 900px; display: none;">
