@@ -6,8 +6,8 @@
     <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
         <Scripts>
             <asp:ScriptReference Path="~/shared/javaScript/minify/sel.claimSelector.js" />
-            <asp:ScriptReference Path="~/shared/javaScript/sel.claims.js?date=20161112" />
-                            <asp:ScriptReference Path="~/shared/javaScript/minify/jquery-selui-dialog.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/sel.claims.js?date=20171214" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/jquery-selui-dialog.js" />
         </Scripts>
         <Services>
             <asp:ServiceReference Path="~/expenses/webServices/claims.asmx" />

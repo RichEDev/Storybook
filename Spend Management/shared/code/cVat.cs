@@ -298,7 +298,7 @@ namespace Spend_Management
                     if (vatpercent != 100)
                     {
                         tempvat = (decimal)(fuelcost / costperunit) * (total / (decimal)(100 + vatrate)) * (decimal)vatrate;
-                        tempvat = (vat / 100) * vatpercent;
+                        tempvat = (tempvat / 100) * vatpercent;
 
                         vat += tempvat;
                     }

@@ -191,9 +191,10 @@
                 if (editableRateValue) {
                     if (parseFloat(editableRateValue) <= 0) {
                         errorMsg = "Please enter an exchange rate greater than 0.";
-                    }
-                    if (editableRateValue.trim() === "") {
+                    } else if (editableRateValue.trim() === "") {
                         errorMsg = "Please enter an exchange rate.";
+                    } else {
+                        $("#ctl00_contentmain_exchangeratemandatory")[0].innerText = "";
                     }
                 }
                 else {
@@ -206,7 +207,6 @@
                 $("#ctl00_contentmain_exchangeratemandatory")[0].style.color = "red";
                 return false;
             }
-            $("#ctl00_contentmain_exchangeratemandatory")[0].innerText = "";
             return true;
         }
 
@@ -273,7 +273,7 @@
     </div>
     <div class="inputpanel">&nbsp;</div>
     <div class="inputpanel">
-        <helpers:CSSButton id="cmdok" runat="server" text="save"  UseSubmitBehavior="True" OnClick="cmdok_Click" OnClientClick="if(!(validateAeExpense())) return false;"/>
+        <helpers:CSSButton id="cmdok" runat="server" text="save"  UseSubmitBehavior="True" OnClick="cmdok_Click" OnClientClick="if(!(validateAeExpense()) || !(checkExchangeRate())) return false;"/>
         &nbsp;&nbsp;<helpers:CSSButton ID="cmdcancel" text="cancel" CausesValidation="False" runat="server"  OnClick="cmdcancel_Click" meta:resourcekey="cmdcancelResource1" />
     </div>
     <asp:Panel ID="pnlAddcar" runat="server" CssClass="modalpanel formpanel" Style="padding: 20px; width: 900px; display: none;">

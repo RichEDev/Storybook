@@ -196,7 +196,17 @@
                     var toIdControl = $("input[id*='txttoid']", table);
                     if (fromIdControl.val() && toIdControl.val()) {
                         var widgetTable = $(this).closest('table');
-                        SEL.MileageGrid.calculateMileage($(widgetTable).data('A' + fromIdControl.val()), $(widgetTable).data('A' + toIdControl.val()), table);
+                        var fromValue = $(widgetTable).data('A' + fromIdControl.val());
+                        if (fromValue === undefined) {
+                            fromValue = { Identifier: fromIdControl.val() }
+                        }
+
+                        var toValue = $(widgetTable).data('A' + toIdControl.val());
+                        if (toValue === undefined) {
+                            toValue = { Identifier: toIdControl.val() }
+                        }
+
+                        SEL.MileageGrid.calculateMileage(fromValue, toValue, table);
                     }
                 });
 
@@ -407,7 +417,17 @@
                 //are they both filled in?
                 if (from.val() && to.val()) {
                     var widgetTable = $(this).closest('table');
-                    SEL.MileageGrid.calculateMileage($(widgetTable).data('A' + from.val()), $(widgetTable).data('A' + to.val()), tr);
+                    var fromValue = $(widgetTable).data('A' + from.val());
+                    if (fromValue === undefined) {
+                        fromValue = {Identifier : from.val()}
+                    }
+
+                    var toValue = $(widgetTable).data('A' + to.val());
+                    if (toValue === undefined) {
+                        toValue = { Identifier: to.val() }
+                    }
+
+                    SEL.MileageGrid.calculateMileage(fromValue, toValue, tr);
                 }
             },
 
@@ -562,6 +582,14 @@
                 warning.css("visibility", "hidden");
                 $("input[data-field='to_search']", container).css("font-weight", "normal");
                 $("input[data-field='from_search']", container).css("font-weight", "normal");
+
+                if (fromAddress.__type === 'SpendManagementLibrary.Addresses.AddressLabel') {
+                    fromAddress.__type = 'SpendManagementLibrary.Addresses.Address';
+                }
+
+                if (toAddress.__type === 'SpendManagementLibrary.Addresses.AddressLabel') {
+                    toAddress.__type = 'SpendManagementLibrary.Addresses.Address';
+                }
 
                 fromAddress.CreatedOn = '';
                 fromAddress.ModifiedOn = '';
