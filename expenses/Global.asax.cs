@@ -77,6 +77,7 @@ namespace expenses
             // ReSharper restore SimplifyConditionalTernaryExpression
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+
             // Caching of data
             var clsAccounts = new cAccounts();
             clsAccounts.CacheList();
