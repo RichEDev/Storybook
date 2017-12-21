@@ -96,6 +96,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisCachePreloader", "Redi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduledTaskHandler", "ScheduledTaskHandler\ScheduledTaskHandler.csproj", "{B8CA467A-3570-43F4-BBEC-8133F76AB8AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendManagementApi.ApiTests", "SpendManagementApi.ApiTests\SpendManagementApi.ApiTests.csproj", "{ED265398-038F-4600-9A65-765952F108EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Automated Build|Any CPU = Automated Build|Any CPU
