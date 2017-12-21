@@ -1137,7 +1137,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>3433</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://development.smapi.localhost</IISUrl>
+          <IISUrl>http://smapi.localhost</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
