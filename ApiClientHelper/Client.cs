@@ -435,7 +435,7 @@
         /// Calls the API to send an email to a specific employee (contained in the  api End Point).
         /// </summary>
         /// <param name="apiEndPoint">The endpoint for the api call.</param>
-        /// <returns></returns>
+        /// <returns>True unless the api call fails</returns>
         public bool SendEmailNotificationForExcessMileage(string apiEndPoint)
         {
 
