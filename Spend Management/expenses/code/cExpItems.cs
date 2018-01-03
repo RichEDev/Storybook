@@ -945,10 +945,17 @@ namespace Spend_Management
             {
                 vatchanged = true;
             }
+
             if (expitem.allowanceid != 0)
             {
                 cAllowances clsallowances = new cAllowances(accountid);
                 clsallowances.calculateDailyAllowance(reqemp.EmployeeID, ref expitem);
+            }
+
+            if (subcat.calculation == CalculationType.ExcessMileage && expitem.journeysteps.ContainsKey(0))
+            {
+                expitem.journeysteps[0].NumActualMiles = (decimal)expitem.quantity * (decimal)reqemp.ExcessMileage;
+                expitem.journeysteps[0].nummiles = (decimal)expitem.quantity * (decimal)reqemp.ExcessMileage;
             }
 
             cMileagecats clsmileagecats = new cMileagecats(accountid);

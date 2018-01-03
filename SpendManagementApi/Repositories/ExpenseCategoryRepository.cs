@@ -140,7 +140,7 @@
             var categories = ActionContext.Categories;
             var subCategories = ActionContext.SubCategories;
 
-            List<SubcatItemRoleBasic> employeeItemRoles = subCategories.GetSubCatsByEmployeeItemRoles(employeeId > 0 ? employeeId : User.EmployeeID);
+            List<SubcatItemRoleBasic> employeeItemRoles = subCategories.GetSubCatsByEmployeeItemRoles(employeeId > 0 ? employeeId : User.EmployeeID, true);
             SortedList<string, int> expenseCategories = categories.GetExpenseCategoriesFromItemRoles(employeeItemRoles);
 
             return  expenseCategories.Select(expenseCategory => new ListItemData(expenseCategory.Value, expenseCategory.Key)).ToList();
@@ -154,7 +154,7 @@
         {
             response.Categories = this.GetEmployeeExpenseCategories();
 
-            List<SubcatItemRoleBasic> basicSubCats = ActionContext.SubCategories.GetSubCatsByEmployeeItemRoles(User.EmployeeID);
+            List<SubcatItemRoleBasic> basicSubCats = ActionContext.SubCategories.GetSubCatsByEmployeeItemRoles(User.EmployeeID, true);
             var expenseSubCategoryRepository = new ExpenseSubCategoryRepository(this.User, this.ActionContext);
 
             List<ExpenseSubCategory> subcats = new List<ExpenseSubCategory>();
@@ -192,7 +192,7 @@
             expenseItemRepository.ClaimantDataPermissionCheck(expenseId, employeeId);
 
             response.Categories = this.GetEmployeeExpenseCategories(employeeId);
-            var basicSubCats = this.ActionContext.SubCategories.GetSubCatsByEmployeeItemRoles(employeeId);
+            var basicSubCats = this.ActionContext.SubCategories.GetSubCatsByEmployeeItemRoles(employeeId, true);
             var expenseSubCategoryRepository = new ExpenseSubCategoryRepository(this.User, this.ActionContext);
 
             var subcats = new List<ExpenseSubCategory>();
