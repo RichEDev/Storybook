@@ -1685,7 +1685,7 @@ namespace Spend_Management
         }
 
         /// <summary>
-        /// 
+        /// Populates the email notification panel
         /// </summary>
         public void GenerateEmailNotifications(int employeeid, Employee reqemp)
         {
