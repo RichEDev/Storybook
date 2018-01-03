@@ -620,5 +620,16 @@
         }
 
         #endregion
+
+        /// <summary>
+        /// Get a <see cref="List{T}"/> of <seealso cref="EmployeeLocation"/> for the current accountId
+        /// </summary>
+        /// <param name="accountId">The accountId to query.</param>
+        /// <returns>A <see cref="List{T}"/> of <seealso cref="EmployeeLocation"/> for the current accountId</returns>
+        public List<EmployeeLocation> GetEmployeeLocations(int accountId)
+        {
+            var employeeLocationsCrud = new EmployeeLocationCrud(this._metaBase, accountId, this._esrApiHandler);
+            return employeeLocationsCrud.ReadAll();
+        }
     }
 }

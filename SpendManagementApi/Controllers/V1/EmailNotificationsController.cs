@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
+    using System.Web.Http.Description;
 
     using SpendManagementApi.Attributes;
     using SpendManagementApi.Models.Common;
@@ -10,6 +11,7 @@
     using SpendManagementApi.Models.Types;
     using SpendManagementApi.Models.Types.Employees;
     using SpendManagementApi.Utilities;
+    using SpendManagementApi.Repositories;
 
     using SpendManagementLibrary;
 
@@ -91,6 +93,21 @@
             this.ValidateAndAddOrRemoveEmailNotificationLink(id, eid, false);
             response.EmployeeId = eid;
             response.LinkedItemId = id;
+            return response;
+        }
+
+        /// <summary>
+        /// Sends email notification to an email notification group about a <see cref="Employee"/>.
+        /// </summary>
+        /// <param name="employeeId">The Id of the <see cref="Employee">AccessRole</see> to send notifications about.</param>
+        /// <param name="accountId">The Id of the <see cref="cAccount">Account</see>.</param>
+        [HttpPost, Route("{accountId:int}/SendExcessMileageNotification/{employeeId:int}")]
+        [InternalSelenityMethod]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public BooleanResponse SendExcessMileageNotification([FromUri]int accountId, [FromUri]int employeeId)
+        {
+            var response = this.InitialiseResponse<BooleanResponse>();
+            response.Item = new EmailNotificationRepository().ExcessMileage(accountId, employeeId);
             return response;
         }
 

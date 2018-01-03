@@ -1157,6 +1157,7 @@
     <Compile Include="shared\code\EasyTree\ReportCommonColumns.cs" />
     <Compile Include="shared\code\EasyTree\ReportNode.cs" />
     <Compile Include="shared\code\EasyTree\TreeField.cs" />
+    <Compile Include="shared\code\EmailNotificationHelper.cs" />
     <Compile Include="shared\code\Function.cs" />
     <Compile Include="shared\code\Functions.cs" />
     <Compile Include="shared\code\FundDetails.cs" />
