@@ -548,6 +548,9 @@ namespace SpendManagementApi.Repositories
                         case -5:
                             expenseItem.ExpenseActionOutcome = ExpenseActionOutcome.AddressesNotMatched;
                             break;
+                        case -7:
+                            expenseItem.ExpenseActionOutcome = ExpenseActionOutcome.BankAccountCouldntBeAssigned;
+                            break;
                         case 0:
                             return null;
                         default:

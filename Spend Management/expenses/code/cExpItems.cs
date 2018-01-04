@@ -403,6 +403,12 @@ namespace Spend_Management
             {
                 expenseid = 0;
             }
+
+            if (expenseid == -7)
+            {
+                return expenseid;
+            }
+
             if (expenseid != 0)
             {
                 expitem.expenseid = expenseid;
@@ -1959,9 +1965,19 @@ namespace Spend_Management
                 }
             }
         }
+
+        /// <summary>
+        /// Insert an expense item to the database
+        /// </summary>
+        /// <param name="expenseitem">The expense item</param>
+        /// <param name="userid">The user Id</param>
+        /// <returns>The expense Id</returns>
         private int RunInsertSQL(ref cExpenseItem expenseitem, int userid)
         {
-            Log.Debug("Method RunInsertSQL has started.");
+            if (Log.IsDebugEnabled)
+            {
+                Log.Debug("Method RunInsertSQL has started");
+            }
 
             DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));
 
@@ -2199,34 +2215,33 @@ namespace Spend_Management
                 expdata.sqlexecute.Parameters.AddWithValue("@MobileMetricDeviceId", expenseitem.MobileMetricDeviceId);
             }
 
-            strsql = "insert into savedexpenses (claimid, itemtype, bmiles, pmiles, reason, receipt, net, vat, total, subcatid, [date], staff, others, organisationIdentifier, home, refnum,  plitres, blitres, allowanceamount, currencyid, attendees, tip, countryid, foreignvat, convertedtotal, exchangerate, normalreceipt, reasonid, allowancestartdate, allowanceenddate, carid, allowancededuct, allowanceid, nonights, quantity, directors, amountpayable, hotelid,primaryitem, norooms, vatnumber, personalguests, remoteworkers, accountcode, basecurrency, globalexchangerate, globalbasecurrency, globaltotal, createdon, createdby, mileageid, transactionid, journey_unit, esrAssignID, hometooffice_deduction_method, addedAsMobileItem, addedByDeviceTypeId, ValidationProgress, BankAccountId, WorkAddressId, MobileMetricDeviceId) " +
-                    "values (@claimid,@itemtype,@bmiles,@pmiles,@reason,@receipt,@net,@vat,@total,@subcatid,@date," +
-                    "@staff,@others,@companyid,@home,@refnum,@plitres,@blitres,@allowanceamount,@currencyid, @attendees,@tip,@countryid,@foreignvat,@convertedtotal,@exchangerate,@normalreceipt";
-
-            strsql = strsql + ",@reasonid,@allowancestartdate,@allowanceenddate,@carid,@allowancededuct,@allowanceid, @nonights, @quantity, @directors, @amountpayable, @hotelid,@primaryitem, @norooms, @vatnumber, @personalguests, @remoteworkers, @accountcode, @basecurrency, @globalexchangerate, @globalbasecurrency, @globaltotal, @createdon, @userid, @mileageid, @transactionid, @journey_unit, @assignmentnum, @hometooffice_deduction_method, @addedAsMobileItem, @addedByDeviceTypeId, @validationProgress, @BankAccountId, @WorkAddressId, @MobileMetricDeviceId);set @identity = @@identity";
-
-
             expdata.sqlexecute.Parameters.AddWithValue("@identity", SqlDbType.Int);
-            expdata.sqlexecute.Parameters["@identity"].Direction = ParameterDirection.Output;
+            expdata.sqlexecute.Parameters["@identity"].Direction = ParameterDirection.ReturnValue;
 
-            expdata.ExecuteSQL(strsql);
+            expdata.ExecuteProc("saveExpenseItem");
             int expenseid = (int)expdata.sqlexecute.Parameters["@identity"].Value;
             expdata.sqlexecute.Parameters.Clear();
 
             if (Log.IsDebugEnabled)
             {
-                Log.Debug(expenseitem);
-                Log.Debug($"The bank account Id on this expense item is set to {expenseitem.bankAccountId} and the expense Id is {expenseid}");
+                Log.Debug($"An expense item has been added the expense Id is {expenseid} and the bank account Id is {expenseitem.bankAccountId}");
+                Log.Debug("Method RunInsertSQL has completed");
             }
-
-            Log.Debug("Method RunInsertSQL has completed.");
 
             return expenseid;
         }
 
+        /// <summary>
+        /// Updates an expense item
+        /// </summary>
+        /// <param name="expenseitem">The expense item</param>
+        /// <param name="userid">The user Id</param>
         private void RunUpdateSQL(ref cExpenseItem expenseitem, int userid)
         {
-            Log.Debug("Method RunUpdateSQL has started.");
+            if (Log.IsDebugEnabled)
+            {
+                Log.Debug("Method RunUpdateSQL has started");
+            }
 
             DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));
             DateTime modifiedon = DateTime.Now.ToUniversalTime();
@@ -2451,11 +2466,9 @@ namespace Spend_Management
 
             if (Log.IsDebugEnabled)
             {
-                Log.Debug(expenseitem);
-                Log.Debug($"The bank account Id on this expense item is set to {expenseitem.bankAccountId}");
+                Log.Debug($"An expense item has been updated the expense Id is {expenseitem.expenseid}, the bank account Id is {expenseitem.bankAccountId}");
+                Log.Debug("Method RunUpdateSQL has completed");
             }
-
-            Log.Debug("Method RunUpdateSQL has completed.");
         }
 
         /// <summary>

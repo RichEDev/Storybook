@@ -34,6 +34,7 @@ using BusinessLogic;
 using BusinessLogic.DataConnections;
 using BusinessLogic.ProjectCodes;
 using Common.Logging;
+using Common.Logging.Log4Net;
 using expenses.admin;
 using expenses.Bootstrap;
 using SpendManagementLibrary.Employees.DutyOfCare;
@@ -91,11 +92,21 @@ public partial class aeexpense : System.Web.UI.Page
 
     [Dependency]
     public IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> ProjectCodesRepository { get; set; }
-
+    
+    /// <summary>
+    /// An instance of <see cref="ILog"/> for logging information.
+    /// </summary>
     private static readonly ILog Log = new LogFactory<aeexpense>().GetLogger();
+
+    /// <summary>
+    /// An instance of <see cref="IExtraContext"/> for logging extra inforamtion
+    /// </summary>
+    private static readonly IExtraContext LoggingContent = new Log4NetContextAdapter();
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        LoggingContent["accountid"] = this.ActionContext.CurrentUser.AccountID;
+        LoggingContent["employeeid"] = this.ActionContext.CurrentUser.EmployeeID;
         this.cmdok.Attributes.Add("onclick", "if (Page_ClientValidate('vgAeExpenses') == false) { return false; } else { document.getElementById(contentID + 'cmdok').disabled = true; $('select:disabled:visible').prop('disabled', false); " + this.GetPostBackEventReference(this.cmdok) + " };");
 
         // dcp  - Task = 44622
@@ -2787,10 +2798,10 @@ public partial class aeexpense : System.Web.UI.Page
             var tempEmployee = this.ActionContext.Employees;
             Employee approverDetail = tempEmployee.GetEmployeeById(this.ActionContext.CurrentUser.EmployeeID);
 
-            if (approverDetail.EmployeeID == claim.employeeid && MustHaveBankAccountCheck(this.ActionContext.CurrentUser.MustHaveBankAccount, reqExpenseItem.bankAccountId))
+            if (approverDetail.EmployeeID == claim.employeeid && this.MustHaveBankAccountCheck(this.ActionContext.CurrentUser.MustHaveBankAccount, reqExpenseItem.bankAccountId))
             {
                 return;
-            } 
+            }
 
             var subcat = subcats.GetSubcatBasic(reqExpenseItem.subcatid);
 
@@ -2916,11 +2927,11 @@ public partial class aeexpense : System.Web.UI.Page
 
                 if (item.total > 0 || item.miles > 0)
                 {
-                    
-                    if (MustHaveBankAccountCheck(this.ActionContext.CurrentUser.MustHaveBankAccount, item.bankAccountId))
-                        {
-                            return;
-                        }
+
+                    if (this.MustHaveBankAccountCheck(this.ActionContext.CurrentUser.MustHaveBankAccount, item.bankAccountId))
+                    {
+                        return;
+                    }
                     var subcat = subcats.GetSubcatBasic(item.subcatid);
 
                     if (subcat.StartDate != null && subcat.StartDate.Value > item.date)
@@ -3026,6 +3037,11 @@ public partial class aeexpense : System.Web.UI.Page
                             return;
                         }
 
+                        return;
+                    case -7:
+                        lblmsg.Text =
+                            "An error has occured saving your expense item, please try again.";
+                        lblmsg.Visible = true;
                         return;
 
                     default:
@@ -3222,6 +3238,12 @@ public partial class aeexpense : System.Web.UI.Page
         return foundValidItemRole ? string.Empty : message;
     }
 
+    /// <summary>
+    /// Check if the user has set a bank account where they are required to
+    /// </summary>
+    /// <param name="mustHaveBankAccount">If the current user is required to have a bank account</param>
+    /// <param name="bankAccountId">The Id of the bank account asigned to the expense</param>
+    /// <returns>Whether or not they need to set a bankaccount</returns>
     private bool MustHaveBankAccountCheck(bool mustHaveBankAccount, int? bankAccountId)
     {
         if (Log.IsDebugEnabled)

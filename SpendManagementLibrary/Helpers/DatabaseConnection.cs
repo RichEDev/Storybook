@@ -13,6 +13,7 @@
     using Microsoft.SqlServer.Server;
 
     using SpendManagementLibrary.Interfaces;
+    using Common.Logging;
 
     /// <summary>
     ///     The Database connection.
@@ -51,6 +52,11 @@
         /// </summary>
         [DataMember]
         private bool disposed;
+
+        /// <summary>
+        /// An instance of <see cref="ILog"/> for logging information.
+        /// </summary>
+        private static readonly ILog Log = new LogFactory<DatabaseConnection>().GetLogger();
 
         #endregion
         /// <summary>
@@ -579,6 +585,7 @@
         /// <param name="sql">
         /// The strsql.
         /// </param>
+        /// <param name="commandType">The <see cref="CommandType"/> for the reader</param>
         /// <returns>
         /// The <see cref="IDataReader"/>.
         /// </returns>
@@ -596,10 +603,21 @@
             {
                 sqlreader = this.sqlexecute.ExecuteReader(CommandBehavior.CloseConnection);
             }
+            catch (SqlException ex)
+            {
+                if (Log.IsErrorEnabled)
+                {
+                    Log.Error($"A SQL exception occured running {sql} with command type {commandType}", ex);
+                }
+            }
             catch (Exception ex)
             {
-
+                if (Log.IsErrorEnabled)
+                {
+                    Log.Error($"An exception occured running {sql} with command type {commandType}", ex);
+                }
             }
+
             return sqlreader;
         }
 

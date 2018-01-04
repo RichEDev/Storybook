@@ -38,6 +38,11 @@
         /// <summary>
         /// The addresses not matched.
         /// </summary>
-        AddressesNotMatched
+        AddressesNotMatched,
+
+        /// <summary>
+        /// The bank account failed to be assigned to the expense item
+        /// </summary>
+        BankAccountCouldntBeAssigned
     }
 }
