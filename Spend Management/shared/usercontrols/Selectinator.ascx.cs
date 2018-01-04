@@ -264,7 +264,10 @@
                 {
                     if (filter.FilterOnEdit)
                     {
-                        filter.Order = (byte)(this.Filters.Count - 1);
+                        if (this.Filters.Count <= 1)
+                        {
+                            filter.Order = (byte) (this.Filters.Count - 1);
+                        }
                     }
                 }
             }
