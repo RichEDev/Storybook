@@ -453,11 +453,8 @@
         [HttpPut, Route("ResetDailyFreeCallLimits")]
         public void ResetDailyFreeCallLimits()
         {
-            if (this.Request.IsLocal())
-            {
-                var accounts = new cAccounts();
-                accounts.ResetDailyFreeCallLimits();
-            }
+            var accounts = new cAccounts();
+            accounts.ResetDailyFreeCallLimits();
         }
 
         /// <summary>
