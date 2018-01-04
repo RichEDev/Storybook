@@ -5152,7 +5152,7 @@ namespace Spend_Management
 
             if (isDefaultOwner)
             {
-                sql += " OR (teamemployeeid IS NULL AND itemcheckerid IS NULL AND teamemployeeid IS NULL and costcodeteamemployeeid IS NULL AND itemCheckerTeamEmployeeId IS NULL))";
+                sql += " OR (teamemployeeid IS NULL AND itemcheckerid IS NULL AND teamemployeeid IS NULL and costcodeteamemployeeid IS NULL AND itemCheckerTeamEmployeeId IS NULL)";
             }
 
             if (!properties.AllowTeamMemberToApproveOwnClaim)
