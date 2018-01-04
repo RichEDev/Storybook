@@ -122,6 +122,24 @@
     <None Include="App.Testing.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
+    <None Include="log4net.Automated Build.config">
+      <DependentUpon>log4net.config</DependentUpon>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="log4net.Debug.config">
+      <DependentUpon>log4net.config</DependentUpon>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="log4net.Production.config">
+      <DependentUpon>log4net.config</DependentUpon>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EsrGo2FromNhsWcfLibrary\EsrGo2FromNhsWcfLibrary.csproj">

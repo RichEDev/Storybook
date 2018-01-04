@@ -464,6 +464,10 @@
             EsrPersonRecord currentPersonRecord = null;
             long currentBatchEsrPersonId = 0;
             var startTime = DateTime.Now.AddMinutes(1);
+            var api = new Api.ApiHelper();
+
+            // Get a list of all employees locations where they have excess mileage 
+            var employeeStartLocations = this._apiRpc.GetEmployeeLocations(this._accountId);
 
             var processedRecords = new List<object>();
             var currentRecordType = ApiRecordType.EsrLocationRecord;
@@ -583,10 +587,24 @@
                 this._logRecord.logID,
                 this.headerRecord.Filename,
                 LogRecord.LogReasonType.None,
-                string.Format("Processed {0} Records. Writing Record Processing Log", processedRecords.Count),
+                $"Processed {processedRecords.Count} Records. Writing Record Processing Log",
                 "ESRRecordProcessor : ProcessRecords()");
             this._logRecord.processedLines = rowIndex - 2;
             this.LogRecordProcessingStatus(processedRecords);
+
+            // Get a list of all employees locations where they have excess mileage and compare to previous list.  Any employees with a difference, send an email.
+            var employeeEndLocations = this._apiRpc.GetEmployeeLocations(this._accountId);
+            var locationComparer = new EmployeeLocationComparer();
+            if (!employeeEndLocations.SequenceEqual(employeeStartLocations, locationComparer))
+            {
+                var changes = employeeEndLocations.Except(employeeStartLocations, locationComparer).Select(l => l.EmployeeId).Distinct();
+                foreach (int change in changes)
+                {
+                    api.SendEmailNotificationForExcessMileage(change, this._accountId);
+                }
+
+            }
+
         }
 
         /// <summary>

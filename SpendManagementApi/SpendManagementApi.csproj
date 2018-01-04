@@ -294,6 +294,7 @@
     <Compile Include="Models\Types\GeneralOptionsDisplayFieldSetting.cs" />
     <Compile Include="Repositories\AppFeedbackRepository.cs" />
     <Compile Include="Repositories\BasicRepository.cs" />
+    <Compile Include="Repositories\EmailNotificationRepository.cs" />
     <Compile Include="Repositories\MobileInformationMessagesRepository.cs" />
     <Compile Include="Controllers\V1\PopulateDrivingLicenceController.cs" />
     <Compile Include="Controllers\V1\ReceiptController.cs" />

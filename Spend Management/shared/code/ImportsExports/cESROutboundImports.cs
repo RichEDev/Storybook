@@ -12,6 +12,7 @@ namespace Spend_Management
     using SpendManagementLibrary.Addresses;
     using SpendManagementLibrary.ESRTransferServiceClasses;
     using SpendManagementLibrary.Employees;
+    using Spend_Management.shared.code;
 
     /// <summary>
     /// Class to import the outbound ESR file into expenses so that all employee and asdsignment records are saved.
@@ -1213,6 +1214,7 @@ namespace Spend_Management
                             datacon.sqlexecute.Parameters.AddWithValue("@addressID", newAddressID);
                             datacon.ExecuteProc("SaveHomeAddressFromEsrOutbound");
                             datacon.sqlexecute.Parameters.Clear();
+                            new EmailNotificationHelper(Employee.Get(employeeID, this.AccountID)).ExcessMileage();
                         }
                     }
                 }
@@ -1553,6 +1555,7 @@ namespace Spend_Management
                                 datacon.sqlexecute.Parameters.AddWithValue("@addressID", newAddressID);
                                 datacon.ExecuteProc("SaveWorkAddressFromEsrOutbound");
                                 datacon.sqlexecute.Parameters.Clear();
+                                new EmailNotificationHelper(Employee.Get(employeeID, this.AccountID)).ExcessMileage();
                             }
                         }
                     }

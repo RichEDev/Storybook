@@ -1,4 +1,3 @@
-
 namespace Spend_Management
 {
     using System;
@@ -16,6 +15,7 @@ namespace Spend_Management
     using SpendManagementLibrary.Addresses;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Employees.DutyOfCare;
+    using Spend_Management.shared.code;
 
     /// <summary>
     /// Summary description for aeemployee.
@@ -671,138 +671,8 @@ namespace Spend_Management
                         }
                     }
                 }
-                
-                var clsEmailNotifications = new cEmailNotifications(this._user.AccountID);
-                Label lblLabel;
-                Label lblInputs;
-                Label lblIcons;
-                Label lblTooltips;
-                Label lblValidators;
-                CheckBox chkBox;
 
-                #region Standard Notifications
-                SortedList<int, cEmailNotification> lstStandardNotifications = clsEmailNotifications.EmailNotificationsByCustomerType(CustomerType.Standard);
-
-                bool secondColumn = false;
-
-                var pnlTwoColumn = new Panel();
-
-                foreach (cEmailNotification notification in lstStandardNotifications.Values)
-                {
-                    if (notification.Enabled)
-                    {
-                        if (secondColumn)
-                        {
-                            secondColumn = false;
-                        }
-                        else
-                        {
-                            pnlTwoColumn = new Panel { CssClass = "twocolumn" };
-                            pnlEmailNotifications.Controls.Add(pnlTwoColumn);
-                            secondColumn = true;
-                        }
-
-                        lblLabel = new Label { Text = notification.Name };
-                        pnlTwoColumn.Controls.Add(lblLabel);
-
-                        lblInputs = new Label { CssClass = "inputs" };
-                        chkBox = new CheckBox { ID = "emailNotification_" + notification.EmailNotificationID };
-
-                        if (employeeid > 0 && reqemp.GetEmailNotificationList().Contains(notification.EmailNotificationID))
-                        {
-                            chkBox.Checked = true;
-                        }
-
-                        lblLabel.AssociatedControlID = chkBox.ID;
-                        lblInputs.Controls.Add(chkBox);
-
-                        pnlTwoColumn.Controls.Add(lblInputs);
-
-                        lblIcons = new Label { Text = "&nbsp;", CssClass = "inputicon" };
-                        pnlTwoColumn.Controls.Add(lblIcons);
-                        string notificationTooltip = "&nbsp;";
-                        if (notification.EmailNotificationType == EmailNotificationType.AuditLogCleared)
-                        {
-                            notificationTooltip = "<img onmouseover=" + "" + "SEL.Tooltip.Show('5849FB1E-6602-49AF-AE01-C838507676F8','sm',this);" + "" + " src='../images/icons/16/plain/tooltip.png' class='tooltipicon'>";
-                        }
-                        lblTooltips = new Label { Text = notificationTooltip, CssClass = "inputtooltipfield" };
-                        pnlTwoColumn.Controls.Add(lblTooltips);
-                        lblValidators = new Label { Text = "&nbsp;", CssClass = "inputvalidatorfield" };
-                        pnlTwoColumn.Controls.Add(lblValidators);
-                    }
-                }
-                #endregion Standard Notifications
-
-                #region NHS Notifications
-                if (this._user.Account.IsNHSCustomer)
-                {
-                    SortedList<int, cEmailNotification> lstEmailNotifications = clsEmailNotifications.EmailNotificationsByCustomerType(CustomerType.NHS);
-                    pnlTwoColumn = new Panel();
-                    pnlTwoColumn.CssClass = "twocolumn";
-
-                    secondColumn = false;
-
-                    pnlESREmailNotifications.Controls.Add(pnlTwoColumn);
-
-                    foreach (cEmailNotification notification in lstEmailNotifications.Values)
-                    {
-                        if (notification.Enabled)
-                        {
-                            if (secondColumn)
-                            {
-                                secondColumn = false;
-                            }
-                            else
-                            {
-                                secondColumn = true;
-                                pnlTwoColumn = new Panel();
-                                pnlTwoColumn.CssClass = "twocolumn";
-                                pnlESREmailNotifications.Controls.Add(pnlTwoColumn);
-                            }
-
-                            lblLabel = new Label();
-                            lblLabel.Text = notification.Name;
-                            pnlTwoColumn.Controls.Add(lblLabel);
-
-                            lblInputs = new Label();
-                            lblInputs.CssClass = "inputs";
-                            chkBox = new CheckBox();
-                            chkBox.ID = "emailNotification_" + notification.EmailNotificationID.ToString();
-
-
-                            if (employeeid > 0 && reqemp.GetEmailNotificationList().Contains(notification.EmailNotificationID) == true)
-                            {
-                                chkBox.Checked = true;
-                            }
-
-                            lblLabel.AssociatedControlID = chkBox.ID;
-                            lblInputs.Controls.Add(chkBox);
-
-                            pnlTwoColumn.Controls.Add(lblInputs);
-
-                            lblIcons = new Label();
-                            lblIcons.Text = "&nbsp;";
-                            lblIcons.CssClass = "inputicon";
-                            pnlTwoColumn.Controls.Add(lblIcons);
-                            lblTooltips = new Label();
-                            lblTooltips.Text = "&nbsp;";
-                            lblTooltips.CssClass = "inputtooltipfield";
-                            pnlTwoColumn.Controls.Add(lblTooltips);
-                            lblValidators = new Label();
-                            lblValidators.Text = "&nbsp;";
-                            lblValidators.CssClass = "inputvalidatorfield";
-                            pnlTwoColumn.Controls.Add(lblValidators);
-                        }
-                    }
-                }
-                else
-                {
-                    pnlESREmailNotificatonsSectionTitle.Visible = false;
-                    pnlESREmailNotifications.Visible = false;
-                }
-                #endregion NHSRegions
-
-                #endregion EmailNotifications
+                this.GenerateEmailNotifications(employeeid, reqemp);
             }
 
             cTable tbl = this._tables.GetTableByID(new Guid("618db425-f430-4660-9525-ebab444ed754")); // employees uf
@@ -1415,6 +1285,8 @@ namespace Spend_Management
 
             employee.GetWorkAddresses().Add(location, user);
 
+            new EmailNotificationHelper(employee).ExcessMileage();
+
             return true;
         }
 
@@ -1440,6 +1312,9 @@ namespace Spend_Management
             var employees = new cEmployees(user.AccountID);
             Employee employee = employees.GetEmployeeById(employeeID);
             employee.GetWorkAddresses().Remove(locationid, user);
+
+            new EmailNotificationHelper(employee).ExcessMileage();
+
             return true;
         }
 
@@ -1647,7 +1522,10 @@ namespace Spend_Management
                 location = new cEmployeeHomeLocation(employeelocationid, employeeid, locationid, startdate, enddate, DateTime.Now, user.EmployeeID, null, null);
             }
 
+            new EmailNotificationHelper(employee).ExcessMileage();
+
             employee.GetHomeAddresses().Add(location, user);
+
             return true;
         }
 
@@ -1673,6 +1551,9 @@ namespace Spend_Management
             var employees = new cEmployees(user.AccountID);
             Employee employee = employees.GetEmployeeById(employeeID);
             employee.GetHomeAddresses().Remove(locationid, user);
+
+            new EmailNotificationHelper(employee).ExcessMileage();
+
             return true;
         }
 
@@ -1802,7 +1683,148 @@ namespace Spend_Management
             cmbAuthoriserLevel.Items.AddRange(lstAuthoriserLevelDetails.ToArray());
             cmbAuthoriserLevel.Enabled = true;
         }
-       
 
+        /// <summary>
+        /// Populates the email notification panel
+        /// </summary>
+        public void GenerateEmailNotifications(int employeeid, Employee reqemp)
+        {
+            var clsEmailNotifications = new cEmailNotifications(this._user.AccountID);
+            Label lblLabel;
+            Label lblInputs;
+            Label lblIcons;
+            Label lblTooltips;
+            Label lblValidators;
+            CheckBox chkBox;
+
+            #region Standard Notifications
+            SortedList<int, cEmailNotification> lstStandardNotifications = clsEmailNotifications.EmailNotificationsByCustomerType(CustomerType.Standard);
+
+            bool secondColumn = false;
+
+            var pnlTwoColumn = new Panel();
+
+            foreach (cEmailNotification notification in lstStandardNotifications.Values)
+            {
+                if (!notification.Enabled || (this._user.CurrentActiveModule != Modules.expenses &&
+                                              notification.EmailNotificationType ==
+                                              EmailNotificationType.ExcessMileage)) continue;
+                if (secondColumn)
+                {
+                    secondColumn = false;
+                }
+                else
+                {
+                    pnlTwoColumn = new Panel { CssClass = "twocolumn" };
+                    this.pnlEmailNotifications.Controls.Add(pnlTwoColumn);
+                    secondColumn = true;
+                }
+
+                lblLabel = new Label { Text = notification.Name };
+                pnlTwoColumn.Controls.Add(lblLabel);
+
+                lblInputs = new Label { CssClass = "inputs" };
+                chkBox = new CheckBox { ID = "emailNotification_" + notification.EmailNotificationID };
+
+                if (employeeid > 0 && reqemp.GetEmailNotificationList().Contains(notification.EmailNotificationID))
+                {
+                    chkBox.Checked = true;
+                }
+
+                lblLabel.AssociatedControlID = chkBox.ID;
+                lblInputs.Controls.Add(chkBox);
+
+                pnlTwoColumn.Controls.Add(lblInputs);
+
+                lblIcons = new Label { Text = "&nbsp;", CssClass = "inputicon" };
+                pnlTwoColumn.Controls.Add(lblIcons);
+                string notificationTooltip = "&nbsp;";
+                switch (notification.EmailNotificationType)
+                {
+                    case EmailNotificationType.AuditLogCleared:
+                        notificationTooltip = "<img onmouseover=" + "" + "SEL.Tooltip.Show('5849FB1E-6602-49AF-AE01-C838507676F8','sm',this);" + "" + " src='../images/icons/16/plain/tooltip.png' class='tooltipicon'>";
+                        break;
+                    case EmailNotificationType.ExcessMileage:
+                        notificationTooltip = "<img onmouseover=" + "" + "SEL.Tooltip.Show('4AE95AE1-D44F-4B3A-8067-89E26ECE447A','ex',this);" + "" + " src='../images/icons/16/plain/tooltip.png' class='tooltipicon'>";
+                        break;
+                    default:
+                        break;
+                }
+                lblTooltips = new Label { Text = notificationTooltip, CssClass = "inputtooltipfield" };
+                pnlTwoColumn.Controls.Add(lblTooltips);
+                lblValidators = new Label { Text = "&nbsp;", CssClass = "inputvalidatorfield" };
+                pnlTwoColumn.Controls.Add(lblValidators);
+            }
+            #endregion Standard Notifications
+
+            #region NHS Notifications
+            if (this._user.Account.IsNHSCustomer)
+            {
+                SortedList<int, cEmailNotification> lstEmailNotifications = clsEmailNotifications.EmailNotificationsByCustomerType(CustomerType.NHS);
+                pnlTwoColumn = new Panel();
+                pnlTwoColumn.CssClass = "twocolumn";
+
+                secondColumn = false;
+
+                pnlESREmailNotifications.Controls.Add(pnlTwoColumn);
+
+                foreach (cEmailNotification notification in lstEmailNotifications.Values)
+                {
+                    if (!notification.Enabled) continue;
+                    if (secondColumn)
+                    {
+                        secondColumn = false;
+                    }
+                    else
+                    {
+                        secondColumn = true;
+                        pnlTwoColumn = new Panel();
+                        pnlTwoColumn.CssClass = "twocolumn";
+                        this.pnlESREmailNotifications.Controls.Add(pnlTwoColumn);
+                    }
+
+                    lblLabel = new Label();
+                    lblLabel.Text = notification.Name;
+                    pnlTwoColumn.Controls.Add(lblLabel);
+
+                    lblInputs = new Label();
+                    lblInputs.CssClass = "inputs";
+                    chkBox = new CheckBox();
+                    chkBox.ID = "emailNotification_" + notification.EmailNotificationID.ToString();
+
+
+                    if (employeeid > 0 && reqemp.GetEmailNotificationList().Contains(notification.EmailNotificationID) == true)
+                    {
+                        chkBox.Checked = true;
+                    }
+
+                    lblLabel.AssociatedControlID = chkBox.ID;
+                    lblInputs.Controls.Add(chkBox);
+
+                    pnlTwoColumn.Controls.Add(lblInputs);
+
+                    lblIcons = new Label();
+                    lblIcons.Text = "&nbsp;";
+                    lblIcons.CssClass = "inputicon";
+                    pnlTwoColumn.Controls.Add(lblIcons);
+                    lblTooltips = new Label();
+                    lblTooltips.Text = "&nbsp;";
+                    lblTooltips.CssClass = "inputtooltipfield";
+                    pnlTwoColumn.Controls.Add(lblTooltips);
+                    lblValidators = new Label();
+                    lblValidators.Text = "&nbsp;";
+                    lblValidators.CssClass = "inputvalidatorfield";
+                    pnlTwoColumn.Controls.Add(lblValidators);
+                }
+            }
+            else
+            {
+                pnlESREmailNotificatonsSectionTitle.Visible = false;
+                pnlESREmailNotifications.Visible = false;
+            }
+            #endregion NHSRegions
+
+            #endregion EmailNotifications
+        }
     }
 }

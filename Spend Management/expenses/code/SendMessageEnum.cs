@@ -296,6 +296,12 @@ namespace Spend_Management.expenses.code
         /// Sent to an approver when claimant denies consent check.
         /// </summary>
         [Description("5483FCA4-5E65-45EE-BB93-15104E61267C")]
-        SentToApproverWhenClaimantDeniesConsentCheck = 40
+        SentToApproverWhenClaimantDeniesConsentCheck = 40,
+
+        /// <summary>
+        /// Sent to the excess mileage notification group when a claimants home or work address changes and they have an excess mileage value set
+        /// </summary>
+        [Description("DB15889F-3293-4FB3-AEB3-6D991349633C")]
+        SentToTheExcessMileageNotificationGroupWhenAClaimantsAddressChanges = 41
     }
 }
