@@ -101,8 +101,18 @@
         {
             var notificationSubscriptions = new cEmailNotifications(this.Employee.AccountID).GetNotificationSubscriptions(emailNotificationType);
             var notificationEmployeeIds = new List<int>(from notificationSubscription in notificationSubscriptions where (sendType)notificationSubscription[0] == sendType.employee select (int)notificationSubscription[1]);
+            var result = new List<Employee>();
 
-            return notificationEmployeeIds.Select(employeeid => Employee.Get(employeeid, this.Employee.AccountID)).ToList();
+            foreach (int employeeId in notificationEmployeeIds)
+            {
+                var employee = Employee.Get(employeeId, this.Employee.AccountID);
+                if (employee.Active && !employee.Archived && !employee.Locked)
+                {
+                    result.Add(employee);
+                }
+            }
+
+            return result;
         }
     }
 }
