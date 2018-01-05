@@ -412,8 +412,12 @@ namespace SpendManagementLibrary
                                                 entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
                                                 entry.label = Convert.ToString(reader.GetValue(1));
                                             }
-                                            else if (reader.GetFieldType(0) == typeof(int)
-                                                     && reader.GetFieldType(1) == typeof(string))
+                                            else if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(long))
+                                            {
+                                                entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
+                                                entry.label = reader.GetInt64(1).ToString(CultureInfo.InvariantCulture);
+                                            }
+                                            else if (reader.GetFieldType(0) == typeof(int) && reader.GetFieldType(1) == typeof(string))
                                             {
                                                 entry.value = reader.GetInt32(0).ToString(CultureInfo.InvariantCulture);
                                                 entry.label = Convert.ToString(reader.GetValue(1));
@@ -583,8 +587,12 @@ namespace SpendManagementLibrary
                             entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
                             entry.label = Convert.ToString(reader.GetValue(1));
                         }
-                        else if (reader.GetFieldType(0) == typeof(int)
-                                 && reader.GetFieldType(1) == typeof(string))
+                        else if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(long))
+                        {
+                            entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
+                            entry.label = reader.GetInt64(1).ToString(CultureInfo.InvariantCulture);
+                        }
+                        else if (reader.GetFieldType(0) == typeof(int) && reader.GetFieldType(1) == typeof(string))
                         {
                             entry.value = reader.GetInt32(0).ToString(CultureInfo.InvariantCulture);
                             entry.label = Convert.ToString(reader.GetValue(1));
