@@ -3040,7 +3040,7 @@ public partial class aeexpense : System.Web.UI.Page
                         return;
                     case -7:
                         lblmsg.Text =
-                            "An error has occured saving your expense item, please try again.";
+                            "An error has occurred saving your expense item, please try again.";
                         lblmsg.Visible = true;
                         return;
 
