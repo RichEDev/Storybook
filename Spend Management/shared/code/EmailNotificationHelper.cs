@@ -1,4 +1,6 @@
-﻿namespace Spend_Management.shared.code
+﻿using System.Threading.Tasks;
+
+namespace Spend_Management.shared.code
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -51,14 +53,12 @@
         /// <param name="sendMessageDescription">The email description</param>
         /// <param name="emailNotificationType">The email notification type</param>
         /// <param name="modules">The module type</param>
-        public void Send(SendMessageDescription sendMessageDescription, EmailNotificationType emailNotificationType, Modules modules)
+        private void Send(SendMessageDescription sendMessageDescription, EmailNotificationType emailNotificationType, Modules modules)
         {
             var notificationEmployees = this.GetEmployeesToNotify(emailNotificationType);
             var user = new CurrentUser(this.Employee.AccountID, this.Employee.EmployeeID, 0, modules, this.Employee.DefaultSubAccount);
             var emailTemplates = new cEmailTemplates(user);
-
-            var recipients = notificationEmployees.Select(notificationEmployee => notificationEmployee.EmployeeID).ToList();
-            emailTemplates.SendMessage(SendMessageEnum.GetEnumDescription(sendMessageDescription), this.Employee.EmployeeID, recipients.ToArray(), this.Employee.EmployeeID);
+            Task.Run(() => emailTemplates.SendMessage(SendMessageEnum.GetEnumDescription(sendMessageDescription), this.Employee.EmployeeID, notificationEmployees.ToArray(), this.Employee.EmployeeID));
         }
 
         /// <summary>
@@ -67,7 +67,11 @@
         public void ExcessMileage()
         {
             Guard.ThrowIfNull(this.Employee, nameof(this.Employee));
-            if (this.Employee.ExcessMileage <= 0) return;
+            if (this.Employee.ExcessMileage <= 0)
+            {
+                return;
+            }
+
             this.Send(SendMessageDescription.SentToTheExcessMileageNotificationGroupWhenAClaimantsAddressChanges
                 , EmailNotificationType.ExcessMileage
                 , Modules.expenses);
@@ -77,7 +81,7 @@
         /// Gets the from address for the emails
         /// </summary>
         /// <returns>The from address for the emails</returns>
-        public string GetFromEmailAddress()
+        private string GetFromEmailAddress()
         {
             var fromAddress = ConfigurationManager.AppSettings["AdminEmailAddress"];
             if (this.AccountProperties.SourceAddress == 1 && this.AccountProperties.EmailAdministrator != string.Empty)
@@ -97,22 +101,12 @@
         /// </summary>
         /// <param name="emailNotificationType">The notification type</param>
         /// <returns>A list of employees</returns>
-        public List<Employee> GetEmployeesToNotify(EmailNotificationType emailNotificationType)
+        private List<int> GetEmployeesToNotify(EmailNotificationType emailNotificationType)
         {
             var notificationSubscriptions = new cEmailNotifications(this.Employee.AccountID).GetNotificationSubscriptions(emailNotificationType);
             var notificationEmployeeIds = new List<int>(from notificationSubscription in notificationSubscriptions where (sendType)notificationSubscription[0] == sendType.employee select (int)notificationSubscription[1]);
-            var result = new List<Employee>();
 
-            foreach (int employeeId in notificationEmployeeIds)
-            {
-                var employee = Employee.Get(employeeId, this.Employee.AccountID);
-                if (employee.Active && !employee.Archived && !employee.Locked)
-                {
-                    result.Add(employee);
-                }
-            }
-
-            return result;
+            return notificationEmployeeIds;
         }
     }
 }

@@ -171,8 +171,13 @@
         /// <summary>
         /// Returns a list of subscribers to a notification
         /// </summary>
-        /// <param name="notificationType"></param>
-        /// <returns></returns>
+        /// <param name="notificationType">The type of <see cref="EmailNotificationType"/> to return</param>
+        /// <returns>A <see cref="List{T}"/> of <seealso>
+        ///         <cref>object[]</cref>
+        ///     </seealso>
+        /// Where the first element of the Obejct array is <seealso cref="sendType"/>
+        /// ansd the second is the ID (either employee or team.
+        /// </returns>
         public List<object[]> GetNotificationSubscriptions(EmailNotificationType notificationType)
         {
             var cache = new Utilities.DistributedCaching.Cache();
@@ -189,8 +194,8 @@
 
                 if (reqEmailNotification != null)
                 {
-                    const string strSql = "SELECT emailNotificationID, teamID, employeeID FROM dbo.emailNotificationLink";
-                    string strWhere = String.Format(" WHERE emailNotificationID=@emailNotificationID and {0} = {0}", AccountID);
+                    const string strSql = "SELECT emailNotificationID, teamID, dbo.emailNotificationLink.employeeID FROM dbo.emailNotificationLink left join employees on employees.employeeid	= dbo.emailNotificationLink.employeeID";
+                    string strWhere = " WHERE emailNotificationID=@emailNotificationID and ISNULL(employees.archived, 1) = 0";
                     connection.sqlexecute.Parameters.AddWithValue("@emailNotificationID", reqEmailNotification.EmailNotificationID);
 
                     using (IDataReader reader = connection.GetReader(strSql + strWhere))
