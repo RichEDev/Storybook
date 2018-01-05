@@ -298,7 +298,29 @@
 
                 },
 
-                UpdateChild: function (parentControlId, matchId, formId, entityId) {                    
+                UpdateChild: function (parentControlId, matchId, formId, entityId) {
+                    var children = [];
+                    var parents = []; //TODO: this needs to contain the mapped parentControlIds with their values and maybe filter duplicate values here instead of server side
+
+                    // get all the children of the current parent control
+                    var childrenElements = $('.parenttxt' + parentControlId);
+
+                    var childParentCollection = {};
+                    // for each child element get parents
+                    $(childrenElements).each(function (i) {
+                        childParentCollection[$(this).attr('id')] = $(this).attr('class').replace('fillspan', '').trim().split(' ');
+
+                    });
+
+                    for (var key in childParentCollection) {
+                        var value = key.replace('_SelectinatorTextSelect', '');
+                        children.push(value.substring(value.lastIndexOf('_') + 1));
+                        $(childParentCollection[key]).each(function (i) {
+                            parents.push(this);
+                        });
+                    }
+
+
                     if (matchId === "0") { // 0 is for none option                       
                         AutoCompleteSearches.InitailData.filter(function (obj) {
                             if (obj.parentControl === parentControlId) {
