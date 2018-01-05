@@ -833,6 +833,8 @@
         [WebMethod(EnableSession = true)]
         public List<AutoCompleteChildFieldValues> GetTriggerFieldParentValues(string parentControlId, int formId, string matchId, int entityId)
         {
+            //TODO: Consider what happens when the user puts all the parents back to none
+            //TODO: Consider server side validation in case anyone manipulates the page (not important right now but maybe at the end of the user story)
             var childElementData = new List<AutoCompleteChildFieldValues>();
             var currentUser = cMisc.GetCurrentUser();
             var connection = new DatabaseConnection(cAccounts.getConnectionString(currentUser.AccountID));

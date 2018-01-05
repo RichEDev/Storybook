@@ -4241,8 +4241,6 @@ namespace Spend_Management
             int currentRow = 0;
             int currentColumn = 0;
 
-            var parentFilterAttributeIds = new List<KeyValuePair<string, string>>();
-
             foreach (cCustomEntityFormField field in formFields)
             {
                 if (formFields.IndexOf(field) > 0)
@@ -4629,6 +4627,11 @@ namespace Spend_Management
                                     selectinator.Filters.Add(FieldFilters.CsToJs(filter, oCurrentUser));
                                 }
 
+                                if (filter.IsParentFilter)
+                                {
+                                    selectinator.AddParentCssClass(filter.ValueOne);
+                                }
+
                                 // Check if it is editing record
                                 if (this.nRecordid > 0)
                                 {
@@ -4646,12 +4649,8 @@ namespace Spend_Management
                                             selectinator.Filters.Add(new JSFieldFilter { ConditionType = ConditionType.Equals, FieldID = filterBy.relatedtable.PrimaryKeyID, ValueOne = recordValues, Order = filter.Order, Joiner = ConditionJoiner.And, FilterOnEdit = true});
                                         }
                                     }
-                            }
-
-                                if (filter.IsParentFilter)
-                                {
-                                    parentFilterAttributeIds.Add(new KeyValuePair<string, string>( "txt" + filter.ValueOne, "txt" + manyToOne.attributeid.ToString())); 
                                 }
+                                
                             }
                             //looping through filter twice because if a particular form does not have any filter added to it (which is when count will be 0), it should take the basic filter added to the attribute(where formid is 0).
                             if (selectinator.Filters.Count == 0)
@@ -4800,18 +4799,6 @@ namespace Spend_Management
 
                 #endregion Update the currentRow and currentColumn before the next iteration
             }
-
-            #region Add parent class to all parent filter attributes
-
-            foreach (Control control in pnlSection.Controls)
-            {
-                if (parentFilterAttributeIds.Exists(x => x.Key == control.ID))
-                {
-                   
-                }
-            }
-
-            #endregion
 
             #region Close final div
 

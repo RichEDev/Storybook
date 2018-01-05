@@ -245,6 +245,16 @@
             }
         }
 
+        /// <summary>
+        /// Sets a css class with the name of the parent filter attribute
+        /// </summary>
+        /// <param name="parentAttributeId">The Id of the parent filter attribute</param>
+        public void AddParentCssClass(string parentAttributeId)
+        {
+            this.SelectinatorTextSelect.CssClass += " parenttxt" + parentAttributeId;
+        }
+
+
         #endregion
 
         #region PrivateMethods
