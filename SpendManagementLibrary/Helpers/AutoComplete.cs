@@ -434,10 +434,7 @@ namespace SpendManagementLibrary
                                             entry.label = Convert.ToString(reader.GetValue(1));
                                         }
 
-                                        if (retVals.Count < 20)
-                                        {
-                                            retVals.Add(entry);
-                                        }
+                                        retVals.Add(entry);
                                     }
 
                                     reader.Close();
