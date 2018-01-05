@@ -407,13 +407,25 @@ namespace SpendManagementLibrary
                                         sAutoCompleteResult entry;
                                         if (!keyIsString)
                                         {
-                                            if (reader.GetFieldType(0) != typeof(int) || reader.GetFieldType(1) != typeof(string))
+                                            if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(string))
+                                            {
+                                                entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
+                                                entry.label = Convert.ToString(reader.GetValue(1));
+                                            }
+                                            else if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(long))
+                                            {
+                                                entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
+                                                entry.label = reader.GetInt64(1).ToString(CultureInfo.InvariantCulture);
+                                            }
+                                            else if (reader.GetFieldType(0) == typeof(int) && reader.GetFieldType(1) == typeof(string))
+                                            {
+                                                entry.value = reader.GetInt32(0).ToString(CultureInfo.InvariantCulture);
+                                                entry.label = Convert.ToString(reader.GetValue(1));
+                                            }
+                                            else
                                             {
                                                 continue;
                                             }
-
-                                            entry.value = reader.GetInt32(0).ToString(CultureInfo.InvariantCulture);
-                                            entry.label = Convert.ToString(reader.GetValue(1));
                                         }
                                         else
                                         {
@@ -570,13 +582,25 @@ namespace SpendManagementLibrary
                     var formattedString = string.Empty;
                     if (!keyIsString)
                     {
-                        if (reader.GetFieldType(0) != typeof(int) || reader.GetFieldType(1) != typeof(string))
+                        if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(string))
+                        {
+                            entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
+                            entry.label = Convert.ToString(reader.GetValue(1));
+                        }
+                        else if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(long))
+                        {
+                            entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
+                            entry.label = reader.GetInt64(1).ToString(CultureInfo.InvariantCulture);
+                        }
+                        else if (reader.GetFieldType(0) == typeof(int) && reader.GetFieldType(1) == typeof(string))
+                        {
+                            entry.value = reader.GetInt32(0).ToString(CultureInfo.InvariantCulture);
+                            entry.label = Convert.ToString(reader.GetValue(1));
+                        }
+                        else
                         {
                             continue;
                         }
-
-                        entry.value = reader.GetInt32(0).ToString(CultureInfo.InvariantCulture);
-                        entry.label = Convert.ToString(reader.GetValue(1));
                     }
                     else
                     {
