@@ -699,6 +699,9 @@ namespace SpendManagementApi.Repositories
                         case -4:
                             expenseItem.ExpenseActionOutcome = ExpenseActionOutcome.RecommendedMileageExceeded;
                             break;
+                        case -7:
+                            expenseItem.ExpenseActionOutcome = ExpenseActionOutcome.BankAccountCouldntBeAssigned;
+                            break;
                         default:
                             expenseItem.ExpenseActionOutcome = ExpenseActionOutcome.Successs;
                             break;

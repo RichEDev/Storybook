@@ -2901,6 +2901,12 @@ public partial class aeexpense : System.Web.UI.Page
                     return;
                 }
             }
+            if (returncode == -7)
+            {
+                lblmsg.Text = "An error has occurred saving your expense item, please try again.";
+                lblmsg.Visible = true;
+                return;
+            }
         }
         else
         {
