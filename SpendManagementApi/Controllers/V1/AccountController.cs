@@ -226,7 +226,7 @@
                 if (!reqEmployee.Locked)
                 {
                     var moduleType = HostManager.GetModule(this.Request.RequestUri.DnsSafeHost);
-                    employees.lockEmployee(request.Username, reqAccount.accountid, moduleType);
+                    employees.lockEmployee(request.Username, reqAccount.accountid, moduleType, fromMobile: mobileRequest);
                     reqEmployee.Locked = true;
 
                     if (mobileRequest)
