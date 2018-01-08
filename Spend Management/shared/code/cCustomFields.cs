@@ -297,27 +297,27 @@ namespace Spend_Management
         /// <returns>
         /// Child field attribute id associated to the selected parent
         /// </returns>
-        public static int GetTriggerChildFieldValues(DatabaseConnection connection, string parentControlId, int formId)
-        {
-            int fieldToBuild = 0;
-            using (connection)
-            {
-                connection.AddWithValue("@parentControlId", parentControlId);
-                connection.AddWithValue("@formId", formId);
+        //public static int GetTriggerChildFieldValues(DatabaseConnection connection, string parentControlId, int formId)
+        //{
+        //    int fieldToBuild = 0;
+        //    using (connection)
+        //    {
+        //        connection.AddWithValue("@parentControlId", parentControlId);
+        //        connection.AddWithValue("@formId", formId);
                 
-                    using (var reader = connection.GetReader("GetChildFieldValues", CommandType.StoredProcedure))
-                    {
-                        var fieldToBuildOrd = reader.GetOrdinal("FieldToBuild");
+        //            using (var reader = connection.GetReader("GetChildFieldValues", CommandType.StoredProcedure))
+        //            {
+        //                var fieldToBuildOrd = reader.GetOrdinal("FieldToBuild");
 
-                        while (reader.Read())
-                        {
-                             fieldToBuild = !reader.IsDBNull(fieldToBuildOrd) ? reader.GetInt32(fieldToBuildOrd) : 0;
-                        }
+        //                while (reader.Read())
+        //                {
+        //                     fieldToBuild = !reader.IsDBNull(fieldToBuildOrd) ? reader.GetInt32(fieldToBuildOrd) : 0;
+        //                }
 
-                    return fieldToBuild;
-                    }
-            }
-        }
+        //            return fieldToBuild;
+        //            }
+        //    }
+        //}
 
         /// <summary>
         /// The get field id of the Display field associated with the child control in parent child filter relation in greenlight forms

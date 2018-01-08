@@ -300,12 +300,15 @@
 
                 UpdateChild: function (parentControlId, matchId, formId, entityId) {
                     var children = [];
-                    var parents = []; //TODO: this needs to contain the mapped parentControlIds with their values and maybe filter duplicate values here instead of server side
-                    //TODO: this function should be placed outside as the global function  - Suraj
+                    var parents = []; 
+
                     function updateValues(parentId, val) {
                         var obj = {};
-                        obj[parentId] = val;
-                        parents.push(obj);
+                        obj["Id"] = parentId.replace('parenttxt', '');
+                        obj["Value"] = val;
+                        if (parents.map(function (o) { return o.Id; }).indexOf(parentId.replace('parenttxt', '')) === -1) {
+                            parents.push(obj);
+                        }
                     }
                     // get all the children of the current parent control
                     var childrenElements = $('.parenttxt' + parentControlId);
@@ -319,9 +322,10 @@
 
                     for (var key in childParentCollection) {
                         var value = key.replace('_SelectinatorTextSelect', '');
-                        children.push(value.substring(value.lastIndexOf('_') + 1));
+                        children.push(value.substring(value.lastIndexOf('_') + 1).replace('txt', ''));
                         $(childParentCollection[key]).each(function (i) {
-                            updateValues(this, $("input[id$='" + this.replace('parent', '')+"_SelectinatorText']").val());
+                            
+                            updateValues(this, $("input[id$='" + this.replace('parent', '')+"_SelectinatorText_ID']").val());
                         });
                     }
 
@@ -346,7 +350,7 @@
                         });
 
                     } else {
-                        Spend_Management.svcAutoComplete.GetTriggerFieldParentValues(parentControlId, formId, matchId.toString(), entityId,
+                        Spend_Management.svcAutoComplete.GetTriggerFieldParentValues(parentControlId, parents, children, formId, entityId,
                             function(data) {
                                 if (data != null)
                                 {

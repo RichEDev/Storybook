@@ -831,49 +831,63 @@
         /// List of readonly trigger field values associated with child
         /// </returns>
         [WebMethod(EnableSession = true)]
-        public List<AutoCompleteChildFieldValues> GetTriggerFieldParentValues(string parentControlId, int formId, string matchId, int entityId)
+        public List<AutoCompleteChildFieldValues> GetTriggerFieldParentValues(string parentControlId, List<SelectinatorParentFilter> parentControls, List<string> childrenControls, int formId, int entityId)
+        //public List<AutoCompleteChildFieldValues> GetTriggerFieldParentValues(string parentControlId, int formId, string matchId, int entityId)
         {
             //TODO: Consider what happens when the user puts all the parents back to none
-            //TODO: Consider server side validation in case anyone manipulates the page (not important right now but maybe at the end of the user story)
             var childElementData = new List<AutoCompleteChildFieldValues>();
             var currentUser = cMisc.GetCurrentUser();
-            var connection = new DatabaseConnection(cAccounts.getConnectionString(currentUser.AccountID));
-          
-            var fieldToBuild = cCustomFields.GetTriggerChildFieldValues(connection, parentControlId, formId);
-
-            if (fieldToBuild == 0) return null;
             var clsentities = new cCustomEntities(currentUser);
             var entity = clsentities.getEntityById(entityId);
-            var attribute = (cManyToOneRelationship)entity.getAttributeById(fieldToBuild);
-            var filterBy = (cManyToOneRelationship)entity.getAttributeById(Convert.ToInt32(parentControlId));
-            var filters = attribute.filters.Where(e => e.Value.IsParentFilter == false);
-            Dictionary<string, JSFieldFilter> filterDictionary =
-                filters.ToDictionary(
-                    x => x.Key.ToString(CultureInfo.InvariantCulture),
-                    x => new JSFieldFilter
-                             {
-                             ConditionType = x.Value.Conditiontype,
-                             FieldID = x.Value.Field.FieldID,
-                             Order = x.Value.Order,
-                             ValueOne = x.Value.ValueOne.ToString(CultureInfo.InvariantCulture)
-                         });
+            var attributesToFilterBy = new List<cManyToOneRelationship>();
 
-            filterDictionary.Add(fieldToBuild.ToString(), new JSFieldFilter { ConditionType = ConditionType.Equals, FieldID = filterBy.relatedtable.PrimaryKeyID, ValueOne = matchId, Joiner = ConditionJoiner.And });
-
-            if (attribute.AutoCompleteDisplayFieldIDList.Count > 0)
+            foreach (var parent in parentControls)
             {
-                var autoDisplayResultList = SpendManagementLibrary.AutoComplete.GetAutoCompleteMatches(currentUser, 26, attribute.relatedtable.TableID.ToString(), attribute.AutoCompleteDisplayField.ToString(), string.Join(",", attribute.AutoCompleteMatchFieldIDList), string.Join(",", attribute.AutoCompleteDisplayFieldIDList), string.Empty, true, filterDictionary, false, null);
-                childElementData.AddRange(autoDisplayResultList.Select(result => new AutoCompleteChildFieldValues { FieldToBuild = fieldToBuild.ToString(), Key = Convert.ToInt32(result.value), Value = result.label, FormattedText = result.formattedText }));
-            }
-            else
-            {
-                var resultList = SpendManagementLibrary.AutoComplete.GetAutoCompleteMatches(currentUser, 26, attribute.relatedtable.TableID.ToString(), attribute.AutoCompleteDisplayField.ToString(), string.Join(",", attribute.AutoCompleteMatchFieldIDList), string.Empty, true, filterDictionary);
-                childElementData.AddRange(resultList.Select(result => new AutoCompleteChildFieldValues { FieldToBuild = fieldToBuild.ToString(), Key = Convert.ToInt32(result.value), Value = result.label }));
+                attributesToFilterBy.Add((cManyToOneRelationship)entity.getAttributeById(Convert.ToInt32(parent.Id)));
             }
 
-            if (childElementData.Count == 0)
-                childElementData.Add(
-                    new AutoCompleteChildFieldValues { FieldToBuild = fieldToBuild.ToString(), Key = 0, Value = null });
+            foreach (var child in childrenControls)
+            {
+                var attribute = (cManyToOneRelationship)entity.getAttributeById(Convert.ToInt32(child));
+
+                var filters = attribute.filters.Where(e => e.Value.IsParentFilter == false);
+                Dictionary<string, JSFieldFilter> filterDictionary =
+                    filters.ToDictionary(
+                        x => x.Key.ToString(CultureInfo.InvariantCulture),
+                        x => new JSFieldFilter
+                        {
+                            ConditionType = x.Value.Conditiontype,
+                            FieldID = x.Value.Field.FieldID,
+                            Order = x.Value.Order,
+                            ValueOne = x.Value.ValueOne.ToString(CultureInfo.InvariantCulture)
+                        });
+
+                var index = 0;
+
+                var parentFilters = attribute.filters.Where(e => e.Value.IsParentFilter == true);
+
+                foreach (var parentFilter in parentFilters)
+                {
+                    var filterBy = attributesToFilterBy.FirstOrDefault(a => a.attributeid.ToString() == parentFilter.Value.ValueOne);
+                    filterDictionary.Add(index.ToString(), new JSFieldFilter { ConditionType = ConditionType.Equals, FieldID = filterBy.relatedtable.PrimaryKeyID, ValueOne = parentControls.FirstOrDefault(a => a.Id == filterBy.attributeid.ToString(CultureInfo.InvariantCulture)).Value, Joiner = ConditionJoiner.And });
+                    index++;
+                }
+
+                if (attribute.AutoCompleteDisplayFieldIDList.Count > 0)
+                {
+                    var autoDisplayResultList = SpendManagementLibrary.AutoComplete.GetAutoCompleteMatches(currentUser, 26, attribute.relatedtable.TableID.ToString(), attribute.AutoCompleteDisplayField.ToString(), string.Join(",", attribute.AutoCompleteMatchFieldIDList), string.Join(",", attribute.AutoCompleteDisplayFieldIDList), string.Empty, true, filterDictionary, false, null);
+                    childElementData.AddRange(autoDisplayResultList.Select(result => new AutoCompleteChildFieldValues { FieldToBuild = child, Key = Convert.ToInt32(result.value), Value = result.label, FormattedText = result.formattedText }));
+                }
+                else
+                {
+                    var resultList = SpendManagementLibrary.AutoComplete.GetAutoCompleteMatches(currentUser, 26, attribute.relatedtable.TableID.ToString(), attribute.AutoCompleteDisplayField.ToString(), string.Join(",", attribute.AutoCompleteMatchFieldIDList), string.Empty, true, filterDictionary);
+                    childElementData.AddRange(resultList.Select(result => new AutoCompleteChildFieldValues { FieldToBuild = child, Key = Convert.ToInt32(result.value), Value = result.label }));
+                }
+
+                if (childElementData.Count == 0)
+                    childElementData.Add(
+                        new AutoCompleteChildFieldValues { FieldToBuild = child, Key = 0, Value = null });
+            }
 
             return childElementData.Count > 0 ? childElementData : null;
         }
