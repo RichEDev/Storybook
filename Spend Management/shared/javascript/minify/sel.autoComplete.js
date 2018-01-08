@@ -301,7 +301,12 @@
                 UpdateChild: function (parentControlId, matchId, formId, entityId) {
                     var children = [];
                     var parents = []; //TODO: this needs to contain the mapped parentControlIds with their values and maybe filter duplicate values here instead of server side
-
+                    //TODO: this function should be placed outside as the global function  - Suraj
+                    function updateValues(parentId, val) {
+                        var obj = {};
+                        obj[parentId] = val;
+                        parents.push(obj);
+                    }
                     // get all the children of the current parent control
                     var childrenElements = $('.parenttxt' + parentControlId);
 
@@ -316,7 +321,7 @@
                         var value = key.replace('_SelectinatorTextSelect', '');
                         children.push(value.substring(value.lastIndexOf('_') + 1));
                         $(childParentCollection[key]).each(function (i) {
-                            parents.push(this);
+                            updateValues(this, $("input[id$='" + this.replace('parent', '')+"_SelectinatorText']").val());
                         });
                     }
 
@@ -341,7 +346,6 @@
                         });
 
                     } else {
-
                         Spend_Management.svcAutoComplete.GetTriggerFieldParentValues(parentControlId, formId, matchId.toString(), entityId,
                             function(data) {
                                 if (data != null)
