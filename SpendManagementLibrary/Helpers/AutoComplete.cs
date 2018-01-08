@@ -653,7 +653,7 @@ namespace SpendManagementLibrary
         /// <returns>
         /// The field string values
         /// </returns>
-        public static List<Tuple<string, string>> GetDisplayAndTriggerFieldValues(ICurrentUserBase currentUser, Guid matchTableId, int matchedId, cField displayField, List<JsAutoCompleteTriggerField> triggerFields)
+        public static List<Tuple<string, string>> GetDisplayAndTriggerFieldValues(ICurrentUserBase currentUser, Guid matchTableId, string matchedId, cField displayField, List<JsAutoCompleteTriggerField> triggerFields)
         {
             return GetDisplayOrTriggerFieldStringValues(currentUser, matchTableId, matchedId, triggerFields, displayField);
         }
@@ -678,7 +678,7 @@ namespace SpendManagementLibrary
         /// </returns>
         public static List<JsAutoCompleteTriggerField> GetTriggerFieldValues(ICurrentUserBase currentUser, Guid matchTableId, int matchedId, List<JsAutoCompleteTriggerField> triggerFields)
         {
-            var values = GetDisplayOrTriggerFieldStringValues(currentUser, matchTableId, matchedId, triggerFields);
+            var values = GetDisplayOrTriggerFieldStringValues(currentUser, matchTableId, matchedId.ToString(), triggerFields);
             if (triggerFields != null)
             {
                 if (values.Count == triggerFields.Count)
@@ -713,7 +713,7 @@ namespace SpendManagementLibrary
         /// </param>
         /// <param name="displayField">The display cField object</param>
         /// <returns>A list of string values</returns>
-        private static List<Tuple<string, string>> GetDisplayOrTriggerFieldStringValues(ICurrentUserBase currentUser, Guid matchTableId, int matchedId, List<JsAutoCompleteTriggerField> triggerFields, cField displayField = null)
+        private static List<Tuple<string, string>> GetDisplayOrTriggerFieldStringValues(ICurrentUserBase currentUser, Guid matchTableId, string matchedId, List<JsAutoCompleteTriggerField> triggerFields, cField displayField = null)
         {
             cTables tables = new cTables(currentUser.AccountID);
             cTable matchTable = tables.GetTableByID(matchTableId);

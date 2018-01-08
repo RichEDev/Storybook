@@ -229,11 +229,11 @@
         /// </summary>
         /// <param name="text">The text to appear in the text box or drop down list.</param>
         /// <param name="id">The ID of the selected item.</param>
-        public void SetValue(string text, int id)
+        public void SetValue(string text, string id)
         {
-            this.SelectinatorText_ID.Text = id.ToString();
+            this.SelectinatorText_ID.Text = id;
             this.SelectinatorText.Text = text;
-            var newItem = new ListItem(text, id.ToString());
+            var newItem = new ListItem(text, id);
             if (this.SelectinatorTextSelect.Items.Contains(newItem))
             {
                 this.SelectinatorTextSelect.Items[this.SelectinatorTextSelect.Items.IndexOf(newItem)].Selected = true;

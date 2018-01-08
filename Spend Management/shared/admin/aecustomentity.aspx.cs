@@ -233,14 +233,14 @@ namespace Spend_Management
                         if (entity.OwnerId.HasValue)
                         {
                             selOwner.SetValue(employees.GetEmployeeById(entity.OwnerId.Value).FullNameUsername,
-                                entity.OwnerId.Value);
+                                entity.OwnerId.Value.ToString());
                         }
 
                         if (entity.SupportContactId.HasValue)
                         {
                             selSupportContact.SetValue(
                                 employees.GetEmployeeById(entity.SupportContactId.Value).FullNameUsername,
-                                entity.SupportContactId.Value);
+                                entity.SupportContactId.Value.ToString());
                         }
                     }
 

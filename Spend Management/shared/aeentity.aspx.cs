@@ -1168,8 +1168,8 @@
                                                     }
 
                                                     // get the string values to populate the fields with
-                                                    var fieldValues = AutoComplete.GetDisplayAndTriggerFieldValues(cMisc.GetCurrentUser(), relationship.relatedtable.TableID, (int)record[field.attribute.attributeid], autoCompleteDisplayField, autoCompleteTriggerFields);
-                                                    selectinator.SetValue(fieldValues[0].Item1, (int)record[field.attribute.attributeid]);
+                                                    var fieldValues = AutoComplete.GetDisplayAndTriggerFieldValues(cMisc.GetCurrentUser(), relationship.relatedtable.TableID, record[field.attribute.attributeid].ToString(), autoCompleteDisplayField, autoCompleteTriggerFields);
+                                                    selectinator.SetValue(fieldValues[0].Item1, record[field.attribute.attributeid].ToString());
 
                                                     for (int i = 1; i < fieldValues.Count; i++)
                                                     {
