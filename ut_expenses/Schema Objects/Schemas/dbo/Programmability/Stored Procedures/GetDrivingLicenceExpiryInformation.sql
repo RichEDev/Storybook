@@ -100,8 +100,9 @@ set @sqlQuery2 = 'SELECT @LastLookUpDate = DvlaLookUpDate from employees where e
 				WHERE '+dbo.GetAttributeId('C790EC93-A920-4CFC-8846-605F8B4B50B5',1)+' = '+Convert(nvarchar,(select valueid from customEntityAttributeListItems where attributeid =dbo.GetAttributeId('C790EC93-A920-4CFC-8846-605F8B4B50B5',0) and item ='Reviewed - OK'))+' 
 					and '+@attEmployee +' = @employeeid 
 					and '+@attLicenceType +' <> '+@attLicenceDvla+ ' 
-					and @expenseItemDate between isnull('+@attDateOfIssue +',''2001-jan-01 00:00:00'') and '+ @attExpireDate +'
+					and @expenseItemDate between isnull('+@attDateOfIssue +',''2001-jan-01 00:00:00'') and '+ @attExpireDate +'					
 					and (@DrivingLicenceReviewPeriodically =0 OR (@DateOfExpense=0 and  CAST(GETUTCDATE() AS DATE) between CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE) and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')) OR (@DateOfExpense=1 and  CAST(@expenseItemDate AS DATE) between CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE) and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+'))) 
+				
 				order by dl.CreatedOn asc
 
 	SELECT @blockDrivingLicence = cast(stringValue as varchar) 
@@ -167,8 +168,8 @@ set @sqlQuery2 = 'SELECT @LastLookUpDate = DvlaLookUpDate from employees where e
 				WHERE '+dbo.GetAttributeId('C790EC93-A920-4CFC-8846-605F8B4B50B5',1)+' = '+Convert(nvarchar,(select valueid from customEntityAttributeListItems where attributeid =dbo.GetAttributeId('C790EC93-A920-4CFC-8846-605F8B4B50B5',0) and item ='Reviewed - OK'))+' 
 					and '+@attEmployee +' = @employeeid 
 					and '+@attLicenceType +' = ' +@attLicencePaper+ '
-					and @expenseItemDate > =isnull('+@attDateOfIssue +',''2001-jan-01 00:00:00'') 
-					and (@DrivingLicenceReviewPeriodically =0 OR (@DateOfExpense=0 and  CAST(GETUTCDATE() AS DATE) between CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE) and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')) OR (@DateOfExpense=1 and CAST(@expenseItemDate AS DATE) between CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE) and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')))
+					and @expenseItemDate > =isnull('+@attDateOfIssue +',''2001-jan-01 00:00:00'') 					
+					and (@DrivingLicenceReviewPeriodically =0 OR (@DateOfExpense=0 and  CAST(GETUTCDATE() AS DATE) between '+@attDateOfIssue +' and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')) OR (@DateOfExpense=1 and CAST(@expenseItemDate AS DATE) between '+@attDateOfIssue +' and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')))				
 				order by dl.CreatedOn asc
 
 				SELECT @nongblicenceValidFrom=isnull('+@attDateOfIssue +',''2001-jan-01 00:00:00'')
@@ -177,8 +178,8 @@ set @sqlQuery2 = 'SELECT @LastLookUpDate = DvlaLookUpDate from employees where e
 				WHERE '+dbo.GetAttributeId('C790EC93-A920-4CFC-8846-605F8B4B50B5',1)+' = '+Convert(nvarchar,(select valueid from customEntityAttributeListItems where attributeid =dbo.GetAttributeId('C790EC93-A920-4CFC-8846-605F8B4B50B5',0) and item ='Reviewed - OK'))+' 
 					and '+@attEmployee +' = @employeeid 
 					and '+@attLicenceType +' = ' +@attLicenceNonGb+ '
-					and @expenseItemDate > =isnull('+@attDateOfIssue +',''2001-jan-01 00:00:00'') 
-					and (@DrivingLicenceReviewPeriodically =0 OR (@DateOfExpense=0 and  CAST(GETUTCDATE() AS DATE) between CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE) and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')) OR (@DateOfExpense=1 and CAST(@expenseItemDate AS DATE) between CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE) and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')))
+					and @expenseItemDate > =isnull('+@attDateOfIssue +',''2001-jan-01 00:00:00'') 					
+					and (@DrivingLicenceReviewPeriodically =0 OR (@DateOfExpense=0 and  CAST(GETUTCDATE() AS DATE) between '+@attDateOfIssue +' and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')) OR (@DateOfExpense=1 and CAST(@expenseItemDate AS DATE) between '+@attDateOfIssue +' and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')))				
 				order by dl.CreatedOn asc
 
 				SELECT @nongblicenceexpiry='+ @attExpireDate +' 
@@ -188,7 +189,8 @@ set @sqlQuery2 = 'SELECT @LastLookUpDate = DvlaLookUpDate from employees where e
 					and '+@attEmployee +' = @employeeid 
 					and '+@attLicenceType +' = '+@attLicenceNonGb+ ' 
 					and @expenseItemDate between isnull('+@attDateOfIssue +',''2001-jan-01 00:00:00'') and '+ @attExpireDate +'
-					and (@DrivingLicenceReviewPeriodically =0 OR (@DateOfExpense=0 and  CAST(GETUTCDATE() AS DATE) between CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE) and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')) OR (@DateOfExpense=1 and  CAST(@expenseItemDate AS DATE) between CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE) and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+'))) 
+					and (@DrivingLicenceReviewPeriodically =0 OR (@DateOfExpense=0 and  CAST(GETUTCDATE() AS DATE) between '+@attDateOfIssue +' and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')) OR (@DateOfExpense=1 and  CAST(@expenseItemDate AS DATE) between '+@attDateOfIssue +' and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+'))) 
+				
 				order by dl.CreatedOn asc
 				 '
   	  
@@ -200,7 +202,8 @@ set @sqlQuery2 = 'SELECT @LastLookUpDate = DvlaLookUpDate from employees where e
 					and '+@attEmployee +' = @employeeid 
 					and '+@attLicenceType +' = '+@attLicencePhotoCard+ ' 
 					and @expenseItemDate between isnull('+@attDateOfIssue +',''2001-jan-01 00:00:00'') and '+ @attExpireDate +'
-					and (@DrivingLicenceReviewPeriodically =0 OR (@DateOfExpense=0 and  CAST(GETUTCDATE() AS DATE) between CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE) and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')) OR (@DateOfExpense=1 and  CAST(@expenseItemDate AS DATE) between CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE) and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+'))) 
+					and (@DrivingLicenceReviewPeriodically =0 OR (@DateOfExpense=0 and  CAST(GETUTCDATE() AS DATE) between '+@attDateOfIssue +' and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+')) OR (@DateOfExpense=1 and  CAST(@expenseItemDate AS DATE) between '+@attDateOfIssue +' and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+'))) 
+				
 				order by dl.CreatedOn asc
   
 			-- Expiry dates will be null if there is no document that has been approved. Hence, we then get the latest document that has been uploaded to get the expiry date  (which in this case will be the expiry date of the document that has been uploaded but hasn''t been approved.) Non-GB licence dates can be null regardless.
@@ -212,7 +215,7 @@ set @sqlQuery2 = 'SELECT @LastLookUpDate = DvlaLookUpDate from employees where e
 						@ReviewStatus =
 			            CASE  
 						when '+@reviewstatus+' Is NULL then ''requires a review''
-						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Awaiting Review'))+' or ('+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Reviewed - OK'))+' and CAST(@expenseItemDate AS DATE) < CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE))  then ''is awaiting review''	
+						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Awaiting Review'))+' then ''is awaiting review''	
 						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Reviewed - Failed'))+' then ''has failed review''		
 						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Invalidated'))+' then ''details have been changed and your review invalidated''
 						ELSE ''review has expired''
@@ -244,10 +247,9 @@ set @sqlQuery2 = 'SELECT @LastLookUpDate = DvlaLookUpDate from employees where e
 						@ReviewStatus =
 						CASE
 						when '+@reviewstatus+' Is NULL then ''requires a review''
-						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Awaiting Review'))+' or ('+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Reviewed - OK'))+' and CAST(@expenseItemDate AS DATE) < CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE))  then ''is awaiting review''	
+						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Awaiting Review'))+' then ''is awaiting review''	
 						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Reviewed - Failed'))+' then ''has failed review''		
-						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Invalidated'))+' then ''details have been changed and your review invalidated''
-						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Reviewed - OK'))+' and CAST(@expenseItemDate AS DATE) between CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE) and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+') then ''''
+						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Invalidated'))+' then ''details have been changed and your review invalidated''																		
 						ELSE ''review has expired''
 						end
 						
@@ -255,10 +257,7 @@ set @sqlQuery2 = 'SELECT @LastLookUpDate = DvlaLookUpDate from employees where e
 					left join '+@drivinglicencereviewentity+' review on (dl.'+dbo.GetAttributeId('C11ADAEB-27E0-4046-843F-7FD39513DACF',1)+' =review.'+dbo.GetAttributeId('D602AF08-2471-4035-B92C-50C3A9F492FD',1)+')
 					WHERE '+@attEmployee +' = @employeeid
 						AND '+@attLicenceType +' = ' +@attLicenceNonGb+ '
-						and @expenseItemDate < '+@attDateOfIssue +'
-					OR '+@attEmployee +' = @employeeid
-						AND '+@attLicenceType +' = ' +@attLicenceNonGb+ '
-						AND '+@attDateOfIssue+' IS NULL
+						and @expenseItemDate >= isnull('+@attDateOfIssue +',''2001-jan-01 00:00:00'')  					
 					ORDER BY dl.CreatedOn,review.CreatedOn ASC
 				END
 				
@@ -268,10 +267,7 @@ set @sqlQuery2 = 'SELECT @LastLookUpDate = DvlaLookUpDate from employees where e
 					FROM '+@drivingLicenceTableId+'
 					WHERE '+@attEmployee +' = @employeeid
 						AND '+@attLicenceType +' = ' +@attLicenceNonGb+ '
-						and @expenseItemDate < '+@attDateOfIssue +'
-					OR '+@attEmployee +' = @employeeid
-						AND '+@attLicenceType +' = ' +@attLicenceNonGb+ '
-						AND '+@attDateOfIssue+' IS NULL
+						and @expenseItemDate < isnull('+@attDateOfIssue +',''2001-jan-01 00:00:00'') 
 					ORDER BY '+@drivingLicenceTableId+'.CreatedOn ASC
 				END'								   
 
@@ -283,7 +279,7 @@ set @sqlQuery2 = 'SELECT @LastLookUpDate = DvlaLookUpDate from employees where e
 					@ReviewStatus =
 				 CASE  
 						when '+@reviewstatus+' Is NULL then ''requires a review''
-						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Awaiting Review'))+' or ('+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Reviewed - OK'))+' and CAST(@expenseItemDate AS DATE) < CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE))  then ''is awaiting review''	
+						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Awaiting Review'))+' then ''is awaiting review''
 						when '+@reviewstatus+'='+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Reviewed - Failed'))+' then ''has failed review''		
 						when '+@reviewstatus+'='+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Invalidated'))+' then ''details have been changed and your review invalidated''
 						ELSE ''review has expired''
@@ -314,11 +310,11 @@ set @sqlQuery2 = 'SELECT @LastLookUpDate = DvlaLookUpDate from employees where e
 						
 						@ReviewStatus =
 						CASE
-						when '+@reviewstatus+' Is NULL then ''requires a review''
-						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Awaiting Review'))+' or ('+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Reviewed - OK'))+' and CAST(@expenseItemDate AS DATE) < CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE))  then ''is awaiting review''	
+						when '+@reviewstatus+' Is NULL then ''requires a review''						
+						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Awaiting Review'))+' then ''is awaiting review''	
 						when '+@reviewstatus+'='+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Reviewed - Failed'))+' then ''has failed review''		
-						when '+@reviewstatus+'='+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Invalidated'))+' then ''details have been changed and your review invalidated''
-						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Reviewed - OK'))+' and CAST(@expenseItemDate AS DATE) between CAST('+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+' AS DATE) and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+') then ''''
+						when '+@reviewstatus+'='+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Invalidated'))+' then ''details have been changed and your review invalidated''												
+						when '+@reviewstatus+'= '+Convert(varchar,(select valueid from customEntityAttributeListItems where attributeid =@reviewstatusvalue and item='Reviewed - OK'))+' and CAST(@expenseItemDate AS DATE) between '+@attDateOfIssue+' and DATEADD(M,+@DrivingLicenceReviewFrequency,'+dbo.GetAttributeId('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)+') then ''''
 						ELSE ''review has expired''
 						end
 
@@ -354,23 +350,20 @@ set @sqlQuery2 = 'SELECT @LastLookUpDate = DvlaLookUpDate from employees where e
 		  --check if the manual licence expiry is valid
 		  -- Non-GB licences can have none, either, or both of Start and End date, so checks must be made for each possibility, for both todays date and expenseItemDate
 		  IF NOT((@DateOfExpense=0 and  CAST(GETUTCDATE() AS DATE) between CAST(@StartDateOfPhotoCardLicence AS DATE) and CAST(@photocardlicenceexpiry AS DATE)) 
-		  OR (@DateOfExpense=1 and  CAST(@expenseItemDate AS DATE) between CAST(@StartDateOfPhotoCardLicence AS DATE) and  CAST(@photocardlicenceexpiry AS DATE))
-		  OR (@DateOfExpense=0 and CAST(GETUTCDATE() AS DATE) between CAST(@nongblicenceValidFrom AS DATE) and CAST(@nongblicenceexpiry AS DATE))
-		  OR (@DateOfExpense=0 and @nongblicenceValidFrom IS NULL and CAST(GETUTCDATE() AS DATE) <= CAST(@nongblicenceexpiry AS DATE))
-		  OR (@DateOfExpense=0 and @nongblicenceexpiry IS NULL and CAST(GETUTCDATE() AS DATE) >= CAST(@nongblicenceValidFrom AS DATE))
-		  OR (@DateOfExpense=1 and CAST(@expenseItemDate AS DATE) between CAST(@nongblicenceValidFrom AS DATE) and CAST(@nongblicenceexpiry AS DATE))		  
-		  OR (@DateOfExpense=1 and @nongblicenceValidFrom IS NULL and CAST(@expenseItemDate AS DATE) <= CAST(@nongblicenceexpiry AS DATE))
-		  OR (@DateOfExpense=1 and @nongblicenceexpiry IS NULL and CAST(@expenseItemDate AS DATE) >= CAST(@nongblicenceValidFrom AS DATE))
-		  OR (@nongblicencecheck=1 and @nongblicenceValidFrom IS NULL and @nongblicenceexpiry IS NULL))		
+		  OR (@DateOfExpense=1 and  CAST(@expenseItemDate AS DATE) between CAST(@StartDateOfPhotoCardLicence AS DATE) and  CAST(@photocardlicenceexpiry AS DATE))		  
+		  OR (@DateOfExpense=0 and CAST(GETUTCDATE() AS DATE) between CAST(@nongblicenceValidFrom AS DATE) and CAST(@nongblicenceexpiry AS DATE))		  		  
+		  OR (@DateOfExpense=0 and @nongblicenceexpiry IS NULL and CAST(GETUTCDATE() AS DATE) >= CAST(@nongblicenceValidFrom AS DATE))		  
+		  OR (@DateOfExpense=1 and CAST(@expenseItemDate AS DATE) between CAST(@nongblicenceValidFrom AS DATE) and CAST(@nongblicenceexpiry AS DATE))		  		  		  
+		  OR (@DateOfExpense=1 and @nongblicenceexpiry IS NULL and CAST(@expenseItemDate AS DATE) >= CAST(@nongblicenceValidFrom AS DATE)))		  		  
 		  SET @IsValidManualLicence = 0
 
-		  IF (@ReviewStatus <> '''' OR (@photocardlicenceexpiry is NULL AND @paperlicenceValidFrom is null AND @nongblicencecheck=0))
+		  IF (@ReviewStatus <> '''' OR @ReviewStatus IS NOT NULL OR (@photocardlicenceexpiry is NULL AND @paperlicenceValidFrom is null AND @nongblicencecheck is NULL))
 		  SET @IsValidManualLicence = 0
 
 		   END
 		END
 			--IF there is no manual licence then consider DVLA as default
-	IF(@photocardlicenceexpiry is NULL AND @paperlicenceValidFrom is null AND @ReviewStatus IS NULL AND @dvlalicenceexpiry IS NOT NULL AND @isvalidlicence <>0)
+	IF(@photocardlicenceexpiry is NULL AND @paperlicenceValidFrom is null AND @nongblicenceValidFrom is null AND @ReviewStatus IS NULL AND @dvlalicenceexpiry IS NOT NULL AND @isvalidlicence <>0)
 	SET @dvlaLicenceValid = 1
 
 	SELECT @paperlicenceValidFrom AS PaperDrivingLicenceDocumentValidFromDate, @nongblicenceValidFrom AS NonGbDrivingLicenceStartDate, @photocardlicenceexpiry AS PhotocardDrivingLicenceExpiryDate, @nongblicenceexpiry AS NonGbDrivingLicenceExpiryDate,@blockDrivingLicence AS BlockDrivingLicence, @photocardcheck AS PhotocardExists, @nongblicencecheck AS NonGbDrivingLicenceExists,@dvlalicenceexpiry AS DvlaLicenceExpiry, @dvlaLicenceValid AS ValidDvlaLicence ,@dvlacheck AS DvlaLookupEnabled ,@ReviewStatus as ReviewStatus,@isvalidlicence as IsValidLicence, @IsValidManualLicence as IsValidManualLicence
