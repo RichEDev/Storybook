@@ -455,29 +455,6 @@
 
 
         /// <summary>
-        /// Calls the API to send an email to a specific employee (contained in the  api End Point).
-        /// </summary>
-        /// <param name="apiEndPoint">The endpoint for the api call.</param>
-        /// <returns>True unless the api call fails</returns>
-        public bool SendEmailNotificationForExcessMileage(string apiEndPoint)
-        {
-
-            var request = new RestRequest(apiEndPoint, Method.POST)
-            {
-                RequestFormat = DataFormat.Json
-            };
-
-            var response = this.BaseRequest<object>(request, false);
-            if (response.Result.Data != null)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-
-        /// <summary>
         /// Process a card file via the API
         /// </summary>
         /// <param name="endPoint">The API endpoint to use</param>
