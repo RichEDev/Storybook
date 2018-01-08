@@ -207,6 +207,12 @@ namespace Spend_Management.expenses.code
         SentWhenAnEmployeeRequestsAPasswordResetFromExpensesMobile = 1125,
 
         /// <summary>
+        /// This email is sent when an employee locks their account from expenses mobile.
+        /// </summary>
+        [Description("6dca72f8-4fcb-44fe-9e90-4e8b080aa0e7")]
+        SentWhenAnEmployeeLocksAccountFromExpensesMobile = 1126,
+
+        /// <summary>
         /// Sent when a vehicle has been added
         /// </summary>
         [Description("cf180b21-4d19-4cd1-b5e5-5266c3d268c8")]
