@@ -223,7 +223,7 @@ using System.Web;
                 {
                     templateId = SendMessageEnum.GetEnumDescription(SendMessageDescription.SentWhenAnEmployeeGetsLockedOut);
                     clsemails.SendMessage(templateId, senderId, recipients);
-                    templateId = SendMessageEnum.GetEnumDescription(fromMobile ? SendMessageDescription.SentWhenAnEmployeeLocksAccountFromAMobileDevice : SendMessageDescription.SentWhenAnEmployeeLocksAccountFromAMethodOtherThanAMobileDevice);
+                    templateId = SendMessageEnum.GetEnumDescription(fromMobile ? SendMessageDescription.SentWhenAnEmployeeLocksAccountFromExpensesMobile : SendMessageDescription.SentWhenAnEmployeeLocksAccountFromAMethodOtherThanAMobileDevice);
                     clsemails.SendMessage(templateId, senderId, recipients);
                 }
                 else
