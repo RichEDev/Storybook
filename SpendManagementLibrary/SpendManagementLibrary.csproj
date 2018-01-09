@@ -866,6 +866,7 @@
     <Compile Include="Report\TreeGroups.cs" />
     <Compile Include="sAutoCompleteResult.cs" />
     <Compile Include="Selectinator\jsSelectinator.cs" />
+    <Compile Include="Selectinator\SelectinatorParentFilter.cs" />
     <Compile Include="SingleSignOn.cs" />
     <Compile Include="sOnlineRoleInfo.cs" />
     <Compile Include="Enumerators\SpendManagementElement.cs" />
