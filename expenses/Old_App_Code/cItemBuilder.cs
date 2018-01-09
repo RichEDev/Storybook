@@ -3345,7 +3345,7 @@ public class cItemBuilder
             }
         }
 
-        if (subcat.mileageapp && clsproperties.AllowUsersToAddCars)
+        if ((subcat.mileageapp || subcat.calculation == CalculationType.ExcessMileage) && clsproperties.AllowUsersToAddCars)
         {
             var addNewVehicleOuter = new Label { CssClass = "addnewvehicleouter" };
             addNewVehicleOuter.Controls.Add(new Label { CssClass = "addnewvehicleicon" });
