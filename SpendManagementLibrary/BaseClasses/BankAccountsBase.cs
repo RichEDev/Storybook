@@ -1,5 +1,4 @@
-﻿
-namespace SpendManagementLibrary.BaseClasses
+﻿namespace SpendManagementLibrary.BaseClasses
 {
     using System;
     using System.Collections.Generic;
@@ -10,6 +9,8 @@ namespace SpendManagementLibrary.BaseClasses
     using SpendManagementLibrary.Account;
     using SpendManagementLibrary.Enumerators;
     using SpendManagementLibrary.Helpers;
+    using Common.Logging;
+
     /// <summary>
     /// BankAcountsBase abstract class
     /// </summary>
@@ -21,9 +22,14 @@ namespace SpendManagementLibrary.BaseClasses
         protected string AccountConnectionString;
         protected Dictionary<int, BankAccount> ListBankAccounts;
 
+        /// <summary>
+        /// An instance of <see cref="ILog"/> for logging information.
+        /// </summary>
+        private static readonly ILog Log = new LogFactory<BankAccountsBase>().GetLogger();
+
         #endregion
 
-       /// <summary>
+        /// <summary>
         /// default constructor
         /// </summary>
         /// <param name="employeeId">employeeid</param>
@@ -42,6 +48,11 @@ namespace SpendManagementLibrary.BaseClasses
         /// <returns>return list of bank account</returns>
         protected Dictionary<int, BankAccount> GetBankAccountsToCache(int accountId,int employeeId)
         {
+            if (Log.IsDebugEnabled)
+            {
+                Log.Debug("Run GetBankAccountsToCache has started");
+            }
+
             var lstToCache = new Dictionary<int, BankAccount>();
 
             using (var databaseConnection = new DatabaseConnection(this.AccountConnectionString))
@@ -83,6 +94,12 @@ namespace SpendManagementLibrary.BaseClasses
                     }
                 }
             }
+
+            if (Log.IsDebugEnabled)
+            {
+                Log.Debug("Run GetBankAccountsToCache has completed");
+            }
+
             return lstToCache;
         }
 

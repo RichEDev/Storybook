@@ -2849,7 +2849,7 @@ public class cItemBuilder
             {
                 if (Log.IsDebugEnabled)
                 {
-                    Log.Debug($"{lstItems.Count} Bank accounts found so dropwdown list will be populated.");
+                    Log.Debug($"{lstItems.Count - 1} Bank accounts found so dropdown list will be populated");
                 }
                 ddlst = new DropDownList { ID = "cmbbankaccount" + id };
                 ddlst.Items.AddRange(lstItems.ToArray());
@@ -2907,7 +2907,7 @@ public class cItemBuilder
             {
                 if (Log.IsDebugEnabled)
                 {
-                    Log.Debug($"{lstItems.Count} Bank accounts found so dropwdown list will not be populated.");
+                    Log.Debug($"{lstItems.Count - 1} Bank accounts found so dropdown list will not be populated");
                 }
             }
         }

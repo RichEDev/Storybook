@@ -398,6 +398,12 @@ namespace Spend_Management
             {
                 expenseid = 0;
             }
+
+            if (expenseid == -7)
+            {
+                return expenseid;
+            }
+
             if (expenseid != 0)
             {
                 expitem.expenseid = expenseid;
@@ -1240,7 +1246,11 @@ namespace Spend_Management
 
             this.ReturnToValidationStageIfAny(expitem, currentUser, clsclaims, reqclaim, subcat);
 
-            RunUpdateSQL(ref expitem, employeeid);
+            var returnVal = RunUpdateSQL(ref expitem, employeeid);
+            if (returnVal == -7)
+            {
+                return returnVal;
+            }
             saveJourneySteps(expitem);
             InsertCostCodeBreakdown(true, expitem);
 
@@ -1947,9 +1957,19 @@ namespace Spend_Management
                 }
             }
         }
+
+        /// <summary>
+        /// Insert an expense item to the database
+        /// </summary>
+        /// <param name="expenseitem">The expense item</param>
+        /// <param name="userid">The user Id</param>
+        /// <returns>The expense Id</returns>
         private int RunInsertSQL(ref cExpenseItem expenseitem, int userid)
         {
-            Log.Debug("Method RunInsertSQL has started.");
+            if (Log.IsDebugEnabled)
+            {
+                Log.Debug("Method RunInsertSQL has started");
+            }
 
             DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));
 
@@ -2112,7 +2132,7 @@ namespace Spend_Management
             expdata.sqlexecute.Parameters.AddWithValue("@globaltotal", expenseitem.globaltotal);
 
             expdata.sqlexecute.Parameters.AddWithValue("@itemtype", (byte)expenseitem.itemtype);
-            expdata.sqlexecute.Parameters.AddWithValue("@createdon", createdon);
+            expdata.sqlexecute.Parameters.AddWithValue("@savedDate", createdon);
             expdata.sqlexecute.Parameters.AddWithValue("@userid", userid);
             if (expenseitem.mileageid == 0)
             {
@@ -2159,6 +2179,7 @@ namespace Spend_Management
 
             // add the validation progress marker.
             expdata.sqlexecute.Parameters.AddWithValue("@validationProgress", (int)expenseitem.ValidationProgress);
+            expdata.sqlexecute.Parameters.AddWithValue("@validationCount", DBNull.Value);
 
             if (expenseitem.bankAccountId == 0 || expenseitem.bankAccountId == null)
             {
@@ -2187,35 +2208,38 @@ namespace Spend_Management
                 expdata.sqlexecute.Parameters.AddWithValue("@MobileMetricDeviceId", expenseitem.MobileMetricDeviceId);
             }
 
-            strsql = "insert into savedexpenses (claimid, itemtype, bmiles, pmiles, reason, receipt, net, vat, total, subcatid, [date], staff, others, organisationIdentifier, home, refnum,  plitres, blitres, allowanceamount, currencyid, attendees, tip, countryid, foreignvat, convertedtotal, exchangerate, normalreceipt, reasonid, allowancestartdate, allowanceenddate, carid, allowancededuct, allowanceid, nonights, quantity, directors, amountpayable, hotelid,primaryitem, norooms, vatnumber, personalguests, remoteworkers, accountcode, basecurrency, globalexchangerate, globalbasecurrency, globaltotal, createdon, createdby, mileageid, transactionid, journey_unit, esrAssignID, hometooffice_deduction_method, addedAsMobileItem, addedByDeviceTypeId, ValidationProgress, BankAccountId, WorkAddressId, MobileMetricDeviceId) " +
-                    "values (@claimid,@itemtype,@bmiles,@pmiles,@reason,@receipt,@net,@vat,@total,@subcatid,@date," +
-                    "@staff,@others,@companyid,@home,@refnum,@plitres,@blitres,@allowanceamount,@currencyid, @attendees,@tip,@countryid,@foreignvat,@convertedtotal,@exchangerate,@normalreceipt";
-
-            strsql = strsql + ",@reasonid,@allowancestartdate,@allowanceenddate,@carid,@allowancededuct,@allowanceid, @nonights, @quantity, @directors, @amountpayable, @hotelid,@primaryitem, @norooms, @vatnumber, @personalguests, @remoteworkers, @accountcode, @basecurrency, @globalexchangerate, @globalbasecurrency, @globaltotal, @createdon, @userid, @mileageid, @transactionid, @journey_unit, @assignmentnum, @hometooffice_deduction_method, @addedAsMobileItem, @addedByDeviceTypeId, @validationProgress, @BankAccountId, @WorkAddressId, @MobileMetricDeviceId);set @identity = @@identity";
-
+            expdata.sqlexecute.Parameters.AddWithValue("@expenseid", 0);
 
             expdata.sqlexecute.Parameters.AddWithValue("@identity", SqlDbType.Int);
-            expdata.sqlexecute.Parameters["@identity"].Direction = ParameterDirection.Output;
+            expdata.sqlexecute.Parameters["@identity"].Direction = ParameterDirection.ReturnValue;
 
-            expdata.ExecuteSQL(strsql);
+            expdata.ExecuteProc("saveExpenseItem");
             int expenseid = (int)expdata.sqlexecute.Parameters["@identity"].Value;
             expdata.sqlexecute.Parameters.Clear();
 
             if (Log.IsDebugEnabled)
             {
-                Log.Debug(expenseitem);
-                Log.Debug($"The bank account Id on this expense item is set to {expenseitem.bankAccountId} and the expense Id is {expenseid}");
+                Log.Debug($"An expense item has been added the expense Id is {expenseid} and the bank account Id is {expenseitem.bankAccountId}");
+                Log.Debug("Method RunInsertSQL has completed");
             }
-
-            Log.Debug("Method RunInsertSQL has completed.");
 
             return expenseid;
         }
 
-        private void RunUpdateSQL(ref cExpenseItem expenseitem, int userid)
-        {
-            Log.Debug("Method RunUpdateSQL has started.");
 
+        /// <summary>
+        /// Updates an expense item
+        /// </summary>
+        /// <param name="expenseitem">The expense item</param>
+        /// <param name="userid">The user Id</param>
+        /// <returns>A return code from the store proc</returns>
+        private int RunUpdateSQL(ref cExpenseItem expenseitem, int userid)
+        {
+            if (Log.IsDebugEnabled)
+            {
+                Log.Debug("Method RunUpdateSQL has started");
+            }
+            
             DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));
             DateTime modifiedon = DateTime.Now.ToUniversalTime();
 
@@ -2252,7 +2276,7 @@ namespace Spend_Management
 
             expdata.sqlexecute.Parameters.AddWithValue("@plitres", expenseitem.plitres);
             expdata.sqlexecute.Parameters.AddWithValue("@blitres", expenseitem.blitres);
-            //expdata.sqlexecute.Parameters.AddWithValue("@allowanceamount",expenseitem.allowanceamount);
+            expdata.sqlexecute.Parameters.AddWithValue("@allowanceamount", expenseitem.total);
             if (expenseitem.currencyid == 0)
             {
                 expdata.sqlexecute.Parameters.AddWithValue("@currencyid", DBNull.Value);
@@ -2368,7 +2392,7 @@ namespace Spend_Management
             expdata.sqlexecute.Parameters.AddWithValue("@globalbasecurrency", expenseitem.globalbasecurrency);
             expdata.sqlexecute.Parameters.AddWithValue("@globaltotal", expenseitem.globaltotal);
 
-            expdata.sqlexecute.Parameters.AddWithValue("@modifiedon", modifiedon);
+            expdata.sqlexecute.Parameters.AddWithValue("@savedDate", modifiedon);
             expdata.sqlexecute.Parameters.AddWithValue("@userid", userid);
             if (expenseitem.mileageid == 0)
             {
@@ -2405,6 +2429,9 @@ namespace Spend_Management
             }
 
             expdata.sqlexecute.Parameters.AddWithValue("@hometooffice_deduction_method", (byte)expenseitem.homeToOfficeDeductionMethod);
+            expdata.sqlexecute.Parameters.AddWithValue("@addedAsMobileItem", expenseitem.addedAsMobileExpense);
+            expdata.sqlexecute.Parameters.AddWithValue("@addedByDeviceTypeId", DBNull.Value);
+            expdata.sqlexecute.Parameters.AddWithValue("@MobileMetricDeviceId", DBNull.Value);
 
             // add the validation progress marker.
             expdata.sqlexecute.Parameters.AddWithValue("@validationProgress", (int)expenseitem.ValidationProgress);
@@ -2428,22 +2455,20 @@ namespace Spend_Management
                 expdata.sqlexecute.Parameters.AddWithValue("@WorkAddressId", expenseitem.WorkAddressId);
             }
 
-            strsql = "update savedexpenses set claimid = @claimid, bmiles = @bmiles, pmiles = @pmiles, reason = @reason, receipt = @receipt, net = @net, vat = @vat, total = @total" +
-                ", subcatid = @subcatid, [date] = @date, staff = @staff, others = @others, organisationIdentifier = @companyid, home = @home, plitres = @plitres, blitres = @blitres" +
-                ", currencyid = @currencyid, attendees = @attendees, tip = @tip, countryid = @countryid, foreignvat = @foreignvat, convertedtotal = @convertedtotal, exchangerate = @exchangerate, reasonid = @reasonid, normalreceipt = @normalreceipt";
-            strsql = strsql + ", allowancestartdate = @allowancestartdate, allowanceenddate = @allowanceenddate, carid = @carid, allowancededuct = @allowancededuct, allowanceid = @allowanceid, nonights = @nonights, quantity = @quantity, directors = @directors, amountpayable = @amountpayable, hotelid = @hotelid, primaryitem = @primaryitem, norooms = @norooms, vatnumber = @vatnumber, personalguests = @personalguests, remoteworkers = @remoteworkers, accountcode = @accountcode, basecurrency = @basecurrency, globalexchangerate = @globalexchangerate, globalbasecurrency = @globalbasecurrency, globaltotal = @globaltotal, ModifiedOn = @modifiedon, ModifiedBy = @userid, mileageid = @mileageid, transactionid = @transactionid, journey_unit = @journey_unit, itemtype = @itemtype, esrAssignID = @assignmentnum, hometooffice_deduction_method = @hometooffice_deduction_method, ValidationProgress = @validationProgress, ValidationCount = @validationCount, BankAccountId = @BankAccountId, WorkAddressId = @WorkAddressId";
+            expdata.sqlexecute.Parameters.AddWithValue("@identity", SqlDbType.Int);
+            expdata.sqlexecute.Parameters["@identity"].Direction = ParameterDirection.ReturnValue;
 
-            strsql = strsql + " where expenseid = @expenseid";
-            expdata.ExecuteSQL(strsql);
+            expdata.ExecuteProc("saveExpenseItem");
+            int returnVal = (int)expdata.sqlexecute.Parameters["@identity"].Value;
             expdata.sqlexecute.Parameters.Clear();
 
             if (Log.IsDebugEnabled)
             {
-                Log.Debug(expenseitem);
-                Log.Debug($"The bank account Id on this expense item is set to {expenseitem.bankAccountId}");
+                Log.Debug($"An expense item has been updated the expense Id is {expenseitem.expenseid}, the bank account Id is {expenseitem.bankAccountId}");
+                Log.Debug("Method RunUpdateSQL has completed");
             }
 
-            Log.Debug("Method RunUpdateSQL has completed.");
+            return returnVal;
         }
 
         /// <summary>
