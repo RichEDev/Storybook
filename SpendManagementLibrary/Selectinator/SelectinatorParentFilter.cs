@@ -1,5 +1,4 @@
-﻿using System;
-namespace SpendManagementLibrary.Selectinator
+﻿namespace SpendManagementLibrary.Selectinator
 {
     /// <summary>
     /// Determines the parent filter for n:1 relationships
