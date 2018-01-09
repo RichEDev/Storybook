@@ -283,43 +283,6 @@ namespace Spend_Management
         }
 
         /// <summary>
-        /// This method get the child field attribute id associated to the parent control
-        /// </summary>
-        /// <param name="connection">
-        /// The connection.
-        /// </param>
-        /// <param name="parentControlId">
-        /// The parent attribute which has a child field configured as filter
-        /// </param>
-        /// <param name="formId">
-        /// The Id of the form which has parent child filter configured
-        /// </param>
-        /// <returns>
-        /// Child field attribute id associated to the selected parent
-        /// </returns>
-        //public static int GetTriggerChildFieldValues(DatabaseConnection connection, string parentControlId, int formId)
-        //{
-        //    int fieldToBuild = 0;
-        //    using (connection)
-        //    {
-        //        connection.AddWithValue("@parentControlId", parentControlId);
-        //        connection.AddWithValue("@formId", formId);
-                
-        //            using (var reader = connection.GetReader("GetChildFieldValues", CommandType.StoredProcedure))
-        //            {
-        //                var fieldToBuildOrd = reader.GetOrdinal("FieldToBuild");
-
-        //                while (reader.Read())
-        //                {
-        //                     fieldToBuild = !reader.IsDBNull(fieldToBuildOrd) ? reader.GetInt32(fieldToBuildOrd) : 0;
-        //                }
-
-        //            return fieldToBuild;
-        //            }
-        //    }
-        //}
-
-        /// <summary>
         /// The get field id of the Display field associated with the child control in parent child filter relation in greenlight forms
         /// </summary>
         /// <param name="connection">
