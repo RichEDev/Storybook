@@ -838,8 +838,8 @@
         {
             var childElementData = new List<AutoCompleteChildFieldValues>();
             var currentUser = cMisc.GetCurrentUser();
-            var clsentities = new cCustomEntities(currentUser);
-            var entity = clsentities.getEntityById(entityId);
+            var entities = new cCustomEntities(currentUser);
+            var entity = entities.getEntityById(entityId);
             var attributesToFilterBy = new List<cManyToOneRelationship>();
 
             foreach (var parent in parentControls)

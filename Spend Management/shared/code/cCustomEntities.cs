@@ -4811,7 +4811,6 @@ namespace Spend_Management
             pnlSection.Controls.Add(lit);
 
             #endregion Close final div
-
         }
 
         /// <summary>
