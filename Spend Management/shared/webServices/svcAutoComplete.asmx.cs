@@ -818,23 +818,24 @@
         /// <param name="parentControlId">
         /// The parent control id for which the child field associated.
         /// </param>
+        /// <param name="parentControls">
+        /// The list of all the parent control Ids with their values.
+        /// </param>
+        /// <param name="childrenControls">
+        /// The list of all the child control Ids.
+        /// </param>
         /// <param name="formId">
         /// Id of the form where the parent and child fields exists.
-        /// </param>
-        /// <param name="matchId">
-        /// The match id , Id of the value selected in parent field.
         /// </param>
         /// <param name="entityId">
         /// Id of the greenlight for which the has parent child filter set.
         /// </param>
         /// <returns>
-        /// List of readonly trigger field values associated with child
+        /// List of readonly trigger field values associated with child.
         /// </returns>
         [WebMethod(EnableSession = true)]
         public List<AutoCompleteChildFieldValues> GetTriggerFieldParentValues(string parentControlId, List<SelectinatorParentFilter> parentControls, List<string> childrenControls, int formId, int entityId)
-        //public List<AutoCompleteChildFieldValues> GetTriggerFieldParentValues(string parentControlId, int formId, string matchId, int entityId)
         {
-            //TODO: Consider what happens when the user puts all the parents back to none
             var childElementData = new List<AutoCompleteChildFieldValues>();
             var currentUser = cMisc.GetCurrentUser();
             var clsentities = new cCustomEntities(currentUser);
