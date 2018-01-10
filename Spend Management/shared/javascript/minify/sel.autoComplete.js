@@ -402,7 +402,7 @@
                                     var parentControlValue = {
                                         parentControl: parentControlId,
                                         childControl: data[0].FieldToBuild,
-                                        parentValue: $("select[id*=txt" + parentControlId + "]").next(".AutoCombostyledSelect").is(":visible") ? $("select[id*=txt" + parentControlId + "]").next(".AutoCombostyledSelect").text() : ($("input[id$=txt" + parentControlId + "_SelectinatorText]").is(":visible") ? $("input[id$=txt" + parentControlId + "_SelectinatorText]").val() : $("select[id*=txt" + parentControlId + "]").find("option:selected").text())
+                                        parentValue: $("select[id*=txt" + parentControlId + "]").next(".AutoCombostyledSelect").is(":visible") ? $("select[id*=txt" + parentControlId + "]").next(".AutoCombostyledSelect").text() : ($("input[id$=txt" + parentControlId + "_SelectinatorText]").is(":visible") ? $("input[id$=txt" + parentControlId + "_SelectinatorText_ID]").val() : $("select[id*=txt" + parentControlId + "]").find("option:selected").text())
 
                                     };
                                     SEL.AutoComplete.Bind.childFilterList = JSON.stringify(data);
