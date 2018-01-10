@@ -342,7 +342,7 @@ public class cItemBuilder
 
         bool hasSornVehicles = this.accountProperties.BlockTaxExpiry && this.clsEmployeeCars.SornCars != null && this.clsEmployeeCars.SornCars.Count > 0;
         
-        if (subcat.comment != "" || !subcat.reimbursable || (subcat.mileageapp && hasSornVehicles && !claimSubmitted))
+        if (subcat.comment != "" || !subcat.reimbursable || (subcat.mileageapp && hasSornVehicles && !claimSubmitted) || subcat.calculation == CalculationType.ExcessMileage)
         {
             pnl.Controls.Add(CreateMileageCommentControl(subcat, expenseitem, carIsSorn));
         }
@@ -351,7 +351,7 @@ public class cItemBuilder
 
         #region add vehicle option
 
-        if (subcat.mileageapp)
+        if (subcat.mileageapp || subcat.calculation == CalculationType.ExcessMileage)
         {
             var activeCars = this.clsEmployeeCars.GetActiveCars(this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? date : DateTime.Now, false);
             var dutyOfCareExpiredDocuments = DutyOfCareDocuments.PassesDutyOfCare(accountid, activeCars, employeeid, this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? date : DateTime.Now, this.currentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect)).FirstOrDefault();
@@ -738,7 +738,7 @@ public class cItemBuilder
 
         #region mileage
 
-        if (subcat.mileageapp && !showjourneygrid && showingJourneyGridBasedOnDocChecks)
+        if ((subcat.mileageapp && !showjourneygrid && showingJourneyGridBasedOnDocChecks) || subcat.calculation == CalculationType.ExcessMileage)
         {
             if (documentExpiryResults == null)
             {
@@ -928,8 +928,11 @@ public class cItemBuilder
             }
 
             row.Cells.Add(cell);
-
-            tbl.Rows.Add(row);
+            if (subcat.calculation != CalculationType.ExcessMileage)
+            {
+                tbl.Rows.Add(row);
+            }
+            
 
             showreturntostart = true;
 
@@ -2014,28 +2017,26 @@ public class cItemBuilder
 
         #endregion
 
-        #region allowance
+        #region allowance/excess mileage
 
-        if (subcat.calculation == CalculationType.FixedAllowance || subcat.IsRelocationMileage)
+        if (subcat.calculation == CalculationType.FixedAllowance || subcat.IsRelocationMileage || subcat.calculation == CalculationType.ExcessMileage)
         {
             #region claim allowance?
 
             row = new TableRow();
             cell = new TableCell();
             cell.Text = "Claim Allowance:";
+            if (subcat.calculation == CalculationType.ExcessMileage)
+            {
+                cell.Text = "Claim Fixed Excess Mileage:";
+            }
             cell.CssClass = "labeltd";
             row.Cells.Add(cell);
             cell = new TableCell();
             cell.CssClass = "inputtd";
             chkbox = new CheckBox();
             chkbox.ID = "chkallowance" + id;
-            if (expenseitem != null)
-            {
-                if (expenseitem.quantity > 0)
-                {
-                    chkbox.Checked = true;
-                }
-            }
+            chkbox.Checked = true;
             cell.Controls.Add(chkbox);
             row.Cells.Add(cell);
 
@@ -2043,14 +2044,6 @@ public class cItemBuilder
             cell.Text = "&nbsp;";
             row.Cells.Add(cell);
 
-            cell = new TableCell();
-
-            lit = new Literal();
-            lit.Text = "<img id=\"imgtooltip263" + id + "\" onclick=\"SEL.Tooltip.Show('640fef2e-0125-4d07-ac22-b9ce6673cebb', 'ex', this);\" src=\"../icons/16/plain/tooltip.png\" alt=\"\" class=\"tooltipicon\"/>";
-            cell.Controls.Add(lit);
-
-
-            row.Cells.Add(cell);
             tbl.Rows.Add(row);
 
             #endregion
@@ -2059,6 +2052,10 @@ public class cItemBuilder
             row = new TableRow();
             cell = new TableCell();
             cell.Text = "Number of Allowances:";
+            if (subcat.calculation == CalculationType.ExcessMileage)
+            {
+                cell.Text = "Number of Journeys:";
+            }
             cell.CssClass = "labeltd";
             row.Cells.Add(cell);
             txtbox = new TextBox();
@@ -2094,7 +2091,10 @@ public class cItemBuilder
             cell = new TableCell();
 
             lit = new Literal();
-            lit.Text = "<img id=\"imgtooltip264" + id + "\" onclick=\"SEL.Tooltip.Show('79094423-60a4-4672-afe7-31070b1e4084','ex', this);\" src=\"../icons/16/plain/tooltip.png\" alt=\"\" class=\"tooltipicon\"/>";
+            var tooltipid = subcat.calculation == CalculationType.ExcessMileage
+                                ? "BB680AAE-3376-4777-9CAE-F550015593B8"
+                                : "79094423-60a4-4672-afe7-31070b1e4084";
+            lit.Text = "<img id=\"imgtooltip264" + id + "\" onclick=\"SEL.Tooltip.Show('"+ tooltipid +"','ex', this);\" src=\"../icons/16/plain/tooltip.png\" alt=\"\" class=\"tooltipicon\"/>";
             cell.Controls.Add(lit);
 
 
@@ -2557,7 +2557,7 @@ public class cItemBuilder
 
         #region total
 
-        if (subcat.calculation != CalculationType.PencePerMile && subcat.calculation != CalculationType.DailyAllowance && subcat.calculation != CalculationType.FixedAllowance && subcat.calculation != CalculationType.PencePerMileReceipt)
+        if (subcat.calculation != CalculationType.PencePerMile && subcat.calculation != CalculationType.DailyAllowance && subcat.calculation != CalculationType.FixedAllowance && subcat.calculation != CalculationType.PencePerMileReceipt && subcat.calculation != CalculationType.ExcessMileage)
         {
             row = new TableRow();
             cell = new TableCell();
@@ -2773,7 +2773,7 @@ public class cItemBuilder
 
         #region purchased with cc
 
-        if (!split && (creditcard == true || purchasecard == true) && subcat.calculation != CalculationType.FixedAllowance && subcat.calculation != CalculationType.PencePerMile && subcat.calculation != CalculationType.PencePerMileReceipt)
+        if (!split && (creditcard == true || purchasecard == true) && subcat.calculation != CalculationType.FixedAllowance && subcat.calculation != CalculationType.PencePerMile && subcat.calculation != CalculationType.PencePerMileReceipt && subcat.calculation != CalculationType.ExcessMileage)
         {
             row = new TableRow();
             cell = new TableCell();
@@ -3291,7 +3291,7 @@ public class cItemBuilder
             DropDownList carOptionComboBox = null;
             carAndJourneyRateDiv.Controls.Add(CreateCarOptionCell(subcat, expenseitem, id, out carOptionComboBox, date));
 
-            if (subcat.calculation == CalculationType.PencePerMile)
+            if (subcat.calculation == CalculationType.PencePerMile || subcat.calculation == CalculationType.ExcessMileage)
             {
                 AddMileageCatControls(
                     carAndJourneyRateDiv,
@@ -3345,7 +3345,7 @@ public class cItemBuilder
             }
         }
 
-        if (subcat.mileageapp && clsproperties.AllowUsersToAddCars)
+        if ((subcat.mileageapp || subcat.calculation == CalculationType.ExcessMileage) && clsproperties.AllowUsersToAddCars)
         {
             var addNewVehicleOuter = new Label { CssClass = "addnewvehicleouter" };
             addNewVehicleOuter.Controls.Add(new Label { CssClass = "addnewvehicleicon" });
@@ -3752,6 +3752,15 @@ public class cItemBuilder
         if (!subcat.reimbursable)
         {
             commentLines.Add("Please Note: This item will NOT be reimbursed");
+        }
+
+        if (subcat.calculation == CalculationType.ExcessMileage)
+        {
+            if (string.Join(string.Empty, commentLines).Trim().Length > 0)
+            {
+                commentLines.Add("<br/>");
+            }
+            commentLines.Add("You are permitted to claim " + this.employee.ExcessMileage + " excess miles on each applicable journey.");
         }
 
         if (subcat.mileageapp && this.accountProperties.BlockTaxExpiry)
