@@ -577,6 +577,12 @@
 
         #endregion
 
+        #region EmailNotifications
+
+        public const string ApiErrorEmailNotificationsFailed = "An error occured while trying to send email notifications";
+
+        #endregion
+
     }
 
 }

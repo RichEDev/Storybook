@@ -108,6 +108,8 @@ namespace SpendManagementLibrary
         /// <summary>A support ticket notification.</summary>
         SupportTicketNotification = 7,
         /// <summary>Notification on clearing audit log.</summary>
-        AuditLogCleared=8
+        AuditLogCleared=8,
+        /// <summary>Email notfication for when users addresses are updated and they have a excess mileage value set</summary>
+        ExcessMileage = 9
     }
 }
