@@ -65,15 +65,20 @@ IF @isAdd = 1 and @attributeid > 0 --OR @attributename = 'CreatedBy' OR @attribu
 		declare @relatedtable nvarchar(250);
 		DECLARE @sql NVARCHAR(4000);
 		DECLARE @keyfield NVARCHAR(500);
+		DECLARE @fieldtype NVARCHAR(2);
 		
 		SELECT @masterTableName = masterTableName FROM [customEntities] WHERE entityid = @entityid
 		
 		IF @relationshiptype = 1 --Many to one
 			BEGIN
 				select @relatedtable = tablename from tables where tableid = @relatedtableid;
-				SELECT @keyfield = field FROM fields INNER JOIN tables ON tables.primarykey = fields.fieldid WHERE tables.tableid = @relatedtableid;
-		
+				SELECT @keyfield = field, @fieldtype = fieldtype FROM fields INNER JOIN tables ON tables.primarykey = fields.fieldid WHERE tables.tableid = @relatedtableid;
+
+				IF (@fieldtype = 'B')
+				SET @sql = 'alter TABLE [custom_' + @masterTableName + '] add [att' + cast(@attributeid as nvarchar(10)) + '] bigint';
+				ELSE
 				SET @sql = 'alter TABLE [custom_' + @masterTableName + '] add [att' + cast(@attributeid as nvarchar(10)) + '] int';
+				
 				EXECUTE sp_executesql @sql;
 		
 				SET @sql = 'ALTER TABLE [custom_' + @masterTableName + ']  WITH CHECK ADD  CONSTRAINT [FK_custom_' + @masterTableName + '_' + @relatedtable + '_' + cast(@attributeid as nvarchar(10)) + '] FOREIGN KEY ([att' + cast(@attributeid as nvarchar(10)) + ']) REFERENCES [dbo].[' + @relatedtable + '] ([' + @keyfield + '])';
@@ -85,9 +90,13 @@ IF @isAdd = 1 and @attributeid > 0 --OR @attributename = 'CreatedBy' OR @attribu
 		ELSE
 			BEGIN
 				select @relatedtable = tablename from tables where tableid = @relatedtableid;
-				SELECT @keyfield = field FROM fields INNER JOIN tables ON tables.primarykey = fields.fieldid WHERE tables.tablename = 'custom_' + @masterTableName;
-		
-				SET @sql = 'alter TABLE [' + @relatedtable + '] add [att' + cast(@attributeid as nvarchar(10)) + '] int';
+				SELECT @keyfield = field, @fieldtype = fieldtype FROM fields INNER JOIN tables ON tables.primarykey = fields.fieldid WHERE tables.tablename = 'custom_' + @masterTableName;
+  
+				IF (@fieldtype = 'B')
+				SET @sql = 'alter TABLE [' + @relatedtable + '] add [att' + cast(@attributeid as nvarchar(10)) + '] BIGINT';
+				ELSE
+				SET @sql = 'alter TABLE [' + @relatedtable + '] add [att' + cast(@attributeid as nvarchar(10)) + '] INT';
+				
 				EXECUTE sp_executesql @sql;
 		
 				SET @sql = 'ALTER TABLE [' + @relatedtable + ']  WITH CHECK ADD  CONSTRAINT [FK_custom_' + @masterTableName + '_' + @relatedtable + '_' + cast(@attributeid as nvarchar(10)) + '] FOREIGN KEY ([att' + cast(@attributeid as nvarchar(10)) + ']) REFERENCES [dbo].[custom_' + @masterTableName + '] ([' + @keyfield + '])';

@@ -407,13 +407,25 @@ namespace SpendManagementLibrary
                                         sAutoCompleteResult entry;
                                         if (!keyIsString)
                                         {
-                                            if (reader.GetFieldType(0) != typeof(int) || reader.GetFieldType(1) != typeof(string))
+                                            if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(string))
+                                            {
+                                                entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
+                                                entry.label = Convert.ToString(reader.GetValue(1));
+                                            }
+                                            else if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(long))
+                                            {
+                                                entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
+                                                entry.label = reader.GetInt64(1).ToString(CultureInfo.InvariantCulture);
+                                            }
+                                            else if (reader.GetFieldType(0) == typeof(int) && reader.GetFieldType(1) == typeof(string))
+                                            {
+                                                entry.value = reader.GetInt32(0).ToString(CultureInfo.InvariantCulture);
+                                                entry.label = Convert.ToString(reader.GetValue(1));
+                                            }
+                                            else
                                             {
                                                 continue;
                                             }
-
-                                            entry.value = reader.GetInt32(0).ToString(CultureInfo.InvariantCulture);
-                                            entry.label = Convert.ToString(reader.GetValue(1));
                                         }
                                         else
                                         {
@@ -570,13 +582,25 @@ namespace SpendManagementLibrary
                     var formattedString = string.Empty;
                     if (!keyIsString)
                     {
-                        if (reader.GetFieldType(0) != typeof(int) || reader.GetFieldType(1) != typeof(string))
+                        if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(string))
+                        {
+                            entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
+                            entry.label = Convert.ToString(reader.GetValue(1));
+                        }
+                        else if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(long))
+                        {
+                            entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
+                            entry.label = reader.GetInt64(1).ToString(CultureInfo.InvariantCulture);
+                        }
+                        else if (reader.GetFieldType(0) == typeof(int) && reader.GetFieldType(1) == typeof(string))
+                        {
+                            entry.value = reader.GetInt32(0).ToString(CultureInfo.InvariantCulture);
+                            entry.label = Convert.ToString(reader.GetValue(1));
+                        }
+                        else
                         {
                             continue;
                         }
-
-                        entry.value = reader.GetInt32(0).ToString(CultureInfo.InvariantCulture);
-                        entry.label = Convert.ToString(reader.GetValue(1));
                     }
                     else
                     {
@@ -629,7 +653,7 @@ namespace SpendManagementLibrary
         /// <returns>
         /// The field string values
         /// </returns>
-        public static List<Tuple<string, string>> GetDisplayAndTriggerFieldValues(ICurrentUserBase currentUser, Guid matchTableId, int matchedId, cField displayField, List<JsAutoCompleteTriggerField> triggerFields)
+        public static List<Tuple<string, string>> GetDisplayAndTriggerFieldValues(ICurrentUserBase currentUser, Guid matchTableId, string matchedId, cField displayField, List<JsAutoCompleteTriggerField> triggerFields)
         {
             return GetDisplayOrTriggerFieldStringValues(currentUser, matchTableId, matchedId, triggerFields, displayField);
         }
@@ -654,7 +678,7 @@ namespace SpendManagementLibrary
         /// </returns>
         public static List<JsAutoCompleteTriggerField> GetTriggerFieldValues(ICurrentUserBase currentUser, Guid matchTableId, int matchedId, List<JsAutoCompleteTriggerField> triggerFields)
         {
-            var values = GetDisplayOrTriggerFieldStringValues(currentUser, matchTableId, matchedId, triggerFields);
+            var values = GetDisplayOrTriggerFieldStringValues(currentUser, matchTableId, matchedId.ToString(), triggerFields);
             if (triggerFields != null)
             {
                 if (values.Count == triggerFields.Count)
@@ -689,7 +713,7 @@ namespace SpendManagementLibrary
         /// </param>
         /// <param name="displayField">The display cField object</param>
         /// <returns>A list of string values</returns>
-        private static List<Tuple<string, string>> GetDisplayOrTriggerFieldStringValues(ICurrentUserBase currentUser, Guid matchTableId, int matchedId, List<JsAutoCompleteTriggerField> triggerFields, cField displayField = null)
+        private static List<Tuple<string, string>> GetDisplayOrTriggerFieldStringValues(ICurrentUserBase currentUser, Guid matchTableId, string matchedId, List<JsAutoCompleteTriggerField> triggerFields, cField displayField = null)
         {
             cTables tables = new cTables(currentUser.AccountID);
             cTable matchTable = tables.GetTableByID(matchTableId);
