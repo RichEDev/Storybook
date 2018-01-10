@@ -152,7 +152,7 @@
                             }
 
                             // get the string values to populate the fields with
-                            var fieldValues = AutoComplete.GetDisplayAndTriggerFieldValues(cMisc.GetCurrentUser(), relationship.relatedtable.TableID, (int) record[field.attribute.attributeid], autoCompleteDisplayField, autoCompleteTriggerFields);
+                            var fieldValues = AutoComplete.GetDisplayAndTriggerFieldValues(cMisc.GetCurrentUser(), relationship.relatedtable.TableID, record[field.attribute.attributeid].ToString(), autoCompleteDisplayField, autoCompleteTriggerFields);
                             for (int i = 1; i < fieldValues.Count; i++)
                             {
                                 recordData.Add(relationship.TriggerLookupFields[i - 1].attributeid, string.IsNullOrWhiteSpace(fieldValues[i].Item1) ? "&nbsp;" : fieldValues[i].Item1);
