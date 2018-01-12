@@ -33,6 +33,7 @@
 
     using SpendManagementLibrary.Mobile;
     using Spend_Management.shared.webServices;
+    using Spend_Management.shared.code;
 
     using Address = SpendManagementLibrary.Addresses.Address;
     using AddressLabel = SpendManagementLibrary.Addresses.AddressLabel;
@@ -618,17 +619,19 @@
 
         public HomeAddressLinkage LinkHomeAddressToEmployee(HomeAddressLinkage linkage)
         {
-            var homeAddresses = new EmployeeHomeAddresses(User.AccountID, linkage.EmployeeId);
-            linkage.CreatedById = (int) (linkage.ModifiedById = User.EmployeeID);
+            var homeAddresses = new EmployeeHomeAddresses(this.User.AccountID, linkage.EmployeeId);
+            linkage.CreatedById = (int) (linkage.ModifiedById = this.User.EmployeeID);
             linkage.CreatedOn = (DateTime) (linkage.ModifiedOn = DateTime.UtcNow);
 
             // validate
-            ActionContext.HomeAddresses = homeAddresses;
-            linkage.Validate(ActionContext);
+            this.ActionContext.HomeAddresses = homeAddresses;
+            linkage.Validate(this.ActionContext);
 
             // save
-            var result = homeAddresses.Add(linkage.Cast(), User);
+            var result = homeAddresses.Add(linkage.Cast(), this.User);
             linkage.Id = result;
+
+            new EmailNotificationHelper(this.User.Employee).ExcessMileage();
 
             //Re-cache employee home locations
             homeAddresses.Get();
@@ -643,8 +646,8 @@
                 throw new InvalidDataException(ApiResources.ApiErrorWrongEmployeeIdMessage);
             }
 
-            var homeAddresses = new EmployeeHomeAddresses(User.AccountID, linkage.EmployeeId);
-            linkage.ModifiedById = User.EmployeeID;
+            var homeAddresses = new EmployeeHomeAddresses(this.User.AccountID, linkage.EmployeeId);
+            linkage.ModifiedById = this.User.EmployeeID;
             linkage.ModifiedOn = DateTime.UtcNow;
 
             var dbLinkage = homeAddresses.HomeLocations.FirstOrDefault(x => x.EmployeeLocationID == linkage.Id);
@@ -663,13 +666,15 @@
             }
 
             // validate
-            ActionContext.HomeAddresses = homeAddresses;
-            linkage.Validate(ActionContext);
+            this.ActionContext.HomeAddresses = homeAddresses;
+            linkage.Validate(this.ActionContext);
 
             // save
             var location = new cEmployeeHomeLocation(linkage.Id, linkage.EmployeeId, linkage.AddressId, linkage.StartDate, linkage.EndDate, linkage.CreatedOn, linkage.CreatedById, DateTime.UtcNow, User.EmployeeID);
-            var result = homeAddresses.Add(location, User);
+            var result = homeAddresses.Add(location, this.User);
             linkage.Id = result;
+
+            new EmailNotificationHelper(this.User.Employee).ExcessMileage();
 
             //Re-cache employee home locations
             homeAddresses.Get();
@@ -679,19 +684,21 @@
 
         public WorkAddressLinkage LinkWorkAddressToEmployee(WorkAddressLinkage linkage)
         {
-            var workAddresses = new EmployeeWorkAddresses(User.AccountID, linkage.EmployeeId);
+            var workAddresses = new EmployeeWorkAddresses(this.User.AccountID, linkage.EmployeeId);
 
-            linkage.CreatedById = (int)(linkage.ModifiedById = User.EmployeeID);
+            linkage.CreatedById = (int)(linkage.ModifiedById = this.User.EmployeeID);
             linkage.CreatedOn = (DateTime)(linkage.ModifiedOn = DateTime.UtcNow);
 
             // validate
             ActionContext.WorkAddresses = workAddresses;
-            linkage.Validate(ActionContext);
+            linkage.Validate(this.ActionContext);
 
             // save
             var location = new cEmployeeWorkLocation(linkage.Id, linkage.EmployeeId, linkage.AddressId, linkage.StartDate, linkage.EndDate, linkage.IsActive, linkage.IsTemporary, linkage.CreatedOn, linkage.CreatedById, DateTime.UtcNow, User.EmployeeID, linkage.EsrAssignmentLocationId, linkage.PrimaryRotational);
-            var result = workAddresses.Add(location, User);
+            var result = workAddresses.Add(location, this.User);
             linkage.Id = result;
+
+            new EmailNotificationHelper(this.User.Employee).ExcessMileage();
 
             //Re-cache employee work locations
             workAddresses.Get();
@@ -706,8 +713,8 @@
                 throw new InvalidDataException(ApiResources.ApiErrorWrongEmployeeIdMessage);
             }
 
-            var workAddresses = new EmployeeWorkAddresses(User.AccountID, linkage.EmployeeId);
-            linkage.ModifiedById = User.EmployeeID;
+            var workAddresses = new EmployeeWorkAddresses(this.User.AccountID, linkage.EmployeeId);
+            linkage.ModifiedById = this.User.EmployeeID;
             linkage.ModifiedOn = DateTime.UtcNow;
 
             var dbLinkage = workAddresses.WorkLocations.FirstOrDefault(x => x.Key == linkage.Id);
@@ -726,13 +733,15 @@
             }
 
             // validate
-            ActionContext.WorkAddresses = workAddresses;
-            linkage.Validate(ActionContext);
+            this.ActionContext.WorkAddresses = workAddresses;
+            linkage.Validate(this.ActionContext);
 
             // save
             var location = new cEmployeeWorkLocation(linkage.Id, linkage.EmployeeId, linkage.AddressId, linkage.StartDate, linkage.EndDate, linkage.IsActive, linkage.IsTemporary, linkage.CreatedOn, linkage.CreatedById, DateTime.UtcNow, User.EmployeeID, linkage.EsrAssignmentLocationId, linkage.PrimaryRotational);
-            var result = workAddresses.Add(location, User);
+            var result = workAddresses.Add(location, this.User);
             linkage.Id = result;
+
+            new EmailNotificationHelper(this.User.Employee).ExcessMileage();
 
             //Re-cache employee work locations
             workAddresses.Get();
@@ -748,7 +757,7 @@
         /// <returns></returns>
         public Models.Types.Address UnlinkAddressFromEmployee(int addressLinkageId, int employeeId)
         {
-            var employee = ActionContext.Employees.GetEmployeeById(employeeId);
+            var employee = this.ActionContext.Employees.GetEmployeeById(employeeId);
 
             if (employee == null)
             {
@@ -760,8 +769,8 @@
                 throw new InvalidDataException(ApiResources.ApiErrorAddressLinkageId);
             }
 
-            var homeAddresses = new EmployeeHomeAddresses(User.AccountID, employeeId);
-            var workAddresses = new EmployeeWorkAddresses(User.AccountID, employeeId);
+            var homeAddresses = new EmployeeHomeAddresses(this.User.AccountID, employeeId);
+            var workAddresses = new EmployeeWorkAddresses(this.User.AccountID, employeeId);
 
             var homeItem = homeAddresses.GetBy(addressLinkageId);
             var workItem = workAddresses.GetBy(addressLinkageId);
@@ -775,15 +784,19 @@
             if (homeItem != null)
             {
                 addressId = homeItem.LocationID;
-                homeAddresses.Remove(addressLinkageId, User);
+                homeAddresses.Remove(addressLinkageId, this.User);
+
+                new EmailNotificationHelper(this.User.Employee).ExcessMileage();
             }
             else
             {
                 addressId = workItem.LocationID;
-                workAddresses.Remove(addressLinkageId, User);
+                workAddresses.Remove(addressLinkageId, this.User);
+
+                new EmailNotificationHelper(this.User.Employee).ExcessMileage();
             }
 
-            return Get(addressId);
+            return this.Get(addressId);
         }
 
         /// <summary>

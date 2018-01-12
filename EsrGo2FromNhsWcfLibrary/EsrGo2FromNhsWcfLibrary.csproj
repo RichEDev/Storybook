@@ -80,6 +80,7 @@
     <Compile Include="ApiDbConnection.cs" />
     <Compile Include="ApiLog.cs" />
     <Compile Include="ApiRpc.cs" />
+    <Compile Include="Api\ApiHelper.cs" />
     <Compile Include="Base\ApiExceptionBase.cs" />
     <Compile Include="Base\ApiResult.cs" />
     <Compile Include="Base\DataClassAttribute.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Crud\DataAccessFactory.cs" />
     <Compile Include="Crud\DataClassBaseApi.cs" />
     <Compile Include="Crud\EmployeeAccessRoleCrud.cs" />
+    <Compile Include="Crud\EmployeeLocationCrud.cs" />
     <Compile Include="Crud\EmployeeRoleCrud.cs" />
     <Compile Include="Crud\EmployeesCrud.cs" />
     <Compile Include="Crud\EntityBase.cs" />
@@ -129,6 +131,8 @@
     <Compile Include="EsrApi.cs" />
     <Compile Include="EsrFileProcessor.cs" />
     <Compile Include="EsrRecordProcessor.cs" />
+    <Compile Include="ESR\EmployeeLocation.cs" />
+    <Compile Include="ESR\EmployeeLocationComparer.cs" />
     <Compile Include="ESR\EsrDateHelpers.cs" />
     <Compile Include="ESR\EsrAddress.cs" />
     <Compile Include="ESR\EsrAddressRecord.cs" />
@@ -231,6 +235,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\APICallsHelper\APICallsHelper.csproj">
+      <Project>{6E5BCFB2-84A2-4180-BA07-614AC70942DC}</Project>
+      <Name>APICallsHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApiClientHelper\ApiClientHelper.csproj">
+      <Project>{1e59dbf1-eedb-43bf-8bd2-ec085b9d1e33}</Project>
+      <Name>ApiClientHelper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{c417335b-7be1-45ae-8274-c0b65829c4fc}</Project>
       <Name>Utilities</Name>
