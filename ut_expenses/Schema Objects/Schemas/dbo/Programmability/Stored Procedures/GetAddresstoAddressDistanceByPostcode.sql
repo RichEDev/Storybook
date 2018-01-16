@@ -17,7 +17,7 @@ AS
 		FROM [dbo].[addressDistances]
 		INNER JOIN Addresses AS AddressesFrom ON AddressesFrom.PostcodeLookup = @OriginAddressLocator
 		INNER JOIN Addresses AS AddressesTo	ON AddressesTo.PostcodeLookup = @DestinationAddressLocator
-		WHERE [AddressIDA] in (AddressesTo.AddressId) AND [AddressIDB] in (AddressesFrom.AddressId)
+		WHERE [AddressIDA] in (AddressesTo.AddressId) AND [AddressIDB] in (AddressesFrom.AddressId) and addressesFrom.Archived = 0 and addressesTo.Archived = 0
 	END
 	ELSE
 	BEGIN
@@ -25,6 +25,6 @@ AS
 		FROM [dbo].[addressDistances]
 		INNER JOIN Addresses AS AddressesFrom ON AddressesFrom.PostcodeLookup = @OriginAddressLocator
 		INNER JOIN Addresses AS AddressesTo	ON AddressesTo.PostcodeLookup = @DestinationAddressLocator
-		WHERE [AddressIDA] in (AddressesFrom.AddressId) AND [AddressIDB] in (AddressesTo.AddressId) 
+		WHERE [AddressIDA] in (AddressesFrom.AddressId) AND [AddressIDB] in (AddressesTo.AddressId) and addressesFrom.Archived = 0 and addressesTo.Archived = 0
 	END
 RETURN 0
