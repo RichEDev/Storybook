@@ -200,12 +200,15 @@
                     
                     if (formid > 0 && viewid > 0)
                     {
-                        var attribute = currentEntity.getAttributeById(currentEntity.FormSelectionAttributeId.Value);
-                        if (((currentView.AddFormMappings != null && currentView.AddFormMappings.Any() && id == 0)
-                            || (currentView.EditFormMappings != null && currentView.EditFormMappings.Any() && id != 0))
-                            && attribute.fieldtype == FieldType.List)
+                        if (currentEntity.FormSelectionAttributeId.HasValue)
                         {
-                            formSelectionFormId = formid;
+                            var attribute = currentEntity.getAttributeById(currentEntity.FormSelectionAttributeId.Value);
+                            if (((currentView.AddFormMappings != null && currentView.AddFormMappings.Any() && id == 0)
+                                 || (currentView.EditFormMappings != null && currentView.EditFormMappings.Any() && id != 0))
+                                && attribute.fieldtype == FieldType.List)
+                            {
+                                formSelectionFormId = formid;
+                            }    
                         }
 
                         if (formSelectionFormId > 0)

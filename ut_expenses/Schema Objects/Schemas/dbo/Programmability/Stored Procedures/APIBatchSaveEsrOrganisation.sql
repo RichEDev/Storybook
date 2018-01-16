@@ -121,5 +121,7 @@ BEGIN
 		SET @index = @index + 1;
 	END
 
+	EXEC ApiSetEsrOrganisationLevel;
+
 	RETURN 0;
 END
