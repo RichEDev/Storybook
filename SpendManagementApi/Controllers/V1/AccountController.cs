@@ -1002,7 +1002,9 @@
                 ShowAdvances = showAdvances,
                 AccountLockedMessage = accountLockedMessage,
                 AccountCurrentlyLockedMessage = accountCurrentlyLockedMessage,
-                CanAskForReviews = canAskForReviews
+                CanAskForReviews = canAskForReviews, 
+                EmployeeId = user.EmployeeID
+
             };
 
             return response;
