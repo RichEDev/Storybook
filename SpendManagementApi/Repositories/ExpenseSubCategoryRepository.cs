@@ -116,7 +116,7 @@
             var expenseSubCategory = cSubcat.Cast<ExpenseSubCategory>(this._cCategories, this.User.AccountID, this.ActionContext);
 
             //Set limits for the Expense Subcategory
-            List<SubcatItemRoleBasic> limits = this._cSubcats.GetSubCatsByEmployeeItemRoles(employeeId);
+            List<SubcatItemRoleBasic> limits = this._cSubcats.GetSubCatsByEmployeeItemRoles(employeeId, true);
             expenseSubCategory.ValidDates = new List<SubCatDates>();
             foreach (var subcatItemRoleBasic in limits.Where(l => l.SubcatId == expenseSubCategoryId))
             {

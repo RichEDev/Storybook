@@ -232,5 +232,10 @@ namespace SpendManagementApi.Models.Responses
         /// Gets or sets a value indicating whether can can ask for a app reviews.
         /// </summary>
         public bool CanAskForReviews { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current employee Id.
+        /// </summary>
+        public int EmployeeId { get; set; }
     }
 }
