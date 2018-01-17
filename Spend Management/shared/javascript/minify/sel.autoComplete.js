@@ -302,14 +302,18 @@
                     var children = [];
                     var parents = []; 
 
-                    function updateValues(parentId, val) {
+                    function updateValues(parentClass, val) {
                         var obj = {};
-                        obj["Id"] = parentId.replace('parenttxt', '');
-                        obj["Value"] = val;
-                        if (parents.map(function (o) { return o.Id; }).indexOf(parentId.replace('parenttxt', '')) === -1) {
-                            parents.push(obj);
+                        var parentId = parseInt(parentClass.replace('parenttxt', ''));
+                        if (typeof parentId === 'number' && (parentId % 1) === 0) {
+                            obj["Id"] = parentId;
+                            obj["Value"] = val;
+                            if (parents.map(function (o) { return o.Id; }).indexOf(parentId) === -1) {
+                                parents.push(obj);
+                            }
                         }
                     }
+
                     // get all the children of the current parent control
                     var childrenElements = $('.parenttxt' + parentControlId);
 
@@ -324,7 +328,6 @@
                         var value = key.replace('_SelectinatorTextSelect', '');
                         children.push(value.substring(value.lastIndexOf('_') + 1).replace('txt', ''));
                         $(childParentCollection[key]).each(function (i) {
-                            
                             updateValues(this, $("input[id$='" + this.replace('parent', '')+"_SelectinatorText_ID']").val());
                         });
                     }

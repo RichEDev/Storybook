@@ -844,7 +844,7 @@
 
             foreach (var parent in parentControls)
             {
-                attributesToFilterBy.Add((cManyToOneRelationship)entity.getAttributeById(Convert.ToInt32(parent.Id)));
+                attributesToFilterBy.Add((cManyToOneRelationship)entity.getAttributeById(parent.Id));
             }
 
             foreach (var child in childrenControls)
@@ -870,7 +870,7 @@
                 foreach (var parentFilter in parentFilters)
                 {
                     var filterBy = attributesToFilterBy.FirstOrDefault(a => a.attributeid.ToString() == parentFilter.Value.ValueOne);
-                    filterDictionary.Add(index.ToString(), new JSFieldFilter { ConditionType = ConditionType.Equals, FieldID = filterBy.relatedtable.PrimaryKeyID, ValueOne = parentControls.FirstOrDefault(a => a.Id == filterBy.attributeid.ToString(CultureInfo.InvariantCulture)).Value, Joiner = ConditionJoiner.And });
+                    filterDictionary.Add(index.ToString(), new JSFieldFilter { ConditionType = ConditionType.Equals, FieldID = filterBy.relatedtable.PrimaryKeyID, ValueOne = parentControls.FirstOrDefault(a => a.Id == filterBy.attributeid).Value, Joiner = ConditionJoiner.And });
                     index++;
                 }
 

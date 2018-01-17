@@ -8,7 +8,7 @@
         /// <summary>
         /// The Id of the parent control
         /// </summary>
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The value of the parent control
