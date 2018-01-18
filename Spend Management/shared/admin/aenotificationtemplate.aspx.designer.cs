@@ -10,7 +10,7 @@
 namespace Spend_Management {
     
     
-    public partial class aenotificationtemplate {
+    public partial class aeemailtemplate {
         
         /// <summary>
         /// TokenInputCss control.
@@ -103,76 +103,22 @@ namespace Spend_Management {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqTempName;
         
         /// <summary>
-        /// lblSendEmail control.
+        /// lblPriority control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSendEmail;
+        protected global::System.Web.UI.WebControls.Label lblPriority;
         
         /// <summary>
-        /// ChkSendEmail control.
+        /// cmbPriority control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox ChkSendEmail;
-        
-        /// <summary>
-        /// lblSendNote control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSendNote;
-        
-        /// <summary>
-        /// ChkSendNote control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox ChkSendNote;
-        
-        /// <summary>
-        /// sendMobileNotifcationCheckboxDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl sendMobileNotifcationCheckboxDiv;
-        
-        /// <summary>
-        /// lblSendMobileNotification control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSendMobileNotification;
-        
-        /// <summary>
-        /// chkCanEmailNotification control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkCanEmailNotification;
-        
-        /// <summary>
-        /// Label1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.DropDownList cmbPriority;
         
         /// <summary>
         /// lblTo control.
@@ -238,58 +184,67 @@ namespace Spend_Management {
         protected global::System.Web.UI.WebControls.HiddenField hdnBCC;
         
         /// <summary>
-        /// Label2 control.
+        /// lblSendEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lblSendEmail;
         
         /// <summary>
-        /// rtSubject control.
+        /// ChkSendEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox rtSubject;
+        protected global::System.Web.UI.WebControls.CheckBox ChkSendEmail;
         
         /// <summary>
-        /// CustomValidator1 control.
+        /// lblSendNote control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
+        protected global::System.Web.UI.WebControls.Label lblSendNote;
         
         /// <summary>
-        /// subjectFields control.
+        /// ChkSendNote control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl subjectFields;
+        protected global::System.Web.UI.WebControls.CheckBox ChkSendNote;
         
         /// <summary>
-        /// lblPriority control.
+        /// sendMobileNotifcationCheckboxDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPriority;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl sendMobileNotifcationCheckboxDiv;
         
         /// <summary>
-        /// cmbPriority control.
+        /// lblSendMobileNotification control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbPriority;
+        protected global::System.Web.UI.WebControls.Label lblSendMobileNotification;
+        
+        /// <summary>
+        /// chkCanEmailNotification control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkCanEmailNotification;
         
         /// <summary>
         /// lblAttachment control.
@@ -326,6 +281,51 @@ namespace Spend_Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkSystemTemplate;
+        
+        /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
+        /// rtSubject control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox rtSubject;
+        
+        /// <summary>
+        /// CustomValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
+        
+        /// <summary>
+        /// subjectFields control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl subjectFields;
+        
+        /// <summary>
+        /// emailBodyHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl emailBodyHeader;
         
         /// <summary>
         /// wrapper control.

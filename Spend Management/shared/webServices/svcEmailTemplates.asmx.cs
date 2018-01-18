@@ -192,7 +192,7 @@ namespace Spend_Management
         /// <returns></returns>
         [WebMethod(EnableSession = true)]
         [ScriptMethod]
-        public int saveEmailTemplate(int emailtemplateid, string templatename, string toVal, string ccVal, string bccVal, string subject, byte priority, string body, Guid basetableid, bool? sysTemp, bool issendnote, string notes, bool update, bool isSendEmail)
+        public int saveEmailTemplate(int emailtemplateid, string templatename, string toVal, string ccVal, string bccVal, string subject, byte priority, string body, Guid basetableid, bool? sysTemp, bool issendnote, string notes, bool update, bool isSendEmail, bool canSendMobileNotification, string mobileNotificationMessage)
         {
             int id = 0;
             bool isSystemTemplate = false;
@@ -253,11 +253,11 @@ namespace Spend_Management
                 }
                 if (emailtemplateid == 0)
                 {
-                    emailTemp = new cEmailTemplate(emailtemplateid, templatename, lstRecipientTypes, buildSubject, buildBody, isSystemTemplate, emailPriority, basetableid, DateTime.UtcNow, user.EmployeeID, null, null, isSendEmail, true, null, issendnote, buildNote);
+                    emailTemp = new cEmailTemplate(emailtemplateid, templatename, lstRecipientTypes, buildSubject, buildBody, isSystemTemplate, emailPriority, basetableid, DateTime.UtcNow, user.EmployeeID, null, null, isSendEmail, true, null, issendnote, buildNote, null, canSendMobileNotification, mobileNotificationMessage);
                 }
                 else
                 {
-                    emailTemp = new cEmailTemplate(emailtemplateid, templatename, lstRecipientTypes, buildSubject, buildBody, isSystemTemplate, emailPriority, basetableid, new DateTime(1900, 01, 01), 0, DateTime.UtcNow, user.EmployeeID, isSendEmail, true, null, issendnote, buildNote);
+                    emailTemp = new cEmailTemplate(emailtemplateid, templatename, lstRecipientTypes, buildSubject, buildBody, isSystemTemplate, emailPriority, basetableid, new DateTime(1900, 01, 01), 0, DateTime.UtcNow, user.EmployeeID, isSendEmail, true, null, issendnote, buildNote, null, canSendMobileNotification, mobileNotificationMessage);
                 }
                
                 id = clsemailtemps.saveEmailTemplate(emailTemp, update);

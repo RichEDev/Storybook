@@ -31,6 +31,8 @@
 
                 chksendNotes: null,
                 chkSendEmail: null,
+                chkCanSendMobileNotification: null,
+                mobileNotificationMessage: null,
                 emailNotes: null,
                 notesHeader: null,
                 lblSendNote: null,
@@ -241,6 +243,29 @@
                             args.IsValid = false;
                         }
                     }
+                }
+                return;
+            },
+
+            ValidateMobileNotificationMessageIsRequired: function (source, args) {
+                if ($get(SEL.EmailTemplates.Elements.chkCanSendMobileNotification)) {
+                    canSendMobileNotification = $get(SEL.EmailTemplates.Elements.chkCanSendMobileNotification).checked;
+                    if (canSendMobileNotification) {
+                        var txtVal = $('#' + SEL.EmailTemplates.Elements.mobileNotificationMessage).val();
+
+                        if (txtVal === "") {
+                            args.IsValid = false;
+                        }
+                    }
+                }
+                return;
+            },
+
+            ValidateMobileNotificationMessageLength: function (source, args) {
+
+                var txtVal = $('#' + SEL.EmailTemplates.Elements.mobileNotificationMessage).val();
+                if (txtVal !== "" && txtVal.length > 400) {
+                    args.IsValid = false;
                 }
                 return;
             },
@@ -478,6 +503,13 @@
                     isSendEmail = $get(SEL.EmailTemplates.Elements.chkSendEmail).checked;
                 }
 
+                var canSendMobileNotification = false;
+                if ($get(SEL.EmailTemplates.Elements.chkCanSendMobileNotification)) {
+                    canSendMobileNotification = $get(SEL.EmailTemplates.Elements.chkCanSendMobileNotification).checked;
+                }
+
+                var mobileMessage = $get(SEL.EmailTemplates.Elements.mobileNotificationMessage).value;
+
                 if (!update)
                 {
                     ddl = $get(SEL.EmailTemplates.Elements.cmbareaid);
@@ -488,7 +520,7 @@
                     tableid = ddl.options[ddl.selectedIndex].value;
                 }
 
-                Spend_Management.svcEmailTemplates.saveEmailTemplate(emailtemplateid, templatename, to, cc, bcc, subject, priority, body, tableid, isSystemTemp, isSendNote, notes, update, isSendEmail, function (value)
+                Spend_Management.svcEmailTemplates.saveEmailTemplate(emailtemplateid, templatename, to, cc, bcc, subject, priority, body, tableid, isSystemTemp, isSendNote, notes, update, isSendEmail, canSendMobileNotification, mobileMessage, function (value)
                 {
                     emailtemplateid = value;
                     if (emailtemplateid === -1) {

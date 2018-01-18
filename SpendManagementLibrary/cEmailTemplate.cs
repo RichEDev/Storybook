@@ -10,8 +10,8 @@ namespace SpendManagementLibrary
     public class cEmailTemplate
     {
         public cEmailTemplate(int emailtemplateid, string templateName, List<sSendDetails> recipienttypes, sBuildDetails subject, sBuildDetails body, bool systemtemplate, MailPriority priority,
-            Guid basetableid, DateTime? createdon, int? createdby, DateTime? modifiedon, int? modifiedby, bool? sendemail = null, bool sendCopyToDelegates = false,
-            byte? emaildirection = null, bool? sendnote = null, sBuildDetails note = default(sBuildDetails), Guid? templateId = null)
+                              Guid basetableid, DateTime? createdon, int? createdby, DateTime? modifiedon, int? modifiedby, bool? sendemail = null, bool sendCopyToDelegates = false,
+                              byte? emaildirection = null, bool? sendnote = null, sBuildDetails note = default(sBuildDetails), Guid? templateId = null, bool? canSendMobileNotification = null, string mobileNotificationMessage = "")
         {
             this.EmailTemplateId = emailtemplateid;
             this.TemplateName = templateName;
@@ -31,7 +31,8 @@ namespace SpendManagementLibrary
             this.SendNote = sendnote;
             this.Note = note;
             this.TemplateId = templateId;
-
+            this.CanSendMobileNotification = canSendMobileNotification;
+            this.MobileNotificationMessage = mobileNotificationMessage;
         }
 
         /// <summary>
@@ -69,6 +70,11 @@ namespace SpendManagementLibrary
         public bool? SendEmail { get; }
 
         /// <summary>
+        /// Gets a value indicating whether can template can send mobile notification.
+        /// </summary>
+        public bool? CanSendMobileNotification { get; }
+
+        /// <summary>
         /// Determines whether a copy of this email template should be sent to delegate or not 
         /// </summary>
         public bool SendCopyToDelegates { get; }
@@ -78,6 +84,11 @@ namespace SpendManagementLibrary
         public bool? SendNote { get; }
 
         public sBuildDetails Note { get; }
+
+        /// <summary>
+        /// Gets the mobile notification message.
+        /// </summary>
+        public String MobileNotificationMessage { get; }
 
         public Guid? TemplateId { get; }
 

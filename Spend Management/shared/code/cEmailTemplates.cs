@@ -85,6 +85,11 @@ namespace Spend_Management
         private ApproverClaimsSummary _claimsSummary;
 
         /// <summary>
+        /// Gets the templates Ids for the email templates where mobile notifications are permitted.
+        /// </summary>
+        public List<Guid?> PermittedMobileNotificationTemplateIds { get; } = new List<Guid?>() { new Guid("F929969F-B2F3-4B98-9252-7AE6B17A418B") };
+
+        /// <summary>
         /// Create a new instance of <see cref="cEmailTemplates"/>
         /// </summary>
         /// <param name="accountid">The current account ID</param>
@@ -233,20 +238,22 @@ namespace Spend_Management
             bool systemTemplate;
             MailPriority priority;
             Guid baseTableID;
-            string subject, templatename, bodyhtml, note;
+            string subject, templatename, bodyhtml, note, mobileNotificationMessage;
             int createdby;
             DateTime createdon;
             DateTime? modifiedon;
             int? modifiedby;
             bool sendnote;
             bool sendemail;
+            bool canSendMobileNotification;
             bool sendCopyToDelegates;
             bool archived = false;
 
             SortedList<int, List<sSendDetails>> lstRecipients = this.getRecipients();
-            SortedList<int, List<sEmailFieldDetails>> lstSubjectDetails = this.GetSubjectBodyOrNoteFields("Subject");
-            SortedList<int, List<sEmailFieldDetails>> lstBodyDetails = this.GetSubjectBodyOrNoteFields("Body");
-            SortedList<int, List<sEmailFieldDetails>> lstNoteDetails = this.GetSubjectBodyOrNoteFields("Notes");
+            SortedList<int, List<sEmailFieldDetails>> lstSubjectDetails = this.GetSubjectFields("Subject");
+            SortedList<int, List<sEmailFieldDetails>> lstBodyDetails = this.GetSubjectFields("Body");
+            SortedList<int, List<sEmailFieldDetails>> lstNoteDetails = this.GetSubjectFields("Notes");
+
             List<sSendDetails> recipients;
             List<sEmailFieldDetails> subjectDetails;
             List<sEmailFieldDetails> bodyDetails;
@@ -400,8 +407,27 @@ namespace Spend_Management
                     emailNoteDetails.details = note;
                     emailNoteDetails.fieldDetails = noteDetails;
 
-                    lstEmailTemplates.Add(emailtemplateid, new cEmailTemplate(emailtemplateid, templatename, recipients, emailSubjectDetails, emailBodyDetails, systemTemplate, priority, baseTableID, createdon, createdby, modifiedon, modifiedby, sendemail, sendCopyToDelegates, emaildirection, sendnote, emailNoteDetails, templateId));
-                }
+                    if (reader.IsDBNull(reader.GetOrdinal("CanSendMobileNotification")))
+                    {
+                        canSendMobileNotification = false;
+                    }
+                    else
+                    {
+                        canSendMobileNotification = reader.GetBoolean(reader.GetOrdinal("CanSendMobileNotification"));
+                    }
+
+                    if (reader.IsDBNull(reader.GetOrdinal("MobileNotificationMessage")))
+                    {
+                        mobileNotificationMessage = null;
+                    }
+                    else
+                    {
+                        mobileNotificationMessage = reader.GetString(reader.GetOrdinal("MobileNotificationMessage"));
+                    }
+                   
+                    lstEmailTemplates.Add(emailtemplateid, new cEmailTemplate(emailtemplateid, templatename, recipients, emailSubjectDetails, emailBodyDetails, systemTemplate, priority, baseTableID, createdon, createdby, modifiedon, modifiedby, sendemail, sendCopyToDelegates, emaildirection, sendnote, emailNoteDetails, templateId, canSendMobileNotification, mobileNotificationMessage));
+      
+                 }
 
                 reader.Close();
             }
@@ -502,8 +528,7 @@ namespace Spend_Management
             return lstSendDetails;
         }
 
-
-        private SortedList<int, List<sEmailFieldDetails>> GetSubjectBodyOrNoteFields(string table)
+        private SortedList<int, List<sEmailFieldDetails>> GetSubjectFields(string table)
         {
             SortedList<int, List<sEmailFieldDetails>> lstFieldDetails;
             using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(this.accountid)))
@@ -511,22 +536,23 @@ namespace Spend_Management
                 lstFieldDetails = new SortedList<int, List<sEmailFieldDetails>>();
                 cFields clsfields = new cFields(this.accountid);
 
-                var strsql = string.Empty;
+                const string selectSql = "SELECT EmailTemplateId, FieldId, EmailFieldType, joinViaId FROM ";
+                string tableSql = string.Empty;
 
                 switch (table.ToLower())
                 {
                     case "body":
-                        strsql = "SELECT * FROM emailTemplateBodyFields";
+                        tableSql = "emailTemplateBodyFields";
                         break;
                     case "subject":
-                        strsql = "SELECT * FROM emailTemplateSubjectFields";
+                        tableSql ="emailTemplateSubjectFields";
                         break;
                     case "notes":
-                        strsql = "SELECT * FROM emailTemplateNoteFields";
-                        break;
+                        tableSql = "emailTemplateNoteFields";
+                        break;                  
                 }
 
-                using (var reader = expdata.GetReader(strsql))
+                using (var reader = expdata.GetReader(selectSql + tableSql))
                 {
                     var emailTemplateIdOrd = reader.GetOrdinal("emailtemplateid");
                     var fieldIdOrd = reader.GetOrdinal("fieldid");
@@ -558,6 +584,7 @@ namespace Spend_Management
 
             return lstFieldDetails;
         }
+
 
 
         /// <summary>
@@ -661,6 +688,24 @@ namespace Spend_Management
                 else
                 {
                     expdata.sqlexecute.Parameters.AddWithValue("@sendemail", emailTemp.SendEmail);
+                }
+
+                if (emailTemp.CanSendMobileNotification == null)
+                {
+                    expdata.sqlexecute.Parameters.AddWithValue("@canSendMobileNotification", DBNull.Value);
+                }
+                else
+                {
+                    expdata.sqlexecute.Parameters.AddWithValue("@canSendMobileNotification", emailTemp.CanSendMobileNotification);
+                }
+
+                if (emailTemp.MobileNotificationMessage == string.Empty)
+                {
+                    expdata.sqlexecute.Parameters.AddWithValue("@mobileNotificationMessage", DBNull.Value);
+                }
+                else
+                {
+                    expdata.sqlexecute.Parameters.AddWithValue("@mobileNotificationMessage", emailTemp.MobileNotificationMessage);
                 }
 
                 expdata.sqlexecute.Parameters.Add("@identity", SqlDbType.Int);
