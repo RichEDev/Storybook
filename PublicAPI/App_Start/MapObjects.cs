@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using BusinessLogic.ProjectCodes;
     using BusinessLogic.UserDefinedFields;
+    using BusinessLogic.P11DCategories;
     using DTO;
 
     /// <summary>
@@ -22,6 +23,8 @@
                 cfg.CreateMap<ProjectCodeDto, ProjectCodeWithUserDefinedFields>().ForMember(pc => pc.UserDefinedFieldValues, m => m.MapFrom(dto => dto.UserDefinedFieldValues));
                 cfg.CreateMap<ProjectCodeWithUserDefinedFields, ProjectCodeDto>().ForMember(dto => dto.UserDefinedFieldValues, m => m.MapFrom(pc => pc.UserDefinedFieldValues));
                 cfg.CreateMap<IEnumerable<ProjectCodeDto>, IEnumerable<ProjectCodeWithUserDefinedFields>>();
+                cfg.CreateMap<IEnumerable<P11DCategoryDto>, IEnumerable<P11DCategory>>().ReverseMap();
+                cfg.CreateMap<P11DCategoryDto, P11DCategory>().ReverseMap();
             });
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -44,11 +45,40 @@ namespace expenses
                 user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.P11D, true, true);
                 ViewState["accountid"] = user.AccountID;
                 ViewState["employeeid"] = user.EmployeeID;
-			}
-		}
 
-		#region Web Form Designer generated code
-		override protected void OnInit(EventArgs e)
+
+			    var gridData = this.createP11DCategoriesGrid(user);
+			    litgrid.Text = gridData[1];
+			    Page.ClientScript.RegisterStartupScript(this.GetType(), "p11DGridVars", cGridNew.generateJS_init("p11DGridVars", new List<string>() { gridData[0] }, user.CurrentActiveModule), true);
+            }
+        }
+
+	    /// <summary>
+	    /// Create cGridNew
+	    /// </summary>
+	    /// <param name="user">Current user</param>
+	    /// <returns></returns>
+	    [WebMethod(EnableSession = true)]
+	    protected string[] createP11DCategoriesGrid(CurrentUser user)
+	    {
+	        var grid = new cGridNew(user.AccountID, user.EmployeeID, "gridP11D", "SELECT pdcatid, pdname FROM pdcats")
+	        {
+	            EmptyText = "No P11D Categories to display",
+	            KeyField = "pdname"
+	        };
+
+	        grid.getColumnByName("pdcatid").hidden = true;
+	        grid.getColumnByName("pdname").HeaderText = "P11D Category";
+	        grid.enabledeleting = true;
+	        grid.enableupdating = true;
+            grid.editlink = "aep11d.aspx?action=2&pdcatid={pdcatid}";
+            grid.deletelink = "javascript:deleteP11d({pdcatid});";
+
+            return grid.generateGrid();
+	    }
+
+        #region Web Form Designer generated code
+        override protected void OnInit(EventArgs e)
 		{
 			//
 			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
@@ -70,64 +100,6 @@ namespace expenses
         protected override void OnInitComplete(EventArgs e)
         {
             base.OnInitComplete(e);
-            gridp11d.InitializeDataSource += new Infragistics.WebUI.UltraWebGrid.InitializeDataSourceEventHandler(gridp11d_InitializeDataSource);
-        }
-
-        void gridp11d_InitializeDataSource(object sender, Infragistics.WebUI.UltraWebGrid.UltraGridEventArgs e)
-        {
-            cP11dcats clspdcats = new cP11dcats((int)ViewState["accountid"]);
-            gridp11d.DataSource = clspdcats.getGrid();
-        }
-        protected void gridp11d_InitializeLayout(object sender, Infragistics.WebUI.UltraWebGrid.LayoutEventArgs e)
-        {
-            #region Sorting
-            cEmployees clsemployees = new cEmployees((int)ViewState["accountid"]);
-            Employee reqemp = clsemployees.GetEmployeeById((int)ViewState["employeeid"]);
-            cGridSort sortorder = reqemp.GetGridSortOrders().GetBy(Grid.Allowances);
-            if (sortorder != null)
-            {
-                if (e.Layout.Bands[0].SortedColumns.Count == 0)
-                {
-                    if (e.Layout.Bands[0].Columns.FromKey(sortorder.columnname) != null)
-                    {
-                        e.Layout.Bands[0].Columns.FromKey(sortorder.columnname).SortIndicator = (SortIndicator)sortorder.sortorder;
-                        e.Layout.Bands[0].SortedColumns.Add(sortorder.columnname);
-                    }
-                }
-            }
-            #endregion
-            e.Layout.Bands[0].Columns.FromKey("pdcatid").Hidden = true;
-            
-            e.Layout.Bands[0].Columns.FromKey("pdname").Header.Caption = "P11D Category";
-            if (e.Layout.Bands[0].Columns.FromKey("edit") == null)
-            {
-                e.Layout.Bands[0].Columns.Insert(0, new Infragistics.WebUI.UltraWebGrid.UltraGridColumn("delete", "<img alt=\"Delete\" src=\"../icons/delete2_blue.gif\">", Infragistics.WebUI.UltraWebGrid.ColumnType.HyperLink, ""));
-                e.Layout.Bands[0].Columns.FromKey("delete").Width = Unit.Pixel(25);
-                e.Layout.Bands[0].Columns.Insert(0, new Infragistics.WebUI.UltraWebGrid.UltraGridColumn("edit", "<img alt=\"Edit\" src=\"../icons/edit_blue.gif\">", Infragistics.WebUI.UltraWebGrid.ColumnType.HyperLink, ""));
-                e.Layout.Bands[0].Columns.FromKey("edit").Width = Unit.Pixel(25);
-            }
-        }
-
-        protected void gridp11d_InitializeRow(object sender, Infragistics.WebUI.UltraWebGrid.RowEventArgs e)
-        {
-            e.Row.Cells.FromKey("edit").Value = "<a href=\"aep11d.aspx?action=2&pdcatid=" + e.Row.Cells.FromKey("pdcatid").Value + "\"><img alt=\"Edit\" src=\"../icons/edit.gif\"></a>";
-            e.Row.Cells.FromKey("delete").Value = "<a href=\"javascript:deleteP11d(" + e.Row.Cells.FromKey("pdcatid").Value + ");\"><img alt=\"Delete\" src=\"../icons/delete2.gif\"></a>";
-        }
-
-
-        [WebMethod(EnableSession = true)]
-        public static int deleteP11d(int accountid, int pdcatid)
-        {
-            cP11dcats clsp11d = new cP11dcats(accountid);
-            return clsp11d.deleteP11dCat(pdcatid);
-        }
-
-        protected void gridp11d_SortColumn(object sender, Infragistics.WebUI.UltraWebGrid.SortColumnEventArgs e)
-        {
-            UltraWebGrid grid = (UltraWebGrid)sender;
-            byte direction = (byte)grid.Columns[e.ColumnNo].SortIndicator;
-            CurrentUser currentUser = cMisc.GetCurrentUser();
-            currentUser.Employee.GetGridSortOrders().Add(Grid.P11dCategories, grid.Columns[e.ColumnNo].Key, direction);
         }
 
         /// <summary>

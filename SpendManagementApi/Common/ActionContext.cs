@@ -65,8 +65,6 @@ namespace SpendManagementApi.Common
 
         private cTeams _teams;
 
-        private cP11dcats _p11Dcats;
-
         private cPoolCars _poolCars;
 
         private cProjectCodes _projectCodes;
@@ -456,18 +454,6 @@ namespace SpendManagementApi.Common
             set
             {
                 _teams = value;
-            }
-        }
-
-        public cP11dcats P11DCats
-        {
-            get
-            {
-                return _p11Dcats ?? (_p11Dcats = new cP11dcats(AccountId));
-            }
-            set
-            {
-                _p11Dcats = value;
             }
         }
 

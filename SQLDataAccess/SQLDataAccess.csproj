@@ -88,6 +88,7 @@
     <Compile Include="MetabaseCustomerDataConnection.cs" />
     <Compile Include="Modules\SqlModulesFactoryComposite.cs" />
     <Compile Include="AccessRoles\SQLAccessRolesFactory.cs" />
+    <Compile Include="P11DCategories\SqlP11DCategoriesFactory.cs" />
     <Compile Include="ProjectCodes\SqlProjectCodesFactory.cs" />
     <Compile Include="ProjectCodes\SqlProjectCodesWithUserDefinedValuesFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -579,6 +579,7 @@ namespace SpendManagementLibrary
         public const string VehicleDocumentsView = "C3069AAF-37A8-487B-A06F-77778C2A3F38";
         public const string DrivingLicences = "F066EF8F-705F-4CD7-8DD7-FDEFBF8F3821";
         public const string CardProviders = "78C92D47-2CF1-4970-93F7-5DC972683F88";
+        public const string P11DCategories = "5D2D9191-83EA-4ED5-8A46-0AABB8190392";
     }
 
     public class ViewGroups
@@ -662,6 +663,8 @@ namespace SpendManagementLibrary
         public const string CardProvidersCardProvider = "5956859B-9463-4D06-A14F-1FE7048FB9F5";
         public const string CardProvidersPurchaseCard = "AD3C99C6-9796-488E-8BEC-14366AF56FC7";
         public const string CardProvidersClaimantsSettleBill = "C85799A2-9D17-4217-AC63-70C7CC75C457";
+
+        public const string P11DCategoriesPDName = "E9B28E60-5AC5-47D0-BCB2-66195B2A5901";
     }
 
 }

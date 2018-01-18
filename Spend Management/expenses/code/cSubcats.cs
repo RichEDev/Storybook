@@ -1500,6 +1500,47 @@ namespace Spend_Management
             return subcats;
         }
 
+        /// <summary>
+        /// Assigns a P11D category to a list of subcats by their Id
+        /// </summary>
+        /// <param name="subcatids">The Ids of the subcats</param>
+        /// <param name="pdcatid">The Id of the P11D Category/></param>
+        public void AssignP11DToSubcats(int[] subcatids, int pdcatid)
+        {
+            using (var connection = new DatabaseConnection(cAccounts.getConnectionString(this._accountid)))
+            {
+                connection.AddWithValue("@pdcatid", pdcatid);
+                var strsql = "update subcats set pdcatid = null where pdcatid = @pdcatid";
+
+                connection.ExecuteSQL(strsql);
+                connection.sqlexecute.Parameters.Clear();
+            }
+
+            if (subcatids.Length == 0) //no subcats, exit function
+            {
+                return;
+            }
+
+            int i = 0;
+
+            using (var connection = new DatabaseConnection(cAccounts.getConnectionString(this._accountid)))
+            {
+                connection.AddWithValue("@pdcatid", pdcatid);
+                var strsql = "update subcats set pdcatid = " + pdcatid + " where ";
+
+                for (i = 0; i < subcatids.Length; i++)
+                {
+                    strsql = strsql + "subcatid = @subcatid" + i + " or ";
+                    connection.AddWithValue("@subcatid" + i, subcatids[i]);
+                }
+                strsql = strsql.Remove(strsql.Length - 4, 4);
+                connection.ExecuteSQL(strsql);
+                connection.sqlexecute.Parameters.Clear();
+            }
+
+            this.InvalidateCache();
+        }
+
         #endregion
 
         #region Methods
@@ -1766,6 +1807,24 @@ namespace Spend_Management
                 }
             }
             this.InvalidateCache();
+        }
+
+        /// <summary>
+        /// Get a list of subcats by a P11D Category Id
+        /// </summary>
+        /// <param name="pdcatId">The id of the P11D Category</param>
+        /// <returns></returns>
+        public DataSet GetSubCatList(int pdcatId)
+        {
+            using (var connection = new DatabaseConnection(cAccounts.getConnectionString(this._accountid)))
+            {
+                connection.AddWithValue("@pdcatid", pdcatId);
+                var strsql = pdcatId == 0 ? "select subcat, subcatid, pdcatid from subcats where pdcatid is null order by subcat" : "select subcat, subcatid, pdcatid from subcats where (pdcatid = @pdcatid or pdcatid is null) order by subcat";
+
+                DataSet temp = connection.GetDataSet(strsql);
+                connection.sqlexecute.Parameters.Clear();
+                return temp;
+            }
         }
 
         #endregion

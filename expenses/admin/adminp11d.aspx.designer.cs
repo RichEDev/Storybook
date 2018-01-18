@@ -22,22 +22,13 @@ namespace expenses {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// litgrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
-        /// <summary>
-        /// gridp11d control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Infragistics.WebUI.UltraWebGrid.UltraWebGrid gridp11d;
+        protected global::System.Web.UI.WebControls.Literal litgrid;
         
         /// <summary>
         /// cmdClose control.
@@ -54,9 +45,9 @@ namespace expenses {
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new expenses.exptemplate Master {
+        public new Spend_Management.smTemplate Master {
             get {
-                return ((expenses.exptemplate)(base.Master));
+                return ((Spend_Management.smTemplate)(base.Master));
             }
         }
     }

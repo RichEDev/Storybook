@@ -7,16 +7,22 @@ using System.Web.UI.WebControls;
 using SpendManagementLibrary;
 using System.Text;
 using System.Web.Services;
+using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.P11DCategories;
 using SpendManagementLibrary.Expedite;
+using SpendManagementLibrary.Helpers;
 using Spend_Management.shared.webServices;
 
 namespace Spend_Management
 {
-	/// <summary>
-	/// Summary description for aesubcat.
-	/// </summary>
+    /// <summary>
+    /// Summary description for aesubcat.
+    /// </summary>
     public partial class aesubcat : Page
     {
+        [Dependency]
+        public IDataFactory<IP11DCategory, int> P11DCategoriesRepository { get; set; }
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
@@ -28,8 +34,9 @@ namespace Spend_Management
             if (IsPostBack == false)
             {
                 this.Master.UseDynamicCSS = true;
-                this.ScriptMan.Scripts.Add(new ScriptReference(GlobalVariables.StaticContentLibrary + "/js/jQuery/jquery-ui.datepicker-en-gb.js"));
-                
+                this.ScriptMan.Scripts.Add(new ScriptReference(GlobalVariables.StaticContentLibrary +
+                                                               "/js/jQuery/jquery-ui.datepicker-en-gb.js"));
+
                 string[] rolesGrid;
                 string[] vatGrid;
                 string[] splititemGrid;
@@ -50,7 +57,6 @@ namespace Spend_Management
                 List<SubcatBasic> subcats = clsSubcats.GetSortedList();
                 cCategories clscategories = new cCategories(user.AccountID);
                 cMisc clsmisc = new cMisc(user.AccountID);
-                cP11dcats clspdcats = new cP11dcats(user.AccountID);
                 cMileagecats clsmileage = new cMileagecats(user.AccountID);
                 cItemRoles clsroles = new cItemRoles(user.AccountID);
                 ddlstItemRole.Items.AddRange(clsroles.CreateDropDown(0, false).ToArray());
@@ -89,7 +95,7 @@ namespace Spend_Management
                     if (!user.Employee.AdminOverride)
                     {
                         txtValidatorNotes1.ReadOnly = txtValidatorNotes2.ReadOnly = txtValidatorNotes3.ReadOnly = true;
-                }
+                    }
                 }
 
                 #endregion Validation Tab
@@ -106,20 +112,16 @@ namespace Spend_Management
 
                     Master.title = "Expense Item: " + reqSubcat.subcat;
                     cmbcategories.Items.AddRange(clscategories.CreateDropDown(0));
-                    cmbpdcats.Items.AddRange(clspdcats.CreateDropDown(reqSubcat.pdcatid));
+                    cmbpdcats.Items.AddRange(this.CreateP11DDropDown(reqSubcat.pdcatid));
                     txtaccountcode.Text = reqSubcat.accountcode;
                     cmbcategories.Items.FindByValue(reqSubcat.categoryid.ToString()).Selected = true;
                     txtsubcat.Text = reqSubcat.subcat;
                     txtshortsubcat.Text = reqSubcat.shortsubcat;
                     txtdescription.Text = reqSubcat.description;
-                    if (reqSubcat.pdcatid != 0)
-                    {
-                        cmbpdcats.Items.FindByValue(reqSubcat.pdcatid.ToString()).Selected = true;
-                    }
 
-                    if (ddlstCalculation.Items.FindByValue(((byte)reqSubcat.calculation).ToString()) != null)
+                    if (ddlstCalculation.Items.FindByValue(((byte) reqSubcat.calculation).ToString()) != null)
                     {
-                        ddlstCalculation.Items.FindByValue(((byte)reqSubcat.calculation).ToString()).Selected = true;
+                        ddlstCalculation.Items.FindByValue(((byte) reqSubcat.calculation).ToString()).Selected = true;
                     }
                     chkreimbursable.Checked = reqSubcat.reimbursable;
                     if (reqSubcat.vatreceipt == true)
@@ -129,12 +131,12 @@ namespace Spend_Management
                     }
 
                     this.txtStartDate.Text = reqSubcat.StartDate == null
-                                                 ? string.Empty
-                                                 : reqSubcat.StartDate.Value.ToString("dd/MM/yyyy");
+                        ? string.Empty
+                        : reqSubcat.StartDate.Value.ToString("dd/MM/yyyy");
 
                     this.txtEndDate.Text = reqSubcat.EndDate == null
-                                               ? string.Empty
-                                               : reqSubcat.EndDate.Value.ToString("dd/MM/yyyy");
+                        ? string.Empty
+                        : reqSubcat.EndDate.Value.ToString("dd/MM/yyyy");
 
                     switch (reqSubcat.calculation)
                     {
@@ -249,18 +251,18 @@ namespace Spend_Management
 
                     createCountryGrid(reqSubcat);
                     allowancesGrid = createAllowancesGrid(reqSubcat);
-                    
+
                     vatGrid = subCatsService.createVATGrid(reqSubcat.subcatid.ToString());
                     splititemGrid = subCatsService.createSplitItemGrid(reqSubcat.subcatid.ToString());
-                    
+
                     modalSplitItemsGrid = subCatsService.getSplitItems(reqSubcat.subcatid.ToString());
-                    
+
                     createUDFGrid(reqSubcat);
                     rolesGrid = subCatsService.createRoleGrid(reqSubcat.subcatid.ToString());
                     this.chkenablehometooffice.Checked = reqSubcat.EnableHomeToLocationMileage;
                     this.chkHomeToOfficeAsZero.Checked = false;
 
-                    switch(reqSubcat.HomeToLocationType)
+                    switch (reqSubcat.HomeToLocationType)
                     {
                         case HomeToLocationType.CalculateHomeAndOfficeToLocationDiff:
                             optdeducthometooffice.Checked = true;
@@ -292,7 +294,8 @@ namespace Spend_Management
                             break;
                         case HomeToLocationType.JuniorDoctorRotation:
                             this.optRotationalMileage.Checked = true;
-                            this.ddlstPublicTransportRate.Items.FindByValue(reqSubcat.PublicTransportRate.ToString()).Selected = true;
+                            this.ddlstPublicTransportRate.Items.FindByValue(reqSubcat.PublicTransportRate.ToString())
+                                .Selected = true;
                             break;
                     }
 
@@ -305,22 +308,29 @@ namespace Spend_Management
                     {
                         this.chkEnforceMileageCap.Checked = true;
                         this.txtMileageCap.Visible = true;
-                        this.txtMileageCap.Text = reqSubcat.HomeToOfficeMileageCap == null ? string.Empty : reqSubcat.HomeToOfficeMileageCap.ToString();
+                        this.txtMileageCap.Text = reqSubcat.HomeToOfficeMileageCap == null
+                            ? string.Empty
+                            : reqSubcat.HomeToOfficeMileageCap.ToString();
                     }
 
-                    if (reqSubcat.MileageCategory != null && ddlstMileageCategory.Items.FindByValue(reqSubcat.MileageCategory.ToString()) != null)
+                    if (reqSubcat.MileageCategory != null &&
+                        ddlstMileageCategory.Items.FindByValue(reqSubcat.MileageCategory.ToString()) != null)
                     {
                         ddlstMileageCategory.Items.FindByValue(reqSubcat.MileageCategory.ToString()).Selected = true;
                     }
 
-                    if (reqSubcat.reimbursableSubcatID != null && cmbReimbursableItems.Items.FindByValue(reqSubcat.reimbursableSubcatID.ToString()) != null)
+                    if (reqSubcat.reimbursableSubcatID != null &&
+                        cmbReimbursableItems.Items.FindByValue(reqSubcat.reimbursableSubcatID.ToString()) != null)
                     {
-                        cmbReimbursableItems.Items.FindByValue(reqSubcat.reimbursableSubcatID.ToString()).Selected = true;
+                        cmbReimbursableItems.Items.FindByValue(reqSubcat.reimbursableSubcatID.ToString()).Selected =
+                            true;
                     }
 
-                    if (reqSubcat.MileageCategory != null && ddlstReimburseMileageCategory.Items.FindByValue(reqSubcat.MileageCategory.ToString()) != null)
+                    if (reqSubcat.MileageCategory != null &&
+                        ddlstReimburseMileageCategory.Items.FindByValue(reqSubcat.MileageCategory.ToString()) != null)
                     {
-                        ddlstReimburseMileageCategory.Items.FindByValue(reqSubcat.MileageCategory.ToString()).Selected = true;
+                        ddlstReimburseMileageCategory.Items.FindByValue(reqSubcat.MileageCategory.ToString()).Selected =
+                            true;
                     }
 
                     udfrecord = reqSubcat.userdefined;
@@ -348,8 +358,10 @@ namespace Spend_Management
                     }
 
                     #region DOC Options
+
                     chkEnableDoc.Checked = reqSubcat.EnableDoC;
                     chkRequireClass1Insurance.Checked = reqSubcat.RequireClass1BusinessInsurance;
+
                     #endregion
 
 
@@ -361,7 +373,7 @@ namespace Spend_Management
                     {
                         var requirements = reqSubcat.ValidationRequirements.OrderBy(x => x.Id);
                         var criterion = requirements.ElementAtOrDefault(0);
-                        
+
                         if (criterion != null)
                         {
                             validationCriterion1Id.Value = criterion.Id.ToString();
@@ -392,7 +404,7 @@ namespace Spend_Management
                 {
                     Master.title = "Expense Item: New";
                     cmbcategories.Items.AddRange(clscategories.CreateDropDown(0));
-                    cmbpdcats.Items.AddRange(clspdcats.CreateDropDown(0));
+                    cmbpdcats.Items.AddRange(this.CreateP11DDropDown(0));
                     createCountryGrid(null);
 
                     if (clsmisc.GetGeneralFieldByCode("reason").individual == false)
@@ -408,11 +420,11 @@ namespace Spend_Management
                     allowancesGrid = createAllowancesGrid(null);
                     vatGrid = subCatsService.createVATGrid("");
                     splititemGrid = subCatsService.createSplitItemGrid("");
-                    
+
                     modalSplitItemsGrid = subCatsService.getSplitItems("");
                     createUDFGrid(null);
                     rolesGrid = subCatsService.createRoleGrid("0");
-                    
+
                 }
 
                 litRoles.Text = rolesGrid[2];
@@ -433,12 +445,13 @@ namespace Spend_Management
                 jsBlockObjects.Add(allowancesGrid[1]);
                 jsBlockObjects.Add(modalSplitItemsGrid[1]);
 
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "SubcatGridVars", cGridNew.generateJS_init("SubcatGridVars", jsBlockObjects, user.CurrentActiveModule), true);
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "SubcatGridVars",
+                    cGridNew.generateJS_init("SubcatGridVars", jsBlockObjects, user.CurrentActiveModule), true);
 
                 script.Append("var subcatid = " + subcatid + ";\n");
                 script.Append(getCountryList());
                 script.Append(getUDFList());
-               
+
                 if (subcatid > 0)
                 {
                     script.Append("setupEditCalculationDiv();\n");
@@ -452,16 +465,49 @@ namespace Spend_Management
             cTables clstables = new cTables(user.AccountID);
             cTable tbl = clstables.GetTableByID(new Guid("401b44d7-d6d8-497b-8720-7ffcc07d635d"));
             StringBuilder javascript;
-            clsuserdefined.createFieldPanel(ref holderUserdefined, clstables.GetTableByID(tbl.UserDefinedTableID), "vgSubcat", out javascript);
+            clsuserdefined.createFieldPanel(ref holderUserdefined, clstables.GetTableByID(tbl.UserDefinedTableID),
+                "vgSubcat", out javascript);
             this.ClientScript.RegisterClientScriptBlock(this.GetType(), "udfs", javascript.ToString(), true);
             if (udfrecord != null)
             {
-                clsuserdefined.populateRecordDetails(ref holderUserdefined, clstables.GetTableByID(tbl.UserDefinedTableID), udfrecord);
+                clsuserdefined.populateRecordDetails(ref holderUserdefined,
+                    clstables.GetTableByID(tbl.UserDefinedTableID), udfrecord);
             }
 
         }
 
+        /// <summary>
+        /// Creates the P11D dropdown
+        /// </summary>
+        /// <param name="pdcatid">The Id of the P11D currently assignedto the subcat</param>
+        /// <returns>A <see cref="ListItem"/> of P11D Categories</returns>
+        public ListItem[] CreateP11DDropDown(int pdcatid)
+        {
+            var p11DCategoriesUnsorted = this.P11DCategoriesRepository.Get();
+            var p11DCategoriesSorted = from p11DCategory in p11DCategoriesUnsorted
+                orderby p11DCategory.Name
+                select p11DCategory;
+            var count = p11DCategoriesSorted.Count();
+            var items = new ListItem[count + 1];
+            items[0] = new ListItem();
+            var i = 1;
 
+            foreach (var p11DCategory in p11DCategoriesSorted)
+            {
+                items[i] = new ListItem
+                {
+                    Text = p11DCategory.Name,
+                    Value = p11DCategory.Id.ToString()
+                };
+                if (p11DCategory.Id == pdcatid)
+                {
+                    items[i].Selected = true;
+                }
+                i++;
+            }
+
+            return items;
+        }
 
         private string[] createAllowancesGrid(cSubcat subcat)
         {
@@ -470,8 +516,8 @@ namespace Spend_Management
             DataSet ds = new DataSet();
             DataTable tbl = new DataTable();
             SortedList<string, cAllowance> allowances = clsallowances.sortList();
-            tbl.Columns.Add("allowanceid",typeof(System.Int32));
-            tbl.Columns.Add("allowance",typeof(System.String));
+            tbl.Columns.Add("allowanceid", typeof(System.Int32));
+            tbl.Columns.Add("allowance", typeof(System.String));
             foreach (cAllowance allowance in allowances.Values)
             {
                 tbl.Rows.Add(new object[] {allowance.allowanceid, allowance.allowance});
@@ -485,7 +531,8 @@ namespace Spend_Management
             List<cNewGridColumn> columns = new List<cNewGridColumn>();
             columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("04031a74-115c-4d41-a31a-0727a3ea0198"))));
             columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("74bec6a1-5520-46bc-96d1-759200bc206f"))));
-            cGridNew clsgrid = new cGridNew(user.AccountID, user.EmployeeID, "gridAllowances", clstables.GetTableByID(new Guid("68a1116c-b8e7-45d9-824b-acfe82c25c54")), columns, ds);
+            cGridNew clsgrid = new cGridNew(user.AccountID, user.EmployeeID, "gridAllowances",
+                clstables.GetTableByID(new Guid("68a1116c-b8e7-45d9-824b-acfe82c25c54")), columns, ds);
             clsgrid.KeyField = "allowanceid";
             clsgrid.getColumnByName("allowanceid").hidden = true;
             clsgrid.EnableSorting = false;
@@ -513,8 +560,8 @@ namespace Spend_Management
             Literal lit;
             Label lbl;
             CheckBox chkbox;
-            
-            
+
+
 
             foreach (cUserDefinedField field in fields)
             {
@@ -540,7 +587,8 @@ namespace Spend_Management
                 }
                 holderUDFs.Controls.Add(chkbox);
                 lit = new Literal();
-                lit.Text = "</span><span class=\"inputicon\"></span><span class=\"inputtooltipfield\"></span><span class=\"inputvalidatorfield\"></span>";
+                lit.Text =
+                    "</span><span class=\"inputicon\"></span><span class=\"inputtooltipfield\"></span><span class=\"inputvalidatorfield\"></span>";
                 holderUDFs.Controls.Add(lit);
                 if (!newdiv)
                 {
@@ -601,14 +649,15 @@ namespace Spend_Management
                 }
                 holderCountries.Controls.Add(txt);
                 lit = new Literal();
-                lit.Text = "</span><span class=\"inputicon\"></span><span class=\"inputtooltipfield\"></span><span class=\"inputvalidatorfield\"></span>";
+                lit.Text =
+                    "</span><span class=\"inputicon\"></span><span class=\"inputtooltipfield\"></span><span class=\"inputvalidatorfield\"></span>";
                 holderCountries.Controls.Add(lit);
                 if (!newdiv)
                 {
                     lit = new Literal();
                     lit.Text = "</div>";
                     holderCountries.Controls.Add(lit);
-                    
+
                 }
                 newdiv = !newdiv;
             }
@@ -628,7 +677,7 @@ namespace Spend_Management
             output.Append("var lstCountries = new Array();\n");
             CurrentUser user = cMisc.GetCurrentUser();
             cCountries clscountries = new cCountries(user.AccountID, user.CurrentSubAccountId);
-            List<int> countries =  clscountries.getCountryIds();
+            List<int> countries = clscountries.getCountryIds();
             foreach (int i in countries)
             {
                 output.Append("lstCountries.push(" + i + ");\n");

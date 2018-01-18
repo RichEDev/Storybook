@@ -8,8 +8,11 @@ using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-
+using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.P11DCategories;
 using SpendManagementLibrary;
+using SpendManagementLibrary.Helpers;
 using Spend_Management;
 
 namespace expenses
@@ -19,56 +22,67 @@ namespace expenses
     /// </summary>
     public partial class aep11d : Page
     {
+        [Dependency]
+        public IDataFactory<IP11DCategory, int> P11DCategoriesRepository { get; set; }
+
         private string action;
 
         private int pdcatid;
 
         protected System.Web.UI.WebControls.ImageButton cmdhelp;
 
-
-        protected void Page_Load(object sender, System.EventArgs e)
+        /// <summary>
+        /// Page Load events
+        /// </summary>
+        /// <param name="sender"><see cref="Object"/></param>
+        /// <param name="e"><see cref="EventArgs"/></param>
+        protected void Page_Load(object sender, EventArgs e)
         {
-            Title = "Add / Edit P11D Category";
-            Master.title = Title;
-            Master.showdummymenu = true;
-            Master.helpid = 1016;
+            this.Title = "Add / Edit P11D Category";
+            this.Master.title = Title;
+            this.Master.showdummymenu = true;
+            this.Master.helpid = 1016;
 
 
-            if (IsPostBack == false)
+            if (this.IsPostBack == false)
             {
-                Master.enablenavigation = false;
+                this.Master.enablenavigation = false;
                 CurrentUser user = cMisc.GetCurrentUser();
                 user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.P11D, true, true);
-                ViewState["accountid"] = user.AccountID;
-                ViewState["employeeid"] = user.EmployeeID;
+                this.ViewState["accountid"] = user.AccountID;
+                this.ViewState["employeeid"] = user.EmployeeID;
+                this.action = this.Request.QueryString["action"];
+                var subcats = new cSubcats(user.AccountID);
 
-                cP11dcats clspdcats = new cP11dcats(user.AccountID);
-                action = Request.QueryString["action"];
-
-                if (action == "2")
+                if (this.action == "2")
                 {
-                    sP11dCat reqpdcat;
-                    txtaction.Text = "2";
-                    pdcatid = int.Parse(Request.QueryString["pdcatid"]);
-                    txtpdcatid.Text = pdcatid.ToString();
-                    reqpdcat = clspdcats.getP11dCatById(pdcatid);
-                    txtpdcat.Text = reqpdcat.pdname;
-
-                    litsubcats.Text = createSubcatGrid(clspdcats.getSubCatList(pdcatid));
-
+                    this.pdcatid = int.Parse(this.Request.QueryString["pdcatid"]);
+                    var p11DCategory = this.P11DCategoriesRepository.Get(p11D => p11D.Id == this.pdcatid);
+                    if (p11DCategory.Count > 0)
+                    {
+                        this.txtaction.Text = "2";
+                        this.txtpdcatid.Text = this.pdcatid.ToString();
+                        this.txtpdcat.Text = p11DCategory[0].Name;
+                        this.litsubcats.Text = this.CreateSubcatGrid(subcats.GetSubCatList(this.pdcatid));
+                    }
+                    else
+                    {
+                        Response.Redirect(ErrorHandlerWeb.MissingRecordUrl, true);
+                    }
                 }
                 else
                 {
-
-
-                    litsubcats.Text = createSubcatGrid(clspdcats.getSubCatList(0));
+                    this.litsubcats.Text = this.CreateSubcatGrid(subcats.GetSubCatList(0));
                 }
-
-
             }
         }
 
-        private string createSubcatGrid(System.Data.DataSet ds)
+        /// <summary>
+        /// Create the subcat grid
+        /// </summary>
+        /// <param name="ds"><see cref="DataSet"/> of a list of subcats</param>
+        /// <returns>Html to create subcat list</returns>
+        private string CreateSubcatGrid(DataSet ds)
         {
             int i;
             System.Text.StringBuilder output = new System.Text.StringBuilder();
@@ -109,29 +123,25 @@ namespace expenses
         {
             this.cmdok.Click += new System.Web.UI.ImageClickEventHandler(this.cmdok_Click);
             this.cmdcancel.Click += new System.Web.UI.ImageClickEventHandler(this.cmdcancel_Click);
-
         }
 
         #endregion
-
-
-
-        private void cmdok_Click(object sender, System.Web.UI.ImageClickEventArgs e)
+        
+        /// <summary>
+        /// Ok button click events
+        /// </summary>
+        /// <param name="sender"><see cref="object"/></param>
+        /// <param name="e"><see cref="ImageClickEventArgs"/></param>
+        private void cmdok_Click(object sender, ImageClickEventArgs e)
         {
-            cP11dcats clspdcats = new cP11dcats((int)ViewState["accountid"]);
-            string pdname;
-            string subcat = Request.Form["subcat"];
+            var subcats = new cSubcats((int)this.ViewState["accountid"]);
+            string subcat = this.Request.Form["subcat"];
             string[] arrsubcat;
             int[] subcatids;
-
             int i = 0;
-
-
-            action = txtaction.Text;
-
-            pdname = txtpdcat.Text;
-
-
+            this.action = this.txtaction.Text;
+            var pdname = this.txtpdcat.Text;
+            
             if (subcat != null)
             {
                 arrsubcat = subcat.Split(',');
@@ -143,43 +153,56 @@ namespace expenses
                 subcatids = new int[0];
             }
 
-
             for (i = 0; i < arrsubcat.Length; i++)
             {
-
-
                 subcatids[i] = int.Parse(arrsubcat[i]);
-
-
             }
 
-            if (action == "2")
+            if (this.action == "2")
             {
-                pdcatid = int.Parse(txtpdcatid.Text);
-                if (clspdcats.updateP11dCat(pdname, pdcatid, subcatids) == 1)
+                var createdP11DCategory = this.P11DCategoriesRepository.Add(new P11DCategory(int.Parse(this.txtpdcatid.Text), pdname));
+                if (createdP11DCategory.Id == -1)
                 {
-                    lblmsg.Text = "The P11D Category you have entered already exists.";
-                    lblmsg.Visible = true;
+                    this.DisplayDuplicateMessage();
+
                     return;
                 }
+
+                subcats.AssignP11DToSubcats(subcatids, createdP11DCategory.Id);
             }
             else
             {
-                if (clspdcats.addP11dCat(pdname, subcatids) == 1)
+                var createdP11DCategory= this.P11DCategoriesRepository.Add(new P11DCategory(0, pdname));
+                if (createdP11DCategory.Id == -1)
                 {
-                    lblmsg.Text = "The P11D Category you have entered already exists.";
-                    lblmsg.Visible = true;
+                    this.DisplayDuplicateMessage();
+
                     return;
                 }
+
+                subcats.AssignP11DToSubcats(subcatids, createdP11DCategory.Id);
             }
 
-            Response.Redirect("adminp11d.aspx", true);
+            this.Response.Redirect("adminp11d.aspx", true);
         }
 
-        private void cmdcancel_Click(object sender, System.Web.UI.ImageClickEventArgs e)
+        /// <summary>
+        /// Displays duplicate P11D Category message
+        /// </summary>
+        private void DisplayDuplicateMessage()
         {
-            Response.Redirect("adminp11d.aspx", true);
+            this.lblmsg.Text = "The P11D Category you have entered already exists.";
+            this.lblmsg.Visible = true;
+        }
 
+        /// <summary>
+        /// Cancel button click events
+        /// </summary>
+        /// <param name="sender"><see cref="object"/></param>
+        /// <param name="e"><see cref="ImageClickEventArgs"/></param>
+        private void cmdcancel_Click(object sender, ImageClickEventArgs e)
+        {
+            this.Response.Redirect("adminp11d.aspx", true);
         }
     }
 }

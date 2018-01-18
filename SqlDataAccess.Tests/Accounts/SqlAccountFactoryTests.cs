@@ -12,7 +12,7 @@
     using BusinessLogic.DataConnections;
 
     using CacheDataAccess.Caching;
-
+    
     using Common.Logging;
 
     using NSubstitute;
@@ -20,6 +20,7 @@
 
     using SQLDataAccess;
     using SQLDataAccess.Accounts;
+    using SqlDataAccess.Tests.Helpers;
 
     using Utilities.Cryptography;
 
@@ -104,7 +105,7 @@
                 this.CacheFactory[Arg.Any<int>()].ReturnsNullForAnyArgs();
 
                 // Mock the IDataReader
-                DbDataReader dataReader = this.GetEmptyRecordReader(5);
+                DbDataReader dataReader = new DataReaderHelper().GetEmptyRecordReader(5);
 
                 // Make the mocked IMetabaseDataConnection.GetReader() return the mocked dataReader
                 this.MetabaseDataConnections.GetReader(string.Empty).ReturnsForAnyArgs(dataReader);
@@ -150,7 +151,7 @@
                 this.DatabaseServerRepository[69].ReturnsForAnyArgs(databaseServer);
 
                 // Mock the IDataReader
-                DbDataReader dataReader = this.GetSingleRecordReader(69, "TheDatabaseCatalogue", "TheUsername", "ThePassword", 11);
+                DbDataReader dataReader = new DataReaderHelper().GetSingleRecordReader(69, "TheDatabaseCatalogue", "TheUsername", "ThePassword", 11);
 
                 // Make the mocked IMetabaseDataConnection.GetReader() return the mocked dataReader
                 this.MetabaseDataConnections.GetReader(string.Empty).ReturnsForAnyArgs(dataReader);
@@ -170,56 +171,6 @@
 
                 // Ensure that when an IAccount is returned from the SqlAccountFactory Get method it is then inserted into cache.
                 this.CacheFactory.ReceivedWithAnyArgs(1).Add(Arg.Any<IAccount>());
-            }
-
-            /// <summary>
-            /// Mock a <see cref="IDataReader"/> making it return the list of <paramref name="rowData"/>.
-            /// </summary>
-            /// <param name="rowData">The data to make the return, in order.</param>
-            /// <returns>A mocked <see cref="IDataReader"/> which will allow allow indexer and GetX usage. FieldCount is set to the <paramref name="rowData"/> length and Read will act as if one row has been returned.</returns>
-            private DbDataReader GetSingleRecordReader(params object[] rowData)
-            {
-                // Mock the IDataReader
-                DbDataReader dataReader = Substitute.For<DbDataReader>();
-
-                for (int i = 0; i < rowData.Length - 1; i++)
-                {
-                    dataReader[i].Returns(rowData[i]);
-
-                    if (rowData[i] is string)
-                    {
-                        dataReader.GetString(Arg.Is(i)).Returns(rowData[i]);
-                    }
-                    else if (rowData[i] is int)
-                    {
-                        dataReader.GetInt32(Arg.Is(i)).Returns(Convert.ToInt32(rowData[i]));
-                    }
-                    else
-                    {
-                        throw new InvalidCastException($"({rowData[i].GetType()}){rowData[i]} is not currently caught, you will need to add support for it.");
-                    }
-                }
-
-                dataReader.Read().Returns(true, false);
-                dataReader.FieldCount.Returns(rowData.Length - 1);
-
-                return dataReader;
-            }
-
-            /// <summary>
-            /// Mock a <see cref="IDataReader"/> making it return nothing.
-            /// </summary>
-            /// <param name="fieldCount">The number of fields returned by the <see cref="IDataReader"/></param>
-            /// <returns></returns>
-            private DbDataReader GetEmptyRecordReader(int fieldCount)
-            {
-                // Mock the IDataReader
-                DbDataReader dataReader = Substitute.For<DbDataReader>();
-
-                dataReader.Read().Returns(false);
-                dataReader.FieldCount.Returns(fieldCount);
-
-                return dataReader;
             }
         }
 
