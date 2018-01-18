@@ -7083,6 +7083,8 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\NCI_BankAccounts_by_EmployeeId.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\APIGetEmployeeLocations.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\ApiSetEsrOrganisationLevel.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SaveP11DCategory.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\DeleteP11DCategory.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ut_expenses.refactorlog">
