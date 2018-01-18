@@ -303,13 +303,15 @@
                     var parents = []; 
 
                     function updateValues(parentClass, val) {
-                        var obj = {};
-                        var parentId = parseInt(parentClass.replace('parenttxt', ''));
-                        if (typeof parentId === 'number' && (parentId % 1) === 0) {
-                            obj["Id"] = parentId;
-                            obj["Value"] = val;
-                            if (parents.map(function (o) { return o.Id; }).indexOf(parentId) === -1) {
-                                parents.push(obj);
+                        if (typeof val !== "undefined") {
+                            var obj = {};
+                            var parentId = parseInt(parentClass.replace('parenttxt', ''));
+                            if (typeof parentId === 'number' && (parentId % 1) === 0) {
+                                obj["Id"] = parentId;
+                                obj["Value"] = val;
+                                if (parents.map(function (o) { return o.Id; }).indexOf(parentId) === -1) {
+                                    parents.push(obj);
+                                }
                             }
                         }
                     }

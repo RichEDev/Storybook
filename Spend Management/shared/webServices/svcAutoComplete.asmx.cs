@@ -865,13 +865,24 @@
 
                 var index = 0;
 
-                var parentFilters = attribute.filters.Where(e => e.Value.IsParentFilter == true);
-
+                var parentFilters = attribute.filters.Where(e => e.Value.IsParentFilter);
+                
                 foreach (var parentFilter in parentFilters)
                 {
-                    var filterBy = attributesToFilterBy.FirstOrDefault(a => a.attributeid.ToString() == parentFilter.Value.ValueOne);
-                    filterDictionary.Add(index.ToString(), new JSFieldFilter { ConditionType = ConditionType.Equals, FieldID = filterBy.relatedtable.PrimaryKeyID, ValueOne = parentControls.FirstOrDefault(a => a.Id == filterBy.attributeid).Value, Joiner = ConditionJoiner.And });
-                    index++;
+                    if (parentControls.Any(x => x.Id == Convert.ToInt32(parentFilter.Value.ValueOne)))
+                    {
+                        var filterBy = attributesToFilterBy.FirstOrDefault(a =>
+                            a.attributeid.ToString() == parentFilter.Value.ValueOne);
+                        filterDictionary.Add(index.ToString(),
+                            new JSFieldFilter
+                            {
+                                ConditionType = ConditionType.Equals,
+                                FieldID = filterBy.relatedtable.PrimaryKeyID,
+                                ValueOne = parentControls.FirstOrDefault(a => a.Id == filterBy.attributeid).Value,
+                                Joiner = ConditionJoiner.And
+                            });
+                        index++;
+                    }
                 }
 
                 if (attribute.AutoCompleteDisplayFieldIDList.Count > 0)
