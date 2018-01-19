@@ -590,13 +590,8 @@ namespace expenses
                     break;
 
                 case SignoffType.CostCodeOwner:
-                    ICurrentUser user = cMisc.GetCurrentUser();
-                    if (user.Account.IsNHSCustomer)
-                    {
-                        this.rowLineManagerAssignmentSupervisor.Visible = true;
-                        this.ReqLineManagerAssignmentSupervisor.Enabled = true;
-                    }
-
+                    this.rowLineManagerAssignmentSupervisor.Visible = true;
+                    this.ReqLineManagerAssignmentSupervisor.Enabled = true;
                     this.cmblist.Visible = false;
                     this.reqsignoff.Enabled = false;
                     this.rfvExtraLevels.Enabled = false;
