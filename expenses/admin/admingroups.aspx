@@ -7,7 +7,7 @@
 
 				<asp:Content ID="Content1" runat="server" ContentPlaceHolderID="contentmenu">
     
-				<a href="aegroup.aspx" class="submenuitem"><asp:Label id="Label1" runat="server" meta:resourcekey="Label1Resource1">Add Group</asp:Label></a>
+				<a href="aegroup.aspx" class="submenuitem"><asp:Label id="Label1" runat="server" meta:resourcekey="Label1Resource1">Add Signoff Group</asp:Label></a>
 				
 				</asp:Content>
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="contentmain">				
