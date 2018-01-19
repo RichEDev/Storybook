@@ -102,8 +102,8 @@ public partial class reports_tailoringmenu : Page
                 this.Master.AddMenuItem(
                     "mail_server",
                     48,
-                    "Email Templates",
-                    "Create/Amend Email templates that can be used for Workflows and employee subscribed Email Notifications.",
+                    "Notification Templates",
+                    "Create/Amend Notification templates that can be used for Workflows and employee subscribed Notifications.",
                     "shared/admin/adminemailtemplates.aspx");
             }
 

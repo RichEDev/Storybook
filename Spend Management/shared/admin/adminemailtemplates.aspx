@@ -2,9 +2,9 @@
 <%@ MasterType VirtualPath="~/masters/smPagedForm.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="contentmenu" runat="server">
-    <a href="javascript:changePage('System');" id="lnkSystem" class="selectedPage">System Email Templates</a>
-    <a href="javascript:changePage('Custom');" id="lnkCustom" >Custom Email Templates</a>
-    <asp:Panel runat="server" ID="pnlAddTemplate"><a href="aeemailtemplate.aspx" class="submenuitem">New Email Template</a></asp:Panel>
+    <a href="javascript:changePage('System');" id="lnkSystem" class="selectedPage">System Notification Templates</a>
+    <a href="javascript:changePage('Custom');" id="lnkCustom" >Custom Notification Templates</a>
+    <asp:Panel runat="server" ID="pnlAddTemplate"><a href="aeemailtemplate.aspx" class="submenuitem">New Notification Template</a></asp:Panel>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="contentmain" runat="server">
 
@@ -26,7 +26,7 @@
         <div id="pgSystem" class="primaryPage formpanel formpanel_padding">
                 <div class="twocolumn">
             <div class="sectiontitle">
-                <asp:Label ID="lblsystemtemps" runat="server" Text="System Email Templates" meta:resourcekey="lblsystemtempsResource1"></asp:Label>
+                <asp:Label ID="lblsystemtemps" runat="server" Text="System Notification Templates" meta:resourcekey="lblsystemtempsResource1"></asp:Label>
                 </div>
                     
             </div>
@@ -36,7 +36,7 @@
         <div id="pgCustom" class="formpanel formpanel_padding"  style="display: none">
             <div class="twocolumn">
                 <div class="sectiontitle">
-                    <asp:Label ID="lblTemplates" runat="server" Text=" Custom Email Templates" meta:resourcekey="lblTemplatesResource1"></asp:Label>
+                    <asp:Label ID="lblTemplates" runat="server" Text=" Custom Notification Templates" meta:resourcekey="lblTemplatesResource1"></asp:Label>
                 </div>
 	     
 	        </div>

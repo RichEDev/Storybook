@@ -101,7 +101,7 @@
         protected void Page_Load(object sender, EventArgs e)
         {
          
-            Master.PageSubTitle = "Email Template Details";
+            Master.PageSubTitle = "Notification Template Details";
             Master.enablenavigation = false;
 
             CurrentUser user = cMisc.GetCurrentUser();
@@ -117,7 +117,7 @@
             else
             {
                 user.CheckAccessRole(AccessRoleType.Add, SpendManagementElement.Emails, true, true);
-                Title = @"Email Template: New";
+                Title = @"Notification Template: New";
             }
 
             Master.title = Title;
@@ -183,7 +183,7 @@
                     if (emailTemp != null)
                     {
                         areaTableID = emailTemp.BaseTableId;
-                        lblTitle.Text = @"Edit Email Template";
+                        lblTitle.Text = @"General Details";
 
                         if (emailTemp.SystemTemplate)
                         {
@@ -198,7 +198,7 @@
 
                         if (master != null)
                         {
-                            var title = "Email Template: " + emailTemp.TemplateName;
+                            var title = "Notification Template: " + emailTemp.TemplateName;
                             master.title = title;
                         }
 

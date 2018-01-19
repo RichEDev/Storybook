@@ -13,7 +13,7 @@ namespace Spend_Management
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Title = "Email Templates";
+            Title = "Notification Templates";
             Master.title = Title;
             
             if (IsPostBack == false)

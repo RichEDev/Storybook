@@ -105,7 +105,7 @@
                         SEL.MasterPopup.ShowMasterPopup('This attachment type is currently in use on an employee licence attachment, it must be removed from all employee records before it can be deleted.');
                         break;
                     case -3:
-                        SEL.MasterPopup.ShowMasterPopup('This attachment type is currently in use on an Email Template attachment, it must be removed from all email template records before it can be deleted.');
+                        SEL.MasterPopup.ShowMasterPopup('This attachment type is currently in use on an Notification Template attachment, it must be removed from all notification template records before it can be deleted.');
                         break;
                     case -4:
                         SEL.MasterPopup.ShowMasterPopup('This attachment type is currently in use on a GreenLight attachment, it must be removed from all GreenLight records before it can be deleted.', 'Delete Attachment Type');

@@ -95,7 +95,7 @@
         </siteMapNode>
         <siteMapNode url="~/shared/admin/userdefinedOrdering.aspx" title="User Defined Field Ordering"></siteMapNode>
         <siteMapNode url="~/shared/admin/userdefinedFieldGroupings.aspx" title="User Defined Groupings"></siteMapNode>
-        <siteMapNode url="~/shared/admin/adminemailtemplates.aspx" title="Email Templates"></siteMapNode>
+        <siteMapNode url="~/shared/admin/adminemailtemplates.aspx" title="Notification Templates"></siteMapNode>
         <siteMapNode url="~/admin/adminqeforms.aspx" title="Quick Entry Form Design"></siteMapNode>
         <siteMapNode url="~/admin/addingexpenses.aspx" title="New Expenses"></siteMapNode>
         <siteMapNode url="~/admin/filterrules.aspx" title="Filter rules"></siteMapNode>

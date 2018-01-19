@@ -543,7 +543,7 @@
             DeleteEmailTemplate: function (emailtemplateid)
             {
                 currentRowID = emailtemplateid;
-                if (confirm('Are you sure you wish to delete the selected Email Template?'))
+                if (confirm('Are you sure you wish to delete the selected Notification Template?'))
                 {
                     PageMethods.deleteEmailTemplate(emailtemplateid, SEL.EmailTemplates.DeleteEmailTemplateComplete, SEL.EmailTemplates.CommandFail);
                 }
