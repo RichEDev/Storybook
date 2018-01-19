@@ -782,13 +782,23 @@
         public void ChangeLockedStatus(bool locked, ICurrentUserBase currentUser)
         {
             this.Locked = locked;
+            this.Save(currentUser);
+        }
 
-            if (!locked)
+        /// <summary>
+        /// Resets the current employee's logon retry count to 0.
+        /// </summary>
+        public void ResetLogonRetryCount()
+        {
+            using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(this.AccountID)))
             {
-                this.LogonRetryCount = 0;
+                databaseConnection.sqlexecute.Parameters.AddWithValue("@employeeId", this.EmployeeID);
+                string sql = "UPDATE employees SET retryCount = 0 WHERE employeeid = @employeeId";
+                databaseConnection.ExecuteSQL(sql);
+                databaseConnection.sqlexecute.Parameters.Clear();
             }
 
-            this.Save(currentUser);
+            User.CacheRemove(this.EmployeeID, this.AccountID);
         }
 
         /// <summary>
@@ -853,7 +863,8 @@
 
             if (this.Locked)
             {
-                this.ChangeLockedStatus(false, currentUser);
+                this.ChangeLockedStatus(false, currentUser);            
+                this.ResetLogonRetryCount();
             }
 
             return 0;

@@ -31,9 +31,17 @@ namespace Spend_Management
         public void changeLockStatus(int employeeid)
         {
             CurrentUser user = cMisc.GetCurrentUser();
-            var clsemployees = new cEmployees(user.AccountID);
-            Employee reqemp = clsemployees.GetEmployeeById(employeeid);
-            reqemp.ChangeLockedStatus(!reqemp.Locked, user);
+            var employees = new cEmployees(user.AccountID);
+            Employee employee = employees.GetEmployeeById(employeeid);
+            employee.ChangeLockedStatus(!employee.Locked, user);
+
+            // Get current user again, to get the correct locked status.
+            user = cMisc.GetCurrentUser();
+
+            if (user.Employee.Locked == false)
+            {
+                employee.ResetLogonRetryCount();
+            }     
         }
 
         /// <summary>
