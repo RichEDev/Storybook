@@ -95,7 +95,7 @@
         </siteMapNode>
         <siteMapNode url="~/shared/admin/userdefinedOrdering.aspx" title="User Defined Field Ordering"></siteMapNode>
         <siteMapNode url="~/shared/admin/userdefinedFieldGroupings.aspx" title="User Defined Groupings"></siteMapNode>
-        <siteMapNode url="~/shared/admin/adminnotificationtemplates.aspx" title="Notification Templates"></siteMapNode>
+        <siteMapNode url="~/shared/admin/adminemailtemplates.aspx" title="Notification Templates"></siteMapNode>
         <siteMapNode url="~/admin/adminqeforms.aspx" title="Quick Entry Form Design"></siteMapNode>
         <siteMapNode url="~/admin/addingexpenses.aspx" title="New Expenses"></siteMapNode>
         <siteMapNode url="~/admin/filterrules.aspx" title="Filter rules"></siteMapNode>
@@ -116,7 +116,7 @@
         <siteMapNode url="~/UserCustomMenu.aspx" title="Custom Menu"></siteMapNode>
         <siteMapNode url="~/shared/admin/accessroles.aspx" title="Access Roles"></siteMapNode>
         <siteMapNode url="~/admin/adminitemroles.aspx" title="Item Roles"></siteMapNode>
-        <siteMapNode url="~/admin/admingroups.aspx" title="Signoff Groups"></siteMapNode>
+        <siteMapNode url="~/admin/admingroups.aspx" title="Groups"></siteMapNode>
         <siteMapNode url="~/admin/adminExpensesConnectUsers.aspx" title="expensesConnect Users"></siteMapNode>
         <siteMapNode url="~/shared/admin/selectemployee.aspx" title="Select Employee">
           <siteMapNode url="~/shared/admin/adminemployees.aspx" title="Employees"></siteMapNode>

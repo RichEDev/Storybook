@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/masters/smForm.master" AutoEventWireup="true" CodeBehind="aenotificationtemplate.aspx.cs" Inherits="Spend_Management.aenotificationtemplate" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/masters/smForm.master" AutoEventWireup="true" CodeBehind="aeemailtemplate.aspx.cs" Inherits="Spend_Management.aeemailtemplate" %>
 <%@ Register Src="~/shared/usercontrols/attachmentList.ascx" TagName="UploadAttachment" TagPrefix="uc1" %>
 <%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="cke" %>
 <%@ Register TagPrefix="asp" Namespace="SpendManagementHelpers" Assembly="SpendManagementHelpers" %>
@@ -194,9 +194,6 @@
                 <asp:ListItem Value="2" Text="High"></asp:ListItem>
                 <asp:ListItem Value="1" Text="Low"></asp:ListItem>
             </asp:DropDownList></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
-        </div>
-        <div class="twocolumn" id="sendMobileNotifcationCheckboxDiv" runat="server">
-            <asp:Label ID="lblSendMobileNotification" runat="server" Text="Send mobile notification"  AssociatedControlID="chkCanEmailNotification"></asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="chkCanEmailNotification" /></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
         </div>
         <div class="twocolumn">
             <asp:Label ID="lblAttachment" runat="server" Text="Attachments" meta:resourcekey="lblAttachmentsResource1" AssociatedControlID="txtAttachments"></asp:Label><span class="inputs"><asp:TextBox ID="txtAttachments" Visible="false" runat="server" CssClass="fillspan" meta:resourcekey="txtAttachmentsResource1"></asp:TextBox></span><span class="inputicon"><a href="javascript:SEL.EmailTemplates.ValidateAndShowAttachmentModal();"><img src="/shared/images/icons/16/plain/add2.png" alt="" id="butAttach" /></a></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>

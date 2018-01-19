@@ -103,8 +103,8 @@ public partial class reports_tailoringmenu : Page
                     "mail_server",
                     48,
                     "Notification Templates",
-					"Create and modify email templates, broadcast messages and mobile notifications.",
-					"shared/admin/adminnotificationtemplates.aspx");
+                    "Create/Amend Notification templates that can be used for Workflows and employee subscribed Notifications.",
+                    "shared/admin/adminemailtemplates.aspx");
             }
 
             if (user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.EmailSuffixes, true))
