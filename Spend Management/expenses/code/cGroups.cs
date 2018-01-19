@@ -461,12 +461,23 @@ namespace Spend_Management
             return allStages;
         }
 
-        public cStage GetStageById(int signoffId)
+        /// <summary>
+        /// Get a sign off group stage by it's Id
+        /// </summary>
+        /// <param name="signOffId">The Id of the stage</param>
+        /// <returns>An instance of a <see cref="cStage"/></returns>
+        public cStage GetStageById(int signOffId)
         {
+            // Check cache is populated before finding stage
+            if (this.list == null)
+            {
+                this.InitialiseData();
+            }
+
             return this.list.Values
                 .OfType<cGroup>()
-                .Where(g => g.stages.ContainsKey(signoffId))
-                .Select(g => g.stages[signoffId])
+                .Where(g => g.stages.ContainsKey(signOffId))
+                .Select(g => g.stages[signOffId])
                 .FirstOrDefault();
         }
 
