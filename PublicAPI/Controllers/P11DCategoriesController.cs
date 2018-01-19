@@ -2,12 +2,19 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Web.Http;
+    
     using BusinessLogic.DataConnections;
     using BusinessLogic.P11DCategories;
-    using System.Web.Http;
+
     using Common.Actions;
     using DTO;
+    using Security.Filters;
 
+    /// <summary>
+    /// Controller enabling actions to be executed on <see cref="IP11DCategory"/> using the <see cref="P11DCategoryDto"/>.
+    /// </summary>
+    [JwtAuthentication]
     public class P11DCategoriesController : ApiController, ICrud<P11DCategoryDto, int>
     {
         private readonly Lazy<IDataFactory<IP11DCategory, int>> _p11DCategories = new Lazy<IDataFactory<IP11DCategory, int>>(() => WebApiApplication.container.GetInstance<IDataFactory<IP11DCategory, int>>());
