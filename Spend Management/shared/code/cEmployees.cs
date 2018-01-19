@@ -829,11 +829,11 @@ using System.Web;
 
             Employee employee = this.GetEmployeeById(employeeID);
        
-            employee.ChangeLockedStatus(true, null); 
+            employee.ChangeLockedStatus(true, null);
 
             //prevents archived user(s) from initiating the password reset procedure. 
-              if (employee.Archived == false)
-            {  
+            if (employee.Archived == false)
+            {
                 SendPasswordKey(employeeID, PasswordKeyType.ForgottenPassword, null, activeModule, true, fromMobile);
             }
         }

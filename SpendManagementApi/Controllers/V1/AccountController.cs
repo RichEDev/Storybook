@@ -654,7 +654,7 @@
             var details = ConstructApiDetails(currentUser);
 
             if (this.IsMobileRequest())
-            {
+            {            
                 var reqAccount = this._accounts.GetAccountByID(accountId);
                 var employees = new cEmployees(reqAccount.accountid);
                 var reqEmployee = employees.GetEmployeeById(Math.Abs(employee.EmployeeID));
@@ -664,6 +664,9 @@
                 var vehicleRepository = new VehicleRepository(currentUser);
                 var claims = new cClaims(currentUser.AccountID);
                 var employeeCards = new cEmployeeCorporateCards(currentUser.AccountID);
+
+                //unlocks employee's account, so that the password policy API call completes.
+                reqEmployee.ChangeLockedStatus(false, currentUser);
 
                 MobileLoginResponse response = this.GenerateMobileLoginResponse(currentUser, reqAccount, employees, reqEmployee, details, subAccountProperties, vehicleRepository, claims, employeeCards, mobileDevices);
 
