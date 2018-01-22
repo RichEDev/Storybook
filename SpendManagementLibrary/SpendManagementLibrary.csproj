@@ -327,10 +327,12 @@
     <Compile Include="Claims\SubmitRejectionReason.cs" />
     <Compile Include="ColFunction.cs" />
     <Compile Include="CustomEntityAutoCompleteResult.cs" />
+    <Compile Include="Definitions\AutocompleteChildField.cs" />
     <Compile Include="Definitions\AutoCompleteChildFieldValues.cs" />
     <Compile Include="Definitions\EmployeeProxyAction.cs" />
     <Compile Include="Definitions\IRelabel.cs" />
     <Compile Include="Definitions\ParentAndChildElementValues.cs" />
+    <Compile Include="Definitions\ParentElement.cs" />
     <Compile Include="DocumentType.cs" />
     <Compile Include="DropDownCreator.cs" />
     <Compile Include="DVLA\CurrentCustomEntityRecord.cs" />
