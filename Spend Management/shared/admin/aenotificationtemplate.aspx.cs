@@ -12,7 +12,7 @@
 
     using SpendManagementLibrary.Helpers;
 
-    public partial class aeemailtemplate : System.Web.UI.Page
+    public partial class aenotificationtemplate : System.Web.UI.Page
     {
 
         #region properties
@@ -109,10 +109,10 @@
 
             this.accountid = user.AccountID;
 
-            if (Request.QueryString["emailtemplateid"] != null)
+            if (Request.QueryString["templateid"] != null)
             {
                 user.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.Emails, true, true);
-                this.templateID = Convert.ToInt32(Request.QueryString["emailtemplateid"]);
+                this.templateID = Convert.ToInt32(Request.QueryString["templateid"]);
             }
             else
             {
@@ -174,6 +174,12 @@
                 this.ChkSendNote.Style.Add("display", "none");
                 this.lblSendNote.Style.Add("display", "none");
 
+                this.sendMobileNotifcationCheckboxDiv.Style.Add("display", "none");        
+                this.chkCanEmailNotification.Style.Add("display", "none");
+                this.lblSendMobileNotification.Style.Add("display", "none");
+                this.mobileNotificationHeader.Style.Add("display", "none");            
+                this.mobileNotificationWrapper.Style.Add("display", "none");
+
                 if (ViewState["emailtemplateID"] != null)
                 {
                     update = true;
@@ -192,6 +198,16 @@
                             this.noteswrapper.Style.Add("display", "block");
                             this.ChkSendNote.Style.Add("display", "inline-block");
                             this.lblSendNote.Style.Add("display", "inline-block");
+                        }
+
+                        if (clsemailtemps.PermittedMobileNotificationTemplateIds.Contains(emailTemp.TemplateId))
+                        {        
+                            //Show Mobile Notification email template options
+                            this.sendMobileNotifcationCheckboxDiv.Style.Add("display", "block"); 
+                            this.chkCanEmailNotification.Style.Add("display", "inline-block");
+                            this.lblSendMobileNotification.Style.Add("display", "inline-block");
+                            this.mobileNotificationWrapper.Style.Add("display", "block");
+                            this.mobileNotificationHeader.Style.Add("display", "block");  
                         }
 
                         var master = ((smForm)this.Page.Master);
@@ -264,11 +280,17 @@
                         this.PopulateSubject(emailTemp.Subject.details);
                         this.bodyHtml.Value = emailTemp.Body.details;
                         this.noteHtml.Value = emailTemp.Note.details;
+                        this.txtMobileNotificationMessage.Text = emailTemp.MobileNotificationMessage;
 
                         this.chkSystemTemplate.Checked = emailTemp.SystemTemplate;
 
                         this.ChkSendNote.Checked = emailTemp.SendNote.HasValue ? emailTemp.SendNote.Value : false;
                         this.ChkSendEmail.Checked = emailTemp.SendEmail.HasValue ? emailTemp.SendEmail.Value : false;
+
+                        this.chkCanEmailNotification.Checked = emailTemp.CanSendMobileNotification.HasValue
+                                                                   ? emailTemp.CanSendMobileNotification.Value
+                                                                   : false;
+
                         this.baseTreeData.Value = this.AddNodesInWebTree(
                             Convert.ToString(this.areaTableID),
                             reportService);
