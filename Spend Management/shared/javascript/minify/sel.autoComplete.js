@@ -340,9 +340,8 @@
                             var currentChildControl = $('select[id*=txt' + data[0].FieldToBuild + ']');   
                             if (!AutoCompleteSearches.InitailData.filter(function (e) { return e.childControl == data[0].FieldToBuild; }).length >0) {
                                 var obj = {
-                                    parentControl: parentControlId,
+                                    parentControls: parents,
                                     childControl: data[0].FieldToBuild,
-                                    value: currentChildControl.html(),
                                     EnableSelectinator: $('input[id$=txt' + data[0].FieldToBuild + '_SelectinatorText]').is(":visible")
 
                                 };
@@ -405,10 +404,8 @@
                                 if (data.length > 25 && $('input[id*=txt' + data[0].FieldToBuild + ']').length > 0) ///25 is the maximum list item we allow in dropdown
                                 {
                                     var parentControlValue = {
-                                        parentControl: parentControlId,
-                                        childControl: data[0].FieldToBuild,
-                                        parentValue: $("select[id*=txt" + parentControlId + "]").next(".AutoCombostyledSelect").is(":visible") ? $("select[id*=txt" + parentControlId + "]").next(".AutoCombostyledSelect").text() : ($("input[id$=txt" + parentControlId + "_SelectinatorText]").is(":visible") ? $("input[id$=txt" + parentControlId + "_SelectinatorText_ID]").val() : $("select[id*=txt" + parentControlId + "]").find("option:selected").text())
-
+                                        parentControls: parents,
+                                        childControl: data[0].FieldToBuild
                                     };
                                     SEL.AutoComplete.Bind.childFilterList = JSON.stringify(data);
 
