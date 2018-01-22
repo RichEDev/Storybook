@@ -518,7 +518,7 @@
                         }
                     } else {
                         var temp = isSystemTemp === true ? "system" : "custom";
-                        window.location = "/shared/admin/adminemailtemplates.aspx?template=" + temp;
+                        window.location = "/shared/admin/adminnotificationtemplates.aspx?template=" + temp;
                     }
 
                 }, SEL.EmailTemplates.CommandFail);
@@ -537,13 +537,13 @@
                     }
                     else temp = SEL.EmailTemplates.Elements.chksystemtempateidinitialval === true ? "?template=system" : "?template=custom";   
                 }
-                window.location = "/shared/admin/adminemailtemplates.aspx" + temp;
+                window.location = "/shared/admin/adminnotificationtemplates.aspx" + temp;
             },
 
             DeleteEmailTemplate: function (emailtemplateid)
             {
                 currentRowID = emailtemplateid;
-                if (confirm('Are you sure you wish to delete the selected Email Template?'))
+                if (confirm('Are you sure you wish to delete the selected Notification Template?'))
                 {
                     PageMethods.deleteEmailTemplate(emailtemplateid, SEL.EmailTemplates.DeleteEmailTemplateComplete, SEL.EmailTemplates.CommandFail);
                 }

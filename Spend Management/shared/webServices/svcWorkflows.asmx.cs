@@ -305,7 +305,7 @@ namespace Spend_Management
                     if (lstEmailTemplates.Count > 0)
                     {
                         sbReturnString.Append("<div class=\"twocolumn\">");
-                            sbReturnString.Append("<label for=\"emailTemplate\">Email Template</label><span class=\"inputs\"><select id=\"emailTemplate\">");
+                            sbReturnString.Append("<label for=\"emailTemplate\">Notification Template</label><span class=\"inputs\"><select id=\"emailTemplate\">");
                             sbReturnString.Append("<option value=\"0\">[None]</option>");
 
                             foreach (ListItem lstItem in lstEmailTemplates)
@@ -317,7 +317,7 @@ namespace Spend_Management
                     }
                     else
                     {
-                        sbReturnString.Append("<div class=\"onecolumnsmall\"><label>Email Template</label><span class=\"inputs\">No valid email templates are currently setup</span></div>");
+                        sbReturnString.Append("<div class=\"onecolumnsmall\"><label>Notification Template</label><span class=\"inputs\">No valid notification templates are currently setup</span></div>");
                     }
 
                     if (workflowType == "d70d9e5f-37e2-4025-9492-3bcf6aa746a8")
@@ -390,7 +390,7 @@ namespace Spend_Management
                         if (lstEmailTemplates.Count > 0)
                         {
                             sbReturnString.Append("<div class=\"twocolumn\">");
-                            sbReturnString.Append("<label for=\"emailTemplate\">Email Template</label><span class=\"inputs\"><select id=\"emailTemplate\">");
+                            sbReturnString.Append("<label for=\"emailTemplate\">Notification Template</label><span class=\"inputs\"><select id=\"emailTemplate\">");
                             sbReturnString.Append("<option value=\"0\">[None]</option>");
 
                             foreach (ListItem lstItem in lstEmailTemplates)
@@ -402,7 +402,7 @@ namespace Spend_Management
                         }
                         else
                         {
-                            sbReturnString.Append("<div class=\"onecolumnsmall\"><label for=\"emailTemplate\">Email Template</label><span class=\"inputs\">No valid Email Templates are currently setup</span></div>");
+                            sbReturnString.Append("<div class=\"onecolumnsmall\"><label for=\"emailTemplate\">Notification Template</label><span class=\"inputs\">No valid Notificatioin Templates are currently setup</span></div>");
                         }
                         break;
                     #endregion

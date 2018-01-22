@@ -12,7 +12,7 @@
 
     using SpendManagementLibrary.Helpers;
 
-    public partial class aeemailtemplate : System.Web.UI.Page
+    public partial class aenotificationtemplate : System.Web.UI.Page
     {
 
         #region properties
@@ -101,7 +101,7 @@
         protected void Page_Load(object sender, EventArgs e)
         {
          
-            Master.PageSubTitle = "Email Template Details";
+            Master.PageSubTitle = "Notification Template Details";
             Master.enablenavigation = false;
 
             CurrentUser user = cMisc.GetCurrentUser();
@@ -109,15 +109,15 @@
 
             this.accountid = user.AccountID;
 
-            if (Request.QueryString["emailtemplateid"] != null)
+            if (Request.QueryString["templateid"] != null)
             {
                 user.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.Emails, true, true);
-                this.templateID = Convert.ToInt32(Request.QueryString["emailtemplateid"]);
+                this.templateID = Convert.ToInt32(Request.QueryString["templateid"]);
             }
             else
             {
                 user.CheckAccessRole(AccessRoleType.Add, SpendManagementElement.Emails, true, true);
-                Title = @"Email Template: New";
+                Title = @"Notification Template: New";
             }
 
             Master.title = Title;
@@ -174,6 +174,12 @@
                 this.ChkSendNote.Style.Add("display", "none");
                 this.lblSendNote.Style.Add("display", "none");
 
+                this.sendMobileNotifcationCheckboxDiv.Style.Add("display", "none");        
+                this.chkCanEmailNotification.Style.Add("display", "none");
+                this.lblSendMobileNotification.Style.Add("display", "none");
+                this.mobileNotificationHeader.Style.Add("display", "none");            
+                this.mobileNotificationWrapper.Style.Add("display", "none");
+
                 if (ViewState["emailtemplateID"] != null)
                 {
                     update = true;
@@ -183,7 +189,7 @@
                     if (emailTemp != null)
                     {
                         areaTableID = emailTemp.BaseTableId;
-                        lblTitle.Text = @"Edit Email Template";
+                        lblTitle.Text = @"General Details";
 
                         if (emailTemp.SystemTemplate)
                         {
@@ -194,11 +200,21 @@
                             this.lblSendNote.Style.Add("display", "inline-block");
                         }
 
+                        if (clsemailtemps.PermittedMobileNotificationTemplateIds.Contains(emailTemp.TemplateId))
+                        {        
+                            //Show Mobile Notification email template options
+                            this.sendMobileNotifcationCheckboxDiv.Style.Add("display", "block"); 
+                            this.chkCanEmailNotification.Style.Add("display", "inline-block");
+                            this.lblSendMobileNotification.Style.Add("display", "inline-block");
+                            this.mobileNotificationWrapper.Style.Add("display", "block");
+                            this.mobileNotificationHeader.Style.Add("display", "block");  
+                        }
+
                         var master = ((smForm)this.Page.Master);
 
                         if (master != null)
                         {
-                            var title = "Email Template: " + emailTemp.TemplateName;
+                            var title = "Notification Template: " + emailTemp.TemplateName;
                             master.title = title;
                         }
 
@@ -264,11 +280,17 @@
                         this.PopulateSubject(emailTemp.Subject.details);
                         this.bodyHtml.Value = emailTemp.Body.details;
                         this.noteHtml.Value = emailTemp.Note.details;
+                        this.txtMobileNotificationMessage.Text = emailTemp.MobileNotificationMessage;
 
                         this.chkSystemTemplate.Checked = emailTemp.SystemTemplate;
 
                         this.ChkSendNote.Checked = emailTemp.SendNote.HasValue ? emailTemp.SendNote.Value : false;
                         this.ChkSendEmail.Checked = emailTemp.SendEmail.HasValue ? emailTemp.SendEmail.Value : false;
+
+                        this.chkCanEmailNotification.Checked = emailTemp.CanSendMobileNotification.HasValue
+                                                                   ? emailTemp.CanSendMobileNotification.Value
+                                                                   : false;
+
                         this.baseTreeData.Value = this.AddNodesInWebTree(
                             Convert.ToString(this.areaTableID),
                             reportService);

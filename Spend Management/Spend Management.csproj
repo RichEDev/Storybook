@@ -277,7 +277,7 @@
     <Content Include="expenses\ClaimSelector.aspx" />
     <Content Include="expenses\claimsummary.aspx" />
     <Content Include="expenses\claimViewer.aspx" />
-    <Content Include="shared\admin\aeemailtemplate.aspx" />
+    <Content Include="shared\admin\aenotificationtemplate.aspx" />
     <Content Include="shared\admin\aeLogonMessages.aspx" />
     <Content Include="shared\admin\AuthoriserLevel.aspx" />
     <Content Include="shared\admin\AuthoriserLevelDetails.aspx" />
@@ -1076,12 +1076,12 @@
     <Compile Include="expenses\code\StringFormatHelper.cs" />
     <Compile Include="SessionHandlerConfiguration.cs" />
     <Compile Include="SessionHttpHandler.cs" />
-    <Compile Include="shared\admin\aeemailtemplate.aspx.cs">
-      <DependentUpon>aeemailtemplate.aspx</DependentUpon>
+    <Compile Include="shared\admin\aenotificationtemplate.aspx.cs">
+      <DependentUpon>aenotificationtemplate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="shared\admin\aeemailtemplate.aspx.designer.cs">
-      <DependentUpon>aeemailtemplate.aspx</DependentUpon>
+    <Compile Include="shared\admin\aenotificationtemplate.aspx.designer.cs">
+      <DependentUpon>aenotificationtemplate.aspx</DependentUpon>
     </Compile>
     <Compile Include="shared\admin\aeLogonMessages.aspx.cs">
       <DependentUpon>aeLogonMessages.aspx</DependentUpon>
@@ -2707,12 +2707,12 @@
     <Compile Include="shared\admin\admindoctemplates.aspx.designer.cs">
       <DependentUpon>admindoctemplates.aspx</DependentUpon>
     </Compile>
-    <Compile Include="shared\admin\adminemailtemplates.aspx.cs">
-      <DependentUpon>adminemailtemplates.aspx</DependentUpon>
+    <Compile Include="shared\admin\adminnotificationtemplates.aspx.cs">
+      <DependentUpon>adminnotificationtemplates.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="shared\admin\adminemailtemplates.aspx.designer.cs">
-      <DependentUpon>adminemailtemplates.aspx</DependentUpon>
+    <Compile Include="shared\admin\adminnotificationtemplates.aspx.designer.cs">
+      <DependentUpon>adminnotificationtemplates.aspx</DependentUpon>
     </Compile>
     <Compile Include="shared\admin\adminuserdefined.aspx.cs">
       <DependentUpon>adminuserdefined.aspx</DependentUpon>
@@ -3141,7 +3141,7 @@
     <Content Include="shared\admin\admindocmerge.aspx" />
     <Content Include="shared\admin\admindocmergeprojects.aspx" />
     <Content Include="shared\admin\admindoctemplates.aspx" />
-    <Content Include="shared\admin\adminemailtemplates.aspx" />
+    <Content Include="shared\admin\adminnotificationtemplates.aspx" />
     <Content Include="shared\admin\adminemployees.aspx" />
     <Content Include="shared\admin\adminProductLicences.aspx" />
     <Content Include="shared\admin\adminprojectcodes.aspx" />

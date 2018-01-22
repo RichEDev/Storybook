@@ -71,7 +71,7 @@ $(document).ready(function () {
 
         $("#wrapper").toggleClass("toggled");
         if ((width <= 1024) && (height <= 768)) {
-            if (window.location.href.indexOf("aeemailtemplate.aspx") == -1 && window.location.href.indexOf("colours.aspx") == -1 && window.location.href.indexOf("claimViewer.aspx") == -1 && window.location.href.indexOf("aeexpense.aspx") == -1 && window.location.href.indexOf("ContractSummary.aspx") == -1) {
+            if (window.location.href.indexOf("aenotificationtemplate.aspx") == -1 && window.location.href.indexOf("colours.aspx") == -1 && window.location.href.indexOf("claimViewer.aspx") == -1 && window.location.href.indexOf("aeexpense.aspx") == -1 && window.location.href.indexOf("ContractSummary.aspx") == -1) {
                 if ($('#wrapper').hasClass('toggled')) {
                     $('.formpanel .onecolumnlarge .inputs').css('width', '');
                     $('.formpanel .twocolumn label').css('width', '');
