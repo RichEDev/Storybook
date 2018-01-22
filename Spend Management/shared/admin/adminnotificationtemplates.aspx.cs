@@ -9,7 +9,7 @@ namespace Spend_Management
 {
     using System.Web.UI.WebControls;
 
-    public partial class adminemailtemplates : System.Web.UI.Page
+    public partial class adminnotificationtemplates : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -56,7 +56,7 @@ namespace Spend_Management
         /// </returns>
         private static string[] CreateSystemGrid(CurrentUser user)
         {
-            const string Sql = "SELECT sendNote, sendEmail, emailtemplateid, templatename, systemtemplate FROM emailTemplates";
+            const string Sql = "SELECT sendNote, sendEmail, canSendMobileNotification, emailtemplateid, templatename, systemtemplate FROM emailTemplates";
             var grid = new cGridNew(user.AccountID, user.EmployeeID, "gridSysEmailTemplates", Sql)
                            {
                                EmptyText
@@ -88,6 +88,7 @@ namespace Spend_Management
 
             grid.getColumnByName("emailtemplateid").hidden = true;
             grid.getColumnByName("systemtemplate").hidden = true;
+            grid.getColumnByName("canSendMobileNotification").Width = Unit.Pixel(160);
             grid.getColumnByName("sendNote").Width = Unit.Pixel(160);
             grid.getColumnByName("sendEmail").Width = Unit.Pixel(160);
             grid.addFilter(

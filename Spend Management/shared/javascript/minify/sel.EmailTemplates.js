@@ -518,7 +518,7 @@
                         }
                     } else {
                         var temp = isSystemTemp === true ? "system" : "custom";
-                        window.location = "/shared/admin/adminemailtemplates.aspx?template=" + temp;
+                        window.location = "/shared/admin/adminnotificationtemplates.aspx?template=" + temp;
                     }
 
                 }, SEL.EmailTemplates.CommandFail);
@@ -537,7 +537,7 @@
                     }
                     else temp = SEL.EmailTemplates.Elements.chksystemtempateidinitialval === true ? "?template=system" : "?template=custom";   
                 }
-                window.location = "/shared/admin/adminemailtemplates.aspx" + temp;
+                window.location = "/shared/admin/adminnotificationtemplates.aspx" + temp;
             },
 
             DeleteEmailTemplate: function (emailtemplateid)

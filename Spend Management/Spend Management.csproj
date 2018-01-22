@@ -2707,12 +2707,12 @@
     <Compile Include="shared\admin\admindoctemplates.aspx.designer.cs">
       <DependentUpon>admindoctemplates.aspx</DependentUpon>
     </Compile>
-    <Compile Include="shared\admin\adminemailtemplates.aspx.cs">
-      <DependentUpon>adminemailtemplates.aspx</DependentUpon>
+    <Compile Include="shared\admin\adminnotificationtemplates.aspx.cs">
+      <DependentUpon>adminnotificationtemplates.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="shared\admin\adminemailtemplates.aspx.designer.cs">
-      <DependentUpon>adminemailtemplates.aspx</DependentUpon>
+    <Compile Include="shared\admin\adminnotificationtemplates.aspx.designer.cs">
+      <DependentUpon>adminnotificationtemplates.aspx</DependentUpon>
     </Compile>
     <Compile Include="shared\admin\adminuserdefined.aspx.cs">
       <DependentUpon>adminuserdefined.aspx</DependentUpon>
@@ -3141,7 +3141,7 @@
     <Content Include="shared\admin\admindocmerge.aspx" />
     <Content Include="shared\admin\admindocmergeprojects.aspx" />
     <Content Include="shared\admin\admindoctemplates.aspx" />
-    <Content Include="shared\admin\adminemailtemplates.aspx" />
+    <Content Include="shared\admin\adminnotificationtemplates.aspx" />
     <Content Include="shared\admin\adminemployees.aspx" />
     <Content Include="shared\admin\adminProductLicences.aspx" />
     <Content Include="shared\admin\adminprojectcodes.aspx" />

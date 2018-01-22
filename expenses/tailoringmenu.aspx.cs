@@ -104,7 +104,7 @@ public partial class reports_tailoringmenu : Page
                     48,
                     "Notification Templates",
                     "Create/Amend Notification templates that can be used for Workflows and employee subscribed Notifications.",
-                    "shared/admin/adminemailtemplates.aspx");
+					"shared/admin/adminnotificationtemplates.aspx");
             }
 
             if (user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.EmailSuffixes, true))
