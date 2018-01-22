@@ -4,7 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="contentmenu" runat="server">
     <a href="javascript:changePage('System');" id="lnkSystem" class="selectedPage">System Notification Templates</a>
     <a href="javascript:changePage('Custom');" id="lnkCustom" >Custom Notification Templates</a>
-    <asp:Panel runat="server" ID="pnlAddTemplate"><a href="aeemailtemplate.aspx" class="submenuitem">New Notification Template</a></asp:Panel>
+    <asp:Panel runat="server" ID="pnlAddTemplate"><a href="aenotificationtemplate.aspx" class="submenuitem">New Notification Template</a></asp:Panel>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="contentmain" runat="server">
 

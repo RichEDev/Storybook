@@ -80,7 +80,7 @@ namespace Spend_Management
                                        true),
                                editlink
                                    =
-                                   "aeemailtemplate.aspx?emailtemplateid={emailtemplateid}",
+								   "aenotificationtemplate.aspx?templateid={emailtemplateid}",
                                KeyField
                                    =
                                    "emailtemplateid"
@@ -137,7 +137,7 @@ namespace Spend_Management
                                       true),
                               editlink
                                   =
-                                  "aeemailtemplate.aspx?emailtemplateid={emailtemplateid}",
+								  "aenotificationtemplate.aspx?templateid={emailtemplateid}",
                               deletelink
                                   =
                                   "javascript:SEL.EmailTemplates.DeleteEmailTemplate({emailtemplateid});",

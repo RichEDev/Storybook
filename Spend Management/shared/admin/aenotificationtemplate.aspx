@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/masters/smForm.master" AutoEventWireup="true" CodeBehind="aeemailtemplate.aspx.cs" Inherits="Spend_Management.aeemailtemplate" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/masters/smForm.master" AutoEventWireup="true" CodeBehind="aenotificationtemplate.aspx.cs" Inherits="Spend_Management.aenotificationtemplate" %>
 <%@ Register Src="~/shared/usercontrols/attachmentList.ascx" TagName="UploadAttachment" TagPrefix="uc1" %>
 <%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="cke" %>
 <%@ Register TagPrefix="asp" Namespace="SpendManagementHelpers" Assembly="SpendManagementHelpers" %>

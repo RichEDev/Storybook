@@ -10,7 +10,7 @@
 namespace Spend_Management {
     
     
-    public partial class aeemailtemplate {
+    public partial class aenotificationtemplate {
         
         /// <summary>
         /// TokenInputCss control.
