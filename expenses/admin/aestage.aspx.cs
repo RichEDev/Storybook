@@ -204,14 +204,10 @@ namespace expenses
                         this.cmblist.Items.AddRange(teams.CreateDropDown(reqstage.relid));
                         break;
                     case SignoffType.CostCodeOwner:
-                        if (user.Account.IsNHSCustomer)
-                        {
-                            this.rowLineManagerAssignmentSupervisor.Visible = true;
-                            this.ReqLineManagerAssignmentSupervisor.Enabled = true;
-                            string nextApproverWhenNoCostCodeOrCostCodeOwner = reqstage.NhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner ? "AssignmentSupervisor" : "LineManager";
-                            this.DropDownLineManagerAssignmentSupervisor.Items.FindByValue(nextApproverWhenNoCostCodeOrCostCodeOwner).Selected = true;
-                        }
-
+                        this.rowLineManagerAssignmentSupervisor.Visible = true;
+                        this.ReqLineManagerAssignmentSupervisor.Enabled = true;
+                        string nextApproverWhenNoCostCodeOrCostCodeOwner = reqstage.NhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner ? "AssignmentSupervisor" : "LineManager";
+                        this.DropDownLineManagerAssignmentSupervisor.Items.FindByValue(nextApproverWhenNoCostCodeOrCostCodeOwner).Selected = true;
                         this.cmblist.Visible = false;
                         this.reqsignoff.Enabled = false;
                         break;
