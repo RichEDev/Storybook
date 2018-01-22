@@ -12,13 +12,15 @@
 @CUdelegateID INT,
 @sendnote bit,
 @sendemail bit,
-@note nvarchar(MAX)
+@note nvarchar(MAX),
+@canSendMobileNotification BIT,
+@mobileNotificationMessage NVARCHAR(400)
 AS
 BEGIN
 if @emailtemplateid = 0
 begin
-	insert into emailTemplates (templatename, [subject], bodyhtml, priority, basetableid, systemtemplate, createdon, createdby, sendNote, sendemail, note,  templateId)
-	values (@templatename, @subject, @bodyhtml, @priority, @basetableid, @systemtemplate, @date, @userid, @sendnote, @sendemail, @note,NEWID());
+	insert into emailTemplates (templatename, [subject], bodyhtml, priority, basetableid, systemtemplate, createdon, createdby, sendNote, sendemail, note, CanSendMobileNotification, MobileNotificationMessage, templateId)
+	values (@templatename, @subject, @bodyhtml, @priority, @basetableid, @systemtemplate, @date, @userid, @sendnote, @sendemail, @note, @canSendMobileNotification, @mobileNotificationMessage, NEWID());
 	set @emailtemplateid = scope_identity();
 
 	exec addInsertEntryToAuditLog @CUemployeeID, @CUdelegateID, 22, @emailtemplateid, @templatename, null;
@@ -44,9 +46,11 @@ begin
 	modifiedon = @date,
 	modifiedby = @userid,
 	sendNote=@sendnote,
-	sendEmail=@sendemail,
-	
-	note=@note
+	sendEmail=@sendemail,		
+	note=@note,
+	canSendMobileNotification = @canSendMobileNotification,
+	mobileNotificationMessage = @mobileNotificationMessage
+
 	where emailtemplateid = @emailtemplateid;
 
 	if @oldtemplatename <> @templatename

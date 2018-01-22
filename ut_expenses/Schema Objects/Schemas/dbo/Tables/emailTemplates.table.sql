@@ -15,6 +15,8 @@
     [sendNote] BIT NULL, 
     [note] NVARCHAR(MAX) NULL, 
     [templateId] UNIQUEIDENTIFIER NOT NULL CONSTRAINT UQ_TemplateId UNIQUE (templateId), 
-    [sendEmail] BIT NULL
+    [sendEmail] BIT NULL, 
+    [CanSendMobileNotification] BIT NULL, 
+    [MobileNotificationMessage] NVARCHAR(400) NULL
 );
 
