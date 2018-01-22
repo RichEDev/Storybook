@@ -308,10 +308,10 @@ namespace Spend_Management
         /// </param>
         public override void NotifyAdminOfNewVehicle(int employeeId, ICurrentUserBase user, cAccountProperties accountProperties, int vehicleId)
         {
-            var emailTemplates = new cEmailTemplates((ICurrentUser)user);
+            var notifications = new NotificationTemplates((ICurrentUser)user);
             var employees = new cEmployees(user.AccountID);
             Employee reqEmployee = employees.GetEmployeeById(employeeId);
-            var emailMessage = emailTemplates.DetermineDefaultSender(accountProperties, reqEmployee.EmailAddress);
+            var emailMessage = notifications.DetermineDefaultSender(accountProperties, reqEmployee.EmailAddress);
 
             try
             {      
@@ -319,7 +319,7 @@ namespace Spend_Management
 
                 var senderId = user.EmployeeID;
                 int[] recipientIds = { accountProperties.MainAdministrator };
-                emailTemplates.SendMessage(templateName, senderId, recipientIds, vehicleId, defaultSender: emailMessage);
+                notifications.SendMessage(templateName, senderId, recipientIds, vehicleId, defaultSender: emailMessage);
             }
             catch (Exception)
             {

@@ -623,10 +623,10 @@ namespace Spend_Management
               int vehicleId)
         {
 
-            var emailTemplate = new cEmailTemplates((ICurrentUser)user);
+            var notifications = new NotificationTemplates((ICurrentUser)user);
             var employees = new cEmployees(user.AccountID);
             Employee reqEmployee = employees.GetEmployeeById(employeeId);
-            var emailMessage = emailTemplate.DetermineDefaultSender(accountProperties, reqEmployee.EmailAddress);
+            var emailMessage = notifications.DetermineDefaultSender(accountProperties, reqEmployee.EmailAddress);
 
             try
             {
@@ -634,7 +634,7 @@ namespace Spend_Management
 
                 var senderId = user.EmployeeID;
                 int[] recipientIds = { accountProperties.MainAdministrator };
-                emailTemplate.SendMessage(templateName, senderId, recipientIds, vehicleId, defaultSender: emailMessage);
+                notifications.SendMessage(templateName, senderId, recipientIds, vehicleId, defaultSender: emailMessage);
             }
             catch (Exception)
             {

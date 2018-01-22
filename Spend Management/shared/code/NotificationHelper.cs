@@ -13,7 +13,7 @@ namespace Spend_Management.shared.code
     /// <summary>
     /// A helper for building email notifications
     /// </summary>
-    public class EmailNotificationHelper
+    public class NotificationHelper
     {
         /// <summary>
         /// The employee who the email is about
@@ -39,7 +39,7 @@ namespace Spend_Management.shared.code
         /// Constructor for the EmailNotificationHelper class
         /// </summary>
         /// <param name="employee">The current employee</param>
-        public EmailNotificationHelper(Employee employee)
+        public NotificationHelper(Employee employee)
         {
             this.Employee = employee;
             this.AccountProperties = new cAccountSubAccountsBase(this.Employee.AccountID).getSubAccountById(this.Employee.DefaultSubAccount).SubAccountProperties;
@@ -57,8 +57,10 @@ namespace Spend_Management.shared.code
         {
             var notificationEmployees = this.GetEmployeesToNotify(emailNotificationType);
             var user = new CurrentUser(this.Employee.AccountID, this.Employee.EmployeeID, 0, modules, this.Employee.DefaultSubAccount);
-            var emailTemplates = new cEmailTemplates(user);
-            Task.Run(() => emailTemplates.SendMessage(SendMessageEnum.GetEnumDescription(sendMessageDescription), this.Employee.EmployeeID, notificationEmployees.ToArray(), this.Employee.EmployeeID));
+            var emailTemplates = new NotificationTemplates(user);
+
+            var recipients = notificationEmployees.Select(notificationEmployee => notificationEmployee.EmployeeID).ToList();
+            emailTemplates.SendMessage(SendMessageEnum.GetEnumDescription(sendMessageDescription), this.Employee.EmployeeID, recipients.ToArray(), this.Employee.EmployeeID);
         }
 
         /// <summary>
@@ -103,7 +105,7 @@ namespace Spend_Management.shared.code
         /// <returns>A list of employees</returns>
         private List<int> GetEmployeesToNotify(EmailNotificationType emailNotificationType)
         {
-            var notificationSubscriptions = new cEmailNotifications(this.Employee.AccountID).GetNotificationSubscriptions(emailNotificationType);
+            var notificationSubscriptions = new Notifications(this.Employee.AccountID).GetNotificationSubscriptions(emailNotificationType);
             var notificationEmployeeIds = new List<int>(from notificationSubscription in notificationSubscriptions where (sendType)notificationSubscription[0] == sendType.employee select (int)notificationSubscription[1]);
 
             return notificationEmployeeIds;

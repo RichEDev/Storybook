@@ -574,7 +574,7 @@
     </Compile>
     <Compile Include="Random\FileDataRequest.cs" />
     <Compile Include="ReportChart.cs" />
-    <Compile Include="cEmailNotifications.cs" />
+    <Compile Include="Notifications.cs" />
     <Compile Include="Definitions\JoinVia\cJoinStep.cs" />
     <Compile Include="Definitions\JoinVia\JoinSteps.cs" />
     <Compile Include="Definitions\JoinVia\JoinViaPart.cs" />
@@ -619,7 +619,7 @@
     <Compile Include="GreenLight\HTMLImageData.cs" />
     <Compile Include="Hotels\Hotels.cs" />
     <Compile Include="Helpers\ReaderExtensions.cs" />
-    <Compile Include="Interfaces\IEmailTemplates.cs" />
+    <Compile Include="Interfaces\INotificationTemplates.cs" />
     <Compile Include="Interfaces\IGlobalCountries.cs" />
     <Compile Include="Interfaces\IKnowledgeArticle.cs" />
     <Compile Include="Interfaces\ISupportTicket.cs" />
@@ -748,8 +748,8 @@
     <Compile Include="cDocumentTemplate.cs" />
     <Compile Include="Definitions\cElement.cs" />
     <Compile Include="cElementCategory.cs" />
-    <Compile Include="cEmailNotification.cs" />
-    <Compile Include="cEmailTemplate.cs" />
+    <Compile Include="Notification.cs" />
+    <Compile Include="NotificationTemplate.cs" />
     <Compile Include="cEmployeeHomeLocation.cs" />
     <Compile Include="cEmployeeWorkLocation.cs" />
     <Compile Include="cESRElementMapping.cs" />

@@ -630,8 +630,8 @@ namespace Expenses_Scheduler
             {
                 if (notifyAboutActivation || notifyAboutArchive || notifyAboutAssignments || notifyAboutCarActivation)
                 {
-                    var notifications = new cEmailNotifications(account.accountid);
-                    var templates = new cEmailTemplates(account.accountid, 0, string.Empty, 0, GlobalVariables.DefaultModule);
+                    var notifications = new Notifications(account.accountid);
+                    var templates = new NotificationTemplates(account.accountid, 0, string.Empty, 0, GlobalVariables.DefaultModule);
 
                     notifications.SendNotifications(EmailNotificationType.ESRSummaryNotification, "", templates);
                 }

@@ -731,10 +731,10 @@ using System.Web.Http;
                         }
                     },
                     {
-                    typeof (List<cEmailNotification>),
-                    new List<cEmailNotification>
+                    typeof (List<Notification>),
+                    new List<Notification>
                     {
-                        new cEmailNotification(1, "Email", "Description", 1, true, CustomerType.Standard,
+                        new Notification(1, "Email", "Description", 1, true, CustomerType.Standard,
                             EmailNotificationType.StandardNotification)
                     }
 

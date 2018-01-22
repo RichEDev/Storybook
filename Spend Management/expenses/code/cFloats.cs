@@ -192,7 +192,7 @@ namespace Spend_Management
 
             CurrentUser user = cMisc.GetCurrentUser();
             cEmployees clsemployees = new cEmployees(this.accountid);
-            var emails = new cEmailTemplates(user);
+            var notifications = new NotificationTemplates(user);
             cGroups clsgroups = new cGroups(user.AccountID);
             Employee claimemp = clsemployees.GetEmployeeById(employeeid);
             cGroup reqgroup = clsgroups.GetGroupById(claimemp.AdvancesSignOffGroup);
@@ -218,7 +218,7 @@ namespace Spend_Management
             {
                 this.approveFloat(reqfloat.floatid);
                 var recieverId = new int[] {employeeid};
-                emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SendToAClaimantToNotifyThemThatTheirAdvanceHasBeenApproved), authoriser, recieverId, reqfloat.floatid);
+                notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SendToAClaimantToNotifyThemThatTheirAdvanceHasBeenApproved), authoriser, recieverId, reqfloat.floatid);
                 return 2;
             }
 
@@ -287,7 +287,7 @@ namespace Spend_Management
                     reqfloat.stage++;
                     if (notify == 1) //just notify of claim by email
                     {
-                        emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorToNotifyThemOfAAdvanceBeingRequested), employeeid, nextcheckerid, reqfloat.floatid);
+                        notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorToNotifyThemOfAAdvanceBeingRequested), employeeid, nextcheckerid, reqfloat.floatid);
                     }
                     else
                     {
@@ -313,7 +313,7 @@ namespace Spend_Management
                         expdata.sqlexecute.Parameters.AddWithValue("@floatid", reqfloat.floatid);
                         expdata.sqlexecute.Parameters.AddWithValue("@employeeid", employeeid);
                         expdata.ExecuteSQL(sql);
-                        emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorToRequestAnAdvance), employeeid, nextcheckerid, reqfloat.floatid);
+                        notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorToRequestAnAdvance), employeeid, nextcheckerid, reqfloat.floatid);
                         int[] arremp = new int[1];
                         arremp[0] = employeeid;
 
@@ -490,10 +490,10 @@ namespace Spend_Management
             expdata.ExecuteSQL(strsql);
             expdata.sqlexecute.Parameters.Clear();
 
-            var emails = new cEmailTemplates(this.accountid, 0, string.Empty, 0, Modules.expenses);
+            var notifications = new NotificationTemplates(this.accountid, 0, string.Empty, 0, Modules.expenses);
 
             recipient[0] = reqfloat.approver;
-            emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorToNotifyThemAnAdvanceHasBeenDispute), reqfloat.employeeid, recipient, floatid);
+            notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorToNotifyThemAnAdvanceHasBeenDispute), reqfloat.employeeid, recipient, floatid);
 
             this.InvalidateCache(false);
         }
@@ -852,11 +852,11 @@ namespace Spend_Management
 
             reqfloat.payAdvance();
 
-            var emails = new cEmailTemplates(this.accountid, 0, string.Empty, 0, Modules.expenses);
+            var notifications = new NotificationTemplates(this.accountid, 0, string.Empty, 0, Modules.expenses);
 
             recipient[0] = reqfloat.employeeid;
 
-            emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantToNotifyThemTheirAdvanceHasBeenPaid), reqfloat.approver, recipient, floatid);
+            notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantToNotifyThemTheirAdvanceHasBeenPaid), reqfloat.approver, recipient, floatid);
             this.InvalidateCache();
         }
 
@@ -889,13 +889,13 @@ namespace Spend_Management
             expdata.ExecuteSQL(strsql);
             expdata.sqlexecute.Parameters.Clear();
 
-            var emails = new cEmailTemplates(this.accountid, 0, string.Empty, 0, Modules.expenses);
+            var notifications = new NotificationTemplates(this.accountid, 0, string.Empty, 0, Modules.expenses);
 
             recipient[0] = reqfloat.employeeid;
             reqfloat.rejected = true;
             try
             {
-                emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SendToAClaimantToNotifyThemThatTheirAdvanceHasBeenRejected), reqfloat.approver, recipient, floatid);
+                notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SendToAClaimantToNotifyThemThatTheirAdvanceHasBeenRejected), reqfloat.approver, recipient, floatid);
             }
             catch
             {

@@ -41,7 +41,7 @@
         [AuthAudit(SpendManagementElement.Emails, AccessRoleType.View)]
         public List<EmailNotification> GetStandardNotifications()
         {
-            var standardNotifications = new cEmailNotifications(this.CurrentUser.AccountID);
+            var standardNotifications = new Notifications(this.CurrentUser.AccountID);
             return standardNotifications.EmailNotificationsByCustomerType(CustomerType.Standard)
                     .Select(x => new EmailNotification().From(x.Value, null))
                     .ToList();
@@ -56,7 +56,7 @@
         {
             if (this.CurrentUser.Account.IsNHSCustomer)
             {
-                var nhsNotifications = new cEmailNotifications(this.CurrentUser.AccountID);
+                var nhsNotifications = new Notifications(this.CurrentUser.AccountID);
                 return nhsNotifications.EmailNotificationsByCustomerType(CustomerType.NHS).Select(x => x.Value).Select(e => new EmailNotification().From(e, null)).ToList();
             }
             return new List<EmailNotification>();
@@ -135,7 +135,7 @@
                 throw new ApiException(ApiResources.ApiErrorWrongEmployeeId, ApiResources.ApiErrorWrongEmployeeIdMessage);
             }
 
-            var notifications = new cEmailNotifications(accountId);
+            var notifications = new Notifications(accountId);
             var not = notifications.GetEmailNotificationByID(notificationId);
 
             if (not == null)

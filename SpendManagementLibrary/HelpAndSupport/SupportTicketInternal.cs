@@ -316,7 +316,7 @@
                 if (notificationSent == false)
                 {
                     // notify all employees who are subscribed, if there aren't any just notify the account administrator email address
-                    List<object[]> notificationSubscriptions = new cEmailNotifications(user.AccountID).GetNotificationSubscriptions(EmailNotificationType.SupportTicketNotification);
+                    List<object[]> notificationSubscriptions = new Notifications(user.AccountID).GetNotificationSubscriptions(EmailNotificationType.SupportTicketNotification);
                     if (notificationSubscriptions.Count > 0)
                     {
                         var notificationEmployeeIds = new List<int>(from notificationSubscription in notificationSubscriptions where (sendType)notificationSubscription[0] == sendType.employee select (int)notificationSubscription[1]);

@@ -40,7 +40,7 @@ namespace SpendManagementApi.Repositories
 
                 Log.Debug("Sending Excess Mileage notifications");
 
-                new EmailNotificationHelper(
+                new NotificationHelper(
                     new cEmployees(accountId).GetEmployeeById(employeeId)
                     ).ExcessMileage();
 

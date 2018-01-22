@@ -168,9 +168,9 @@ namespace SpendManagementApi.Repositories.Expedite
                             // update claim history.
                             var history = string.Format("Claim {0} has reimbursed.", claim.claimno);
                             ActionContext.Claims.UpdateClaimHistory(claim, history);
-                            var emails = ActionContext.Emails;
-                            //Send email to each claimant                                
-                            emails.SendMessage(new Guid("67E99E3E-E431-4C9C-A131-5D647D64FF05"), User.EmployeeID,
+                            var notifications = ActionContext.Notifications;
+                            //Send notification to each claimant                                
+                            notifications.SendMessage(new Guid("67E99E3E-E431-4C9C-A131-5D647D64FF05"), User.EmployeeID,
                                 new[] { employee.EmployeeID });
                         }
                     }

@@ -1285,7 +1285,7 @@ namespace Spend_Management
 
             employee.GetWorkAddresses().Add(location, user);
 
-            new EmailNotificationHelper(employee).ExcessMileage();
+            new NotificationHelper(employee).ExcessMileage();
 
             return true;
         }
@@ -1313,7 +1313,7 @@ namespace Spend_Management
             Employee employee = employees.GetEmployeeById(employeeID);
             employee.GetWorkAddresses().Remove(locationid, user);
 
-            new EmailNotificationHelper(employee).ExcessMileage();
+            new NotificationHelper(employee).ExcessMileage();
 
             return true;
         }
@@ -1415,7 +1415,7 @@ namespace Spend_Management
                        startmiles, startmilesdate, false, null, 0, authoriserLevelId, oldemp.NotifyClaimUnsubmission, null, null, null, null, null,null,null,null,null,null,null,null,null, excessMileage);
                 if (employee.EmailAddress != oldemp.EmailAddress)
                 {
-                    cEmailNotifications.InvalidateCache(user.AccountID);
+                    Notifications.InvalidateCache(user.AccountID);
                 }
             }
             else
@@ -1522,7 +1522,7 @@ namespace Spend_Management
                 location = new cEmployeeHomeLocation(employeelocationid, employeeid, locationid, startdate, enddate, DateTime.Now, user.EmployeeID, null, null);
             }
 
-            new EmailNotificationHelper(employee).ExcessMileage();
+            new NotificationHelper(employee).ExcessMileage();
 
             employee.GetHomeAddresses().Add(location, user);
 
@@ -1552,7 +1552,7 @@ namespace Spend_Management
             Employee employee = employees.GetEmployeeById(employeeID);
             employee.GetHomeAddresses().Remove(locationid, user);
 
-            new EmailNotificationHelper(employee).ExcessMileage();
+            new NotificationHelper(employee).ExcessMileage();
 
             return true;
         }
@@ -1689,7 +1689,7 @@ namespace Spend_Management
         /// </summary>
         public void GenerateEmailNotifications(int employeeid, Employee reqemp)
         {
-            var clsEmailNotifications = new cEmailNotifications(this._user.AccountID);
+            var Notifications = new Notifications(this._user.AccountID);
             Label lblLabel;
             Label lblInputs;
             Label lblIcons;
@@ -1698,13 +1698,13 @@ namespace Spend_Management
             CheckBox chkBox;
 
             #region Standard Notifications
-            SortedList<int, cEmailNotification> lstStandardNotifications = clsEmailNotifications.EmailNotificationsByCustomerType(CustomerType.Standard);
+            SortedList<int, Notification> lstStandardNotifications = Notifications.EmailNotificationsByCustomerType(CustomerType.Standard);
 
             bool secondColumn = false;
 
             var pnlTwoColumn = new Panel();
 
-            foreach (cEmailNotification notification in lstStandardNotifications.Values)
+            foreach (Notification notification in lstStandardNotifications.Values)
             {
                 if (!notification.Enabled || (this._user.CurrentActiveModule != Modules.expenses &&
                                               notification.EmailNotificationType ==
@@ -1760,7 +1760,7 @@ namespace Spend_Management
             #region NHS Notifications
             if (this._user.Account.IsNHSCustomer)
             {
-                SortedList<int, cEmailNotification> lstEmailNotifications = clsEmailNotifications.EmailNotificationsByCustomerType(CustomerType.NHS);
+                SortedList<int, Notification> lstEmailNotifications = Notifications.EmailNotificationsByCustomerType(CustomerType.NHS);
                 pnlTwoColumn = new Panel();
                 pnlTwoColumn.CssClass = "twocolumn";
 
@@ -1768,7 +1768,7 @@ namespace Spend_Management
 
                 pnlESREmailNotifications.Controls.Add(pnlTwoColumn);
 
-                foreach (cEmailNotification notification in lstEmailNotifications.Values)
+                foreach (Notification notification in lstEmailNotifications.Values)
                 {
                     if (!notification.Enabled) continue;
                     if (secondColumn)
