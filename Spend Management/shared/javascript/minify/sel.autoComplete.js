@@ -334,118 +334,124 @@
                         });
                     }
 
-                    Spend_Management.svcAutoComplete.GetTriggerFieldParentValues(parentControlId, parents, children, formId, entityId,
+                    Spend_Management.svcAutoComplete.GetTriggerFieldParentValues(parents, children, formId, entityId,
                         function(data) {
                             if (data != null) {
-                            var currentChildControl = $('select[id*=txt' + data[0].FieldToBuild + ']');   
-                            if (!AutoCompleteSearches.InitailData.filter(function (e) { return e.childControl == data[0].FieldToBuild; }).length >0) {
-                                var obj = {
-                                    parentControls: parents,
-                                    childControl: data[0].FieldToBuild,
-                                    EnableSelectinator: $('input[id$=txt' + data[0].FieldToBuild + '_SelectinatorText]').is(":visible")
-
-                                };
-                                AutoCompleteSearches.InitailData.push(obj);
-                            }
-                            if (data.length === 1 && data[0].Key === 0) {
-                                currentChildControl.find('option').remove();
-                                currentChildControl.append($('<option>',{value: 0,text: '[None]', title: "None"}));
-                                currentChildControl.show();
-                                currentChildControl.next(".AutoCombostyledSelect").show();
-                                currentChildControl.next(".AutoCombooptions").show();
-                                currentChildControl.parent(".AutoComboselect").show();
-                                currentChildControl.next(".AutoCombostyledSelect").text("[None]");
-                                $("label[id*=txt" + data[0].FieldToBuild + "]").addClass("AutoComboMargin");
-                                currentChildControl.parent().find(".AutoCombooptions").html("<li value=\"0\"><span class=\"displayName\">[None]</span></li>");
-
-                                var reference = $('input[id$=txt' + data[0].FieldToBuild + '_SelectinatorText]');
-                                reference.hide();
-                                $('img[id*=txt' + data[0].FieldToBuild + ']').hide();
-                                    
-                                var referenceId = reference.prop("id");
-                                var referenceHiddenFieldForDropdownId = $("#" + referenceId + "_ID");
-                                referenceHiddenFieldForDropdownId.val('');
-
-                                //Clear the trigger fields
-                                    SEL.AutoCompleteCombo.AutoCompleteDropdownBindParameterList.BindMatchParameterList.filter(function (newArray) {
-                                        if (newArray.controlname === data[0].FieldToBuild) {
-                                            SEL.AutoCompleteCombo.AutocompleteComboSelect(0, newArray.BindMatchTableId, newArray.BindtriggerFields);
-                                        }
-                                    });
-                            }
-                            else {
-                                if (data.length > 0 && data[0].FieldToBuild != undefined)
-                                    currentChildControl.find('option').remove();
-                                currentChildControl.append($('<option>', {
-                                    value: 0,
-                                    text: '[None]',
-                                    title: "None"
-                                }));
-                                $(data).each(function (i, o) {
-                                    if (o.FormattedText === null) {
-                                        currentChildControl.append($('<option>',{ value: o.Key, text: o.Value}));
+                                $(data).each(function (i) {
+                                    var childFieldToBuild = this.Id;
+                                    var childFieldValues = this.ChildFieldValues;
+                                    var currentChildControl = $('select[id*=txt' + childFieldToBuild + ']');
+                                    if (!AutoCompleteSearches.InitailData.filter(function(e) { return e.childControl == childFieldToBuild;}).length >0) {
+                                        var obj = {
+                                            parentControls: parents,
+                                            childControl: childFieldToBuild,
+                                            EnableSelectinator: $('input[id$=txt' + childFieldToBuild + '_SelectinatorText]').is(":visible")
+                                        };
+                                        AutoCompleteSearches.InitailData.push(obj);
                                     }
-                                    else {
-                                        var newOption = "<option title='displayField'  value='" + o.Key + "',1>" + o.Value + "</option>";
-                                        var newOption2 = "<option title='formatted' value='" + o.Key + "',2>" + o.FormattedText + "</option>";
-                                        currentChildControl.append(newOption);
-                                        currentChildControl.append(newOption2);
-                                    }
-                                });
-                                //Set the child control value back to None
-                                currentChildControl.val(0).change();
-                                //Clear the trigger fields                                   
-                                var controlId =$(currentChildControl).attr('id').toString().substring($(currentChildControl).attr('id').indexOf("txt"), $(currentChildControl).attr('id').lastIndexOf("_")).replace(/[^0-9]/gi, '');
-                                SEL.AutoCompleteCombo.AutoCompleteDropdownBindParameterList.BindMatchParameterList.filter(function (newArray) {
-                                    if (newArray.controlname === controlId) {
-                                        SEL.AutoCompleteCombo.AutocompleteComboSelect(currentChildControl.val(), newArray.BindMatchTableId, newArray.BindtriggerFields);
-                                    }
-                                });
-                                if (data.length > 25 && $('input[id*=txt' + data[0].FieldToBuild + ']').length > 0) ///25 is the maximum list item we allow in dropdown
-                                {
-                                    var parentControlValue = {
-                                        parentControls: parents,
-                                        childControl: data[0].FieldToBuild
-                                    };
-                                    SEL.AutoComplete.Bind.childFilterList = JSON.stringify(data);
-
-                                    AutoCompleteSearches.ParentChildFilterData = AutoCompleteSearches.ParentChildFilterData.filter(function (data) {
-                                        return data.parentControl !== parentControlValue.parentControl;
-                                    });
-
-                                    AutoCompleteSearches.ParentChildFilterData.push(parentControlValue);
-                                    currentChildControl.hide();
-                                    currentChildControl.next(".AutoCombostyledSelect").hide();
-                                    $('input[id$=txt' + data[0].FieldToBuild + '_SelectinatorText]').val('');
-                                    currentChildControl.parent(".AutoComboselect").hide();
-                                    $('input[id$=txt' + data[0].FieldToBuild + '_SelectinatorText]').show();                                    
-                                    $("label[id*=txt" + data[0].FieldToBuild + "]").removeClass("AutoComboMargin");
-                                    $('img[id*=txt' + data[0].FieldToBuild + ']').show();
-                                } else {
-                                    if (data[0].FormattedText === null) {
-                                        currentChildControl.on("change", function (event) {
-                                            window["txt" + data[0].FieldToBuild + "selectinator"]["SelectChange"](this);
-                                        });
-                                        $("label[id*=txt" + data[0].FieldToBuild + "]").removeClass("AutoComboMargin");
-                                    } else {
-                                        $("label[id*=txt" + data[0].FieldToBuild + "]").addClass("AutoComboMargin");
-                                        currentChildControl.next(".AutoCombostyledSelect").remove();
+                                    if (childFieldValues.length === 1 && childFieldValues[0].Key === 0) {
+                                        currentChildControl.find('option').remove();
+                                        currentChildControl.append($('<option>',{value: 0,text: '[None]', title: "None"}));
+                                        currentChildControl.show();
+                                        currentChildControl.next(".AutoCombostyledSelect").show();
+                                        currentChildControl.next(".AutoCombooptions").show();
                                         currentChildControl.parent(".AutoComboselect").show();
+                                        currentChildControl.next(".AutoCombostyledSelect").text("[None]");
+                                        $("label[id*=txt" + childFieldToBuild + "]").addClass("AutoComboMargin");
+                                        currentChildControl.parent().find(".AutoCombooptions").html("<li value=\"0\"><span class=\"displayName\">[None]</span></li>");
 
-                                        var referenceId = $('input[id$=txt' + data[0].FieldToBuild + '_SelectinatorText]').prop("id");
+                                        var reference = $('input[id$=txt' + childFieldToBuild + '_SelectinatorText]');
+                                        reference.hide();
+                                        $('img[id*=txt' + childFieldToBuild + ']').hide();
+
+                                        var referenceId = reference.prop("id");
                                         var referenceHiddenFieldForDropdownId = $("#" + referenceId + "_ID");
                                         referenceHiddenFieldForDropdownId.val('');
 
-                                        var childControl=($(currentChildControl).attr('id').toString().substring($(currentChildControl).attr('id').indexOf("txt"), $(currentChildControl).attr('id').lastIndexOf("_")).replace(/[^0-9]/gi, ''));
-                                        SEL.AutoCompleteCombo.ulSelectFormat(currentChildControl,childControl);
+                                        //Clear the trigger fields
+                                        SEL.AutoCompleteCombo.AutoCompleteDropdownBindParameterList.BindMatchParameterList.filter(function (newArray) {
+                                            if (newArray.controlname === childFieldToBuild) {
+                                                SEL.AutoCompleteCombo.AutocompleteComboSelect(0, newArray.BindMatchTableId, newArray.BindtriggerFields);
+                                                }
+                                            });
                                     }
-                                    currentChildControl.show();
-                                    currentChildControl.val(0).change();
-                                    $('input[id$=txt' + data[0].FieldToBuild + '_SelectinatorText]').hide();
-                                    $('img[id*=txt' + data[0].FieldToBuild + ']').hide();
-                                }
+                                    else {
+                                        if (childFieldValues.length > 0 && childFieldValues[0].FieldToBuild != undefined)
+                                            currentChildControl.find('option').remove();
+                                        currentChildControl.append($('<option>', {
+                                                value: 0,
+                                                text: '[None]',
+                                                title: "None"
+                                            }));
+                                        $(childFieldValues).each(function (i, o) {
+                                            if (o.FormattedText === null) {
+                                                currentChildControl.append($('<option>',{ value: o.Key, text: o.Value}));
+                                            }
+                                            else {
+                                                var newOption = "<option title='displayField'  value='" + o.Key + "',1>" + o.Value + "</option>";
+                                                var newOption2 = "<option title='formatted' value='" + o.Key + "',2>" + o.FormattedText + "</option>";
+                                                currentChildControl.append(newOption);
+                                                currentChildControl.append(newOption2);
+                                            }
+                                        });
+                                        //Set the child control value back to None
+                                        currentChildControl.val(0).change();
+                                        //Clear the trigger fields                                   
+                                        var controlId =$(currentChildControl).attr('id').toString().substring($(currentChildControl).attr('id').indexOf("txt"), $(currentChildControl).attr('id').lastIndexOf("_")).replace(/[^0-9]/gi, '');
+                                        SEL.AutoCompleteCombo.AutoCompleteDropdownBindParameterList.BindMatchParameterList.filter(function (newArray) {
+                                                if (newArray.controlname === controlId) {
+                                                    SEL.AutoCompleteCombo.AutocompleteComboSelect(currentChildControl.val(), newArray.BindMatchTableId, newArray.BindtriggerFields);
+                                                }
+                                        });
+
+                                        if (childFieldValues.length > 25 && $('input[id*=txt' + childFieldToBuild + ']').length > 0) ///25 is the maximum list item we allow in dropdown
+                                        {
+                                            var parentControlValue = {
+                                                parentControls: parents,
+                                                childControl: children
+                                            };
+                                            SEL.AutoComplete.Bind.childFilterList = JSON.stringify(childFieldValues);
+
+                                            AutoCompleteSearches.ParentChildFilterData =
+                                                AutoCompleteSearches.ParentChildFilterData.filter(function (childFieldValues) {
+                                                    return childFieldValues.parentControl !== parentControlValue.parentControl;
+                                                });
+
+                                            AutoCompleteSearches.ParentChildFilterData.push(parentControlValue);
+                                            currentChildControl.hide();
+                                            currentChildControl.next(".AutoCombostyledSelect").hide();
+                                            $('input[id$=txt' + childFieldToBuild + '_SelectinatorText]').val('');
+                                            currentChildControl.parent(".AutoComboselect").hide();
+                                            $('input[id$=txt' + childFieldToBuild + '_SelectinatorText]').show();
+                                            $("label[id*=txt" + childFieldToBuild + "]")
+                                                .removeClass("AutoComboMargin");
+                                            $('img[id*=txt' + childFieldToBuild + ']').show();
+                                        } else {
+                                            if (childFieldValues[0].FormattedText === null) {
+                                                currentChildControl.on("change", function (event) {
+                                                        window["txt" + childFieldToBuild + "selectinator"]["SelectChange"](this);
+                                                    });
+                                                $("label[id*=txt" + childFieldToBuild + "]").removeClass("AutoComboMargin");
+                                            } else {
+                                                $("label[id*=txt" + childFieldToBuild + "]").addClass("AutoComboMargin");
+                                                currentChildControl.next(".AutoCombostyledSelect").remove();
+                                                currentChildControl.parent(".AutoComboselect").show();
+
+                                                var referenceId = $('input[id$=txt' + childFieldToBuild + '_SelectinatorText]').prop("id");
+                                                var referenceHiddenFieldForDropdownId = $("#" + referenceId + "_ID");
+                                                referenceHiddenFieldForDropdownId.val('');
+
+                                                var childControl=($(currentChildControl).attr('id').toString().substring($(currentChildControl).attr('id').indexOf("txt"), $(currentChildControl).attr('id').lastIndexOf("_")).replace(/[^0-9]/gi, ''));
+                                                SEL.AutoCompleteCombo.ulSelectFormat(currentChildControl,childControl);
+                                            }
+                                            currentChildControl.show();
+                                            currentChildControl.val(0).change();
+                                            $('input[id$=txt' + childFieldToBuild + '_SelectinatorText]').hide();
+                                            $('img[id*=txt' + childFieldToBuild + ']').hide();
+                                        }
+                                    }
+                                });
                             }
-                        }
                     },
                     SEL.Common.WebService.ErrorHandler
               );}
