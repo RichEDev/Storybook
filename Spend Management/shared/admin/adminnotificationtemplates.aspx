@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/masters/smPagedForm.master"AutoEventWireup="true" CodeBehind="adminemailtemplates.aspx.cs" Inherits="Spend_Management.adminemailtemplates" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/masters/smPagedForm.master"AutoEventWireup="true" CodeBehind="adminnotificationtemplates.aspx.cs" Inherits="Spend_Management.adminnotificationtemplates" %>
 <%@ MasterType VirtualPath="~/masters/smPagedForm.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="contentmenu" runat="server">
