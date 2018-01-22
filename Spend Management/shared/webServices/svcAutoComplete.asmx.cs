@@ -1414,23 +1414,30 @@
                 {
                     if (controlId != $"txt{dynamicFilter.ChildControl}selectinator") continue;
 
-                    var fieldValues = cCustomFields.GetFilterAttributeForChildField(
-                        connection,
-                        dynamicFilter.ParentControl,
-                        dynamicFilter.ChildControl);
                     selectinator.Filters.RemoveAll(filter => filter.FilterOnEdit);
-                    if (fieldValues != Guid.Empty)
-                        selectinator.Filters.Add(
-                            new JSFieldFilter
+
+                    foreach (var parentFilter in dynamicFilter.ParentControls)
+                    {
+                       var filterAttrribute = cCustomFields.GetFilterAttributeForChildField(
+                            connection,
+                            parentFilter.Id,
+                            dynamicFilter.ChildControl);
+
+                        if (filterAttrribute != Guid.Empty)
+                            selectinator.Filters.Add(
+                                new JSFieldFilter
                                 {
                                     ConditionType = ConditionType.Equals,
-                                    FieldID = fieldValues,
-                                    ValueOne = dynamicFilter.ParentValue,
-                                    Joiner = ConditionJoiner.And
+                                    FieldID = filterAttrribute, 
+                                    ValueOne = parentFilter.Value,
+                                    Joiner = ConditionJoiner.And,
                                 });
+                    }
+
                     break;
                 }
             }
+
             return this.GetSelectinatorSearchGrid(currentUser, type, controlId, selectinator.TableGuid, selectinator.DisplayField, selectinator.MatchFields, selectinator.Filters);
         }
 

@@ -310,9 +310,11 @@ namespace Spend_Management
                 {
                     while (reader.Read())
                     {
-                        var displayField = reader.GetOrdinal("relationshipDisplayField");
+                        var displayField = reader.GetOrdinal("primarykey");
                         result = !reader.IsDBNull(displayField) ? reader.GetGuid(displayField) : Guid.Empty;
                     }
+
+                    connection.ClearParameters();
 
                     return result;
                 }

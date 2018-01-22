@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using SpendManagementLibrary.Definitions;
+
 namespace SpendManagementLibrary
 {
     /// <summary>
@@ -6,19 +9,14 @@ namespace SpendManagementLibrary
     public class ParentAndChildElementValues
     {
         /// <summary>
-        /// Gets or sets the parent control.
-        /// </summary>
-        public string ParentControl { get; set; }
-
-        /// <summary>
         /// Gets or sets the child control.
         /// </summary>
         public string ChildControl { get; set; }
 
         /// <summary>
-        /// Gets or sets the parent value.
+        /// Gets or sets a List of <see cref="ParentElement"/>
         /// </summary>
-        public string ParentValue { get; set; }
+        public List<ParentElement> ParentControls { get; set; }
 
     }
 }
