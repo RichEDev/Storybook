@@ -140,7 +140,7 @@ namespace Spend_Management
 								  "aenotificationtemplate.aspx?templateid={emailtemplateid}",
                               deletelink
                                   =
-                                  "javascript:SEL.NotificationTemplates.DeletNotificationTemplate({emailtemplateid});",
+                                  "javascript:SEL.NotificationTemplates.DeleteNotificationTemplate({emailtemplateid});",
                               KeyField = "emailtemplateid"
                           };
             newgrid.getColumnByName("emailtemplateid").hidden = true;
