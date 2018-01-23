@@ -152,7 +152,7 @@
         <div class="onecolumnsmall">
             <asp:Label ID="lblTemplateName" CssClass="mandatory" runat="server" Text="Template name*" meta:resourcekey="lblTemplateNameResource1" AssociatedControlID="txtTemplateName"></asp:Label><span class="inputs"><asp:TextBox ID="txtTemplateName" runat="server" MaxLength="250" meta:resourcekey="txtTemplateNameResource1"></asp:TextBox></span><span class="inputicon">&nbsp;</span><span class="inputvalidatorfield"><asp:RequiredFieldValidator ID="reqTempName" runat="server" ErrorMessage="Please enter a Template name." Text="*" ControlToValidate="txtTemplateName" ValidationGroup="vgMain"></asp:RequiredFieldValidator></span><span class="inputtooltipfield">&nbsp;</span>
         </div>
-        <div class="twocolumn">
+        <div class="twocolumn" id="divSystemTemplate" runat="server">
             <asp:Label ID="lblSystemTemplate" runat="server" Text="System template" meta:resourcekey="lblBCCResource1" AssociatedControlID="chkSystemTemplate" ></asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="chkSystemTemplate" onclick="SEL.NotificationTemplates.OnSystemTemplateCheckChanged(this.id)"/></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
         </div>
         <div class="twocolumn">

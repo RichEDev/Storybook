@@ -167,8 +167,8 @@
                 usrAttachments.iFrameName = "iFrEmailAttach";
                 usrAttachments.MultipleAttachments = true;
                 
-                if (!isAdmin) this.chkSystemTemplate.Style.Add("display", "none");
-                if(!isAdmin) this.lblSystemTemplate.Style.Add("display","none");
+                if (!isAdmin) this.divSystemTemplate.Style.Add("display", "none");
+               
                 this.notesHeader.Style.Add("display", "none");
                 this.noteswrapper.Style.Add("display", "none");
                 this.ChkSendNote.Style.Add("display", "none");
