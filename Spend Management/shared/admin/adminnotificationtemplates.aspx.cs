@@ -158,7 +158,7 @@ namespace Spend_Management
         }
 
         [WebMethod(EnableSession = true)]
-        public static void deleteEmailTemplate(int templateid)
+        public static void DeleteNotificationTemplate(int templateid)
         {
             CurrentUser user = cMisc.GetCurrentUser();
             NotificationTemplates notifications = new NotificationTemplates(user);

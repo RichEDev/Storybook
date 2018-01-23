@@ -153,9 +153,12 @@
             <asp:Label ID="lblTemplateName" CssClass="mandatory" runat="server" Text="Template name*" meta:resourcekey="lblTemplateNameResource1" AssociatedControlID="txtTemplateName"></asp:Label><span class="inputs"><asp:TextBox ID="txtTemplateName" runat="server" MaxLength="250" meta:resourcekey="txtTemplateNameResource1"></asp:TextBox></span><span class="inputicon">&nbsp;</span><span class="inputvalidatorfield"><asp:RequiredFieldValidator ID="reqTempName" runat="server" ErrorMessage="Please enter a Template name." Text="*" ControlToValidate="txtTemplateName" ValidationGroup="vgMain"></asp:RequiredFieldValidator></span><span class="inputtooltipfield">&nbsp;</span>
         </div>
         <div class="twocolumn">
+            <asp:Label ID="lblSystemTemplate" runat="server" Text="System template" meta:resourcekey="lblBCCResource1" AssociatedControlID="chkSystemTemplate" ></asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="chkSystemTemplate" onclick="SEL.NotificationTemplates.OnSystemTemplateCheckChanged(this.id)"/></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
+        </div>
+        <div class="twocolumn">
             <asp:Label ID="lblSendEmail" runat="server" Text="Send email"  AssociatedControlID="ChkSendEmail"></asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="ChkSendEmail" /></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
             <asp:Label ID="lblSendNote" runat="server" Text="Send broadcast message" meta:resourcekey="lblBCCResource1" AssociatedControlID="ChkSendNote"></asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="ChkSendNote" /></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
-        </div>
+        </div>       
         <div class="twocolumn" id="sendMobileNotifcationCheckboxDiv" runat="server">
             <asp:Label ID="lblSendMobileNotification" runat="server" Text="Send mobile notification"  AssociatedControlID="chkCanEmailNotification"></asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="chkCanEmailNotification" /></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
         </div>
@@ -197,10 +200,8 @@
         </div>
         <div class="twocolumn">
             <asp:Label ID="lblAttachment" runat="server" Text="Attachments" meta:resourcekey="lblAttachmentsResource1" AssociatedControlID="txtAttachments"></asp:Label><span class="inputs"><asp:TextBox ID="txtAttachments" Visible="false" runat="server" CssClass="fillspan" meta:resourcekey="txtAttachmentsResource1"></asp:TextBox></span><span class="inputicon"><a href="javascript:SEL.NotificationTemplates.ValidateAndShowAttachmentModal();"><img src="/shared/images/icons/16/plain/add2.png" alt="" id="butAttach" /></a></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
-            <asp:Label ID="lblSystemTemplate" runat="server" Text="System template" meta:resourcekey="lblBCCResource1" AssociatedControlID="chkSystemTemplate" ></asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="chkSystemTemplate" onclick="SEL.NotificationTemplates.OnSystemTemplateCheckChanged(this.id)"/></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
         </div>
-       
-        
+            
     </div>
     <div class="formpanel formpanel_padding" style="max-width: 850px;">
         <div style="float:left; width: 60%;">
