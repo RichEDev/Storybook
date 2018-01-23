@@ -631,7 +631,7 @@
             var result = homeAddresses.Add(linkage.Cast(), this.User);
             linkage.Id = result;
 
-            new EmailNotificationHelper(this.User.Employee).ExcessMileage();
+            new NotificationHelper(this.User.Employee).ExcessMileage();
 
             //Re-cache employee home locations
             homeAddresses.Get();
@@ -674,7 +674,7 @@
             var result = homeAddresses.Add(location, this.User);
             linkage.Id = result;
 
-            new EmailNotificationHelper(this.User.Employee).ExcessMileage();
+            new NotificationHelper(this.User.Employee).ExcessMileage();
 
             //Re-cache employee home locations
             homeAddresses.Get();
@@ -698,7 +698,7 @@
             var result = workAddresses.Add(location, this.User);
             linkage.Id = result;
 
-            new EmailNotificationHelper(this.User.Employee).ExcessMileage();
+            new NotificationHelper(this.User.Employee).ExcessMileage();
 
             //Re-cache employee work locations
             workAddresses.Get();
@@ -741,7 +741,7 @@
             var result = workAddresses.Add(location, this.User);
             linkage.Id = result;
 
-            new EmailNotificationHelper(this.User.Employee).ExcessMileage();
+            new NotificationHelper(this.User.Employee).ExcessMileage();
 
             //Re-cache employee work locations
             workAddresses.Get();
@@ -786,14 +786,14 @@
                 addressId = homeItem.LocationID;
                 homeAddresses.Remove(addressLinkageId, this.User);
 
-                new EmailNotificationHelper(this.User.Employee).ExcessMileage();
+                new NotificationHelper(this.User.Employee).ExcessMileage();
             }
             else
             {
                 addressId = workItem.LocationID;
                 workAddresses.Remove(addressLinkageId, this.User);
 
-                new EmailNotificationHelper(this.User.Employee).ExcessMileage();
+                new NotificationHelper(this.User.Employee).ExcessMileage();
             }
 
             return this.Get(addressId);

@@ -85,9 +85,9 @@
                         int reminderDays = reqSubAccount.SubAccountProperties.RemindApproverOnDOCDocumentExpiryDays;
                         filterDate = DateTime.Today.AddDays(reminderDays);
                     }
-                    var emails = new cEmailTemplates(claimantDetails.AccountId, claimantDetails.ClaimantId, string.Empty, 0, Modules.expenses);
+                    var notifications = new NotificationTemplates(claimantDetails.AccountId, claimantDetails.ClaimantId, string.Empty, 0, Modules.expenses);
                     int[] recipientsId = claimantDetails.Approver == "Line Manager" ? new int[] { Employee.Get(claimantDetails.ClaimantId, claimantDetails.AccountId).LineManager } : claimantDetails.TeamIds;
-                    emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAsApproverWhenClaimantsDocIsAboutToExpire), claimantDetails.ClaimantId, recipientsId, filterfieldval: filterDate, filterFieldGuid: new Guid("9F6E275F-516E-4A71-A94C-0D3D26A77D38"));
+                    notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAsApproverWhenClaimantsDocIsAboutToExpire), claimantDetails.ClaimantId, recipientsId, filterfieldval: filterDate, filterFieldGuid: new Guid("9F6E275F-516E-4A71-A94C-0D3D26A77D38"));
                 }
             }
             catch (Exception ex)
@@ -134,8 +134,8 @@
                         int reminderDays = reqSubAccount.SubAccountProperties.RemindApproverOnDOCDocumentExpiryDays;
                         filterDate = DateTime.Today.AddDays(reminderDays);
                     }
-                    var emails = new cEmailTemplates(claimant.AccountId, claimant.ClaimantId, string.Empty, 0, Modules.expenses);
-                    emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenADutyOfCareDocumentIsDueToExpire), claimant.ClaimantId, new[] { claimant.ClaimantId }, filterfieldval: filterDate, filterFieldGuid: new Guid("9F6E275F-516E-4A71-A94C-0D3D26A77D38"));
+                    var notifications = new NotificationTemplates(claimant.AccountId, claimant.ClaimantId, string.Empty, 0, Modules.expenses);
+                    notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenADutyOfCareDocumentIsDueToExpire), claimant.ClaimantId, new[] { claimant.ClaimantId }, filterfieldval: filterDate, filterFieldGuid: new Guid("9F6E275F-516E-4A71-A94C-0D3D26A77D38"));
                 }
             }
 
@@ -174,8 +174,8 @@
             foreach (var claimant in claimantsEmailDetails)
             {
                 var claimantDetails = CreateEmployeeDataTableForEmailTemplatesBody(claimant, accountId);
-                var emails = new cEmailTemplates(accountId, claimant.EmployeeId, string.Empty, 0, Modules.expenses);
-                emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToClaimantWhenDrivingLicenceReviewIsDueToExpire), claimant.EmployeeId, new[] { claimant.EmployeeId }, EmployeeDetailsForBody: claimantDetails);
+                var notifications = new NotificationTemplates(accountId, claimant.EmployeeId, string.Empty, 0, Modules.expenses);
+                notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToClaimantWhenDrivingLicenceReviewIsDueToExpire), claimant.EmployeeId, new[] { claimant.EmployeeId }, EmployeeDetailsForBody: claimantDetails);
             }
 
             return true;

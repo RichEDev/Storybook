@@ -7,7 +7,7 @@
     /// <summary>
     /// Encapsultes the data necessaray fpr a user to subscribe to events, via email.
     /// </summary>
-    public class EmailNotification : BaseExternalType, IApiFrontForDbObject<cEmailNotification, EmailNotification>
+    public class EmailNotification : BaseExternalType, IApiFrontForDbObject<Notification, EmailNotification>
     {
         /// <summary>
         /// The unique Id of this EmailNotification.
@@ -51,7 +51,7 @@
         /// <param name="dbType">the DAL type.</param>
         /// <param name="actionContext">The IActionContext</param>
         /// <returns>The API type.</returns>
-        public EmailNotification From(cEmailNotification dbType, IActionContext actionContext)
+        public EmailNotification From(Notification dbType, IActionContext actionContext)
         {
             Id = dbType.EmailNotificationID;
             Label = dbType.Name;
@@ -67,9 +67,9 @@
         /// Converts from the API type to the DAL type.
         /// </summary>
         /// <returns>The DAL type, T.</returns>
-        public cEmailNotification To(IActionContext actionContext)
+        public Notification To(IActionContext actionContext)
         {
-            return new cEmailNotification(Id, Label, Description, EmailTemplateId, Enabled, CustomerType, EmailNotificationType);
+            return new Notification(Id, Label, Description, EmailTemplateId, Enabled, CustomerType, EmailNotificationType);
         }
     }
 }

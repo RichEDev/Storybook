@@ -321,7 +321,7 @@ namespace Spend_Management
                 var templateName = SendMessageEnum.GetEnumDescription(SendMessageDescription.SentWhenAnEmployeeClearAuditLog);
                 var senderId =user.EmployeeID;
                 int[] recipientIds = new cEmployees(user.AccountID).GetEmployeeIdByNotificationType((int)EmailNotificationType.AuditLogCleared).ToArray();
-                new cEmailTemplates(user).SendMessage(templateName, senderId, recipientIds, defaultSender: "admin@sel-expenses.com");
+                new NotificationTemplates(user).SendMessage(templateName, senderId, recipientIds, defaultSender: "admin@sel-expenses.com");
             }
             catch (Exception ex)
             {

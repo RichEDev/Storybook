@@ -548,13 +548,7 @@ namespace Spend_Management
                     strBody.Append("Username: " + reqEmp.Username + " with name " + reqEmp.Forename + " " + reqEmp.Surname + "<br />");
                 }
 
-                //if (lstLineManagersToModify.Count > 0)
-                //{
-                //    cEmailNotifications notifications = new cEmailNotifications(this.AccountID);
-                //    cEmailTemplates templates = new cEmailTemplates(this._user);
-
-                //    notifications.SendNotifications(EmailNotificationType.ESRLineManagerRoleUpdate, strBody.ToString(), templates);
-                //}
+             
 
                 #endregion
 
@@ -1214,7 +1208,7 @@ namespace Spend_Management
                             datacon.sqlexecute.Parameters.AddWithValue("@addressID", newAddressID);
                             datacon.ExecuteProc("SaveHomeAddressFromEsrOutbound");
                             datacon.sqlexecute.Parameters.Clear();
-                            new EmailNotificationHelper(Employee.Get(employeeID, this.AccountID)).ExcessMileage();
+                            new NotificationHelper(Employee.Get(employeeID, this.AccountID)).ExcessMileage();
                         }
                     }
                 }
@@ -1555,7 +1549,7 @@ namespace Spend_Management
                                 datacon.sqlexecute.Parameters.AddWithValue("@addressID", newAddressID);
                                 datacon.ExecuteProc("SaveWorkAddressFromEsrOutbound");
                                 datacon.sqlexecute.Parameters.Clear();
-                                new EmailNotificationHelper(Employee.Get(employeeID, this.AccountID)).ExcessMileage();
+                                new NotificationHelper(Employee.Get(employeeID, this.AccountID)).ExcessMileage();
                             }
                         }
                     }
@@ -1991,7 +1985,7 @@ namespace Spend_Management
         {
             cAccountSubAccounts subaccs = new cAccountSubAccounts(AccountID);
             cAccountSubAccount subaccount = subaccs.getFirstSubAccount(); // only got a single subaccount until fully implemented
-            cEmailNotifications notifications = new cEmailNotifications(AccountID);
+            Notifications notifications = new Notifications(AccountID);
             cTasks tasks = new cTasks(AccountID, subaccount.SubAccountID);
 
             List<object[]> tellWho = notifications.GetNotificationSubscriptions(EmailNotificationType.ESROutboundInvalidPostcodes);

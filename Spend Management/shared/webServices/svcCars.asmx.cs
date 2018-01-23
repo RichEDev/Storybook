@@ -333,7 +333,7 @@ namespace Spend_Management
         /// </param>
         private void SendCarIsActiveEmail(ICurrentUserBase user, int employeeid, int carId, string registrationNumber, cAccountProperties accountProperties)
         {
-            var clsEmails = new cEmailTemplates((ICurrentUser)user);
+            var notifications = new NotificationTemplates((ICurrentUser)user);
             var clsEmployees = new cEmployees(user.AccountID);
             var reqEmployee = clsEmployees.GetEmployeeById(employeeid);
             var templateName = SendMessageEnum.GetEnumDescription(SendMessageDescription.SentWhenaVehicleHasBeenActivatedForUse);
@@ -360,7 +360,7 @@ namespace Spend_Management
 
                 var senderId = user.EmployeeID;
                 int[] recipients = { reqEmployee.EmployeeID };
-                clsEmails.SendMessage(templateName, senderId, recipients, carId, defaultSender: msgFrom);
+                notifications.SendMessage(templateName, senderId, recipients, carId, defaultSender: msgFrom);
             }
             catch (Exception ex)
             {

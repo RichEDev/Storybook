@@ -1305,7 +1305,7 @@ namespace Spend_Management
             {
                 int[] recipients = new int[1];
 
-                var email = new cEmailTemplates(user);
+                var notifications = new NotificationTemplates(user);
                 string strsql = "select distinct employeeid from employee_corporate_cards inner join card_transactions on card_transactions.corporatecardid = employee_corporate_cards.corporatecardid where statementid = @statementid";
                 expdata.sqlexecute.Parameters.AddWithValue("@statementid", statementid);
                 using (IDataReader reader = expdata.GetReader(strsql))
@@ -1314,7 +1314,7 @@ namespace Spend_Management
                     while (reader.Read())
                     {
                         recipients[0] = reader.GetInt32(0);
-                        email.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.ThisEmailIsSentToNotifyUsersTheirCreditCardStatementIsReady), user.EmployeeID, recipients);
+                        notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.ThisEmailIsSentToNotifyUsersTheirCreditCardStatementIsReady), user.EmployeeID, recipients);
                     }
 
                     reader.Close();
@@ -2460,8 +2460,8 @@ namespace Spend_Management
 
                 cardImportLogs.Save(importLog);
 
-                var emailTemplates = new cEmailTemplates(account.accountid, 0, string.Empty, 0, Modules.expenses);
-                cEmailTemplate reqmsg = emailTemplates.Get(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorWhenACardImportFails));
+                var notifications = new NotificationTemplates(account.accountid, 0, string.Empty, 0, Modules.expenses);
+                NotificationTemplate reqmsg = notifications.Get(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorWhenACardImportFails));
                 var recipientTypes = new List<sSendDetails>
                 {
                     new sSendDetails
@@ -2472,7 +2472,7 @@ namespace Spend_Management
                     }
                 };
 
-                var emailTemplate = new cEmailTemplate(reqmsg.EmailTemplateId, reqmsg.TemplateName,
+                var emailTemplate = new NotificationTemplate(reqmsg.EmailTemplateId, reqmsg.TemplateName,
                     recipientTypes, reqmsg.Subject, reqmsg.Body, reqmsg.SystemTemplate,
                     reqmsg.Priority, reqmsg.BaseTableId, reqmsg.CreatedOn,
                     reqmsg.CreatedBy, reqmsg.ModifiedOn, reqmsg.ModifiedBy, reqmsg.SendEmail, reqmsg.SendCopyToDelegates,
@@ -2480,7 +2480,7 @@ namespace Spend_Management
 
                 var cardProviderIdField =
                     fields.GetFieldByID(new Guid(ReportKeyFields.CardProvidersCardProviderId));
-                emailTemplates.processEmail(emailTemplate, recipientTypes, cardProviderIdField,
+                notifications.processEmail(emailTemplate, recipientTypes, cardProviderIdField,
                     provider.cardproviderid, 0, string.Empty);
 
                 return 0;

@@ -140,7 +140,7 @@ namespace Spend_Management
 								  "aenotificationtemplate.aspx?templateid={emailtemplateid}",
                               deletelink
                                   =
-                                  "javascript:SEL.EmailTemplates.DeleteEmailTemplate({emailtemplateid});",
+                                  "javascript:SEL.NotificationTemplates.DeleteNotificationTemplate({emailtemplateid});",
                               KeyField = "emailtemplateid"
                           };
             newgrid.getColumnByName("emailtemplateid").hidden = true;
@@ -158,11 +158,11 @@ namespace Spend_Management
         }
 
         [WebMethod(EnableSession = true)]
-        public static void deleteEmailTemplate(int emailtemplateid)
+        public static void deleteEmailTemplate(int templateid)
         {
             CurrentUser user = cMisc.GetCurrentUser();
-            cEmailTemplates clsEmailTemps = new cEmailTemplates(user);
-            clsEmailTemps.deleteEmailTemplate(emailtemplateid);
+            NotificationTemplates notifications = new NotificationTemplates(user);
+            notifications.DeleteNotificationTemplate(templateid);
         }
 
 

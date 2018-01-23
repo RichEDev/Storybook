@@ -197,7 +197,7 @@ using System.Web;
             cAccount account = clsaccounts.GetAccountByID(accountid);
             cMisc clsMisc = new cMisc(this.accountid);
             var reqGlobalProperties = clsMisc.GetGlobalProperties(this.accountid);
-            cEmailTemplates clsemails = new cEmailTemplates(this.accountid, employeeID, passwordKey, reqGlobalProperties.attempts, currentModule);
+            NotificationTemplates notifications = new NotificationTemplates(this.accountid, employeeID, passwordKey, reqGlobalProperties.attempts, currentModule);
 
             cAccountSubAccounts clsSubAccounts = new cAccountSubAccounts(this.accountid);
             cAccountProperties clsAccountProperties = (reqemp.DefaultSubAccount >= 0) ? clsSubAccounts.getSubAccountById(reqemp.DefaultSubAccount).SubAccountProperties : clsSubAccounts.getFirstSubAccount().SubAccountProperties;
@@ -222,14 +222,14 @@ using System.Web;
                 if (employeeIsLockedEmail)
                 {
                     templateId = SendMessageEnum.GetEnumDescription(SendMessageDescription.SentWhenAnEmployeeGetsLockedOut);
-                    clsemails.SendMessage(templateId, senderId, recipients);
-                    templateId = SendMessageEnum.GetEnumDescription(fromMobile ? SendMessageDescription.SentWhenAnEmployeeLocksAccountFromExpensesMobile : SendMessageDescription.SentWhenAnEmployeeLocksAccountFromAMethodOtherThanAMobileDevice);
-                    clsemails.SendMessage(templateId, senderId, recipients);
+                    notifications.SendMessage(templateId, senderId, recipients);
+                    templateId = SendMessageEnum.GetEnumDescription(fromMobile ? SendMessageDescription.SentWhenAnEmployeeLocksAccountFromAMobileDevice : SendMessageDescription.SentWhenAnEmployeeLocksAccountFromAMethodOtherThanAMobileDevice);
+                    notifications.SendMessage(templateId, senderId, recipients);
                 }
                 else
                 {
                     templateId = SendMessageEnum.GetEnumDescription(SendMessageDescription.SentWhenAnEmployeeRequestsAPasswordReset);
-                    clsemails.SendMessage(templateId, senderId, recipients);
+                    notifications.SendMessage(templateId, senderId, recipients);
 
                     if (fromMobile)
                     {
@@ -247,7 +247,7 @@ using System.Web;
                         templateId = SendMessageEnum.GetEnumDescription(SendMessageDescription.SentWhenAnEmployeeRequestsAPasswordResetFromAMethodOtherThanAMobileDevice);
                     }
 
-                    clsemails.SendMessage(templateId, senderId, recipients);
+                    notifications.SendMessage(templateId, senderId, recipients);
                 }
             }
             catch (Exception ex)
@@ -273,7 +273,7 @@ using System.Web;
         /// </param>
         public void SendWelcomeEmail(int senderId, int recipientId, ICurrentUser user, bool fromActivation = false)
         {
-            var emails = new cEmailTemplates(user);
+            var emails = new NotificationTemplates(user);
             try
             {
                 var empId = new int[1];
@@ -1028,7 +1028,7 @@ using System.Web;
         {
             var employee = this.GetEmployeeById(employeeId);
             var currentUser = cMisc.GetCurrentUser();
-            var emails = HttpContext.Current != null ? new cEmailTemplates(currentUser) : new cEmailTemplates(employee.AccountID, 0, string.Empty, 0, GlobalVariables.DefaultModule, true);
+            var notifications = HttpContext.Current != null ? new NotificationTemplates(currentUser) : new NotificationTemplates(employee.AccountID, 0, string.Empty, 0, GlobalVariables.DefaultModule, true);
             var templateId =SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnEmployeeAfterTheirAccountHaveBeenActivated);
             var subAccounts = currentUser != null ? new cAccountSubAccounts(currentUser.AccountID): new cAccountSubAccounts(employee.AccountID);
             var properties = currentUser != null ? subAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties:subAccounts.getSubAccountById(subAccounts.getFirstSubAccount().SubAccountID).SubAccountProperties;
@@ -1037,7 +1037,7 @@ using System.Web;
             try
             {
                 int[] recipients = { employeeId };
-                emails.SendMessage(templateId, senderId, recipients);
+                notifications.SendMessage(templateId, senderId, recipients);
             }
             catch (Exception ex)
             {
@@ -3177,8 +3177,8 @@ using System.Web;
 
             employee.GetCostBreakdown().Add(newEmployee, costCodeBreakdown);
 
-            cEmailNotifications clsEmailNotifications = new cEmailNotifications(this.accountid);
-            clsEmailNotifications.SaveNotificationLink(emailNotificationIDs, employee.EmployeeID, null);
+            Notifications notifications = new Notifications(this.accountid);
+            notifications.SaveNotificationLink(emailNotificationIDs, employee.EmployeeID, null);
 
             cFields clsFields = new cFields(this.accountid);
             cTables clstables = new cTables(this.accountid);

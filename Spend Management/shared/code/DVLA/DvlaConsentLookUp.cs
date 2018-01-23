@@ -63,7 +63,7 @@
             employeeConsentDetails.LicencePortalUrl = dvlaApi.LicencePortalUrl;
             // LookupDate is updated with Manual review date when the autolookup is enabled || Consent Expired and user submit the consent again (employee has a lookupdate recorded from last Lookup run)
             employeeConsentDetails.EmployeeLookUpDateHasUpdated =((employee.DvlaConsentDate == null && employee.DvlaLookUpDate != null) ||(employee.DvlaConsentDate != null && employee.AgreeToProvideConsent.HasValue == false));
-            cEmailTemplates emailTemplates;
+            NotificationTemplates notifications;
 
             if (string.IsNullOrEmpty(response.ResponseCode) && response.SecurityCode != string.Empty && response.SecurityCode != new Guid().ToString() && response.DriverId > 0 && oldSecurityCode != response.SecurityCode)
             {
@@ -95,8 +95,8 @@
 
             if (!string.IsNullOrEmpty(employeeConsentDetails.ResponseCode))
             {
-                emailTemplates = new cEmailTemplates(user, ConfigurationManager.AppSettings["SupportEmailAddress"]);
-                DvlaServiceEventLogAndEmailNotification.DvlaLogEntry(response.ResponseCode, response.ResponseMessage, account.companyid, "Consent Submission", emailTemplates, employee);
+                notifications = new NotificationTemplates(user, ConfigurationManager.AppSettings["SupportEmailAddress"]);
+                DvlaServiceEventLogAndEmailNotification.DvlaLogEntry(response.ResponseCode, response.ResponseMessage, account.companyid, "Consent Submission", notifications, employee);
                 if (!(response.ResponseCode == "312" && drivingLicencePlate == oldDrivingLicenceNumber))
                 {
                     return employeeConsentDetails;
@@ -105,8 +105,8 @@
 
             if (!string.IsNullOrEmpty(employeeConsentDetails.SecurityCode))
             {
-                emailTemplates = new cEmailTemplates(user, email);
-                emailTemplates.SendMessage(
+                notifications = new NotificationTemplates(user, email);
+                notifications.SendMessage(
                     string.IsNullOrEmpty(response.ResponseCode)
                         ? new Guid("61C92AE2-2FAA-4E81-9B7A-71F25AE32936")
                         : new Guid("A7BB1638-8368-4814-9DB7-3754BE55DBDB"),
@@ -129,7 +129,7 @@
             var subAccounts = new cAccountSubAccounts(user.AccountID);
             var subAccount = subAccounts.getFirstSubAccount();
             var accountProperties = subAccount.SubAccountProperties;
-            var emails = new cEmailTemplates(user.AccountID, user.EmployeeID, string.Empty, 0, Modules.expenses);
+            var notifications = new NotificationTemplates(user.AccountID, user.EmployeeID, string.Empty, 0, Modules.expenses);
             var teams = new cTeams(user.AccountID, null);
             int[] recipientsId;
             if (accountProperties.DutyOfCareApprover.ToUpper() != "LINE MANAGER")
@@ -142,7 +142,7 @@
                 recipientsId = new[] { Employee.Get(user.EmployeeID, user.AccountID).LineManager };
             }
 
-            emails.SendMessage(user.Employee.DvlaConsentDate != null ? SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToApproverWhenClaimantOptsOutOfConsentCheck) : SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToApproverWhenClaimantDeniesConsentCheck), user.EmployeeID, recipientsId);
+            notifications.SendMessage(user.Employee.DvlaConsentDate != null ? SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToApproverWhenClaimantOptsOutOfConsentCheck) : SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToApproverWhenClaimantDeniesConsentCheck), user.EmployeeID, recipientsId);
         }
 
         /// <summary>
@@ -227,8 +227,8 @@
                             var user = cMisc.GetCurrentUser($"{accountId}, {claimantDetails.ClaimantId}");
                             var dvlaLookUpConsent = new DvlaLookUpConsent();
                             dvlaLookUpConsent.DeleteConsentAfterRevoking(claimantDetails.ClaimantId, accountId);
-                            var emailTemplates = new cEmailTemplates(user, claimantDetails.EmailId);
-                            emailTemplates.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToClaimantWhenConsentIsDueToExpire), senderid: user.EmployeeID,recipientsId: recipientsId);
+                            var notifications = new NotificationTemplates(user, claimantDetails.EmailId);
+                            notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToClaimantWhenConsentIsDueToExpire), senderid: user.EmployeeID,recipientsId: recipientsId);
                             responseMessage = "Email successfully sent " + ": Account Id : " + accountId;
                         }
                         else

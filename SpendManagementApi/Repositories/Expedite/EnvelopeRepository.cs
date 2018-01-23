@@ -200,10 +200,10 @@
 
             // drop the administrator an email.
             var properties = ActionContext.SubAccounts.getFirstSubAccount().SubAccountProperties;
-            var emails = ActionContext.Emails;
+            var notifications = ActionContext.Notifications;
             var claim = ActionContext.Claims.getClaimById(envelope.ClaimId.Value);
             var expenseItemIds = ActionContext.Claims.getExpenseItemsFromDB(claim.claimid).Keys.ToList();
-            emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAccountAdministratorWhenAPreviouslyUnidentifiedEnvelopeHasBeenAttachedToTheirAccount), User.EmployeeID, new[] { properties.MainAdministrator }, expenseItemIds);
+            notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAccountAdministratorWhenAPreviouslyUnidentifiedEnvelopeHasBeenAttachedToTheirAccount), User.EmployeeID, new[] { properties.MainAdministrator }, expenseItemIds);
 
             return result;
         }
@@ -246,9 +246,9 @@
             var signoffGroup = ActionContext.SignoffGroups.GetGroupById(employee.SignOffGroupID);
             if (signoffGroup.NotifyClaimantWhenEnvelopeReceived == true)
             {
-                var emails = ActionContext.Emails;
+                var notifications = ActionContext.Notifications;
                 var expenseItemIds = ActionContext.Claims.getExpenseItemsFromDB(claim.claimid).Keys.ToList();
-                emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenTheirEnvelopeIsReceivedForScanAndAttach), User.EmployeeID, new[] { claim.employeeid }, expenseItemIds);
+                notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenTheirEnvelopeIsReceivedForScanAndAttach), User.EmployeeID, new[] { claim.employeeid }, expenseItemIds);
             }
 
             return envelope;
@@ -315,10 +315,10 @@
                     }
                     else
                     {
-                        var emails = ActionContext.Emails;
+                        var notifications = ActionContext.Notifications;
                         var tempClaims = new cClaims(claim.accountid);
                         var expenseItemsIds = tempClaims.getExpenseItemsFromDB(claim.claimid).Keys.ToList();
-                        emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenAnReceiptMatchingForAllExpenseCannotBeFullyCompleted), User.EmployeeID, new[] { claim.employeeid }, expenseItemsIds);
+                        notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenAnReceiptMatchingForAllExpenseCannotBeFullyCompleted), User.EmployeeID, new[] { claim.employeeid }, expenseItemsIds);
                     }
                 }
             }
@@ -408,9 +408,9 @@
                             var signoffGroup = ActionContext.SignoffGroups.GetGroupById(employee.SignOffGroupID);
                             if (signoffGroup.NotifyClaimantWhenEnvelopeNotReceived == true)
                             {
-                                var emails = ActionContext.Emails;
+                                var notifications = ActionContext.Notifications;
                                 var expenseItemIds =new List<int>(ActionContext.Claims.getExpenseItemsFromDB(claim.claimid).Keys);
-                                emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenTheirEnvelopeIsMarkedAsSentButHasNotBeenReceivedAfterAspecifiedNumberOfDays), employee.EmployeeID, new[] { claim.employeeid }, expenseItemIds);
+                                notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenTheirEnvelopeIsMarkedAsSentButHasNotBeenReceivedAfterAspecifiedNumberOfDays), employee.EmployeeID, new[] { claim.employeeid }, expenseItemIds);
                             }
 
                             // update the envelope so it can be identified and also doesn't trigger this again.

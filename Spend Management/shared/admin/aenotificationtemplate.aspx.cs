@@ -155,7 +155,7 @@
 
                 this.employeeTreeData.Value = this.AddNodesInWebTree("618db425-f430-4660-9525-ebab444ed754", reportService);
                 
-                cEmailTemplates clsemailtemps = new cEmailTemplates(user);
+                NotificationTemplates notificationTemplates = new NotificationTemplates(user);
                 cTables clstables = new cTables(accountid);
                 bool update = false;
                 this.areaTableID = new Guid(cmbArea.SelectedValue);
@@ -185,13 +185,13 @@
                     update = true;
                     cmbArea.Enabled = false;
                     usrAttachments.RecordID = (int)ViewState["emailtemplateID"];
-                    cEmailTemplate emailTemp = clsemailtemps.getEmailTemplateById((int)ViewState["emailtemplateID"]);
-                    if (emailTemp != null)
+                    NotificationTemplate notification = notificationTemplates.GetNotificationTemplateById((int)ViewState["emailtemplateID"]);
+                    if (notification != null)
                     {
-                        areaTableID = emailTemp.BaseTableId;
+                        areaTableID = notification.BaseTableId;
                         lblTitle.Text = @"General Details";
 
-                        if (emailTemp.SystemTemplate)
+                        if (notification.SystemTemplate)
                         {
                             this.rtBodyText.Height = 200;
                             this.notesHeader.Style.Add("display", "block");
@@ -200,7 +200,7 @@
                             this.lblSendNote.Style.Add("display", "inline-block");
                         }
 
-                        if (clsemailtemps.PermittedMobileNotificationTemplateIds.Contains(emailTemp.TemplateId))
+                        if (notificationTemplates.PermittedMobileNotificationTemplateIds.Contains(notification.TemplateId))
                         {        
                             //Show Mobile Notification email template options
                             this.sendMobileNotifcationCheckboxDiv.Style.Add("display", "block"); 
@@ -214,7 +214,7 @@
 
                         if (master != null)
                         {
-                            var title = "Notification Template: " + emailTemp.TemplateName;
+                            var title = "Notification Template: " + notification.TemplateName;
                             master.title = title;
                         }
 
@@ -232,8 +232,8 @@
                         }
 
 
-                        var emailTemplatesService = new svcEmailTemplates();
-                        var result = emailTemplatesService.GetGreenLightAttributes(this.areaTableID.ToString());
+                        var notificationTemplatesService = new svcNotificationTemplates();
+                        var result = notificationTemplatesService.GetGreenLightAttributes(this.areaTableID.ToString());
                         this.cmbGreenLightAttribute.Items.Clear();
                         this.cmbGreenLightAttribute.Items.Insert(0, new ListItem("[None]", Convert.ToString(Guid.Empty)));
                         foreach (CustomEntityEmailAttribute customEntityEmailAttribute in result)
@@ -247,10 +247,10 @@
                             this.cmbGreenLightAttribute.Items.Add(listItem);
                         }
                         
-                        this.txtTemplateName.Text = emailTemp.TemplateName;
-                        if (emailTemp.RecipientTypes != null)
+                        this.txtTemplateName.Text = notification.TemplateName;
+                        if (notification.RecipientTypes != null)
                         {
-                            foreach (sSendDetails sendDet in emailTemp.RecipientTypes)
+                            foreach (sSendDetails sendDet in notification.RecipientTypes)
                             {
                                 switch (sendDet.recType)
                                 {
@@ -267,28 +267,28 @@
                             }
                         }
 
-                        this.cmbPriority.Items.FindByText(emailTemp.Priority.ToString()).Selected = true;
+                        this.cmbPriority.Items.FindByText(notification.Priority.ToString()).Selected = true;
 
                         this.Page.ClientScript.RegisterClientScriptBlock(
                             this.GetType(),
                             "variables",
-                            string.Format("var isSystemTemp = true;", emailTemp.SystemTemplate),
+                            string.Format("var isSystemTemp = true;", notification.SystemTemplate),
                             true);
 
-                        this.rtBodyText.Text = emailTemp.Body.details;
-                        this.txtNotes.Text = emailTemp.Note.details;
-                        this.PopulateSubject(emailTemp.Subject.details);
-                        this.bodyHtml.Value = emailTemp.Body.details;
-                        this.noteHtml.Value = emailTemp.Note.details;
-                        this.txtMobileNotificationMessage.Text = emailTemp.MobileNotificationMessage;
+                        this.rtBodyText.Text = notification.Body.details;
+                        this.txtNotes.Text = notification.Note.details;
+                        this.PopulateSubject(notification.Subject.details);
+                        this.bodyHtml.Value = notification.Body.details;
+                        this.noteHtml.Value = notification.Note.details;
+                        this.txtMobileNotificationMessage.Text = notification.MobileNotificationMessage;
 
-                        this.chkSystemTemplate.Checked = emailTemp.SystemTemplate;
+                        this.chkSystemTemplate.Checked = notification.SystemTemplate;
 
-                        this.ChkSendNote.Checked = emailTemp.SendNote.HasValue ? emailTemp.SendNote.Value : false;
-                        this.ChkSendEmail.Checked = emailTemp.SendEmail.HasValue ? emailTemp.SendEmail.Value : false;
+                        this.ChkSendNote.Checked = notification.SendNote.HasValue ? notification.SendNote.Value : false;
+                        this.ChkSendEmail.Checked = notification.SendEmail.HasValue ? notification.SendEmail.Value : false;
 
-                        this.chkCanEmailNotification.Checked = emailTemp.CanSendMobileNotification.HasValue
-                                                                   ? emailTemp.CanSendMobileNotification.Value
+                        this.chkCanEmailNotification.Checked = notification.CanSendMobileNotification.HasValue
+                                                                   ? notification.CanSendMobileNotification.Value
                                                                    : false;
 
                         this.baseTreeData.Value = this.AddNodesInWebTree(
@@ -330,11 +330,11 @@
 
                 if (ViewState["emailtemplateID"] != null)
                 {
-                    this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "emailtemplateid", "var emailtemplateid = " + (int)ViewState["emailtemplateID"] + ";", true);
+                    this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "notificationtemplateid ", "var notificationtemplateid  = " + (int)ViewState["emailtemplateID"] + ";", true);
                 }
                 else
                 {
-                    this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "emailtemplateid", "var emailtemplateid = 0;", true);
+                    this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "notificationtemplateid ", "var notificationtemplateid  = 0;", true);
                 }
 
                 if (ViewState["areaTableID"] != null)
