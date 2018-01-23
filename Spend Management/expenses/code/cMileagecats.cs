@@ -2035,7 +2035,7 @@ namespace Spend_Management
             cMileageThreshold clsthreshold = null;
             if (thresholdtype == ThresholdType.Annual)
             {
-                totalmiles = clsemployees.getMileageTotal(employeeId, expenseitem.date);
+                totalmiles = clsemployees.getMileageTotal(employeeId, expenseitem.date, reqmileage.FinancialYearID);
                 clsthreshold = mileagecats.getMileageThreshold(clsdaterange, totalmiles);
             }
 
@@ -2713,7 +2713,7 @@ namespace Spend_Management
             }
             else
             {
-                totalmiles = clsemployees.getMileageTotal(employee.EmployeeID, date);
+                totalmiles = clsemployees.getMileageTotal(employee.EmployeeID, date, mileageCategory.FinancialYearID);
                 cMileageThreshold threshold = this.getMileageThreshold(clsdaterange, totalmiles);
 
                 if (threshold != null)

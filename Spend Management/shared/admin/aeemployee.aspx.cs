@@ -377,7 +377,17 @@ namespace Spend_Management
                         cmpmaxstartmileagedate.ValueToCompare = maxDate;
                         cmpmaxstartmileagedate.ErrorMessage = "Start mileage date must be on or before " + maxDate;
                     }
-                    txtCurrentMileage.Text = ((long)this._employees.getMileageTotal(reqemp.EmployeeID, DateTime.Today)).ToString();
+
+                    var currentActiveCars = employeeCars.GetActiveCars();
+                    if (currentActiveCars != null && currentActiveCars.Count > 0)
+                    {
+                        this.txtCurrentMileage.Text = ((long)this._employees.getMileageTotal(reqemp.EmployeeID, DateTime.Today, employeeCars.GetFinancialYearId(currentActiveCars[0]))).ToString();
+                    }
+                    else
+                    {
+                        this.txtCurrentMileage.Text = ((long)this._employees.getMileageTotal(reqemp.EmployeeID, DateTime.Today)).ToString();
+                    }
+                    
                     txtposition.Text = reqemp.Position;
                     txtpayroll.Text = reqemp.PayrollNumber;
                     txtemailhome.Text = reqemp.HomeEmailAddress;
