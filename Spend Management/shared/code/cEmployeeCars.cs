@@ -326,6 +326,21 @@ namespace Spend_Management
         }
 
         /// <summary>
+        /// Get financial year id of the employee using the car.
+        /// </summary>
+        /// <param name="currentCar">
+        /// Current car of the employee.
+        /// </param>
+        /// <returns>
+        /// The <see cref="int?"/> financial year ID.
+        /// </returns>
+        public int? GetFinancialYearId(cCar currentCar)
+        {
+            var mileageCategories = new cMileagecats(this.nAccountID);
+            return mileageCategories.GetMileageCatById(currentCar.mileagecats[0]).FinancialYearID;
+        }
+
+        /// <summary>
         /// Get the car that is within a valid date range of the expense item 
         /// </summary>
         /// <param name="carID"></param>

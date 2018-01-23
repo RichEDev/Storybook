@@ -79,7 +79,6 @@ namespace Spend_Management
 
                 cAccountSubAccounts subaccs = new cAccountSubAccounts(user.AccountID);
                 cAccountProperties accProperties = subaccs.getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
-
                 lblusername.Text = user.Employee.Username;
                 lblusername.Enabled = false; // user can never modify their username
                 txtTitle.Text = user.Employee.Title;
@@ -90,7 +89,17 @@ namespace Spend_Management
                 txtcreditor.Value = user.Employee.Creditor;
                 txtpayroll.Value = user.Employee.PayrollNumber;
                 txtposition.Value = user.Employee.Position;
-                txtmileage.Text = clsemployees.getMileageTotal(user.Employee.EmployeeID, DateTime.Today).ToString();
+                var employeeCars = new cEmployeeCars(user.AccountID, user.EmployeeID);
+                var currentActiveCars = employeeCars.GetActiveCars();
+                if (currentActiveCars != null && currentActiveCars.Count > 0)
+                {
+                    this.txtmileage.Text = clsemployees.getMileageTotal(user.Employee.EmployeeID, DateTime.Today, employeeCars.GetFinancialYearId(currentActiveCars[0])).ToString();
+                }
+                else
+                {
+                    this.txtmileage.Text = clsemployees.getMileageTotal(user.Employee.EmployeeID, DateTime.Today).ToString();
+                }
+
                 txtpersonalmiles.Text = clsemployees.getPersonalMiles(user.Employee.EmployeeID).ToString();
                 txtextension.Text = user.Employee.TelephoneExtensionNumber;
                 txtmobileno.Text = user.Employee.MobileTelephoneNumber;
