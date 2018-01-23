@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Spend_Management.shared.code
+﻿namespace Spend_Management.shared.code
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -8,12 +6,13 @@ namespace Spend_Management.shared.code
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
     using Spend_Management.expenses.code;
+	using System.Threading.Tasks;
     using System.Configuration;
 
-    /// <summary>
-    /// A helper for building email notifications
-    /// </summary>
-    public class NotificationHelper
+	/// <summary>
+	/// A helper for building email notifications
+	/// </summary>
+	public class NotificationHelper
     {
         /// <summary>
         /// The employee who the email is about
@@ -53,14 +52,12 @@ namespace Spend_Management.shared.code
         /// <param name="sendMessageDescription">The email description</param>
         /// <param name="emailNotificationType">The email notification type</param>
         /// <param name="modules">The module type</param>
-        private void Send(SendMessageDescription sendMessageDescription, EmailNotificationType emailNotificationType, Modules modules)
+        public void Send(SendMessageDescription sendMessageDescription, EmailNotificationType emailNotificationType, Modules modules)
         {
-            var notificationEmployees = this.GetEmployeesToNotify(emailNotificationType);
-            var user = new CurrentUser(this.Employee.AccountID, this.Employee.EmployeeID, 0, modules, this.Employee.DefaultSubAccount);
-            var emailTemplates = new NotificationTemplates(user);
-
-            var recipients = notificationEmployees.Select(notificationEmployee => notificationEmployee.EmployeeID).ToList();
-            emailTemplates.SendMessage(SendMessageEnum.GetEnumDescription(sendMessageDescription), this.Employee.EmployeeID, recipients.ToArray(), this.Employee.EmployeeID);
+			var notificationEmployees = this.GetEmployeesToNotify(emailNotificationType);
+			var user = new CurrentUser(this.Employee.AccountID, this.Employee.EmployeeID, 0, modules, this.Employee.DefaultSubAccount);
+			var emailTemplates = new NotificationTemplates(user);
+			Task.Run(() => emailTemplates.SendMessage(SendMessageEnum.GetEnumDescription(sendMessageDescription), this.Employee.EmployeeID, notificationEmployees.ToArray(), this.Employee.EmployeeID));
         }
 
         /// <summary>
