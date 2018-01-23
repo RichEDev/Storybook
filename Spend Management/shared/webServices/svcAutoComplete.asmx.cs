@@ -23,6 +23,7 @@
     using AjaxControlToolkit;
     using SpendManagementLibrary;
     using SpendManagementLibrary.Addresses;
+    using SpendManagementLibrary.Definitions;
     using SpendManagementLibrary.Definitions.JoinVia;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Helpers;
@@ -815,9 +816,6 @@
         /// <summary>
         /// This get the Readonly lookup field values associated with the child , based on parent control id. On loading greenlight form, the readonly lookup field should be fetched for parent and associated child
         /// </summary>
-        /// <param name="parentControlId">
-        /// The parent control id for which the child field associated.
-        /// </param>
         /// <param name="parentControls">
         /// The list of all the parent control Ids with their values.
         /// </param>
@@ -834,9 +832,9 @@
         /// List of readonly trigger field values associated with child.
         /// </returns>
         [WebMethod(EnableSession = true)]
-        public List<AutoCompleteChildFieldValues> GetTriggerFieldParentValues(string parentControlId, List<SelectinatorParentFilter> parentControls, List<string> childrenControls, int formId, int entityId)
+        public List<AutoCompleteChildField> GetTriggerFieldParentValues(List<SelectinatorParentFilter> parentControls, List<string> childrenControls, int formId, int entityId)
         {
-            var childElementData = new List<AutoCompleteChildFieldValues>();
+            var childElementList = new List<AutoCompleteChildField>();
             var currentUser = cMisc.GetCurrentUser();
             var entities = new cCustomEntities(currentUser);
             var entity = entities.getEntityById(entityId);
@@ -849,6 +847,7 @@
 
             foreach (var child in childrenControls)
             {
+                var childElementData = new List<AutoCompleteChildFieldValues>();
                 var attribute = (cManyToOneRelationship)entity.getAttributeById(Convert.ToInt32(child));
 
                 var filters = attribute.filters.Where(e => e.Value.IsParentFilter == false);
@@ -897,11 +896,14 @@
                 }
 
                 if (childElementData.Count == 0)
-                    childElementData.Add(
-                        new AutoCompleteChildFieldValues { FieldToBuild = child, Key = 0, Value = null });
+                {
+                    childElementData.Add(new AutoCompleteChildFieldValues {FieldToBuild = child, Key = 0, Value = null});
+                }
+
+                childElementList.Add(new AutoCompleteChildField { Id = child, ChildFieldValues = childElementData });
             }
 
-            return childElementData.Count > 0 ? childElementData : null;
+            return childElementList.Count > 0 ? childElementList : null;
         }
 
         /// <summary>
@@ -1410,27 +1412,36 @@
             {
                 var connection = new DatabaseConnection(cAccounts.getConnectionString(currentUser.AccountID));
 
+                var currentControlId = controlId.Replace("txt", "").Replace("selectinator", "");
+
                 foreach (var dynamicFilter in childFilterList)
                 {
-                    if (controlId != $"txt{dynamicFilter.ChildControl}selectinator") continue;
+                    if (!dynamicFilter.ChildControl.Contains(currentControlId)) continue;
 
-                    var fieldValues = cCustomFields.GetFilterAttributeForChildField(
-                        connection,
-                        dynamicFilter.ParentControl,
-                        dynamicFilter.ChildControl);
                     selectinator.Filters.RemoveAll(filter => filter.FilterOnEdit);
-                    if (fieldValues != Guid.Empty)
-                        selectinator.Filters.Add(
-                            new JSFieldFilter
+
+                    foreach (var parentFilter in dynamicFilter.ParentControls)
+                    {
+                        var filterAttrribute = cCustomFields.GetFilterAttributeForChildField(
+                             connection,
+                             parentFilter.Id,
+                            currentControlId);
+
+                        if (filterAttrribute != Guid.Empty)
+                            selectinator.Filters.Add(
+                                new JSFieldFilter
                                 {
                                     ConditionType = ConditionType.Equals,
-                                    FieldID = fieldValues,
-                                    ValueOne = dynamicFilter.ParentValue,
-                                    Joiner = ConditionJoiner.And
+                                    FieldID = filterAttrribute,
+                                    ValueOne = parentFilter.Value,
+                                    Joiner = ConditionJoiner.And,
                                 });
-                    break;
+                        }
+
+                        break;
                 }
             }
+
             return this.GetSelectinatorSearchGrid(currentUser, type, controlId, selectinator.TableGuid, selectinator.DisplayField, selectinator.MatchFields, selectinator.Filters);
         }
 
