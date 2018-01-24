@@ -270,11 +270,14 @@
         {
             if (this.Filters.Count > 0 && this.Filters.Exists(filter => filter.FilterOnEdit))
             {
+                var filterCount = this.Filters.Count;
+
                 foreach (var filter in this.Filters)
                 {
                     if (filter.FilterOnEdit)
                     {
-                        filter.Order = (byte) (this.Filters.Count - 1);
+                        filter.Order = (byte) (filterCount - 1);
+                        filterCount--;
                     }
                 }
             }
