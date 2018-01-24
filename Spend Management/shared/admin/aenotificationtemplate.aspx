@@ -39,7 +39,7 @@
         </Services>
         <Scripts>
             <asp:ScriptReference Path="~/shared/javaScript/Attachments.js" />
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.notificationtemplates.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.notificationtemplates.js?date=20180124" />
         </Scripts>
     </asp:ScriptManagerProxy>
     <script type="text/javascript" src="../javaScript/minify/jquery.min.js"></script>
