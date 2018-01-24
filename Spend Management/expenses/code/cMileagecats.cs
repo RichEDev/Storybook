@@ -2491,26 +2491,6 @@ namespace Spend_Management
             return decimal.Parse(kmValue.ToString("#0.00"));
         }
 
-        /// <summary>
-        /// Convert a distance in miles to the equivalent distance in kilometres
-        /// </summary>
-        /// <param name="miles">The number of miles</param>
-        /// <returns>The distance in kilometres</returns>
-        public static decimal ConvertMilesToKilometres(decimal miles)
-        {
-            return (miles == 0m) ? 0m : miles * 1.609344m;
-        }
-
-        /// <summary>
-        /// Convert a distance in kilometres to the equivalent distance in miles
-        /// </summary>
-        /// <param name="kilometres">The number of kilometres</param>
-        /// <returns>The distance in miles</returns>
-        public static decimal ConvertKilometresToMiles(decimal kilometres)
-        {
-            return (kilometres == 0m) ? 0m : kilometres / 1.609344m;
-        }
-
         public virtual int saveVehicleJourneyRate(cMileageCat mileagecat)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();

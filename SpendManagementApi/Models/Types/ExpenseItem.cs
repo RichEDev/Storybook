@@ -16,6 +16,7 @@
 
     using SpendManagementLibrary.Expedite;
     using SpendManagementLibrary.Flags;
+    using SpendManagementLibrary.Helpers;
 
     using Spend_Management.expenses.code;
 
@@ -803,10 +804,21 @@
             if (JourneySteps != null)
             {
                 var itemJourneySteps = new SortedList<int, cJourneyStep>();
+                var vehicle = actionContext.EmployeeCars.GetCarByID(CarId);
 
                 foreach (var journeyStep in JourneySteps)
                 {
-                    itemJourneySteps.Add(journeyStep.StepNumber, journeyStep.To(actionContext));
+                    cJourneyStep journey = journeyStep.To(actionContext);
+
+                    if ((!subcat.fromapp && !subcat.toapp) && vehicle.defaultuom == MileageUOM.KM)
+                    {
+                        //only convert if claimant has entered mileage as journey step builder takes care of conversion when entering a start, stop and end locations.
+                        var miles = ConvertKilometersToMiles.PerformConversion(journey.NumActualMiles);
+                        journey.NumActualMiles = miles;
+                        journey.nummiles = miles;                     
+                    }
+
+                    itemJourneySteps.Add(journeyStep.StepNumber, journey);
                 }
 
                 item.journeysteps = itemJourneySteps;
