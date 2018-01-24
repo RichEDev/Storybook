@@ -1020,11 +1020,12 @@ namespace Spend_Management
 
                                 countrycode = (field.defaultvalue.Length > 0 && string.IsNullOrWhiteSpace(fileContentsCountryCode)) ? field.defaultvalue : fileContentsCountryCode;
                                 var globalCountry = this.GetCountry(countrycode, field.countrylookup);
-                                this.checkCountryExists(globalCountry.GlobalCountryId, countrycode);
+                                this.checkCountryExists(globalCountry?.GlobalCountryId ?? 0, countrycode);
                                 strsql += "[card_transactions].[country_code], [card_transactions].[globalcountryid],";
                                 values += "@countrycode,@globalcountryid,";
                                 expdata.sqlexecute.Parameters.AddWithValue("@countrycode", countrycode);
-                                expdata.sqlexecute.Parameters.AddWithValue("@globalcountryid", globalCountry.GlobalCountryId);
+                                
+                                    expdata.sqlexecute.Parameters.AddWithValue("@globalcountryid", globalCountry == null ? 0 : globalCountry.GlobalCountryId);    
                             }
                             else if (field.mappedfield.ToLower().Trim() == "exchangerate")
                             {
@@ -1509,7 +1510,11 @@ namespace Spend_Management
                 {
                     if (!validateCountryLst.ContainsKey(globalCountryID))
                     {
-                        validateCountryLst.Add(globalCountryID, "- Country '" + globCountry.Country + "' with country code '" + countryCode + "' does not exist and needs to added.");
+                        this.validateCountryLst.Add(globalCountryID,
+                            globCountry == null
+                                ? $"- A Country with country code \'{countryCode}\' does not exist and needs to added."
+                                : $"- Country \'{globCountry.Country}\' with country code \'{countryCode}\' does not exist and needs to added.");
+
                         return false;
                     }
                 }
