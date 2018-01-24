@@ -1,4 +1,7 @@
-﻿namespace SpendManagementApi.Repositories
+﻿using BusinessLogic.DataConnections;
+using BusinessLogic.P11DCategories;
+
+namespace SpendManagementApi.Repositories
 {
     using System;
     using System.Collections.Generic;
@@ -20,14 +23,14 @@
     {
         private cSubcats _cSubcats;   
         private readonly cCategories _cCategories;
-        private readonly cP11dcats _p11Dcats;
+        private readonly IDataFactory<IP11DCategory, int> _p11DCategories;
 
         public ExpenseSubCategoryRepository(ICurrentUser user, IActionContext actionContext = null)
             : base(user, actionContext, subcat => subcat.SubCatId, subcat => subcat.SubCat)
         {
             _cSubcats = this.ActionContext.SubCategories;
             _cCategories = this.ActionContext.Categories;
-            _p11Dcats = new cP11dcats(User.AccountID);
+            this._p11DCategories = WebApiApplication.container.GetInstance<IDataFactory<IP11DCategory, int>>();
         }
 
         /// <summary>
@@ -252,7 +255,7 @@
                 throw new ApiException(ApiResources.ApiErrorInvalidExpenseCategory, ApiResources.ApiErrorInvalidExpenseCategoryMessage);
             }
 
-            if (expenseSubCategory.PdCatId.HasValue && expenseSubCategory.PdCatId.Value > 0 && String.IsNullOrEmpty(_p11Dcats.getP11dCatById(expenseSubCategory.PdCatId.Value).pdname))
+            if (expenseSubCategory.PdCatId.HasValue && expenseSubCategory.PdCatId.Value > 0 && String.IsNullOrEmpty(this._p11DCategories[expenseSubCategory.PdCatId.Value].Name))
             {
                 throw new ApiException("Invalid P11d Category", "No P11d category exists with specified P11d category id");
             }
@@ -351,7 +354,7 @@
             }
 
             if (expenseSubCategory.PdCatId.HasValue && expenseSubCategory.PdCatId.Value > 0 &&
-                String.IsNullOrEmpty(_p11Dcats.getP11dCatById(expenseSubCategory.PdCatId.Value).pdname))
+                String.IsNullOrEmpty(this._p11DCategories[expenseSubCategory.PdCatId.Value].Name))
             {
                 throw new ApiException("Invalid P11d Category",
                     "No P11d category exists with specified P11d category id");

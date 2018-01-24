@@ -208,7 +208,7 @@
 
     <cc1:TabContainer ID="TabContainer1" runat="server">
         <cc1:TabPanel ID="tabGeneral" runat="server" HeaderText="General Details">
-            <ContentTemplate>
+        <ContentTemplate>
                 <div class="formpanel">
                     <div class="sectiontitle">
                         <asp:Label ID="Label2" runat="server" meta:resourcekey="Label2Resource1">General Details</asp:Label>
@@ -239,7 +239,7 @@
                         </span>
                     </div>
                     <div class="onecolumnsmall">
-                        <asp:Label ID="lblp11d" runat="server" meta:resourcekey="lblp11dResource1" AssociatedControlID="cmbpdcats">P11d Category</asp:Label>
+                        <asp:Label ID="lblp11d" runat="server" meta:resourcekey="lblp11dResource1" AssociatedControlID="cmbpdcats">P11D Category</asp:Label>
                         <span class="inputs">
                             <asp:DropDownList ID="cmbpdcats" runat="server" meta:resourcekey="cmbpdcatsResource1"></asp:DropDownList>
                         </span>

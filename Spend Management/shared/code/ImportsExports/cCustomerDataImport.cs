@@ -1,4 +1,7 @@
-﻿namespace Spend_Management
+﻿using System.Data;
+using SpendManagementLibrary.Helpers;
+
+namespace Spend_Management
 {
     using System;
     using System.Collections.Generic;
@@ -18,6 +21,10 @@
     using SpendManagementLibrary.FinancialYears;
     using Syncfusion.XlsIO;
     using SpendManagementLibrary.Enumerators;
+    using BusinessLogic.P11DCategories;
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+
 
     /// <summary>
     /// Class used to import all data from the implementations spreadsheet 
@@ -32,6 +39,12 @@
         private int processedrecordcount = 0;
         private bool bSpreadsheetInvalid = false;
         cLogging clsLogging;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IP11DCategory, int> P11DCategoriesRepository { get; set; }
 
         /// <summary>
         /// Constructor for cCustomerDataImport
@@ -1109,23 +1122,22 @@
         {
             cElements clsElements = new cElements();
             cElement element = clsElements.GetElementByName("P11D");
-
-            cP11dcats clsP11dcats = new cP11dcats(AccountID);
+            
             string p11DCat = lstP11Dcats["P11d Category Description"].ToString();
 
-            if (exists("pdcats", "pdname", p11DCat))
+            var p11DCategoryId =
+                this.GetIdByTableGuidFieldGuidAndValue(new Guid(ReportTable.P11DCategories),
+                    new Guid(ReportFields.P11DCategoriesPDName), p11DCat);
+            if (p11DCategoryId > 0)
             {
-                sP11dCat p11d = clsP11dcats.getP11DByName(p11DCat);
-                clsP11dcats.updateP11dCat(p11DCat, p11d.pdcatid, new int[0]);
-
+                this.P11DCategoriesRepository.Add(new P11DCategory(p11DCategoryId, p11DCat));
                 clsLogging.saveLogItem(logID, LogReasonType.SuccessUpdate, element, "Updated P11D " + p11DCat);
             }
             else
             {
-                clsP11dcats.addP11dCat(p11DCat, new int[0]);
+                this.P11DCategoriesRepository.Add(new P11DCategory(0, p11DCat));
                 clsLogging.saveLogItem(logID, LogReasonType.SuccessAdd, element, "Added P11D " + p11DCat);
             }
-
         }
 
         private void saveItemRole(Dictionary<string, object> lstItemRoles)
@@ -1182,7 +1194,6 @@
             cSubcats clsSubcats = new cSubcats(AccountID);
             cCategories clsCategories = new cCategories(AccountID);
             cItemRoles clsItemRoles = new cItemRoles(AccountID);
-            cP11dcats clsP11dcats = new cP11dcats(AccountID);
 
             string masterCat = lstSubcats["Master Category"].ToString();
             string expenseItem = lstSubcats["Expense Items"].ToString();
@@ -1202,12 +1213,9 @@
             string allowanceAmount = lstSubcats["Allowance Amount"].ToString();
 
             cSubcat newSubcat;
-
-            sP11dCat p11d = clsP11dcats.getP11DByName(p11D);
+            
             cItemRole reqItemRole = clsItemRoles.getItemRoleByName(itemRole);
             cCategory reqCategory = clsCategories.getCategoryByName(masterCat);
-
-
 
             if (reqItemRole == null)
             {
@@ -1223,7 +1231,8 @@
 
             int categoryid = reqCategory.categoryid;
             int itemroleid = reqItemRole.itemroleid;
-            int p11Did = p11d.pdcatid;
+            int p11Did = this.GetIdByTableGuidFieldGuidAndValue(new Guid(ReportTable.P11DCategories),
+                new Guid(ReportFields.P11DCategoriesPDName), p11D);
 
             bool isReimbursable;
             //bool isAllowance;
@@ -2755,5 +2764,31 @@
             }
 
         }
+
+        /// <summary>
+        /// Gets an id by the table, a field and  value for that field
+        /// </summary>
+        /// <param name="tableGuid">Guid of the table</param>
+        /// <param name="fieldGuid">Guid of the field</param>
+        /// <param name="value">Value to search by on the field</param>
+        /// <returns>The id of the field</returns>
+        public int GetIdByTableGuidFieldGuidAndValue(Guid tableGuid, Guid fieldGuid, string value)
+        {
+            int id = 0;
+            var fields = new cFields(this.AccountID);
+            var field = fields.GetFieldByID(fieldGuid);
+            var tables = new cTables(this.AccountID);
+            var table = tables.GetTableByID(tableGuid);
+            var keyField = table.GetPrimaryKey();
+            using (var connection = new DatabaseConnection(cAccounts.getConnectionString(this.AccountID)))
+            {
+                connection.sqlexecute.Parameters.AddWithValue("@value", value);
+                var sql =
+                    $"SELECT DISTINCT [{keyField.FieldName}] FROM [{table.TableName}] WHERE [{table.TableName}].[{field.FieldName}] = @value";
+                id = connection.ExecuteScalar<int>(sql);
+            }
+            return id;
+        }
     }
 }
+

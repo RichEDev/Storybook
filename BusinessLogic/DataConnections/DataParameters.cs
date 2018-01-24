@@ -15,7 +15,7 @@
         /// <summary>
         /// The return value for a lookup
         /// </summary>
-        public object ReturnValue { get; set; }
+        public virtual object ReturnValue { get; set; }
 
         /// <summary>
         /// Initalises an instance of <see cref="DataParameters{T}">DataParameters</see>

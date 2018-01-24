@@ -105,6 +105,7 @@
     <Compile Include="Cache\AccountCacheKeyTests.cs" />
     <Compile Include="Database\MetabaseCatalogueTests.cs" />
     <Compile Include="DataConnections\DataParametersTests.cs" />
+    <Compile Include="P11DCategories\P11DCategoryTests.cs" />
     <Compile Include="ProjectCodes\ProjectCodeTests.cs" />
     <Compile Include="ProjectCodes\ProjectCodeWithUserDefinedFieldsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

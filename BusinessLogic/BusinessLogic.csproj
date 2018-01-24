@@ -142,6 +142,8 @@
     <Compile Include="Identity\IIdentityProvider.cs" />
     <Compile Include="Identity\UserIdentity.cs" />
     <Compile Include="JoinVia\IJoinVia.cs" />
+    <Compile Include="P11DCategories\IP11DCategory.cs" />
+    <Compile Include="P11DCategories\P11DCategory.cs" />
     <Compile Include="ProjectCodes\IProjectCodeWithUserDefinedFields.cs" />
     <Compile Include="ProjectCodes\ProjectCodeWithUserDefinedFields.cs" />
     <Compile Include="RepositoryBase.cs" />

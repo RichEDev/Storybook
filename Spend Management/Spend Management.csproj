@@ -2243,7 +2243,6 @@
     <Compile Include="shared\code\ImportsExports\cImportTemplates.cs" />
     <Compile Include="shared\code\cLanguages.cs" />
     <Compile Include="shared\code\cLogging.cs" />
-    <Compile Include="expenses\code\cP11dcats.cs" />
     <Compile Include="expenses\NHS\aeESRElementMapping.aspx.cs">
       <DependentUpon>aeESRElementMapping.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

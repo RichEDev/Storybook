@@ -1,8 +1,11 @@
 ﻿namespace SpendManagementApi.Models.Types
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Utilities;
+    using BusinessLogic.P11DCategories;
+    using Interfaces;
 
     /// <summary>
     /// A P11D Category is a category that the system uses to group expense items, 
@@ -29,5 +32,31 @@
         /// Important: Use the ExpenseSubCategories resource to add and update those. You can link them using this resource.
         /// </summary>
         public List<int> ExpenseSubCategoryIds { get; set; }
+
+        /// <summary>
+        /// Converts from the DAL type to the API type.
+        /// </summary>
+        /// <returns>This, the API type.</returns>
+        public P11DCategory From(IP11DCategory original, IActionContext actionContext)
+        {
+            this.Id = original.Id;
+            this.Label = original.Name;
+            
+            this.CreatedById = 0;
+            this.CreatedOn = default(DateTime);
+            this.ModifiedById = 0;
+            this.ModifiedOn = default(DateTime);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Converts from the API type to the DAL type.
+        /// </summary>
+        /// <returns>The DAL type.</returns>
+        public IP11DCategory To(IActionContext actionContext)
+        {
+            return new BusinessLogic.P11DCategories.P11DCategory(this.Id, this.Label);
+        }
     }
 }

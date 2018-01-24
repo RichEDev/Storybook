@@ -142,9 +142,11 @@
     <Compile Include="Bootstrap\Bootstrapper.cs" />
     <Compile Include="Bootstrap\WebIdentityContext.cs" />
     <Compile Include="Controllers\HttpActionResult.cs" />
+    <Compile Include="Controllers\P11DCategoriesController.cs" />
     <Compile Include="Controllers\ProjectCodesController.cs" />
     <Compile Include="Controllers\ControllerExtensions.cs" />
     <Compile Include="Controllers\TokenController.cs" />
+    <Compile Include="DTO\P11DCategoryDTO.cs" />
     <Compile Include="DTO\ProjectCodeDTO.cs" />
     <Compile Include="Filters\ValidateModel.cs" />
     <Compile Include="Security\Filters\AddChallengeOnUnauthorizedResult.cs" />
