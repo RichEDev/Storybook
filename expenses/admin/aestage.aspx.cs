@@ -880,7 +880,12 @@ namespace expenses
             this.trThresholdPayBeforeValidate.Visible = this.chkPayBeforeValidate.Checked;
             this.cmbinclude.Enabled = !this.chkPayBeforeValidate.Checked;
             this.cmbinvolvement.Enabled = !this.chkPayBeforeValidate.Checked;
-            this.chksinglesignoff.Enabled = !this.chkPayBeforeValidate.Checked;            
+
+            var currentSignoffType = (SignoffType)Enum.Parse(typeof(SignoffType), this.cmbsignofftype.SelectedValue);
+            if (currentSignoffType == SignoffType.AssignmentSignOffOwner ||
+                currentSignoffType == SignoffType.CostCodeOwner) return;
+
+            this.chksinglesignoff.Enabled = !this.chkPayBeforeValidate.Checked;
         }
 
         private void ToggleOnHolidaySkip()
@@ -897,6 +902,10 @@ namespace expenses
 
         protected void chkApproverJustificationsRequired_CheckedChanged(object sender, EventArgs e)
         {
+            var currentSignoffType = (SignoffType)Enum.Parse(typeof(SignoffType), this.cmbsignofftype.SelectedValue);
+            if (currentSignoffType == SignoffType.AssignmentSignOffOwner ||
+                currentSignoffType == SignoffType.CostCodeOwner) return;
+
             this.chksinglesignoff.Enabled = !this.chkApproverJustificationsRequired.Checked;
             this.chksinglesignoff.Checked = false;
         }
