@@ -817,6 +817,9 @@ namespace SpendManagementLibrary
                                     AddLookUpDisplayFields(ref lookUpFields, fileOutput.fileName, guid.ToString());
                                 }
                                 break;
+                            case "B":
+                                AddLookUpDisplayFields(ref lookUpFields, reader.GetInt64(i).ToString(CultureInfo.InvariantCulture));
+                                break;
                             default:
                                 AddLookUpDisplayFields(ref lookUpFields, reader.GetString(i));
                                 break;

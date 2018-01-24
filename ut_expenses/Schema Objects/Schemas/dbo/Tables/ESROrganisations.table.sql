@@ -13,6 +13,7 @@
     [ESRLocationId]         BIGINT         NULL,
     [ESRLastUpdateDate]     DATETIME       NULL,
     [CostCentreDescription] NVARCHAR (240) NULL,
+	[Level]					INT            NOT NULL DEFAULT(0),
     CONSTRAINT [PK_ESROrganisations] PRIMARY KEY CLUSTERED ([ESROrganisationId] ASC)
 );
 
