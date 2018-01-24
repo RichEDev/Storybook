@@ -13,7 +13,7 @@
             <asp:ServiceReference InlineScript="true" Path="~/shared/webservices/svcNotificationTemplates.asmx" />
         </Services>
         <Scripts>
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.notificationtemplates.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.notificationtemplates.js?date=20180124" />
         </Scripts>
         
     </asp:ScriptManagerProxy>
