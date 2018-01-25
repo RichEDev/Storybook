@@ -139,7 +139,7 @@ function GetCPDetail(CPId, activeContractId) {
         activeContractId = CPId;
     }
     maintParams = document.getElementById("MaintParams")
-    PageMethods.GetCPDetail(CPId, fnGetCPDetailComplete, activeContractId, maintParams);
+    PageMethods.GetCPDetail(CPId, activeContractId, fnGetCPDetailComplete, activeContractId, maintParams);
 }
 
 function fnGetCPDetailComplete(strResult)
