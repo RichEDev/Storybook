@@ -46,7 +46,7 @@ Namespace Framework2006
         End Sub
 
         Protected Sub lnkCHnav_Click(ByVal sender As Object, ByVal e As System.EventArgs)
-            Response.Redirect("ContractHistory.aspx?lc=" & IIf(lnkLCnav.Visible, "1", "0"), True)
+            Response.Redirect("ContractHistory.aspx?lc=" & IIf(lnkLCnav.Visible, "1", "0") + "&ContractId=" + ViewState("ActiveContract").ToString(), True)
         End Sub
 
         Protected Sub lnkRTnav_Click(ByVal sender As Object, ByVal e As System.EventArgs)

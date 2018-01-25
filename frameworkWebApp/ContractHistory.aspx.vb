@@ -16,6 +16,11 @@ Namespace Framework2006
 
             If Me.IsPostBack = False Then
                 curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ContractHistory, False, True)
+                Dim activeContract = 0
+                If Request.QueryString("contractId") > "" Then
+                    activeContract = Request.QueryString("contractId")
+                    ViewState("ActiveContract") = activeContract
+                End If
 
                 Dim db As New cFWDBConnection
                 Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, New cAccountSubAccounts(curUser.Account.accountid).getSubAccountsCollection, curUser.CurrentSubAccountId)
@@ -35,7 +40,7 @@ Namespace Framework2006
                     lnkLCnav.Visible = True
                 End If
 
-                litHistory.Text = GetContractHistory(db, curUser, Session("ActiveContract"), Session("ExpId"))
+                litHistory.Text = GetContractHistory(db, curUser, activeContract, Session("ExpId"))
                 db.DBClose()
                 db = Nothing
             End If
@@ -54,7 +59,7 @@ Namespace Framework2006
             sql.Append("SELECT contract_history.*,[contract_details].[ContractDescription] FROM [contract_history] " & vbNewLine)
             sql.Append("INNER JOIN [contract_details] ON [contract_history].[ContractId] = [contract_details].[ContractId] " & vbNewLine)
             sql.Append("WHERE [contract_history].[ContractId] = @contractId ORDER BY [SummaryTab],[ActionDate] DESC")
-            db.AddDBParam("contractId", Session("ActiveContract"), True)
+            db.AddDBParam("contractId", ViewState("ActiveContract"), True)
             db.RunSQL(sql.ToString, db.glDBWorkA, False, "", False)
 
             If db.glNumRowsReturned = 0 Then
@@ -169,7 +174,7 @@ Namespace Framework2006
             If historyId > 0 Then
                 Dim ARec As New cAuditRecord
 
-                db.FWDb("R2", "contract_details", "ContractId", Session("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
+                db.FWDb("R2", "contract_details", "ContractId", ViewState("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
                 If db.FWDb2Flag Then
                     db.FWDb("R3", "contract_history", "HistoryId", historyId, "", "", "", "", "", "", "", "", "", "")
                     If db.FWDb3Flag Then
@@ -207,40 +212,40 @@ Namespace Framework2006
         End Sub
 
 		Protected Sub lnkCDnav_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkCDnav.Click
-			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & Session("ActiveContract"), True)
+			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & ViewState("ActiveContract"), True)
 		End Sub
 
 		Protected Sub lnkCAnav_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkCAnav.Click
-			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractAdditional & "&id=" & Session("ActiveContract"), True)
+			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractAdditional & "&id=" & ViewState("ActiveContract"), True)
 		End Sub
 
 		Protected Sub lnkCPnav_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkCPnav.Click
-			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&id=" & Session("ActiveContract"), True)
+			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&id=" & ViewState("ActiveContract"), True)
 		End Sub
 
 		Protected Sub lnkIDnav_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkIDnav.Click
-			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceDetail & "&id=" & Session("ActiveContract"), True)
+			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceDetail & "&id=" & ViewState("ActiveContract"), True)
 		End Sub
 
 		Protected Sub lnkIFnav_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkIFnav.Click
-			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&id=" & Session("ActiveContract"), True)
+			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&id=" & ViewState("ActiveContract"), True)
 		End Sub
 
 		Protected Sub lnkNSnav_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkNSnav.Click
-			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.NotesSummary & "&id=" & Session("ActiveContract"), True)
+			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.NotesSummary & "&id=" & ViewState("ActiveContract"), True)
 		End Sub
 
 		Protected Sub lnkLCnav_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkLCnav.Click
-			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.LinkedContracts & "&id=" & Session("ActiveContract"), True)
+			Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.LinkedContracts & "&id=" & ViewState("ActiveContract"), True)
 		End Sub
 
 		Protected Sub lnkCHnav_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkCHnav.Click
-			Response.Redirect("ContractHistory.aspx", True)
+			Response.Redirect("ContractHistory.aspx?contractId=" + ViewState("ActiveContract"), True)
 		End Sub
 
 		Private Sub SetTabOptions(ByVal db As cFWDBConnection, ByVal curUser As CurrentUser)
-			If Session("ActiveContract") Is Nothing Then
-				Session("ActiveContract") = 0
+			If ViewState("ActiveContract") Is Nothing Then
+				ViewState("ActiveContract") = 0
 			End If
 
 			Dim subaccs As New cAccountSubAccounts(curUser.Account.accountid)
@@ -249,7 +254,7 @@ Namespace Framework2006
 			Dim omout As String = "window.status='Done';"
 			Dim omover As String = "window.status='%msg%';return true;"
 
-			If Session("ActiveContract") > 0 Then
+			If ViewState("ActiveContract") > 0 Then
 				If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ContractAdditional, False) = False Then
 					lnkCAnav.Visible = False
 				Else
@@ -335,7 +340,7 @@ Namespace Framework2006
 		End Sub
 
         Protected Sub lnkRTnav_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkRTnav.Click
-            Response.Redirect("ContractRechargeBreakdown.aspx?id=" & Session("ActiveContract"), True)
+            Response.Redirect("ContractRechargeBreakdown.aspx?id=" & ViewState("ActiveContract"), True)
         End Sub
 
         Protected Sub lnkRPnav_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkRPnav.Click
