@@ -38,7 +38,6 @@ Namespace Framework2006
                 Dim db As New cFWDBConnection
                 Dim licensedUsers As String = ""
                 db.DBOpen(fws, False)
-                Dim accProperties As cAccountProperties = subAccs.getSubAccountById(curUser.CurrentSubAccountId).SubAccountProperties
 
                 licensedUsers = curUser.Account.LicencedUsers
 
@@ -49,11 +48,15 @@ Namespace Framework2006
 
                 Title = "About"
                 Master.title = Title
-
+                Dim activeContract = 0
+                If Request.QueryString("contractId") > "" Then
+                    activeContract = Request.QueryString("contractId")
+                End If
+                
                 ' remove any contract lock that might exist in case they exit contractsummary.aspx via the About Framework link
-                If Session("ActiveContract") > 0 Then
-                    cLocks.RemoveLockItem(curUser.AccountID, cAccounts.getConnectionString(curUser.AccountID), Cache, "CD_" & curUser.AccountID.ToString, Session("ActiveContract"), curUser.EmployeeID)
-                    cLocks.RemoveLockItem(curUser.AccountID, cAccounts.getConnectionString(curUser.AccountID), Cache, "CA_" & curUser.AccountID.ToString, Session("ActiveContract"), curUser.EmployeeID)
+                If activeContract > 0 Then
+                    cLocks.RemoveLockItem(curUser.AccountID, cAccounts.getConnectionString(curUser.AccountID), Cache, "CD_" & curUser.AccountID.ToString, activeContract, curUser.EmployeeID)
+                    cLocks.RemoveLockItem(curUser.AccountID, cAccounts.getConnectionString(curUser.AccountID), Cache, "CA_" & curUser.AccountID.ToString, activeContract, curUser.EmployeeID)
                 End If
 
                 db.DBClose()

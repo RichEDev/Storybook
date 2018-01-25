@@ -2541,7 +2541,7 @@ Namespace Framework2006
         End Sub
 
         Private Sub Notifications()
-            Response.Redirect("Associations.aspx?frompage=contractdetails", True)
+            Response.Redirect("Associations.aspx?frompage=contractdetails&contractId=" + ViewState("ActiveContract"), True)
         End Sub
 
         Protected Sub txtReviewPeriod_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs)
@@ -3806,7 +3806,7 @@ Namespace Framework2006
         End Sub
 
         Protected Sub lnkNotify_Click(ByVal sender As Object, ByVal e As System.EventArgs)
-            Response.Redirect("Associations.aspx?frompage=contractdetails", True)
+            Response.Redirect("Associations.aspx?frompage=contractdetails&contractId=" + ViewState("ActiveContract"), True)
         End Sub
 
         Protected Sub lnkSchedules_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles imgSchedules.Click
@@ -10065,6 +10065,10 @@ Namespace Framework2006
 
             Return tmpStr.ToString
         End Function
+
+        Private Sub lnkTSnav_Load(sender As Object, e As EventArgs) Handles lnkTSnav.Load
+
+        End Sub
 #End Region
     End Class
 End Namespace
