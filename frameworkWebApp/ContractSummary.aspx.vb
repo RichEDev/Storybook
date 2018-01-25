@@ -143,8 +143,8 @@ Namespace Framework2006
             Dim jscript As New StringBuilder
             Dim activeContractId = Request.QueryString("id")
             Dim contrCatID As Integer
-            If ViewState("CDAction") Is Nothing
-                ViewState("CDAction") = Request.QueryString("cdaction")
+            If Session("CDAction") Is Nothing
+                Session("CDAction") = Request.QueryString("cdaction")
             End If
             If activeContractId Is Nothing
                 activeContractId = 0
@@ -155,13 +155,13 @@ Namespace Framework2006
                 Dim ActiveViewTab As SummaryTabs
 
                 ActiveViewTab = CType(Request.QueryString("tab"), SummaryTabs)
-                If ActiveViewTab <> ViewState("CurTab") Then
-                    ViewState("CurTab") = ActiveViewTab
+                If ActiveViewTab <> Session("CurTab") Then
+                    Session("CurTab") = ActiveViewTab
                 End If
 
             End If
 
-            Select Case CType(ViewState("CurTab"), SummaryTabs)
+            Select Case CType(Session("CurTab"), SummaryTabs)
                 Case SummaryTabs.ContractDetail
                     Dim cdTable As cTable = tables.getTableByName("contract_details")
                     phCDUFields.Controls.Clear()
@@ -219,7 +219,7 @@ Namespace Framework2006
             End Select
 
             If jscript.Length > 0 Then
-                ScriptManager.RegisterStartupScript(Me, Page.GetType, "udfscript_" & ViewState("CurTab"), jscript.ToString, True)
+                ScriptManager.RegisterStartupScript(Me, Page.GetType, "udfscript_" & Session("CurTab"), jscript.ToString, True)
             End If
         End Sub
 
