@@ -241,28 +241,6 @@ Namespace Framework2006
             GetSchedulesForMerge = strHTML.ToString
         End Function
 
-        Private Sub doCancel()
-            ' Abandon, so return to contract summary for the active contract
-            Dim cId As String
-
-            If Request.QueryString("action") = "merge" Then
-                If Session("ActiveContract") > 0 Then
-                    Response.Redirect("ContractSummary.aspx?id=" & Trim(Str(Session("ActiveContract"))), True)
-                Else
-                    Response.Redirect("SummaryPortal.aspx", True)
-                End If
-            Else
-                cId = Request.QueryString("id")
-                If Val(cId) > 0 Then
-                    Response.Redirect("ContractSummary.aspx?id=" & Trim(cId), True)
-                Else
-                    Response.Redirect("SummaryPortal.aspx", True)
-                End If
-
-            End If
-
-        End Sub
-
         Private Sub PerformAction()
             Dim drow As DataRow
             Dim db As New cFWDBConnection
