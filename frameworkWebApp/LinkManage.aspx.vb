@@ -36,6 +36,7 @@ Namespace Framework2006
             contractId = Request.QueryString("cid")
             If contractId > 0 Then
                 hiddenContractId.Text = contractId.ToString
+                ViewState("ActiveContract") = contractId
             Else
                 hiddenContractId.Text = ""
             End If
@@ -287,7 +288,7 @@ Namespace Framework2006
         Private Sub ExitLinkManage()
             Select Case Request.QueryString("ret")
                 Case "0"
-                    Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & Session("ActiveContract"), True)
+                    Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & ViewState("ActiveContract"), True)
                 Case "1"
                     Response.Redirect(Trim(Request.QueryString("returl")), True)
                 Case "2"
