@@ -212,7 +212,7 @@ Namespace Framework2006
             Dim subaccs As New cAccountSubAccounts(curUser.Account.accountid)
             Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, subaccs.getSubAccountsCollection(), curUser.CurrentSubAccountId)
             Dim ActiveViewTab As SummaryTabs
-            Dim activeContractId = ViewState("ActiveContract")
+            Dim activeContractId = 0
             Response.Expires = 0
             Response.ExpiresAbsolute = DateTime.Now.AddMinutes(-1)
             Response.AddHeader("pragma", "no-cache")
@@ -235,11 +235,14 @@ Namespace Framework2006
                 Title = "Contract Summary"
                 Master.title = Title
                 'Master.enablenavigation = False
-                Dim curContract As Integer
-                If ViewState("ActiveContract") Is Nothing Or activeContractId Is Nothing
+                Dim curContract As Integer = 0
+                If ViewState("ActiveContract") Is Nothing 
                     activeContractId = 0
                     ViewState("ActiveContract") = 0
+                    Else 
+                        activeContractId = ViewState("ActiveContract")
                 End If
+
                 curContract = activeContractId
                 SetViewTab(ViewState("CurTab"), False, curUser, curContract)
 
@@ -1400,12 +1403,7 @@ Namespace Framework2006
 
             NewCPEntry(ConCategoryId)
 
-            'Response.Redirect("ContractSummary.aspx?cpaction=add&am=1&tab=" & SummaryTabs.ContractProduct, True)
         End Sub
-
-        'Protected Sub lnkVRegistry_Click(ByVal sender As Object, ByVal e As System.EventArgs)
-        '    Response.Redirect("VersionRegistry.aspx?cid=" & ViewState("ActiveContract"), True)
-        'End Sub
 
         Protected Sub lnkBulkUpdate_Click(ByVal sender As Object, ByVal e As System.EventArgs)
             CallBulkUpdates()

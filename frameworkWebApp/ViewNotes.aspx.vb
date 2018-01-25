@@ -802,7 +802,7 @@ Namespace Framework2006
             'If Me.IsPostBack = False Then
             If Session("NoteType") = "Contract" Then
                 ' if current contract is archived, do not permit update or delete
-                db.FWDb("R", "contract_details", "contractId", Session("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
+                db.FWDb("R", "contract_details", "contractId", ViewState("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
                 If db.FWDbFlag = True Then
                     If db.FWDbFindVal("Archived", 1) = "Y" And fws.glAllowNotesAdd = False Then
                         hideDelete = True
