@@ -181,8 +181,8 @@ Partial Class FWMenu
                 ' clear any locks held for the current user
                 Dim db As New cFWDBConnection
                 db.DBOpen(fws, False)
-                cLocks.RemoveLockItem(currentUser.Account.accountid, fws.getConnectionString, Cache, "CD_" & currentUser.AccountID.ToString, Session("ActiveContract"), currentUser.Employee.EmployeeID)
-                cLocks.RemoveLockItem(currentUser.Account.accountid, fws.getConnectionString, Cache, "CA_" & currentUser.AccountID.ToString, Session("ActiveContract"), currentUser.Employee.EmployeeID)
+                cLocks.RemoveLockItem(currentUser.Account.accountid, fws.getConnectionString, Cache, "CD_" & currentUser.AccountID.ToString, ViewState("ActiveContract"), currentUser.Employee.EmployeeID)
+                cLocks.RemoveLockItem(currentUser.Account.accountid, fws.getConnectionString, Cache, "CA_" & currentUser.AccountID.ToString, ViewState("ActiveContract"), currentUser.Employee.EmployeeID)
                 db.DBClose()
             End If
 
