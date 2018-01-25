@@ -1506,12 +1506,7 @@
                             thisNs.SetUpSearchTextBox();
                             thisNs.SetUpMultiSelectControl();
                             thisNs.ExtractMetaDataToControls();
-
-                            if (SEL.CustomEntityAdministration.ParentFilter.IsParentFilter && $('span[class*=filterInfo]').length > 1) {
-                                SEL.MasterPopup.ShowMasterPopup("A parent filter already exists for this attribute");
-                            } else {
-                                thisNs.Show();
-                            }
+                            thisNs.Show();
                         }
                         return true;
                     };

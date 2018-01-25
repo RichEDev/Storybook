@@ -22,7 +22,7 @@
                         <asp:ScriptReference Path="~/shared/javaScript/minify/jsonParse.js" />
                         <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
                         <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
-                        <asp:ScriptReference Path="~/shared/javaScript/minify/sel.autoComplete.js" />
+                        <asp:ScriptReference Path="~/shared/javaScript/minify/sel.autoComplete.js?date=20180115" />
                         <asp:ScriptReference Path="~/shared/javaScript/sel.tooltips.js" />
                         <asp:ScriptReference Path="~/shared/javaScript/Attachments.js"/>
                     </Scripts>

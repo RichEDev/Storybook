@@ -78,7 +78,7 @@
                 <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
                 <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
                 <asp:ScriptReference Path="~/shared/javaScript/Attachments.js" />
-                <asp:ScriptReference Path="~/shared/javaScript/minify/sel.autoComplete.js?v=2017081202" />
+                <asp:ScriptReference Path="~/shared/javaScript/minify/sel.autoComplete.js?date=20180115" />
                 <asp:ScriptReference Name="tooltips" />
             </Scripts>
         </cc1:ToolkitScriptManager>

@@ -4,6 +4,7 @@ using System.Web.Services.Protocols;
 using Newtonsoft.Json.Linq;
 using SpendManagementLibrary.GreenLight;
 using Spend_Management.shared.code.Helpers;
+using Syncfusion.Linq;
 
 
 namespace Spend_Management
@@ -4626,25 +4627,31 @@ namespace Spend_Management
                                     selectinator.Filters.Add(FieldFilters.CsToJs(filter, oCurrentUser));
                                 }
 
+                                if (filter.IsParentFilter)
+                                {
+                                    selectinator.AddParentCssClass(filter.ValueOne);
+                                }
+
                                 // Check if it is editing record
                                 if (this.nRecordid > 0)
                                 {
-                                SortedList<int, object> record = this.getEntityRecord(entity, this.nRecordid, form);
+                                    SortedList<int, object> record = this.getEntityRecord(entity, this.nRecordid, form);
 
                                     // Check for parent filter
                                     if (filter.FormId == form.formid && filter.IsParentFilter && filter.ValueOne != null)
                                     {
-                                    string recordValues = record[Convert.ToInt32(filter.ValueOne)].ToString();
-                                    var fieldToBuild = Convert.ToInt32(field.attribute.attributeid);
+                                        string recordValues = record[Convert.ToInt32(filter.ValueOne)].ToString();
+                                        var fieldToBuild = Convert.ToInt32(field.attribute.attributeid);
 
                                         if (fieldToBuild > 0)
                                         {
                                             var filterBy = (cManyToOneRelationship)entity.getAttributeById(Convert.ToInt32(filter.ValueOne));
-                                            selectinator.Filters.Add(new JSFieldFilter { ConditionType = ConditionType.Equals, FieldID = filterBy.relatedtable.PrimaryKeyID, ValueOne = recordValues, Joiner = ConditionJoiner.And, FilterOnEdit = true});
+                                            selectinator.Filters.Add(new JSFieldFilter { ConditionType = ConditionType.Equals, FieldID = filterBy.relatedtable.PrimaryKeyID, ValueOne = recordValues, Order = filter.Order, Joiner = ConditionJoiner.And, FilterOnEdit = true});
                                         }
                                     }
+                                }
+                                
                             }
-                        }
                             //looping through filter twice because if a particular form does not have any filter added to it (which is when count will be 0), it should take the basic filter added to the attribute(where formid is 0).
                             if (selectinator.Filters.Count == 0)
                             {

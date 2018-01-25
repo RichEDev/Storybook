@@ -7131,7 +7131,6 @@
     <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetExpiredDrivingLicenceReview.sql" />
     <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetAutocompleteSearchResultsFields.sql" />
     <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetChildFilterFieldValues.proc.sql" />
-    <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetChildFieldValues.sql" />
     <None Include="Schema Objects\Schemas\dbo\Programmability\Functions\GetTableOrFieldName.function.sql" />
     <None Include="Scripts\Workflows\Duty of Care\Driving Licence Review Workflow.sql" />
     <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SaveDvlaServiceResponseInformation.sql" />
