@@ -221,15 +221,15 @@
                     <asp:CustomValidator ID="custxtNoteValidator" runat="server" ErrorMessage="Please enter Broadcast Message."
                     Text="*"  ClientValidationFunction="SEL.NotificationTemplates.ValidateBroadcastMessageLength" ValidationGroup="vgMain"></asp:CustomValidator>
                 </div>            
-            <div class="sectiontitle" style="margin-top: 10px;"  ID="mobileNotificationHeader" runat="server">Mobile Notification Message
+            <div class="sectiontitle" style="margin-top: 10px;"  ID="mobileNotificationHeader" runat="server">Mobile Notification
                 <span class="inputtooltipfield"><img style="margin-right: 0px" id="imgNote" onmouseover="SEL.Tooltip.Show('7e52f777-fee9-495f-8046-f3a565a0dc69', 'ex', this);" src="../images/icons/16/plain/tooltip.png" alt="" class="tooltipicon pull-right" /></span>
             </div>       
             <div id="mobileNotificationWrapper" style="width: 100%" runat="server">
                 <asp:TextBox runat="server" Height="100px" Width="99%" ID="txtMobileNotificationMessage" TextMode="MultiLine"></asp:TextBox>
                 
-                <asp:CustomValidator ID="reqMobileNotificationMessage" runat="server" ErrorMessage="Please enter a mobile notification message."
+                <asp:CustomValidator ID="reqMobileNotificationMessage" runat="server" ErrorMessage="Please enter a mobile notification."
                                      Text="*"  ClientValidationFunction="SEL.NotificationTemplates.ValidateMobileNotificationMessageIsRequired" ValidationGroup="vgMain"></asp:CustomValidator>
-                <asp:CustomValidator ID="checkMessageLength" runat="server" ErrorMessage="Mobile notification message cannot be more than 400 characters in length."
+                <asp:CustomValidator ID="checkMessageLength" runat="server" ErrorMessage="Mobile notification cannot be more than 400 characters in length."
                                      Text="*"  ClientValidationFunction="SEL.NotificationTemplates.ValidateMobileNotificationMessageLength" ValidationGroup="vgMain"></asp:CustomValidator>
             </div>
         </div>
