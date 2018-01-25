@@ -5,6 +5,7 @@ Imports Spend_Management
 Imports System.Collections.Generic
 Imports System.Web.Services
 Imports SpendManagementLibrary.Employees
+Imports System.Web.Script.Serialization
 
 Namespace Framework2006
     Partial Class ContractSummary
@@ -50,11 +51,10 @@ Namespace Framework2006
 
         Protected Sub lnkRTnav_Click(ByVal sender As Object, ByVal e As System.EventArgs)
             'SetViewTab(SummaryTabs.RechargeTemplate)
-            Response.Redirect("ContractRechargeBreakdown.aspx?id=" & Session("ActiveContract"), True)
+            Response.Redirect("ContractRechargeBreakdown.aspx?id=" & ViewState("ActiveContract"), True)
         End Sub
-
         Protected Sub lnkRPnav_Click(ByVal sender As Object, ByVal e As System.EventArgs)
-            Response.Redirect("ContractRechargeData.aspx?id=" & Session("ActiveContract"), True)
+            Response.Redirect("ContractRechargeData.aspx?id=" & ViewState("ActiveContract"), True)
         End Sub
 
         Protected Sub lnkTSnav_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkTSnav.Click
@@ -62,14 +62,13 @@ Namespace Framework2006
 
             Select Case CType(ViewTab.ActiveViewIndex, SummaryTabs)
                 Case SummaryTabs.ContractDetail, SummaryTabs.ContractAdditional
-                    varURL = "?pid=" & Session("ActiveContract") & "&paa=" & AppAreas.CONTRACT_DETAILS
-                    varURL += "&ret=" & Server.UrlEncode("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & Session("ActiveContract"))
-                    Session("TaskRetURL") = Server.UrlEncode("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & Session("ActiveContract"))
-
+                    varURL = "?pid=" & ViewState("ActiveContract") & "&paa=" & AppAreas.CONTRACT_DETAILS
+                    varURL += "&ret=" & Server.UrlEncode("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & ViewState("ActiveContract"))
+                    ViewState("TaskRetURL") = Server.UrlEncode("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & ViewState("ActiveContract"))
                 Case SummaryTabs.ContractProduct
-                    varURL = "?pid=" & Session("ActiveContract") & "&paa=" & AppAreas.CONTRACT_PRODUCTS
-                    varURL += "&ret=" & Server.UrlEncode("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & Session("ActiveContract"))
-                    Session("TaskRetURL") = Server.UrlEncode("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & Session("ActiveContract"))
+                    varURL = "?pid=" & ViewState("ActiveContract") & "&paa=" & AppAreas.CONTRACT_PRODUCTS
+                    varURL += "&ret=" & Server.UrlEncode("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & ViewState("ActiveContract"))
+                    ViewState("TaskRetURL") = Server.UrlEncode("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & ViewState("ActiveContract"))
                 Case SummaryTabs.InvoiceDetail
                 Case SummaryTabs.InvoiceForecast
                 Case Else
@@ -105,14 +104,12 @@ Namespace Framework2006
             End Select
 
             If doRefresh Then
-                Session("CurTab") = tabId
-
+                ViewState("CurTab") = tabId
                 If callSetScreen Then
                     Dim curUser As CurrentUser = cMisc.GetCurrentUser()
-
                     RenderUFields()
                     Dim subaccs As New cAccountSubAccounts(curUser.Account.accountid)
-                    SetScreen(tabId, curUser.Account.accountid, curUser.Employee.employeeid)
+                    SetScreen(tabId, curUser.Account.accountid, curUser.Employee.EmployeeID)
                 End If
             End If
         End Sub
@@ -144,25 +141,27 @@ Namespace Framework2006
             Dim tables As New cTables(curUser.Account.accountid)
 
             Dim jscript As New StringBuilder
+            Dim activeContractId = Request.QueryString("id")
             Dim contrCatID As Integer
+            If ViewState("CDAction") Is Nothing
+                ViewState("CDAction") = Request.QueryString("cdaction")
+            End If
+            If activeContractId Is Nothing
+                activeContractId = 0
+            End If
+            ViewState("ActiveContract") = activeContractId
 
             If IsPostBack = False Then
                 Dim ActiveViewTab As SummaryTabs
 
                 ActiveViewTab = CType(Request.QueryString("tab"), SummaryTabs)
-                If ActiveViewTab <> Session("CurTab") Then
-                    Session("CurTab") = ActiveViewTab
+                If ActiveViewTab <> ViewState("CurTab") Then
+                    ViewState("CurTab") = ActiveViewTab
                 End If
 
-                If Not Request.QueryString("id") Is Nothing Then
-                    Dim curContractId As Integer = Request.QueryString("id")
-                    If Session("ActiveContract") <> curContractId Then
-                        Session("ActiveContract") = curContractId
-                    End If
-                End If
             End If
 
-            Select Case CType(Session("CurTab"), SummaryTabs)
+            Select Case CType(ViewState("CurTab"), SummaryTabs)
                 Case SummaryTabs.ContractDetail
                     Dim cdTable As cTable = tables.getTableByName("contract_details")
                     phCDUFields.Controls.Clear()
@@ -184,7 +183,7 @@ Namespace Framework2006
 
                     If lstContractCategory.SelectedValue = String.Empty Then
                         Dim db As New DBConnection(cAccounts.getConnectionString(curUser.Account.accountid))
-                        Dim contrID As Integer? = Session("ActiveContract")
+                        Dim contrID As Integer? = activeContractId
                         Dim sql As String = "select ISNULL([categoryId],0) from contract_details where [contractId] = @conId"
                         db.sqlexecute.Parameters.AddWithValue("@conId", contrID)
                         contrCatID = db.getcount(sql)
@@ -202,7 +201,7 @@ Namespace Framework2006
                 Case SummaryTabs.ContractProduct
                     ' get parent contract category for udf grouping filter
                     Dim db As New DBConnection(cAccounts.getConnectionString(curUser.Account.accountid))
-                    Dim contrID As Integer? = Session("ActiveContract")
+                    Dim contrID As Integer? = activeContractId
                     Dim sql As String = "select ISNULL([categoryId],0) from contract_details where [contractId] = @conId"
                     db.sqlexecute.Parameters.AddWithValue("@conId", contrID)
                     contrCatID = db.getcount(sql)
@@ -220,7 +219,7 @@ Namespace Framework2006
             End Select
 
             If jscript.Length > 0 Then
-                ScriptManager.RegisterStartupScript(Me, Page.GetType, "udfscript_" & Session("CurTab"), jscript.ToString, True)
+                ScriptManager.RegisterStartupScript(Me, Page.GetType, "udfscript_" & ViewState("CurTab"), jscript.ToString, True)
             End If
         End Sub
 
@@ -229,7 +228,7 @@ Namespace Framework2006
             Dim subaccs As New cAccountSubAccounts(curUser.Account.accountid)
             Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, subaccs.getSubAccountsCollection(), curUser.CurrentSubAccountId)
             Dim ActiveViewTab As SummaryTabs
-
+            Dim activeContractId = ViewState("ActiveContract")
             Response.Expires = 0
             Response.ExpiresAbsolute = DateTime.Now.AddMinutes(-1)
             Response.AddHeader("pragma", "no-cache")
@@ -260,11 +259,11 @@ Namespace Framework2006
                 SetScreen(Session("CurTab"), curUser.Account.accountid, curUser.Employee.employeeid)
 
                 Dim curContract As Integer
-                If Not Session("ActiveContract") Is Nothing Then
-                    curContract = Session("ActiveContract")
-                Else
-                    curContract = 0
+                If ViewState("ActiveContract") Is Nothing Or activeContractId Is Nothing
+                    activeContractId = 0
+                    ViewState("ActiveContract") = 0
                 End If
+                curContract = activeContractId
 
                 Dim onloadFunctionAppend As String = ""
                 Dim allowDelete As Boolean = curUser.CheckAccessRole(AccessRoleType.Delete, SpendManagementElement.ContractDetails, False)
@@ -275,11 +274,11 @@ Namespace Framework2006
                         Dim db As New cFWDBConnection
                         db.DBOpen(fws, False)
                         sql = "SELECT dbo.IsVariation(@conId) AS [IsVariation]"
-                        db.AddDBParam("conId", Session("ActiveContract"), True)
+                        db.AddDBParam("conId", activeContractId, True)
                         db.RunSQL(sql, db.glDBWorkA, False, "", False)
 
-                        Dim CDLocked As Boolean = cLocks.IsLocked(Cache, "CD_" & curUser.AccountID.ToString, Session("ActiveContract"), curUser.EmployeeID)
-                        Dim CALocked As Boolean = cLocks.IsLocked(Cache, "CA_" & curUser.AccountID.ToString, Session("ActiveContract"), curUser.EmployeeID)
+                        Dim CDLocked As Boolean = cLocks.IsLocked(Cache, "CD_" & curUser.AccountID.ToString, activeContractId, curUser.EmployeeID)
+                        Dim CALocked As Boolean = cLocks.IsLocked(Cache, "CA_" & curUser.AccountID.ToString, activeContractId, curUser.EmployeeID)
 
                         If db.GetFieldValue(db.glDBWorkA, "IsVariation", 0, 0) > 0 Or curContract = 0 Then
                             lnkNewVariation.Visible = False
@@ -317,10 +316,11 @@ Namespace Framework2006
         Private Sub SetViewPermissions(ByVal ActiveViewTab As SummaryTabs)
             Dim helpID As String = "#0"
             Dim curUser As CurrentUser = cMisc.GetCurrentUser()
+            Dim activeContractId = ViewState("ActiveContract")
 
             Select Case ActiveViewTab
                 Case SummaryTabs.ContractDetail
-                    If Session("ActiveContract") = 0 Then
+                    If activeContractId = 0 Then
                         helpID = "#1073"
                     Else
                         helpID = "#1074"
@@ -370,6 +370,7 @@ Namespace Framework2006
         Private Sub SetScreen(ByVal ActiveViewTab As SummaryTabs, ByVal accountid As Integer, ByVal employeeid As Integer)
             Dim connStr As String = cAccounts.getConnectionString(accountid)
             Dim curUser As CurrentUser = cMisc.GetCurrentUser()
+            Dim activeContractId = ViewState("ActiveContract")
 
             'ChangeCSPage(ActiveViewTab, Session("ActiveContract"), employeeid)
 
@@ -377,7 +378,7 @@ Namespace Framework2006
             'SetViewPermissions(ActiveViewTab)
             'SetHeadings(ActiveViewTab)
 
-            ChangeCSPage(ActiveViewTab, Session("ActiveContract"), curUser.EmployeeID)
+            ChangeCSPage(ActiveViewTab, activeContractId, curUser.EmployeeID)
 
             SetTabOptions()
             SetViewPermissions(ActiveViewTab)
@@ -386,53 +387,53 @@ Namespace Framework2006
             Select Case ActiveViewTab
                 Case SummaryTabs.ContractDetail
                     ' release any lock for user in other tabs
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, activeContractId, employeeid)
                     ContractDetails_Load()
 
                 Case SummaryTabs.ContractAdditional
                     ' release any lock for user in other tabs
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, activeContractId, employeeid)
                     ContractAdditional_Load()
 
                 Case SummaryTabs.ContractProduct
                     ' release any lock for user in other tabs
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, activeContractId, employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, activeContractId, employeeid)
                     ContractProduct_Load()
 
                 Case SummaryTabs.InvoiceDetail
                     ' release any lock for user in other tabs
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, activeContractId, employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, activeContractId, employeeid)
                     InvoiceDetails_Load()
 
                 Case SummaryTabs.InvoiceForecast
                     ' release any lock for user in other tabs
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, activeContractId, employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, activeContractId, employeeid)
                     InvoiceForecast_Load()
 
                 Case SummaryTabs.NotesSummary
                     ' release any lock for user in other tabs
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, activeContractId, employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, activeContractId, employeeid)
                     NoteSummary_Load()
 
                 Case SummaryTabs.LinkedContracts
                     ' release any lock for user in other tabs
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, activeContractId, employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, activeContractId, employeeid)
                     LinkedContracts_Load()
 
                 Case SummaryTabs.RechargeTemplate
                     ' release any lock for user in other tabs
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, activeContractId, employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, activeContractId, employeeid)
 
                 Case SummaryTabs.RechargePayments
                     ' release any lock for user in other tabs
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
-                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, Session("ActiveContract"), employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, activeContractId, employeeid)
+                    cLocks.RemoveLockItem(accountid, connStr, Cache, "CA_" & curUser.AccountID.ToString, activeContractId, employeeid)
 
                 Case Else
 
@@ -698,7 +699,7 @@ Namespace Framework2006
                      "WHERE [contract_details].[ContractId] = @conId " & _
                      "ORDER BY [ProductName]"
 
-                    db.AddDBParam("conId", Session("ActiveContract"), True)
+                    db.AddDBParam("conId", ViewState("ActiveContract"), True)
                     db.RunSQL(sql, db.glDBWorkB, False, "Products", False)
                     lstProductName.Items.Clear()
                     lstProductName.DataSource = db.glDBWorkB
@@ -847,6 +848,7 @@ Namespace Framework2006
             Dim clsModules As New cModules
             Dim clsModule As cModule = clsModules.GetModuleByID(CInt(curUser.CurrentActiveModule))
             Dim brandName As String = clsModule.BrandNameHTML
+            Dim activeContractid = ViewState("ActiveContract")
 
             'Set the element for the audit log
             Dim element As SpendManagementElement
@@ -886,7 +888,8 @@ Namespace Framework2006
                         FWDb.DBClose()
                         Response.Redirect("Home.aspx?error=4", True)
                     End If
-                    Session("ActiveContract") = cId
+                    ViewState("ActiveContract") = cId
+                    activeContractid = cId
                 End If
                 loc = Request.QueryString("loc")
 
@@ -930,7 +933,7 @@ Namespace Framework2006
                             ' must have validly created the new schedule
                             FWDb.FWDb("R2", "contract_details", "contractId", cId, "", "", "", "", "", "", "", "", "", "")
                             If FWDb.FWDb2Flag = True Then
-                                Session("ActiveContract") = cId
+                                ViewState("ActiveContract") = cId
                                 ARec.Action = cFWAuditLog.AUDIT_ADD
                                 If Trim(FWDb.FWDbFindVal("contractKey", 2)) <> "" Then
                                     ARec.ContractNumber = FWDb.FWDbFindVal("contractKey", 2)
@@ -968,7 +971,8 @@ Namespace Framework2006
                             cId = Val(Request.QueryString("id"))
                         Else
                             ' must have validly created the new schedule
-                            Session("ActiveContract") = cId
+                            ViewState("ActiveContract") = cId
+                            activeContractid = cId
                             FWDb.FWDb("R2", "contract_details", "contractId", cId, "", "", "", "", "", "", "", "", "", "")
                             If FWDb.FWDb2Flag = True Then
                                 ARec.Action = cFWAuditLog.AUDIT_ADD
@@ -1053,21 +1057,21 @@ Namespace Framework2006
                         ' instigate the caching of templates and payments for this contract
                         Dim cc As New cCacheCollections(curUser, curUser.Employee)
 
-                        If Cache("RCT_" & Session("ActiveContract")) Is Nothing Then
+                        If Cache("RCT_" & activeContractid) Is Nothing Then
                             ' only do background cache, if it not already being done
                             Dim crt As New cCacheCollections.CacheRTCollection(AddressOf cc.CacheTemplateCollection)
                             Dim rtsyncres As IAsyncResult
 
-                            Cache("RCT_" & Session("ActiveContract")) = 1
+                            Cache("RCT_" & activeContractid) = 1
                             rtsyncres = crt.BeginInvoke(cId, New AsyncCallback(AddressOf CSRTCallBack), crt)
                         End If
 
-                        If Cache("RCP_" & Session("ActiveContract")) Is Nothing And Cache("RCG_" & Session("ActiveContract")) Is Nothing Then
+                        If Cache("RCP_" & activeContractid) Is Nothing And Cache("RCG_" & activeContractid) Is Nothing Then
                             Dim rpsyncres As IAsyncResult
                             Dim cp_info As New cCPFieldInfo(fws.MetabaseCustomerId, curUser.CurrentSubAccountId, fws.getConnectionString, curUser.EmployeeID, cId)
                             Dim crp As New cCacheCollections.CacheRPCollection(AddressOf cc.CachePaymentCollection)
 
-                            Cache("RCP_" & Session("ActiveContract")) = 1
+                            Cache("RCP_" & activeContractid) = 1
                             rpsyncres = crp.BeginInvoke(cp_info, cId, New AsyncCallback(AddressOf CSRPCallBack), crp)
                         End If
                     End If
@@ -1080,19 +1084,19 @@ Namespace Framework2006
 
         Private Sub CSRTCallBack(ByVal result As IAsyncResult)
             Dim rt As cCacheCollections.CacheRTCollection = CType(result.AsyncState, cCacheCollections.CacheRTCollection)
+            Dim activeContractId = ViewState("ActiveContract")
             rt.EndInvoke(result)
-
-            If Not Cache("RCT_" & Session("ActiveContract")) Is Nothing Then
-                Cache.Remove("RCT_" & Session("ActiveContract"))
+            If Not Cache("RCT_" & activeContractId) Is Nothing Then
+                Cache.Remove("RCT_" & activeContractId)
             End If
         End Sub
 
         Private Sub CSRPCallBack(ByVal result As IAsyncResult)
             Dim rp As cCacheCollections.CacheRPCollection = CType(result.AsyncState, cCacheCollections.CacheRPCollection)
+            Dim activeContractId = ViewState("ActiveContract")
             rp.EndInvoke(result)
-
-            If Not Cache("RCP_" & Session("ActiveContract")) Is Nothing Then
-                Cache.Remove("RCP_" & Session("ActiveContract"))
+            If Not Cache("RCP_" & activeContractId) Is Nothing Then
+                Cache.Remove("RCP_" & activeContractId)
             End If
         End Sub
 
@@ -1102,14 +1106,18 @@ Namespace Framework2006
             Dim subaccs As New cAccountSubAccounts(curUser.Account.accountid)
             Dim properties As cAccountProperties = subaccs.getSubAccountById(curUser.CurrentSubAccountId).SubAccountProperties
 
-            If Session("ActiveContract") Is Nothing Then
-                Session("ActiveContract") = 0
+            Dim activeContractid
+            If ViewState("ActiveContract") Is Nothing Then
+                ViewState("ActiveContract") = 0
+                activeContractid = 0
+            Else
+                activeContractid = ViewState("ActiveContract")
             End If
 
             Dim omout As String = "window.status='Done';"
             Dim omover As String = "window.status='%msg%';return true;"
 
-            If Session("ActiveContract") > 0 Then
+            If activeContractid  > 0 Then
                 If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ContractAdditional, False) = False Then
                     lnkCAnav.Visible = False
                 Else
@@ -1159,13 +1167,13 @@ Namespace Framework2006
                 End If
 
                 If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ContractLinks, False) = True Then
-                    If Session("ActiveContract") > 0 Then
+                    If activeContractid  > 0 Then
                         ' contract was found previously
                         Dim Sql As New System.Text.StringBuilder
                         Sql.Append("SELECT COUNT(*) AS [LnkCnt] FROM [link_matrix] ")
                         Sql.Append("INNER JOIN [link_definitions] ON [link_definitions].[linkId] = [link_matrix].[linkId] ")
                         Sql.Append("WHERE [link_definitions].[isScheduleLink] = 0 AND [contractId] = @cId")
-                        db.sqlexecute.Parameters.AddWithValue("@cId", Session("ActiveContract"))
+                        db.sqlexecute.Parameters.AddWithValue("@cId", ViewState("ActiveContract"))
                         Dim count As Integer = db.getcount(Sql.ToString)
 
                         If count > 0 Then
@@ -1463,7 +1471,7 @@ Namespace Framework2006
                     Session("CPAction") = "add"
 
                     Dim sql As String = "select [categoryId] from contract_details where [contractId] = @conId"
-                    db.sqlexecute.Parameters.AddWithValue("@conId", Session("ActiveContract"))
+                    db.sqlexecute.Parameters.AddWithValue("@conId", ViewState("ActiveContract"))
 
                     ConCategoryId = db.getIntSum(sql)
 
@@ -1487,7 +1495,7 @@ Namespace Framework2006
 
         Protected Sub lnkNewVariation_Click(ByVal sender As Object, ByVal e As System.EventArgs)
             Session("CDAction") = "addvariation"
-            Response.Redirect("ContractSummary.aspx?tab=0&id=" & Session("ActiveContract") & "&cdaction=addvariation", True)
+            Response.Redirect("ContractSummary.aspx?tab=0&id=" & ViewState("ActiveContract") & "&cdaction=addvariation", True)
         End Sub
 
         Protected Sub lnkNotes_Click(ByVal sender As Object, ByVal e As System.EventArgs)
@@ -1495,7 +1503,7 @@ Namespace Framework2006
 
             Select Case CType(ViewTab.ActiveViewIndex, SummaryTabs)
                 Case SummaryTabs.ContractDetail, SummaryTabs.ContractAdditional
-                    url = "ViewNotes.aspx?notetype=Contract&id=-1&contractid=" & Session("ActiveContract") & "&item=" & Replace(Replace(Session("CurContractDesc"), "&", "%26"), vbNewLine, "")
+                    url = "ViewNotes.aspx?notetype=Contract&id=-1&contractid=" & ViewState("ActiveContract") & "&item=" & Replace(Replace(Session("CurContractDesc"), "&", "%26"), vbNewLine, "")
                 Case Else
 
             End Select
@@ -1516,7 +1524,7 @@ Namespace Framework2006
             Dim db As New DBConnection(cAccounts.getConnectionString(curUser.Account.accountid))
 
             Dim sql As String = "select [categoryId] from contract_details where [contractId] = @conId"
-            db.sqlexecute.Parameters.AddWithValue("@conId", Session("ActiveContract"))
+            db.sqlexecute.Parameters.AddWithValue("@conId", ViewState("ActiveContract"))
 
             ConCategoryId = db.getIntSum(sql)
 

@@ -133,10 +133,13 @@ function SetIsVariation(bVal)
     bIsVariation = bVal;
 }
 
-function GetCPDetail(CPId)
-{
+function GetCPDetail(CPId, activeContractId) {
     nActiveCP = CPId;
-    PageMethods.GetCPDetail(CPId,fnGetCPDetailComplete);
+    if (activeContractId === undefined || activeContractId === null || activeContractId.length <= 0) {
+        activeContractId = CPId;
+    }
+    maintParams = document.getElementById("MaintParams")
+    PageMethods.GetCPDetail(CPId, fnGetCPDetailComplete, activeContractId, maintParams);
 }
 
 function fnGetCPDetailComplete(strResult)

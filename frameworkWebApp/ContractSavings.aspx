@@ -2,6 +2,23 @@
     AutoEventWireup="false" Inherits="frameworkWebApp.Framework2006.ContractSavings" Codebehind="ContractSavings.aspx.vb" %>
 <%@ MasterType VirtualPath="~/FWMaster.master" %>
 <asp:Content ID="Content3" runat="server" ContentPlaceHolderID="contentmain">
+    <script type="text/javascript">
+        $("document").ready(function () {
+            if ($('#ctl00_sitemap:contains("Contract Summary")').length > 0) {
+                $("#ctl00_sitemap li:nth-child(2)").children("a")
+                    .attr("href", "/ContractSummary.aspx?id=" + getParameterByName("contractId"));
+            }
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+        });
+    </script>
     <div class="inputpanel formpanel_padding">
         <div class="inputpaneltitle">
             Contract Savings<asp:Label ID="lblTitle" runat="server"></asp:Label></div>
