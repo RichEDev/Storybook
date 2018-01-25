@@ -26,7 +26,7 @@ function doAddSchedule()
     }
     else
     {
-        window.location.href='ScheduleAction.aspx';
+        window.location.href='ScheduleAction.aspx?contractId=' + curContractId;
     }
 }
 
@@ -38,7 +38,7 @@ function doUpdateSchedule()
     }
     else
     {
-        window.location.href='ScheduleAction.aspx';
+        window.location.href='ScheduleAction.aspx?contractId=' + curContractId;
     }
 }
 

@@ -3678,7 +3678,7 @@ Namespace Framework2006
         End Sub
 
         Protected Sub lnkSchedules_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles imgSchedules.Click
-            Response.Redirect("ScheduleAction.aspx", True)
+            Response.Redirect("ScheduleAction.aspx?contractId=" + ViewState("ActiveContract").ToString(), True)
         End Sub
 
         Protected Sub lstSchedules_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs)
