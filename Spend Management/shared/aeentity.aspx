@@ -29,7 +29,7 @@
 			<asp:ScriptReference Path="~/shared/javaScript/ajaxEditor.js" />
             <asp:ScriptReference  Name="tooltips" />
             <asp:ScriptReference Path="~/shared/javaScript/Attachments.js?v=1" />
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.filterDialog.js"/>
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.filterDialog.js?date=20180126"/>
             <asp:ScriptReference Path="~/shared/javaScript/sel.ajax.js" />
             <asp:ScriptReference Path="~/shared/javaScript/minify/SEL.CustomEntityRecordLocking.js" />
 		</Scripts>
