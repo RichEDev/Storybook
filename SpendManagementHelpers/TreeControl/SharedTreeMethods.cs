@@ -173,7 +173,7 @@
                 //parentSM.Scripts.Add(new ScriptReference("TreeDrop/sel.trees.js", "SpendManagementHelpers"));
 
                 var selTrees = new ScriptReference(Path + "/shared/javascript/minify/sel.trees.js");
-                var filterDialogPlugin = new ScriptReference(Path + "/shared/javascript/minify/sel.filterDialog.js");
+                var filterDialogPlugin = new ScriptReference(Path + "/shared/javascript/minify/sel.filterDialog.js?date=20180126");
                 var ajaxService = new ScriptReference(Path + "/shared/javascript/sel.ajax.js");
                 var jQueryTree = new ScriptReference(Path + "/shared/javascript/minify/jquery.jstree.js");
                 parentSM.Scripts.Add(jQueryTree);

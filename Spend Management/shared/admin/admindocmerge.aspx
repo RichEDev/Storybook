@@ -26,7 +26,7 @@
         <Scripts>
             <asp:ScriptReference Name="tooltips" />
             <asp:ScriptReference Path="~/shared/javaScript/minify/sel.docMerge.js" />
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.filterDialog.js"/>
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.filterDialog.js?date=20180126"/>
             <asp:ScriptReference Path="~/shared/javaScript/sel.ajax.js" />
         </Scripts>
     </asp:ScriptManagerProxy>
