@@ -367,7 +367,6 @@ Namespace Framework2006
                 hypLastContract.Attributes.Add("onmouseover", "window.status='Open the last Contract you viewed';return true;")
 
                 ' ensure that tab always defaults back to ContractDetails
-                Session("CurTab") = SummaryTabs.ContractDetail
 
                 If tmpstr = "" Then
                     hypLastContract.Enabled = False

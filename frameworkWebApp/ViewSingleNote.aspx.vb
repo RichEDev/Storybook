@@ -65,6 +65,7 @@ Namespace Framework2006
                         srcField = "Contract Description"
                         att_area = AttachmentArea.CONTRACT_NOTES
                         currentElement = SpendManagementElement.ContractNotes
+                        ViewState("ActiveContract") = ownerIdx
 
                     Case "invoice"
                         IDField = "invoiceID"
@@ -201,7 +202,7 @@ Namespace Framework2006
         End Sub
 
         Protected Sub cmdClose_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdClose.Click
-            Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.NotesSummary & "&id=" & Session("ActiveContract"), True)
+            Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.NotesSummary & "&id=" & ViewState("ActiveContract"), True)
         End Sub
     End Class
 

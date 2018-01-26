@@ -30,9 +30,11 @@ Namespace Framework2006
 
                 litScript.Text = GetScriptBlock()
 
-                id = Request.QueryString("id")
-
-                litCalculation.Text = Session("CalcText" & id.ToString)
+                id =  Request.QueryString("id")
+                If id = 0
+                    id = Server.UrlDecode(Request.QueryString("id"))
+                End If
+                litCalculation.Text = Server.UrlDecode(Request.QueryString("calcText"))
             End If
 
             Dim strStyles As New StringBuilder

@@ -27,6 +27,8 @@ Namespace Framework2006
             Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, subaccs.getSubAccountsCollection, curUser.CurrentSubAccountId)
             Dim params As cAccountProperties = subaccs.getSubAccountById(curUser.CurrentSubAccountId).SubAccountProperties
             Dim connStr As String = cAccounts.getConnectionString(curUser.Account.accountid)
+            Dim activeContractId = Request.QueryString("contractId")
+            ViewState("ActiveContract") = activeContractId
 
             curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ContractSavings, False, True)
 
@@ -57,7 +59,7 @@ Namespace Framework2006
                             Dim ARec As New cAuditRecord
                             Dim ALog As New cFWAuditLog(fws, SpendManagementElement.ContractSavings, curUser.CurrentSubAccountId)
 
-                            db.FWDb("R3", "contract_details", "ContractId", Session("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
+                            db.FWDb("R3", "contract_details", "ContractId", activeContractId, "", "", "", "", "", "", "", "", "", "")
                             If db.FWDb3Flag Then
                                 ARec.ContractNumber = db.FWDbFindVal("ContractKey", 3)
                             End If
@@ -91,12 +93,12 @@ Namespace Framework2006
                     End If
 
                     ' remove any potential lock from the parent contract
-                    cLocks.RemoveLockItem(curUser.Account.accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, Session("ActiveContract"), curUser.EmployeeID)
+                    cLocks.RemoveLockItem(curUser.Account.accountid, connStr, Cache, "CD_" & curUser.AccountID.ToString, activeContractId, curUser.EmployeeID)
 
-                    litSavingsTable.Text = GetSavingsGrid(db, Session("ActiveContract"))
+                    litSavingsTable.Text = GetSavingsGrid(db, activeContractId)
                 End If
 
-                db.FWDb("R", "contract_details", "ContractId", Session("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
+                db.FWDb("R", "contract_details", "ContractId", activeContractId, "", "", "", "", "", "", "", "", "", "")
                 If db.FWDbFlag = True Then
                     lblTitle.Text = " - " & db.FWDbFindVal("ContractDescription", 1)
                 End If
@@ -166,11 +168,11 @@ Namespace Framework2006
 
                         .Append("<tr>" & vbNewLine)
                         If curUser.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.ContractSavings, True) Then
-                            .Append("<td class=""" & rowClass & """><a onmouseover=""window.status='Edit the saving entry';return true;"" onmouseout=""window.status='Done';"" href=""ContractSavings.aspx?action=edit&savingid=" & drow.Item("SavingsId") & """ title=""Edit saving entry""><img src=""./icons/edit.gif"" /></a></td>" & vbNewLine)
+                            .Append("<td class=""" & rowClass & """><a onmouseover=""window.status='Edit the saving entry';return true;"" onmouseout=""window.status='Done';"" href=""ContractSavings.aspx?action=edit&contractId=" & ViewState("ActiveContract") &"&savingid=" & drow.Item("SavingsId") & """ title=""Edit saving entry""><img src=""./icons/edit.gif"" /></a></td>" & vbNewLine)
                         End If
 
                         If curUser.CheckAccessRole(AccessRoleType.Delete, SpendManagementElement.ContractSavings, True) Then
-                            .Append("<td class=""" & rowClass & """><a onmouseover=""window.status='Delete the saving entry';return true;"" onmouseout=""window.status='Done';"" onclick=""javascript:if(confirm('Click OK to confirm deletion of this saving entry')){window.location.href='ContractSavings.aspx?action=delete&savingid=" & drow.Item("SavingsId") & "';}"" title=""Delete saving entry"" style=""cursor: hand;""><img src=""./icons/delete2.gif"" /></a></td>" & vbNewLine)
+                            .Append("<td class=""" & rowClass & """><a onmouseover=""window.status='Delete the saving entry';return true;"" onmouseout=""window.status='Done';"" onclick=""javascript:if(confirm('Click OK to confirm deletion of this saving entry')){window.location.href='ContractSavings.aspx?action=delete&contractId=" & ViewState("ActiveContract") &"&savingid=" & drow.Item("SavingsId") & "';}"" title=""Delete saving entry"" style=""cursor: hand;""><img src=""./icons/delete2.gif"" /></a></td>" & vbNewLine)
                         End If
 
                         .Append("<td class=""" & rowClass & """>" & drow.Item("Reference") & "</td>" & vbNewLine)
@@ -229,7 +231,7 @@ Namespace Framework2006
                 '    collRE = GetRechargeEntityCollection(db, conId)
                 'End If
 
-                db.FWDb("R2", "contract_details", "ContractId", Session("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
+                db.FWDb("R2", "contract_details", "ContractId", ViewState("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
 
                 If updId > 0 Then
                     curUser.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.ContractSavings, False, True)
@@ -363,7 +365,7 @@ Namespace Framework2006
 
                     ' must be inserting
                     db.SetFieldValue("subAccountId", curUser.CurrentSubAccountId, "N", True)
-                    db.SetFieldValue("ContractId", Session("ActiveContract"), "N", False)
+                    db.SetFieldValue("ContractId", ViewState("ActiveContract"), "N", False)
                     db.SetFieldValue("Reference", txtReference.Text, "S", False)
                     If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ViewFinancials, True) Then
                         db.SetFieldValue("Amount", txtAmount.Text, "N", False)
@@ -393,19 +395,19 @@ Namespace Framework2006
 
             End Try
 
-            Response.Redirect("ContractSavings.aspx", True)
+            Response.Redirect("ContractSavings.aspx?contractId=" & ViewState("ActiveContract"), True)
         End Sub
 
 		Private Sub cmdRefresh_Click(ByVal sender As System.Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdRefresh.Click
 			Session("SavingFrom") = dateFrom.Value
 			Session("SavingTo") = dateTo.Value
-			Response.Redirect("ContractSavings.aspx", True)
+			Response.Redirect("ContractSavings.aspx?contractId=" & ViewState("ActiveContract"), True)
 		End Sub
 
 		Private Sub LeaveScreen()
 			Session("SavingFrom") = Nothing
 			Session("SavingTo") = Nothing
-			Response.Redirect("ContractSummary.aspx?id=" & Trim(Str(Session("ActiveContract"))), True)
+			Response.Redirect("ContractSummary.aspx?id=" & Trim(Str(ViewState("ActiveContract"))), True)
 		End Sub
 
 		Private Sub cmdClose_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdClose.Click
@@ -437,12 +439,12 @@ Namespace Framework2006
                 txtReference.Text = db.FWDbFindVal("Reference", 1)
                 hiddenSavingId.Text = savingId.ToString
             Else
-                Response.Redirect("ContractSavings.aspx", True)
+                Response.Redirect("ContractSavings.aspx?contractId=" & ViewState("ActiveContract"), True)
             End If
         End Sub
 
         Protected Sub cmdCancel_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdCancel.Click
-            Response.Redirect("ContractSavings.aspx", True)
+            Response.Redirect("ContractSavings.aspx?contractId=" & ViewState("ActiveContract"), True)
         End Sub
 
         Protected Sub cmdUpdate_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdUpdate.Click

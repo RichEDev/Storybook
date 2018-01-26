@@ -33,11 +33,18 @@ Namespace Framework2006
             Dim suppStr As String = "Supplier"
 
             If Me.IsPostBack = False Then
-                Session("FromPage") = UCase(Request.QueryString("frompage"))
+                ViewState("FromPage") = UCase(Request.QueryString("frompage"))
                 FWDb.DBOpen(fws, False)
 
+                Dim activeContract = 0
+                If Request.QueryString("contractId") > "" Then
+                    activeContract = Request.QueryString("contractId")
+                    ViewState("ActiveContract") = activeContract
+                End If
+                
+
                 ' set titles
-                Select Case Session("FromPage")
+                Select Case ViewState("FromPage")
                     Case "PRODUCTDETAILS", "VENDORDETAILS"
                         suppStr = fwparams.SupplierPrimaryTitle
                         lblTitle.Text = "Product-" & suppStr & " Association"
@@ -85,7 +92,7 @@ Namespace Framework2006
         Private Sub ReturnToWhenceICame()
             Dim redir As String
 
-            Select Case CStr(Session("FromPage"))
+            Select Case CStr(ViewState("FromPage"))
                 Case "PRODUCTDETAILS"
                     redir = "ProductDetails.aspx?item=" & Trim(Session("ProductText")) & "&id=" & Session("ProductId") & "&action=edit"
 
@@ -93,7 +100,7 @@ Namespace Framework2006
                     redir = "Home.aspx"
 
                 Case "CONTRACTDETAILS"
-                    redir = "ContractSummary.aspx?id=" & Trim(Session("ActiveContract"))
+                    redir = "ContractSummary.aspx?id=" & Trim(ViewState("ActiveContract"))
 
                 Case Else
                     redir = "Home.aspx"
@@ -108,7 +115,7 @@ Namespace Framework2006
             Dim curUser As CurrentUser = cMisc.GetCurrentUser()
 
             curID = Session("ProductId")
-            Select Case Session("FromPage")
+            Select Case ViewState("FromPage")
                 Case "PRODUCTDETAILS"
                     sql = "SELECT [product_suppliers].[supplierId],[supplier_details].[suppliername] FROM [product_suppliers]" & vbNewLine & _
      "INNER JOIN [supplier_details] ON [product_suppliers].[supplierId] = [supplier_details].[supplierid]" & vbNewLine & _
@@ -152,7 +159,7 @@ Namespace Framework2006
                 If Not .SelectedItem Is Nothing Then
                     db.DBOpen(fws, False)
 
-                    Select Case CStr(Session("FromPage"))
+                    Select Case CStr(ViewState("FromPage"))
                         Case "PRODUCTDETAILS", "VENDORDETAILS"
                             reccount = .Items.Count - 1
                             x = 0
@@ -186,7 +193,7 @@ Namespace Framework2006
                                 If .Items(x).Selected = True Then
                                     .Items(x).Selected = False
                                     lstSelected.Items.Add(.Items(x))
-                                    db.SetFieldValue("ContractId", Session("ActiveContract"), "N", True)
+                                    db.SetFieldValue("ContractId", ViewState("ActiveContract"), "N", True)
                                     db.SetFieldValue("employeeId", .Items(x).Value.Replace("T", ""), "N", False)
                                     db.SetFieldValue("subAccountId", curUser.CurrentSubAccountId, "N", False)
                                     If .Items(x).Text.Substring(0, 2) = "**" Then
@@ -197,7 +204,7 @@ Namespace Framework2006
                                     End If
                                     db.FWDb("W", "contract_notification", "", "", "", "", "", "", "", "", "", "", "", "")
 
-                                    db.FWDb("R2", "contract_details", "ContractId", Session("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
+                                    db.FWDb("R2", "contract_details", "ContractId", ViewState("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
                                     If db.FWDb2Flag = True Then
                                         Dim tmpId As String
                                         tmpId = Trim(db.FWDbFindVal("ContractKey", 2))
@@ -214,12 +221,12 @@ Namespace Framework2006
                                     ARec.PreVal = "DESELECTED"
                                     ARec.PostVal = "SELECTED"
                                     ALog.AddAuditRec(ARec, True)
-                                    ALog.CommitAuditLog(curUser.Employee, Session("ActiveContract"))
+                                    ALog.CommitAuditLog(curUser.Employee, ViewState("ActiveContract"))
 
                                     ARec.ElementDesc = "CONTRACT NOTIFY"
                                     ARec.PreVal = ""
                                     ARec.PostVal = .Items(x).Text
-                                    ContractRoutines.AddContractHistory(curUser.AccountID, cAccounts.getConnectionString(curUser.AccountID), curUser.Employee, SummaryTabs.ContractDetail, Session("ActiveContract"), ARec)
+                                    ContractRoutines.AddContractHistory(curUser.AccountID, cAccounts.getConnectionString(curUser.AccountID), curUser.Employee, SummaryTabs.ContractDetail, ViewState("ActiveContract"), ARec)
 
                                     .Items.Remove(.Items(x))
                                     reccount = reccount - 1
@@ -251,7 +258,7 @@ Namespace Framework2006
                 If Not .SelectedItem Is Nothing Then
                     db.DBOpen(fws, False)
 
-                    Select Case Session("FromPage")
+                    Select Case ViewState("FromPage")
                         Case "PRODUCTDETAILS", "VENDORDETAILS"
                             reccount = .Items.Count - 1
                             x = 0
@@ -284,7 +291,7 @@ Namespace Framework2006
                                     .Items(x).Selected = False
                                     lstAvailable.Items.Add(.Items(x))
 
-                                    db.FWDb("R2", "contract_details", "ContractId", Session("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
+                                    db.FWDb("R2", "contract_details", "ContractId", ViewState("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
                                     If db.FWDb2Flag = True Then
                                         ARec.ContractNumber = db.FWDbFindVal("ContractKey", 2)
                                     End If
@@ -295,7 +302,7 @@ Namespace Framework2006
                                     Else
                                         IsTeam = AudienceType.Individual
                                     End If
-                                    db.FWDb("D", "contract_notification", "contractId", Session("ActiveContract"), "employeeId", .Items(x).Value.Replace("T", ""), "IsTeam", IsTeam, "", "", "", "", "", "")
+                                    db.FWDb("D", "contract_notification", "contractId", ViewState("ActiveContract"), "employeeId", .Items(x).Value.Replace("T", ""), "IsTeam", IsTeam, "", "", "", "", "", "")
 
                                     ALog = New cFWAuditLog(fws, SpendManagementElement.ContractDetails, curUser.CurrentSubAccountId)
                                     ARec.Action = cFWAuditLog.AUDIT_DEL
@@ -304,12 +311,12 @@ Namespace Framework2006
                                     ARec.PreVal = "SELECTED"
                                     ARec.PostVal = "DESELECTED"
                                     ALog.AddAuditRec(ARec, True)
-                                    ALog.CommitAuditLog(curUser.Employee, Session("ActiveContract"))
+                                    ALog.CommitAuditLog(curUser.Employee, ViewState("ActiveContract"))
 
                                     ARec.ElementDesc = "CONTRACT NOTIFY"
                                     ARec.PreVal = .Items(x).Text
                                     ARec.PostVal = ""
-                                    ContractRoutines.AddContractHistory(curUser.AccountID, cAccounts.getConnectionString(curUser.AccountID), curUser.Employee, SummaryTabs.ContractDetail, Session("ActiveContract"), ARec)
+                                    ContractRoutines.AddContractHistory(curUser.AccountID, cAccounts.getConnectionString(curUser.AccountID), curUser.Employee, SummaryTabs.ContractDetail, ViewState("ActiveContract"), ARec)
 
                                     .Items.Remove(.Items(x))
                                     reccount = reccount - 1
@@ -338,7 +345,7 @@ Namespace Framework2006
             Dim notifySQL As New System.Text.StringBuilder
             Dim drow As DataRow
 
-            curID = Session("ActiveContract")
+            curID = ViewState("ActiveContract")
 
             notifySQL.Append("SELECT [contract_notification].[employeeId] AS [NotifyId], [employees].[firstname] + ' ' + employees.surname AS [NotifyName],[IsTeam] " & vbNewLine)
             notifySQL.Append("FROM [contract_notification] " & vbNewLine)

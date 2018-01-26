@@ -43,7 +43,7 @@ Namespace Framework2006
                         Session("arlSelected") = arlSelected
                         GetUserAudience(db, fws, curUser, hiddenEntityId.Text, arlSelected)
                         helpID = "#1074"
-
+                        ViewState("ActiveContract") = hiddenEntityId.Text
                     Case "attachment"
                         curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.AttachmentAudience, False, True)
                         hiddenAudienceTable.Text = "attachment_audience"
@@ -229,7 +229,7 @@ Namespace Framework2006
 
             Select Case audienceTable
                 Case "contract_audience"
-                    db.FWDb("R2", "contract_details", "ContractId", Session("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
+                    db.FWDb("R2", "contract_details", "ContractId", ViewState("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
                     If db.FWDb2Flag Then
                         ARec.ContractNumber = db.FWDbFindVal("ContractKey", 2)
                     Else
