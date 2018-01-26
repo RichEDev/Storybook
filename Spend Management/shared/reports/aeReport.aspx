@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="contentmain" runat="server">
     <asp:ScriptManagerProxy runat="server" ID="smProxy">
         <Scripts>
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.filterDialog.js"/>
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.filterDialog.js?date=20180126"/>
             <asp:ScriptReference Path="~/shared/javaScript/sel.reports.js?date=201801241614" />
             <asp:ScriptReference Path="~/shared/javaScript/sel.ajax.js"/>
             <asp:ScriptReference Name="tooltips" />
