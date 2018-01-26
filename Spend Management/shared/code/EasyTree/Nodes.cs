@@ -518,7 +518,7 @@
                                 == (entityField.TableID == thisTable ? entityField.RelatedTableID : entityField.TableID))
                             {
                                 if (entityField.FieldName.ToLower() == "createdby"
-                                   || entityField.FieldName.ToLower() == "modifiedby" || entityField.FieldSource == cField.FieldSourceType.CustomEntity || entityField.FieldID == new Guid(ReportFields.TeamEmployeeId))
+                                   || entityField.FieldName.ToLower() == "modifiedby" || entityField.FieldSource != cField.FieldSourceType.Metabase || entityField.FieldID == new Guid(ReportFields.TeamEmployeeId))
                                 {
                                     result.Add(entityField);
                                 }
