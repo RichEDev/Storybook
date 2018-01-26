@@ -1,7 +1,6 @@
-﻿CREATE PROC [dbo].[GetApproversReminderList]
+﻿CREATE PROCEDURE [dbo].[GetApproversReminderList] 
 AS
 BEGIN
-
 DECLARE @checkReminderEnabled BIT
 SELECT @checkReminderEnabled = stringValue from accountProperties where stringKey = 'EnableClaimApprovalReminders'
 
@@ -16,7 +15,7 @@ DECLARE @reminderFrequency INT
 DECLARE @nDaysAgo datetime
 
 SELECT @reminderFrequency = stringValue FROM accountProperties WHERE stringKey = 'ClaimApprovalReminderFrequency'
-SET @nDaysAgo = dateadd(day,- @reminderFrequency,GETDATE())
+SET @nDaysAgo = cast(cast(dateadd(day,- @reminderFrequency,GETDATE()) as date) as datetime) + cast(cast('1900-01-01 23:59' as time) as datetime);
 
 INSERT INTO @employeeIdList
 SELECT DISTINCT employees.employeeid
@@ -34,6 +33,7 @@ WHERE ISNULL(ApproverLastRemindedDate, '1900-01-01') <= @ndaysago
 				itemcheckerClaims.STATUS <> 4
 				AND itemcheckerClaims.submitted = 1
 				AND itemcheckerClaims.paid = 0
+				AND savedexpenses.tempallow = 0
 			)
 		)
 
@@ -49,8 +49,3 @@ INSERT INTO claimhistory (claimid, stage, comment, datestamp, employeeid, create
 		WHERE CB.paid = 0 AND CB.submitted = 1 AND CB.status <> 4
 
 END
-
-
-GO
-
-
