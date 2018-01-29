@@ -1415,7 +1415,7 @@ Namespace Framework2006
         End Sub
 
         Protected Sub lnkSaving_Click(ByVal sender As Object, ByVal e As System.EventArgs)
-            Response.Redirect("ContractSavings.aspx", True)
+            Response.Redirect("ContractSavings.aspx?contractId=" & ViewState("ActiveContract"), True)
         End Sub
 
 #End Region
@@ -5587,7 +5587,7 @@ Namespace Framework2006
 
                 If curUser.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.ContractProducts, False) Then
                     Dim litEdit As New Literal
-                    litEdit.Text = "<a onmouseover=""window.status='Edit/View this Product';return true;"" onmouseout=""window.status='Done';"" href=""ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&cpaction=edit&cpid=" & drow.Item("contractProductId") & """ title=""Edit/View this Product""><img src=""./icons/edit.gif"" /></a>"
+                    litEdit.Text = "<a onmouseover=""window.status='Edit/View this Product';return true;"" onmouseout=""window.status='Done';"" href=""ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&cpaction=edit&cpid=" & drow.Item("contractProductId") & "&id=" & ViewState("ActiveContract") & """ title=""Edit/View this Product""><img src=""./icons/edit.gif"" /></a>"
                     CPCell.Controls.Add(litEdit)
 
                     CPCell.CssClass = rowClass
