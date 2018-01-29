@@ -2589,7 +2589,7 @@ namespace Spend_Management
         {
             cEmployeeCars clsEmployeeCars = new cEmployeeCars(accountid, employeeid);
 
-            cCar[] cars = clsEmployeeCars.GetCarArray(true);
+            var cars = this.GetEmployeesActiveCarsWithAFuelCard(clsEmployeeCars);
 
             cSubcats clsSubcats = new cSubcats(accountid);
             cExpenseItems clsExpItems = new cExpenseItems(accountid);
@@ -3681,11 +3681,11 @@ namespace Spend_Management
                     int businessmilescount = connection.ExecuteScalar<int>(strsql);
                     if (businessmilescount != 0)
                     {
-                        cCar[] cars = clsEmployeeCars.GetCarArray(true);
-                        for (int i = 0; i < cars.GetLength(0); i++)
+                        var cars = this.GetEmployeesActiveCarsWithAFuelCard(clsEmployeeCars);
+                        foreach (cCar car in cars)
                         {
-                            cOdometerReading reading = cars[i].getLastOdometerReading();
-                            clsemployees.deleteOdometerReading(employee.EmployeeID, cars[i].carid, reading.odometerid);
+                            cOdometerReading reading = car.getLastOdometerReading();
+                            clsemployees.deleteOdometerReading(employee.EmployeeID, car.carid, reading.odometerid);
                         }
 
                         // undo the mileage
@@ -4023,16 +4023,12 @@ namespace Spend_Management
         public void deleteLastOdometerReading(Employee reqemp)
         {
             cEmployeeCars clsEmployeeCars = new cEmployeeCars(accountid, reqemp.EmployeeID);
+            var cars = this.GetEmployeesActiveCarsWithAFuelCard(clsEmployeeCars);
             cEmployees clsemployees = new cEmployees(accountid);
-            cCar[] odocars = clsEmployeeCars.GetCarArray(true);
-            for (int i = 0; i < odocars.GetLength(0); i++)
+            foreach (cCar car in cars)
             {
-                cOdometerReading odoreading = odocars[i].getLastOdometerReading();
-
-                if (odoreading != null)
-                {
-                    clsemployees.deleteOdometerReading(reqemp.EmployeeID, odocars[i].carid, odoreading.odometerid);
-                }
+                cOdometerReading reading = car.getLastOdometerReading();
+                clsemployees.deleteOdometerReading(reqemp.EmployeeID, car.carid, reading.odometerid);
             }
         }
 
@@ -6979,6 +6975,16 @@ namespace Spend_Management
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Gets all the employees cars with a fuel cards
+        /// </summary>
+        /// <param name="employeeCars"><see cref="cEmployeeCars"/></param>
+        /// <returns>A list of <see cref="cCar"/></returns>
+        private List<cCar> GetEmployeesActiveCarsWithAFuelCard(cEmployeeCars employeeCars)
+        {
+            return employeeCars.GetActiveCars().Where(e => e.fuelcard == true).ToList();
         }
     }
 }
