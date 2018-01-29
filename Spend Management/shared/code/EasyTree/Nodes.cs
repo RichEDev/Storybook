@@ -59,6 +59,26 @@
         private List<int> _lstLicencedElementIDs;
 
         /// <summary>
+        /// A <see cref="ConcurrentDictionary{TKey,TValue}"/> of table plus account and the unexpanded tree.
+        /// </summary>
+        private static ConcurrentDictionary<string, List<EasyTreeNode>> _trees;
+
+        /// <summary>
+        /// A private instance of <see cref="ConcurrentDictionary{TKey,TValue}"/> if accountID and last update time.
+        /// </summary>
+        private static ConcurrentDictionary<int, long> lastReadFromDatabaseTicks = new ConcurrentDictionary<int, long>();
+
+
+        /// <summary>
+        /// A static constructor to initialise the cached trees.
+        /// </summary>
+        static Nodes()
+        {
+            _trees = new ConcurrentDictionary<string, List<EasyTreeNode>>();
+        }
+
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Nodes"/> class. 
         /// </summary>
         /// <param name="user">
@@ -96,6 +116,17 @@
             this._reportCommonColumns = new ReadOnlyCollection<ReportCommonColumn>(new List<ReportCommonColumn>());
             this._nonRequiredFields = new FilteredFields(user.CurrentActiveModule);
             this._lstLicencedElementIDs = new cElements().GetLicencedModuleIDs(user.AccountID, user.CurrentActiveModule);
+
+            long lastUpdatedAllServers = cUserDefinedFieldsBase.GetLastUpdatedFromCache(this._user.AccountID);
+            long lastReadFromDatabaseThisServer = lastReadFromDatabaseTicks.GetOrAdd(this._user.AccountID, 0);
+            var forceUpdateFromDatabase = lastUpdatedAllServers > lastReadFromDatabaseThisServer;
+            if (forceUpdateFromDatabase)
+            {
+                _trees = new ConcurrentDictionary<string, List<EasyTreeNode>>();
+            }
+
+            lastReadFromDatabaseTicks.AddOrUpdate(this._user.AccountID, addValueFactory: accId => lastUpdatedAllServers,
+                updateValueFactory: (accId, old) => lastUpdatedAllServers);
         }
 
         /// <summary>
@@ -107,6 +138,11 @@
         {
             var result = new List<EasyTreeNode>();
             this.baseTable =  new Guid(baseTableString);
+            var tableKey = $"{baseTableString}_{this._user.AccountID}";
+            if (_trees.ContainsKey(tableKey))
+            {
+                return _trees[tableKey];
+            }
 
             // system entity
             var exportedTables = new List<Guid>();
