@@ -33,6 +33,6 @@ INSERT INTO claimhistory (claimid, stage, comment, datestamp, employeeid, create
  SELECT DISTINCT cb.claimid, stage,'Sent reminder email for claim submission.', GETDATE(), cb.employeeid, cb.createdon, null from claims_base cb
   INNER JOIN  @employeeIdList CHECKERS ON cb.employeeid = CHECKERS.employeeId
   INNER JOIN employees ON CHECKERS.employeeId = employees.employeeid
+  WHERE cb.submitted = 0
 
 END
-GO
