@@ -312,6 +312,8 @@
                                     sel.ReceiptManagement.Elements.ReceiptTreeControl.ReceiptTree.addNew(result.id, result.url, result.icon, result.isImage);
                                 }
                                 sel.ReceiptManagement.Elements.ReceiptUploadError.hide();
+                                var element = document.getElementById("dynamicImageForm");
+                                element.parentNode.removeChild(element);
                                 return false;
                             },
                             error: function (xhr) {                              

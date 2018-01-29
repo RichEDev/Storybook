@@ -13,7 +13,7 @@
             <asp:ScriptReference Path="~/shared/javaScript/minify/knockout-3.1.0.debug.js" ScriptMode="Release" />
             <asp:ScriptReference Path="~/shared/javaScript/minify/knockout.mapping-latest.debug.js" ScriptMode="Release" />
             <asp:ScriptReference Path="~/shared/javaScript/minify/knockout.sortable.js" ScriptMode="Release" />
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.ReceiptManagement.js" ScriptMode="Release" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.ReceiptManagement.js?date=20180116" ScriptMode="Release" />
         </Scripts>
         <Services>
             <asp:ServiceReference Path="~/webServices/receipts.asmx" />
