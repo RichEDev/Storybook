@@ -232,6 +232,9 @@
       <DependentUpon>App.config</DependentUpon>
     </None>
     <None Include="Expenses_Reports_TemporaryKey.pfx" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="reports.cd" />
   </ItemGroup>
