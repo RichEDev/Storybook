@@ -1336,7 +1336,7 @@ Namespace Framework2006
             Select Case CType(ViewTab.ActiveViewIndex, SummaryTabs)
                 Case SummaryTabs.ContractDetail, SummaryTabs.ContractAdditional
                     ViewState("CDAction") = "add"
-                    url = "ContractSummary.aspx?cdaction=add&id=0&tab=" & SummaryTabs.ContractDetail
+                    url = "ContractSummary.aspx?cdaction=add&id=0&tab=" & SummaryTabs.ContractDetail & "&id=" & ViewState("ActiveContract")
                 Case SummaryTabs.ContractProduct
                     Dim ConCategoryId As Integer = 0
 
@@ -1350,13 +1350,13 @@ Namespace Framework2006
 
                     NewCPEntry(ConCategoryId)
 
-                    url = "" '"ContractSummary.aspx?cpaction=add&tab=" & SummaryTabs.ContractProduct
+                    url = "" 
                 Case SummaryTabs.InvoiceDetail
                     Session("IDAction") = "add"
-                    url = "ContractSummary.aspx?idaction=add&tab=" & SummaryTabs.InvoiceDetail
+                    url = "ContractSummary.aspx?idaction=add&tab=" & SummaryTabs.InvoiceDetail & "&id=" & ViewState("ActiveContract")
                 Case SummaryTabs.InvoiceForecast
                     Session("IFAction") = "add"
-                    url = "ContractSummary.aspx?ifaction=add&tab=" & SummaryTabs.InvoiceForecast
+                    url = "ContractSummary.aspx?ifaction=add&tab=" & SummaryTabs.InvoiceForecast & "&id=" & ViewState("ActiveContract")
                 Case Else
 
             End Select
@@ -1411,7 +1411,7 @@ Namespace Framework2006
 
         Protected Sub lnkGenerate_Click(ByVal sender As Object, ByVal e As System.EventArgs)
             Session("IFAction") = "generate"
-            Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast, True)
+            Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&id=" & ViewState("ActiveContract"), True)
         End Sub
 
         Protected Sub lnkSaving_Click(ByVal sender As Object, ByVal e As System.EventArgs)
@@ -1619,31 +1619,7 @@ Namespace Framework2006
                 lstVendor.Enabled = False
             End If
 
-            'litUserFields.Text = GetUserDefinedFields(db, False, False)
-
-            ' THIS IS NOW DONE IN THE PAGE_INIT
-            'Dim ufields As New cUserDefinedFields(fws, uinfo)
-            'CDUFPanel.Controls.Add(ufields.GetUserFieldDisplayTable(AppAreas.CONTRACT_DETAILS, ViewState("ActiveContract"), 0))
-
             UpdateContractLinks(fwdb, ViewState("ActiveContract"), curUser)
-            'Else
-            '' update any uf fields into viewstate
-            'UpdateUFViewState(db)
-            'End If
-
-            'If uinfo.permDelete = True Then
-            '    If ViewState("ActiveContract") = 0 Then
-            '        lnkDelete.Visible = False
-            '    Else
-            '        If IsArchived = True And uinfo.permAdmin = False Then
-            '            lnkDelete.Visible = False
-            '        Else
-            '            lnkDelete.Attributes.Add("onclick", "javascript:if(confirm('Click OK to confirm deletion')){window.navigate('ContractSummary.aspx?action=delete&id=" & ViewState("ActiveContract") & "');}")
-            '            lnkDelete.Attributes.Add("onmouseover", "window.status='Delete this contract';return true;")
-            '            lnkDelete.Attributes.Add("onmouseout", "window.status='Done';")
-            '        End If
-            '    End If
-            'End If
 
             If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ContractNotes, False) Then
                 If ViewState("ActiveContract") > 0 Then
@@ -1675,11 +1651,6 @@ Namespace Framework2006
                 lnkNotify.Attributes.Add("onmouseover", "window.status='Add / Remove nominees for email notifications';return true;")
                 lnkNotify.Attributes.Add("onmouseout", "window.status='Done';")
             End If
-
-            'If uinfo.permExport = True Then
-            '    litPrint.Text = "<a onmouseover=""window.status='Open window with details that are printer friendly';return true;"" onmouseout=""window.status='Done';"" href=""javascript:window.navigate(window.location);"" onclick=""javascript:window.open('ContractMain.aspx?action=print&id=" & Trim(ViewState("ActiveContract")) & "');""><img src=""./buttons/printer.gif"" /></a>"
-            '    holderPrintButton.Controls.Add(litPrint)
-            'End If
 
             cmdCDUpdate.ToolTip = "Update any changes to the system"
             cmdCDUpdate.AlternateText = "Update"
@@ -2378,7 +2349,6 @@ Namespace Framework2006
         Protected Sub cmdCDUpdate_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdCDUpdate.Click
             cmdCDUpdate.Enabled = False
             UpdateContract()
-            'Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & ViewState("ActiveContract"), True)
         End Sub
 
         Protected Sub cmdCDCancel_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdCDCancel.Click
@@ -2586,7 +2556,6 @@ Namespace Framework2006
                 db = Nothing
 
                 Return "Contract Deleted Successfully"
-                'Response.Redirect("Home.aspx", True)
             Else
                 Return "ERROR! Contract record not found. Deletion aborted."
             End If
@@ -2838,7 +2807,6 @@ Namespace Framework2006
                 Else
                     redir = "Home.aspx"
                 End If
-                'redir = "FWMain.aspx?viewname=current"
             Else
                 ' updating an existing record
                 Dim firstchange As Boolean = True
@@ -4802,8 +4770,7 @@ Namespace Framework2006
 
             If chkAddAnother.Checked = True Then
                 ViewState("CP_AddMulti") = "1"
-                Response.Redirect("ContractSummary.aspx?cpaction=add&am=1&tab=" & SummaryTabs.ContractProduct, True)
-                'ShowCPDetail(True, isAddMulti, isAddAndDefine)
+                Response.Redirect("ContractSummary.aspx?cpaction=add&am=1&tab=" & SummaryTabs.ContractProduct & "&id=" & ViewState("ActiveContract"), True)
             Else
                 ' must refresh the contract details tab as Vendor will now not be changeable
                 SetNavActiveState(True)
@@ -4816,317 +4783,7 @@ Namespace Framework2006
             End If
         End Sub
 
-        '   Private Sub UpdateCPUFField(ByRef db As cFWDBConnection, ByRef src_dset As DataSet, ByVal curField As cUserField, ByRef firstentry As Boolean, ByRef ALog As cFWAuditLog, ByRef ARec As cAuditRecord, ByVal isAmend As Boolean)
-        '       Dim dbFieldName As String = "UF" & curField.FieldId.ToString
-        '       Dim curUser As cCurrentUser = cUserMisc.GetCurrentUser(User.Identity)
-        '       Dim fws As cFWSettings = curUser.UserFWS
-        '       Dim uinfo As UserInfo = curUser.currentUser.userInfo
-
-        '       ARec.ElementDesc = curField.FieldName.ToUpper
-
-        '       Select Case curField.FieldType
-        '           Case UserFieldType.Character, UserFieldType.Text, UserFieldType.Hyperlink
-        '               Dim txt As TextBox = CType(CPUFPanel.FindControl(dbFieldName), TextBox)
-        '               If Not txt Is Nothing Then
-        '                   If isAmend Then
-        '                       If txt.Text <> db.GetFieldValue(src_dset, dbFieldName, 0, 0) Then
-        '                           ARec.PreVal = db.GetFieldValue(src_dset, dbFieldName, 0, 0)
-        '                           ARec.PostVal = txt.Text
-        '                           ALog.AddAuditRec(ARec, firstentry)
-
-        '                           db.SetFieldValue(dbFieldName, txt.Text, "S", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   Else
-        '                       db.SetFieldValue(dbFieldName, txt.Text, "S", firstentry)
-        '                       firstentry = False
-        '                   End If
-        '               End If
-        '           Case UserFieldType.Checkbox
-        '               Dim chk As CheckBox = CType(CPUFPanel.FindControl(dbFieldName), CheckBox)
-        '               If Not chk Is Nothing Then
-        '                   If isAmend Then
-        '                       If db.GetFieldValue(src_dset, dbFieldName, 0, 0) = "1" Then
-        '                           ARec.PreVal = "CHECKED"
-        '                       Else
-        '                           ARec.PreVal = "UNCHECKED"
-        '                       End If
-
-        '                       If chk.Checked Then
-        '                           ARec.PostVal = "CHECKED"
-        '                       Else
-        '                           ARec.PostVal = "UNCHECKED"
-        '                       End If
-        '                       ALog.AddAuditRec(ARec, firstentry)
-
-        '                       db.SetFieldValue(dbFieldName, IIf(chk.Checked, 1, 0), "N", firstentry)
-        '                       firstentry = False
-        '                   Else
-        '                       db.SetFieldValue(dbFieldName, IIf(chk.Checked, 1, 0), "N", firstentry)
-        '                       firstentry = False
-        '                   End If
-        '               End If
-        '           Case UserFieldType.DateField
-        '               Dim txt As TextBox = CType(CPUFPanel.FindControl(dbFieldName), TextBox)
-        '               If Not txt Is Nothing Then
-        '                   If isAmend Then
-        '                       If IsDBNull(db.GetFieldValue(src_dset, dbFieldName, 0, 0)) = False Then
-        '                           If db.GetFieldValue(src_dset, dbFieldName, 0, 0) <> txt.Text.Trim Then
-        '                               ARec.PreVal = Format(db.GetFieldValue(src_dset, dbFieldName, 0, 0), cDef.DATE_FORMAT)
-        '                           Else
-        '                               ARec.PreVal = ""
-        '                           End If
-        '                           ALog.AddAuditRec(ARec, firstentry)
-
-        '                           db.SetFieldValue(dbFieldName, txt.Text, "D", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   Else
-        '                       If txt.Text.Trim <> "" Then
-        '                           db.SetFieldValue(dbFieldName, txt.Text, "D", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   End If
-        '               End If
-        '           Case UserFieldType.DDList
-        '               Dim lst As DropDownList = CType(CPUFPanel.FindControl(dbFieldName), DropDownList)
-        '               If Not lst Is Nothing Then
-        '                   If isAmend Then
-        '                       If db.GetFieldValue(src_dset, dbFieldName, 0, 0) <> lst.SelectedItem.Text Then
-        '                           If IsDBNull(db.GetFieldValue(src_dset, dbFieldName, 0, 0)) Then
-        '                               ARec.PreVal = db.GetFieldValue(src_dset, dbFieldName, 0, 0)
-        '                           Else
-        '                               ARec.PreVal = ""
-        '                           End If
-
-        '                           ARec.PostVal = lst.SelectedItem.Text
-        '                           ALog.AddAuditRec(ARec, firstentry)
-
-        '                           db.SetFieldValue(dbFieldName, lst.SelectedItem.Text, "S", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   Else
-        '                       db.SetFieldValue(dbFieldName, lst.SelectedItem.Text, "S", firstentry)
-        '                       firstentry = False
-        '                   End If
-        '               End If
-        '           Case UserFieldType.Float, UserFieldType.Number
-        '               Dim txt As TextBox = CType(CPUFPanel.FindControl(dbFieldName), TextBox)
-        '               If Not txt Is Nothing Then
-        '                   If isAmend Then
-        '                       If txt.Text <> db.GetFieldValue(src_dset, dbFieldName, 0, 0) Then
-        '                           ARec.PreVal = db.GetFieldValue(src_dset, dbFieldName, 0, 0)
-        '                           ARec.PostVal = txt.Text
-        '                           ALog.AddAuditRec(ARec, firstentry)
-
-        '                           db.SetFieldValue(dbFieldName, txt.Text, "N", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   Else
-        '                       db.SetFieldValue(dbFieldName, txt.Text, "N", firstentry)
-        '                       firstentry = False
-        '                   End If
-        '               End If
-
-        '           Case UserFieldType.RechargeAcc_Code
-        'Dim rca As New FWClasses.cRechargeAccountCodes(uinfo, fws)
-        '               If rca.Count > cDef.UF_MAXCOUNT Then
-        '                   ' displays text box for look up
-        '                   Dim txt As TextBox = CType(CPUFPanel.FindControl(dbFieldName & "_TXT"), TextBox)
-        '                   Dim txt_id As HiddenField = CType(CPUFPanel.FindControl(dbFieldName), HiddenField)
-        '                   If txt_id.Value <> "" Then
-        '                       If isAmend Then
-        '                           If txt_id.Value <> CStr(db.GetFieldValue(src_dset, dbFieldName, 0, 0)) Then
-        '                               If db.GetFieldValue(src_dset, dbFieldName, 0, 0) > 0 Then
-        '                                   ARec.PreVal = rca.GetCodeById(CInt(db.GetFieldValue(src_dset, dbFieldName, 0, 0))).AccountCode
-        '                               Else
-        '                                   ARec.PreVal = ""
-        '                               End If
-
-        '                               ARec.PostVal = rca.GetCodeById(CInt(txt_id.Value)).AccountCode
-        '                               ALog.AddAuditRec(ARec, firstentry)
-
-        '                               db.SetFieldValue(dbFieldName, txt_id.Value, "N", firstentry)
-        '                               firstentry = False
-        '                           End If
-        '                       Else
-        '                           db.SetFieldValue(dbFieldName, txt_id.Value, "N", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   End If
-        '               Else
-        '                   Dim lst As DropDownList = CType(CPUFPanel.FindControl(dbFieldName), DropDownList)
-
-        '                   If Not lst Is Nothing Then
-        '                       If isAmend Then
-        '                           If db.GetFieldValue(src_dset, dbFieldName, 0, 0) > 0 Then
-        '                               ARec.PreVal = rca.GetCodeById(db.GetFieldValue(src_dset, dbFieldName, 0, 0)).CodeId
-        '                           Else
-        '                               ARec.PreVal = ""
-        '                           End If
-
-        '                           ARec.PostVal = lst.SelectedItem.Text
-        '                           ALog.AddAuditRec(ARec, firstentry)
-
-        '                           db.SetFieldValue(dbFieldName, lst.SelectedItem.Value, "N", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   Else
-        '                       db.SetFieldValue(dbFieldName, lst.SelectedItem.Value, "N", firstentry)
-        '                       firstentry = False
-        '                   End If
-        '               End If
-        '           Case UserFieldType.RechargeClient_Ref
-        'Dim rcc As New FWClasses.cRechargeClientList(uinfo, fws)
-        '               If rcc.Count > cDef.UF_MAXCOUNT Then
-        '                   ' displays text box for look up
-        '                   Dim txt As TextBox = CType(CPUFPanel.FindControl(dbFieldName & "_TXT"), TextBox)
-        '                   Dim txt_id As HiddenField = CType(CPUFPanel.FindControl(dbFieldName), HiddenField)
-        '                   If txt_id.Value <> "" Then
-        '                       If isAmend Then
-        '                           If txt_id.Value <> CStr(db.GetFieldValue(src_dset, dbFieldName, 0, 0)) Then
-        '                               If db.GetFieldValue(src_dset, dbFieldName, 0, 0) > 0 Then
-        '                                   ARec.PreVal = rcc.GetClientById(CInt(db.GetFieldValue(src_dset, dbFieldName, 0, 0))).ClientName
-        '                               Else
-        '                                   ARec.PreVal = ""
-        '                               End If
-
-        '                               ARec.PostVal = rcc.GetClientById(CInt(txt_id.Value)).ClientName
-        '                               ALog.AddAuditRec(ARec, firstentry)
-
-        '                               db.SetFieldValue(dbFieldName, txt_id.Value, "N", firstentry)
-        '                               firstentry = False
-        '                           End If
-        '                       Else
-        '                           db.SetFieldValue(dbFieldName, txt_id.Value, "N", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   End If
-        '               Else
-        '                   Dim lst As DropDownList = CType(CPUFPanel.FindControl(dbFieldName), DropDownList)
-
-        '                   If Not lst Is Nothing Then
-        '                       If isAmend Then
-        '                           If db.GetFieldValue(src_dset, dbFieldName, 0, 0) > 0 Then
-        '                               ARec.PreVal = rcc.GetClientById(db.GetFieldValue(src_dset, dbFieldName, 0, 0)).ClientName
-        '                           Else
-        '                               ARec.PreVal = ""
-        '                           End If
-
-        '                           ARec.PostVal = lst.SelectedItem.Text
-        '                           ALog.AddAuditRec(ARec, firstentry)
-
-        '                           db.SetFieldValue(dbFieldName, lst.SelectedItem.Value, "N", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   Else
-        '                       db.SetFieldValue(dbFieldName, lst.SelectedItem.Value, "N", firstentry)
-        '                       firstentry = False
-        '                   End If
-        '               End If
-
-        '           Case UserFieldType.Site_Ref
-        '               Dim sites As New cSites(fws, uinfo)
-        '               If sites.Count > cDef.UF_MAXCOUNT Then
-        '                   ' displays text box for look up
-        '                   Dim txt As TextBox = CType(CPUFPanel.FindControl(dbFieldName & "_TXT"), TextBox)
-        '                   Dim txt_id As HiddenField = CType(CPUFPanel.FindControl(dbFieldName), HiddenField)
-        '                   If txt_id.Value <> "" Then
-        '                       If isAmend Then
-        '                           If txt_id.Value <> CStr(db.GetFieldValue(src_dset, dbFieldName, 0, 0)) Then
-        '                               If db.GetFieldValue(src_dset, dbFieldName, 0, 0) > 0 Then
-        '                                   ARec.PreVal = sites.GetSiteById(CInt(db.GetFieldValue(src_dset, dbFieldName, 0, 0))).SiteCode
-        '                               Else
-        '                                   ARec.PreVal = ""
-        '                               End If
-
-        '                               ARec.PostVal = sites.GetSiteById(CInt(txt_id.Value)).SiteCode
-        '                               ALog.AddAuditRec(ARec, firstentry)
-
-        '                               db.SetFieldValue(dbFieldName, txt_id.Value, "N", firstentry)
-        '                               firstentry = False
-        '                           End If
-        '                       Else
-        '                           db.SetFieldValue(dbFieldName, txt_id.Value, "N", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   End If
-        '               Else
-        '                   Dim lst As DropDownList = CType(CPUFPanel.FindControl(dbFieldName), DropDownList)
-
-        '                   If Not lst Is Nothing Then
-        '                       If isAmend Then
-        '                           If db.GetFieldValue(src_dset, dbFieldName, 0, 0) > 0 Then
-        '                               ARec.PreVal = sites.GetSiteById(db.GetFieldValue(src_dset, dbFieldName, 0, 0)).SiteCode
-        '                           Else
-        '                               ARec.PreVal = ""
-        '                           End If
-
-        '                           ARec.PostVal = lst.SelectedItem.Text
-        '                           ALog.AddAuditRec(ARec, firstentry)
-
-        '                           db.SetFieldValue(dbFieldName, lst.SelectedItem.Value, "N", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   Else
-        '                       db.SetFieldValue(dbFieldName, lst.SelectedItem.Value, "N", firstentry)
-        '                       firstentry = False
-        '                   End If
-        '               End If
-
-        '           Case UserFieldType.StaffName_Ref
-        'Dim emps As New cEmployees(fws.MetabaseCustomerId)
-        '               If emps.Count > cDef.UF_MAXCOUNT Then
-        '                   ' displays text box for look up
-        '                   Dim txt As TextBox = CType(CPUFPanel.FindControl(dbFieldName & "_TXT"), TextBox)
-        '                   Dim txt_id As HiddenField = CType(CPUFPanel.FindControl(dbFieldName), HiddenField)
-        '                   If txt_id.Value <> "" Then
-        '                       If isAmend Then
-        '                           If txt_id.Value <> CStr(db.GetFieldValue(src_dset, dbFieldName, 0, 0)) Then
-        '                               If db.GetFieldValue(src_dset, dbFieldName, 0, 0) > 0 Then
-        '                                   ARec.PreVal = emps.GetEmployeeById(CInt(db.GetFieldValue(src_dset, dbFieldName, 0, 0))).EmployeeName
-        '                               Else
-        '                                   ARec.PreVal = ""
-        '                               End If
-
-        '                               ARec.PostVal = emps.GetEmployeeById(CInt(txt_id.Value)).EmployeeName
-        '                               ALog.AddAuditRec(ARec, firstentry)
-
-        '                               db.SetFieldValue(dbFieldName, txt_id.Value, "N", firstentry)
-        '                               firstentry = False
-        '                           End If
-        '                       Else
-        '                           db.SetFieldValue(dbFieldName, txt_id.Value, "N", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   End If
-        '               Else
-        '                   Dim lst As DropDownList = CType(CPUFPanel.FindControl(dbFieldName), DropDownList)
-
-        '                   If Not lst Is Nothing Then
-        '                       If isAmend Then
-        '                           If db.GetFieldValue(src_dset, dbFieldName, 0, 0) > 0 Then
-        '                               ARec.PreVal = emps.GetEmployeeById(db.GetFieldValue(src_dset, dbFieldName, 0, 0)).EmployeeName
-        '                           Else
-        '                               ARec.PreVal = ""
-        '                           End If
-
-        '                           ARec.PostVal = lst.SelectedItem.Text
-        '                           ALog.AddAuditRec(ARec, firstentry)
-
-        '                           db.SetFieldValue(dbFieldName, lst.SelectedItem.Value, "N", firstentry)
-        '                           firstentry = False
-        '                       End If
-        '                   Else
-        '                       db.SetFieldValue(dbFieldName, lst.SelectedItem.Value, "N", firstentry)
-        '                       firstentry = False
-        '                   End If
-        '               End If
-        '           Case Else
-
-        '       End Select
-        '   End Sub
-
+      
         <WebMethod(enableSession:=True)> _
         Public Shared Function DeleteContractProduct(ByVal CPid As Integer) As String
             Dim appinfo As HttpApplication = CType(HttpContext.Current.ApplicationInstance, HttpApplication)
@@ -8755,7 +8412,7 @@ Namespace Framework2006
 
             db.DBClose()
             db = Nothing
-            Response.Redirect("InvoiceForecastGenerate.aspx", True)
+            Response.Redirect("InvoiceForecastGenerate.aspx?id=" + ViewState("ActiveContract"), True)
         End Sub
 
         Private Sub CallBulkUpdates()
