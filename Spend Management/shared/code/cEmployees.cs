@@ -2280,17 +2280,19 @@ using System.Web;
         /// </summary>
         /// <param name="employeeid">The empoyee to enquire on</param>
         /// <param name="date">The date of the expense</param>
+        /// <param name="financialYearId">The financial year of the employee/vehicle</param>
         /// <param name="connection">Optional: Database connection.</param>
         /// <returns>The mileage total for the current year for the employee id entered.</returns>
-        public decimal getMileageTotal(int employeeid, DateTime date, IDBConnection connection = null)
+        public decimal getMileageTotal(int employeeid, DateTime date, int? financialYearId = 0, IDBConnection connection = null)
         {
             decimal total;
             using (var dbConnection = connection ?? new DatabaseConnection(cAccounts.getConnectionString(accountid)))
-        {
+            {
                 dbConnection.sqlexecute.Parameters.Clear();
 
                 dbConnection.sqlexecute.Parameters.AddWithValue("@employeeid", employeeid);
                 dbConnection.sqlexecute.Parameters.AddWithValue("@expenseDate", date);
+                dbConnection.sqlexecute.Parameters.AddWithValue("@financialYearId", financialYearId);
                 dbConnection.sqlexecute.Parameters.Add("@identity", SqlDbType.Int);
                 dbConnection.sqlexecute.Parameters["@identity"].Direction = ParameterDirection.ReturnValue;
                 dbConnection.ExecuteProc("getEmployeeMileageTotal");
