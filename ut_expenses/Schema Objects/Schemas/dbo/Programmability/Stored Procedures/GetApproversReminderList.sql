@@ -46,6 +46,6 @@ INSERT INTO claimhistory (claimid, stage, comment, datestamp, employeeid, create
 		INNER JOIN savedexpenses se ON cb.claimId = se.claimId
 		INNER JOIN  @employeeIdList CHECKERS ON SE.itemCheckerId = CHECKERS.employeeId OR cb.checkerid = CHECKERS.employeeId
 		INNER JOIN employees ON CHECKERS.employeeId = employees.employeeid
-		WHERE CB.paid = 0 AND CB.submitted = 1 AND CB.status <> 4
+		WHERE CB.paid = 0 AND CB.submitted = 1 AND CB.status <> 4 AND se.tempallow = 0
 
 END
