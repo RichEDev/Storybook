@@ -59,16 +59,6 @@
         private List<int> _lstLicencedElementIDs;
 
         /// <summary>
-        /// A <see cref="ConcurrentDictionary{TKey,TValue}"/> of table plus account and the unexpanded tree.
-        /// </summary>
-        private static ConcurrentDictionary<string, List<EasyTreeNode>> _trees;
-
-        static Nodes()
-        {
-            _trees = new ConcurrentDictionary<string, List<EasyTreeNode>>();
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Nodes"/> class. 
         /// </summary>
         /// <param name="user">
@@ -116,13 +106,7 @@
         public List<EasyTreeNode> GetInitialTreeNodes(string baseTableString)
         {
             var result = new List<EasyTreeNode>();
-            var tableKey = $"{baseTableString}_{this._user.AccountID}";
             this.baseTable =  new Guid(baseTableString);
-            var table = this._tables.GetTableByID(this.baseTable);
-            if (_trees.ContainsKey(tableKey))
-            {
-                return _trees[tableKey];
-            }
 
             // system entity
             var exportedTables = new List<Guid>();
@@ -138,11 +122,7 @@
 
             var node = this.CreateGroupNode("Other Columns", result);
             faves.Add(node);
-            if (table.TableSource == cTable.TableSourceType.Metabase)
-            {
-                _trees[tableKey] = faves;
-            }
-            
+
             return faves;
         }
 
