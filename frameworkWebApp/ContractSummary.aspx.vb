@@ -1336,7 +1336,7 @@ Namespace Framework2006
             Select Case CType(ViewTab.ActiveViewIndex, SummaryTabs)
                 Case SummaryTabs.ContractDetail, SummaryTabs.ContractAdditional
                     ViewState("CDAction") = "add"
-                    url = "ContractSummary.aspx?cdaction=add&id=0&tab=" & SummaryTabs.ContractDetail
+                    url = "ContractSummary.aspx?cdaction=add&id=0&tab=" & SummaryTabs.ContractDetail & "&id=" & ViewState("ActiveContract")
                 Case SummaryTabs.ContractProduct
                     Dim ConCategoryId As Integer = 0
 
@@ -1350,13 +1350,13 @@ Namespace Framework2006
 
                     NewCPEntry(ConCategoryId)
 
-                    url = "" '"ContractSummary.aspx?cpaction=add&tab=" & SummaryTabs.ContractProduct
+                    url = "" 
                 Case SummaryTabs.InvoiceDetail
                     Session("IDAction") = "add"
-                    url = "ContractSummary.aspx?idaction=add&tab=" & SummaryTabs.InvoiceDetail
+                    url = "ContractSummary.aspx?idaction=add&tab=" & SummaryTabs.InvoiceDetail & "&id=" & ViewState("ActiveContract")
                 Case SummaryTabs.InvoiceForecast
                     Session("IFAction") = "add"
-                    url = "ContractSummary.aspx?ifaction=add&tab=" & SummaryTabs.InvoiceForecast
+                    url = "ContractSummary.aspx?ifaction=add&tab=" & SummaryTabs.InvoiceForecast & "&id=" & ViewState("ActiveContract")
                 Case Else
 
             End Select
@@ -1411,7 +1411,7 @@ Namespace Framework2006
 
         Protected Sub lnkGenerate_Click(ByVal sender As Object, ByVal e As System.EventArgs)
             Session("IFAction") = "generate"
-            Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast, True)
+            Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&id=" & ViewState("ActiveContract"), True)
         End Sub
 
         Protected Sub lnkSaving_Click(ByVal sender As Object, ByVal e As System.EventArgs)
@@ -1619,31 +1619,7 @@ Namespace Framework2006
                 lstVendor.Enabled = False
             End If
 
-            'litUserFields.Text = GetUserDefinedFields(db, False, False)
-
-            ' THIS IS NOW DONE IN THE PAGE_INIT
-            'Dim ufields As New cUserDefinedFields(fws, uinfo)
-            'CDUFPanel.Controls.Add(ufields.GetUserFieldDisplayTable(AppAreas.CONTRACT_DETAILS, ViewState("ActiveContract"), 0))
-
             UpdateContractLinks(fwdb, ViewState("ActiveContract"), curUser)
-            'Else
-            '' update any uf fields into viewstate
-            'UpdateUFViewState(db)
-            'End If
-
-            'If uinfo.permDelete = True Then
-            '    If ViewState("ActiveContract") = 0 Then
-            '        lnkDelete.Visible = False
-            '    Else
-            '        If IsArchived = True And uinfo.permAdmin = False Then
-            '            lnkDelete.Visible = False
-            '        Else
-            '            lnkDelete.Attributes.Add("onclick", "javascript:if(confirm('Click OK to confirm deletion')){window.navigate('ContractSummary.aspx?action=delete&id=" & ViewState("ActiveContract") & "');}")
-            '            lnkDelete.Attributes.Add("onmouseover", "window.status='Delete this contract';return true;")
-            '            lnkDelete.Attributes.Add("onmouseout", "window.status='Done';")
-            '        End If
-            '    End If
-            'End If
 
             If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ContractNotes, False) Then
                 If ViewState("ActiveContract") > 0 Then
@@ -1675,11 +1651,6 @@ Namespace Framework2006
                 lnkNotify.Attributes.Add("onmouseover", "window.status='Add / Remove nominees for email notifications';return true;")
                 lnkNotify.Attributes.Add("onmouseout", "window.status='Done';")
             End If
-
-            'If uinfo.permExport = True Then
-            '    litPrint.Text = "<a onmouseover=""window.status='Open window with details that are printer friendly';return true;"" onmouseout=""window.status='Done';"" href=""javascript:window.navigate(window.location);"" onclick=""javascript:window.open('ContractMain.aspx?action=print&id=" & Trim(ViewState("ActiveContract")) & "');""><img src=""./buttons/printer.gif"" /></a>"
-            '    holderPrintButton.Controls.Add(litPrint)
-            'End If
 
             cmdCDUpdate.ToolTip = "Update any changes to the system"
             cmdCDUpdate.AlternateText = "Update"
@@ -2378,7 +2349,6 @@ Namespace Framework2006
         Protected Sub cmdCDUpdate_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdCDUpdate.Click
             cmdCDUpdate.Enabled = False
             UpdateContract()
-            'Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & ViewState("ActiveContract"), True)
         End Sub
 
         Protected Sub cmdCDCancel_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdCDCancel.Click
@@ -2586,7 +2556,6 @@ Namespace Framework2006
                 db = Nothing
 
                 Return "Contract Deleted Successfully"
-                'Response.Redirect("Home.aspx", True)
             Else
                 Return "ERROR! Contract record not found. Deletion aborted."
             End If
@@ -2838,7 +2807,6 @@ Namespace Framework2006
                 Else
                     redir = "Home.aspx"
                 End If
-                'redir = "FWMain.aspx?viewname=current"
             Else
                 ' updating an existing record
                 Dim firstchange As Boolean = True
@@ -8444,7 +8412,7 @@ Namespace Framework2006
 
             db.DBClose()
             db = Nothing
-            Response.Redirect("InvoiceForecastGenerate.aspx", True)
+            Response.Redirect("InvoiceForecastGenerate.aspx?id=" + ViewState("ActiveContract"), True)
         End Sub
 
         Private Sub CallBulkUpdates()
