@@ -223,7 +223,7 @@ using System.Web;
                 {
                     templateId = SendMessageEnum.GetEnumDescription(SendMessageDescription.SentWhenAnEmployeeGetsLockedOut);
                     notifications.SendMessage(templateId, senderId, recipients);
-                    templateId = SendMessageEnum.GetEnumDescription(fromMobile ? SendMessageDescription.SentWhenAnEmployeeLocksAccountFromAMobileDevice : SendMessageDescription.SentWhenAnEmployeeLocksAccountFromAMethodOtherThanAMobileDevice);
+                    templateId = SendMessageEnum.GetEnumDescription(fromMobile ? SendMessageDescription.SentWhenAnEmployeeRequestsAPasswordResetFromExpensesMobile : SendMessageDescription.SentWhenAnEmployeeLocksAccountFromAMethodOtherThanAMobileDevice);
                     notifications.SendMessage(templateId, senderId, recipients);
                 }
                 else
