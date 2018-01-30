@@ -5310,7 +5310,7 @@ Namespace Framework2006
                         .ToolTip = "Open contract product notes"
                         .Attributes.Add("onmouseover", "window.status='Open contract product notes';return true;")
                         .Attributes.Add("onmouseout", "window.status='Done';")
-                        .Attributes.Add("onclick", "window.location.href='ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&cpaction=cpnotes&cpid=" & drow.Item("contractProductId") & "';")
+                        .Attributes.Add("onclick", "window.location.href='ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&id=" & ViewState("ActiveContract").ToString() & "&cpaction=cpnotes&cpid=" & drow.Item("contractProductId") & "';")
                         .Attributes.Add("style", "cursor: hand;")
                     End With
                     CPCell.Controls.Add(CPNotesImg)
@@ -5327,7 +5327,7 @@ Namespace Framework2006
                         .ImageUrl = "~/icons/16/plain/clipboard.gif"
                         .Attributes.Add("onmouseover", "window.status='View Product Information';return true;")
                         .Attributes.Add("onmouseout", "window.status='Done';")
-                        .Attributes.Add("onclick", "window.open('ContractProductInfo.aspx?cpid=" & CStr(drow.Item("contractProductId")).Trim & "');")
+                        .Attributes.Add("onclick", "window.open('ContractProductInfo.aspx?cpid=" & CStr(drow.Item("contractProductId")).Trim & "&id=" & ViewState("ActiveContract").ToString() & "');")
                         .Attributes.Add("style", "cursor: hand;")
                         .ToolTip = "View Product Information"
                     End With
@@ -5341,7 +5341,7 @@ Namespace Framework2006
                 Dim taskImg As New System.Web.UI.WebControls.Image
                 taskImg.ID = "task" & drow.Item("contractProductId")
 
-                Dim retURL As String = "~/ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&id=" & ViewState("ActiveContract")
+                Dim retURL As String = "~/ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&id=" & ViewState("ActiveContract").ToString()
                 retURL = Server.UrlEncode(retURL)
 
                 If curUser.CheckAccessRole(AccessRoleType.Add, SpendManagementElement.Tasks, False) Then
