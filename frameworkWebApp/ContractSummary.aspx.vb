@@ -8439,7 +8439,7 @@ Namespace Framework2006
                     End If
 
                     Session("IFAction") = "bulkedit"
-                    Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&ifaction=bulkedit&" & BU_URL.ToString, True)
+                    Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&ifaction=bulkedit&" & BU_URL.ToString & "&id=" & ViewState("ActiveContract"), True)
                 End If
             Else
                 lblErrorString.Text = "ERROR! Cannot bulk edit as no selections were made."
