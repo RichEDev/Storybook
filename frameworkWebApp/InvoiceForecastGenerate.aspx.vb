@@ -32,6 +32,11 @@ Namespace Framework2006
 
             If Me.IsPostBack = False Then
                 curUser.CheckAccessRole(AccessRoleType.Add, SpendManagementElement.InvoiceForecasts, False, True)
+                Dim contractId As Integer;
+                If Not Request.QueryString("id") Is Nothing Then
+                    Integer.TryParse(Request.QueryString("id"), contractId)
+                    ViewState("ActiveContract") = contractId
+                End If
 
                 lblFirstDate.Text = "Start Date"
                 lblSecondDate.Text = "End Date"
@@ -42,7 +47,7 @@ Namespace Framework2006
 
                 FWDb.DBOpen(fws, False)
 
-                FWDb.FWDb("R2", "contract_details", "ContractId", Session("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
+                FWDb.FWDb("R2", "contract_details", "ContractId", ViewState("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
                 If FWDb.FWDb2Flag = True Then
                     lblIFTitle.Text = " - " & FWDb.FWDbFindVal("ContractDescription", 2)
                 End If
@@ -120,7 +125,7 @@ Namespace Framework2006
             GenDate = dateFirst.Text
             CutOff = dateSecond.Text
 
-            db.FWDb("R2", "contract_details", "ContractId", Session("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
+            db.FWDb("R2", "contract_details", "ContractId", ViewState("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
             If db.FWDbFindVal("EndDate", 2) <> "" Then
                 ContractEndDate = CDate(db.FWDbFindVal("EndDate", 2))
             End If
@@ -150,7 +155,7 @@ Namespace Framework2006
             glSql = New System.Text.StringBuilder
             glSql.Append("SELECT COUNT([ContractForecastId]) AS FC" & vbNewLine)
             glSql.Append("FROM [contract_forecastdetails]" & vbNewLine)
-            glSql.Append("WHERE [ContractId] = " & Session("ActiveContract") & vbNewLine)
+            glSql.Append("WHERE [ContractId] = " & ViewState("ActiveContract") & vbNewLine)
             glSql.Append("AND [PaymentDate] > CONVERT(datetime,'" & Format(GenDate, "yyyy-MM-dd") & "',120) " & vbNewLine)
             glSql.Append("AND [PaymentDate] < CONVERT(datetime,'" & Format(CutOff, "yyyy-MM-dd") & "',120)")
 
@@ -162,7 +167,7 @@ Namespace Framework2006
             End If
 
             glNYMParams = New MaintParams
-            glNYMParams = SMRoutines.GetMaintParams(db, Session("ActiveContract"))
+            glNYMParams = SMRoutines.GetMaintParams(db, ViewState("ActiveContract"))
 
             glSql = New System.Text.StringBuilder
             glSql.Append("SELECT [contract_productdetails].[ProductValue]," & vbNewLine)
@@ -173,7 +178,7 @@ Namespace Framework2006
             glSql.Append("FROM [contract_productdetails]" & vbNewLine)
             glSql.Append("LEFT OUTER JOIN [productDetails]" & vbNewLine)
             glSql.Append(" ON [contract_productdetails].[ProductId] = [productDetails].[ProductId]" & vbNewLine)
-            glSql.Append("WHERE [ContractId] = " & Session("ActiveContract"))
+            glSql.Append("WHERE [ContractId] = " & ViewState("ActiveContract"))
             db.RunSQL(glSql.ToString, db.glDBWorkA, False, "", False)
 
             ' Calculate the number of payments that will result. Ensure correct division value for payment
@@ -362,7 +367,7 @@ Namespace Framework2006
             db.DBOpen(fws, False)
 
             For Each gridRow In dGrid.Rows
-                db.SetFieldValue("ContractId", Session("ActiveContract"), "N", True)
+                db.SetFieldValue("ContractId", ViewState("ActiveContract"), "N", True)
                 db.SetFieldValue("PaymentDate", gridRow.Cells.FromKey("Date").Value, "D", False)
                 db.SetFieldValue("ForecastAmount", gridRow.Cells.FromKey("Amount").Value, "N", False)
                 db.SetFieldValue("CoverPeriodEnd", gridRow.Cells.FromKey("PeriodEnd").Value, "D", False)
@@ -381,7 +386,7 @@ Namespace Framework2006
             Session("IFAction") = Nothing
             Session("GenFromDate") = Nothing
             Session("GenToDate") = Nothing
-            Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&id=" & Session("ActiveContract"), True)
+            Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&id=" & ViewState("ActiveContract"), True)
         End Sub
 
         Protected Sub cmdReGenerate_Click(ByVal sender As System.Object, ByVal e As System.Web.UI.ImageClickEventArgs)
@@ -398,7 +403,7 @@ Namespace Framework2006
             PopulateForecasts(db)
             db.DBClose()
             db = Nothing
-            'Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&id=" & Session("ActiveContract"), True)
+            'Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&id=" & ViewState("ActiveContract"), True)
             'Response.Redirect("InvoiceForecastGenerate.aspx", True)
         End Sub
 
@@ -408,7 +413,7 @@ Namespace Framework2006
 
         Protected Sub cmdIFCancel_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdIFCancel.Click
             Session("IFAction") = Nothing
-            Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&id=" & Session("ActiveContract"), True)
+            Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&id=" & ViewState("ActiveContract"), True)
         End Sub
     End Class
 

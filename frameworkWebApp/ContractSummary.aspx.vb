@@ -8412,7 +8412,7 @@ Namespace Framework2006
 
             db.DBClose()
             db = Nothing
-            Response.Redirect("InvoiceForecastGenerate.aspx?id=" + ViewState("ActiveContract"), True)
+            Response.Redirect("InvoiceForecastGenerate.aspx?id=" + ViewState("ActiveContract").ToString(), True)
         End Sub
 
         Private Sub CallBulkUpdates()
