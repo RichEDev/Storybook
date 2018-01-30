@@ -2379,7 +2379,7 @@ Namespace Framework2006
         End Sub
 
         Private Sub Notifications()
-            Response.Redirect("Associations.aspx?frompage=contractdetails&contractId=" + ViewState("ActiveContract"), True)
+            Response.Redirect("Associations.aspx?frompage=contractdetails&contractId=" + ViewState("ActiveContract").ToString(), True)
         End Sub
 
         Protected Sub txtReviewPeriod_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs)
@@ -2819,7 +2819,7 @@ Namespace Framework2006
 
 
                 ' get the original record for comparison
-                FWDb.FWDb("R2", "contract_details", "subAccountId", curUser.CurrentSubAccountId, "contractId", ViewState("ActiveContract"), "", "", "", "", "", "", "", "")
+                FWDb.FWDb("R2", "contract_details", "subAccountId", curUser.CurrentSubAccountId, "contractId", ViewState("ActiveContract").ToString(), "", "", "", "", "", "", "", "")
                 If FWDb.FWDb2Flag = True Then
                     tmpval = FWDb.FWDbFindVal("contractKey", 2)
                     If tmpval = "" Then
@@ -3562,7 +3562,7 @@ Namespace Framework2006
             ViewState("CDAction") = Nothing
 
             If redir = String.Empty Then
-                redir = "ContractSummary.aspx?id=" & Trim(ViewState("ActiveContract"))
+                redir = "ContractSummary.aspx?id=" & Trim(ViewState("ActiveContract").ToString())
             End If
 
             Response.Redirect(redir, True)
@@ -3640,7 +3640,7 @@ Namespace Framework2006
         End Sub
 
         Protected Sub lnkNotify_Click(ByVal sender As Object, ByVal e As System.EventArgs)
-            Response.Redirect("Associations.aspx?frompage=contractdetails&contractId=" + ViewState("ActiveContract"), True)
+            Response.Redirect("Associations.aspx?frompage=contractdetails&contractId=" + ViewState("ActiveContract").ToString(), True)
         End Sub
 
         Protected Sub lnkSchedules_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles imgSchedules.Click
