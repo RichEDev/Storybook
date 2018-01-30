@@ -1592,7 +1592,7 @@
                 }
 
                 html = html + "' src='/static/icons/24/plain/add.png' border='0' title='Count'></div>";
-                if (fieldType === "N" || fieldType === "C" || fieldType === "M") {
+                if (fieldType === "N" || fieldType === "C" || fieldType === "M" || fieldType === "FD") {
                     html = html + "<div class='" + rowClass + "'><img id='averageicon0' class='icon ";
                     if (average === false) {
                         html = html + "iconDisabled";
@@ -2276,7 +2276,6 @@
                     switch (fieldType) {
                         case "S":
                         case "FS":
-                        case "FD":
                         case "D":
                         case "DT":
                         case "LT":

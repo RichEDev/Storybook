@@ -53,7 +53,7 @@
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="contentmain">
     <asp:ScriptManagerProxy ID="ScriptMan" runat="server">
         <Scripts>
-            <asp:ScriptReference Path="~/expenses/javaScript/subcats.js" />
+            <asp:ScriptReference Path="~/expenses/javaScript/subcats.js?date=20180125" />
             <asp:ScriptReference Path="~/shared/javaScript/userdefined.js" />
             <asp:ScriptReference Path="~/shared/javaScript/sel.ajax.js" />
         </Scripts>
@@ -502,7 +502,6 @@
                                 <asp:RequiredFieldValidator ID="reqDeductMiles1" runat="server" ErrorMessage="Please enter a value for Number of miles to deduct in the box provided." Text="*" ControlToValidate="txtDeductFixed" ValidationGroup="vgHomeToOffice"></asp:RequiredFieldValidator>
                                 <asp:CompareValidator ID="reqDeductMiles2" runat="server" ErrorMessage="Please enter a valid value for Number of miles to deduct." ControlToValidate="txtDeductFixed" Operator="DataTypeCheck" Type="Double"  ValidationGroup="vgHomeToOffice">*</asp:CompareValidator>
                                 <asp:CompareValidator ID="reqDeductMiles3" runat="server" ErrorMessage="The Number of miles to deduct must be less than or equal to 1000." ControlToValidate="txtDeductFixed" Operator="LessThanEqual" ValueToCompare="1000" Type="Double"  ValidationGroup="vgHomeToOffice">*</asp:CompareValidator>
-                                <asp:CompareValidator ID="reqDeductMiles4" runat="server" ErrorMessage="The Number of miles to deduct must be greater than 0." ControlToValidate="txtDeductFixed" Operator="GreaterThan" ValueToCompare="0" Type="Double"  ValidationGroup="vgHomeToOffice">*</asp:CompareValidator>
                             </span>
                             </div>
                             <div class="twocolumn">

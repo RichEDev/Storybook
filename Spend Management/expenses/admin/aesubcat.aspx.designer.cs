@@ -670,15 +670,6 @@ namespace Spend_Management {
         protected global::System.Web.UI.WebControls.CompareValidator reqDeductMiles3;
         
         /// <summary>
-        /// reqDeductMiles4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator reqDeductMiles4;
-        
-        /// <summary>
         /// optRotationalMileage control.
         /// </summary>
         /// <remarks>
