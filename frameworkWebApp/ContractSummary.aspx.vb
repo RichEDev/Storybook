@@ -9322,7 +9322,7 @@ Namespace Framework2006
                     tmpOwnerId = RecId
                 End If
 
-                strNoteTable.Append("<td class=""" & rowClass & """style=""text-align:center""><a href=""ViewSingleNote.aspx?id=" & Trim(drow.Item("NoteId")) & "&notetype=" & Trim(NoteType) & "&ownerid=" & RecId.ToString & """><img src=""./icons/16/plain/zoom_in.png"" /></a></td>" & vbNewLine)
+                strNoteTable.Append("<td class=""" & rowClass & """style=""text-align:center""><a href=""ViewSingleNote.aspx?id=" & Trim(drow.Item("NoteId")) & "&notetype=" & Trim(NoteType) & "&ownerid=" & RecId.ToString & "&contractId=" & ViewState("ActiveContract") & """><img src=""./icons/16/plain/zoom_in.png"" /></a></td>" & vbNewLine)
 
                 tmpStr = IIf(IsDBNull(drow.Item("Date")) = True, "&nbsp;", Format(CDate(drow.Item("Date")), cDef.DATE_FORMAT))
                 strNoteTable.Append("<td class=""" & rowClass & """>" & tmpStr.Trim & "</td>" & vbNewLine)

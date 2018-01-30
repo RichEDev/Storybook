@@ -46,6 +46,7 @@ Namespace Framework2006
                 NoteType = Request.QueryString("notetype")
                 NoteIdx = Request.QueryString("id")
                 OwnerIdx = Request.QueryString("ownerid")
+                ViewState("ActiveContract") = Request.QueryString("contractId")
 
                 Select Case LCase(NoteType)
                     Case "suppliers"
