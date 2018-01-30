@@ -7536,7 +7536,7 @@ Namespace Framework2006
                     .Append("<tr>" & vbNewLine)
                     .Append("<td class=""" & rowClass & """>")
                     If curUser.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.Invoices, False) Then
-                        .Append("<a href=""ContractSummary.aspx?idaction=edit&tab=" & SummaryTabs.InvoiceDetail & "&invid=" & CStr(drow.Item("InvoiceId")).Trim & """ onmouseover=""window.status='Edit this invoice';return true;"" onmouseout=""window.status='Done';"" title=""Edit this invoice""><img src=""./icons/edit.gif"" /></a>")
+                        .Append("<a href=""ContractSummary.aspx?idaction=edit&tab=" & SummaryTabs.InvoiceDetail & "&id=" & Trim(ViewState("ActiveContract")) & "&invid=" & CStr(drow.Item("InvoiceId")).Trim & """ onmouseover=""window.status='Edit this invoice';return true;"" onmouseout=""window.status='Done';"" title=""Edit this invoice""><img src=""./icons/edit.gif"" /></a>")
                     End If
                     .Append("</td>" & vbNewLine)
                     .Append("<td class=""" & rowClass & """>")
@@ -7546,10 +7546,10 @@ Namespace Framework2006
                     .Append("</td>" & vbNewLine)
                     .Append("<td class=""" & rowClass & """>")
                     If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.InvoiceNotes, False) Then
-                        .Append("<a href=""ContractSummary.aspx?idaction=notes&tab=" & SummaryTabs.InvoiceDetail & "&invid=" & drow.Item("invoiceId") & "&invnum=" & drow.Item("invoiceNumber") & """ onmouseover=""window.status='Open free text notes for this invoice';return true;"" onmouseout=""window.status='Done';"" title=""Open free text notes for this invoice""><img src=""./icons/16/plain/document_attachment.png"" /></a>")
+                        .Append("<a href=""ContractSummary.aspx?idaction=notes&tab=" & SummaryTabs.InvoiceDetail & "&id=" & Trim(ViewState("ActiveContract")) & "&invid=" & drow.Item("invoiceId") & "&invnum=" & drow.Item("invoiceNumber") & """ onmouseover=""window.status='Open free text notes for this invoice';return true;"" onmouseout=""window.status='Done';"" title=""Open free text notes for this invoice""><img src=""./icons/16/plain/document_attachment.png"" /></a>")
                     End If
                     .Append("</td>" & vbNewLine)
-                    .Append("<td class=""" & rowClass & """><a href=""ViewStatusHistory.aspx?id=" & drow.Item("invoiceId") & "&desc=" & drow.Item("invoiceNumber") & """ onmouseover=""window.status='View the status history for this invoice';return true;"" onmouseout=""window.status='Done';"" title=""View the status history for this invoice""><img src=""./icons/16/plain/history.png"" /></a></td>" & vbNewLine)
+                    .Append("<td class=""" & rowClass & """><a href=""ViewStatusHistory.aspx?id=" & drow.Item("invoiceId") & "&contractid=" & Trim(ViewState("ActiveContract")) & "&desc=" & drow.Item("invoiceNumber") & """ onmouseover=""window.status='View the status history for this invoice';return true;"" onmouseout=""window.status='Done';"" title=""View the status history for this invoice""><img src=""./icons/16/plain/history.png"" /></a></td>" & vbNewLine)
                     .Append("<td class=""" & rowClass & """>" & drow.Item("invoiceNumber") & "</td>" & vbNewLine)
 
                     If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ViewFinancials, True) Then
@@ -8209,7 +8209,7 @@ Namespace Framework2006
                     strHTML.Append("<td class=""" & rowClass & """><input type=""checkbox"" name=""IFBU"" value=""" & drow.Item("contractForecastId") & """ /></td>" & vbNewLine)
                     If curUser.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.InvoiceForecasts, False) Then
                         strHTML.Append("<td class=""" & rowClass & """><a title=""Transfer forecast into an active invoice"" href=""ContractSummary.aspx?tab=" & SummaryTabs.InvoiceDetail & "&id=" & Trim(ViewState("ActiveContract")) & "&idaction=move&fid=" & Trim(drow.Item("contractForecastId")) & """>Move</a></td>" & vbNewLine)
-                        strHTML.Append("<td class=""" & rowClass & """><a onmouseover=""window.status='Edit this Forecast Item';return true;"" onmouseout=""window.status='Done';"" href=""ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&ifaction=edit&ifid=" & Trim(drow.Item("contractForecastId")) & """><img src=""./icons/edit.gif"" /></a></td>" & vbNewLine)
+                        strHTML.Append("<td class=""" & rowClass & """><a onmouseover=""window.status='Edit this Forecast Item';return true;"" onmouseout=""window.status='Done';"" href=""ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&id=" & Trim(ViewState("ActiveContract")) & "&ifaction=edit&ifid=" & Trim(drow.Item("contractForecastId")) & """><img src=""./icons/edit.gif"" /></a></td>" & vbNewLine)
                     Else
                         strHTML.Append("<td class=""" & rowClass & """>&nbsp;</td>" & vbNewLine)
                         strHTML.Append("<td class=""" & rowClass & """>&nbsp;</td>" & vbNewLine)
