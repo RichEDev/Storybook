@@ -32,7 +32,7 @@ Namespace Framework2006
 
             If Me.IsPostBack = False Then
                 curUser.CheckAccessRole(AccessRoleType.Add, SpendManagementElement.InvoiceForecasts, False, True)
-                Dim contractId As Integer;
+                Dim contractId As Integer
                 If Not Request.QueryString("id") Is Nothing Then
                     Integer.TryParse(Request.QueryString("id"), contractId)
                     ViewState("ActiveContract") = contractId
