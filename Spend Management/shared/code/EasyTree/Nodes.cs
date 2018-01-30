@@ -158,6 +158,11 @@
 
             var node = this.CreateGroupNode("Other Columns", result);
             faves.Add(node);
+            var table = this._tables.GetTableByID(this.baseTable);
+            if (table.TableSource == cTable.TableSourceType.Metabase)
+            {
+                _trees[tableKey] = faves;
+            }
 
             return faves;
         }
