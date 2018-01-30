@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spend Management", "Spend Management\Spend Management.csproj", "{1CBFD8EC-F67C-4425-A10C-97BFC7501045}"
 	ProjectSection(ProjectDependencies) = postProject
