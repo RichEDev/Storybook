@@ -116,13 +116,13 @@ Namespace Framework2006
                     End If
 
                     If curUser.CheckAccessRole(AccessRoleType.Delete, SpendManagementElement.ContractSchedules, False) And drow.Item("PermitVal") <> 0 Then
-                        strHTML.Append("<td class=""" & rowClass & """><a onclick=""javascript:if(confirm('Click OK to confirm removal of schedule link')){window.location.href='ScheduleAction.aspx?action=delete&linkid=" & drow.Item("LinkId") & "&cid=" & drow.Item("ContractId") & "';}"" onmouseover=""window.status='Delete this contract link from schedule chain';return true;"" onmouseout=""window.status='Done';"" title=""Delete this contract link from schedule chain"" style=""cursor: hand;""><img src=""./icons/delete2.gif"" /></td>" & vbNewLine)
+                        strHTML.Append("<td class=""" & rowClass & """><a onclick=""javascript:if(confirm('Click OK to confirm removal of schedule link')){window.location.href='ScheduleAction.aspx?action=delete&linkid=" & drow.Item("LinkId") & "&cid=" & ViewState("ActiveContract") & "';}"" onmouseover=""window.status='Delete this contract link from schedule chain';return true;"" onmouseout=""window.status='Done';"" title=""Delete this contract link from schedule chain"" style=""cursor: hand;""><img src=""./icons/delete2.gif"" /></td>" & vbNewLine)
                     Else
                         strHTML.Append("<td class=""" & rowClass & """></td>" & vbNewLine)
                     End If
                     strHTML.Append("<td class=""" & rowClass & """>" & drow.Item("ContractKey") & "</td>" & vbNewLine)
                     If drow.Item("PermitVal") <> 0 Then
-                        strHTML.Append("<td class=""" & rowClass & """><a href=""ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & drow.Item("ContractId") & """>" & drow.Item("ContractDescription") & "</a></td>" & vbNewLine)
+                        strHTML.Append("<td class=""" & rowClass & """><a href=""ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & ViewState("ActiveContract") & """>" & drow.Item("ContractDescription") & "</a></td>" & vbNewLine)
                         strHTML.Append("<td class=""" & rowClass & """>" & drow.Item("ScheduleNumber") & "</td>" & vbNewLine)
                         If IsDate(drow.Item("StartDate")) Then
                             tmpDate = Format(CDate(drow.Item("StartDate")), cDef.DATE_FORMAT)

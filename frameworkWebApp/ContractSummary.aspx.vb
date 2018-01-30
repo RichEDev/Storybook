@@ -2379,7 +2379,7 @@ Namespace Framework2006
         End Sub
 
         Private Sub Notifications()
-            Response.Redirect("Associations.aspx?frompage=contractdetails&contractId=" + ViewState("ActiveContract"), True)
+            Response.Redirect("Associations.aspx?frompage=contractdetails&contractId=" + ViewState("ActiveContract").ToString(), True)
         End Sub
 
         Protected Sub txtReviewPeriod_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs)
@@ -2819,7 +2819,7 @@ Namespace Framework2006
 
 
                 ' get the original record for comparison
-                FWDb.FWDb("R2", "contract_details", "subAccountId", curUser.CurrentSubAccountId, "contractId", ViewState("ActiveContract"), "", "", "", "", "", "", "", "")
+                FWDb.FWDb("R2", "contract_details", "subAccountId", curUser.CurrentSubAccountId, "contractId", ViewState("ActiveContract").ToString(), "", "", "", "", "", "", "", "")
                 If FWDb.FWDb2Flag = True Then
                     tmpval = FWDb.FWDbFindVal("contractKey", 2)
                     If tmpval = "" Then
@@ -3562,7 +3562,7 @@ Namespace Framework2006
             ViewState("CDAction") = Nothing
 
             If redir = String.Empty Then
-                redir = "ContractSummary.aspx?id=" & Trim(ViewState("ActiveContract"))
+                redir = "ContractSummary.aspx?id=" & Trim(ViewState("ActiveContract").ToString())
             End If
 
             Response.Redirect(redir, True)
@@ -3640,7 +3640,7 @@ Namespace Framework2006
         End Sub
 
         Protected Sub lnkNotify_Click(ByVal sender As Object, ByVal e As System.EventArgs)
-            Response.Redirect("Associations.aspx?frompage=contractdetails&contractId=" + ViewState("ActiveContract"), True)
+            Response.Redirect("Associations.aspx?frompage=contractdetails&contractId=" + ViewState("ActiveContract").ToString(), True)
         End Sub
 
         Protected Sub lnkSchedules_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles imgSchedules.Click
@@ -5310,7 +5310,7 @@ Namespace Framework2006
                         .ToolTip = "Open contract product notes"
                         .Attributes.Add("onmouseover", "window.status='Open contract product notes';return true;")
                         .Attributes.Add("onmouseout", "window.status='Done';")
-                        .Attributes.Add("onclick", "window.location.href='ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&cpaction=cpnotes&cpid=" & drow.Item("contractProductId") & "';")
+                        .Attributes.Add("onclick", "window.location.href='ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&id=" & ViewState("ActiveContract").ToString() & "&cpaction=cpnotes&cpid=" & drow.Item("contractProductId") & "';")
                         .Attributes.Add("style", "cursor: hand;")
                     End With
                     CPCell.Controls.Add(CPNotesImg)
@@ -5327,7 +5327,7 @@ Namespace Framework2006
                         .ImageUrl = "~/icons/16/plain/clipboard.gif"
                         .Attributes.Add("onmouseover", "window.status='View Product Information';return true;")
                         .Attributes.Add("onmouseout", "window.status='Done';")
-                        .Attributes.Add("onclick", "window.open('ContractProductInfo.aspx?cpid=" & CStr(drow.Item("contractProductId")).Trim & "');")
+                        .Attributes.Add("onclick", "window.open('ContractProductInfo.aspx?cpid=" & CStr(drow.Item("contractProductId")).Trim & "&id=" & ViewState("ActiveContract").ToString() & "');")
                         .Attributes.Add("style", "cursor: hand;")
                         .ToolTip = "View Product Information"
                     End With
@@ -5341,7 +5341,7 @@ Namespace Framework2006
                 Dim taskImg As New System.Web.UI.WebControls.Image
                 taskImg.ID = "task" & drow.Item("contractProductId")
 
-                Dim retURL As String = "~/ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&id=" & ViewState("ActiveContract")
+                Dim retURL As String = "~/ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&id=" & ViewState("ActiveContract").ToString()
                 retURL = Server.UrlEncode(retURL)
 
                 If curUser.CheckAccessRole(AccessRoleType.Add, SpendManagementElement.Tasks, False) Then
@@ -7536,7 +7536,7 @@ Namespace Framework2006
                     .Append("<tr>" & vbNewLine)
                     .Append("<td class=""" & rowClass & """>")
                     If curUser.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.Invoices, False) Then
-                        .Append("<a href=""ContractSummary.aspx?idaction=edit&tab=" & SummaryTabs.InvoiceDetail & "&invid=" & CStr(drow.Item("InvoiceId")).Trim & """ onmouseover=""window.status='Edit this invoice';return true;"" onmouseout=""window.status='Done';"" title=""Edit this invoice""><img src=""./icons/edit.gif"" /></a>")
+                        .Append("<a href=""ContractSummary.aspx?idaction=edit&tab=" & SummaryTabs.InvoiceDetail & "&id=" & Trim(ViewState("ActiveContract")) & "&invid=" & CStr(drow.Item("InvoiceId")).Trim & """ onmouseover=""window.status='Edit this invoice';return true;"" onmouseout=""window.status='Done';"" title=""Edit this invoice""><img src=""./icons/edit.gif"" /></a>")
                     End If
                     .Append("</td>" & vbNewLine)
                     .Append("<td class=""" & rowClass & """>")
@@ -7546,10 +7546,10 @@ Namespace Framework2006
                     .Append("</td>" & vbNewLine)
                     .Append("<td class=""" & rowClass & """>")
                     If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.InvoiceNotes, False) Then
-                        .Append("<a href=""ContractSummary.aspx?idaction=notes&tab=" & SummaryTabs.InvoiceDetail & "&invid=" & drow.Item("invoiceId") & "&invnum=" & drow.Item("invoiceNumber") & """ onmouseover=""window.status='Open free text notes for this invoice';return true;"" onmouseout=""window.status='Done';"" title=""Open free text notes for this invoice""><img src=""./icons/16/plain/document_attachment.png"" /></a>")
+                        .Append("<a href=""ContractSummary.aspx?idaction=notes&tab=" & SummaryTabs.InvoiceDetail & "&id=" & Trim(ViewState("ActiveContract")) & "&invid=" & drow.Item("invoiceId") & "&invnum=" & drow.Item("invoiceNumber") & """ onmouseover=""window.status='Open free text notes for this invoice';return true;"" onmouseout=""window.status='Done';"" title=""Open free text notes for this invoice""><img src=""./icons/16/plain/document_attachment.png"" /></a>")
                     End If
                     .Append("</td>" & vbNewLine)
-                    .Append("<td class=""" & rowClass & """><a href=""ViewStatusHistory.aspx?id=" & drow.Item("invoiceId") & "&desc=" & drow.Item("invoiceNumber") & """ onmouseover=""window.status='View the status history for this invoice';return true;"" onmouseout=""window.status='Done';"" title=""View the status history for this invoice""><img src=""./icons/16/plain/history.png"" /></a></td>" & vbNewLine)
+                    .Append("<td class=""" & rowClass & """><a href=""ViewStatusHistory.aspx?id=" & drow.Item("invoiceId") & "&contractid=" & Trim(ViewState("ActiveContract")) & "&desc=" & drow.Item("invoiceNumber") & """ onmouseover=""window.status='View the status history for this invoice';return true;"" onmouseout=""window.status='Done';"" title=""View the status history for this invoice""><img src=""./icons/16/plain/history.png"" /></a></td>" & vbNewLine)
                     .Append("<td class=""" & rowClass & """>" & drow.Item("invoiceNumber") & "</td>" & vbNewLine)
 
                     If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ViewFinancials, True) Then
@@ -8209,7 +8209,7 @@ Namespace Framework2006
                     strHTML.Append("<td class=""" & rowClass & """><input type=""checkbox"" name=""IFBU"" value=""" & drow.Item("contractForecastId") & """ /></td>" & vbNewLine)
                     If curUser.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.InvoiceForecasts, False) Then
                         strHTML.Append("<td class=""" & rowClass & """><a title=""Transfer forecast into an active invoice"" href=""ContractSummary.aspx?tab=" & SummaryTabs.InvoiceDetail & "&id=" & Trim(ViewState("ActiveContract")) & "&idaction=move&fid=" & Trim(drow.Item("contractForecastId")) & """>Move</a></td>" & vbNewLine)
-                        strHTML.Append("<td class=""" & rowClass & """><a onmouseover=""window.status='Edit this Forecast Item';return true;"" onmouseout=""window.status='Done';"" href=""ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&ifaction=edit&ifid=" & Trim(drow.Item("contractForecastId")) & """><img src=""./icons/edit.gif"" /></a></td>" & vbNewLine)
+                        strHTML.Append("<td class=""" & rowClass & """><a onmouseover=""window.status='Edit this Forecast Item';return true;"" onmouseout=""window.status='Done';"" href=""ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&id=" & Trim(ViewState("ActiveContract")) & "&ifaction=edit&ifid=" & Trim(drow.Item("contractForecastId")) & """><img src=""./icons/edit.gif"" /></a></td>" & vbNewLine)
                     Else
                         strHTML.Append("<td class=""" & rowClass & """>&nbsp;</td>" & vbNewLine)
                         strHTML.Append("<td class=""" & rowClass & """>&nbsp;</td>" & vbNewLine)
@@ -8412,7 +8412,7 @@ Namespace Framework2006
 
             db.DBClose()
             db = Nothing
-            Response.Redirect("InvoiceForecastGenerate.aspx?id=" + ViewState("ActiveContract"), True)
+            Response.Redirect("InvoiceForecastGenerate.aspx?id=" + ViewState("ActiveContract").ToString(), True)
         End Sub
 
         Private Sub CallBulkUpdates()
@@ -8439,7 +8439,7 @@ Namespace Framework2006
                     End If
 
                     Session("IFAction") = "bulkedit"
-                    Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&ifaction=bulkedit&" & BU_URL.ToString, True)
+                    Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.InvoiceForecast & "&ifaction=bulkedit&" & BU_URL.ToString & "&id=" & ViewState("ActiveContract"), True)
                 End If
             Else
                 lblErrorString.Text = "ERROR! Cannot bulk edit as no selections were made."
@@ -9322,7 +9322,7 @@ Namespace Framework2006
                     tmpOwnerId = RecId
                 End If
 
-                strNoteTable.Append("<td class=""" & rowClass & """style=""text-align:center""><a href=""ViewSingleNote.aspx?id=" & Trim(drow.Item("NoteId")) & "&notetype=" & Trim(NoteType) & "&ownerid=" & RecId.ToString & """><img src=""./icons/16/plain/zoom_in.png"" /></a></td>" & vbNewLine)
+                strNoteTable.Append("<td class=""" & rowClass & """style=""text-align:center""><a href=""ViewSingleNote.aspx?id=" & Trim(drow.Item("NoteId")) & "&notetype=" & Trim(NoteType) & "&ownerid=" & RecId.ToString & "&contractId=" & ViewState("ActiveContract") & """><img src=""./icons/16/plain/zoom_in.png"" /></a></td>" & vbNewLine)
 
                 tmpStr = IIf(IsDBNull(drow.Item("Date")) = True, "&nbsp;", Format(CDate(drow.Item("Date")), cDef.DATE_FORMAT))
                 strNoteTable.Append("<td class=""" & rowClass & """>" & tmpStr.Trim & "</td>" & vbNewLine)
