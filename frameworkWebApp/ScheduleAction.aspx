@@ -49,7 +49,11 @@ function doMergeSchedule()
 
 function doAddExisting()
 {
-    window.location.href='ScheduleManage.aspx?&action=addlinks&id=' + curContractId;
+    window.location.href='ScheduleManage.aspx?action=addlinks&cid=' + curContractId;
+}
+
+function doCreateLinks() {
+    window.location.href = 'ScheduleManage.aspx?action=createlinks&cid=' + curContractId;
 }
 
 function SetPermissions(permInsert,permUpdate,permDelete)
@@ -86,7 +90,7 @@ function SetPermissions(permInsert,permUpdate,permDelete)
 </script>
 <a class="submenuitem" id="lnkAddSchedule" href="javascript:doAddSchedule();" onmouseover="window.status='Create a new schedule of the current contract';return true;" onmouseout="window.status='Done';" title="Create a new schedule of the current contract">Add Schedule</a>
 <a class="submenuitem" id="lnkUpdateSchedule" href="javascript:doUpdateSchedule();" onmouseover="window.status='Duplicate the current schedule (Save As New)';return true;" onmouseout="window.status='Done';" title="Duplicate the current schedule (Save As New)">Update Schedule</a>
-<a class="submenuitem" id="lnkCreateLinks" href="ScheduleManage.aspx?action=createlinks" onmouseover="window.status='Create schedule links for existing contracts';return true;" onmouseout="window.status='Done';" title="Create schedule links for existing contracts">Create Schedule Links</a>
+<a class="submenuitem" id="lnkCreateLinks" href="javascript:doCreateLinks();" onmouseover="window.status='Create schedule links for existing contracts';return true;" onmouseout="window.status='Done';" title="Create schedule links for existing contracts">Create Schedule Links</a>
 <a class="submenuitem" id="lnkMergeSchedule" href="javascript:doMergeSchedule();" onmouseover="window.status='Merge multiple schedules to a single schedule entry';return true;" onmouseout="window.status='Done';" title="Merge multiple schedules to a single schedule entry">Merge Schedule</a>
 <a class="submenuitem" id="lnkAddScheduleLink" href="javascript:doAddExisting();" onmouseover="window.status='Add a contract as a schedule to the current contract. Retrospectively add a schedule to the current contract.';return true;" onmouseout="window.status='Done';" title="Add a contract as a schedule to the current contract. Retrospectively add a schedule to the current contract.">Add Existing Schedule</a>
 </asp:Content>

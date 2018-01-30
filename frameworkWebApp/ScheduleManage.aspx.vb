@@ -26,6 +26,7 @@ Namespace Framework2006
             Dim helpID As String = "#1081"
             Dim action As String
             action = Request.QueryString("action")
+            ViewState("ContractId") = Request.QueryString("cid")
 
             Dim curuser As CurrentUser = cMisc.GetCurrentUser()
 
@@ -650,7 +651,7 @@ Namespace Framework2006
         End Sub
 
         Protected Sub cmdCancel_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdCancel.Click
-            Response.Redirect("ScheduleAction.aspx", True)
+            Response.Redirect("ScheduleAction.aspx?contractId=" & ViewState("ContractId"), True)
         End Sub
 
         Protected Sub cmdSearch_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdSearch.Click
