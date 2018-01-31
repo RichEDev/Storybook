@@ -18,6 +18,11 @@ Namespace Framework2006
 
             ' if no schedules exist, then hide merge option
             Dim hideMergeFunction As String = "HideMerge();"
+            Dim activeContract = 0
+            If Request.QueryString("contractId") > "" Then
+                activeContract = Request.QueryString("contractId")
+                ViewState("ActiveContract") = activeContract
+            End If
 
             Dim sql As New System.Text.StringBuilder
             sql.Append("SELECT [link_matrix].[LinkId], [link_matrix].[ContractId] " & vbNewLine)
@@ -27,7 +32,7 @@ Namespace Framework2006
             sql.Append("INNER JOIN [link_matrix] ON [link_matrix].[LinkId] = [link_definitions].[LinkId] ")
             sql.Append("WHERE [link_matrix].[ContractId] = @conId AND [IsScheduleLink] = 1) ")
             sql.Append("AND dbo.CheckContractAccess(@userId,[link_matrix].[ContractId], @subAccountId) > 0")
-            db.AddDBParam("conId", Session("ActiveContract"), True)
+            db.AddDBParam("conId", activeContract, True)
             db.AddDBParam("userId", curUser.EmployeeID, False)
             db.AddDBParam("subAccountID", curUser.CurrentSubAccountId, False)
             db.RunSQL(sql.ToString, db.glDBWorkA, False, "", False)
@@ -35,7 +40,7 @@ Namespace Framework2006
                 hideMergeFunction = ""
             End If
 
-            Master.onloadfunc = "SetContractId(" & Session("ActiveContract") & ");SetPermissions(" & curUser.CheckAccessRole(AccessRoleType.Add, SpendManagementElement.ContractDetails, False).ToString.ToLower & "," & curUser.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.ContractDetails, False).ToString.ToLower & "," & curUser.CheckAccessRole(AccessRoleType.Delete, SpendManagementElement.ContractDetails, False).ToString.ToLower & ");" & hideMergeFunction
+            Master.onloadfunc = "SetContractId(" & activeContract & ");SetPermissions(" & curUser.CheckAccessRole(AccessRoleType.Add, SpendManagementElement.ContractDetails, False).ToString.ToLower & "," & curUser.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.ContractDetails, False).ToString.ToLower & "," & curUser.CheckAccessRole(AccessRoleType.Delete, SpendManagementElement.ContractDetails, False).ToString.ToLower & ");" & hideMergeFunction
             Title = "Contract Schedule Actions"
             Master.title = Title
 
@@ -47,13 +52,13 @@ Namespace Framework2006
                         lblError.Text = "An error occurred trying to remove schedule link"
                     Else
                         db.DBClose()
-                        Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & Session("ActiveContract"), True)
+                        Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & activeContract, True)
                     End If
 
                 Case Else
 
             End Select
-            litCurrentSchedules.Text = GetSchedules(db, curUser, Session("ActiveContract"))
+            litCurrentSchedules.Text = GetSchedules(db, curUser, activeContract)
 
             db.DBClose()
             db = Nothing
@@ -71,14 +76,12 @@ Namespace Framework2006
             sql.Append("INNER JOIN [link_matrix] ON [link_matrix].[LinkId] = [link_definitions].[LinkId] " & vbNewLine)
             sql.Append("WHERE [link_matrix].[ContractId] = @conId AND [IsScheduleLink] = 1) " & vbNewLine)
             sql.Append("ORDER BY [StartDate],[EndDate] ASC" & vbNewLine)
-            db.AddDBParam("conId", Session("ActiveContract"), True)
+            db.AddDBParam("conId", contractId, True)
             db.AddDBParam("userId", curUser.EmployeeID, False)
             db.AddDBParam("subAccountId", curUser.CurrentSubAccountId, False)
             db.RunSQL(sql.ToString, db.glDBWorkD, False, "", False)
 
             Dim drow As DataRow
-            Dim curId As Integer
-            curId = Session("ActiveContract")
 
             strHTML.Append("<table class=""datatbl"">" & vbNewLine)
             strHTML.Append("<tr>" & vbNewLine)
@@ -106,20 +109,20 @@ Namespace Framework2006
                     End If
 
                     strHTML.Append("<tr>" & vbNewLine)
-                    If drow.Item("ContractId") = curId Then
+                    If drow.Item("ContractId") = contractId Then
                         strHTML.Append("<td class=""" & rowClass & """><img src=""./images/arrow_right.png"" /></td>" & vbNewLine)
                     Else
                         strHTML.Append("<td class=""" & rowClass & """></td>" & vbNewLine)
                     End If
 
                     If curUser.CheckAccessRole(AccessRoleType.Delete, SpendManagementElement.ContractSchedules, False) And drow.Item("PermitVal") <> 0 Then
-                        strHTML.Append("<td class=""" & rowClass & """><a onclick=""javascript:if(confirm('Click OK to confirm removal of schedule link')){window.location.href='ScheduleAction.aspx?action=delete&linkid=" & drow.Item("LinkId") & "&cid=" & drow.Item("ContractId") & "';}"" onmouseover=""window.status='Delete this contract link from schedule chain';return true;"" onmouseout=""window.status='Done';"" title=""Delete this contract link from schedule chain"" style=""cursor: hand;""><img src=""./icons/delete2.gif"" /></td>" & vbNewLine)
+                        strHTML.Append("<td class=""" & rowClass & """><a onclick=""javascript:if(confirm('Click OK to confirm removal of schedule link')){window.location.href='ScheduleAction.aspx?action=delete&linkid=" & drow.Item("LinkId") & "&cid=" & ViewState("ActiveContract") & "';}"" onmouseover=""window.status='Delete this contract link from schedule chain';return true;"" onmouseout=""window.status='Done';"" title=""Delete this contract link from schedule chain"" style=""cursor: hand;""><img src=""./icons/delete2.gif"" /></td>" & vbNewLine)
                     Else
                         strHTML.Append("<td class=""" & rowClass & """></td>" & vbNewLine)
                     End If
                     strHTML.Append("<td class=""" & rowClass & """>" & drow.Item("ContractKey") & "</td>" & vbNewLine)
                     If drow.Item("PermitVal") <> 0 Then
-                        strHTML.Append("<td class=""" & rowClass & """><a href=""ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & drow.Item("ContractId") & """>" & drow.Item("ContractDescription") & "</a></td>" & vbNewLine)
+                        strHTML.Append("<td class=""" & rowClass & """><a href=""ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & ViewState("ActiveContract") & """>" & drow.Item("ContractDescription") & "</a></td>" & vbNewLine)
                         strHTML.Append("<td class=""" & rowClass & """>" & drow.Item("ScheduleNumber") & "</td>" & vbNewLine)
                         If IsDate(drow.Item("StartDate")) Then
                             tmpDate = Format(CDate(drow.Item("StartDate")), cDef.DATE_FORMAT)
@@ -218,7 +221,7 @@ Namespace Framework2006
         End Function
 
         Protected Sub cmdClose_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdClose.Click
-            Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & Session("ActiveContract"), True)
+            Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & ViewState("ActiveContract"), True)
         End Sub
 
         Public Sub New()

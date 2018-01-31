@@ -69,7 +69,7 @@
                     menuItems.Append(this.CreateMenuItems("javascript:ShowSubAccountModal();", "switch_accounts.png", "Switch Sub Account"));
                 }
 
-                menuItems.Append(this.CreateMenuItems("/About.aspx", "about_fw.png", "About"));
+                menuItems.Append(this.CreateMenuItems("/About.aspx?contractId=" + this.ViewState["ActiveContract"], "about_fw.png", "About"));
             }
             else
             {

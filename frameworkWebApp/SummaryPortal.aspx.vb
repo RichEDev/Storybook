@@ -47,8 +47,6 @@ Namespace Framework2006
             SetPanels(curUser, colParams)
 
             If Me.IsPostBack = False Then
-                Session("ActiveContract") = 0
-
                 Title = "Advanced Search"
                 Master.title = Title
 
