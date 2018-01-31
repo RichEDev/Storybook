@@ -34,6 +34,10 @@ WHERE ISNULL(ApproverLastRemindedDate, '1900-01-01') <= @ndaysago
 				AND itemcheckerClaims.submitted = 1
 				AND itemcheckerClaims.paid = 0
 				AND savedexpenses.tempallow = 0
+			) OR (
+				itemcheckerClaims.STATUS <> 4
+				AND itemcheckerClaims.submitted = 1
+				AND itemcheckerClaims.paid = 0
 			)
 		)
 
