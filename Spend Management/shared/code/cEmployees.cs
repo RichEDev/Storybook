@@ -223,7 +223,7 @@ using System.Web;
                 {
                     templateId = SendMessageEnum.GetEnumDescription(SendMessageDescription.SentWhenAnEmployeeGetsLockedOut);
                     clsemails.SendMessage(templateId, senderId, recipients);
-                    templateId = SendMessageEnum.GetEnumDescription(fromMobile ? SendMessageDescription.SentWhenAnEmployeeLocksAccountFromAMobileDevice : SendMessageDescription.SentWhenAnEmployeeLocksAccountFromAMethodOtherThanAMobileDevice);
+                    templateId = SendMessageEnum.GetEnumDescription(fromMobile ? SendMessageDescription.SentWhenAnEmployeeLocksAccountFromExpensesMobile : SendMessageDescription.SentWhenAnEmployeeLocksAccountFromAMethodOtherThanAMobileDevice);
                     clsemails.SendMessage(templateId, senderId, recipients);
                 }
                 else
@@ -804,10 +804,22 @@ using System.Web;
         /// <summary>
         /// Lock an employee by their username
         /// </summary>
-        /// <param name="username"> Username of employee to lock</param>  
-        /// <param name="accountID"> account id of employee</param>
-        /// <param name="activeModule"> Current active module</param>
-        public void lockEmployee(string username, int accountID, Modules activeModule, IDBConnection connection = null)
+        /// <param name="username">
+        /// Username of employee to lock
+        /// </param>
+        /// <param name="accountID">
+        /// The account id of employee
+        /// </param>
+        /// <param name="activeModule">
+        /// An instance of <see cref="Modules"/>
+        /// </param>
+        /// <param name="connection">
+        /// An instance of <see cref="IDBConnection"/>
+        /// </param>
+        /// <param name="fromMobile">
+        /// Whether the request is from a mobile device.
+        /// </param>
+        public void lockEmployee(string username, int accountID, Modules activeModule, IDBConnection connection = null, bool fromMobile = false)
         {
             using (var expdata = connection ?? new DatabaseConnection(cAccounts.getConnectionString(accountid)))
             {
@@ -817,12 +829,12 @@ using System.Web;
 
             Employee employee = this.GetEmployeeById(employeeID);
        
-            employee.ChangeLockedStatus(true, null); 
+            employee.ChangeLockedStatus(true, null);
 
             //prevents archived user(s) from initiating the password reset procedure. 
-              if (employee.Archived == false)
-            {  
-                SendPasswordKey(employeeID, PasswordKeyType.ForgottenPassword, null, activeModule, true);
+            if (employee.Archived == false)
+            {
+                SendPasswordKey(employeeID, PasswordKeyType.ForgottenPassword, null, activeModule, true, fromMobile);
             }
         }
 
