@@ -10,13 +10,13 @@
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Interfaces;
 
-    public class cEmailNotifications  
+    public class Notifications  
     {
         public int nAccountID;
-        private static SortedList<int, cEmailNotification> _cachedEmailNotifications;
+        private static SortedList<int, Notification> _cachedEmailNotifications;
         private const string CacheKey = "subscriptions";
 
-        public cEmailNotifications()
+        public Notifications()
         {
         }
 
@@ -24,7 +24,7 @@
         /// Default constructor for cEmailNotifications
         /// </summary>
         /// <param name="accountId"></param>
-        public cEmailNotifications(int accountId)
+        public Notifications(int accountId)
         {
             nAccountID = accountId;
             CacheList();
@@ -37,7 +37,7 @@
                 return;
             }
 
-            _cachedEmailNotifications = new SortedList<int, cEmailNotification>();
+            _cachedEmailNotifications = new SortedList<int, Notification>();
             using (var connection = new DatabaseConnection(ConfigurationManager.ConnectionStrings["metabase"].ConnectionString))
             {
                 const string Sql = "SELECT emailNotificationID, name, description, emailTemplateID, enabled, customerType, emailNotificationType FROM dbo.emailNotifications";
@@ -63,7 +63,7 @@
                         var emailNotificationType =
                             (EmailNotificationType)reader.GetInt32(reader.GetOrdinal("emailNotificationType"));
 
-                        var tmpEmailNotification = new cEmailNotification(
+                        var tmpEmailNotification = new Notification(
                             emailNotificationId,
                             name,
                             description,
@@ -151,9 +151,9 @@
         /// </summary>
         /// <param name="emailNotificationID"></param>
         /// <returns></returns>
-        public cEmailNotification GetEmailNotificationByID(int emailNotificationID)
+        public Notification GetEmailNotificationByID(int emailNotificationID)
         {
-            cEmailNotification emailNotification;
+            Notification emailNotification;
             _cachedEmailNotifications.TryGetValue(emailNotificationID, out emailNotification);
             return emailNotification;
         }
@@ -163,7 +163,7 @@
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public cEmailNotification GetEmailNotificationByNotificationType(EmailNotificationType type)
+        public Notification GetEmailNotificationByNotificationType(EmailNotificationType type)
         {
             return _cachedEmailNotifications.Values.FirstOrDefault(notification => notification.EmailNotificationType == type);
         }
@@ -190,7 +190,7 @@
 
             using (var connection = new DatabaseConnection(cAccounts.getConnectionString(nAccountID)))
             {
-                cEmailNotification reqEmailNotification = GetEmailNotificationByNotificationType(notificationType);
+                Notification reqEmailNotification = GetEmailNotificationByNotificationType(notificationType);
 
                 if (reqEmailNotification != null)
                 {
@@ -253,7 +253,7 @@
         /// <param name="notificationType"></param>
         /// <param name="bodyUpdate"></param>
         /// <param name="templates"></param>
-        public void SendNotifications(EmailNotificationType notificationType, string bodyUpdate, IEmailTemplates templates)
+        public void SendNotifications(EmailNotificationType notificationType, string bodyUpdate, INotificationTemplates templates)
         {
             // Put current summary action log data into a temporary table so it can be processed for the recipients to get notifications of any summary of employee archiving/activation
             // A temporary table is created with the currect action log data so it can be reported on for the email template summary
@@ -262,7 +262,7 @@
             {
                 connection.ExecuteSQL(SqlExists);
 
-                cEmailNotification reqEmailNotification = GetEmailNotificationByNotificationType(notificationType);
+                Notification reqEmailNotification = GetEmailNotificationByNotificationType(notificationType);
                 List<object[]> lstRequired = GetNotificationSubscriptions(notificationType);
                 var lstSendDetails = new List<sSendDetails>();
 
@@ -311,11 +311,11 @@
         /// </summary>
         /// <param name="customerType"></param>
         /// <returns></returns>
-        public SortedList<int, cEmailNotification> EmailNotificationsByCustomerType(CustomerType customerType)
+        public SortedList<int, Notification> EmailNotificationsByCustomerType(CustomerType customerType)
         {
-            var lstEmailNotifications = new SortedList<int, cEmailNotification>();
+            var lstEmailNotifications = new SortedList<int, Notification>();
 
-            foreach (cEmailNotification notification in _cachedEmailNotifications.Values.Where(notification => notification.CustomerType == customerType))
+            foreach (Notification notification in _cachedEmailNotifications.Values.Where(notification => notification.CustomerType == customerType))
             {
                 lstEmailNotifications.Add(notification.EmailNotificationID, notification);
             }
@@ -326,7 +326,7 @@
         /// <summary>
         /// Gets or sets the list of EmailNotifications - this is unfiltered
         /// </summary>
-        public SortedList<int, cEmailNotification> EmailNotifications
+        public SortedList<int, Notification> EmailNotifications
         {
             get { return _cachedEmailNotifications; }
             set { _cachedEmailNotifications = value; }

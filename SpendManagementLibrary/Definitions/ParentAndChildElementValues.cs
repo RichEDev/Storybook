@@ -11,7 +11,7 @@ namespace SpendManagementLibrary
         /// <summary>
         /// Gets or sets the child control.
         /// </summary>
-        public string ChildControl { get; set; }
+        public List<string> ChildControl { get; set; }
 
         /// <summary>
         /// Gets or sets a List of <see cref="ParentElement"/>

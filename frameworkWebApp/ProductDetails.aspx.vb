@@ -861,7 +861,7 @@ Namespace Framework2006
                 Case "1"
                     Dim conId As String = Request.QueryString("cid")
                     If conId.Trim <> "" Then
-                        url = "ContractSummary.aspx?cid=" & conId & "&tab=" & SummaryTabs.ContractProduct
+                        url = "ContractSummary.aspx?id=" & conId & "&tab=" & SummaryTabs.ContractProduct
                     End If
 
                 Case "2"

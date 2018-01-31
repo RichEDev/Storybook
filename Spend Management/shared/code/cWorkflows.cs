@@ -2615,8 +2615,8 @@ namespace Spend_Management
         /// <param name="senderID">The owner of the entity, e.g. if a user created a an expense claim it will be his employeeID used here</param>
         public void sendEmailTemplate(int emailTemplateID, cField primaryKeyField, int entityID, int senderID)
         {
-            cEmailTemplates clsEmailTemplates = new cEmailTemplates(this.oCurrentUser);
-            clsEmailTemplates.SendMessage(emailTemplateID, primaryKeyField, entityID, senderID, "");
+            NotificationTemplates notifications = new NotificationTemplates(this.oCurrentUser);
+            notifications.SendMessage(emailTemplateID, primaryKeyField, entityID, senderID, "");
         }
 
         private void UpdateEntityState(int workflowID, int entityID, int? approverID)

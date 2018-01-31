@@ -103,6 +103,33 @@ namespace Spend_Management {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqTempName;
         
         /// <summary>
+        /// divSystemTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSystemTemplate;
+        
+        /// <summary>
+        /// lblSystemTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSystemTemplate;
+        
+        /// <summary>
+        /// chkSystemTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSystemTemplate;
+        
+        /// <summary>
         /// lblSendEmail control.
         /// </summary>
         /// <remarks>
@@ -308,24 +335,6 @@ namespace Spend_Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAttachments;
-        
-        /// <summary>
-        /// lblSystemTemplate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSystemTemplate;
-        
-        /// <summary>
-        /// chkSystemTemplate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkSystemTemplate;
         
         /// <summary>
         /// wrapper control.

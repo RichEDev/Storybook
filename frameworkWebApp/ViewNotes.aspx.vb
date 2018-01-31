@@ -30,6 +30,15 @@ Namespace Framework2006
             Dim params As cAccountProperties = subaccs.getSubAccountById(curUser.CurrentSubAccountId).SubAccountProperties
             Dim getItemName As Boolean = False
             Dim ActiveNoteOwner As Integer
+            Dim activeContractId = Request.QueryString("contractid")
+            If activeContractId Is Nothing 
+                activeContractId = Server.UrlDecode(Request.QueryString("ret"))
+                If activeContractId is Nothing 
+                    activeContractId = 0 
+                End If
+            End If
+            ViewState("ActiveContract") = activeContractId 
+
 
             If Me.IsPostBack = False Then
                 FWDb.DBOpen(fws, False)
@@ -544,8 +553,8 @@ Namespace Framework2006
                     Title = "Product Notes"
 
                 Case "Contract"
-                    cLocks.RemoveLockItem(curUser.AccountID, connStr, Cache, "CD_" & curUser.AccountID.ToString, Session("ActiveContract"), curUser.EmployeeID)
-                    cLocks.RemoveLockItem(curUser.AccountID, connStr, Cache, "CA_" & curUser.AccountID.ToString, Session("ActiveContract"), curUser.EmployeeID)
+                    cLocks.RemoveLockItem(curUser.AccountID, connStr, Cache, "CD_" & curUser.AccountID.ToString, ViewState("ActiveContract"), curUser.EmployeeID)
+                    cLocks.RemoveLockItem(curUser.AccountID, connStr, Cache, "CA_" & curUser.AccountID.ToString, ViewState("ActiveContract"), curUser.EmployeeID)
 
                     Session("NotesForID") = Request.QueryString("contractid")
                     Session("NotesIDField") = "ContractId"
@@ -764,7 +773,7 @@ Namespace Framework2006
 
             If Session("NoteType") = "Contract" Then
                 ' check that the active contract is not archived. If it is, don't permit update
-                db.FWDb("R2", "contract_details", "contractId", Session("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
+                db.FWDb("R2", "contract_details", "contractId", ViewState("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
                 If db.FWDb2Flag = True Then
                     If db.FWDbFindVal("Archived", 2) = "Y" Then
                         isArchived = True
@@ -793,7 +802,7 @@ Namespace Framework2006
             'If Me.IsPostBack = False Then
             If Session("NoteType") = "Contract" Then
                 ' if current contract is archived, do not permit update or delete
-                db.FWDb("R", "contract_details", "contractId", Session("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
+                db.FWDb("R", "contract_details", "contractId", ViewState("ActiveContract"), "", "", "", "", "", "", "", "", "", "")
                 If db.FWDbFlag = True Then
                     If db.FWDbFindVal("Archived", 1) = "Y" And fws.glAllowNotesAdd = False Then
                         hideDelete = True

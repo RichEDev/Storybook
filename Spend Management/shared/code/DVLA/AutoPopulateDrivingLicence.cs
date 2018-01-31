@@ -109,7 +109,7 @@
             {
                 #region driving licence
                 var properties = new cAccountSubAccounts(curUser.AccountID).getFirstSubAccount().SubAccountProperties;
-                var emailTemplate = new cEmailTemplates(curUser);
+                var notifications = new NotificationTemplates(curUser);
                 var teams = new cTeams(accountId);
                 var customentities = new cCustomEntities(curUser);
                 var entity = customentities.getEntityByTableId(new Guid(GreenLightSystemGuidConstants.Entity));
@@ -252,7 +252,7 @@
 
                     if (drivingLicenceDetailsResponse.DvlaStatus != "FC" && drivingLicenceDetailsResponse.DvlaStatus != "PC" && drivingLicenceDetailsResponse.DvlaStatus != "FL")
                     {
-                        this.NotificationOnInvalidDrivingLicence(curUser, properties, emailTemplate, teams);
+                        this.NotificationOnInvalidDrivingLicence(curUser, properties, notifications, teams);
                     }
 
                     drivingLicenceEntityReferenceList = new CurrentCustomEntityRecord() { EntityId = entity.entityid, ViewId = viewId, RecordId = id, FormId = formId };
@@ -273,8 +273,8 @@
             employees.SaveDvlaLookupInformation(drivingLicenceDetailsResponse.EmployeeId, drivingLicenceDetailsResponse.ResponseCode, (isManualCheck && employeeDetails.DvlaLookUpDate != null && !isLookupDateUpdated) ? employeeDetails.DvlaLookUpDate : DateTime.UtcNow);
             if (!string.IsNullOrWhiteSpace(drivingLicenceDetailsResponse.ResponseCode))
             {
-                cEmailTemplates emailTemplates = new cEmailTemplates(curUser, ConfigurationManager.AppSettings["SupportEmailAddress"]);
-                DvlaServiceEventLogAndEmailNotification.DvlaLogEntry(drivingLicenceDetailsResponse.ResponseCode, drivingLicenceDetailsResponse.ErrorStatus, curUser.Account.companyid, "Autolookup", emailTemplates, employeeDetails);
+                NotificationTemplates notifications = new NotificationTemplates(curUser, ConfigurationManager.AppSettings["SupportEmailAddress"]);
+                DvlaServiceEventLogAndEmailNotification.DvlaLogEntry(drivingLicenceDetailsResponse.ResponseCode, drivingLicenceDetailsResponse.ErrorStatus, curUser.Account.companyid, "Autolookup", notifications, employeeDetails);
             }
 
             return drivingLicenceEntityReferenceList;
@@ -710,13 +710,13 @@
         /// <param name="properties">
         /// The properties.
         /// </param>
-        /// <param name="emailTemplate">
-        /// The email Templates.
+        /// <param name="notifications">
+        /// The notification Templates.
         /// </param>
         /// <param name="teams">
         /// The teams which employee related to .
         /// </param>
-        private void NotificationOnInvalidDrivingLicence(CurrentUser user, cAccountProperties properties, cEmailTemplates emailTemplate, cTeams teams)
+        private void NotificationOnInvalidDrivingLicence(CurrentUser user, cAccountProperties properties, NotificationTemplates notifications, cTeams teams)
         {
             var employee = Employee.Get(user.EmployeeID, user.AccountID);
             var recipientsId = properties.DutyOfCareApprover.ToLower() == "line manager"
@@ -725,8 +725,8 @@
             var approverTemplateName = SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToApproverWhenClaimantDrivingLicenceIsInvalid);
             var claimantTemplateName = SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToClaimantForInvalidDrivingLicence);
             var senderId = user.EmployeeID;
-            emailTemplate.SendMessage(approverTemplateName, senderId, recipientsId, defaultSender: "admin@sel-expenses.com");
-            emailTemplate.SendMessage(claimantTemplateName, senderId, new int[] { senderId }, defaultSender: "admin@sel-expenses.com");
+            notifications.SendMessage(approverTemplateName, senderId, recipientsId, defaultSender: "admin@sel-expenses.com");
+            notifications.SendMessage(claimantTemplateName, senderId, new int[] { senderId }, defaultSender: "admin@sel-expenses.com");
         }
 
         /// <summary>

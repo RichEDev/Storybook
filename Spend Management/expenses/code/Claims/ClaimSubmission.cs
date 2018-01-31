@@ -507,7 +507,7 @@ using shared.code.ApprovalMatrix;
                     subAccountID = firstSubAccount.SubAccountID;
                 }
 
-                var emails = new cEmailTemplates(this._user);
+                var notifications = new NotificationTemplates(this._user);
 
                 this._employees = this._employees ?? new cEmployees(this._user.AccountID);
                 Employee claimemp = this._employees.GetEmployeeById(claim.employeeid);
@@ -696,7 +696,7 @@ using shared.code.ApprovalMatrix;
                             if (notify == 1) 
                             {
                                 // just notify of claim by email
-                                this.SendNotifyEmails(claim, employeeid, signofftype, relid, subAccountID, nextCheckerId, emails);
+                                this.SendNotifyEmails(claim, employeeid, signofftype, relid, subAccountID, nextCheckerId, notifications);
                             }
                             else
                             {
@@ -891,7 +891,7 @@ using shared.code.ApprovalMatrix;
                                     {
                                         try
                                         {
-                                            emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorAfterASetOfExpensesHaveBeenSubmitted), claim.employeeid, nextCheckerId, expenseItemsIds);
+                                            notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorAfterASetOfExpensesHaveBeenSubmitted), claim.employeeid, nextCheckerId, expenseItemsIds);
                                         }
                                         catch
                                         {
@@ -911,7 +911,7 @@ using shared.code.ApprovalMatrix;
                                             }
                                             try
                                             {
-                                                emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenAClaimReachesTheNextStageInTheApprovalProcess), nextCheckerId[0], arremp, expenseItemsIds);
+                                                notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenAClaimReachesTheNextStageInTheApprovalProcess), nextCheckerId[0], arremp, expenseItemsIds);
                                             }
                                             catch (Exception ex)
                                             {
@@ -989,7 +989,7 @@ using shared.code.ApprovalMatrix;
             int relid,
             int subAccountID,
             IEnumerable<int> nextcheckerid,
-            cEmailTemplates emails)
+            NotificationTemplates notifications)
         {
             var recipientIds = new List<int>();
 
@@ -1023,7 +1023,7 @@ using shared.code.ApprovalMatrix;
             var claims = new cClaims(claim.accountid);
             var expenseItemsIds = claims.getExpenseItemsFromDB(claim.claimid).Keys.ToList();
 
-            emails.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.ThisEmailIsSentToNotifyUsersOfAClaimBeingMade), claim.employeeid, recipientIds.ToArray(), expenseItemsIds);
+            notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.ThisEmailIsSentToNotifyUsersOfAClaimBeingMade), claim.employeeid, recipientIds.ToArray(), expenseItemsIds);
         }
 
         public int SetRelIdforApprovalMatrixStage(

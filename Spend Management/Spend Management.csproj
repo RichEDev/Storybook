@@ -520,7 +520,7 @@
     <Content Include="shared\javaScript\minify\knockout.mapping-latest.js" />
     <Content Include="shared\javaScript\minify\sel.AuthoriserLevels.js" />
     <Content Include="shared\javaScript\minify\sel.bankAccounts.js" />
-    <Content Include="shared\javaScript\minify\sel.EmailTemplates.js" />
+    <Content Include="shared\javaScript\minify\sel.NotificationTemplates.js" />
     <Content Include="shared\javaScript\minify\sel.ReceiptManagement.js" />
     <Content Include="shared\javaScript\minify\sel.CustomMenu.js" />
     <Content Include="shared\javaScript\minify\sel.filterDialog.js" />
@@ -1157,7 +1157,7 @@
     <Compile Include="shared\code\EasyTree\ReportCommonColumns.cs" />
     <Compile Include="shared\code\EasyTree\ReportNode.cs" />
     <Compile Include="shared\code\EasyTree\TreeField.cs" />
-    <Compile Include="shared\code\EmailNotificationHelper.cs" />
+    <Compile Include="shared\code\NotificationHelper.cs" />
     <Compile Include="shared\code\Function.cs" />
     <Compile Include="shared\code\Functions.cs" />
     <Compile Include="shared\code\FundDetails.cs" />
@@ -2804,7 +2804,7 @@
     <Compile Include="expenses\code\cDefItems.cs" />
     <Compile Include="shared\code\cDepartments.cs" />
     <Compile Include="shared\code\DocumentTemplate.cs" />
-    <Compile Include="shared\code\cEmailTemplates.cs" />
+    <Compile Include="shared\code\NotificationTemplates.cs" />
     <Compile Include="shared\code\cEmployees.cs" />
     <Compile Include="expenses\code\cFilterRules.cs" />
     <Compile Include="expenses\code\cFloats.cs" />
@@ -2934,8 +2934,8 @@
       <DependentUpon>unitTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\SpendManagementAttributes.cs" />
-    <Compile Include="shared\webServices\svcEmailTemplates.asmx.cs">
-      <DependentUpon>svcEmailTemplates.asmx</DependentUpon>
+    <Compile Include="shared\webServices\svcNotificationTemplates.asmx.cs">
+      <DependentUpon>svcNotificationTemplates.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="shared\webServices\svcAutoComplete.asmx.cs">
@@ -4067,7 +4067,7 @@
     <Content Include="shared\webServices\svcTreeView.asmx" />
     <Content Include="shared\workflows.aspx" />
     <Content Include="shared\unitTest.aspx" />
-    <Content Include="shared\webServices\svcEmailTemplates.asmx" />
+    <Content Include="shared\webServices\svcNotificationTemplates.asmx" />
     <Content Include="shared\webServices\svcAutoComplete.asmx" />
     <Content Include="shared\webServices\svcWorkflows.asmx" />
     <Content Include="masters\smMenuForm.master" />

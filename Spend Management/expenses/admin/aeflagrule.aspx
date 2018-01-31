@@ -22,7 +22,7 @@
         <Scripts>
             <asp:ScriptReference Path="~/shared/javaScript/minify/jquery-selui-dialog.js" />
             <asp:ScriptReference Path="~/expenses/javaScript/SEL.FlagRules.js" />
-            <asp:ScriptReference Path="~/shared/javaScript/sel.reports.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/sel.reports.js?date=201801241614" />
         </Scripts>
     </asp:ScriptManagerProxy>
  

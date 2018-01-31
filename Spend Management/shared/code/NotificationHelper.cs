@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Spend_Management.shared.code
+﻿namespace Spend_Management.shared.code
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -8,12 +6,13 @@ namespace Spend_Management.shared.code
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
     using Spend_Management.expenses.code;
+	using System.Threading.Tasks;
     using System.Configuration;
 
-    /// <summary>
-    /// A helper for building email notifications
-    /// </summary>
-    public class EmailNotificationHelper
+	/// <summary>
+	/// A helper for building email notifications
+	/// </summary>
+	public class NotificationHelper
     {
         /// <summary>
         /// The employee who the email is about
@@ -39,7 +38,7 @@ namespace Spend_Management.shared.code
         /// Constructor for the EmailNotificationHelper class
         /// </summary>
         /// <param name="employee">The current employee</param>
-        public EmailNotificationHelper(Employee employee)
+        public NotificationHelper(Employee employee)
         {
             this.Employee = employee;
             this.AccountProperties = new cAccountSubAccountsBase(this.Employee.AccountID).getSubAccountById(this.Employee.DefaultSubAccount).SubAccountProperties;
@@ -53,12 +52,12 @@ namespace Spend_Management.shared.code
         /// <param name="sendMessageDescription">The email description</param>
         /// <param name="emailNotificationType">The email notification type</param>
         /// <param name="modules">The module type</param>
-        private void Send(SendMessageDescription sendMessageDescription, EmailNotificationType emailNotificationType, Modules modules)
+        public void Send(SendMessageDescription sendMessageDescription, EmailNotificationType emailNotificationType, Modules modules)
         {
-            var notificationEmployees = this.GetEmployeesToNotify(emailNotificationType);
-            var user = new CurrentUser(this.Employee.AccountID, this.Employee.EmployeeID, 0, modules, this.Employee.DefaultSubAccount);
-            var emailTemplates = new cEmailTemplates(user);
-            Task.Run(() => emailTemplates.SendMessage(SendMessageEnum.GetEnumDescription(sendMessageDescription), this.Employee.EmployeeID, notificationEmployees.ToArray(), this.Employee.EmployeeID));
+			var notificationEmployees = this.GetEmployeesToNotify(emailNotificationType);
+			var user = new CurrentUser(this.Employee.AccountID, this.Employee.EmployeeID, 0, modules, this.Employee.DefaultSubAccount);
+			var emailTemplates = new NotificationTemplates(user);
+			Task.Run(() => emailTemplates.SendMessage(SendMessageEnum.GetEnumDescription(sendMessageDescription), this.Employee.EmployeeID, notificationEmployees.ToArray(), this.Employee.EmployeeID));
         }
 
         /// <summary>
@@ -103,7 +102,7 @@ namespace Spend_Management.shared.code
         /// <returns>A list of employees</returns>
         private List<int> GetEmployeesToNotify(EmailNotificationType emailNotificationType)
         {
-            var notificationSubscriptions = new cEmailNotifications(this.Employee.AccountID).GetNotificationSubscriptions(emailNotificationType);
+            var notificationSubscriptions = new Notifications(this.Employee.AccountID).GetNotificationSubscriptions(emailNotificationType);
             var notificationEmployeeIds = new List<int>(from notificationSubscription in notificationSubscriptions where (sendType)notificationSubscription[0] == sendType.employee select (int)notificationSubscription[1]);
 
             return notificationEmployeeIds;

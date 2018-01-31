@@ -34,12 +34,12 @@
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="contentmain">
     <asp:ScriptManagerProxy ID="smProxy" runat="server">
         <Services>
-            <asp:ServiceReference InlineScript="true" Path="~/shared/webservices/svcEmailTemplates.asmx" />
+            <asp:ServiceReference InlineScript="true" Path="~/shared/webservices/svcNotificationTemplates.asmx" />
             <asp:ServiceReference InlineScript="true" Path="~/shared/webservices/svcWorkflows.asmx" />
         </Services>
         <Scripts>
             <asp:ScriptReference Path="~/shared/javaScript/Attachments.js" />
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.emailtemplates.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.notificationtemplates.js?date=20180124" />
         </Scripts>
     </asp:ScriptManagerProxy>
     <script type="text/javascript" src="../javaScript/minify/jquery.min.js"></script>
@@ -91,7 +91,7 @@
                 r.subjectHtml = '<%=this.subjectHtml.ClientID %>';
                 r.bodyHtml = '<%=this.bodyHtml.ClientID %>';
                 r.noteHtml = '<%=this.noteHtml.ClientID %>';
-            }(SEL.EmailTemplates.Elements));
+            }(SEL.NotificationTemplates.Elements));
             $('#tabs').tabs();
 
             CKEDITOR.config.allowedContent = true;
@@ -100,16 +100,16 @@
             CKEDITOR.config.font_defaultLabel = 'Arial';
             CKEDITOR.config.fontSize_defaultLabel = '12px';
 
-            SEL.EmailTemplates.RecipientModalInitialise();
-            SEL.EmailTemplates.InitialiseTokenInputPlugin();
-            SEL.EmailTemplates.BindOnKeyDownHandler();
-            SEL.EmailTemplates.Tree.PageLoad();
-            SEL.EmailTemplates.ClearHdnToField();
-            SEL.EmailTemplates.GroupComboBoxItem(SEL.EmailTemplates.Elements.cmbareaid);
-            SEL.EmailTemplates.GroupComboBoxItem(SEL.EmailTemplates.Elements.cmbGreenLightAttribute);
-            SEL.EmailTemplates.ValidateToRecipientForSystemTemplate();
-            SEL.EmailTemplates.OnProductAreaChange();
-            SEL.EmailTemplates.GetFieldComments();
+            SEL.NotificationTemplates.RecipientModalInitialise();
+            SEL.NotificationTemplates.InitialiseTokenInputPlugin();
+            SEL.NotificationTemplates.BindOnKeyDownHandler();
+            SEL.NotificationTemplates.Tree.PageLoad();
+            SEL.NotificationTemplates.ClearHdnToField();
+            SEL.NotificationTemplates.GroupComboBoxItem(SEL.NotificationTemplates.Elements.cmbareaid);
+            SEL.NotificationTemplates.GroupComboBoxItem(SEL.NotificationTemplates.Elements.cmbGreenLightAttribute);
+            SEL.NotificationTemplates.ValidateToRecipientForSystemTemplate();
+            SEL.NotificationTemplates.OnProductAreaChange();
+            SEL.NotificationTemplates.GetFieldComments();
         });
     </script>
     <style>
@@ -146,16 +146,19 @@
             <asp:Label ID="lblAreaTable" runat="server" Text="Product area" meta:resourcekey="lblAreaTableResource1" AssociatedControlID="cmbArea">
 
             </asp:Label><span class="inputs"><asp:DropDownList ID="cmbArea" runat="server" CssClass="fillspan" AutoPostBack="False" meta:resourcekey="cmbAreaResource1"
-               onchange="javascript:SEL.EmailTemplates.ChangeBase();">
+               onchange="javascript:SEL.NotificationTemplates.ChangeBase();">
             </asp:DropDownList></span><span class="inputicon">&nbsp;</span><span class="inputvalidatorfield">&nbsp;</span> <span class="inputtooltipfield">&nbsp;</span>
         </div>
         <div class="onecolumnsmall">
             <asp:Label ID="lblTemplateName" CssClass="mandatory" runat="server" Text="Template name*" meta:resourcekey="lblTemplateNameResource1" AssociatedControlID="txtTemplateName"></asp:Label><span class="inputs"><asp:TextBox ID="txtTemplateName" runat="server" MaxLength="250" meta:resourcekey="txtTemplateNameResource1"></asp:TextBox></span><span class="inputicon">&nbsp;</span><span class="inputvalidatorfield"><asp:RequiredFieldValidator ID="reqTempName" runat="server" ErrorMessage="Please enter a Template name." Text="*" ControlToValidate="txtTemplateName" ValidationGroup="vgMain"></asp:RequiredFieldValidator></span><span class="inputtooltipfield">&nbsp;</span>
         </div>
+        <div class="twocolumn" id="divSystemTemplate" runat="server">
+            <asp:Label ID="lblSystemTemplate" runat="server" Text="System template" meta:resourcekey="lblBCCResource1" AssociatedControlID="chkSystemTemplate" ></asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="chkSystemTemplate" onclick="SEL.NotificationTemplates.OnSystemTemplateCheckChanged(this.id)"/></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
+        </div>
         <div class="twocolumn">
             <asp:Label ID="lblSendEmail" runat="server" Text="Send email"  AssociatedControlID="ChkSendEmail"></asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="ChkSendEmail" /></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
             <asp:Label ID="lblSendNote" runat="server" Text="Send broadcast message" meta:resourcekey="lblBCCResource1" AssociatedControlID="ChkSendNote"></asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="ChkSendNote" /></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
-        </div>
+        </div>       
         <div class="twocolumn" id="sendMobileNotifcationCheckboxDiv" runat="server">
             <asp:Label ID="lblSendMobileNotification" runat="server" Text="Send mobile notification"  AssociatedControlID="chkCanEmailNotification"></asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="chkCanEmailNotification" /></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
         </div>
@@ -166,26 +169,26 @@
         <div class="onecolumnsmall">
             <asp:Label ID="lblTo" CssClass="mandatory" runat="server" Text="To*" AssociatedControlID="hdnTo"></asp:Label>
             <span class="inputs"><asp:HiddenField ID="hdnTo" runat="server" /><input id="txtTo" type="text" class="fillspan" /></span>
-            <span class="inputicon"><img src="/shared/images/icons/16/plain/add2.png" alt="" id="butTo" onclick="javascript:SEL.EmailTemplates.ShowAddRecipientModal('to');" /></span>
-            <span class="inputvalidatorfield"><asp:CustomValidator ID="reqTo" runat="server" ErrorMessage="Please enter a To recipient." Text="*"  ClientValidationFunction="SEL.EmailTemplates.ValidateToRecipient" ValidationGroup="vgMain"></asp:CustomValidator></span>
+            <span class="inputicon"><img src="/shared/images/icons/16/plain/add2.png" alt="" id="butTo" onclick="javascript:SEL.NotificationTemplates.ShowAddRecipientModal('to');" /></span>
+            <span class="inputvalidatorfield"><asp:CustomValidator ID="reqTo" runat="server" ErrorMessage="Please enter a To recipient." Text="*"  ClientValidationFunction="SEL.NotificationTemplates.ValidateToRecipient" ValidationGroup="vgMain"></asp:CustomValidator></span>
             <span class="inputtooltipfield"><img id="imgSystemTemplate" onmouseover="SEL.Tooltip.Show('DA129D5F-B356-43EB-8C86-AD0E05EE8AA1', 'ex', this);" src="../images/icons/16/plain/tooltip.png" alt="" class="tooltipicon" /></span>
         </div>
         <div class="onecolumnsmall">
             <asp:Label ID="lblCC" runat="server" Text="CC" AssociatedControlID="hdnCC"></asp:Label>
             <span class="inputs"><asp:HiddenField ID="hdnCC" runat="server" /><input id="txtCC" type="text" class="fillspan" /></span>
-            <span class="inputicon"><img src="/shared/images/icons/16/plain/add2.png" alt="" id="butCC" onclick="javascript:SEL.EmailTemplates.ShowAddRecipientModal('cc');" /></span>
+            <span class="inputicon"><img src="/shared/images/icons/16/plain/add2.png" alt="" id="butCC" onclick="javascript:SEL.NotificationTemplates.ShowAddRecipientModal('cc');" /></span>
             <span class="inputvalidatorfield">&nbsp;</span>
             <span class="inputtooltipfield">&nbsp;</span>
         </div>
          <div class="onecolumnsmall">
             <asp:Label ID="lblBCC" runat="server" Text="BCC" AssociatedControlID="hdnBCC"></asp:Label>
             <span class="inputs"><asp:HiddenField ID="hdnBCC" runat="server" /><input id="txtBCC" type="text" class="fillspan" /></span>
-            <span class="inputicon"><img src="/shared/images/icons/16/plain/add2.png" alt="" id="butBCC" onclick="javascript:SEL.EmailTemplates.ShowAddRecipientModal('bcc');" /></span>
+            <span class="inputicon"><img src="/shared/images/icons/16/plain/add2.png" alt="" id="butBCC" onclick="javascript:SEL.NotificationTemplates.ShowAddRecipientModal('bcc');" /></span>
             <span class="inputvalidatorfield">&nbsp;</span>
             <span class="inputtooltipfield">&nbsp;</span>
         </div>
         <div class="onecolumnsmall">
-            <asp:Label ID="Label2" runat="server" CssClass="mandatory" Text="Subject*" meta:resourcekey="lblSubjectResource1" AssociatedControlID="rtSubject"></asp:Label><span class="inputs"><asp:TextBox ID="rtSubject"  runat="server" Height="21px" TextMode="SingleLine" ToolTip="" CssClass="subject easytree-droppable" MaxLength="250" /></span><span class="inputicon">&nbsp;</span><span class="inputvalidatorfield"><asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="Please enter a Subject."                                                                                                                                                                                                                                                                                                                                                                                                                                       Text="*"  ClientValidationFunction="SEL.EmailTemplates.ValidateSubjectTextLength" ValidationGroup="vgMain"></asp:CustomValidator></span><span class="inputtooltipfield">&nbsp;</span>
+            <asp:Label ID="Label2" runat="server" CssClass="mandatory" Text="Subject*" meta:resourcekey="lblSubjectResource1" AssociatedControlID="rtSubject"></asp:Label><span class="inputs"><asp:TextBox ID="rtSubject"  runat="server" Height="21px" TextMode="SingleLine" ToolTip="" CssClass="subject easytree-droppable" MaxLength="250" /></span><span class="inputicon">&nbsp;</span><span class="inputvalidatorfield"><asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="Please enter a Subject."                                                                                                                                                                                                                                                                                                                                                                                                                                       Text="*"  ClientValidationFunction="SEL.NotificationTemplates.ValidateSubjectTextLength" ValidationGroup="vgMain"></asp:CustomValidator></span><span class="inputtooltipfield">&nbsp;</span>
         </div>
         <div ID="subjectFields" class="subjectFields" runat="server" style="display: none;"></div>
         <div class="twocolumn">
@@ -196,11 +199,9 @@
             </asp:DropDownList></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
         </div>
         <div class="twocolumn">
-            <asp:Label ID="lblAttachment" runat="server" Text="Attachments" meta:resourcekey="lblAttachmentsResource1" AssociatedControlID="txtAttachments"></asp:Label><span class="inputs"><asp:TextBox ID="txtAttachments" Visible="false" runat="server" CssClass="fillspan" meta:resourcekey="txtAttachmentsResource1"></asp:TextBox></span><span class="inputicon"><a href="javascript:SEL.EmailTemplates.ValidateAndShowAttachmentModal();"><img src="/shared/images/icons/16/plain/add2.png" alt="" id="butAttach" /></a></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
-            <asp:Label ID="lblSystemTemplate" runat="server" Text="System template" meta:resourcekey="lblBCCResource1" AssociatedControlID="chkSystemTemplate" ></asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="chkSystemTemplate" onclick="SEL.EmailTemplates.OnSystemTemplateCheckChanged(this.id)"/></span><span class="inputicon"></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
+            <asp:Label ID="lblAttachment" runat="server" Text="Attachments" meta:resourcekey="lblAttachmentsResource1" AssociatedControlID="txtAttachments"></asp:Label><span class="inputs"><asp:TextBox ID="txtAttachments" Visible="false" runat="server" CssClass="fillspan" meta:resourcekey="txtAttachmentsResource1"></asp:TextBox></span><span class="inputicon"><a href="javascript:SEL.NotificationTemplates.ValidateAndShowAttachmentModal();"><img src="/shared/images/icons/16/plain/add2.png" alt="" id="butAttach" /></a></span><span class="inputvalidatorfield">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
         </div>
-       
-        
+            
     </div>
     <div class="formpanel formpanel_padding" style="max-width: 850px;">
         <div style="float:left; width: 60%;">
@@ -209,7 +210,7 @@
                 <div style="width: 100%; height: 320px; padding: 1px; margin-right:12px;" id="wrapper" runat="server">
                     <cke:CKEditorControl ID="rtBodyText" AutoPostBack="true" runat="server" Width="100%" RemovePlugins="elementspath" ToolTip="Email body."  />
                     <asp:CustomValidator ID="custxtValidator" runat="server" ErrorMessage="Please enter Email body."
-                    Text="*"  ClientValidationFunction="SEL.EmailTemplates.ValidateBodyTextLength" ValidationGroup="vgMain"></asp:CustomValidator>
+                    Text="*"  ClientValidationFunction="SEL.NotificationTemplates.ValidateBodyTextLength" ValidationGroup="vgMain"></asp:CustomValidator>
                 </div>
                 <div class="sectiontitle" style="margin-top: 10px;"  ID="notesHeader" runat="server">Broadcast Message
                     <span class="inputtooltipfield"><img style="margin-right: 0px" id="imgNote" onmouseover="SEL.Tooltip.Show('FC198784-08C7-4A3E-A060-F7CDF1AC418B', 'ex', this);" src="../images/icons/16/plain/tooltip.png" alt="" class="tooltipicon pull-right" /></span>
@@ -218,18 +219,18 @@
                 <div id="noteswrapper" style="width: 100%; height: 320px;" runat="server">
                     <cke:CKEditorControl ID="txtNotes" AutoPostBack="true" runat="server" Height="290px" Width="100%" RemovePlugins="elementspath" ToolTip="Note" />
                     <asp:CustomValidator ID="custxtNoteValidator" runat="server" ErrorMessage="Please enter Broadcast Message."
-                    Text="*"  ClientValidationFunction="SEL.EmailTemplates.ValidateBroadcastMessageLength" ValidationGroup="vgMain"></asp:CustomValidator>
+                    Text="*"  ClientValidationFunction="SEL.NotificationTemplates.ValidateBroadcastMessageLength" ValidationGroup="vgMain"></asp:CustomValidator>
                 </div>            
-            <div class="sectiontitle" style="margin-top: 10px;"  ID="mobileNotificationHeader" runat="server">Mobile Notification Message
+            <div class="sectiontitle" style="margin-top: 10px;"  ID="mobileNotificationHeader" runat="server">Mobile Notification
                 <span class="inputtooltipfield"><img style="margin-right: 0px" id="imgNote" onmouseover="SEL.Tooltip.Show('7e52f777-fee9-495f-8046-f3a565a0dc69', 'ex', this);" src="../images/icons/16/plain/tooltip.png" alt="" class="tooltipicon pull-right" /></span>
             </div>       
             <div id="mobileNotificationWrapper" style="width: 100%" runat="server">
                 <asp:TextBox runat="server" Height="100px" Width="99%" ID="txtMobileNotificationMessage" TextMode="MultiLine"></asp:TextBox>
                 
-                <asp:CustomValidator ID="reqMobileNotificationMessage" runat="server" ErrorMessage="Please enter a mobile notification message."
-                                     Text="*"  ClientValidationFunction="SEL.EmailTemplates.ValidateMobileNotificationMessageIsRequired" ValidationGroup="vgMain"></asp:CustomValidator>
-                <asp:CustomValidator ID="checkMessageLength" runat="server" ErrorMessage="Mobile notification message cannot be more than 400 characters in length."
-                                     Text="*"  ClientValidationFunction="SEL.EmailTemplates.ValidateMobileNotificationMessageLength" ValidationGroup="vgMain"></asp:CustomValidator>
+                <asp:CustomValidator ID="reqMobileNotificationMessage" runat="server" ErrorMessage="Please enter a mobile notification."
+                                     Text="*"  ClientValidationFunction="SEL.NotificationTemplates.ValidateMobileNotificationMessageIsRequired" ValidationGroup="vgMain"></asp:CustomValidator>
+                <asp:CustomValidator ID="checkMessageLength" runat="server" ErrorMessage="Mobile notification cannot be more than 400 characters in length."
+                                     Text="*"  ClientValidationFunction="SEL.NotificationTemplates.ValidateMobileNotificationMessageLength" ValidationGroup="vgMain"></asp:CustomValidator>
             </div>
         </div>
         
@@ -297,9 +298,9 @@
         </div>
 
    <div class="formbuttons" style="margin-top: 76px; clear: both;">
-        <a href="javascript:SEL.EmailTemplates.SaveTemplate(false);" runat="server">
+        <a href="javascript:SEL.NotificationTemplates.SaveTemplate(false);" runat="server">
             <img src="/shared/images/buttons/btn_save.png" alt="" id="cmdSave" /></a>&nbsp;&nbsp;
-        <a href="javascript:SEL.EmailTemplates.Cancel();">
+        <a href="javascript:SEL.NotificationTemplates.Cancel();">
             <img src="/shared/images/buttons/cancel_up.gif" alt="" id="cmdCancel" /></a>
     </div>
     <input type="hidden" id="hdnEmailtemplateId" />

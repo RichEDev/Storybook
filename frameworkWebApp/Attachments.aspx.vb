@@ -235,7 +235,6 @@ Namespace Framework2006
                             attId = Request.QueryString("id")
 
                             If attId <> 0 Then
-                                'att_sent = SMRoutines.SendAttachmentRequest(db, fws, curUser.Employee, attId, att_area.Text, Session("ActiveContract"), Server)
                                 'If att_sent = False Then
                                 lblStatusMsg.Text = "Email Attachment request failed. Contact your " & brandName & " Administrator."
                                 'End If

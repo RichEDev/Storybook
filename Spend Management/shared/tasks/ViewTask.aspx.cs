@@ -622,7 +622,6 @@ namespace Spend_Management
             }
             strHTML.Append("</select>\n");
             
-            //litAttachmentIcon.Text = "<a onmouseover=""window.status='Open the file attachments screen';return true;"" onmouseout=""window.status='Done';"" href=""Attachments.aspx?attarea=" & Trim(AttachmentArea.CONTRACT) & "&ref=" & Trim(Session("ActiveContract")) & """><img alt=""Open the file attachments screen"" src=""./icons/16/plain/paperclip.gif"" /></a>"
             litAttachments.Text = strHTML.ToString();
 			return;
 		}

@@ -101,7 +101,7 @@ namespace SpendManagementApi.Interfaces
 
         cCustomEntities CustomEntities { get; set; }
 
-        cEmailTemplates Emails { get; set; }
+        NotificationTemplates Notifications { get; set; }
 
         cFields Fields { get; set; }
 

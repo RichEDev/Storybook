@@ -43,11 +43,16 @@ Namespace Framework2006
                 hiddenInvID.Text = Str(InvId)
                 InvNumber = Request.QueryString("desc")
                 hiddenDesc.Text = InvNumber
+                Dim contractId As Integer
+                If Not Request.QueryString("contractid") Is Nothing Then
+                    Integer.TryParse(Request.QueryString("contractid"), contractId)
+                    ViewState("ActiveContract") = contractId
+                End If
 
                 If InvId = 0 Then
                     FWDb.DBClose()
                     FWDb = Nothing
-                    Response.Redirect("ContractSummary.aspx?id=" & Session("ActiveContract") & "&tab=" & SummaryTabs.InvoiceDetail, True)
+                    Response.Redirect("ContractSummary.aspx?id=" & ViewState("ActiveContract") & "&tab=" & SummaryTabs.InvoiceDetail, True)
                 End If
 
                 lblTitle.Text = " - " & InvNumber
@@ -77,7 +82,7 @@ Namespace Framework2006
         End Sub
 
         Private Sub cmdClose_Click(ByVal sender As System.Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdClose.Click
-            Response.Redirect("ContractSummary.aspx?id=" & Session("ActiveContract") & "&tab=" & SummaryTabs.InvoiceDetail, True)
+            Response.Redirect("ContractSummary.aspx?id=" & ViewState("ActiveContract") & "&tab=" & SummaryTabs.InvoiceDetail, True)
         End Sub
 
         Private Function GetStatusData(ByVal db As cFWDBConnection, ByVal hasdata As Boolean) As String

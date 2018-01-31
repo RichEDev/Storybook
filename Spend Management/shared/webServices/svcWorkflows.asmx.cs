@@ -269,7 +269,7 @@ namespace Spend_Management
             Guid gWorkflowType = new Guid(workflowType);
             cWorkflows clsWorkflows = new cWorkflows(currentUser);
             WorkFlowStepAction eAction = (WorkFlowStepAction)stepAction;
-            cEmailTemplates clsEmailTemplates;
+            NotificationTemplates notifications;
             List<ListItem> lstEmailTemplates;
             StringBuilder sbReturnString = new StringBuilder();
 
@@ -299,8 +299,8 @@ namespace Spend_Management
                     //sbReturnString.Append("<tr><td class=\"labeltd\">Involvement:</td><td class=\"inputtd\">");
                     //sbReturnString.Append(".!.</td></tr>");
 
-                    clsEmailTemplates = new cEmailTemplates(currentUser);
-                    lstEmailTemplates = clsEmailTemplates.CreateDropDown(gWorkflowType);
+                    notifications = new NotificationTemplates(currentUser);
+                    lstEmailTemplates = notifications.CreateDropDown(gWorkflowType);
 
                     if (lstEmailTemplates.Count > 0)
                     {
@@ -384,8 +384,8 @@ namespace Spend_Management
                     #endregion
                 case WorkFlowStepAction.SendEmail:
                     #region send emails
-                        clsEmailTemplates = new cEmailTemplates(currentUser);
-                        lstEmailTemplates = clsEmailTemplates.CreateDropDown(gWorkflowType);
+                        notifications = new NotificationTemplates(currentUser);
+                        lstEmailTemplates = notifications.CreateDropDown(gWorkflowType);
 
                         if (lstEmailTemplates.Count > 0)
                         {

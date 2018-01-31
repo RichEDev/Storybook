@@ -460,7 +460,12 @@ function saveSubcat()
     var deducthometooffice = 0;
     var homeToOfficeFixedMiles = null;
     var publicTransportRate = null;
-    
+
+    if (!homeToOfficeMileageOptionSelected() && $('#' + chkenablehometooffice).is(':checked')) {
+        SEL.MasterPopup.ShowMasterPopup("Please select a home to office deduction option");
+        return;
+    }
+
     if (document.getElementById(optdeducthometooffice).checked) 
     {
         deducthometooffice = 1;
@@ -497,14 +502,12 @@ function saveSubcat()
     {
         deducthometooffice = 9;
         homeToOfficeFixedMiles = $.trim($("#" + txtDeductFixed).val());
-        if (homeToOfficeFixedMiles.length == 0)
-        {
+        if (homeToOfficeFixedMiles.length == 0) {
             SEL.MasterPopup.ShowMasterPopup('If "Deduct a fixed number of miles" (on General Details > Home to Office Mileage) is selected, then "Number of fixed miles to deduct" must be specified.', 'Message from ' + moduleNameHTML);
             return;
         }
 
         homeToOfficeFixedMiles = parseFloat(homeToOfficeFixedMiles);
-
     }
     else if ($('#' + optRotationalMileage).prop("checked"))
     {
@@ -716,6 +719,22 @@ function saveSubcat()
     SEL.Ajax.Service('/shared/webServices/svcSubCats.asmx/', 'saveSubcat', params, saveSubcatComplete);
 
     //PageMethods.saveSubcat(subcatid, subcat, categoryid, accountcode, description, allowanceamount, addasnet, mileageapp, staffapp, othersapp, attendeesapp, pmilesapp, bmilesapp, tipapp, eventinhomeapp, passengersapp, nopassengersapp, passengernamesapp, splitentertainment, entertainmentid, pdcatid, reimbursable, nonights, hotelapp, comment, attendeesmand, nodirectorsapp, alternateaccountcode, hotelmand, nopersonalguests, noremoteworkers, splitpersonal, splitremote, reasonapp, otherdetails, personalid, remoteid, noroomsapp, vatnumber, vatnumbermand, fromapp, toapp, companyapp, shortsubcat, receipt, calculation, arrCountries, arrAllowances, udfs, enablehometooffice, deducthometooffice, mileageCategory, isRelocationMileage, reimbursableSubcatID, allowHeavyBulkyMileage, userdefined, homeToOfficeAsZero, homeToOfficeFixedMiles, startDateString, endDateString, shouldValidate, validatorNotes, saveSubcatComplete);
+}
+
+function homeToOfficeMileageOptionSelected() {
+    if (document.getElementById(optdeducthometooffice).checked ||
+        document.getElementById(optflaghometooffice).checked ||
+        document.getElementById(optdeducthometoofficeonce).checked ||
+        document.getElementById(optdeducthometoofficeall).checked ||
+        document.getElementById(optdeducthometoofficestart).checked ||
+        document.getElementById(optdeductfirstorlasthome).checked ||
+        document.getElementById(optdeducthometoofficedistancefull).checked ||
+        document.getElementById(optdeductfullhometoofficestart).checked ||
+        $("#" + optDeductFixed).prop("checked") && $('#' + chkenablehometooffice).is(':checked') ||
+        $('#' + optRotationalMileage).prop("checked")) {
+        return true;
+    }
+    return false;
 }
 
 function saveSubcatFailure(data) {

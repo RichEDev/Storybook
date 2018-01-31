@@ -3,7 +3,7 @@
 namespace SpendManagementLibrary
 {
     [Serializable]
-    public class cEmailNotification
+    public class Notification
     {
         private int _emailNotification;
         private string _name;
@@ -13,7 +13,7 @@ namespace SpendManagementLibrary
         private CustomerType _customerType;
         private EmailNotificationType _emailNotificationType;
 
-        public cEmailNotification(int emailNotificationId, string name, string description, int emailTemplateId, bool enabled, CustomerType customerType, EmailNotificationType emailNotificationType)
+        public Notification(int emailNotificationId, string name, string description, int emailTemplateId, bool enabled, CustomerType customerType, EmailNotificationType emailNotificationType)
         {
             _emailNotification = emailNotificationId;
             _name = name;

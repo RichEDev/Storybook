@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace SpendManagementLibrary.Definitions
+﻿namespace SpendManagementLibrary.Definitions
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// The autocomplete field with its values
     /// </summary>

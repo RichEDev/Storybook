@@ -1212,7 +1212,7 @@ namespace Spend_Management
 
             if (reqclaim.submitted == true && reqitem.returned == true) //add delete comment
             {
-                var email = new cEmailTemplates(user);
+                var notifications = new NotificationTemplates(user);
 
                 int[] recipients = new int[1];
 
@@ -1221,7 +1221,7 @@ namespace Spend_Management
                 addDeleteComment(reqclaim, reqitem);
                 updateReturned(reqclaim, reqitem, user);
 
-                email.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToNotifyAdministratorOfAnyReturnedExpensesBeingCorrected), reqclaim.employeeid, recipients, reqitem.expenseid);
+                notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToNotifyAdministratorOfAnyReturnedExpensesBeingCorrected), reqclaim.employeeid, recipients, reqitem.expenseid);
             }
 
             if (approver) //do we need to send email to claimant?
@@ -1231,7 +1231,7 @@ namespace Spend_Management
                 expenseids[0] = reqitem.expenseid;
                 recipient[0] = employeeid;
 
-                var email = new cEmailTemplates(user);
+                var notifications = new NotificationTemplates(user);
                 var checkerid = 0;
 
                 if (reqclaim.splitApprovalStage && reqitem.itemCheckerId.HasValue)
@@ -1243,7 +1243,7 @@ namespace Spend_Management
                     checkerid = reqclaim.checkerid;
                 }
 
-                email.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenAnItemHasBeenDeleted), checkerid, recipient, reqitem.expenseid);
+                notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenAnItemHasBeenDeleted), checkerid, recipient, reqitem.expenseid);
             }
 
             if (reqitem.floatid != 0)
@@ -1399,8 +1399,8 @@ namespace Spend_Management
                 recipients[0] = reqclaim.checkerid;
             }
 
-            var emailTemplates = new cEmailTemplates(userid);
-            emailTemplates.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToNotifyAdministratorOfAnyReturnedExpensesBeingCorrected), reqclaim.employeeid, recipients, reqitem.expenseid);
+            var notifications = new NotificationTemplates(userid);
+            notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToNotifyAdministratorOfAnyReturnedExpensesBeingCorrected), reqclaim.employeeid, recipients, reqitem.expenseid);
 
             this.UpdateApproverLastRemindedDateWhenApproved(reqclaim.claimid, recipients[0]);
         }
@@ -2589,7 +2589,7 @@ namespace Spend_Management
         {
             cEmployeeCars clsEmployeeCars = new cEmployeeCars(accountid, employeeid);
 
-            cCar[] cars = clsEmployeeCars.GetCarArray(true);
+            var cars = this.GetEmployeesActiveCarsWithAFuelCard(clsEmployeeCars);
 
             cSubcats clsSubcats = new cSubcats(accountid);
             cExpenseItems clsExpItems = new cExpenseItems(accountid);
@@ -2988,13 +2988,13 @@ namespace Spend_Management
 
             if (claim.AmountPayable != 0)
             {
-                var email = new cEmailTemplates(this.ClaimUser(employeeId));
+                var notifications = new NotificationTemplates(this.ClaimUser(employeeId));
 
                 try
                 {
                     var claims = new cClaims(claim.accountid);
                     var expenseItemsIds = claims.getExpenseItemsFromDB(claim.claimid).Keys.ToList();
-                    email.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToNotifyAUserTheirExpensesHaveBeenPaid), employeeId, new int[] { claim.employeeid }, expenseItemsIds);
+                    notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToNotifyAUserTheirExpensesHaveBeenPaid), employeeId, new int[] { claim.employeeid }, expenseItemsIds);
                 }
                 catch (Exception ex)
                 {
@@ -3231,10 +3231,10 @@ namespace Spend_Management
             nextcheckerid[0] = recieverId;
             if (reqStage.sendmail)
             {
-                var email = new cEmailTemplates(this.ClaimUser(senderId));
+                var notifications = new NotificationTemplates(this.ClaimUser(senderId));
                 var claims = new cClaims(claim.accountid);
                 var expenseItemsIds = claims.getExpenseItemsFromDB(claim.claimid).Keys.ToList();
-                email.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorAfterASetOfExpensesHaveBeenSubmitted), (int)senderId, nextcheckerid, expenseItemsIds);
+                notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorAfterASetOfExpensesHaveBeenSubmitted), (int)senderId, nextcheckerid, expenseItemsIds);
             }
         }
         /// <summary>
@@ -3621,7 +3621,7 @@ namespace Spend_Management
                 {
                     commenter = (int)delegateid;
                 }
-                var email = new cEmailTemplates(this.ClaimUser(claim.employeeid));
+                var email = new NotificationTemplates(this.ClaimUser(claim.employeeid));
                 var claims = new cClaims(claim.accountid);
                 var expenseItemsIds = claims.getExpenseItemsFromDB(claim.claimid).Keys.ToList();
                 if (approver == true)
@@ -3681,11 +3681,11 @@ namespace Spend_Management
                     int businessmilescount = connection.ExecuteScalar<int>(strsql);
                     if (businessmilescount != 0)
                     {
-                        cCar[] cars = clsEmployeeCars.GetCarArray(true);
-                        for (int i = 0; i < cars.GetLength(0); i++)
+                        var cars = this.GetEmployeesActiveCarsWithAFuelCard(clsEmployeeCars);
+                        foreach (cCar car in cars)
                         {
-                            cOdometerReading reading = cars[i].getLastOdometerReading();
-                            clsemployees.deleteOdometerReading(employee.EmployeeID, cars[i].carid, reading.odometerid);
+                            cOdometerReading reading = car.getLastOdometerReading();
+                            clsemployees.deleteOdometerReading(employee.EmployeeID, car.carid, reading.odometerid);
                         }
 
                         // undo the mileage
@@ -4023,16 +4023,12 @@ namespace Spend_Management
         public void deleteLastOdometerReading(Employee reqemp)
         {
             cEmployeeCars clsEmployeeCars = new cEmployeeCars(accountid, reqemp.EmployeeID);
+            var cars = this.GetEmployeesActiveCarsWithAFuelCard(clsEmployeeCars);
             cEmployees clsemployees = new cEmployees(accountid);
-            cCar[] odocars = clsEmployeeCars.GetCarArray(true);
-            for (int i = 0; i < odocars.GetLength(0); i++)
+            foreach (cCar car in cars)
             {
-                cOdometerReading odoreading = odocars[i].getLastOdometerReading();
-
-                if (odoreading != null)
-                {
-                    clsemployees.deleteOdometerReading(reqemp.EmployeeID, odocars[i].carid, odoreading.odometerid);
-                }
+                cOdometerReading reading = car.getLastOdometerReading();
+                clsemployees.deleteOdometerReading(reqemp.EmployeeID, car.carid, reading.odometerid);
             }
         }
 
@@ -4070,8 +4066,8 @@ namespace Spend_Management
 
             changeStatus(claim, ClaimStatus.ItemReturnedAwaitingEmployee, currentUserId);
 
-            var email = new cEmailTemplates(this.ClaimUser(currentUserId));
-            email.SendMessage((Guid)(isFromValidation ? SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenAnExpenseFailsReceiptValidation) : SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAUserIfAnExpenseItemGetsReturned)), currentUserId, new[] { claim.employeeid }, items);
+            var notifications = new NotificationTemplates(this.ClaimUser(currentUserId));
+            notifications.SendMessage((Guid)(isFromValidation ? SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenAnExpenseFailsReceiptValidation) : SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAUserIfAnExpenseItemGetsReturned)), currentUserId, new[] { claim.employeeid }, items);
             DeleteClaimApproverDetailExpenseItems(items, currentUserId);
            
             return true;
@@ -4139,13 +4135,13 @@ namespace Spend_Management
             else
             {
                 // let the approver know...
-                var email = new cEmailTemplates(user);
+                var notifications = new NotificationTemplates(user);
                 int[] approverIds = new int[] { claim.checkerid };
                 if (claim.checkerid == 0)
                 {
                     approverIds = this.GetApproverIds(claim, false);
                 }
-                email.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToNotifyAdministratorOfAnyReturnedExpensesBeingCorrected), user.EmployeeID, approverIds, item.expenseid);
+                notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToNotifyAdministratorOfAnyReturnedExpensesBeingCorrected), user.EmployeeID, approverIds, item.expenseid);
                 this.UpdateApproverLastRemindedDateWhenApproved(claim.claimid, claim.checkerid);
             }
         }
@@ -6684,13 +6680,13 @@ namespace Spend_Management
 
                 var approverAccountId = 0;
                 var msgFrom = string.Empty;
-                cEmailTemplates emails = null;
+                NotificationTemplates emails = null;
                 approverEmailDetails = approverEmailDetails.OrderBy(o => o.AccountId).ToList();
                 foreach (var approver in approverEmailDetails)
                 {
                     if (approverAccountId == 0 || approverAccountId != approver.AccountId)
                     {
-                        emails = new cEmailTemplates(approver.AccountId, approver.EmployeeId, string.Empty, 0, Modules.expenses);
+                        emails = new NotificationTemplates(approver.AccountId, approver.EmployeeId, string.Empty, 0, Modules.expenses);
                         var clsSubAccounts = new cAccountSubAccounts(approver.AccountId);
                         var reqProperties = clsSubAccounts.getFirstSubAccount().SubAccountProperties.Clone();
                         msgFrom = reqProperties.SourceAddress == 1 ? reqProperties.EmailAdministrator : "admin@sel-expenses.com";
@@ -6733,20 +6729,20 @@ namespace Spend_Management
 
                 var claimantAccountId = 0;
                 var msgFrom = string.Empty;
-                cEmailTemplates emails = null;
+                NotificationTemplates notifications = null;
                 claimantEmailDetails = claimantEmailDetails.OrderBy(o => o.AccountId).ToList();
                 foreach (var claimant in claimantEmailDetails)
                 {
                     if (claimantAccountId == 0 || claimantAccountId != claimant.AccountId)
                     {
-                        emails = new cEmailTemplates(claimant.AccountId, claimant.EmployeeId, string.Empty, 0, Modules.expenses);
+                        notifications = new NotificationTemplates(claimant.AccountId, claimant.EmployeeId, string.Empty, 0, Modules.expenses);
                         var clsSubAccounts = new cAccountSubAccounts(claimant.AccountId);
                         var reqProperties = clsSubAccounts.getFirstSubAccount().SubAccountProperties.Clone();
                         msgFrom = reqProperties.SourceAddress == 1 ? reqProperties.EmailAdministrator : "admin@sel-expenses.com";
                         claimantAccountId = claimant.AccountId;
                     }
 
-                    emails?.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantToRemindThemOfUnsubmittedClaims), 0, new[] { claimant.EmployeeId }, defaultSender: msgFrom);
+                    notifications?.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantToRemindThemOfUnsubmittedClaims), 0, new[] { claimant.EmployeeId }, defaultSender: msgFrom);
                 }
             }
             catch (Exception ex)
@@ -6979,6 +6975,16 @@ namespace Spend_Management
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Gets all the employees cars with a fuel cards
+        /// </summary>
+        /// <param name="employeeCars"><see cref="cEmployeeCars"/></param>
+        /// <returns>A list of <see cref="cCar"/></returns>
+        private List<cCar> GetEmployeesActiveCarsWithAFuelCard(cEmployeeCars employeeCars)
+        {
+            return employeeCars.GetActiveCars().Where(e => e.fuelcard == true).ToList();
         }
     }
 }

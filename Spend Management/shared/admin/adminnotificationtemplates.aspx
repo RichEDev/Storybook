@@ -10,10 +10,10 @@
 
     <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
         <Services>
-            <asp:ServiceReference InlineScript="true" Path="~/shared/webservices/svcEmailTemplates.asmx" />
+            <asp:ServiceReference InlineScript="true" Path="~/shared/webservices/svcNotificationTemplates.asmx" />
         </Services>
         <Scripts>
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.emailtemplates.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.notificationtemplates.js?date=20180124" />
         </Scripts>
         
     </asp:ScriptManagerProxy>

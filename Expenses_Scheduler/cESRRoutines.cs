@@ -46,7 +46,7 @@ namespace Expenses_Scheduler
 
                 cEmployees emps = new cEmployees(curAccount.accountid);
                 cClaims clsclaims = new cClaims(curAccount.accountid);
-                cEmailNotifications notifications = new cEmailNotifications(curAccount.accountid);
+                Notifications notifications = new Notifications(curAccount.accountid);
                 cTasks tasks = new cTasks(curAccount.accountid, subaccount.SubAccountID);
 
                 foreach (KeyValuePair<int, DateTime?> kvp in emps.getPendingArchives(gracePeriod))
@@ -210,7 +210,7 @@ namespace Expenses_Scheduler
 
             if (subaccount.SubAccountProperties.AutoActivateType != AutoActivateType.DoNotActivate)
             {
-                cEmailNotifications notifications = new cEmailNotifications(curAccount.accountid);
+                Notifications notifications = new Notifications(curAccount.accountid);
                 cEmployees emps = new cEmployees(curAccount.accountid);
                 cTasks tasks = new cTasks(curAccount.accountid, subaccount.SubAccountID);
 
@@ -285,7 +285,7 @@ namespace Expenses_Scheduler
 
             int assignmentArchiveFailCount = 0;
 
-            cEmailNotifications notifications = new cEmailNotifications(curAccount.accountid);
+            Notifications notifications = new Notifications(curAccount.accountid);
             cTasks tasks = new cTasks(curAccount.accountid, subaccs.getFirstSubAccount().SubAccountID);
 
             //Dictionary<int, int> itemsToArchive = cESRAssignment.getPendingArchives(curAccount.accountid, grace_period, cAccounts.getConnectionString(curAccount.accountid));

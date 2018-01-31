@@ -107,7 +107,7 @@ namespace SpendManagementApi.Common
 
         private cCustomEntities _customEntities;
 
-        private cEmailTemplates _emails;
+        private NotificationTemplates _notifications;
 
         private Organisations _organisations;
 
@@ -683,13 +683,13 @@ namespace SpendManagementApi.Common
             }
         }
 
-        public cEmailTemplates Emails
+        public NotificationTemplates Notifications
         {
             get
             {
                 return
-                    (_emails =
-                         new cEmailTemplates(
+                    (_notifications =
+                         new NotificationTemplates(
                              AccountId,
                              CurrentUser.EmployeeID,
                              string.Empty,
@@ -698,7 +698,7 @@ namespace SpendManagementApi.Common
             }
             set
             {
-                _emails = value;
+                _notifications = value;
             }
         }
 
