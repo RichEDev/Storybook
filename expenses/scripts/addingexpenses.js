@@ -84,6 +84,22 @@ Sys.Application.add_load(function (application, applicationEventArguments) {
             OrganisationSearches[searchName] = AutoCompleteSearches.New("Organisation", o.id, OrganisationSearchModal, OrganisationSearchPanel);
         }
     });
+
+    // attach cost code autocompletes
+    $(".costcode-autocomplete").each(function (i, o) {
+        SEL.AutoComplete.Bind(o.id, 15,
+            '7bdaf84e-a373-4008-83d1-9e18aaa47f8e',
+            '4d0f2409-0705-4f0f-9824-42057b25aebe',
+            '4d0f2409-0705-4f0f-9824-42057b25aebe, ac87c4c4-9107-4555-b2a3-27109b3ebfbb', null,
+            '{ 0: { "FieldID": "4B7873D6-8EDC-44D4-94F7-B8ABCBD87692", "ConditionType": 1, "ValueOne": "0", "ValueTwo": "", "Order": 0, "JoinViaID": 0 } }',
+            500, null, "False", null, null, SEL.Expenses.Validate.Organisation.SaveIfNotExists);
+
+        var searchName = $(o).data("search");
+        if (typeof searchName === "string" && searchName !== "") {
+            CostCodeSearches[searchName] = AutoCompleteSearches.New("CostCode", o.id, CostCodeSearchModal, CostCodeSearchPanel);
+        }
+    });
+
 });
 
 function MileageDetailsUpdated(controlUpdated) {

@@ -1566,6 +1566,9 @@ public partial class aeexpense : System.Web.UI.Page
 
         if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet)
         {
+
+ 
+
             if (cellCount == 0)
             {
                 row = new TableRow();
@@ -1575,28 +1578,61 @@ public partial class aeexpense : System.Web.UI.Page
             cell.CssClass = "labeltd";
             cell.Text = clsmisc.GetGeneralFieldByCode("costcode").description + ":";
             row.Cells.Add(cell);
+
+            //create searchbox 
+            //apply filter on select 
+
             cell = new TableCell();
             cell.CssClass = "inputtd";
-            ddlst = new DropDownList();
-            ddlst.ID = "cmbgencostcode";
 
-            var filterAttribute = this.ActionContext.FilterRules.FilterDropdown(FilterType.Costcode, "", ddlst.ID);
-            if (!filterAttribute.IsNullOrEmpty())
-            {
-                ddlst.Attributes.Add(filterAttribute[0], filterAttribute[1]);
-            }
+             txtbox = new TextBox
+                              {
+                                  ID = "txtCostCodeAutoComplete",
+                                  CssClass = "costcode-autocomplete"
+                              };
 
-            ddlst.Items.AddRange(this.ActionContext.CostCodes.CreateDropDown(clsproperties.usecostcodedesc).ToArray());
-            ddlst.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
+            txtbox.Attributes.Add("data-search", "General");
 
-            if (breakdown.Count > 0 && ddlst.Items.FindByValue(breakdown[0].costcodeid.ToString()) != null)
-            {
-                ddlst.Items.FindByValue(breakdown[0].costcodeid.ToString()).Selected = true;
-            }
+            TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode_ID" };
+            hiddenIdentifier.Style.Add(HtmlTextWriterStyle.Display, "none");
 
-            cell.Controls.Add(ddlst);
+            cell.Controls.Add(txtbox);
+            cell.Controls.Add(hiddenIdentifier);
+            cell.Controls.Add(new Literal { Text = " " });
 
+            img = new Image
+                      {
+                          ImageUrl = GlobalVariables.StaticContentLibrary + "/icons/16/new-icons/find.png",
+                          ID = "txtCostCodeSearchIcon",
+                          AlternateText = "Search " +  clsmisc.GetGeneralFieldByCode("costcode").description,
+                          CssClass = "btn"
+                      };
+
+            img.Attributes.Add("onclick", "CostCodeSearch = CostCodeSearches[\"General\"];CostCodeSearches[\"General\"].Search();");
+
+            cell.Controls.Add(img);
             row.Cells.Add(cell);
+
+         //   ddlst = new DropDownList();
+           // ddlst.ID = "cmbgencostcode";
+
+            //var filterAttribute = this.ActionContext.FilterRules.FilterDropdown(FilterType.Costcode, "", ddlst.ID);
+            //if (!filterAttribute.IsNullOrEmpty())
+            //{
+            //    ddlst.Attributes.Add(filterAttribute[0], filterAttribute[1]);
+            //}
+
+            //ddlst.Items.AddRange(this.ActionContext.CostCodes.CreateDropDown(clsproperties.usecostcodedesc).ToArray());
+            //ddlst.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
+
+            //if (breakdown.Count > 0 && ddlst.Items.FindByValue(breakdown[0].costcodeid.ToString()) != null)
+            //{
+            //    ddlst.Items.FindByValue(breakdown[0].costcodeid.ToString()).Selected = true;
+            //}
+
+            //cell.Controls.Add(ddlst);
+
+            //row.Cells.Add(cell);
 
             cell = new TableCell();
             cell.Text = "&nbsp;";
@@ -1820,6 +1856,22 @@ public partial class aeexpense : System.Web.UI.Page
         tbl.Rows.Add(row);
 
         #endregion mobile device information panel
+    }
+
+    private void GenerateCostCodeSearch()
+    {
+      var  txtbox = new TextBox
+                     {
+                         ID = "txtCostCodeAutoComplete",
+                         CssClass = "costcode-autocomplete"
+                     };
+
+        txtbox.Attributes.Add("data-search", "General");
+
+        TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode_ID" };
+        hiddenIdentifier.Style.Add(HtmlTextWriterStyle.Display, "none");
+
+
     }
 
     /// <summary>

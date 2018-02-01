@@ -131,6 +131,11 @@
         var OrganisationSearchModal = '<% = mdlOrganisationSearch.ClientID %>';
         var OrganisationSearchPanel = '<% = pnlOrganisationSearch.ClientID %>';
 
+        var CostCodeSearches = {};
+        var CostCodeSearch = null;
+        var CostCodeSearchModal = '<% = mdlCostCodeSearch.ClientID %>';
+        var CostCodeSearchPanel = '<% = pnlCostCodeSearch.ClientID %>';
+
         $(document).ready(function() { 
             
             (function(s) {
@@ -328,7 +333,20 @@
     </asp:Panel>
     <cc1:ModalPopupExtender runat="server" ID="mdlOrganisationSearch" BackgroundCssClass="modalBackground" TargetControlID="lnkOrganisationSearch" PopupControlID="pnlOrganisationSearch" CancelControlID="btnOrganisationSearchCancel" />
     <asp:LinkButton runat="server" ID="lnkOrganisationSearch" Style="display: none;"></asp:LinkButton>
+   
+    <asp:Panel runat="server" ID="pnlCostCodeSearch" CssClass="modalpanel formpanel" Style="display: none;">
+        <div class="sectiontitle">
+            <asp:Label runat="server" ID="lblCostCodeSearchTitle">Cost Code</asp:Label>
+            Search
+        </div>
+        <div class="searchgrid"></div>
+        <div class="formbuttons">
+            <helpers:CSSButton runat="server" ID="btnCostCodeSearchCancel" Text="cancel" OnClientClick="return false;" UseSubmitBehavior="False" />
+        </div>
+    </asp:Panel>
 
+    <cc1:ModalPopupExtender runat="server" ID="mdlCostCodeSearch" BackgroundCssClass="modalBackground" TargetControlID="lnkCostCodeSearch" PopupControlID="pnlCostCodeSearch" CancelControlID="btnCostCodeSearchCancel" />
+    <asp:LinkButton runat="server" ID="lnkCostCodeSearch" Style="display: none;"></asp:LinkButton>
 
 
     <div id="flagSummary">

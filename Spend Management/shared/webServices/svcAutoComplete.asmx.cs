@@ -971,6 +971,16 @@
         }
 
         /// <summary>
+        /// Organisation search grid, should be refactored when a combined autocomplete/select control is made
+        /// </summary>
+        /// <returns></returns>
+        [WebMethod(EnableSession = true)]
+        public string[] GetCostCodeSearchGrid()
+        {
+            return this.GetAutoCompleteSearchGrid(cMisc.GetCurrentUser(), "gridOrganisationSearch");
+        }
+
+        /// <summary>
         /// Department search grid, should be refactored when a combined autocomplete/select control is made
         /// </summary>
         /// <returns></returns>

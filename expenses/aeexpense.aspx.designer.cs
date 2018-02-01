@@ -55,7 +55,7 @@ public partial class aeexpense {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.UpdateProgress UpdateProgress1;
-
+    
     /// <summary>
     /// usrTooltip control.
     /// </summary>
@@ -64,7 +64,7 @@ public partial class aeexpense {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::Spend_Management.tooltip usrTooltip;
-
+    
     /// <summary>
     /// vgAeExpenses control.
     /// </summary>
@@ -217,7 +217,7 @@ public partial class aeexpense {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.Panel pnlAddcar;
-
+    
     /// <summary>
     /// addCar control.
     /// </summary>
@@ -226,7 +226,7 @@ public partial class aeexpense {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::Spend_Management.aeCars addCar;
-
+    
     /// <summary>
     /// lnkAddCar control.
     /// </summary>
@@ -325,7 +325,7 @@ public partial class aeexpense {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.HyperLink lnkProcessingAdd;
-
+    
     /// <summary>
     /// addressDetailsPopup control.
     /// </summary>
@@ -334,7 +334,7 @@ public partial class aeexpense {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::Spend_Management.addressDetailsPopup addressDetailsPopup;
-
+    
     /// <summary>
     /// mapContainer control.
     /// </summary>
@@ -415,6 +415,51 @@ public partial class aeexpense {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.LinkButton lnkOrganisationSearch;
+    
+    /// <summary>
+    /// pnlCostCodeSearch control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Panel pnlCostCodeSearch;
+    
+    /// <summary>
+    /// lblCostCodeSearchTitle control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Label lblCostCodeSearchTitle;
+    
+    /// <summary>
+    /// btnCostCodeSearchCancel control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::SpendManagementHelpers.CSSButton btnCostCodeSearchCancel;
+    
+    /// <summary>
+    /// mdlCostCodeSearch control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::AjaxControlToolkit.ModalPopupExtender mdlCostCodeSearch;
+    
+    /// <summary>
+    /// lnkCostCodeSearch control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.LinkButton lnkCostCodeSearch;
     
     /// <summary>
     /// litclear control.
