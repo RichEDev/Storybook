@@ -52,7 +52,7 @@ namespace SpendManagementLibrary.Claims
         /// <returns></returns>
         private IEnumerable<ApproverClaim> GetAllPendingClaims(int approverId, int accountId)
         {
-            const string Sql = "SELECT stage, claimId, empname, name, total, datesubmitted, currencySymbol FROM checkandpay WHERE checkandpay.STATUS <> 4 AND checkerid = @approverId OR(itemCheckerId = @approverId AND(splitApprovalStage = 1 AND CheckerItemsUnapproved = 0 AND ItemsApproved != ClaimItemsCount))";
+            const string Sql = "SELECT stage, claimId, empname, name, total, datesubmitted, currencySymbol FROM checkandpay WHERE checkandpay.STATUS <> 4 AND checkerid = @approverId OR(itemCheckerId = @approverId AND(ItemsApproved = ClaimItemsCount AND CheckerItemsApproved = 1)) OR(itemCheckerId = @approverId AND(ItemsApproved != ClaimItemsCount AND CheckerItemsUnapproved = 1))";
             using (IDBConnection claimsData = new DatabaseConnection(cAccounts.getConnectionString(accountId)))
             {
                 claimsData.AddWithValue("@approverId", approverId);
