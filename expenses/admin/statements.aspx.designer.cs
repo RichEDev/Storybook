@@ -13,13 +13,22 @@ namespace expenses.admin {
     public partial class statements {
         
         /// <summary>
-        /// gridstatements control.
+        /// litgrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Infragistics.WebUI.UltraWebGrid.UltraWebGrid gridstatements;
+        protected global::System.Web.UI.WebControls.Literal litgrid;
+        
+        /// <summary>
+        /// cmdClose control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton cmdClose;
         
         /// <summary>
         /// Master property.

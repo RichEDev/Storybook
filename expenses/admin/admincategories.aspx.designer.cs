@@ -22,22 +22,13 @@ namespace expenses {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// litgrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
-        /// <summary>
-        /// gridcategories control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Infragistics.WebUI.UltraWebGrid.UltraWebGrid gridcategories;
+        protected global::System.Web.UI.WebControls.Literal litgrid;
         
         /// <summary>
         /// cmdClose control.
