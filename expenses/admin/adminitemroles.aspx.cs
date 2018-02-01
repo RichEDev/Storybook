@@ -1,12 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Services;
-using System.Web.UI.WebControls;
-
-using Infragistics.WebUI.UltraWebGrid;
 
 using SpendManagementLibrary;
-using SpendManagementLibrary.Employees;
 
 using Spend_Management;
 
@@ -16,7 +13,6 @@ public partial class admin_adminitemroles : System.Web.UI.Page
     {
         if (IsPostBack == false)
         {
-            
             Title = "Item Roles";
             Master.title = Title;
             Master.helpid = 1100;
@@ -24,7 +20,31 @@ public partial class admin_adminitemroles : System.Web.UI.Page
             user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ItemRoles, true, true);
             ViewState["accountid"] = user.AccountID;
             ViewState["employeeid"] = user.EmployeeID;
+
+            string[] gridData = createGrid(user.AccountID, user.EmployeeID);
+            litgrid.Text = gridData[1];
+
+            // set the sel.grid javascript variables
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "ItemRolesGridVars", cGridNew.generateJS_init("ItemRolesGridVars", new List<string>() { gridData[0] }, user.CurrentActiveModule), true);
         }
+    }
+
+    private string[] createGrid(int accountid, int employeeid)
+    {
+        cTables clstables = new cTables(accountid);
+        cFields clsfields = new cFields(accountid);
+        List<cNewGridColumn> columns = new List<cNewGridColumn>();
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("F3016E05-1832-49D1-9D33-79ED893B4366"))));
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("54825039-9125-4705-B2D4-EB340D1D30DE"))));
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("DCC4C3E7-1ED8-40B9-94BC-F5C52897FD86"))));
+        cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridItemRoles", clstables.GetTableByID(new Guid("DB7D42FD-E1FA-4A42-84B4-E8B95C751BDA")), columns);
+        clsgrid.getColumnByName("itemroleid").hidden = true;
+        clsgrid.KeyField = "itemroleid";
+        clsgrid.enabledeleting = true;
+        clsgrid.deletelink = "javascript:deleteRole({itemroleid});";
+        clsgrid.enableupdating = true;
+        clsgrid.editlink = "aeitemrole.aspx?action=2&itemroleid={itemroleid}";
+        return clsgrid.generateGrid();
     }
 
     [WebMethod(EnableSession = true)]
@@ -33,62 +53,6 @@ public partial class admin_adminitemroles : System.Web.UI.Page
         cItemRoles clsroles = new cItemRoles(accountid);
         return clsroles.deleteRole(itemroleid);
     }
-
-    protected override void OnInit(EventArgs e)
-    {
-        base.OnInit(e);
-        gridroles.InitializeDataSource += new Infragistics.WebUI.UltraWebGrid.InitializeDataSourceEventHandler(gridroles_InitializeDataSource);
-    }
-
-    void gridroles_InitializeDataSource(object sender, Infragistics.WebUI.UltraWebGrid.UltraGridEventArgs e)
-    {
-        cItemRoles clsitemroles = new cItemRoles((int)ViewState["accountid"]);
-        gridroles.DataSource = clsitemroles.getGrid();
-    }
-    protected void gridroles_InitializeLayout(object sender, Infragistics.WebUI.UltraWebGrid.LayoutEventArgs e)
-    {
-        #region Sorting
-        cEmployees clsemployees = new cEmployees((int)ViewState["accountid"]);
-        Employee reqemp = clsemployees.GetEmployeeById((int)ViewState["employeeid"]);
-        cGridSort sortorder = reqemp.GetGridSortOrders().GetBy(Grid.ItemRoles);
-        if (sortorder != null)
-        {
-            if (e.Layout.Bands[0].SortedColumns.Count == 0)
-            {
-                if (e.Layout.Bands[0].Columns.FromKey(sortorder.columnname) != null)
-                {
-                    e.Layout.Bands[0].Columns.FromKey(sortorder.columnname).SortIndicator = (SortIndicator)sortorder.sortorder;
-                    e.Layout.Bands[0].SortedColumns.Add(sortorder.columnname);
-                }
-            }
-        }
-        #endregion
-        e.Layout.Bands[0].Columns.FromKey("itemroleid").Hidden = true;
-        e.Layout.Bands[0].Columns.FromKey("rolename").Header.Caption = "Role Name";
-        e.Layout.Bands[0].Columns.FromKey("description").Header.Caption = "Description";
-        if (e.Layout.Bands[0].Columns.FromKey("edit") == null)
-        {
-            e.Layout.Bands[0].Columns.Insert(0, new Infragistics.WebUI.UltraWebGrid.UltraGridColumn("delete", "<img alt=\"Delete\" src=\"../icons/delete2_blue.gif\">", Infragistics.WebUI.UltraWebGrid.ColumnType.HyperLink, ""));
-            e.Layout.Bands[0].Columns.FromKey("delete").Width = Unit.Pixel(25);
-            e.Layout.Bands[0].Columns.Insert(0, new Infragistics.WebUI.UltraWebGrid.UltraGridColumn("edit", "<img alt=\"Edit\" src=\"../icons/edit_blue.gif\">", Infragistics.WebUI.UltraWebGrid.ColumnType.HyperLink, ""));
-            e.Layout.Bands[0].Columns.FromKey("edit").Width = Unit.Pixel(25);
-        }
-    }
-
-    protected void gridroles_InitializeRow(object sender, Infragistics.WebUI.UltraWebGrid.RowEventArgs e)
-    {
-        e.Row.Cells.FromKey("edit").Value = "<a href=\"aeitemrole.aspx?action=2&itemroleid=" + e.Row.Cells.FromKey("itemroleid").Value + "\"><img alt=\"Edit\" src=\"../icons/edit.gif\"></a>";
-        e.Row.Cells.FromKey("Delete").Value = "<a href=\"javascript:deleteRole(" + e.Row.Cells.FromKey("itemroleid").Value + ");\"><img alt=\"Delete\" src=\"../icons/delete2.gif\"></a>";
-    }
-
-    protected void gridroles_SortColumn(object sender, Infragistics.WebUI.UltraWebGrid.SortColumnEventArgs e)
-    {
-        UltraWebGrid grid = (UltraWebGrid)sender;
-        byte direction = (byte)grid.Columns[e.ColumnNo].SortIndicator;
-        CurrentUser currentUser = cMisc.GetCurrentUser();
-        currentUser.Employee.GetGridSortOrders().Add(Grid.ItemRoles, grid.Columns[e.ColumnNo].Key, direction);
-    }
-
 
     /// <summary>
     /// Close button event function
