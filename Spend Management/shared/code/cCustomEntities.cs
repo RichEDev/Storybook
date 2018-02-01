@@ -5081,7 +5081,7 @@ namespace Spend_Management
                     fileUploader.Mandatory = this.GetMandatoryValueOfAnAttribute(field);
                     fileUploader.IncludeImageLibrary = ((cAttachmentAttribute)field.attribute).IncludeImageLibrary;
                     fileUploader.ValidationControlGroup = validationGroup;
-                    fileUploader.Name = field.attribute.displayname;
+                    fileUploader.Name = string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText;
                     fileUploader.ImageLibraryModalPopupExtenderId = ImageLibraryModalPopupExtenderId;
                     fileUploader.AttributeId = field.attribute.attributeid.ToString();
                     ph.Controls.Add(fileUploader);
@@ -5106,7 +5106,7 @@ namespace Spend_Management
             {
                 case FieldType.TickBox:
                 case FieldType.List:
-                    val = new CompareValidator { ID = "req" + field.attribute.attributeid, ControlToValidate = "cmb" + field.attribute.attributeid, Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic, ErrorMessage = ValidatorMessages.MandatoryDropdown(field.attribute.displayname) };
+                    val = new CompareValidator { ID = "req" + field.attribute.attributeid, ControlToValidate = "cmb" + field.attribute.attributeid, Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic, ErrorMessage = ValidatorMessages.MandatoryDropdown(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText) };
 
                     ((CompareValidator)val).Type = ValidationDataType.Integer;
                     ((CompareValidator)val).ValueToCompare = "-1";
@@ -5119,7 +5119,7 @@ namespace Spend_Management
                 case FieldType.Attachment:
                     break;
                 default:
-                    val = new RequiredFieldValidator { ID = "req" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic, ErrorMessage = ValidatorMessages.MandatoryDropdown(field.attribute.displayname) };
+                    val = new RequiredFieldValidator { ID = "req" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic, ErrorMessage = ValidatorMessages.MandatoryDropdown(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText) };
 
                     if (field.attribute.fieldtype == FieldType.DateTime)
                     {
@@ -5145,22 +5145,22 @@ namespace Spend_Management
             switch (field.attribute.fieldtype)
             {
                 case FieldType.Currency:
-                    compval = new CompareValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Currency, ErrorMessage = ValidatorMessages.FormatCurrency(field.attribute.displayname), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic, Operator = ValidationCompareOperator.DataTypeCheck };
+                    compval = new CompareValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Currency, ErrorMessage = ValidatorMessages.FormatCurrency(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic, Operator = ValidationCompareOperator.DataTypeCheck };
                     ph.Controls.Add(compval);
                     break;
                 case FieldType.Integer:
-                    compval = new CompareValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Integer, ErrorMessage = ValidatorMessages.FormatInteger(field.attribute.displayname), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic, Operator = ValidationCompareOperator.DataTypeCheck };
+                    compval = new CompareValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Integer, ErrorMessage = ValidatorMessages.FormatInteger(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic, Operator = ValidationCompareOperator.DataTypeCheck };
                     ph.Controls.Add(compval);
 
-                    compval = new CompareValidator { ID = "compgte" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Integer, ValueToCompare = "-2147483648", Operator = ValidationCompareOperator.GreaterThanEqual, ErrorMessage = ValidatorMessages.FormatIntegerGreaterThan(field.attribute.displayname, -2147483648), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
+                    compval = new CompareValidator { ID = "compgte" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Integer, ValueToCompare = "-2147483648", Operator = ValidationCompareOperator.GreaterThanEqual, ErrorMessage = ValidatorMessages.FormatIntegerGreaterThan(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText, -2147483648), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
                     ph.Controls.Add(compval);
 
-                    compval = new CompareValidator { ID = "complte" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Integer, ValueToCompare = "2147483647", Operator = ValidationCompareOperator.LessThanEqual, ErrorMessage = ValidatorMessages.FormatIntegerLessThan(field.attribute.displayname, 2147483647), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
+                    compval = new CompareValidator { ID = "complte" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Integer, ValueToCompare = "2147483647", Operator = ValidationCompareOperator.LessThanEqual, ErrorMessage = ValidatorMessages.FormatIntegerLessThan(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText, 2147483647), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
                     ph.Controls.Add(compval);
 
                     break;
                 case FieldType.Number:
-                    compval = new CompareValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Double, ErrorMessage = ValidatorMessages.FormatNumber(field.attribute.displayname), Text = "*", Operator = ValidationCompareOperator.DataTypeCheck, Display = ValidatorDisplay.Dynamic, ValidationGroup = validationGroup };
+                    compval = new CompareValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Double, ErrorMessage = ValidatorMessages.FormatNumber(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText), Text = "*", Operator = ValidationCompareOperator.DataTypeCheck, Display = ValidatorDisplay.Dynamic, ValidationGroup = validationGroup };
                     ph.Controls.Add(compval);
 
                     break;
@@ -5173,51 +5173,51 @@ namespace Spend_Management
                     switch (datetimeatt.format)
                     {
                         case AttributeFormat.DateOnly:
-                            compval = new CompareValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Date, ErrorMessage = ValidatorMessages.FormatDate(field.attribute.displayname), Text = "*", Operator = ValidationCompareOperator.DataTypeCheck, ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
+                            compval = new CompareValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Date, ErrorMessage = ValidatorMessages.FormatDate(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText), Text = "*", Operator = ValidationCompareOperator.DataTypeCheck, ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
 
                             ph.Controls.Add(compval);
 
                             mindate = new DateTime(1753, 1, 1).ToShortDateString();
-                            compval = new CompareValidator { ID = "compgte" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Date, ValueToCompare = mindate, Operator = ValidationCompareOperator.GreaterThanEqual, ErrorMessage = ValidatorMessages.FormatDateMinimum(field.attribute.displayname, mindate), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
+                            compval = new CompareValidator { ID = "compgte" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Date, ValueToCompare = mindate, Operator = ValidationCompareOperator.GreaterThanEqual, ErrorMessage = ValidatorMessages.FormatDateMinimum(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText, mindate), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
 
                             ph.Controls.Add(compval);
 
                             maxdate = new DateTime(3000, 12, 31).ToShortDateString();
-                            compval = new CompareValidator { ID = "complte" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Date, ValueToCompare = maxdate, Operator = ValidationCompareOperator.LessThanEqual, ErrorMessage = ValidatorMessages.FormatDateMaximum(field.attribute.displayname, maxdate), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
+                            compval = new CompareValidator { ID = "complte" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Date, ValueToCompare = maxdate, Operator = ValidationCompareOperator.LessThanEqual, ErrorMessage = ValidatorMessages.FormatDateMaximum(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText, maxdate), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
 
                             ph.Controls.Add(compval);
                             break;
 
                         case AttributeFormat.DateTime:
-                            compval = new CompareValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Date, ErrorMessage = ValidatorMessages.FormatDateAndTime(field.attribute.displayname), Text = "*", Operator = ValidationCompareOperator.DataTypeCheck, ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
+                            compval = new CompareValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Date, ErrorMessage = ValidatorMessages.FormatDateAndTime(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText), Text = "*", Operator = ValidationCompareOperator.DataTypeCheck, ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
 
                             ph.Controls.Add(compval);
 
                             mindate = new DateTime(1753, 1, 1).ToShortDateString();
-                            compval = new CompareValidator { ID = "compgte" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Date, ValueToCompare = mindate, Operator = ValidationCompareOperator.GreaterThanEqual, ErrorMessage = ValidatorMessages.FormatDateAndTimeMinimum(field.attribute.displayname, mindate), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
+                            compval = new CompareValidator { ID = "compgte" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Date, ValueToCompare = mindate, Operator = ValidationCompareOperator.GreaterThanEqual, ErrorMessage = ValidatorMessages.FormatDateAndTimeMinimum(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText, mindate), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
 
                             ph.Controls.Add(compval);
 
                             maxdate = new DateTime(3000, 12, 31).ToShortDateString();
-                            compval = new CompareValidator { ID = "complte" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Date, ValueToCompare = maxdate, Operator = ValidationCompareOperator.LessThanEqual, ErrorMessage = ValidatorMessages.FormatDateAndTimeMaximum(field.attribute.displayname, maxdate), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
+                            compval = new CompareValidator { ID = "complte" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Type = ValidationDataType.Date, ValueToCompare = maxdate, Operator = ValidationCompareOperator.LessThanEqual, ErrorMessage = ValidatorMessages.FormatDateAndTimeMaximum(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText, maxdate), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
 
                             ph.Controls.Add(compval);
 
-                            regCompval = new RegularExpressionValidator { ID = "comp" + field.attribute.attributeid + "_time", ControlToValidate = "txt" + field.attribute.attributeid + "_time", ValidationExpression = "^(([0-9])|([0-1][0-9])|([2][0-3])):(([0-9])|([0-5][0-9]))$", ErrorMessage = ValidatorMessages.FormatDateAndTime(field.attribute.displayname), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
+                            regCompval = new RegularExpressionValidator { ID = "comp" + field.attribute.attributeid + "_time", ControlToValidate = "txt" + field.attribute.attributeid + "_time", ValidationExpression = "^(([0-9])|([0-1][0-9])|([2][0-3])):(([0-9])|([0-5][0-9]))$", ErrorMessage = ValidatorMessages.FormatDateAndTime(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
 
                             ph.Controls.Add(regCompval);
 
-                            RequiredFieldValidator reqVal = new RequiredFieldValidator { ID = "reqDate" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic, ErrorMessage = ValidatorMessages.MandatoryDateFromDateTime(field.attribute.displayname), CssClass = "reqDateVal", Enabled = false };
+                            RequiredFieldValidator reqVal = new RequiredFieldValidator { ID = "reqDate" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic, ErrorMessage = ValidatorMessages.MandatoryDateFromDateTime(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText), CssClass = "reqDateVal", Enabled = false };
 
                             ph.Controls.Add(reqVal);
 
-                            reqVal = new RequiredFieldValidator { ID = "reqTime" + field.attribute.attributeid + "_time", ControlToValidate = "txt" + field.attribute.attributeid + "_time", Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic, ErrorMessage = ValidatorMessages.MandatoryTimeFromDateTime(field.attribute.displayname), CssClass = "reqTimeVal", Enabled = false };
+                            reqVal = new RequiredFieldValidator { ID = "reqTime" + field.attribute.attributeid + "_time", ControlToValidate = "txt" + field.attribute.attributeid + "_time", Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic, ErrorMessage = ValidatorMessages.MandatoryTimeFromDateTime(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText), CssClass = "reqTimeVal", Enabled = false };
 
                             ph.Controls.Add(reqVal);
                             break;
 
                         case AttributeFormat.TimeOnly:
-                            regCompval = new RegularExpressionValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, ValidationExpression = "^(([0-9])|([0-1][0-9])|([2][0-3])):(([0-9])|([0-5][0-9]))$", ErrorMessage = ValidatorMessages.FormatTime(field.attribute.displayname), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
+                            regCompval = new RegularExpressionValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, ValidationExpression = "^(([0-9])|([0-1][0-9])|([2][0-3])):(([0-9])|([0-5][0-9]))$", ErrorMessage = ValidatorMessages.FormatTime(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
 
                             ph.Controls.Add(regCompval);
                             break;
@@ -5229,7 +5229,7 @@ namespace Spend_Management
                     var contactAttribute = (cContactAttribute) field.attribute;
                     if (contactAttribute.format == AttributeFormat.ContactEmail)
                     {
-                        regCompval = new RegularExpressionValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, ValidationExpression = @"^\S+@\S+\.\S+$", ErrorMessage = ValidatorMessages.FormatContactEmail(field.attribute.displayname), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
+                        regCompval = new RegularExpressionValidator { ID = "comp" + field.attribute.attributeid, ControlToValidate = "txt" + field.attribute.attributeid, ValidationExpression = @"^\S+@\S+\.\S+$", ErrorMessage = ValidatorMessages.FormatContactEmail(string.IsNullOrEmpty(field.labelText) ? field.attribute.displayname : field.labelText), Text = "*", ValidationGroup = validationGroup, Display = ValidatorDisplay.Dynamic };
                         ph.Controls.Add(regCompval);
                     }
                     break;
