@@ -9,8 +9,9 @@
 				
 		<asp:Content ID="Content2" runat="server" ContentPlaceHolderID="contentmain">
 		<script language="javascript" type="text/javascript">
-
-		    function deleteCategory(categoryid) {
+		    var id = 0;
+            function deleteCategory(categoryid) {
+                id = categoryid;
 		        if (confirm('Are you sure you wish to delete the selected expense category?')) {
 
 		            PageMethods.deleteCategory(accountid, categoryid, deleteCategoryComplete);
@@ -27,9 +28,7 @@
 				            alert('This Expense Category cannot be deleted as it is currently assigned to one or more GreenLights or user defined fields.');
 				            break;
 				        default:
-				            var grid = igtbl_getGridById(contentID + 'gridcategories');
-
-				            grid.Rows.remove(grid.getActiveRow().getIndex());
+				            SEL.Grid.deleteGridRow('gridCats', id);
 				            break;
 				    }
 				}			
