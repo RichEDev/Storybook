@@ -1,23 +1,16 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-
-using System.Web.Services;
-using Infragistics.WebUI.UltraWebGrid;
-using SpendManagementLibrary;
-using Spend_Management;
 namespace expenses
 {
-    using SpendManagementLibrary.Employees;
+    using System;
+    using System.Collections.Generic;
+    using System.Web;
+    using System.Web.Services;
+    using System.Web.UI;
 
-	/// <summary>
+    using SpendManagementLibrary;
+
+    using Spend_Management;
+
+    /// <summary>
 	/// Summary description for admincategories.
 	/// </summary>
 	public partial class admincategories : Page
@@ -32,7 +25,6 @@ namespace expenses
 			Response.AddHeader ("cache-control","private");
 			Response.CacheControl = "no-cache";
 
-			
 			Title = "Expense Categories";
             Master.title = Title;
             Master.helpid = 1022;
@@ -42,22 +34,33 @@ namespace expenses
                 user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ExpenseCategories, true, true);
                 ViewState["accountid"] = user.AccountID;
                 ViewState["employeeid"] = user.EmployeeID;
-			}
+
+			    string[] gridData = createGrid(user.AccountID, user.EmployeeID);
+			    litgrid.Text = gridData[1];
+
+			    // set the sel.grid javascript variables
+			    Page.ClientScript.RegisterStartupScript(this.GetType(), "CatsGridVars", cGridNew.generateJS_init("CatsGridVars", new List<string>() { gridData[0] }, user.CurrentActiveModule), true);
+            }
 		}
 
-        protected override void OnInitComplete(EventArgs e)
-        {
-            base.OnInitComplete(e);
-            gridcategories.InitializeDataSource += new Infragistics.WebUI.UltraWebGrid.InitializeDataSourceEventHandler(gridcategories_InitializeDataSource);
-        }
+	    private string[] createGrid(int accountid, int employeeid)
+	    {
+	        cTables clstables = new cTables(accountid);
+	        cFields clsfields = new cFields(accountid);
+	        List<cNewGridColumn> columns = new List<cNewGridColumn>();
+	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("6ECCC7C6-C6DA-44D1-AABA-A2E9CFF48918"))));
+	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("44C2A53A-DB33-45AF-AF66-D0055AAD48EC"))));
+	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("0744BEC1-5C4D-4B5E-90CF-8D3D9F187DBF"))));
+	        cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridCats", clstables.GetTableByID(new Guid("75C247C2-457E-4B14-BBEC-1391CD77FB9E")), columns);
+	        clsgrid.getColumnByName("categoryid").hidden = true;
+	        clsgrid.KeyField = "categoryid";
+	        clsgrid.enabledeleting = true;
+	        clsgrid.deletelink = "javascript:deleteCategory({categoryid});";
+	        clsgrid.enableupdating = true;
+	        clsgrid.editlink = "aecategory.aspx?action=2&categoryid={categoryid}";
+	        return clsgrid.generateGrid();
+	    }
 
-        void gridcategories_InitializeDataSource(object sender, Infragistics.WebUI.UltraWebGrid.UltraGridEventArgs e)
-        {
-            clscategory = new cCategories((int)ViewState["accountid"]);
-
-            gridcategories.DataSource = clscategory.getGrid();
-            gridcategories.DataBind();
-        }
 		#region Web Form Designer generated code
 		override protected void OnInit(EventArgs e)
 		{
@@ -78,59 +81,12 @@ namespace expenses
 		}
 		#endregion
 
-        protected void gridcategories_InitializeLayout(object sender, Infragistics.WebUI.UltraWebGrid.LayoutEventArgs e)
-        {
-            #region Sorting
-            cEmployees clsemployees = new cEmployees((int)ViewState["accountid"]);
-            Employee reqemp = clsemployees.GetEmployeeById((int)ViewState["employeeid"]);
-            cGridSort sortorder = reqemp.GetGridSortOrders().GetBy(Grid.Categories);
-            if (sortorder != null)
-            {
-                if (e.Layout.Bands[0].SortedColumns.Count == 0)
-                {
-                    if (e.Layout.Bands[0].Columns.FromKey(sortorder.columnname) != null)
-                    {
-                        e.Layout.Bands[0].Columns.FromKey(sortorder.columnname).SortIndicator = (SortIndicator)sortorder.sortorder;
-                        e.Layout.Bands[0].SortedColumns.Add(sortorder.columnname);
-                    }
-                }
-            }
-            #endregion
-            e.Layout.Bands[0].Columns.FromKey("categoryid").Hidden = true;
-            e.Layout.Bands[0].Columns.FromKey("category").Header.Caption = "Expense Category";
-            e.Layout.Bands[0].Columns.FromKey("description").Header.Caption = "Description";
-            if (e.Layout.Bands[0].Columns.FromKey("edit") == null)
-            {
-                e.Layout.Bands[0].Columns.Insert(0, new Infragistics.WebUI.UltraWebGrid.UltraGridColumn("delete", "<img alt=\"Delete\" src=\"../icons/delete2_blue.gif\">", Infragistics.WebUI.UltraWebGrid.ColumnType.HyperLink, ""));
-                e.Layout.Bands[0].Columns.FromKey("delete").Width = Unit.Pixel(25);
-                e.Layout.Bands[0].Columns.Insert(0, new Infragistics.WebUI.UltraWebGrid.UltraGridColumn("edit", "<img alt=\"Edit\" src=\"../icons/edit_blue.gif\">", Infragistics.WebUI.UltraWebGrid.ColumnType.HyperLink, ""));
-                e.Layout.Bands[0].Columns.FromKey("edit").Width = Unit.Pixel(25);
-            }
-        }
-
-        protected void gridcategories_InitializeRow(object sender, Infragistics.WebUI.UltraWebGrid.RowEventArgs e)
-        {
-            e.Row.Cells.FromKey("edit").Value = "<a href=\"aecategory.aspx?action=2&categoryid=" + e.Row.Cells.FromKey("categoryid").Value + "\"><img alt=\"Edit\" src=\"../icons/edit.gif\"></a>";
-            e.Row.Cells.FromKey("delete").Value = "<a href=\"javascript:deleteCategory(" + e.Row.Cells.FromKey("categoryid").Value + ");\"><img alt=\"Delete\" src=\"../icons/delete2.gif\"></a>";
-        }
-
-
-
         [WebMethod(EnableSession = true)]
         public static int deleteCategory(int accountid, int categoryid)
         {
             cCategories clscategory = new cCategories(accountid);
             return clscategory.deleteCategory(categoryid);
         }
-
-        protected void gridcategories_SortColumn(object sender, Infragistics.WebUI.UltraWebGrid.SortColumnEventArgs e)
-        {
-            UltraWebGrid grid = (UltraWebGrid)sender;
-            byte direction = (byte)grid.Columns[e.ColumnNo].SortIndicator;
-            CurrentUser currentUser = cMisc.GetCurrentUser();
-            currentUser.Employee.GetGridSortOrders().Add(Grid.Categories, grid.Columns[e.ColumnNo].Key, direction);
-        }
-
 
         /// <summary>
         /// Close button event function
