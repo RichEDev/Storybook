@@ -2556,6 +2556,54 @@ namespace Spend_Management
             }
             return companyNumber;
         }
+
+        /// <summary>
+        /// Creates Card Statements grid
+        /// </summary>
+        /// <param name="accountid">The account id of logged in user</param>
+        /// <param name="employeeid">The user id of logged in user</param>
+        /// <returns>Returns the html of grid</returns>
+        public string[] createGrid(int accountid, int employeeid)
+        {
+            cTables clstables = new cTables(accountid);
+            cFields clsfields = new cFields(accountid);
+            List<cNewGridColumn> columns = new List<cNewGridColumn>();
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("ABC8A3E9-FFFD-463F-B957-D641DD049312"))));
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("CF224FEC-6B1F-46D2-B3A5-6D0554CCAE37"))));
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("265140FE-F439-442D-9B0C-8CE8B1D7F0D7"))));
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("7FB17FED-9243-40B5-BDF1-A4AAC1DEE6AF"))));
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("D25CB71F-CC31-4D55-B62F-89A6D275FEB1"))));
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("3C798501-B158-466C-9411-083792451A02"))));
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("7FB320D5-B1E7-4CC7-85F0-A5C45F055412"))));
+            cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridCardStatements", clstables.GetTableByID(new Guid("19931AA1-6287-4BD5-936C-1D7ADD367BF8")), columns);
+            clsgrid.getColumnByName("statementid").hidden = true;
+            clsgrid.KeyField = "statementid";
+            clsgrid.enabledeleting = true;
+            clsgrid.deletelink = "javascript:deleteStatement({statementid});";
+            clsgrid.enableupdating = true;
+            clsgrid.editlink = "editstatement.aspx?statementid={statementid}";
+            clsgrid.getColumnByName("CreatedOn").HeaderText = "Upload Date";
+            clsgrid.InitialiseRow += this.statementGrid_InitialiseRow;
+            clsgrid.ServiceClassForInitialiseRowEvent = "Spend_Management.cCardStatements";
+            clsgrid.ServiceClassMethodForInitialiseRowEvent = "statementGrid_InitialiseRow";
+            return clsgrid.generateGrid();
+        }
+
+        /// <summary>
+        /// The initialise row event of the grid
+        /// </summary>
+        /// <param name="row">The row in the grid</param>
+        /// <param name="gridinfo">The grid information</param>
+        public void statementGrid_InitialiseRow(cNewGridRow row, SerializableDictionary<string, object> gridinfo)
+        {
+            row.getCellByID("name").Value =
+                $"<a href=\"transaction_viewer.aspx?statementid={row.getCellByID("statementid").Value}\">{row.getCellByID("name").Value}</a>";
+            if ((int)row.getCellByID("unallocated_cards").Value > 0)
+            {
+                row.getCellByID("unallocated_cards").Value =
+                    $"<a href=\"unallocated_cards.aspx?statementid={row.getCellByID("statementid").Value}\">{row.getCellByID("unallocated_cards").Value}</a>";
+            }
+        }
     }
 }
 
