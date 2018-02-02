@@ -14,6 +14,8 @@ using SpendManagementLibrary.Helpers;
 
 namespace Spend_Management
 {
+    using System.Globalization;
+
     using Microsoft.SqlServer.Server;
 
     using SpendManagementLibrary.Definitions.JoinVia;
@@ -1792,7 +1794,7 @@ namespace Spend_Management
                                                 if (cell.Column.ForceSingleLine)
                                                 {
                                                     if (isdateValue)
-                                                        output.Append((dateValue.ToShortDateString()).Replace(" ", "&nbsp;"));
+                                                        output.Append(dateValue.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture).Replace(" ", "&nbsp;"));
                                                 }
                                                 else if (!string.IsNullOrEmpty(cell.Column.CustomDateFormat))
                                                 {
@@ -1802,7 +1804,7 @@ namespace Spend_Management
                                                 else
                                                 {
                                                     if(isdateValue)
-                                                        output.Append(dateValue.ToShortDateString());
+                                                        output.Append(dateValue.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
                                                 }
                                                 break;
                                             case "DT":
