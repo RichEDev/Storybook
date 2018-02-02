@@ -1,28 +1,22 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using System.Web.Services;
-using Spend_Management;
-
 namespace expenses.information
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Web;
+    using System.Web.Services;
+    using System.Web.UI;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Holidays;
+
+    using Spend_Management;
 
     /// <summary>
 	/// Summary description for holidays.
 	/// </summary>
 	public partial class holidays : Page
 	{
-	
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
 			
@@ -34,69 +28,45 @@ namespace expenses.information
                 CurrentUser user = cMisc.GetCurrentUser();
                 ViewState["accountid"] = user.AccountID;
                 ViewState["employeeid"] = user.EmployeeID;
-			}
-		}
 
-		#region Web Form Designer generated code
-		override protected void OnInit(EventArgs e)
-		{
-			//
-			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
-			//
-			InitializeComponent();
-			base.OnInit(e);
-		}
-		
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{    
+			    string[] gridData = createGrid(user.AccountID, user.EmployeeID);
+			    litgrid.Text = gridData[1];
 
-		}
-		#endregion
-
-        protected override void OnInitComplete(EventArgs e)
-        {
-            base.OnInitComplete(e);
-            gridholidays.InitializeDataSource += new Infragistics.WebUI.UltraWebGrid.InitializeDataSourceEventHandler(gridholidays_InitializeDataSource);
-        }
-
-        void gridholidays_InitializeDataSource(object sender, Infragistics.WebUI.UltraWebGrid.UltraGridEventArgs e)
-        {
-            CurrentUser user = cMisc.GetCurrentUser();
-            var connection = new DatabaseConnection(cAccounts.getConnectionString(user.AccountID));
-            Holidays holidays = new Holidays(connection);
-            gridholidays.DataSource = holidays.GetHolidayDataSet(((int)ViewState["employeeid"]));
-        }
-        protected void gridholidays_InitializeLayout(object sender, Infragistics.WebUI.UltraWebGrid.LayoutEventArgs e)
-        {
-            e.Layout.Bands[0].Columns.FromKey("holidayid").Hidden = true;
-            e.Layout.Bands[0].Columns.FromKey("startdate").Header.Caption = "Start Date";
-            e.Layout.Bands[0].Columns.FromKey("enddate").Header.Caption = "End Date";
-            e.Layout.Bands[0].Columns.FromKey("startdate").Format = "dd/MM/yyyy";
-            e.Layout.Bands[0].Columns.FromKey("enddate").Format = "dd/MM/yyyy";
-            if (e.Layout.Bands[0].Columns.FromKey("edit") == null)
-            {
-                e.Layout.Bands[0].Columns.Insert(0, new Infragistics.WebUI.UltraWebGrid.UltraGridColumn("delete", "<img alt=\"Delete\" src=\"../icons/delete2_blue.gif\">", Infragistics.WebUI.UltraWebGrid.ColumnType.HyperLink, ""));
-                e.Layout.Bands[0].Columns.FromKey("delete").Width = Unit.Pixel(15);
-                e.Layout.Bands[0].Columns.Insert(0, new Infragistics.WebUI.UltraWebGrid.UltraGridColumn("edit", "<img alt=\"Edit\" src=\"../icons/edit_blue.gif\">", Infragistics.WebUI.UltraWebGrid.ColumnType.HyperLink, ""));
-                e.Layout.Bands[0].Columns.FromKey("edit").Width = Unit.Pixel(15);
+			    // set the sel.grid javascript variables
+			    Page.ClientScript.RegisterStartupScript(this.GetType(), "HolidaysGridVars", cGridNew.generateJS_init("HolidaysGridVars", new List<string>() { gridData[0] }, user.CurrentActiveModule), true);
             }
-        }
+		}
 
-        protected void gridholidays_InitializeRow(object sender, Infragistics.WebUI.UltraWebGrid.RowEventArgs e)
-        {
-            e.Row.Cells.FromKey("edit").Value = "<a href=\"aeholiday.aspx?action=2&holidayid=" + e.Row.Cells.FromKey("holidayid").Value + "\"><img alt=\"Edit\" src=\"../icons/edit.gif\"></a>";
-            e.Row.Cells.FromKey("delete").Value = "<a href=\"javascript:deleteHoliday(" + e.Row.Cells.FromKey("holidayid").Value + ");\"><img alt=\"Delete\" src=\"../icons/delete2.gif\"></a>";
-        }
+        /// <summary>
+        /// Creates holidays grid
+        /// </summary>
+        /// <param name="accountid">The account id of logged in user</param>
+        /// <param name="employeeid">The employee id of logged in user</param>
+        /// <returns>The html and data of the grid</returns>
+	    private string[] createGrid(int accountid, int employeeid)
+	    {
+	        cTables clstables = new cTables(accountid);
+	        cFields clsfields = new cFields(accountid);
+	        List<cNewGridColumn> columns = new List<cNewGridColumn>();
+	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("35B90FF5-780A-43C2-8E54-932B1A7C8B6E"))));
+	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("76E6DAEB-DD74-4B4F-B7D5-E69D47FAA0EA"))));
+	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("F6A23A31-B705-4567-92AE-48FD95372941"))));
+	        cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridHolidays", clstables.GetTableByID(new Guid("A6FF86D3-808F-406F-9DD6-E21B7B9A8D67")), columns);
+	        clsgrid.getColumnByName("holidayid").hidden = true;
+	        clsgrid.KeyField = "holidayid";
+	        clsgrid.enabledeleting = true;
+	        clsgrid.deletelink = "javascript:deleteHoliday({holidayid});";
+	        clsgrid.enableupdating = true;
+	        clsgrid.editlink = "aeholiday.aspx?action=2&holidayid={holidayid}";
+	        var employeeIdField = clsfields.GetFieldByID(Guid.Parse("10300FB9-53F1-471A-A65A-D77A6491BB8F")); // employeeID
+	        clsgrid.addFilter(employeeIdField, ConditionType.Equals, new object[] { employeeid }, null, ConditionJoiner.None);
+            return clsgrid.generateGrid();
+	    }
 
         [WebMethod(EnableSession = true)]
         public static void deleteHoliday (int accountid, int holidayid)
         {
-            CurrentUser user = cMisc.GetCurrentUser();
-            var connection = new DatabaseConnection(cAccounts.getConnectionString(user.AccountID));
+            var connection = new DatabaseConnection(cAccounts.getConnectionString(accountid));
             Holidays holidays = new Holidays(connection);
             holidays.DeleteHoliday(holidayid);
         }
