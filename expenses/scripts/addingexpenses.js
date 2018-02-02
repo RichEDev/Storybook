@@ -92,7 +92,7 @@ Sys.Application.add_load(function (application, applicationEventArguments) {
             '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC',
             '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72', null,
             '{ 0: { "FieldID": "8178629C-5908-4458-89F6-D7EE7438314D", "ConditionType": 1, "ValueOne": "0", "ValueTwo": "", "Order": 0, "JoinViaID": 0 } }',
-            500, null, "False", null, null, SEL.Expenses.Validate.Organisation.SaveIfNotExists);
+            500, null, "False", null, null,null);
 
         var searchName = $(o).data("search");
         if (typeof searchName === "string" && searchName !== "") {

@@ -1587,30 +1587,54 @@ public partial class aeexpense : System.Web.UI.Page
 
              txtbox = new TextBox
                               {
-                                  ID = "txtCostCodeAutoComplete",
+                                  ID = "txtCostCode",
                                   CssClass = "costcode-autocomplete"
                               };
 
             txtbox.Attributes.Add("data-search", "General");
 
+            txtbox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes; 
+            
             TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode_ID" };
             hiddenIdentifier.Style.Add(HtmlTextWriterStyle.Display, "none");
+
+            cCostCode costcode = null;
+
+
+            if (action == Action.Edit || action == Action.Copy)
+            {
+                if (expenseitem.costcodebreakdown[0].costcodeid > 0)
+                {
+                    costcode =  ActionContext.CostCodes.GetCostcodeById(expenseitem.costcodebreakdown[0].costcodeid);
+
+                    if (costcode != null)
+                    {
+                        txtbox.Text = costcode.Costcode;
+                        hiddenIdentifier.Text = costcode.CostcodeId.ToString(CultureInfo.InvariantCulture);
+                    }
+                }
+            }
+            else if (action == Action.Add && itemtype == ItemType.Cash)
+            {
+                //check this session thing
+                if (Session["costcodeId"] != null && (int)Session["costcodeId"] > 0)
+                {
+                    costcode =  ActionContext.CostCodes.GetCostcodeById(expenseitem.costcodebreakdown[0].costcodeid);
+
+                    if (costcode != null)
+                    {
+                        txtbox.Text = costcode.Costcode;
+                        hiddenIdentifier.Text = costcode.CostcodeId.ToString(CultureInfo.InvariantCulture);
+                    }
+                }
+            }
+
+            //don't forget validation
 
             cell.Controls.Add(txtbox);
             cell.Controls.Add(hiddenIdentifier);
             cell.Controls.Add(new Literal { Text = " " });
 
-            img = new Image
-                      {
-                          ImageUrl = GlobalVariables.StaticContentLibrary + "/icons/16/new-icons/find.png",
-                          ID = "txtCostCodeSearchIcon",
-                          AlternateText = "Search " +  clsmisc.GetGeneralFieldByCode("costcode").description,
-                          CssClass = "btn"
-                      };
-
-            img.Attributes.Add("onclick", "CostCodeSearch = CostCodeSearches[\"General\"];CostCodeSearches[\"General\"].Search();");
-
-            cell.Controls.Add(img);
             row.Cells.Add(cell);
 
          //   ddlst = new DropDownList();
@@ -2308,9 +2332,12 @@ public partial class aeexpense : System.Web.UI.Page
                 }
             else if (clsproperties.usecostcodes && clsproperties.costcodeson && clsproperties.usecostcodeongendet)
             {
-                ddlst = (DropDownList)pnlgeneral.FindControl("cmbgencostcode");
-                int.TryParse(Request[ddlst.ClientID.Replace("_", "$")], out costcodeid);
-                }
+               var cctxtbox = (TextBox)pnlgeneral.FindControl("txtCostCode_ID");
+      
+                costcodeid = Convert.ToInt32(cctxtbox.Text);
+                //ddlst = (DropDownList)pnlgeneral.FindControl("cmbgencostcode");
+                //int.TryParse(Request[ddlst.ClientID.Replace("_", "$")], out costcodeid);
+            }
 
             if (clsproperties.useprojectcodes && clsproperties.projectcodeson && clsproperties.useprojectcodeongendet == false)
             {
