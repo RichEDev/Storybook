@@ -88,10 +88,10 @@ Sys.Application.add_load(function (application, applicationEventArguments) {
     // attach cost code autocompletes
     $(".costcode-autocomplete").each(function (i, o) {
         SEL.AutoComplete.Bind(o.id, 15,
-            '7bdaf84e-a373-4008-83d1-9e18aaa47f8e',
-            '4d0f2409-0705-4f0f-9824-42057b25aebe',
-            '4d0f2409-0705-4f0f-9824-42057b25aebe, ac87c4c4-9107-4555-b2a3-27109b3ebfbb', null,
-            '{ 0: { "FieldID": "4B7873D6-8EDC-44D4-94F7-B8ABCBD87692", "ConditionType": 1, "ValueOne": "0", "ValueTwo": "", "Order": 0, "JoinViaID": 0 } }',
+            '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
+            '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC',
+            '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72', null,
+            '{ 0: { "FieldID": "8178629C-5908-4458-89F6-D7EE7438314D", "ConditionType": 1, "ValueOne": "0", "ValueTwo": "", "Order": 0, "JoinViaID": 0 } }',
             500, null, "False", null, null, SEL.Expenses.Validate.Organisation.SaveIfNotExists);
 
         var searchName = $(o).data("search");

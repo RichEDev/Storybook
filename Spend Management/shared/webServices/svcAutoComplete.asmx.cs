@@ -977,7 +977,7 @@
         [WebMethod(EnableSession = true)]
         public string[] GetCostCodeSearchGrid()
         {
-            return this.GetAutoCompleteSearchGrid(cMisc.GetCurrentUser(), "gridOrganisationSearch");
+            return this.GetAutoCompleteSearchGrid(cMisc.GetCurrentUser(), "gridCostCentreCostCodeSearch");
         }
 
         /// <summary>
