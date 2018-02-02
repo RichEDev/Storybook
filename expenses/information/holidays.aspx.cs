@@ -53,7 +53,9 @@ namespace expenses.information
 	        clsgrid.deletelink = "javascript:deleteHoliday({holidayid});";
 	        clsgrid.enableupdating = true;
 	        clsgrid.editlink = "aeholiday.aspx?action=2&holidayid={holidayid}";
-	        return clsgrid.generateGrid();
+	        var employeeIdField = clsfields.GetFieldByID(Guid.Parse("10300FB9-53F1-471A-A65A-D77A6491BB8F")); // employeeID
+	        clsgrid.addFilter(employeeIdField, ConditionType.Equals, new object[] { employeeid }, null, ConditionJoiner.None);
+            return clsgrid.generateGrid();
 	    }
 
         [WebMethod(EnableSession = true)]
