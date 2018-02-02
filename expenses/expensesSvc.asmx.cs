@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Services;
+using BusinessLogic;
+using Common.Cryptography;
 using SpendManagementLibrary;
 using SpendManagementLibrary.Enumerators;
 using Spend_Management.expenses.code.Claims;
@@ -18,6 +20,12 @@ namespace Spend_Management
     public class expensesSvc : System.Web.Services.WebService
     {
         private System.Web.Caching.Cache CachedUser = (System.Web.Caching.Cache)System.Web.HttpRuntime.Cache;
+
+        /// <summary>
+        /// A public instance of <see cref="IEncryptor"/>
+        /// </summary>
+        [Dependency]
+        public IEncryptor Encryptor { get; set; }
 
         public expensesSvc()
         {
@@ -48,7 +56,8 @@ namespace Spend_Management
             }
 
             cEmployees clsEmployees = new cEmployees(reqAccount.accountid);
-            AuthenicationOutcome authOutcome = clsEmployees.Authenticate(username, password, AccessRequestType.Mobile);
+            EncryptorFactory.SetCurrent(new HashEncryptorFactory());
+            AuthenicationOutcome authOutcome = clsEmployees.Authenticate(username, password, AccessRequestType.Mobile, this.Encryptor);
        
             CurrentUser user = new CurrentUser();
 

@@ -1433,7 +1433,7 @@ namespace Spend_Management
                 employee = new Employee(user.AccountID, employeeid, username, string.Empty, email, title, firstname, middlenames, maidenname, surname, true, true, false, false, 0, 0, DateTime.UtcNow, user.EmployeeID, null, null, new BankAccount(accountholder, accountnumber, accounttype, sortcode, reference), 
                      signoff, extension, mobileno, pagerno, faxno, emailhome, linemanager,
                     advancesgroup, preferredname, gender, dateofbirth, hiredate, leavedate, payroll, position, telno, creditaccount, CreationMethod.Manually, 
-                    PasswordEncryptionMethod.RijndaelManaged, true, false, defaultSubAccountId, currency, homecountry, signoffcc, signoffpc, false, localeID, NHSTrustID,
+                    PasswordEncryptionMethod.SaltedHash, true, false, defaultSubAccountId, currency, homecountry, signoffcc, signoffpc, false, localeID, NHSTrustID,
                      ninumber, employeenumber, nhsuniqueid, null, null, null, 1, DateTime.UtcNow, 1, startmiles, startmilesdate, false, null, 0, authoriserLevelId, false, null, null, null, null, null, null, null, null, null, null, null, null, null, excessMileage);
             }
 

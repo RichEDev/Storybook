@@ -1,4 +1,6 @@
-﻿namespace SpendManagementLibrary.Employees
+﻿using Common.Cryptography;
+
+namespace SpendManagementLibrary.Employees
 {
     using System;
 
@@ -32,6 +34,11 @@
         /// RijndaelManaged (cSecureData).
         /// </summary>
         RijndaelManaged = 4,
+
+        /// <summary>
+        /// Salted hash <see cref="Pbkdf2Encryptor"/>
+        /// </summary>
+        SaltedHash = 5,
 
         /// <summary>
         /// Plain text. Should not be used.

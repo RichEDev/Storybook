@@ -1,4 +1,5 @@
-﻿using SpendManagementApi.Models.Responses;
+﻿using Common.Cryptography;
+using SpendManagementApi.Models.Responses;
 using SpendManagementApi.Models.Types;
 
 namespace SpendManagementApi.Repositories
@@ -39,6 +40,7 @@ namespace SpendManagementApi.Repositories
             _employees = this.ActionContext.Employees;
             _mileagecats = this.ActionContext.MileageCategories;
             _cards = this.ActionContext.EmployeeCorporateCards;
+            EncryptorFactory.SetCurrent(new HashEncryptorFactory());
         }
 
         #endregion Constructor
@@ -362,7 +364,7 @@ namespace SpendManagementApi.Repositories
         public ChangePasswordResponse ChangePassword(int id, string newPassword, ChangePasswordResponse response)
         {
             var dbEmp = _employees.GetEmployeeById(id);
-            response.RequestResponse = dbEmp.ChangePassword(string.Empty, newPassword, false, 0, 0, this.User);
+            response.RequestResponse = dbEmp.ChangePassword(string.Empty, newPassword, false, 0, 0, this.User, EncryptorFactory.CreateEncryptor());
             return response;
         }
 

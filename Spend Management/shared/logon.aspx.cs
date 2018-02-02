@@ -8,6 +8,8 @@
     using System.Web;
     using System.Web.Security;
     using System.Web.UI;
+    using BusinessLogic;
+    using Common.Cryptography;
     using Spend_Management.shared.code;
     using SpendManagementLibrary;
 
@@ -28,6 +30,12 @@
         /// Gets or sets the module.
         /// </summary>
         protected Modules Module { get; set; }
+
+        /// <summary>
+        /// A public instance of <see cref="IEncryptor"/>
+        /// </summary>
+        [Dependency]
+        public IEncryptor Encryptor { get; set; }
 
         /// <summary>
         /// The page_ pre init.
@@ -58,6 +66,11 @@
         /// </param>
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (this.Encryptor == null)
+            {
+                this.Encryptor = new Pbkdf2Encryptor();
+            }
+
             this.tsm.Scripts.Insert(0, new ScriptReference(GlobalVariables.StaticContentLibrary + "/js/jQuery/jquery-1.9.0.min.js"));
             this.tsm.Scripts.Insert(1, new ScriptReference(GlobalVariables.StaticContentLibrary + "/js/jQuery/jquery-ui-1.9.2.custom.min.js"));
             this.tsm.Scripts.Insert(2, new ScriptReference(GlobalVariables.StaticContentLibrary + "/js/bxSlider/jquery.bxslider.js"));
@@ -317,7 +330,7 @@
         {
             this.txtCompanyID.Text = companyId.Trim();
             this.txtUsername.Text = username.Trim();
-            var logon = new Logon();
+            var logon = new Logon(this.Encryptor);
 
             if (usedForm && (!this.rfCompanyID.IsValid || !this.rfUsername.IsValid))
             {

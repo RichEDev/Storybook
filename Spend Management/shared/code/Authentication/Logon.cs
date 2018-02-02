@@ -1,4 +1,5 @@
-﻿namespace Spend_Management.shared.code.Authentication
+﻿
+namespace Spend_Management.shared.code.Authentication
 {
     using System;
     using System.Data;
@@ -8,6 +9,7 @@
     using System.Web.Security;
     using System.Web.SessionState;
 
+    using Common.Cryptography;
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Enumerators;
@@ -18,6 +20,11 @@
     /// </summary>
     public class Logon
     {
+        /// <summary>
+        /// A private instance of <see cref="IEncryptor"/>
+        /// </summary>
+        private readonly IEncryptor _encryptor;
+
         #region Fields
 
         /// <summary>
@@ -47,8 +54,9 @@
         /// <summary>
         ///     Initialises a new instance of the <see cref="Logon" /> class.
         /// </summary>
-        public Logon()
+        public Logon(IEncryptor encryptor)
         {
+            this._encryptor = encryptor;
             this.accountId = 0;
             this.employeeId = 0;
             this.forgottenDetailsVisible = false;
@@ -418,7 +426,7 @@
 
             var clsEmployees = new cEmployees(reqAccount.accountid);
 
-            AuthenicationOutcome authOutcome = clsEmployees.Authenticate(username, password, AccessRequestType.Website, fromSso);
+            AuthenicationOutcome authOutcome = clsEmployees.Authenticate(username, password, AccessRequestType.Website, this._encryptor, fromSso);
             int authenticate = authOutcome.employeeId;
 
             this.employeeId = Math.Abs(authenticate);

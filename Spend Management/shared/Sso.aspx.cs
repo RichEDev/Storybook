@@ -1,10 +1,12 @@
-﻿namespace Spend_Management.shared
+﻿
+namespace Spend_Management.shared
 {
     using System;
     using System.Globalization;
     using System.Linq;
     using System.Security.Cryptography.X509Certificates;
-
+    using BusinessLogic;
+    using Common.Cryptography;
     using code.Authentication;
     using SpendManagementLibrary;
 
@@ -22,6 +24,12 @@
         protected Modules Module { get; set; }
 
         private string _moduleName;
+
+        /// <summary>
+        /// A public instance of <see cref="IEncryptor"/>
+        /// </summary>
+        [Dependency]
+        public IEncryptor Encryptor { get; set; }
 
         /// <summary>
         /// Gets the plain text module name.
@@ -158,10 +166,10 @@
                                     throw new InvalidOperationException("Single Sign-on is not licensed on this account.");
                                 }
 
-                                var logon = new Logon();
+                                var logon = new Logon(this.Encryptor);
                                 var employeeIdAccountId = logon.FindEmployee(account, identifier, result.SsoConfig.IdLookupFieldId);
 
-                                Saml.DebugMessage(String.Format("employeeIdAccountId = {0}", employeeIdAccountId));
+                                Saml.DebugMessage(string.Format("employeeIdAccountId = {0}", employeeIdAccountId));
 
                                 try
                                 {

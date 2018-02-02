@@ -3,6 +3,7 @@ namespace Spend_Management
     using System;
     using System.Text;
     using System.Web.UI;
+    using Common.Cryptography;
     using shared.code.Authentication;
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
@@ -36,6 +37,8 @@ namespace Spend_Management
 
             if (this.IsPostBack == false)
             {
+                EncryptorFactory.SetCurrent(new HashEncryptorFactory());
+
                 int employeeid = 0;
 
                 int returnto = 0;
@@ -176,12 +179,12 @@ namespace Spend_Management
                 {
                     case 1:
                     case 3:
-                        checkpwd = clsemployees.checkpassword(password, (int)ViewState["accountid"], employeeid);
-                        returncode = employee.ChangePassword(txtold.Text, txtnew.Text, false, checkpwd, clsproperties.PwdHistoryNum, curUser);
+                        checkpwd = clsemployees.checkpassword(password, (int)this.ViewState["accountid"], employeeid,EncryptorFactory.CreateEncryptor());
+                        returncode = employee.ChangePassword(txtold.Text, txtnew.Text, false, checkpwd, clsproperties.PwdHistoryNum, curUser, EncryptorFactory.CreateEncryptor());
                         break;
                     case 2:
-                        checkpwd = clsemployees.checkpassword(password, (int)ViewState["accountid"], employeeid);
-                        returncode = employee.ChangePassword(txtold.Text, txtnew.Text, true, checkpwd, clsproperties.PwdHistoryNum, curUser);
+                        checkpwd = clsemployees.checkpassword(password, (int)this.ViewState["accountid"], employeeid,EncryptorFactory.CreateEncryptor());
+                        returncode = employee.ChangePassword(txtold.Text, txtnew.Text, true, checkpwd, clsproperties.PwdHistoryNum, curUser, EncryptorFactory.CreateEncryptor());
                         break;
                 }
 

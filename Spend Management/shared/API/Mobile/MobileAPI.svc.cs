@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using System.Text;
+using Common.Cryptography;
 using SpendManagementLibrary.Employees;
 using SpendManagementLibrary.Enumerators;
 using SpendManagementLibrary.Mobile;
@@ -1413,8 +1414,8 @@ namespace Spend_Management
                 string[] userNameSplit = userName.Split('-');
                 if(string.IsNullOrEmpty(userNameSplit[0]) || string.IsNullOrEmpty(userNameSplit[1]) || string.IsNullOrEmpty(password))
                     throw new SecurityTokenException("Username and password required");
-
-                if(!AuthenticateDetails(userNameSplit[0].Trim(), userNameSplit[1].Trim(), password.Trim()))
+                EncryptorFactory.SetCurrent(new HashEncryptorFactory());
+                if(!AuthenticateDetails(userNameSplit[0].Trim(), userNameSplit[1].Trim(), password.Trim(), EncryptorFactory.CreateEncryptor()))
                 {
                     throw new SecurityTokenException("Username and password required");
                 }
@@ -1431,8 +1432,9 @@ namespace Spend_Management
             /// <param name="CompanyName">Company ID</param>
             /// <param name="Username">Usermame</param>
             /// <param name="Password">Password</param>
+            /// <param name="encryptor">An instance of <see cref="IEncryptor"/></param>
             /// <returns>TRUE if user successfully authenticated, otherwise FALSE</returns>
-            private bool AuthenticateDetails(string CompanyName, string Username, string Password)
+            private bool AuthenticateDetails(string CompanyName, string Username, string Password, IEncryptor encryptor)
             {
                 cAccounts clsAccounts = new cAccounts();
                 cAccount reqAccount = clsAccounts.GetAccountByCompanyID(CompanyName);
@@ -1443,7 +1445,7 @@ namespace Spend_Management
                 }
 
                 cEmployees clsEmployees = new cEmployees(reqAccount.accountid);
-                AuthenicationOutcome authOutcome = clsEmployees.Authenticate(Username, Password, AccessRequestType.Mobile);
+                AuthenicationOutcome authOutcome = clsEmployees.Authenticate(Username, Password, AccessRequestType.Mobile, encryptor);
              
                 if (authOutcome.employeeId <= 0)
                 {

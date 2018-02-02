@@ -14,12 +14,14 @@ using AjaxControlToolkit;
 using System.Data;
 using System.Web;
 
-    namespace Spend_Management
+
+namespace Spend_Management
     {
     using System.Linq;
     using System.Net.Mail;
     using System.Text.RegularExpressions;
 
+    using Common.Cryptography;
     using Infragistics.WebUI.UltraWebGrid;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Helpers;
@@ -51,6 +53,7 @@ using System.Web;
             this._fields = new cFields(accountid);
             this.Cache = new Cache();
             this._nAccountid = accountid;
+            EncryptorFactory.SetCurrent(new HashEncryptorFactory());
         }
 
         #region properties
@@ -594,12 +597,21 @@ using System.Web;
         }
 
 
-            public AuthenicationOutcome Authenticate(string username, string password, AccessRequestType accessRequestType, bool fromSso = false, IDBConnection connection = null)
-        {
-            int employeeId;
+            /// <summary>
+            /// Authenticate a user against the customer data store
+            /// </summary>
+            /// <param name="username">The user name of the <see cref="Employee"/></param>
+            /// <param name="password">The unencrypted password of the <see cref="Employee"/></param>
+            /// <param name="accessRequestType">The type of access defined by <see cref="AccessRequestType"/></param>
+            /// <param name="encryptor">An instance of <see cref="IEncryptor"/></param>
+            /// <param name="fromSso">True if this request is from sso.</param>
+            /// <returns></returns>
+            public AuthenicationOutcome Authenticate(string username, string password, AccessRequestType accessRequestType, IEncryptor encryptor, bool fromSso = false)
+            {
+                int employeeId; 
                 var authOutcome = new AuthenicationOutcome();
 
-            using (var expdata = connection ?? new DatabaseConnection(cAccounts.getConnectionString(this.accountid)))
+            using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(this.accountid)))
             {
                 expdata.sqlexecute.Parameters.Clear();
                 employeeId = 0;
@@ -704,6 +716,7 @@ using System.Web;
                             if (clsSecureData.Encrypt(password) == passwordInDB)
                             {
                                 passwordMatch = true;
+                                updatePassword = true;
                             }
 
 
@@ -715,6 +728,12 @@ using System.Web;
                                 updatePassword = true;
                             }
 
+                            break;
+                        case PasswordEncryptionMethod.SaltedHash:
+                            if (encryptor.Verify(password, passwordInDB))
+                            {
+                                passwordMatch = true;
+                            }
                             break;
                     }
 
@@ -1046,9 +1065,17 @@ using System.Web;
         }
 
         
-        public byte checkpassword(string password, int accountID, int employeeid, IDBConnection connection = null)
+        /// <summary>
+        /// Check the password complies to the password policy
+        /// </summary>
+        /// <param name="password">The password to check</param>
+        /// <param name="accountID">The ID of the <see cref="cAccount"/></param>
+        /// <param name="employeeid">The ID of the <see cref="Employee"/></param>
+        /// <param name="encryptor">An instance of <see cref="IEncryptor"/>used to hash the password</param>
+        /// <returns></returns>
+        public byte checkpassword(string password, int accountID, int employeeid, IEncryptor encryptor)
         {
-            using (var expdata = connection ?? new DatabaseConnection(cAccounts.getConnectionString(accountid)))
+            using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(accountid)))
             {
                 expdata.sqlexecute.Parameters.Clear();
             //return codes
@@ -1137,11 +1164,12 @@ using System.Web;
                 if (employeeid != 0)
                 {
                         expdata.sqlexecute.Parameters.AddWithValue("@employeeid", employeeid);
-                    const string strsql = "select password from previouspasswords where employeeid = @employeeid";
+                    const string strsql = "select password, passwordMethod from previouspasswords where employeeid = @employeeid";
                     string oldPassword;
 
                         using (IDataReader prevreader = expdata.GetReader(strsql))
-                    {
+
+                        {
                         switch (reqEmployee.PasswordMethod)
                         {
                             case PasswordEncryptionMethod.FWBasic:
@@ -1158,6 +1186,10 @@ using System.Web;
                             case PasswordEncryptionMethod.ShaHash:
                                 oldPassword = cPassword.SHA_HashPassword(password);
                                 break;
+                            case PasswordEncryptionMethod.SaltedHash:
+                                //TODO: salty hash
+                                oldPassword = password;
+                                break;
                             default:
                                 oldPassword = string.Empty;
                                 break;
@@ -1165,20 +1197,43 @@ using System.Web;
 
                         while (prevreader.Read())
                         {
-                            if (prevreader.GetString(0) == oldPassword)
+                            if (reqEmployee.PasswordMethod == PasswordEncryptionMethod.SaltedHash)
                             {
-                                isPrevious = true;
-                                break;
+                                if (encryptor.Verify(oldPassword, prevreader.GetString(0)))
+                                {
+                                    isPrevious = true;
+                                    break;
+                                }
                             }
+                            else
+                            {
+                                if (prevreader.GetString(0) == oldPassword)
+                                {
+                                    isPrevious = true;
+                                    break;
+                                }    
+                            }
+                            
                         }
                         prevreader.Close();
                     }
 
                     //Check against current password
-                    if (reqEmployee.Password == oldPassword)
+                    if (reqEmployee.PasswordMethod == PasswordEncryptionMethod.SaltedHash)
                     {
-                        isPrevious = true;
+                        if (encryptor.Verify(oldPassword, reqEmployee.Password))
+                        {
+                            isPrevious = true;
+                        }
                     }
+                    else
+                    {
+                        if (reqEmployee.Password == oldPassword)
+                        {
+                            isPrevious = true;
+                        }    
+                    }
+                    
 
                     if (isPrevious)
                     {
@@ -3172,7 +3227,8 @@ using System.Web;
                         false,
                         0,
                         properties.PwdHistoryNum,
-                        currentUser);
+                        currentUser,
+                        EncryptorFactory.CreateEncryptor());
             }
 
             employee.GetCostBreakdown().Add(newEmployee, costCodeBreakdown);

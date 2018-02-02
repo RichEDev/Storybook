@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using Common.Cryptography;
 using SpendManagementLibrary.Enumerators;
 using Spend_Management;
 using SpendManagementLibrary;
@@ -53,8 +54,8 @@ namespace Spend_Management
             }
 
             cEmployees clsEmployees = new cEmployees(reqAccount.accountid);
-
-            AuthenicationOutcome authOutcome = clsEmployees.Authenticate(username, password, AccessRequestType.Mobile);
+            EncryptorFactory.SetCurrent(new HashEncryptorFactory());
+            AuthenicationOutcome authOutcome = clsEmployees.Authenticate(username, password, AccessRequestType.Mobile, EncryptorFactory.CreateEncryptor());
             employeeID = authOutcome.employeeId;
 
             var user = new CurrentUser(reqAccount.accountid, employeeID, -1, Modules.expenses, 0);

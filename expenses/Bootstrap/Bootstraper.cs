@@ -25,6 +25,7 @@
     using CacheDataAccess.CustomFields;
     using CacheDataAccess.Fields;
 
+    using Common.Cryptography;
     using Common.Logging;
     using Common.Logging.Log4Net;
     using Configuration.Core;
@@ -93,6 +94,7 @@
 
             container.Register(typeof(IMetabaseCacheFactory<,>), typeof(MetabaseCacheFactory<,>));
             container.Register(typeof(IAccountCacheFactory<,>), typeof(AccountCacheFactory<,>));
+            container.Register(typeof(IEncryptor), typeof(Pbkdf2Encryptor), Lifestyle.Singleton);
 
             // This registration should register all implementations of IDataFactory<,> within the SqlDataAccess project. 
             container.Register(typeof(IDataFactory<,>), new[] { typeof(SqlAccountFactory).Assembly });
@@ -157,7 +159,7 @@
                 where !assembly.IsDynamic
                 where !assembly.GlobalAssemblyCache
                 from type in assembly.GetExportedTypes()
-                where type.IsSubclassOf(typeof(Page))
+                where type.IsSubclassOf(typeof(Page)) || type.IsSubclassOf(typeof(System.Web.Services.WebService))
                 where !type.IsAbstract && !type.IsGenericType
                 select type;
 

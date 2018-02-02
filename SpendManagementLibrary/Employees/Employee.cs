@@ -26,7 +26,7 @@
     using System.Globalization;
 
     using Microsoft.SqlServer.Server;
-
+    using Common.Cryptography;
     using SpendManagementLibrary.Employees.DutyOfCare;
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Interfaces;
@@ -805,7 +805,7 @@
         /// Changes an employee password.
         /// </summary>
         /// <param name="currentPassword">
-        /// The current password.
+        /// The current password of the employee.
         /// </param>
         /// <param name="newPassword">
         /// The new password.
@@ -822,24 +822,21 @@
         /// <param name="currentUser">
         /// The current user.
         /// </param>
-        /// <param name="connection">
-        /// The connection.
-        /// </param>
+        /// <param name="encryptor">An instance of <see cref="IEncryptor"/></param>
         /// <returns>
         /// 0 on success, 1 if the old password doesn't match, 2 if it doesn't conform to the account password policy.
         /// </returns>
-        public byte ChangePassword(string currentPassword, string newPassword, bool checkOldPassword, byte checkNewPassword, int passwordHistoryNumber, ICurrentUserBase currentUser, IDBConnection connection = null)
+        public byte ChangePassword(string currentPassword, string newPassword, bool checkOldPassword, byte checkNewPassword, int passwordHistoryNumber, ICurrentUserBase currentUser, IEncryptor encryptor)
         {
-            using (var databaseConnection = connection ?? new DatabaseConnection(cAccounts.getConnectionString(this.AccountID)))
-            {
-                databaseConnection.sqlexecute.Parameters.Clear();
-            }
-
             cSecureData secureData = new cSecureData();
 
-            string oldPasswordHashed = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(currentPassword, System.Web.Configuration.FormsAuthPasswordFormat.MD5.ToString());
-            string oldPasswordEncrypted = secureData.Encrypt(currentPassword);
-            string newPasswordEncryped = secureData.Encrypt(newPassword);
+            string oldPasswordHashed =
+                System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(currentPassword,
+                    System.Web.Configuration.FormsAuthPasswordFormat.MD5.ToString());
+            string oldPasswordEncrypted = this.PasswordMethod == PasswordEncryptionMethod.RijndaelManaged
+                ? secureData.Encrypt(currentPassword)
+                : encryptor.Encrypt(currentPassword);
+            string newPasswordEncryped = encryptor.Encrypt(newPassword);
 
             if (checkOldPassword)
             {
@@ -855,7 +852,7 @@
             }
 
             this.Password = newPasswordEncryped;
-            this.PasswordMethod = PasswordEncryptionMethod.RijndaelManaged;
+            this.PasswordMethod = PasswordEncryptionMethod.SaltedHash;
             this.LastChange = DateTime.UtcNow;
             this.LogonRetryCount = 0;
             this.Save(currentUser);

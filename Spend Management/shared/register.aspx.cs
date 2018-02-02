@@ -12,6 +12,8 @@ using System.Text;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BusinessLogic;
+using Common.Cryptography;
 using SpendManagementLibrary;
 using SpendManagementLibrary.Account;
 using SpendManagementLibrary.Addresses;
@@ -851,6 +853,12 @@ public partial class register : Page
     }
 
     /// <summary>
+    /// A public instance of <see cref="IEncryptor"/>
+    /// </summary>
+    [Dependency]
+    public IEncryptor Encryptor { get; set; }
+
+    /// <summary>
     /// The page_ load.
     /// </summary>
     /// <param name="sender">
@@ -1580,8 +1588,8 @@ public partial class register : Page
             reqEmp.GetItemRoles().Add(lstItemRoles, null);
         }
 
-        byte checkpwd = clsemployees.checkpassword(password, accountId, reqEmp.EmployeeID);
-        reqEmp.ChangePassword(string.Empty, password, false, checkpwd, accountProperties.PwdHistoryNum, null);
+        byte checkpwd = clsemployees.checkpassword(password, accountId, reqEmp.EmployeeID, this.Encryptor);
+        reqEmp.ChangePassword(string.Empty, password, false, checkpwd, accountProperties.PwdHistoryNum, null, this.Encryptor);
         bool usecar = this.chkusecar.Checked;
 
         if (usecar)
@@ -1696,7 +1704,7 @@ public partial class register : Page
                 break;
             case 1: // password
                 clsemployees = new cEmployees((int)this.ViewState["accountid"]);
-                if (clsemployees.checkpassword(this.txtnew.Text, (int)this.ViewState["accountid"], 0) > 0)
+                if (clsemployees.checkpassword(this.txtnew.Text, (int)this.ViewState["accountid"], 0, this.Encryptor) > 0)
                 {
                     this.lblpassword.Text = "The password you have entered does not conform to the password policy.";
                     this.lblpassword.Visible = true;

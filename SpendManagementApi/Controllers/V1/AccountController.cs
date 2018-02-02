@@ -1,4 +1,6 @@
-﻿namespace SpendManagementApi.Controllers.V1
+﻿using Common.Cryptography;
+
+namespace SpendManagementApi.Controllers.V1
 {
     using System;
     using System.Collections.Generic;
@@ -48,6 +50,7 @@
         public AccountV1Controller()
         {
             this._accounts = new cAccounts();
+            EncryptorFactory.SetCurrent(new HashEncryptorFactory());
         }
 
         /// <summary>
@@ -138,7 +141,8 @@
             var employees = new cEmployees(reqAccount.accountid);
             var misc = new cMisc(reqAccount.accountid);
             var reqGlobalProperties = misc.GetGlobalProperties(reqAccount.accountid);
-            var authenticate = employees.Authenticate(request.Username, request.Password, mobileRequest ? AccessRequestType.Mobile : AccessRequestType.Api);
+            EncryptorFactory.SetCurrent(new HashEncryptorFactory());
+            var authenticate = employees.Authenticate(request.Username, request.Password, mobileRequest ? AccessRequestType.Mobile : AccessRequestType.Api, EncryptorFactory.CreateEncryptor());
 
             if (authenticate.employeeId == 0)
             {
@@ -578,8 +582,8 @@
 
             var checkOldPassword = !requestContainsResetKey && !passwordHasExpired;
 
-            var checkpwd = employees.checkpassword(request.NewPassword, this.CurrentUser.AccountID, this.CurrentUser.EmployeeID); // checks to make sure the password meets the complexity on the account
-            var returncode = employee.ChangePassword(oldpass, request.NewPassword, checkOldPassword, checkpwd, subaccountProperties.PwdHistoryNum, this.CurrentUser); // 0 on success, 1 if the old password doesn't match, 2 if it doesn't conform to the account password policy.
+            var checkpwd = employees.checkpassword(request.NewPassword, this.CurrentUser.AccountID, this.CurrentUser.EmployeeID, EncryptorFactory.CreateEncryptor()); // checks to make sure the password meets the complexity on the account
+            var returncode = employee.ChangePassword(oldpass, request.NewPassword, checkOldPassword, checkpwd, subaccountProperties.PwdHistoryNum, this.CurrentUser, EncryptorFactory.CreateEncryptor()); // 0 on success, 1 if the old password doesn't match, 2 if it doesn't conform to the account password policy.
 
             if (returncode == 0 && requestContainsResetKey)
             {

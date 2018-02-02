@@ -72,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cryptography\EncryptorFactory.cs" />
+    <Compile Include="Cryptography\Pbkdf2Encryptor.cs" />
+    <Compile Include="Cryptography\HashEncryptorFactory.cs" />
+    <Compile Include="Cryptography\HashException.cs" />
     <Compile Include="Cryptography\IEncryptor.cs" />
     <Compile Include="Cryptography\IEncryptorFactory.cs" />
     <Compile Include="Logging\Converters\ActivityIdHelper.cs" />
