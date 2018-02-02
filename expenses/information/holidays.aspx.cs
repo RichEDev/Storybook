@@ -17,7 +17,6 @@ namespace expenses.information
 	/// </summary>
 	public partial class holidays : Page
 	{
-	
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
 			
@@ -38,6 +37,12 @@ namespace expenses.information
             }
 		}
 
+        /// <summary>
+        /// Creates holidays grid
+        /// </summary>
+        /// <param name="accountid">The account id of logged in user</param>
+        /// <param name="employeeid">The employee id of logged in user</param>
+        /// <returns>The html and data of the grid</returns>
 	    private string[] createGrid(int accountid, int employeeid)
 	    {
 	        cTables clstables = new cTables(accountid);
