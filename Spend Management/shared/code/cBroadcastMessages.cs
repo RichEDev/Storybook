@@ -1,20 +1,15 @@
 using System;
-using System.Data;
-using System.Configuration;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using System.Collections;
-using SpendManagementLibrary.Employees;
-using expenses;
-using System.Web.Caching;
 using System.Collections.Generic;
-using SpendManagementLibrary;
-using Spend_Management;
+using System.Data;
 using System.Data.SqlClient;
+using System.Web.Caching;
+
+using SpendManagementLibrary;
+using SpendManagementLibrary.Employees;
+
+using Spend_Management;
+
 /// <summary>
 /// Summary description for cBroadcastMessages
 /// </summary>
@@ -27,6 +22,14 @@ public class cBroadcastMessages
     System.Web.Caching.Cache Cache = (System.Web.Caching.Cache)System.Web.HttpRuntime.Cache;
 
     SortedList list;
+
+    /// <summary>
+    /// Not for general usage. The constructor is required by cGridNew when it tries to create an instance of cBroadcastMessages.
+    /// </summary>
+    public cBroadcastMessages()
+    {
+    }
+
     public cBroadcastMessages(int accountid)
     {
         nAccountid = accountid;
@@ -418,5 +421,64 @@ public class cBroadcastMessages
         }
 
         return messageList;
+    }
+
+    /// <summary>
+    /// Creates the broadcast message grid
+    /// </summary>
+    /// <param name="accountid">
+    /// The accountid of the current user
+    /// </param>
+    /// <param name="employeeid">
+    /// The employeeid of the current user.
+    /// </param>
+    /// <returns>
+    /// The <see cref="DataSet"/> of the grid
+    /// </returns>
+    public string[] CreateGrid(int accountid, int employeeid)
+    {
+        cTables clstables = new cTables(accountid);
+        cFields clsfields = new cFields(accountid);
+        List<cNewGridColumn> columns = new List<cNewGridColumn>();
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("D097D6BB-B51C-4BBB-8AF9-EA12F9DCF03B"))));
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("E786773E-1C9A-44CD-A2F8-018EE3BECB16"))));
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("6AEF1AF6-35F6-47BE-9577-A2D98FAEE2C8"))));
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("D22D0481-4A90-4DBD-AF26-1CE3AA2178F4"))));
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("4A6AAE5A-B343-4DB2-962D-4AACCD1E196B"))));
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("0F539F73-AB6C-4627-AFAC-93CCED12C272"))));
+        cGridNew clsgrid = new cGridNew(
+            accountid,
+            employeeid,
+            "gridBroadcastMessages",
+            clstables.GetTableByID(new Guid("A6472255-3751-4EA0-B485-132C932277EE")),
+            columns);
+        clsgrid.getColumnByName("broadcastid").hidden = true;
+        clsgrid.KeyField = "broadcastid";
+        clsgrid.enabledeleting = true;
+        clsgrid.deletelink = "javascript:deleteBroadcast({broadcastid});";
+        clsgrid.enableupdating = true;
+        clsgrid.editlink = "aebroadcastmessage.aspx?broadcastid={broadcastid}";
+        clsgrid.InitialiseRow += this.broadcastMessagesGrid_InitialiseRow;
+        clsgrid.ServiceClassForInitialiseRowEvent = "cBroadcastMessages";
+        clsgrid.ServiceClassMethodForInitialiseRowEvent = "broadcastMessagesGrid_InitialiseRow";
+        return clsgrid.generateGrid();
+    }
+
+    /// <summary>
+    /// The initialise row event of the grid
+    /// </summary>
+    /// <param name="row">The row in the grid</param>
+    /// <param name="gridinfo">The grid information</param>
+    public void broadcastMessagesGrid_InitialiseRow(cNewGridRow row, SerializableDictionary<string, object> gridinfo)
+    {
+        if ((DateTime)row.getCellByID("startdate").Value == new DateTime(1900, 01, 01))
+        {
+            row.getCellByID("startdate").Value = "";
+        }
+
+        if ((DateTime)row.getCellByID("enddate").Value == new DateTime(1900, 01, 01))
+        {
+            row.getCellByID("enddate").Value = "";
+        }
     }
 }

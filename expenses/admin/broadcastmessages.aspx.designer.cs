@@ -21,13 +21,13 @@ public partial class admin_broadcastmessages {
     protected global::System.Web.UI.WebControls.Label lbladdbroadcast;
     
     /// <summary>
-    /// gridbroadcast control.
+    /// litgrid control.
     /// </summary>
     /// <remarks>
     /// Auto-generated field.
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
-    protected global::Infragistics.WebUI.UltraWebGrid.UltraWebGrid gridbroadcast;
+    protected global::System.Web.UI.WebControls.Literal litgrid;
     
     /// <summary>
     /// cmdClose control.

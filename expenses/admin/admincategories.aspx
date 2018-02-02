@@ -41,10 +41,6 @@
                     <asp:ImageButton ID="cmdClose" OnClick="cmdClose_Click" runat="server" ImageUrl="~/shared/images/buttons/btn_close.png" CausesValidation="False"></asp:ImageButton>
                 </div>
             </div>
-
-
-
-
         </asp:Content>
 
 
