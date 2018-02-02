@@ -60,7 +60,7 @@ public partial class admin_broadcastmessages : Page
             user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.BroadcastMessages, true, true);
 
             var clsmessages = new cBroadcastMessages(user.AccountID);
-            string[] gridData = clsmessages.createGrid(user.AccountID, user.EmployeeID);
+            string[] gridData = clsmessages.CreateGrid(user.AccountID, user.EmployeeID);
             litgrid.Text = gridData[1];
 
             // set the sel.grid javascript variables

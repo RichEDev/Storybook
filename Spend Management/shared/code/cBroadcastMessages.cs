@@ -1,20 +1,15 @@
 using System;
-using System.Data;
-using System.Configuration;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using System.Collections;
-using SpendManagementLibrary.Employees;
-using expenses;
-using System.Web.Caching;
 using System.Collections.Generic;
-using SpendManagementLibrary;
-using Spend_Management;
+using System.Data;
 using System.Data.SqlClient;
+using System.Web.Caching;
+
+using SpendManagementLibrary;
+using SpendManagementLibrary.Employees;
+
+using Spend_Management;
+
 /// <summary>
 /// Summary description for cBroadcastMessages
 /// </summary>
@@ -28,10 +23,13 @@ public class cBroadcastMessages
 
     SortedList list;
 
+    /// <summary>
+    /// Not for general usage. The constructor is required by cGridNew when it tries to create an instance of cBroadcastMessages.
+    /// </summary>
     public cBroadcastMessages()
     {
-        
     }
+
     public cBroadcastMessages(int accountid)
     {
         nAccountid = accountid;
@@ -426,15 +424,18 @@ public class cBroadcastMessages
     }
 
     /// <summary>
-    /// The get grid.
+    /// Creates the broadcast message grid
     /// </summary>
-    /// <param name="module">
-    /// The module.
+    /// <param name="accountid">
+    /// The accountid of the current user
+    /// </param>
+    /// <param name="employeeid">
+    /// The employeeid of the current user.
     /// </param>
     /// <returns>
-    /// The <see cref="DataSet"/>.
+    /// The <see cref="DataSet"/> of the grid
     /// </returns>
-    public string[] createGrid(int accountid, int employeeid)
+    public string[] CreateGrid(int accountid, int employeeid)
     {
         cTables clstables = new cTables(accountid);
         cFields clsfields = new cFields(accountid);
