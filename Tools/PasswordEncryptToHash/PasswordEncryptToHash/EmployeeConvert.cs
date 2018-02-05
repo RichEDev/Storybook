@@ -19,7 +19,7 @@ namespace PasswordEncryptToHash
         public override void Convert(cAccount account)
         {
             this.Convert(account,
-                "select employeeid, [password], passwordMethod from employees where passwordMethod <> 5 and password > ''",
+                "select employeeid, [password], passwordMethod, 0 as [Order] from employees where passwordMethod <> 5 and password > ''",
                 Global.EmployeeUpdate);
             return;
         }

@@ -48,12 +48,13 @@ namespace PasswordEncryptToHash
                             Logger.Processing();
                             employeeId = reader.GetInt32(0);
                             encryptedPassword = reader.GetString(1);
-                            
+                            var order = reader.GetInt32(3);
                             var decryptedPassword = this._secureData.DecryptString(encryptedPassword);
                             var hashPassword = this._encryptor.Encrypt(decryptedPassword);
+                            
                             row = new SqlDataRecord(typelogitem);
                             row.SetInt32(0, employeeId);
-                            row.SetInt32(1, 0);
+                            row.SetInt32(1, order);
                             row.SetString(2, hashPassword);
                             employeePasswords.Add(row);
                         }
