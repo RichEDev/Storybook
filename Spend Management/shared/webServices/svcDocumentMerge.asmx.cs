@@ -996,7 +996,7 @@ namespace Spend_Management
                 ConditionType.Equals, new object[] { recordid }, new object[] { }, ConditionJoiner.None, 99, false, 0);
             Session["MergeStatus_" + mergeprojectid + "_" + mergeRequestNumber] = 1;
             var executor = new DocumentMergeExecutor(curUser, documentid, project, criteria,
-                mergeRequestNumber, config.GroupingConfigurationId, recordid, entityid, storeDoc);
+                mergeRequestNumber, config.GroupingConfigurationId, recordid, entityid, storeDoc, new cAuditLog(curUser.AccountID, curUser.EmployeeID));
             config.GroupingSources = new List<string>();
             var projectGroupingSources = project.GetGroupingSources();
             foreach (KeyValuePair<int, cReport> keyValue in project.GetReportSources())
