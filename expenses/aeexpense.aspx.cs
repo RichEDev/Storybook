@@ -1581,6 +1581,7 @@ public partial class aeexpense : System.Web.UI.Page
 
             //create searchbox 
             //apply filter on select 
+       
 
             cell = new TableCell();
             cell.CssClass = "inputtd";
@@ -1605,7 +1606,7 @@ public partial class aeexpense : System.Web.UI.Page
             {
                 if (expenseitem.costcodebreakdown[0].costcodeid > 0)
                 {
-                    costcode =  ActionContext.CostCodes.GetCostcodeById(expenseitem.costcodebreakdown[0].costcodeid);
+                    costcode = ActionContext.CostCodes.GetCostcodeById(expenseitem.costcodebreakdown[0].costcodeid);
 
                     if (costcode != null)
                     {
@@ -1616,26 +1617,76 @@ public partial class aeexpense : System.Web.UI.Page
             }
             else if (action == Action.Add && itemtype == ItemType.Cash)
             {
-                //check this session thing
-                if (Session["costcodeId"] != null && (int)Session["costcodeId"] > 0)
-                {
-                    costcode =  ActionContext.CostCodes.GetCostcodeById(expenseitem.costcodebreakdown[0].costcodeid);
 
-                    if (costcode != null)
-                    {
-                        txtbox.Text = costcode.Costcode;
-                        hiddenIdentifier.Text = costcode.CostcodeId.ToString(CultureInfo.InvariantCulture);
-                    }
+
+                if (breakdown.Count > 0)
+
+                {
+                    costcode = ActionContext.CostCodes.GetCostcodeById(breakdown[0].costcodeid);
+
+                    //employee has default costcode breakdown so predefine
+                    txtbox.Text = costcode.Costcode;
+                    hiddenIdentifier.Text = costcode.CostcodeId.ToString();
                 }
+                
+
+
+                //check this session thing
+                //if (Session["costcodeId"] != null && (int)Session["costcodeId"] > 0)
+                //{
+                //    costcode =  ActionContext.CostCodes.GetCostcodeById(expenseitem.costcodebreakdown[0].costcodeid);
+
+                //    if (costcode != null)
+                //    {
+                //        txtbox.Text = costcode.Costcode;
+                //        hiddenIdentifier.Text = costcode.CostcodeId.ToString(CultureInfo.InvariantCulture);
+                //    }
+                //}
             }
 
-            //don't forget validation
+            //don't forget validation or setting if show the description or code name
 
             cell.Controls.Add(txtbox);
             cell.Controls.Add(hiddenIdentifier);
             cell.Controls.Add(new Literal { Text = " " });
 
             row.Cells.Add(cell);
+
+            
+            //cell = new TableCell { CssClass = "inputtd", ColumnSpan = 2 };
+            //if ((itemtype == ItemType.Cash && company.mandatory) || (itemtype == ItemType.CreditCard && company.mandatorycc) || (itemtype == ItemType.PurchaseCard && company.mandatorypc))
+            //{
+            //    custval = new CustomValidator
+            //                  {
+            //                      ClientValidationFunction = "SEL.Expenses.Validate.Organisation.GeneralDetailsMandatory",
+            //                      ControlToValidate = "txtOrganisation",
+            //                      ID = "custorganisation",
+            //                      ValidationGroup = "vgAeExpenses",
+            //                      ValidateEmptyText = true,
+            //                      ErrorMessage = "Please enter a valid " + company.description + ".",
+            //                      Text = "*"
+            //                  };
+
+            //    cell.Controls.Add(custval);
+            //}
+            //else
+            //{
+            //    custval = new CustomValidator
+            //                  {
+            //                      ClientValidationFunction = "SEL.Expenses.Validate.Organisation.GeneralDetailsNotMandatory",
+            //                      ControlToValidate = "txtOrganisation",
+            //                      ID = "custorganisation",
+            //                      ValidationGroup = "vgAeExpenses",
+            //                      ValidateEmptyText = true,
+            //                      ErrorMessage = company.description + " is not valid. Please enter a value in the box provided.",
+            //                      Text = "*"
+            //                  };
+
+            //    cell.Controls.Add(custval);
+            //}
+
+            //row.Cells.Add(cell);
+
 
          //   ddlst = new DropDownList();
            // ddlst.ID = "cmbgencostcode";
