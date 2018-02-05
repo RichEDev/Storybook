@@ -480,5 +480,21 @@ public class cBroadcastMessages
         {
             row.getCellByID("enddate").Value = "";
         }
+
+        byte location = Convert.ToByte(row.getCellByID("location").Value);
+
+        if (location == 1)
+        {
+            row.getCellByID("location").Value = "Home Page";
+        }
+        else if (location == 2)
+        {
+            row.getCellByID("location").Value = "Submit Claim";
+        }
+        else
+        {
+            row.getCellByID("location").Value = "Not Set";
+        }
+
     }
 }
