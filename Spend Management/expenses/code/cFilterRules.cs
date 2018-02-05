@@ -135,13 +135,13 @@
             cTables clstables = new cTables(accountid);
             cFields clsfields = new cFields(accountid);
             List<cNewGridColumn> columns = new List<cNewGridColumn>();
-            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("F01356A1-E1A1-419D-AD0C-E0EDC0E654D6"))));
-            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("3A0D5614-C591-4F8E-B50C-376610053708"))));
-            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("681973BC-AF7D-4BF1-8DFA-F918B43B0B17"))));
-            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("21E21F08-AD33-4DA2-B407-9FB02A284823"))));
-            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("83D6468C-4390-4DD5-94AF-37D832AD5AC5"))));
-            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("1EAE5079-174C-4EB1-9113-929E77FC15B1"))));
-            cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridFilterRules", clstables.GetTableByID(new Guid("A5DD2B27-287E-4342-85C3-A6F8EBDF83DD")), columns);
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("F01356A1-E1A1-419D-AD0C-E0EDC0E654D6")))); // filterid
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("3A0D5614-C591-4F8E-B50C-376610053708")))); // parent
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("681973BC-AF7D-4BF1-8DFA-F918B43B0B17")))); // child
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("21E21F08-AD33-4DA2-B407-9FB02A284823")))); // enabled
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("83D6468C-4390-4DD5-94AF-37D832AD5AC5")))); // childuserdefineid
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("1EAE5079-174C-4EB1-9113-929E77FC15B1")))); // paruserdefineid
+            cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridFilterRules", clstables.GetTableByID(new Guid("A5DD2B27-287E-4342-85C3-A6F8EBDF83DD")), columns); // filter_rules
             clsgrid.getColumnByName("filterid").hidden = true;
             clsgrid.getColumnByName("childuserdefineid").hidden = true;
             clsgrid.getColumnByName("paruserdefineid").hidden = true;
@@ -150,7 +150,7 @@
             clsgrid.deletelink = "javascript:deleteFilterRule(" + accountid + ",{holidayid});";
             clsgrid.enableupdating = true;
             clsgrid.editlink = "aefilterrule.aspx?action=2&filterid={filterid}";
-            var filterTypeField = clsfields.GetFieldByID(Guid.Parse("3A0D5614-C591-4F8E-B50C-376610053708"));
+            var filterTypeField = clsfields.GetFieldByID(Guid.Parse("3A0D5614-C591-4F8E-B50C-376610053708")); // parent
             if (filterType != FilterType.All)
             {
                 clsgrid.addFilter(filterTypeField, ConditionType.Equals, new object[] { (byte)filterType }, null, ConditionJoiner.None);
@@ -170,27 +170,27 @@
         /// <param name="gridinfo">The grid information</param>
         public void FilterRulesGrid_InitialiseRow(cNewGridRow row, SerializableDictionary<string, object> gridinfo)
         {
-            cUserdefinedFields clsudf = new cUserdefinedFields(accountid); ;
-            cUserDefinedField field = null;
-            byte parentid = Convert.ToByte(row.getCellByID("parent").Value);
-            if (parentid != (byte)FilterType.Userdefined)
+            cUserdefinedFields accountUserdefinedFields = new cUserdefinedFields(accountid); ;
+            cUserDefinedField field;
+            byte parentId = Convert.ToByte(row.getCellByID("parent").Value);
+            if (parentId != (byte)FilterType.Userdefined)
             {
-                row.getCellByID("parent").Value = ((FilterType)parentid).ToString();
+                row.getCellByID("parent").Value = ((FilterType)parentId).ToString();
             }
             else
             {
-                field = clsudf.GetUserDefinedById((int)row.getCellByID("paruserdefineid").Value);
+                field = accountUserdefinedFields.GetUserDefinedById((int)row.getCellByID("paruserdefineid").Value);
                 row.getCellByID("parent").Value = field.label;
             }
 
-            byte childid = Convert.ToByte(row.getCellByID("child").Value);
-            if (childid != (byte)FilterType.Userdefined)
+            byte childId = Convert.ToByte(row.getCellByID("child").Value);
+            if (childId != (byte)FilterType.Userdefined)
             {
-                row.getCellByID("child").Value = ((FilterType)childid).ToString();
+                row.getCellByID("child").Value = ((FilterType)childId).ToString();
             }
             else
             {
-                field = clsudf.GetUserDefinedById((int)row.getCellByID("childuserdefineid").Value);
+                field = accountUserdefinedFields.GetUserDefinedById((int)row.getCellByID("childuserdefineid").Value);
                 row.getCellByID("child").Value = field.label;
             }
         }

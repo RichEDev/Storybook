@@ -48,11 +48,11 @@ namespace expenses
 	        cTables clstables = new cTables(accountid);
 	        cFields clsfields = new cFields(accountid);
 	        List<cNewGridColumn> columns = new List<cNewGridColumn>();
-	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("6ECCC7C6-C6DA-44D1-AABA-A2E9CFF48918"))));
-	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("44C2A53A-DB33-45AF-AF66-D0055AAD48EC"))));
-	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("0744BEC1-5C4D-4B5E-90CF-8D3D9F187DBF"))));
-	        cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridCats", clstables.GetTableByID(new Guid("75C247C2-457E-4B14-BBEC-1391CD77FB9E")), columns);
-	        clsgrid.getColumnByName("categoryid").hidden = true;
+	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("6ECCC7C6-C6DA-44D1-AABA-A2E9CFF48918")))); // categoryid
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("44C2A53A-DB33-45AF-AF66-D0055AAD48EC")))); // category
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("0744BEC1-5C4D-4B5E-90CF-8D3D9F187DBF")))); // description
+            cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridCats", clstables.GetTableByID(new Guid("75C247C2-457E-4B14-BBEC-1391CD77FB9E")), columns); // categories 
+            clsgrid.getColumnByName("categoryid").hidden = true;
 	        clsgrid.KeyField = "categoryid";
 	        clsgrid.enabledeleting = true;
 	        clsgrid.deletelink = "javascript:deleteCategory({categoryid});";
