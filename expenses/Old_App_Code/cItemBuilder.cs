@@ -709,7 +709,7 @@ public class cItemBuilder
                 if (homeAddressIds.Value != null && subAccount.SubAccountProperties.ShowFullHomeAddressOnClaims && currentUser.EmployeeID != employeeid && !currentUser.isDelegate)
                 {
                     cAuditLog auditLog = new cAuditLog();
-                    auditLog.ViewRecord(SpendManagementElement.Claims, "Home Address of " + employee.Username + " viewed by employee.");
+                    auditLog.ViewRecord(SpendManagementElement.Claims, "Home Address of " + employee.Username + " viewed by employee.", currentUser);
                 }
 
 
