@@ -3439,12 +3439,7 @@ public class cItemBuilder
         var subcat = subcats.GetSubcatById(subcatid);
         var DutyOfCareDocuments = new DutyOfCareDocuments();
         var activeCars = this.clsEmployeeCars.GetActiveCars(this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? expenseItemDate : DateTime.Now, false);
-
-        if (this.accountProperties.UseDateOfExpenseForDutyOfCareChecks)
-        {
-            activeCars = activeCars.Where(currentCar => currentCar.carid == carid).ToList();
-        }
-
+        activeCars = activeCars.Where(currentCar => currentCar.carid == carid).ToList();
         var dutyOfCareExpiredDocuments = DutyOfCareDocuments.PassesDutyOfCare(accountid, activeCars, employeeid, this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? expenseItemDate : DateTime.Now, this.currentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect)).FirstOrDefault();
         var documentExpiryResults = dutyOfCareExpiredDocuments.Key;
         var isManualDocumentValid = dutyOfCareExpiredDocuments.Value;
@@ -4084,7 +4079,7 @@ public class cItemBuilder
                     bool hasAnyActiveCars = activeCars.Count > 0 ? true : false;
                     documentExpiryResults = documentExpiryResults.Where(i => i.carId == 0 && hasAnyActiveCars).ToList();
                 }
-                outcome = (((documentExpiryResults.Count <= 0 || !isEnableDoc || (isEnableDoc && submittedClaim))
+                outcome = (((documentExpiryResults.Count <= 0  || !accountProperties.UseDateOfExpenseForDutyOfCareChecks || !isEnableDoc || (isEnableDoc && submittedClaim))
                         && activeCars.Count > 0 && !carIsSorn)
                         && (class1BusinessResults.Count == 0 || (accountProperties.BlockInsuranceExpiry && !isEnableDoc)
                         || (accountProperties.BlockInsuranceExpiry && isEnableDoc && !RequireClass1BusinessInsurance)
@@ -4130,7 +4125,7 @@ public class cItemBuilder
             return outcome;
         }
         //if None of Doc checks are enabled OR date of expense is current date and DOC documents are valid
-        if (!docChecksEnabled || (((documentExpiryResults.Count <= 0 || !isEnableDoc || (isEnableDoc && submittedClaim))
+        if (!docChecksEnabled || (((documentExpiryResults.Count <= 0 || !accountProperties.UseDateOfExpenseForDutyOfCareChecks || !isEnableDoc || (isEnableDoc && submittedClaim))
                                    && activeCarCount > 0 &&
                                    !carIsSorn)
                                   &&
