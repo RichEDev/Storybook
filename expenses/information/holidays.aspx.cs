@@ -48,18 +48,18 @@ namespace expenses.information
 	        cTables clstables = new cTables(accountid);
 	        cFields clsfields = new cFields(accountid);
 	        List<cNewGridColumn> columns = new List<cNewGridColumn>();
-	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("35B90FF5-780A-43C2-8E54-932B1A7C8B6E"))));
-	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("76E6DAEB-DD74-4B4F-B7D5-E69D47FAA0EA"))));
-	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("F6A23A31-B705-4567-92AE-48FD95372941"))));
-	        cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridHolidays", clstables.GetTableByID(new Guid("A6FF86D3-808F-406F-9DD6-E21B7B9A8D67")), columns);
-	        clsgrid.getColumnByName("holidayid").hidden = true;
+	        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("35B90FF5-780A-43C2-8E54-932B1A7C8B6E")))); // holidayid
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("76E6DAEB-DD74-4B4F-B7D5-E69D47FAA0EA")))); // startdate
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("F6A23A31-B705-4567-92AE-48FD95372941")))); // enddate
+	        cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridHolidays", clstables.GetTableByID(new Guid("A6FF86D3-808F-406F-9DD6-E21B7B9A8D67")), columns); // holidays
+            clsgrid.getColumnByName("holidayid").hidden = true;
 	        clsgrid.KeyField = "holidayid";
 	        clsgrid.enabledeleting = true;
 	        clsgrid.deletelink = "javascript:deleteHoliday({holidayid});";
 	        clsgrid.enableupdating = true;
 	        clsgrid.editlink = "aeholiday.aspx?action=2&holidayid={holidayid}";
-	        var employeeIdField = clsfields.GetFieldByID(Guid.Parse("10300FB9-53F1-471A-A65A-D77A6491BB8F")); // employeeID
-	        clsgrid.addFilter(employeeIdField, ConditionType.Equals, new object[] { employeeid }, null, ConditionJoiner.None);
+	        var employeeIdField = clsfields.GetFieldByID(Guid.Parse("10300FB9-53F1-471A-A65A-D77A6491BB8F")); // employeeid
+            clsgrid.addFilter(employeeIdField, ConditionType.Equals, new object[] { employeeid }, null, ConditionJoiner.None);
             return clsgrid.generateGrid();
 	    }
 

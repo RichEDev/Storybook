@@ -440,18 +440,13 @@ public class cBroadcastMessages
         cTables clstables = new cTables(accountid);
         cFields clsfields = new cFields(accountid);
         List<cNewGridColumn> columns = new List<cNewGridColumn>();
-        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("D097D6BB-B51C-4BBB-8AF9-EA12F9DCF03B"))));
-        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("E786773E-1C9A-44CD-A2F8-018EE3BECB16"))));
-        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("6AEF1AF6-35F6-47BE-9577-A2D98FAEE2C8"))));
-        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("D22D0481-4A90-4DBD-AF26-1CE3AA2178F4"))));
-        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("4A6AAE5A-B343-4DB2-962D-4AACCD1E196B"))));
-        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("0F539F73-AB6C-4627-AFAC-93CCED12C272"))));
-        cGridNew clsgrid = new cGridNew(
-            accountid,
-            employeeid,
-            "gridBroadcastMessages",
-            clstables.GetTableByID(new Guid("A6472255-3751-4EA0-B485-132C932277EE")),
-            columns);
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("D097D6BB-B51C-4BBB-8AF9-EA12F9DCF03B")))); // broadcastid
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("E786773E-1C9A-44CD-A2F8-018EE3BECB16")))); // title
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("6AEF1AF6-35F6-47BE-9577-A2D98FAEE2C8")))); // startdate
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("D22D0481-4A90-4DBD-AF26-1CE3AA2178F4")))); // enddate
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("4A6AAE5A-B343-4DB2-962D-4AACCD1E196B")))); // expirewhenread
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("0F539F73-AB6C-4627-AFAC-93CCED12C272")))); // location
+        cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridBroadcastMessages", clstables.GetTableByID(new Guid("A6472255-3751-4EA0-B485-132C932277EE")), columns); // broadcast_messages
         clsgrid.getColumnByName("broadcastid").hidden = true;
         clsgrid.KeyField = "broadcastid";
         clsgrid.enabledeleting = true;

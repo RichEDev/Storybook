@@ -123,50 +123,78 @@
                 .ToDictionary(rule => rule.filterid);
         }
 
-        public System.Data.DataSet getFilterRuleGrid(FilterType filtertype)
+        /// <summary>
+        /// Creates filter rules grid
+        /// </summary>
+        /// <param name="accountid">The account id of logged in user</param>
+        /// <param name="employeeid">The employee id of logged in user</param>
+        /// <param name="filterType">The type of filter that must be applied to the grid</param>
+        /// <returns>The html and data of the grid</returns>
+        public string[] createFilterRuleGrid(int accountid, int employeeid, FilterType filterType)
         {
-            object[] values;
-            Dictionary<int, cFilterRule> lstRules = GetFilterRulesByType(filtertype);
-            cUserdefinedFields clsudf = new cUserdefinedFields(accountid); ;
-            cUserDefinedField field = null;
-            System.Data.DataSet ds = new System.Data.DataSet();
-            System.Data.DataTable tbl = new System.Data.DataTable();
-
-            tbl.Columns.Add("filterid", System.Type.GetType("System.Int32"));
-            tbl.Columns.Add("parent", System.Type.GetType("System.String"));
-            tbl.Columns.Add("child", System.Type.GetType("System.String"));
-            tbl.Columns.Add("enabled", System.Type.GetType("System.Boolean"));
-
-            foreach (cFilterRule rule in lstRules.Values)
+            cTables clstables = new cTables(accountid);
+            cFields clsfields = new cFields(accountid);
+            List<cNewGridColumn> columns = new List<cNewGridColumn>();
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("F01356A1-E1A1-419D-AD0C-E0EDC0E654D6")))); // filterid
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("3A0D5614-C591-4F8E-B50C-376610053708")))); // parent
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("681973BC-AF7D-4BF1-8DFA-F918B43B0B17")))); // child
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("21E21F08-AD33-4DA2-B407-9FB02A284823")))); // enabled
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("83D6468C-4390-4DD5-94AF-37D832AD5AC5")))); // childuserdefineid
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("1EAE5079-174C-4EB1-9113-929E77FC15B1")))); // paruserdefineid
+            cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridFilterRules", clstables.GetTableByID(new Guid("A5DD2B27-287E-4342-85C3-A6F8EBDF83DD")), columns); // filter_rules
+            clsgrid.getColumnByName("filterid").hidden = true;
+            clsgrid.getColumnByName("childuserdefineid").hidden = true;
+            clsgrid.getColumnByName("paruserdefineid").hidden = true;
+            clsgrid.KeyField = "filterid";
+            clsgrid.enabledeleting = true;
+            clsgrid.deletelink = "javascript:deleteFilterRule(" + accountid + ",{holidayid});";
+            clsgrid.enableupdating = true;
+            clsgrid.editlink = "aefilterrule.aspx?action=2&filterid={filterid}";
+            var filterTypeField = clsfields.GetFieldByID(Guid.Parse("3A0D5614-C591-4F8E-B50C-376610053708")); // parent
+            if (filterType != FilterType.All)
             {
-                values = new object[4];
-                values[0] = rule.filterid;
-                if (rule.parent != FilterType.Userdefined)
-                {
-                    values[1] = rule.parent.ToString();
-                }
-                else
-                {
-                    field = clsudf.GetUserDefinedById(rule.paruserdefineid);
-                    values[1] = field.label;
-                }
-                if (rule.child != FilterType.Userdefined)
-                {
-                    values[2] = rule.child.ToString();
-                }
-                else
-                {
-                    field = clsudf.GetUserDefinedById(rule.childuserdefineid);
-                    values[2] = field.label;
-                }
-                values[3] = rule.enabled;
+                clsgrid.addFilter(filterTypeField, ConditionType.Equals, new object[] { (byte)filterType }, null, ConditionJoiner.None);
+            }
+            clsgrid.InitialiseRow += this.FilterRulesGrid_InitialiseRow;
+            clsgrid.ServiceClassForInitialiseRowEvent = "cFilterRules";
+            clsgrid.ServiceClassMethodForInitialiseRowEvent = "FilterRulesGrid_InitialiseRow";
+            clsgrid.EmptyText = "There are no filter rules to display.";
+            return clsgrid.generateGrid();
+        }
 
-                tbl.Rows.Add(values);
+
+        /// <summary>
+        /// The initialise row event of the grid
+        /// </summary>
+        /// <param name="row">The row in the grid</param>
+        /// <param name="gridinfo">The grid information</param>
+        public void FilterRulesGrid_InitialiseRow(cNewGridRow row, SerializableDictionary<string, object> gridinfo)
+        {
+            cUserdefinedFields accountUserdefinedFields = new cUserdefinedFields(accountid); ;
+            cUserDefinedField field;
+            byte parentId = Convert.ToByte(row.getCellByID("parent").Value);
+            if (parentId != (byte)FilterType.Userdefined)
+            {
+                row.getCellByID("parent").Value = ((FilterType)parentId).ToString();
+            }
+            else
+            {
+                field = accountUserdefinedFields.GetUserDefinedById((int)row.getCellByID("paruserdefineid").Value);
+                row.getCellByID("parent").Value = field.label;
             }
 
-            ds.Tables.Add(tbl);
-            return ds;
+            byte childId = Convert.ToByte(row.getCellByID("child").Value);
+            if (childId != (byte)FilterType.Userdefined)
+            {
+                row.getCellByID("child").Value = ((FilterType)childId).ToString();
+            }
+            else
+            {
+                field = accountUserdefinedFields.GetUserDefinedById((int)row.getCellByID("childuserdefineid").Value);
+                row.getCellByID("child").Value = field.label;
+            }
         }
+
 
         public List<ListItem> getUserdefinedListItems()
         {

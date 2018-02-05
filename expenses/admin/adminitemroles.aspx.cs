@@ -34,10 +34,10 @@ public partial class admin_adminitemroles : System.Web.UI.Page
         cTables clstables = new cTables(accountid);
         cFields clsfields = new cFields(accountid);
         List<cNewGridColumn> columns = new List<cNewGridColumn>();
-        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("F3016E05-1832-49D1-9D33-79ED893B4366"))));
-        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("54825039-9125-4705-B2D4-EB340D1D30DE"))));
-        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("DCC4C3E7-1ED8-40B9-94BC-F5C52897FD86"))));
-        cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridItemRoles", clstables.GetTableByID(new Guid("DB7D42FD-E1FA-4A42-84B4-E8B95C751BDA")), columns);
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("F3016E05-1832-49D1-9D33-79ED893B4366")))); // itemroleid
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("54825039-9125-4705-B2D4-EB340D1D30DE")))); // rolename
+        columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("DCC4C3E7-1ED8-40B9-94BC-F5C52897FD86")))); // description
+        cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridItemRoles", clstables.GetTableByID(new Guid("DB7D42FD-E1FA-4A42-84B4-E8B95C751BDA")), columns); // item_roles
         clsgrid.getColumnByName("itemroleid").hidden = true;
         clsgrid.KeyField = "itemroleid";
         clsgrid.enabledeleting = true;

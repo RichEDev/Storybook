@@ -49,22 +49,13 @@ namespace expenses.admin {
         protected global::System.Web.UI.WebControls.DropDownList cmbfilter;
         
         /// <summary>
-        /// pnlFilter control.
+        /// litgrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel pnlFilter;
-        
-        /// <summary>
-        /// gridfilterrules control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Infragistics.WebUI.UltraWebGrid.UltraWebGrid gridfilterrules;
+        protected global::System.Web.UI.WebControls.Literal litgrid;
         
         /// <summary>
         /// cmdClose control.
