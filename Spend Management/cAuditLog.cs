@@ -282,7 +282,7 @@ namespace Spend_Management
         /// <param name="element">Application area description</param>
         /// <param name="value">Record description to identify record</param>
         /// <param name="currentUser">Pass a CurentUser if you don't want the session to be looked at.</param>
-        public void ViewRecord(SpendManagementElement element, string value, ICurrentUser currentUser = null)
+        public void ViewRecord(SpendManagementElement element, string value, ICurrentUser currentUser)
         {
             CurrentUser user = (currentUser ?? cMisc.GetCurrentUser()) as CurrentUser;
             DBConnection expdata = new DBConnection(cAccounts.getConnectionString(AccountID));
@@ -370,11 +370,6 @@ namespace Spend_Management
 			set { sUsername = value; }
 		}
 	}
-
-    public interface IAuditLog
-    {
-        void editRecord(int id, string item, SpendManagementElement element, Guid fieldID, string oldvalue, string newvalue);
-    }
 
     /// <summary>
 	/// Individual audit log entry class

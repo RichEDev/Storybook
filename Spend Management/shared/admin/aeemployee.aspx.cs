@@ -523,7 +523,7 @@ namespace Spend_Management
                     if (reqemp.EmployeeID != _user.EmployeeID)
                     {
                         cAuditLog auditLog = new cAuditLog();
-                        auditLog.ViewRecord(SpendManagementElement.Employees, reqemp.Username);
+                        auditLog.ViewRecord(SpendManagementElement.Employees, reqemp.Username, this._user);
                     }
 
                 }

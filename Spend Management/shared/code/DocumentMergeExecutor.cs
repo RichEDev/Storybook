@@ -59,6 +59,8 @@ namespace Spend_Management.shared.code
 
         private readonly bool _storeDocument;
 
+        private IAuditLog _auditLog;
+
         #endregion
        
         public TorchGroupingConfiguration TorchGroupingConfiguration { get; set; }
@@ -78,6 +80,7 @@ namespace Spend_Management.shared.code
         /// <param name="projectRecordId">The record id for the project</param>
         /// <param name="entityId">The custom entity id for the project</param>
         /// <param name="store">A value indicating whether or not a copy of the generated document should be saved</param>
+        /// <param name="auditLog">An instance of audit logger</param>
         public DocumentMergeExecutor(
             ICurrentUser currentUser,
             int documentId,
@@ -87,7 +90,8 @@ namespace Spend_Management.shared.code
             int torchConfigId,
             int projectRecordId,
             int entityId,
-            bool store)
+            bool store,
+            IAuditLog auditLog)
         {
             this._accountId = currentUser.AccountID;
             this._documentId = documentId;
@@ -103,6 +107,7 @@ namespace Spend_Management.shared.code
 
             this._currentUser = currentUser;
             this._torchConfigId = torchConfigId;
+            this._auditLog = auditLog;
             _calcManager = new UltraWebCalcManager();
             var fnTxt = new cText();
             _calcManager.RegisterUserDefinedFunction(fnTxt);
@@ -826,18 +831,20 @@ namespace Spend_Management.shared.code
         /// <summary>
         /// Processes an attachment based on its fileID.
         /// </summary>
-        /// <param name="fileId"></param>
+        /// <param name="fileId">The id of the file being processed</param>
         /// <returns>Error or html image tag</returns>
         private string ProcessAttachmentImage(Guid fileId)
         {
             var customEntities = new cCustomEntities();
             HTMLImageData fileData = customEntities.GetCustomEntityAttachmentData(
-                this._currentUser.AccountID,
+                this._currentUser,
+                this._auditLog,
                 fileId.ToString());
 
             if (fileData != null)
             {
                 var entities = new cCustomEntities();
+                this._auditLog.ViewRecord(SpendManagementElement.Attachments, fileData.fileName, this._currentUser);
 
                 if (customEntities.CheckFileTypeIsImage(fileData.fileType))
                 {

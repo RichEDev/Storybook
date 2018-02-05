@@ -181,7 +181,7 @@ namespace Spend_Management
                         Guid tableid = new Guid(context.Request.QueryString["tableid"]);
 
                         cAttachments atts = new cAttachments(curUser.AccountID, curUser.EmployeeID, curUser.CurrentSubAccountId, delegateId);
-                        cAttachment att = atts.getAttachment(tableid, attid);
+                        cAttachment att = atts.getAttachment(tableid, attid, curUser, new cAuditLog(curUser.AccountID, curUser.EmployeeID));
 
                         cGlobalMimeTypes clsGlobMimeTypes = new cGlobalMimeTypes(curUser.AccountID);
 
@@ -226,7 +226,7 @@ namespace Spend_Management
                         string fileID = (context.Request.QueryString["fileID"]);
 
 
-                        HTMLImageData fileData = customEntities.GetCustomEntityAttachmentData(curUser.AccountID, fileID);
+                        HTMLImageData fileData = customEntities.GetCustomEntityAttachmentData(curUser, new cAuditLog(curUser.AccountID, curUser.EmployeeID), fileID);
 
                         if (fileData != null)
                         {
@@ -247,7 +247,7 @@ namespace Spend_Management
                         //get file details based on ID
                         cCustomEntities customEntities = new cCustomEntities();
 
-                        HTMLImageData fileData = customEntities.GetCustomEntityAttachmentData(curUser.AccountID, fileID);
+                        HTMLImageData fileData = customEntities.GetCustomEntityAttachmentData(curUser, new cAuditLog(curUser.AccountID, curUser.EmployeeID), fileID);
 
                         if (fileData != null)
                         {

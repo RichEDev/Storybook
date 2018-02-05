@@ -961,7 +961,7 @@ namespace Spend_Management
                 ConditionType.Equals, new object[] { recordid }, new object[] { }, ConditionJoiner.None, 99, false, 0);
             Session["MergeStatus_" + mergeprojectid + "_" + mergeRequestNumber] = 1;
             var executor = new DocumentMergeExecutor(curUser, documentid, project, criteria,
-                mergeRequestNumber, configId, recordid,entityid, storeDoc);
+                mergeRequestNumber, configId, recordid,entityid, storeDoc, new cAuditLog(curUser.AccountID, curUser.EmployeeID));
             var docTemplates = new DocumentTemplate(curUser.AccountID, curUser.CurrentSubAccountId, curUser.EmployeeID);
             cDocumentTemplate docTemplate = docTemplates.getTemplateById(documentid);
             var outputDocType = TorchExportDocumentType.MS_Word_DOC;

@@ -207,14 +207,18 @@ namespace Spend_Management
 		/// </summary>
 		/// <param name="tableid">Database table ID to get the attachment from</param>
 		/// <param name="attachmentid">Database ID of the attachment to be retrieved</param>
+		/// <param name="currentUser">An instance of ICurrentUser, to pass the current user to auditing</param>
+		/// <param name="auditLog">An instance of IAuditLog, to write an audit log entry</param>
 		/// <returns>Attachment in a class structure</returns>
-		public cAttachment getAttachment(Guid tableid, int attachmentid)
+		public cAttachment getAttachment(Guid tableid, int attachmentid, ICurrentUser currentUser, IAuditLog auditLog)
 		{
-			cAttachment retAttachment = null;
+            cAttachment retAttachment = null;
 			cTables clsTables = new cTables(accountid);
             cTable table = clsTables.GetTableByID(tableid);
 
 			retAttachment = getAttachmentFromDb(table, attachmentid);
+            auditLog.ViewRecord(SpendManagementElement.Attachments, retAttachment.FileName, currentUser);
+
 			return retAttachment;
 		}
 

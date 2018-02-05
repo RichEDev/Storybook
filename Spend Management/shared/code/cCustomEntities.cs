@@ -745,12 +745,15 @@ namespace Spend_Management
         /// <summary>
         /// Gets the attachment data relating to the attachment type attribute or images uploaded in the formatted text boxes
         /// </summary>
-        /// <param name="accountid">The account id</param>
+        /// <param name="currentUser">An instance of the current user</param>
+        /// <param name="auditLog">An instance of audit log. To write a view record</param>
         /// <param name="GuidFileID">The file guid</param>
         /// <returns>List<HTMLImageData></returns> 
-        public HTMLImageData GetCustomEntityAttachmentData(int accountid, string GuidFileID = "")
-        {
-            return CustomEntityImageData.GetData(accountid, GuidFileID);
+        public HTMLImageData GetCustomEntityAttachmentData(ICurrentUser currentUser, IAuditLog auditLog, string GuidFileID = "")
+        {            
+            var attachment =  CustomEntityImageData.GetData(currentUser.AccountID, GuidFileID);
+            auditLog.ViewRecord(SpendManagementElement.Attachments, attachment.fileName, currentUser);
+            return attachment;
         }
 
         /// <summary>

@@ -1364,7 +1364,7 @@
             if (auditHomeAddress == true && (user.EmployeeID != reqclaimemp.EmployeeID && !user.isDelegate))
             {
                 cAuditLog auditLog = new cAuditLog();
-                auditLog.ViewRecord(SpendManagementElement.Claims, "Home Address of " + reqclaimemp.Username + " viewed by employee.");
+                auditLog.ViewRecord(SpendManagementElement.Claims, "Home Address of " + reqclaimemp.Username + " viewed by employee.", user);
             }
 
             output.Append("</table>");

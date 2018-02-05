@@ -978,6 +978,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\AutomapperConfig.cs" />
     <Compile Include="Bootstrap\BootstrapDvla.cs" />
+    <Compile Include="cAuditLog.cs" />
     <Compile Include="Expedite\ExpediteEmail.cs" />
     <Compile Include="Expedite\PaymentService.cs" />
     <Compile Include="ExpenseItemsGridHomeAddressModifier.cs" />
@@ -1074,6 +1075,7 @@
     <Compile Include="expenses\code\Claims\ClaimSubmission.cs" />
     <Compile Include="expenses\code\SendMessageEnum.cs" />
     <Compile Include="expenses\code\StringFormatHelper.cs" />
+    <Compile Include="IAuditLog.cs" />
     <Compile Include="SessionHandlerConfiguration.cs" />
     <Compile Include="SessionHttpHandler.cs" />
     <Compile Include="shared\admin\aenotificationtemplate.aspx.cs">
@@ -2789,7 +2791,6 @@
     </Compile>
     <Compile Include="shared\code\cAccessRoles.cs" />
     <Compile Include="expenses\code\cAllowances.cs" />
-    <Compile Include="shared\code\cAuditLog.cs" />
     <Compile Include="expenses\code\cBudgetholders.cs" />
     <Compile Include="expenses\code\cCardStatements.cs" />
     <Compile Include="expenses\code\cCardTemplates.cs" />
