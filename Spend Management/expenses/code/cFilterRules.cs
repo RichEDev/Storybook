@@ -124,10 +124,11 @@
         }
 
         /// <summary>
-        /// Creates holidays grid
+        /// Creates filter rules grid
         /// </summary>
         /// <param name="accountid">The account id of logged in user</param>
         /// <param name="employeeid">The employee id of logged in user</param>
+        /// <param name="filterType">The type of filter that must be applied to the grid</param>
         /// <returns>The html and data of the grid</returns>
         public string[] createFilterRuleGrid(int accountid, int employeeid, FilterType filterType)
         {
