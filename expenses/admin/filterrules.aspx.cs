@@ -19,6 +19,8 @@ using Spend_Management;
 
 namespace expenses.admin
 {
+    using System.Collections.Generic;
+
     using SpendManagementLibrary.Employees;
 
     public partial class filterrules : System.Web.UI.Page
@@ -45,10 +47,17 @@ namespace expenses.admin
                 ViewState["filtertype"] = Request.QueryString["FilterType"];
 
                 // filter rules element not mapped yet
-                //user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.FilterRules, true, true);
 
                 cmbfilter.SelectedIndex = int.Parse(ViewState["filtertype"].ToString());
                 ViewState["filtertype"] = (FilterType)cmbfilter.SelectedIndex;
+
+                var filterRules = new cFilterRules(user.AccountID);
+                byte selectedValue = Convert.ToByte(this.cmbfilter.Items[this.cmbfilter.SelectedIndex].Value);
+                string[] gridData = filterRules.createFilterRuleGrid(user.AccountID, user.EmployeeID, (FilterType)selectedValue);
+                litgrid.Text = gridData[1];
+
+                // set the sel.grid javascript variables
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "FilterRulesGridVars", cGridNew.generateJS_init("FilterRulesGridVars", new List<string>() { gridData[0] }, user.CurrentActiveModule), true);
             }
         }
 
@@ -73,75 +82,12 @@ namespace expenses.admin
 
         #endregion
 
-        protected override void OnInitComplete(EventArgs e)
-        {
-            base.OnInitComplete(e);
-            gridfilterrules.InitializeDataSource += new Infragistics.WebUI.UltraWebGrid.InitializeDataSourceEventHandler(gridfilterrules_InitializeDataSource);
-        }
-
-        private void getGrid(FilterType filtertype)
-        {
-            this.SetFilterRules((int)ViewState["accountid"]);
-            gridfilterrules.DataSource = _filterRules.getFilterRuleGrid(filtertype);
-            gridfilterrules.DataBind();
-        }
-
-        void gridfilterrules_InitializeDataSource(object sender, Infragistics.WebUI.UltraWebGrid.UltraGridEventArgs e)
-        {
-            getGrid((FilterType)ViewState["filtertype"]);
-        }
-
-        protected void gridfilterrules_InitializeRow(object sender, Infragistics.WebUI.UltraWebGrid.RowEventArgs e)
-        {
-            e.Row.Cells.FromKey("edit").Value = "<a href=\"aefilterrule.aspx?action=2&filterid=" + e.Row.Cells.FromKey("filterid").Value + "\"><img alt=\"Edit\" src=\"../icons/edit.gif\"></a>";
-            e.Row.Cells.FromKey("delete").Value = "<a href=\"javascript:deleteFilterRule(" + (int)ViewState["accountid"] + "," + e.Row.Cells.FromKey("filterid").Value + ");\"><img alt=\"Delete\" src=\"../icons/delete2.gif\"></a>";
-        }
-
-        protected void gridfilterrules_InitializeLayout(object sender, Infragistics.WebUI.UltraWebGrid.LayoutEventArgs e)
-        {
-            #region Sorting
-            cEmployees clsemployees = new cEmployees((int)ViewState["accountid"]);
-            Employee reqemp = clsemployees.GetEmployeeById((int)ViewState["employeeid"]);
-            cGridSort sortorder = reqemp.GetGridSortOrders().GetBy(Grid.FilterRule);
-            if (sortorder != null)
-            {
-                if (e.Layout.Bands[0].SortedColumns.Count == 0)
-                {
-                    if (e.Layout.Bands[0].Columns.FromKey(sortorder.columnname) != null)
-                    {
-                        e.Layout.Bands[0].Columns.FromKey(sortorder.columnname).SortIndicator = (SortIndicator)sortorder.sortorder;
-                        e.Layout.Bands[0].SortedColumns.Add(sortorder.columnname);
-                    }
-                }
-            }
-            #endregion
-
-            e.Layout.Bands[0].Columns.FromKey("filterid").Hidden = true;
-            e.Layout.Bands[0].Columns.FromKey("parent").Header.Caption = "Parent";
-            e.Layout.Bands[0].Columns.FromKey("child").Header.Caption = "Child";
-            e.Layout.Bands[0].Columns.FromKey("enabled").Header.Caption = "Enabled";
-
-            if (e.Layout.Bands[0].Columns.FromKey("edit") == null)
-            {
-                e.Layout.Bands[0].Columns.Insert(0, new Infragistics.WebUI.UltraWebGrid.UltraGridColumn("delete", "<img alt=\"Delete\" src=\"../icons/delete2_blue.gif\">", Infragistics.WebUI.UltraWebGrid.ColumnType.HyperLink, ""));
-                e.Layout.Bands[0].Columns.FromKey("delete").Width = Unit.Pixel(15);
-                e.Layout.Bands[0].Columns.Insert(0, new Infragistics.WebUI.UltraWebGrid.UltraGridColumn("edit", "<img alt=\"Edit\" src=\"../icons/edit_blue.gif\">", Infragistics.WebUI.UltraWebGrid.ColumnType.HyperLink, ""));
-                e.Layout.Bands[0].Columns.FromKey("edit").Width = Unit.Pixel(15);
-            }
-        }
-
         protected void cmbfilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            getGrid((FilterType)cmbfilter.SelectedIndex);
-            
-        }
-
-        protected void gridfilterrules_SortColumn(object sender, Infragistics.WebUI.UltraWebGrid.SortColumnEventArgs e)
-        {
-            UltraWebGrid grid = (UltraWebGrid)sender;
-            byte direction = (byte)grid.Columns[e.ColumnNo].SortIndicator;
-            CurrentUser currentUser = cMisc.GetCurrentUser();
-            currentUser.Employee.GetGridSortOrders().Add(Grid.FilterRule, grid.Columns[e.ColumnNo].Key, direction);
+            var filterRules = new cFilterRules((int)ViewState["accountid"]);
+            byte selectedValue = Convert.ToByte(this.cmbfilter.Items[this.cmbfilter.SelectedIndex].Value);
+            string[] gridData = filterRules.createFilterRuleGrid((int)ViewState["accountid"], (int)ViewState["employeeid"], (FilterType)selectedValue);
+            litgrid.Text = gridData[1];
         }
 
         [WebMethod(EnableSession = true)]

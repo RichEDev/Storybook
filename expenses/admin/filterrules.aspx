@@ -19,44 +19,30 @@
 					if (confirm('Are you sure you wish to delete the selected filter rule?'))
 					{
 						PageMethods.deleteFilterRule(accountid, filterid);
-						var grid = igtbl_getGridById(contentID + 'gridfilterrules');
-						
-				    grid.Rows.remove(grid.getActiveRow().getIndex());
+                        SEL.Grid.deleteGridRow('gridFilterRules', filterid);
 					}
 				}
     </script>			
     <div class="inputpanel">
 	    <div class="inputpaneltitle">
-	    <asp:Label id="lblFilterRules" runat="server" meta:resourcekey="lblFilterRulesResource1">Filter Rules</asp:Label></div>
+	    <asp:Label id="lblFilterRules" runat="server">Filter Rules</asp:Label></div>
         
-        <asp:Label id="lblFilter" runat="server" meta:resourcekey="lblFilterResource1">Display Filter</asp:Label>
+        <asp:Label id="lblFilter" runat="server" >Display Filter</asp:Label>
 		:
 		<asp:DropDownList id="cmbfilter" runat="server" AutoPostBack="True" onselectedindexchanged="cmbfilter_SelectedIndexChanged" meta:resourcekey="cmbfilterResource1">
-			<asp:ListItem Value="0" meta:resourcekey="ListItemResource1">All Filter Rules</asp:ListItem>
-			<asp:ListItem Value="1" meta:resourcekey="ListItemResource2">Cost codes</asp:ListItem>
-			<asp:ListItem Value="2" meta:resourcekey="ListItemResource3">Departments</asp:ListItem>
-		    <%--<asp:ListItem Value="3">Addresses</asp:ListItem>--%>
+			<asp:ListItem Value="0">All Filter Rules</asp:ListItem>
+			<asp:ListItem Value="1">Cost codes</asp:ListItem>
+			<asp:ListItem Value="2">Departments</asp:ListItem>
+		   <%-- <asp:ListItem Value="3">Addresses</asp:ListItem>--%>
             <asp:ListItem Value="4">Project codes</asp:ListItem>
             <asp:ListItem Value="5">Reasons</asp:ListItem>
             <asp:ListItem Value="6">User Defined</asp:ListItem>
 		</asp:DropDownList>
 	</div>
-    <div class="inputpanel">  
-        <asp:UpdatePanel ID="pnlFilter" runat="server">
-        <ContentTemplate> 
-            <igtbl:UltraWebGrid ID="gridfilterrules" runat="server" SkinID="gridskin" 
-                OnInitializeLayout="gridfilterrules_InitializeLayout" 
-                OnInitializeRow="gridfilterrules_InitializeRow" 
-                OnSortColumn="gridfilterrules_SortColumn">
-            </igtbl:UltraWebGrid>
-          
-        </ContentTemplate>
-        </asp:UpdatePanel>
-			
-	</div>
-    <div class="formpanel" style="padding-left:0px;">
-    <div class="formbuttons">
-        <asp:ImageButton ID="cmdClose" OnClick="cmdClose_Click" runat="server" ImageUrl="~/shared/images/buttons/btn_close.png" CausesValidation="False"></asp:ImageButton>
-    </div>
+    <div class="formpanel" style="padding-left: 0">
+        <asp:Literal ID="litgrid" runat="server"></asp:Literal>
+        <div class="formbuttons">
+            <asp:ImageButton ID="cmdClose" OnClick="cmdClose_Click" runat="server" ImageUrl="~/shared/images/buttons/btn_close.png" CausesValidation="False"></asp:ImageButton>
+        </div>
     </div>
 </asp:Content>
