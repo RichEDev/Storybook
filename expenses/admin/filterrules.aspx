@@ -1,6 +1,4 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="filterrules.aspx.cs" MasterPageFile="~/exptemplate.master" Inherits="expenses.admin.filterrules" %>
-
-<%@ Register TagPrefix="igtbl" Namespace="Infragistics.WebUI.UltraWebGrid" Assembly="Infragistics4.WebUI.UltraWebGrid.v11.1, Version=11.1.20111.2238, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" %>
 <%@ MasterType VirtualPath="~/exptemplate.master" %>
 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="contentmenu">
