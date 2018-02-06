@@ -2158,27 +2158,64 @@ public partial class aeexpense : System.Web.UI.Page
 
         if (globalProperties.costcodeson && globalProperties.usecostcodes && globalProperties.usecostcodeongendet == false)
         {
+
             cell = new TableCell();
-            ddlst = new DropDownList();
-            ddlst.ID = "cmbcostcode" + index;
 
-            string[] filterAttribute = this.ActionContext.FilterRules.FilterDropdown(FilterType.Costcode, index.ToString(), ddlst.ID);
 
-            if (!filterAttribute.IsNullOrEmpty())
+            var textBox = new TextBox
             {
-                ddlst.Attributes.Add(filterAttribute[0], filterAttribute[1]);
+                ID = "txtCostCode" + index,
+                CssClass = "costcode-autocomplete"
+            };
+
+            textBox.Attributes.Add("data-search", "General");
+
+            textBox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
+
+
+            TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode" + index + "_ID"};          
+            hiddenIdentifier.Style.Add(HtmlTextWriterStyle.Display, "none");
+
+            //pre populate if edit
+
+            var costCode = this.ActionContext.CostCodes.GetCostcodeById(breakdownItem.costcodeid);
+
+            if (costCode != null)
+            {
+                textBox.Text = costCode.Costcode;
+                hiddenIdentifier.Text = costCode.CostcodeId.ToString(); 
             }
 
-            ddlst.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
-            ddlst.Items.AddRange(this.ActionContext.CostCodes.CreateDropDown(globalProperties.usecostcodedesc, includeNoneOption: true).ToArray());
 
-            if (ddlst.Items.FindByValue(breakdownItem.costcodeid.ToString()) != null)
-            {
-                ddlst.SelectedValue = breakdownItem.costcodeid.ToString();
-            }
 
-            cell.Controls.Add(ddlst);
+
+            //filters
+
+            cell.Controls.Add(textBox);
+            cell.Controls.Add(hiddenIdentifier);
             row.Cells.Add(cell);
+
+            //cell = new TableCell();
+            //ddlst = new DropDownList();
+            //ddlst.ID = "cmbcostcode" + index;
+
+            //string[] filterAttribute = this.ActionContext.FilterRules.FilterDropdown(FilterType.Costcode, index.ToString(), ddlst.ID);
+
+            //if (!filterAttribute.IsNullOrEmpty())
+            //{
+            //    ddlst.Attributes.Add(filterAttribute[0], filterAttribute[1]);
+            //}
+
+            //ddlst.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
+            //ddlst.Items.AddRange(this.ActionContext.CostCodes.CreateDropDown(globalProperties.usecostcodedesc, includeNoneOption: true).ToArray());
+
+            //if (ddlst.Items.FindByValue(breakdownItem.costcodeid.ToString()) != null)
+            //{
+            //    ddlst.SelectedValue = breakdownItem.costcodeid.ToString();
+            //}
+
+            //cell.Controls.Add(ddlst);
+            //row.Cells.Add(cell);
 
             if (user.CanEditCostCodes)
             {
@@ -2186,12 +2223,12 @@ public partial class aeexpense : System.Web.UI.Page
 
                 if ((itemtype == ItemType.Cash && cc.mandatory) || (itemtype == ItemType.CreditCard && cc.mandatorycc) || (itemtype == ItemType.PurchaseCard && cc.mandatorypc))
                 {
-                    CompareValidator compCostCodeVal = GenerateCompareValidator(ddlst.ID, cc.description);
+                    CompareValidator compCostCodeVal = GenerateCompareValidator(hiddenIdentifier.Text, cc.description);
                     cell.Controls.Add(compCostCodeVal);
                     row.Cells.Add(cell);
                 }
+             }
             }
-        }
 
         if (globalProperties.projectcodeson && globalProperties.useprojectcodes && globalProperties.useprojectcodeongendet == false)
         {
@@ -2378,9 +2415,10 @@ public partial class aeexpense : System.Web.UI.Page
 
             if (clsproperties.usecostcodes && clsproperties.costcodeson && clsproperties.usecostcodeongendet == false)
             {
-                ddlst = (DropDownList)tbl.FindControl("cmbcostcode" + (i - 1));
-                int.TryParse(Request[ddlst.ClientID.Replace("_", "$")], out costcodeid);
-                }
+                var cctxtboxBreakdown = (TextBox)tbl.FindControl("txtCostCode" + (i -1) + "_ID");
+              //  costcodeid = 1064;
+                  costcodeid = Convert.ToInt32(cctxtboxBreakdown.Text);
+            }
             else if (clsproperties.usecostcodes && clsproperties.costcodeson && clsproperties.usecostcodeongendet)
             {
                var cctxtbox = (TextBox)pnlgeneral.FindControl("txtCostCode_ID");
