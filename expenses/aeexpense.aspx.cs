@@ -1153,7 +1153,7 @@ public partial class aeexpense : System.Web.UI.Page
             if ((itemtype == ItemType.Cash && reason.mandatory) || (itemtype == ItemType.CreditCard && reason.mandatorycc) || (itemtype == ItemType.PurchaseCard && reason.mandatorypc))
             {
 
-                CompareValidator compReasonVal = GenerateCompareValidator("cmbreason", reason.description);
+                CompareValidator compReasonVal = GenerateCompareValidator("cmbreason", reason.description, "0");
                 cell.Controls.Add(compReasonVal);
             }
             else
@@ -1248,7 +1248,7 @@ public partial class aeexpense : System.Web.UI.Page
             cell.CssClass = "inputtd";
             if ((itemtype == ItemType.Cash && country.mandatory) || (itemtype == ItemType.CreditCard && country.mandatorycc) || (itemtype == ItemType.PurchaseCard && country.mandatorypc))
             {
-                CompareValidator compCountryVal = GenerateCompareValidator("cmbcountry", reason.description);
+                CompareValidator compCountryVal = GenerateCompareValidator("cmbcountry", reason.description, "0");
                 cell.Controls.Add(compCountryVal);
             }
             else
@@ -1346,7 +1346,7 @@ public partial class aeexpense : System.Web.UI.Page
 
             if ((itemtype == ItemType.Cash && currency.mandatory) || (itemtype == ItemType.CreditCard && currency.mandatorycc) || (itemtype == ItemType.PurchaseCard && currency.mandatorypc))
             {
-                CompareValidator compCurrencyVal = GenerateCompareValidator("cmbcurrency", currency.description);
+                CompareValidator compCurrencyVal = GenerateCompareValidator("cmbcurrency", currency.description, "0");
                 cell.Controls.Add(compCurrencyVal);
             }
             else
@@ -2135,7 +2135,7 @@ public partial class aeexpense : System.Web.UI.Page
 
                 if ((itemtype == ItemType.Cash && dept.mandatory) || (itemtype == ItemType.CreditCard && dept.mandatorycc) || (itemtype == ItemType.PurchaseCard && dept.mandatorypc))
                 {
-                    CompareValidator compDeptVal = GenerateCompareValidator(ddlst.ID, dept.description);
+                    CompareValidator compDeptVal = GenerateCompareValidator(ddlst.ID, dept.description, "0");
                     cell.Controls.Add(compDeptVal);
                     row.Cells.Add(cell);
                 }
@@ -2181,6 +2181,28 @@ public partial class aeexpense : System.Web.UI.Page
             cell.Controls.Add(hiddenIdentifier);
             row.Cells.Add(cell);
 
+            if (user.CanEditCostCodes)
+            {
+                cFieldToDisplay costCodeField = misc.GetGeneralFieldByCode("costcode");
+
+                if ((itemtype == ItemType.Cash && costCodeField.mandatory) || (itemtype == ItemType.CreditCard && costCodeField.mandatorycc) || (itemtype == ItemType.PurchaseCard && costCodeField.mandatorypc))
+                {
+                   var custval = new CustomValidator
+                                  {
+                                      ClientValidationFunction = "SEL.Expenses.Validate.CostCode.GeneralDetailsMandatory",
+                                      ControlToValidate = textBox.ID,
+                                      ID = "custCostCodeid" + index,
+                                      ValidationGroup = "vgAeExpenses",
+                                      ValidateEmptyText = true,
+                                      ErrorMessage = "Please enter a valid " + costCodeField.description + ".",
+                                      Text = "*"
+                                  };
+
+                    cell.Controls.Add(custval);
+                    row.Cells.Add(cell);
+                }
+            }
+
             //cell = new TableCell();
             //ddlst = new DropDownList();
             //ddlst.ID = "cmbcostcode" + index;
@@ -2203,17 +2225,17 @@ public partial class aeexpense : System.Web.UI.Page
             //cell.Controls.Add(ddlst);
             //row.Cells.Add(cell);
 
-            if (user.CanEditCostCodes)
-            {
-                cFieldToDisplay cc = misc.GetGeneralFieldByCode("costcode");
+            //if (user.CanEditCostCodes)
+            //{
+            //    cFieldToDisplay cc = misc.GetGeneralFieldByCode("costcode");
 
-                if ((itemtype == ItemType.Cash && cc.mandatory) || (itemtype == ItemType.CreditCard && cc.mandatorycc) || (itemtype == ItemType.PurchaseCard && cc.mandatorypc))
-                {
-                    CompareValidator compCostCodeVal = GenerateCompareValidator(hiddenIdentifier.Text, cc.description);
-                    cell.Controls.Add(compCostCodeVal);
-                    row.Cells.Add(cell);
-                }
-             }
+            //    if ((itemtype == ItemType.Cash && cc.mandatory) || (itemtype == ItemType.CreditCard && cc.mandatorycc) || (itemtype == ItemType.PurchaseCard && cc.mandatorypc))
+            //    {
+            //        CompareValidator compCostCodeVal = GenerateCompareValidator(hiddenIdentifier.Text, cc.description);
+            //        cell.Controls.Add(compCostCodeVal);
+            //        row.Cells.Add(cell);
+            //    }
+            // }
             }
 
         if (globalProperties.projectcodeson && globalProperties.useprojectcodes && globalProperties.useprojectcodeongendet == false)
@@ -2247,7 +2269,7 @@ public partial class aeexpense : System.Web.UI.Page
 
                 if ((itemtype == ItemType.Cash && project.mandatory) || (itemtype == ItemType.CreditCard && project.mandatorycc) || (itemtype == ItemType.PurchaseCard && project.mandatorypc))
                 {
-                    CompareValidator compDeptVal = GenerateCompareValidator(ddlst.ID, project.description);
+                    CompareValidator compDeptVal = GenerateCompareValidator(ddlst.ID, project.description, "0");
                     cell.Controls.Add(compDeptVal);
                     row.Cells.Add(cell);
                 }
@@ -2294,10 +2316,18 @@ public partial class aeexpense : System.Web.UI.Page
     /// <summary>
     /// Creates a Compare Validator for a drop down list to enforce a required field. 
     /// </summary>
-    /// <param name="controlId">The Id of the control to validate </param>
-    /// <param name="fieldDescription">The field description</param>
-    /// <returns></returns>
-    private static CompareValidator GenerateCompareValidator(string controlId, string fieldDescription)
+    /// <param name="controlId">
+    /// The Id of the control to validate 
+    /// </param>
+    /// <param name="fieldDescription">
+    /// The field description
+    /// </param>
+    /// <param name="valueToCompare">
+    /// The value To Compare.
+    /// </param>
+    /// <returns>
+    /// </returns>
+    private static CompareValidator GenerateCompareValidator(string controlId, string fieldDescription, string valueToCompare)
     {
         var compVal = new CompareValidator
         {
@@ -2306,11 +2336,12 @@ public partial class aeexpense : System.Web.UI.Page
             Text = "*",
             Type = ValidationDataType.String,
             Operator = ValidationCompareOperator.NotEqual,
-            ValueToCompare = "0",
+            ValueToCompare = valueToCompare,
             ValidationGroup = "vgAeExpenses"
         };
         return compVal;
     }
+
 
     void delete_Click(object sender, ImageClickEventArgs e)
     {
@@ -2402,8 +2433,11 @@ public partial class aeexpense : System.Web.UI.Page
             if (clsproperties.usecostcodes && clsproperties.costcodeson && clsproperties.usecostcodeongendet == false)
             {
                 var cctxtboxBreakdown = (TextBox)tbl.FindControl("txtCostCode" + (i -1) + "_ID");
-              //  costcodeid = 1064;
-                  costcodeid = Convert.ToInt32(cctxtboxBreakdown.Text);
+                if (cctxtboxBreakdown.Text != string.Empty)
+                {
+                       costcodeid = Convert.ToInt32(cctxtboxBreakdown.Text);
+                }
+               
             }
             else if (clsproperties.usecostcodes && clsproperties.costcodeson && clsproperties.usecostcodeongendet)
             {
