@@ -43,6 +43,12 @@ namespace expenses
             }
 		}
 
+        /// <summary>
+        /// Creates the expense categories grid
+        /// </summary>
+        /// <param name="accountid">The account id of logged in user</param>
+        /// <param name="employeeid">The employee id of logged in user</param>
+        /// <returns>The html of the grid</returns>
 	    private string[] createGrid(int accountid, int employeeid)
 	    {
 	        cTables clstables = new cTables(accountid);
