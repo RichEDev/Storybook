@@ -88,6 +88,7 @@ namespace expenses.admin
             byte selectedValue = Convert.ToByte(this.cmbfilter.Items[this.cmbfilter.SelectedIndex].Value);
             string[] gridData = filterRules.createFilterRuleGrid((int)ViewState["accountid"], (int)ViewState["employeeid"], (FilterType)selectedValue);
             litgrid.Text = gridData[1];
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "FilterRulesGridVars", cGridNew.generateJS_init("FilterRulesGridVars", new List<string>() { gridData[0] }, Modules.SpendManagement), true);
         }
 
         [WebMethod(EnableSession = true)]
