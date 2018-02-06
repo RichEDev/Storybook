@@ -23,6 +23,14 @@
         private readonly int AccountId;
         private readonly cCostcodes CostCodes;
 
+        /// <summary>
+        /// Not for general use - Required by cGridNew when it tries to initialise an instance of this class
+        /// </summary>
+        public cFilterRules()
+        {
+
+        }
+
         public cFilterRules(int accountId, cCostcodes costCodes = null)
         {
             AccountId = accountId;
@@ -156,7 +164,7 @@
                 clsgrid.addFilter(filterTypeField, ConditionType.Equals, new object[] { (byte)filterType }, null, ConditionJoiner.None);
             }
             clsgrid.InitialiseRow += this.FilterRulesGrid_InitialiseRow;
-            clsgrid.ServiceClassForInitialiseRowEvent = "cFilterRules";
+            clsgrid.ServiceClassForInitialiseRowEvent = "Spend_Management.cFilterRules";
             clsgrid.ServiceClassMethodForInitialiseRowEvent = "FilterRulesGrid_InitialiseRow";
             clsgrid.EmptyText = "There are no filter rules to display.";
             return clsgrid.generateGrid();
@@ -170,7 +178,8 @@
         /// <param name="gridinfo">The grid information</param>
         public void FilterRulesGrid_InitialiseRow(cNewGridRow row, SerializableDictionary<string, object> gridinfo)
         {
-            cUserdefinedFields accountUserdefinedFields = new cUserdefinedFields(accountid); ;
+            var user = cMisc.GetCurrentUser();
+            cUserdefinedFields accountUserdefinedFields = new cUserdefinedFields(user.AccountID);
             cUserDefinedField field;
             byte parentId = Convert.ToByte(row.getCellByID("parent").Value);
             if (parentId != (byte)FilterType.Userdefined)
