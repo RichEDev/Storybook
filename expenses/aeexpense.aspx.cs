@@ -1665,13 +1665,28 @@ public partial class aeexpense : System.Web.UI.Page
                 custval = new CustomValidator
                 {
                     ClientValidationFunction = "SEL.Expenses.Validate.CostCode.GeneralDetailsMandatory",
-                    ControlToValidate = "txtOrganisation",
+                    ControlToValidate = "txtCostCode",
                     ID = "custCostCodeid",
                     ValidationGroup = "vgAeExpenses",
                     ValidateEmptyText = true,
                     ErrorMessage = "Please enter a valid " + costCodeField.description + ".",
                     Text = "*"
                 };
+
+                cell.Controls.Add(custval);
+            }
+            else
+            {
+                custval = new CustomValidator
+                              {
+                                  ClientValidationFunction = "SEL.Expenses.Validate.CostCode.GeneralDetailsNotMandatory",
+                                  ControlToValidate = "txtCostCode",
+                                  ID = "custCostCode",
+                                  ValidationGroup = "vgAeExpenses",
+                                  ValidateEmptyText = true,
+                                  ErrorMessage = costCodeField.description + " is not valid. Please enter a value in the box provided.",
+                                  Text = "*"
+                              };
 
                 cell.Controls.Add(custval);
             }

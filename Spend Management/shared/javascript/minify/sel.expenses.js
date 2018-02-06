@@ -205,11 +205,13 @@
                 CostCode: {
                     GeneralDetailsMandatory: function (sender, args) { SEL.Expenses.Validate.CostCode.GeneralDetails(sender, args, true); },
 
+                    GeneralDetailsNotMandatory: function (sender, args) { SEL.Expenses.Validate.CostCode.GeneralDetails(sender, args, false); },
+
                     GeneralDetails: function (sender, args, mandatory) {
                         var prefix = window.contentID,
                             elementIdentifier = prefix + "txtCostCode";
 
-                        args.IsValid = !mandatory || $("#" + elementIdentifier).val().length > 0;
+                        args.IsValid = SEL.Expenses.Validate.Organisation.AutocompleteValid(elementIdentifier) && (!mandatory || $("#" + elementIdentifier).val().length > 0);
                         return;
                     }
                 }
