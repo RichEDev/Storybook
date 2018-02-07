@@ -29,6 +29,12 @@ public partial class admin_adminitemroles : System.Web.UI.Page
         }
     }
 
+    /// <summary>
+    /// Creates the item roles grid
+    /// </summary>
+    /// <param name="accountid">The account id of logged in user</param>
+    /// <param name="employeeid">The employee id of logged in user</param>
+    /// <returns>The html of the grid</returns>
     private string[] createGrid(int accountid, int employeeid)
     {
         cTables clstables = new cTables(accountid);
@@ -47,6 +53,12 @@ public partial class admin_adminitemroles : System.Web.UI.Page
         return clsgrid.generateGrid();
     }
 
+    /// <summary>
+    /// Delets the given item role
+    /// </summary>
+    /// <param name="accountid">The account id of logged in user</param>
+    /// <param name="itemroleid">The id of the item role that needs to be deleted</param>
+    /// <returns>Returns 0 if it was successfully deleted, else returns -1</returns>
     [WebMethod(EnableSession = true)]
     public static int deleteRole(int accountid, int itemroleid)
     {
