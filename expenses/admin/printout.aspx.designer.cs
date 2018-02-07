@@ -22,22 +22,13 @@ namespace expenses.admin {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// gridprintout control.
+        /// litgrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Infragistics.WebUI.UltraWebGrid.UltraWebGrid gridprintout;
-        
-        /// <summary>
-        /// cmdok control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton cmdok;
+        protected global::System.Web.UI.WebControls.Literal litgrid;
         
         /// <summary>
         /// ImageButton2 control.
