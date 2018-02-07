@@ -1620,7 +1620,7 @@ public partial class aeexpense : System.Web.UI.Page
             {
 
 
-                if (breakdown.Count > 0)
+                if (breakdown.Count > 0 && breakdown[0].costcodeid != 0)
 
                 {
                     costcode = ActionContext.CostCodes.GetCostcodeById(breakdown[0].costcodeid);
@@ -2187,6 +2187,10 @@ public partial class aeexpense : System.Web.UI.Page
 
                 if ((itemtype == ItemType.Cash && costCodeField.mandatory) || (itemtype == ItemType.CreditCard && costCodeField.mandatorycc) || (itemtype == ItemType.PurchaseCard && costCodeField.mandatorypc))
                 {
+                  
+                  
+
+
                    var custval = new CustomValidator
                                   {
                                       ClientValidationFunction = "SEL.Expenses.Validate.CostCode.GeneralDetailsMandatory",
@@ -2195,7 +2199,7 @@ public partial class aeexpense : System.Web.UI.Page
                                       ValidationGroup = "vgAeExpenses",
                                       ValidateEmptyText = true,
                                       ErrorMessage = "Please enter a valid " + costCodeField.description + ".",
-                                      Text = "*"
+                                      Text = "*", AccessKey = index.ToString()
                                   };
 
                     cell.Controls.Add(custval);

@@ -209,7 +209,7 @@
 
                     GeneralDetails: function (sender, args, mandatory) {
                         var prefix = window.contentID,
-                            elementIdentifier = prefix + "txtCostCode";
+                            elementIdentifier = prefix + "txtCostCode" + sender.accessKey;
 
                         args.IsValid = SEL.Expenses.Validate.Organisation.AutocompleteValid(elementIdentifier) && (!mandatory || $("#" + elementIdentifier).val().length > 0);
                         return;
