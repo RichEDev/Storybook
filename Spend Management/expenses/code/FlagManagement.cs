@@ -414,8 +414,9 @@ namespace Spend_Management.expenses.code
 
                                 var employeeWorkLocationId = this.GetEmployeeWorkLocationId(item, user, employee);
 
-                                var expenseStartLocationId = item.journeysteps[0].startlocation.Identifier;
-                                var expenseEndLocationId = item.journeysteps[item.journeysteps.Count - 1].endlocation.Identifier;
+                                var expenseStartLocationId = item.journeysteps.FirstOrDefault().Value.startlocation.Identifier;
+                                var expenseEndLocationId = item.journeysteps.LastOrDefault().Value.endlocation.Identifier;
+
                                 Address homeAddress = null; 
                                 Address expenseStartAddress = null; 
                                 var employeeHomeLocationId = employeeHomeAddress?.LocationID ?? 0;
