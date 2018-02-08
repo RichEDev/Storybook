@@ -330,6 +330,7 @@ namespace Spend_Management.expenses.webservices
             grid.getColumnByName("signoffid").hidden = true;
             grid.getColumnByName("relid").HeaderText = "Approver";
             grid.getColumnByName("include").HeaderText = "When to Include";
+            grid.getColumnByName("signofftype").HeaderText = "Signoff Type";
 
             return grid.generateGrid();
         }

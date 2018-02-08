@@ -9,18 +9,48 @@
         {
             IDs: {
                 SignoffTypes: {
-                    None : "0",
-                    BudgetHolder : "1",
-                    Employee : "2",
-                    Team : "3",
-                    LineManager : "4",
-                    ClaimantSelectsOwnChecker : "5",
-                    ApprovalMatrix : "6",
-                    DeterminedByClaimantFromApprovalMatrix : "7",
-                    CostCodeOwner : "8",
-                    AssignmentSupervisor : "9",
-                    SELScanAttach : "100",
-                    SELValidation : "101"
+                    None: "0",
+                    BudgetHolder: "1",
+                    Employee: "2",
+                    Team: "3",
+                    LineManager: "4",
+                    ClaimantSelectsOwnChecker: "5",
+                    ApprovalMatrix: "6",
+                    DeterminedByClaimantFromApprovalMatrix: "7",
+                    CostCodeOwner: "8",
+                    AssignmentSupervisor: "9",
+                    SELScanAttach: "100",
+                    SELValidation: "101"
+                },
+
+                StageInclusionType: {
+                    Always: "1",
+                    ClaimTotalExceeds: "2",
+                    ExpenseItemExceeds: "3",
+                    IncludesCostCode: "4",
+                    ClaimTotalBelow: "5",
+                    IncludesExpenseItem: "6",
+                    OlderThanDays: "7",
+                    IncludesDepartment: "8",
+                    ValidationFailedTwice: "9"
+                },
+
+                OnHolidayType: {
+                    NoAction: "1",
+                    SkipStage: "2",
+                    AssignToSomeoneElse: "3"
+                },
+
+                HolidayApproverType: {
+                    BudgetHolder: "1",
+                    Employee: "2",
+                    Team: "3",
+                    LineManager: "4"
+                },
+
+                Action: {
+                    NotifyUser: "1",
+                    UserChecksClaim: "2"
                 }
             },
 
@@ -323,7 +353,7 @@
                         case SEL.SignoffGroups.IDs.SignoffTypes.BudgetHolder:
                         case SEL.SignoffGroups.IDs.SignoffTypes.Employee:
                         case SEL.SignoffGroups.IDs.SignoffTypes.Team:
-                        case SEL.SignoffGroups.IDs.SignoffTypesApprovalMatrix:
+                        case SEL.SignoffGroups.IDs.SignoffTypes.ApprovalMatrix:
                             $g(SEL.SignoffGroups.DomIDs.Validators.cmblist).enabled = true;
                             SEL.SignoffGroups.SignoffStage.PopulateSignOffValuesDropdown(value);
                             break;
@@ -337,8 +367,10 @@
                             SEL.SignoffGroups.SignoffStage.PopulateSignOffValuesDropdown(value);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.ApprovalMatrixDiv).show();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).prop("disabled", true);
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).val(1);
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.OnHolidayDiv).hide();
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).val(
+                                SEL.SignoffGroups.IDs.OnHolidayType.NoAction).change();
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayTypeDropdown).val(
+                                SEL.SignoffGroups.IDs.HolidayApproverType.BudgetHolder).change();
                             break;
                         case SEL.SignoffGroups.IDs.SignoffTypes.CostCodeOwner:
                             $g(SEL.SignoffGroups.DomIDs.Validators.DropDownLineManagerAssignmentSupervisor).enabled = true;
@@ -367,12 +399,16 @@
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverJustificationCheckbox).prop("disabled", true);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverJustificationCheckbox).prop('checked', false);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.IncludeDropDown).prop("disabled", true);
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.IncludeDropDown).val(0).change();
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.IncludeDropDown).val(
+                                SEL.SignoffGroups.IDs.StageInclusionType.Always).change();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.InvlolvementDropDown).prop("disabled", true);
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.InvlolvementDropDown).val(2);
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.InvlolvementDropDown).val(
+                                SEL.SignoffGroups.IDs.Action.UserChecksClaim);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).prop("disabled", true);
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).val(1);
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.OnHolidayDiv).hide();
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).val(
+                                SEL.SignoffGroups.IDs.OnHolidayType.NoAction).change();
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayTypeDropdown).val(
+                                SEL.SignoffGroups.IDs.HolidayApproverType.BudgetHolder).change();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimantEmailCheckbox).prop('checked', true);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.CostCodeOwnerDiv).hide();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountDropDown).hide();
@@ -391,12 +427,16 @@
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverJustificationCheckbox).prop("disabled", true);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverJustificationCheckbox).prop('checked', false);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.IncludeDropDown).prop("disabled", true);
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.IncludeDropDown).val(0).change();
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.IncludeDropDown).val(
+                                SEL.SignoffGroups.IDs.StageInclusionType.Always).change();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.InvlolvementDropDown).prop("disabled", true);
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.InvlolvementDropDown).val(2);
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.InvlolvementDropDown).val(
+                                SEL.SignoffGroups.IDs.Action.UserChecksClaim);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).prop("disabled", true);
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).val(1);
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.OnHolidayDiv).hide();
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).val(
+                                SEL.SignoffGroups.IDs.OnHolidayType.NoAction).change();
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayTypeDropdown).val(
+                                SEL.SignoffGroups.IDs.HolidayApproverType.BudgetHolder).change();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimantEmailCheckbox).prop('checked', true);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountDropDown).hide();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountTextBox).hide();
@@ -408,11 +448,11 @@
                 OnHolidayOnChange: function () {
                     window.ValidatorEnable($g(SEL.SignoffGroups.DomIDs.Validators.cmbholidaylist), false);
                     switch ($(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).val()) {
-                        case "1":
-                        case "2":
+                        case SEL.SignoffGroups.IDs.OnHolidayType.NoAction:
+                        case SEL.SignoffGroups.IDs.OnHolidayType.SkipStage:
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.OnHolidayDiv).hide();
                             break;
-                        case "3":
+                        case SEL.SignoffGroups.IDs.OnHolidayType.AssignToSomeoneElse:
                             $g(SEL.SignoffGroups.DomIDs.Validators.cmbholidaylist).enabled = true;
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.OnHolidayDiv).show();
                             break;
@@ -424,16 +464,16 @@
                     window.ValidatorEnable($g(SEL.SignoffGroups.DomIDs.Validators.txtamountRequired), false);
                     var value = $(SEL.SignoffGroups.DomIDs.SignoffStage.IncludeDropDown).val();
                     switch (value) {
-                        case "1":
-                        case "9":
-                        case "3":
+                        case SEL.SignoffGroups.IDs.StageInclusionType.Always:
+                        case SEL.SignoffGroups.IDs.StageInclusionType.ValidationFailedTwice:
+                        case SEL.SignoffGroups.IDs.StageInclusionType.ExpenseItemExceeds:
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountTextBox).hide();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountDropDown).hide();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountLabel).hide();
                             break;
-                        case "2":
-                        case "5":
-                        case "7":
+                        case SEL.SignoffGroups.IDs.StageInclusionType.ClaimTotalExceeds:
+                        case SEL.SignoffGroups.IDs.StageInclusionType.ClaimTotalBelow:
+                        case SEL.SignoffGroups.IDs.StageInclusionType.OlderThanDays:
                             $g(SEL.SignoffGroups.DomIDs.Validators.txtamountCompare).enabled = true;
                             $g(SEL.SignoffGroups.DomIDs.Validators.txtamountRequired).enabled = true;
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountTextBox).show();
@@ -441,15 +481,15 @@
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountLabel).show();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountLabel).text("Amount");
                             break;
-                        case "4":
+                        case SEL.SignoffGroups.IDs.StageInclusionType.IncludesCostCode:
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountLabel).text("Cost Code");
                             SEL.SignoffGroups.SignoffStage.SetupWhenToIncludeUI(value);
                             break;
-                        case "6":
+                        case SEL.SignoffGroups.IDs.StageInclusionType.IncludesExpenseItem:
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountLabel).text("Expense item");
                             SEL.SignoffGroups.SignoffStage.SetupWhenToIncludeUI(value);
                             break;
-                        case "8":
+                        case SEL.SignoffGroups.IDs.StageInclusionType.IncludesDepartment:
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountLabel).text("Department");
                             SEL.SignoffGroups.SignoffStage.SetupWhenToIncludeUI(value);
                             break;
@@ -465,7 +505,9 @@
 
                 ApproverJustificationOnChange: function () {
                     if ($(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffDropdown).val() !== 
-                        SEL.SignoffGroups.IDs.SignoffTypes.CostCodeOwner) {
+                        SEL.SignoffGroups.IDs.SignoffTypes.CostCodeOwner &&
+                        $(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffDropdown).val() !==
+                        SEL.SignoffGroups.IDs.SignoffTypes.AssignmentSupervisor) {
                         if ($(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverJustificationCheckbox).is(':checked')) {
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.SingleSignoffCheckbox).prop("disabled", true);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.SingleSignoffCheckbox).prop("checked", false);
@@ -488,7 +530,7 @@
                     $g(SEL.SignoffGroups.DomIDs.Validators.cmbholidaylist).enabled = true;
                     var holidayTypeId = $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayTypeDropdown).val();
 
-                    if (holidayTypeId == 4) {
+                    if (holidayTypeId === SEL.SignoffGroups.IDs.HolidayApproverType.LineManager) {
                         window.ValidatorEnable($g(SEL.SignoffGroups.DomIDs.Validators.cmbholidaylist), false);
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayListDropdown).hide();
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayListLabel).hide();
@@ -741,16 +783,32 @@
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverEmailCheckbox).prop('checked', r.d.sendmail);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimantEmailCheckbox).prop('checked', r.d.claimantmail);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.DeclarationCheckbox).prop('checked', r.d.displaydeclaration);
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.ExtraLevelsTextBox).val(r.d.ExtraApprovalLevels);
+                            if (r.d.signofftype ==
+                                SEL.SignoffGroups.IDs.SignoffTypes.DeterminedByClaimantFromApprovalMatrix) {
+                                $(SEL.SignoffGroups.DomIDs.SignoffStage.ExtraLevelsTextBox)
+                                    .val(r.d.ExtraApprovalLevels);
+                            } else {
+                                $(SEL.SignoffGroups.DomIDs.SignoffStage.ExtraLevelsTextBox).val("");
+                            }
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.FromMyLevelCheckbox).prop('checked', r.d.FromMyLevel);
                             if (r.d.NhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner) {
                                 $(SEL.SignoffGroups.DomIDs.SignoffStage.CostCodeOwnerDropDown).val("AssignmentSupervisor");
                             } else {
                                 $(SEL.SignoffGroups.DomIDs.SignoffStage.CostCodeOwnerDropDown).val("LineManager");
                             }
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountTextBox).val(r.d.amount);
+                            switch ($(SEL.SignoffGroups.DomIDs.SignoffStage.IncludeDropDown).val()) {
+                                case SEL.SignoffGroups.IDs.StageInclusionType.ClaimTotalBelow:
+                                case SEL.SignoffGroups.IDs.StageInclusionType.ClaimTotalExceeds:
+                                case SEL.SignoffGroups.IDs.StageInclusionType.OlderThanDays:
+                                    $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountTextBox).val(r.d.amount);
+                                    break;
+                                default:
+                                    $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountTextBox).val("");
+                                    break;
+                            }
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.InvlolvementDropDown).val(r.d.notify);
-                            if (r.d.signofftype !== 100 && r.d.signofftype !== 101) {
+                            if (r.d.signofftype != SEL.SignoffGroups.IDs.SignoffTypes.SELScanAttach
+                                && r.d.signofftype != SEL.SignoffGroups.IDs.SignoffTypes.SELValidation) {
                                 $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverJustificationCheckbox).prop('checked', r.d.ApproverJustificationsRequired).change();
                                 $(SEL.SignoffGroups.DomIDs.SignoffStage.SingleSignoffCheckbox).prop('checked', r.d.singlesignoff).change();
                             }
@@ -794,11 +852,11 @@
                 Add: function () {
                     $("#ui-id-1").text("New Stage");
 
-                    $(SEL.SignoffGroups.DomIDs.SignoffStage.IncludeDropDown).val(1).change();
-                    $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).val(1).change();
+                    $(SEL.SignoffGroups.DomIDs.SignoffStage.IncludeDropDown).val(SEL.SignoffGroups.IDs.StageInclusionType.Always).change();
+                    $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).val(SEL.SignoffGroups.IDs.OnHolidayType.NoAction).change();
                     $(SEL.SignoffGroups.DomIDs.SignoffStage.AmountTextBox).val("");
                     $(SEL.SignoffGroups.DomIDs.SignoffStage.ExtraLevelsTextBox).val("");
-                    $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayTypeDropdown).val(1).change();
+                    $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayTypeDropdown).val(SEL.SignoffGroups.IDs.HolidayApproverType.BudgetHolder).change();
                     $(SEL.SignoffGroups.DomIDs.SignoffStage.SingleSignoffCheckbox).prop("checked", false);
                     $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverEmailCheckbox).prop("checked", false);
                     $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimantEmailCheckbox).prop("checked", false);
