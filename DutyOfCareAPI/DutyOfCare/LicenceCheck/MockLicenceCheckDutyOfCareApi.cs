@@ -358,6 +358,34 @@
         }
 
         /// <summary>
+        /// Lookup a vehicle based on the registration number
+        /// </summary>
+        /// <param name="registrationNumber"></param>
+        /// <param name="lookupLogger">An instance of <see cref="ILookupLogger"/></param>
+        /// <returns>An instance of <see cref="IVehicleLookupResult"/></returns>
+        public IVehicleLookupResult Lookup(string registrationNumber, ILookupLogger lookupLogger)
+        {
+            var result = new VehicleLookupSuccess
+            {
+                Code = "200",
+                Message = "OK",
+                Vehicle = new Vehicle
+                {
+                    RegistrationNumber = "Test" + DateTime.Now.ToString(),
+                    Make = "test",
+                    Model = "tester",
+                    FuelType = "Petrol",
+                    EngineCapacity = 100,
+                    VehicleType = "Car"
+                }
+            };
+
+            lookupLogger.Write(registrationNumber, result.Code, result.Message);
+
+            return result;
+        }
+
+        /// <summary>
         /// Invalidates the claimants consent. 
         /// </summary>
         /// <param name="securityKey">

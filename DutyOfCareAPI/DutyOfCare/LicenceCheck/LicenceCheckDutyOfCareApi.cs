@@ -6,6 +6,9 @@
     using System.ServiceModel;
     using DutyOfCare;
     using DutyOfCareLicenceCheckApi;
+    using DutyOfCareAPI.DutyOfCare.LicenceCheck.VehicleLookup;
+    using DutyOfCareAPI.VDLVehicleLookup;
+
 
     /// <summary>
     /// Class represents the Various Licence Check API methods
@@ -26,7 +29,6 @@
         ///Licence portal url base of Mode(Test/Live)
         /// </summary>
         public string LicencePortalUrl { get; set; }
-
 
         /// <summary>
         /// Create a new <see cref="LicenceCheckDutyOfCareApi"/>object.
@@ -255,6 +257,44 @@
                 var response = quickCheckClient.HasDriverGivenEConsent(this._credentials.UserName, this._credentials.Password, driverId);
 
                 return response.Data;
+            }
+        }
+
+        /// <summary>
+        /// Lookup a vehicle based on the registration number
+        /// </summary>
+        /// <param name="registrationNumber"></param>
+        /// <param name="lookupLogger">An instance of <see cref="ILookupLogger"/></param>
+        /// <returns>An instance of <see cref="IVehicleLookupResult"/></returns>
+        public IVehicleLookupResult Lookup(string registrationNumber, ILookupLogger lookupLogger)
+        {
+            var service = new VDLServiceClient();
+            var response = service.GetAdvancedVehicleData(this._credentials.UserName, this._credentials.Password, registrationNumber);
+            lookupLogger.Write(registrationNumber, response.ResponseMessage.Code, response.ResponseMessage.Description);
+            if (response.Success)
+            {
+                var engineCapacity = 0;
+                int.TryParse(response.VehicleData.Cc, out engineCapacity);
+                var result = new VehicleLookupSuccess
+                {
+                    Message = response.ResponseMessage.Description,
+                    Code = response.ResponseMessage.Code,
+                    Vehicle = new Vehicle
+                    {
+                        RegistrationNumber = response.VehicleData.VRM,
+                        Model = response.VehicleData.DvlaModel,
+                        Make = response.VehicleData.DvlaMake,
+                        FuelType = response.VehicleData.Fuel,
+                        EngineCapacity = engineCapacity,
+                        VehicleType = string.IsNullOrEmpty(response.VehicleData.VehicleType) ? response.VehicleData.BodyStyle : response.VehicleData.VehicleType
+                    }
+                };
+
+                return result;
+            }
+            else
+            {
+                return new VehicleLookupFailed(response.ResponseMessage.Code, response.ResponseMessage.Description);
             }
         }
 

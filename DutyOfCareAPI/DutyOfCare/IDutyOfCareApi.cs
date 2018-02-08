@@ -77,5 +77,14 @@
         /// <param name="driverId">The driver to check</param>
         /// <returns>true if consent is on record, false if not</returns>
         bool HasUserProvidedConsent(int driverId);
+
+        /// <summary>
+        /// Lookup a vehicle based on the registration number
+        /// </summary>
+        /// <param name="registrationNumber"></param>
+        /// <param name="lookupLogger">An instance of <see cref="ILookupLogger"/></param>
+        /// <returns>An instance of <see cref="IVehicleLookupResult"/></returns>
+        IVehicleLookupResult Lookup(string registrationNumber, ILookupLogger lookupLogger);
+
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Spend_Management.Bootstrap
+﻿using Spend_Management.shared.code.DVLA;
+
+namespace Spend_Management.Bootstrap
 {
     using DutyOfCareAPI.DutyOfCare;
     using DutyOfCareAPI.DutyOfCare.LicenceCheck;
@@ -42,6 +44,11 @@
             }
 
             return api;
+        }
+
+        public static ILookupLogger CreateLogger(ICurrentUser currentUser)
+        {
+            return new VehicleLookupLogger(currentUser);
         }
     }
 }

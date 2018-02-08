@@ -1176,6 +1176,7 @@
     <Compile Include="shared\code\DVLA\EmployeesToPopulateDrivingLicence.cs" />
     <Compile Include="shared\code\DVLA\EmployeeToPopulateDrivingLicence.cs" />
     <Compile Include="shared\code\DutyOfCareEmailTemplates.cs" />
+    <Compile Include="shared\code\DVLA\VehicleLookupLogger.cs" />
     <Compile Include="shared\code\EasyTree\CustomMenuNode.cs" />
     <Compile Include="shared\code\EasyTree\FilteredFields.cs" />
     <Compile Include="shared\code\EasyTree\ReportCommonColumns.cs" />

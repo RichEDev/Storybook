@@ -591,5 +591,28 @@
 
             return vehicles;
         }
+
+        /// <summary>
+        /// Lookup vehicle details based on a given registration number
+        /// </summary>
+        /// <param name="registrationNumber">The registration number of the vehicle.</param>
+        /// <returns>An instance of <see cref="Vehicle"/> or null</returns>
+        public Vehicle LookupVehicle(string registrationNumber)
+        {
+            if (this.ActionContext.GeneralOptions.GetGeneralOptionByKeyAndSubAccount("VehicleLookup",
+                this.ActionContext.SubAccountId.Value).Value != "1")
+            {
+                throw new ApiException(ApiResources.HttpStatusCodeForbidden, ApiResources.HttpStatusCodeForbidden);
+            }
+
+            var dvlaApi = BootstrapDvla.CreateNew();
+            var lookupResult = dvlaApi.Lookup(registrationNumber, BootstrapDvla.CreateLogger(cMisc.GetCurrentUser()));
+            if (lookupResult.Code == "200")
+            {
+                return VehicleFactory.New(lookupResult);    
+            }
+
+            throw new ApiException(lookupResult.Code, lookupResult.Message);
+        }
     }
 }

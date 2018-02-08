@@ -71,6 +71,7 @@
     <Compile Include="DutyOfCare\GetConsentPortalAccessResponse.cs" />
     <Compile Include="DutyOfCare\Guard.cs" />
     <Compile Include="DutyOfCare\IDutyOfCareApi.cs" />
+    <Compile Include="DutyOfCare\ILookupLogger.cs" />
     <Compile Include="DutyOfCare\LicenceCheck\LicenceCheckDutyOfCareApi.cs" />
     <Compile Include="DutyOfCare\LicenceCheck\MockLicenceCheckDutyOfCareApi.cs" />
     <Compile Include="DutyOfCare\LicenceCheck\TestLicenseCheckApi.cs" />

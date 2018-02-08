@@ -1386,4 +1386,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="CategoryId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="9fcd6e2d-9c60-4957-ab7c-7ce4788d9245" ChangeDateTime="02/08/2018 08:48:02">
+    <Property Name="ElementName" Value="[dbo].[VehicleLookupLog].[DegegateId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleLookupLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DelegateId" />
+  </Operation>
 </Operations>

@@ -316,7 +316,65 @@ namespace Spend_Management
 
             return arrCarVals;
         }
-   
+
+        /// <summary>
+        /// Lookup a vehicle details from an external service based on the registration number (UK only).
+        /// </summary>
+        /// <param name="registrationNumber">The registration nunmber to lookup</param>
+        /// <returns>An instance of <see cref="cCar"/> or null is the lookup fails.</returns>
+        [WebMethod]
+        public cCar LookupVehicle(string registrationNumber)
+        {
+            var user = cMisc.GetCurrentUser();
+            cCar result = null;
+            var subAccounts = new cAccountSubAccounts(user.AccountID);
+            cAccountProperties reqProperties = subAccounts.getFirstSubAccount().SubAccountProperties.Clone();
+            if (!reqProperties.VehicleLookup)
+            {
+                return null;
+            }
+
+            var dvlaApi = BootstrapDvla.CreateNew();
+            var lookupResult = dvlaApi.Lookup(registrationNumber, BootstrapDvla.CreateLogger(user));
+            if (lookupResult.Code == "200")
+            {
+                if (lookupResult.Code != "200")
+                {
+                    return null;
+                }
+
+                result = new cCar(user.AccountID,
+                    user.EmployeeID,
+                    0,
+                    lookupResult.Vehicle.Make,
+                    lookupResult.Vehicle.Model,
+                    lookupResult.Vehicle.RegistrationNumber,
+                    null,
+                    null,
+                    false,
+                    new List<int>(),
+                    FuelTypeFactory.Convert(lookupResult.Vehicle.FuelType, user)
+                    ,
+                    0,
+                    false,
+                    0,
+                    MileageUOM.Mile,
+                    lookupResult.Vehicle.EngineCapacity,
+                    null,
+                    user.EmployeeID,
+                    null,
+                    null,
+                    false,
+                    false,
+                    (byte?) VehicleTypeFactory.Convert(lookupResult.Vehicle.VehicleType));
+                
+                return result;
+            }
+
+            return null;
+        }
+
+
         /// <summary>
         /// Send a "car is active email".
         /// </summary>

@@ -7085,6 +7085,8 @@
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\ApiSetEsrOrganisationLevel.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SaveP11DCategory.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\DeleteP11DCategory.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SaveVehicleLookupLog.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\VehicleLookupLog.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Views\SignoffStagesView.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -7200,6 +7202,7 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_VehicleLookupLog_Employees.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\100\SqlSchemas\master.dacpac">
