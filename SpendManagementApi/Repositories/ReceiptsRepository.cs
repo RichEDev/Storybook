@@ -6,7 +6,8 @@
     using System.Linq;
     using System.Web.Http;
     using Spend_Management;
-    using SpendManagementApi.Interfaces;
+	using SpendManagementApi.Common;
+	using SpendManagementApi.Interfaces;
     using SpendManagementApi.Models.Common;
     using SpendManagementApi.Models.Requests;
     using SpendManagementApi.Models.Responses;
@@ -270,10 +271,17 @@
                 string mappedTempPath = globalFolderPaths.GetSingleFolderPath(accountId, FilePathType.Receipt) + accountId.ToString();
                 var fullPath = $"{mappedTempPath}\\{receipt.ReceiptId}.{receipt.Extension}";
 
-                Image receiptImage = receiptData.GetImageFromPath(fullPath);
-                expenseReceipt.ReceiptData = receiptData.ConvertImageToBase64(receiptImage, receiptImage.RawFormat);
-             
-                expenseReceipt.MimeHeader = attachedReceipt.mimeType;
+				if (attachedReceipt.extension == "pdf")
+				{
+					expenseReceipt.ReceiptData = Helper.ConvertFileToBase64(fullPath);					
+				}
+				else
+				{
+					Image receiptImage = receiptData.GetImageFromPath(fullPath);
+					expenseReceipt.ReceiptData = receiptData.ConvertImageToBase64(receiptImage, receiptImage.RawFormat);
+				}
+
+				expenseReceipt.MimeHeader = attachedReceipt.mimeType;
 
                 if (generateThumbnails)
                 {
