@@ -68,7 +68,7 @@ public partial class usermanagementmenu : Page
                     48,
                     "Signoff Groups",
                     "A Group determines the stages a claim has to go through in order to be approved. Add, edit or delete groups. Modify the individual stages of an existing group.",
-                    "admin/admingroups.aspx");
+                    "expenses/admin/SignoffGroups.aspx");
             }
 
             if (user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.Employees, true))

@@ -240,23 +240,6 @@
             }
             throw new MethodAccessException(@"Ensure the enum you are passing in is decorated with a [Display(Name="")] attribute with a meaningful value.");
         }
-
-        /// <summary>
-        /// Generates a <see cref="Infragistics.WebUI.UltraWebGrid.ValueListItem"/>, based on the [Display(Name="")] tag 
-        /// and the value of a SignoffType enum member.
-        /// </summary>
-        /// <param name="signoffType">The value of the enum.</param>
-        /// <returns>A <see cref="Infragistics.WebUI.UltraWebGrid.ValueListItem"/>.</returns>
-        public static Infragistics.WebUI.UltraWebGrid.ValueListItem ToInfragisticsValueListItem(this SignoffType signoffType)
-        {
-            var display = GetDisplayValue(signoffType);
-            if (!string.IsNullOrWhiteSpace(display))
-            {
-                return new Infragistics.WebUI.UltraWebGrid.ValueListItem(display, (byte)signoffType);
-            }
-
-            throw new MethodAccessException(@"Ensure the enum you are passing in is decorated with a [Display(Name="")] attribute with a meaningful value.");
-        }
     }
 
 }

@@ -768,6 +768,31 @@ namespace Spend_Management
             this.InvalidateCache();
         }
 
+        /// <summary>
+        /// Update a <see cref="cStage"/>
+        /// </summary>
+        /// <param name="signofftype">The signoff type of the <see cref="cStage"/></param>
+        /// <param name="relid">The relid of the <see cref="cStage"/></param>
+        /// <param name="include">The include type of the <see cref="cStage"/></param>
+        /// <param name="amount">The amount of the <see cref="cStage"/></param>
+        /// <param name="notify">The notify type of the <see cref="cStage"/></param>
+        /// <param name="onholiday">The onholiday state of the <see cref="cStage"/></param>
+        /// <param name="holidaytype">The holiday type of the <see cref="cStage"/></param>
+        /// <param name="holidayid">The holiday id of the <see cref="cStage"/></param>
+        /// <param name="includeid">The include id of the <see cref="cStage"/></param>
+        /// <param name="claimantmail">The claimant mail state of the <see cref="cStage"/></param>
+        /// <param name="singlesignoff">The single signoff state of the <see cref="cStage"/></param>
+        /// <param name="sendmail">The approver mail state of the <see cref="cStage"/></param>
+        /// <param name="displaydeclaration">The display declaration state of the <see cref="cStage"/></param>
+        /// <param name="userid">The user id of the <see cref="cStage"/></param>
+        /// <param name="signoffid">The signoff id of the <see cref="cStage"/></param>
+        /// <param name="extraApprovalLevels">The extra approver levels of the <see cref="cStage"/></param>
+        /// <param name="approveHigherLevelsOnly">The approver higher levels state of the <see cref="cStage"/></param>
+        /// <param name="approverJustificationsRequired">The approver justification state of the <see cref="cStage"/></param>
+        /// <param name="nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner">The no cost code owner state of the <see cref="cStage"/></param>
+        /// <param name="allocateForPayment">The allocate for payment state of the <see cref="cStage"/></param>
+        /// <param name="validationCorrectionThreshold">The validation threshold of the <see cref="cStage"/></param>
+        /// <returns>The new id of the stage</returns>
         public int updateStage(int signoffid, SignoffType signofftype, int relid, int include, decimal amount, int notify, int onholiday, SignoffType holidaytype, int holidayid, int includeid, bool claimantmail, bool singlesignoff, bool sendmail, bool displaydeclaration, int userid, int extraApprovalLevels, bool approveHigherLevelsOnly, bool approverJustificationsRequired, bool nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, bool allocateForPayment, int? validationCorrectionThreshold)
         {
             var currentStage = this.GetStageById(signoffid);
@@ -781,43 +806,79 @@ namespace Spend_Management
                 }
             }
 
-            DBConnection expdata = new DBConnection(cAccounts.getConnectionString(this.AccountId));
-            expdata.sqlexecute.Parameters.AddWithValue("@signoffid", signoffid);
-            expdata.sqlexecute.Parameters.AddWithValue("@signofftype", (byte)signofftype);
-            expdata.sqlexecute.Parameters.AddWithValue("@relid", relid);
-            expdata.sqlexecute.Parameters.AddWithValue("@extraApprovalLevels", extraApprovalLevels);
-            expdata.sqlexecute.Parameters.AddWithValue("@include", include);
-            expdata.sqlexecute.Parameters.AddWithValue("@amount", amount);
-            expdata.sqlexecute.Parameters.AddWithValue("@notify", notify);
-            expdata.sqlexecute.Parameters.AddWithValue("@onholiday", onholiday);
-            expdata.sqlexecute.Parameters.AddWithValue("@holidaytype", (byte)holidaytype);
-            expdata.sqlexecute.Parameters.AddWithValue("@holidayid", holidayid);
-            expdata.sqlexecute.Parameters.AddWithValue("@claimantmail", Convert.ToByte(claimantmail));
-            expdata.sqlexecute.Parameters.AddWithValue("@singlesignoff", Convert.ToByte(singlesignoff));
-            if (includeid == 0)
+            using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(this.AccountId)))
             {
-                expdata.sqlexecute.Parameters.AddWithValue("@includeid", DBNull.Value);
-            }
-            else
-            {
-                expdata.sqlexecute.Parameters.AddWithValue("@includeid", includeid);
-            }
-            expdata.sqlexecute.Parameters.AddWithValue("@sendmail", Convert.ToByte(sendmail));
-            expdata.sqlexecute.Parameters.AddWithValue("@displaydeclaration", Convert.ToByte(displaydeclaration));
-            expdata.sqlexecute.Parameters.AddWithValue("@modifiedon", DateTime.Now.ToUniversalTime());
-            expdata.sqlexecute.Parameters.AddWithValue("@modifiedby", userid);
-            expdata.sqlexecute.Parameters.AddWithValue("@approveHigherLevelsOnly", approveHigherLevelsOnly);
-            expdata.sqlexecute.Parameters.AddWithValue("@nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner", nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner);
-            expdata.sqlexecute.Parameters.AddWithValue("@AllocateForPayment", allocateForPayment);
-            expdata.sqlexecute.Parameters.AddWithValue("@ValidationCorrectionThreshold", (object)validationCorrectionThreshold ?? DBNull.Value);
-            expdata.sqlexecute.Parameters.AddWithValue("@approverJustificationsRequired", Convert.ToByte(approverJustificationsRequired));
 
-            expdata.ExecuteProc("SaveSignoffStage");
-            expdata.sqlexecute.Parameters.Clear();
+                expdata.sqlexecute.Parameters.AddWithValue("@signoffid", signoffid);
+                expdata.sqlexecute.Parameters.AddWithValue("@signofftype", (byte) signofftype);
+                expdata.sqlexecute.Parameters.AddWithValue("@relid", relid);
+                expdata.sqlexecute.Parameters.AddWithValue("@extraApprovalLevels", extraApprovalLevels);
+                expdata.sqlexecute.Parameters.AddWithValue("@include", include);
+                expdata.sqlexecute.Parameters.AddWithValue("@amount", amount);
+                expdata.sqlexecute.Parameters.AddWithValue("@notify", notify);
+                expdata.sqlexecute.Parameters.AddWithValue("@onholiday", onholiday);
+                expdata.sqlexecute.Parameters.AddWithValue("@holidaytype", (byte) holidaytype);
+                expdata.sqlexecute.Parameters.AddWithValue("@holidayid", holidayid);
+                expdata.sqlexecute.Parameters.AddWithValue("@claimantmail", Convert.ToByte(claimantmail));
+                expdata.sqlexecute.Parameters.AddWithValue("@singlesignoff", Convert.ToByte(singlesignoff));
+                if (includeid == 0)
+                {
+                    expdata.sqlexecute.Parameters.AddWithValue("@includeid", DBNull.Value);
+                }
+                else
+                {
+                    expdata.sqlexecute.Parameters.AddWithValue("@includeid", includeid);
+                }
+
+                expdata.sqlexecute.Parameters.AddWithValue("@sendmail", Convert.ToByte(sendmail));
+                expdata.sqlexecute.Parameters.AddWithValue("@displaydeclaration", Convert.ToByte(displaydeclaration));
+                expdata.sqlexecute.Parameters.AddWithValue("@modifiedon", DateTime.Now.ToUniversalTime());
+                expdata.sqlexecute.Parameters.AddWithValue("@modifiedby", userid);
+                expdata.sqlexecute.Parameters.AddWithValue("@approveHigherLevelsOnly", approveHigherLevelsOnly);
+                expdata.sqlexecute.Parameters.AddWithValue("@nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner",
+                    nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner);
+                expdata.sqlexecute.Parameters.AddWithValue("@AllocateForPayment", allocateForPayment);
+                expdata.sqlexecute.Parameters.AddWithValue("@ValidationCorrectionThreshold",
+                    (object) validationCorrectionThreshold ?? DBNull.Value);
+                expdata.sqlexecute.Parameters.AddWithValue("@approverJustificationsRequired",
+                    Convert.ToByte(approverJustificationsRequired));
+
+                expdata.ExecuteProc("SaveSignoffStage");
+                expdata.sqlexecute.Parameters.Clear();
+            }
+
             this.InvalidateCache();
             return 0;
         }
 
+        /// <summary>
+        /// Save a <see cref="cStage"/>
+        /// </summary>
+        /// <param name="groupid">The id of the <see cref="cGroup"/></param>
+        /// <param name="signofftype">The signoff type of the <see cref="cStage"/></param>
+        /// <param name="relid">The relid of the <see cref="cStage"/></param>
+        /// <param name="include">The include type of the <see cref="cStage"/></param>
+        /// <param name="amount">The amount of the <see cref="cStage"/></param>
+        /// <param name="notify">The notify type of the <see cref="cStage"/></param>
+        /// <param name="onholiday">The onholiday state of the <see cref="cStage"/></param>
+        /// <param name="holidaytype">The holiday type of the <see cref="cStage"/></param>
+        /// <param name="holidayid">The holiday id of the <see cref="cStage"/></param>
+        /// <param name="includeid">The include id of the <see cref="cStage"/></param>
+        /// <param name="claimantmail">The claimant mail state of the <see cref="cStage"/></param>
+        /// <param name="singlesignoff">The single signoff state of the <see cref="cStage"/></param>
+        /// <param name="sendmail">The approver mail state of the <see cref="cStage"/></param>
+        /// <param name="displaydeclaration">The display declaration state of the <see cref="cStage"/></param>
+        /// <param name="userid">The user id of the <see cref="cStage"/></param>
+        /// <param name="signoffid">The signoff id of the <see cref="cStage"/></param>
+        /// <param name="offline">Offline state</param>
+        /// <param name="extraApprovalLevels">The extra approver levels of the <see cref="cStage"/></param>
+        /// <param name="approveHigherLevelsOnly">The approver higher levels state of the <see cref="cStage"/></param>
+        /// <param name="approverJustificationsRequired">The approver justification state of the <see cref="cStage"/></param>
+        /// <param name="nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner">The no cost code owner state of the <see cref="cStage"/></param>
+        /// <param name="allocateForPayment">The allocate for payment state of the <see cref="cStage"/></param>
+        /// <param name="isPostValidationCleanupStage">The cleanup stage state of the <see cref="cStage"/></param>
+        /// <param name="validationCorrectionThreshold">The validation threshold of the <see cref="cStage"/></param>
+        /// <returns>The new id of the stage</returns>
         public int addStage(int groupid, SignoffType signofftype, int relid, int include, decimal amount, int notify, int onholiday, SignoffType holidaytype, int holidayid, int includeid, bool claimantmail, bool singlesignoff, bool sendmail, bool displaydeclaration, int userid, int signoffid, bool offline, int extraApprovalLevels, bool approveHigherLevelsOnly, bool approverJustificationsRequired, bool nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, bool allocateForPayment, bool isPostValidationCleanupStage, int? validationCorrectionThreshold)
         {
             DBConnection expdata = new DBConnection(cAccounts.getConnectionString(this.AccountId));
@@ -855,10 +916,15 @@ namespace Spend_Management
 
             expdata.sqlexecute.Parameters.AddWithValue("@stage", Byte.MaxValue);
 
+            expdata.sqlexecute.Parameters.AddWithValue("@identity", SqlDbType.Int);
+            expdata.sqlexecute.Parameters["@identity"].Direction = ParameterDirection.ReturnValue;
+
             expdata.ExecuteProc("SaveSignoffStage");
+            var returnVal = (int)expdata.sqlexecute.Parameters["@identity"].Value;
             expdata.sqlexecute.Parameters.Clear();
             this.InvalidateCache();
-            return 0;
+
+            return returnVal;
         }
 
         public byte deleteStage(cGroup grp, int signoffId, bool systemAction = false)
@@ -1169,12 +1235,12 @@ namespace Spend_Management
         /// <summary>
         /// There are no stages to validate in this group.
         /// </summary>
-        public const string NoStages = "You cannot save a Signoff group with no stages.";
+        public const string NoStages = "You must have at least one stage to save a Signoff Group.";
 
         /// <summary>
         /// There can only be one scan and attach stage permitted.
         /// </summary>
-        public const string OnlyOneScanAttachStagePermitted = "There can only be one Scan & Attach stage in a Signoff group.";
+        public const string OnlyOneScanAttachStagePermitted = "There can only be one Scan & Attach stage in a Signoff Group.";
 
         /// <summary>
         /// There can only be one scan and attach stage permitted.
@@ -1184,7 +1250,7 @@ namespace Spend_Management
         /// <summary>
         /// There can only be one scan and attach stage permitted.
         /// </summary>
-        public const string OnlyOneValidationStagePermitted = "There can only be one Validation stage in a Signoff group.";
+        public const string OnlyOneValidationStagePermitted = "There can only be one Validation stage in a Signoff Group.";
 
         /// <summary>
         /// There can only be one scan and attach stage permitted.
@@ -1194,67 +1260,67 @@ namespace Spend_Management
         /// <summary>
         /// Scan & Attach or validation must not be the last stage in the approval process.
         /// </summary>
-        public const string SELStageMustNotBeTheLastStage = "Scan & Attach or Validation must not be the last stage in the approval process.";
+        public const string SELStageMustNotBeTheLastStage = "Scan & Attach or Validation must not be the last stage in the Signoff Group.";
 
         /// <summary>
         /// When to include of last stage must be 'always'.
         /// </summary>
-        public const string WhenToIncludeMustBeSetToAlways = "The 'when to include' of the last stage must be set to \"Always\".";
+        public const string WhenToIncludeMustBeSetToAlways = "The last stage of a Signoff Group must always be included.";
 
         /// <summary>
         /// Involvement of last stage must be 'user to check'.
         /// </summary>
-        public const string InvolvementLastStageMustBeSetToUserCheck = "The 'involvement' of the last stage must be set to \"User is to check claim\".";
+        public const string InvolvementLastStageMustBeSetToUserCheck = "The last stage of a Signoff Group must always be set to User is to check claim.";
 
         /// <summary>
         /// Last stage cannot be skipped if the approver is on holiday.
         /// </summary>
-        public const string LastStageCannotBeSkippedIfUserOnHoliday = "The last stage of a group cannot be skipped if the approver is on holiday.";
+        public const string LastStageCannotBeSkippedIfUserOnHoliday = "The last stage of a Signoff Group cannot be skipped if the approver is on holiday.";
 
         /// <summary>
         /// There can only be one Allocate for Payment stage in a Signoff group.
         /// </summary>
-        public const string OnlyOneAllocateForpaymentStagePermitted = "There can only be one 'allocate for payment' stage in a signoff group.";
+        public const string OnlyOneAllocateForpaymentStagePermitted = "There can only be one Allocate for Payment stage in a Signoff Group.";
 
         /// <summary>
         /// There can only be one Post-Validation Cleanup stage in a Signoff group.
         /// </summary>
-        public const string OnlyOnePostValidationCleanupStagePermitted = "There can only be one 'post-validation cleanup' stage in a signoff group.";
+        public const string OnlyOnePostValidationCleanupStagePermitted = "There can only be one post-validation cleanup stage in a signoff group.";
 
         /// <summary>
         /// The Post-Validation Cleanup stage must be the last stage in the approval process.
         /// </summary>
-        public const string PostValidationCleanupStageMustBeLast = "The 'post-validation cleanup' stage must be the last stage in the approval process.";
+        public const string PostValidationCleanupStageMustBeLast = "The post-validation cleanup stage must be the last stage in the approval process.";
 
         /// <summary>
         /// The Post-Validation Cleanup stage must be after the Allocate for Payment stage.
         /// </summary>
-        public const string PostValidationCleanupStageMustBeAfterAllocateForPayment = "The 'post-validation cleanup' stage must be after the 'allocate for payment' stage.";
+        public const string PostValidationCleanupStageMustBeAfterAllocateForPayment = "The post-validation cleanup stage must be after the allocate for payment stage.";
 
         /// <summary>
         /// The 'allocate for payment' stage must be before the 'validation' stage.
         /// </summary>
-        public const string AllocateForPaymentCannotBeAfterValidation = "The 'allocate for payment' stage must be before the 'validation' stage.";
+        public const string AllocateForPaymentCannotBeAfterValidation = "The Allocate for Payment stage must be before the Validation stage.";
 
         /// <summary>
         /// The Post-Validation Cleanup stage has not been configured.
         /// </summary>
-        public const string PostValidationCleanupStageMustBeconfigured = "The 'post-validation cleanup' stage has not been configured.";
+        public const string PostValidationCleanupStageMustBeconfigured = "The post-validation cleanup stage has not been configured.";
 
         /// <summary>
         /// The 'allocate for payment' stage cannot be skipped if user is on holiday.
         /// </summary>
-        public const string CannotSkipAllocateForPayment = "The 'allocate for payment' stage cannot be skipped if user is on holiday.";
+        public const string CannotSkipAllocateForPayment = "The Allocate for Payment stage cannot be skipped if the approver is on holiday.";
 
         /// <summary>
         /// The 'post-validation cleaup' stage cannot be skipped if user is on holiday.
         /// </summary>
-        public const string CannotSkipPostValidationCleanupStage = "The 'post-validation cleaup' stage cannot be skipped if user is on holiday.";
+        public const string CannotSkipPostValidationCleanupStage = "The post-validation cleaup stage cannot be skipped if user is on holiday.";
 
         /// <summary>
         /// To use Pay before Validate a Validation stage must included.
         /// </summary>
-        public const string ValidationIsRequired = "To use pay before validate a 'validation' stage must included.";
+        public const string ValidationIsRequired = "To use pay before validate a validation stage must included.";
 
         /// <summary>
         /// The result of the validation.

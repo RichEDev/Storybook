@@ -268,6 +268,7 @@
     <Content Include="expenses\admin\adminVehicleEngineTypes.aspx" />
     <Content Include="expenses\admin\aeemailsuffix.aspx" />
     <Content Include="expenses\admin\aeflagrule.aspx" />
+    <Content Include="expenses\admin\aeSignoffGroup.aspx" />
     <Content Include="expenses\admin\aeVehicleEngineType.aspx" />
     <Content Include="expenses\admin\companydetails.aspx" />
     <Content Include="expenses\admin\emailsuffixes.aspx" />
@@ -277,6 +278,9 @@
     <Content Include="expenses\ClaimSelector.aspx" />
     <Content Include="expenses\claimsummary.aspx" />
     <Content Include="expenses\claimViewer.aspx" />
+    <Content Include="expenses\admin\SignoffGroups.aspx" />
+    <Content Include="expenses\javaScript\sel.SignoffGroups.js" />
+    <Content Include="expenses\webservices\SignoffGroups.asmx" />
     <Content Include="shared\admin\aenotificationtemplate.aspx" />
     <Content Include="shared\admin\aeLogonMessages.aspx" />
     <Content Include="shared\admin\AuthoriserLevel.aspx" />
@@ -996,6 +1000,13 @@
     <Compile Include="expenses\admin\aeemailsuffix.aspx.designer.cs">
       <DependentUpon>aeemailsuffix.aspx</DependentUpon>
     </Compile>
+    <Compile Include="expenses\admin\aeSignoffGroup.aspx.cs">
+      <DependentUpon>aeSignoffGroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="expenses\admin\aeSignoffGroup.aspx.designer.cs">
+      <DependentUpon>aeSignoffGroup.aspx</DependentUpon>
+    </Compile>
     <Compile Include="expenses\admin\aeVehicleEngineType.aspx.cs">
       <DependentUpon>aeVehicleEngineType.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1076,8 +1087,19 @@
     <Compile Include="expenses\code\SendMessageEnum.cs" />
     <Compile Include="expenses\code\StringFormatHelper.cs" />
     <Compile Include="IAuditLog.cs" />
+    <Compile Include="expenses\webservices\SignoffGroups.asmx.cs">
+      <DependentUpon>SignoffGroups.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SessionHandlerConfiguration.cs" />
     <Compile Include="SessionHttpHandler.cs" />
+    <Compile Include="expenses\admin\SignoffGroups.aspx.cs">
+      <DependentUpon>SignoffGroups.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="expenses\admin\SignoffGroups.aspx.designer.cs">
+      <DependentUpon>SignoffGroups.aspx</DependentUpon>
+    </Compile>
     <Compile Include="shared\admin\aenotificationtemplate.aspx.cs">
       <DependentUpon>aenotificationtemplate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

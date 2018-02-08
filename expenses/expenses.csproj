@@ -799,13 +799,6 @@
     <Compile Include="admin\adminfloats.aspx.designer.cs">
       <DependentUpon>adminfloats.aspx</DependentUpon>
     </Compile>
-    <Compile Include="admin\admingroups.aspx.cs">
-      <DependentUpon>admingroups.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\admingroups.aspx.designer.cs">
-      <DependentUpon>admingroups.aspx</DependentUpon>
-    </Compile>
     <Compile Include="admin\adminitemroles.aspx.cs">
       <DependentUpon>adminitemroles.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -883,13 +876,6 @@
     <Compile Include="admin\aefloat.aspx.designer.cs">
       <DependentUpon>aefloat.aspx</DependentUpon>
     </Compile>
-    <Compile Include="admin\aegroup.aspx.cs">
-      <DependentUpon>aegroup.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\aegroup.aspx.designer.cs">
-      <DependentUpon>aegroup.aspx</DependentUpon>
-    </Compile>
     <Compile Include="admin\aeitemrole.aspx.cs">
       <DependentUpon>aeitemrole.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -910,13 +896,6 @@
     </Compile>
     <Compile Include="admin\aeqeform.aspx.designer.cs">
       <DependentUpon>aeqeform.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="admin\aestage.aspx.cs">
-      <DependentUpon>aestage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\aestage.aspx.designer.cs">
-      <DependentUpon>aestage.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\broadcastmessages.aspx.cs">
       <DependentUpon>broadcastmessages.aspx</DependentUpon>
@@ -1512,7 +1491,6 @@
     <Content Include="admin\admincategories.aspx" />
     <Content Include="admin\adminfaqs.aspx" />
     <Content Include="admin\adminfloats.aspx" />
-    <Content Include="admin\admingroups.aspx" />
     <Content Include="admin\adminitemroles.aspx" />
     <Content Include="admin\adminp11d.aspx" />
     <Content Include="admin\adminpolicy.aspx" />
@@ -1522,11 +1500,9 @@
     <Content Include="admin\aefaq.aspx" />
     <Content Include="admin\aefaqcategory.aspx" />
     <Content Include="admin\aefloat.aspx" />
-    <Content Include="admin\aegroup.aspx" />
     <Content Include="admin\aeitemrole.aspx" />
     <Content Include="admin\aep11d.aspx" />
     <Content Include="admin\aeqeform.aspx" />
-    <Content Include="admin\aestage.aspx" />
     <Content Include="admin\broadcastmessages.aspx" />
     <Content Include="admin\changeadvance.aspx" />
     <Content Include="admin\companylogo.aspx" />
