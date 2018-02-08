@@ -37,9 +37,9 @@ namespace expenses
         {
             var user = cMisc.GetCurrentUser();
             return new Receipts(user.AccountID, user.EmployeeID)
-                                .GetByClaimLine(expenseId)
-                                .Select(r => AttachedReceipt.FromReceipt(r, user.AccountID))
-                                .ToList();
+                .GetByClaimLine(expenseId)
+                .Select(r => AttachedReceipt.FromReceipt(r, user.AccountID))
+                .ToList();
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace expenses
         {
             var user = cMisc.GetCurrentUser();
             return new Receipts(user.AccountID, user.EmployeeID)
-                                .GetByClaim(claimId)
-                                .Select(r => AttachedReceipt.FromReceipt(r, user.AccountID))
-                                .ToList();
+                .GetByClaim(claimId)
+                .Select(r => AttachedReceipt.FromReceipt(r, user.AccountID))
+                .ToList();
         }
 
         /// <summary>
@@ -71,12 +71,12 @@ namespace expenses
             var isImage = data.CheckIfReceiptIsImageAndOverwriteUrl(receipt);
 
             var output = new
-            {
-                id = receipt.ReceiptId,
-                url = receipt.TemporaryUrl,
-                isImage,
-                icon = receipt.IconUrl
-            };
+                             {
+                                 id = receipt.ReceiptId,
+                                 url = receipt.TemporaryUrl,
+                                 isImage,
+                                 icon = receipt.IconUrl
+                             };
 
             return new JavaScriptSerializer().Serialize(output);
         }
@@ -103,12 +103,12 @@ namespace expenses
             var envelopeList = envelopeData.GetEnvelopesByAccount(accountId).Where(e => !e.ClaimId.HasValue && e.Status == EnvelopeStatus.PendingAdminReassignment);
 
             envelopeList.ForEach(e =>
-            {
-                var envelope = new EnvelopeManagementEnvelope(e);
-                var receiptList = receiptData.GetByEnvelope(e.EnvelopeId, false);
-                envelope.children = new List<EnvelopeManagementDTONode>(receiptList.Select(r => new EnvelopeManagementReceipt(r)));
-                output.Add(envelope);
-            });
+                {
+                    var envelope = new EnvelopeManagementEnvelope(e);
+                    var receiptList = receiptData.GetByEnvelope(e.EnvelopeId, false);
+                    envelope.children = new List<EnvelopeManagementDTONode>(receiptList.Select(r => new EnvelopeManagementReceipt(r)));
+                    output.Add(envelope);
+                });
 
             return output;
         }
@@ -152,10 +152,19 @@ namespace expenses
 
             var reciepts = new Receipts(user.AccountID, user.EmployeeID);
             byte[] fileData;
+            Stream t;
+            if (extension == ".jpg")
+            {
+                t = PatchAwayExif(uploadedFile.InputStream);
+            }
+            else
+            {
+                t = uploadedFile.InputStream;
+            }
 
             using (MemoryStream ms = new MemoryStream())
             {
-                uploadedFile.InputStream.CopyTo(ms);
+                t.CopyTo(ms);
                 fileData = ms.ToArray();
                 if (!reciepts.CheckReceiptFileIsValid(fileData, extension))
                 {
@@ -172,7 +181,7 @@ namespace expenses
                 using (var pdfViewerControl = new PdfViewerControl())
                 {
                     // Load the document in the viewer
-                    pdfViewerControl.Load(uploadedFile.InputStream);
+                    pdfViewerControl.Load(t);
                     // Export the pages of the loaded document as bitmap images
                     receiptImages = pdfViewerControl.ExportAsImage(0, pdfViewerControl.PageCount - 1);
                 }
@@ -180,12 +189,12 @@ namespace expenses
                 foreach (Image image in receiptImages)
                 {
                     var currentReceipt = new Receipt
-                    {
-                        CreationMethod = ReceiptCreationMethod.UploadedByClaimant,
-                        Extension = "jpg",
-                        ModifiedBy = user.EmployeeID,
-                        ModifiedOn = DateTime.UtcNow
-                    };
+                                             {
+                                                 CreationMethod = ReceiptCreationMethod.UploadedByClaimant,
+                                                 Extension = "jpg",
+                                                 ModifiedBy = user.EmployeeID,
+                                                 ModifiedOn = DateTime.UtcNow
+                                             };
 
                     bool isCurrentReceiptImage;
                     using (var memoryStream = new MemoryStream())
@@ -196,12 +205,12 @@ namespace expenses
                     }
 
                     outputList.Add(new
-                    {
-                        id = currentReceipt.ReceiptId,
-                        url = currentReceipt.TemporaryUrl,
-                        isCurrentReceiptImage,
-                        icon = currentReceipt.IconUrl
-                    });
+                                       {
+                                           id = currentReceipt.ReceiptId,
+                                           url = currentReceipt.TemporaryUrl,
+                                           isCurrentReceiptImage,
+                                           icon = currentReceipt.IconUrl
+                                       });
                 }
 
                 return new JavaScriptSerializer().Serialize(outputList);
@@ -210,26 +219,69 @@ namespace expenses
             // save and attach the receipt
             var data = new Receipts(user.AccountID, user.EmployeeID);
             var receipt = new Receipt
-            {
-                CreationMethod = ReceiptCreationMethod.UploadedByClaimant,
-                Extension = extension,
-                ModifiedBy = user.EmployeeID,
-                ModifiedOn = DateTime.UtcNow
-            };
+                              {
+                                  CreationMethod = ReceiptCreationMethod.UploadedByClaimant,
+                                  Extension = extension,
+                                  ModifiedBy = user.EmployeeID,
+                                  ModifiedOn = DateTime.UtcNow
+                              };
 
+         
+  
             receipt = data.AddReceipt(receipt, fileData);
-            
-            var isImage = data.CheckIfReceiptIsImageAndOverwriteUrl(receipt, uploadedFile.InputStream);
-
+            var isImage = data.CheckIfReceiptIsImageAndOverwriteUrl(receipt, t);
+    
             var output = new
-            {
-                id = receipt.ReceiptId,
-                url = receipt.TemporaryUrl,
-                isImage,
-                icon = receipt.IconUrl
-            };
+                             {
+                                 id = receipt.ReceiptId,
+                                 url = receipt.TemporaryUrl,
+                                 isImage,
+                                 icon = receipt.IconUrl
+                             };
 
             return new JavaScriptSerializer().Serialize(output);
+        }
+
+        public Stream PatchAwayExif(Stream inStream)
+        {
+            Stream outStream = new MemoryStream();
+            byte[] jpegHeader = new byte[2];
+            jpegHeader[0] = (byte)inStream.ReadByte();
+            jpegHeader[1] = (byte)inStream.ReadByte();
+            if (jpegHeader[0] == 0xff && jpegHeader[1] == 0xd8) //check if it's a jpeg          file
+            {
+                SkipAppHeaderSection(inStream);
+            }
+            outStream.WriteByte(0xff);
+            outStream.WriteByte(0xd8);
+
+            int readCount;
+            byte[] readBuffer = new byte[4096];
+            while ((readCount = inStream.Read(readBuffer, 0, readBuffer.Length)) > 0)
+                outStream.Write(readBuffer, 0, readCount);
+
+            return outStream;
+        }
+        private void SkipAppHeaderSection(Stream inStream)
+        {
+            byte[] header = new byte[2];
+            header[0] = (byte)inStream.ReadByte();
+            header[1] = (byte)inStream.ReadByte();
+
+            while (header[0] == 0xff && (header[1] >= 0xe0 && header[1] <= 0xef))
+            {
+                int exifLength = inStream.ReadByte();
+                exifLength = exifLength << 8;
+                exifLength |= inStream.ReadByte();
+
+                for (int i = 0; i < exifLength - 2; i++)
+                {
+                    inStream.ReadByte();
+                }
+                header[0] = (byte)inStream.ReadByte();
+                header[1] = (byte)inStream.ReadByte();
+            }
+            inStream.Position -= 2; //skip back two bytes
         }
     }
 }
