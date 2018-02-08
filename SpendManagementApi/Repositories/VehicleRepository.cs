@@ -1,4 +1,7 @@
-﻿namespace SpendManagementApi.Repositories
+﻿using Microsoft.Ajax.Utilities;
+using Spend_Management.Bootstrap;
+
+namespace SpendManagementApi.Repositories
 {
     using System;
     using System.Collections.Generic;
@@ -7,6 +10,7 @@
     using Models.Common;
     using Models.Types;
 
+    using DutyOfCareAPI.DutyOfCare.LicenceCheck;
     using SpendManagementApi.Common.Enums;
     using SpendManagementApi.Models;
 
@@ -30,6 +34,8 @@
 
         private cEmployeeCars _employeeCarsData;
 
+        //private IVehicleLookup _vehicleLookup;
+
         /// <summary>
         /// Creates a new VehicleRepository with the passed in user.
         /// </summary>
@@ -40,6 +46,7 @@
             _eData = new cEmployees(User.AccountID);
             _pData = new cPoolCars(User.AccountID);
             this._employeeCarsData = new cEmployeeCars(User.AccountID,User.EmployeeID);
+            //this._vehicleLookup = WebApiApplication.container.GetInstance<IVehicleLookup>();
         }
 
         /// <summary>

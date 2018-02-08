@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="44c4bb14-dd39-4e0e-8c8a-4862e9254319" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://vdl.licencecheck.co.uk/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="wcfVehicleLookup.disco" MetadataType="Disco" ID="89b0125f-844f-48f5-8045-c7b742f741a2" SourceId="1" SourceUrl="http://vdl.licencecheck.co.uk/wcfVehicleLookup.VDLService.svc?disco" />
+    <MetadataFile FileName="VDLService.wsdl" MetadataType="Wsdl" ID="84ae29d9-c2d4-4a93-8bde-8b45fc8570b5" SourceId="1" SourceUrl="http://vdl.licencecheck.co.uk/wcfVehicleLookup.VDLService.svc?wsdl" />
+    <MetadataFile FileName="wcfVehicleLookup.xsd" MetadataType="Schema" ID="a67a5831-94d0-46f6-aa21-a44027c959c4" SourceId="1" SourceUrl="http://vdl.licencecheck.co.uk/wcfVehicleLookup.VDLService.svc?xsd=xsd0" />
+    <MetadataFile FileName="wcfVehicleLookup1.xsd" MetadataType="Schema" ID="0e51e0bb-9460-4b28-a261-e4ef0035b127" SourceId="1" SourceUrl="http://vdl.licencecheck.co.uk/wcfVehicleLookup.VDLService.svc?xsd=xsd1" />
+    <MetadataFile FileName="wcfVehicleLookup2.xsd" MetadataType="Schema" ID="dc992733-370e-4e15-998c-9f6929cb5256" SourceId="1" SourceUrl="http://vdl.licencecheck.co.uk/wcfVehicleLookup.VDLService.svc?xsd=xsd2" />
+    <MetadataFile FileName="wcfVehicleLookup3.xsd" MetadataType="Schema" ID="cc6475ae-374e-46f2-b8a5-ceb268dda349" SourceId="1" SourceUrl="http://vdl.licencecheck.co.uk/wcfVehicleLookup.VDLService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

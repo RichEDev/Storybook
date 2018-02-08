@@ -859,6 +859,7 @@
     <Compile Include="Utilities\ExtensionMethods.cs" />
     <Compile Include="Utilities\IPValidator.cs" />
     <Compile Include="Utilities\UdfValidator.cs" />
+    <Compile Include="Utilities\VehicleFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="--app_offline.htm" />
@@ -1079,6 +1080,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{85dfc378-171e-46c8-9c54-74cbe66368ac}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DutyOfCareAPI\DutyOfCareAPI.csproj">
+      <Project>{e6a4dc2a-ded9-4231-abdb-6aac318f5c4d}</Project>
+      <Name>DutyOfCareAPI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Spend Management\Spend Management.csproj">
       <Project>{1cbfd8ec-f67c-4425-a10c-97bfc7501045}</Project>

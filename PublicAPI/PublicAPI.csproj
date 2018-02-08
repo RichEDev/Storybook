@@ -105,6 +105,8 @@
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.1.4\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -130,6 +132,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Connected Services\VDLService\PublicAPI.VDLService.AdvancedVehicleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\VDLService\PublicAPI.VDLService.StatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\VDLService\PublicAPI.VDLService.VehicleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\VDLService\VDLService.wsdl" />
+    <None Include="Connected Services\VDLService\wcfVehicleLookup.disco" />
+    <None Include="Connected Services\VDLService\configuration91.svcinfo" />
+    <None Include="Connected Services\VDLService\configuration.svcinfo" />
+    <None Include="Connected Services\VDLService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -141,6 +160,11 @@
     <Compile Include="Bootstrap\BootstrapAccount.cs" />
     <Compile Include="Bootstrap\Bootstrapper.cs" />
     <Compile Include="Bootstrap\WebIdentityContext.cs" />
+    <Compile Include="Connected Services\VDLService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\HttpActionResult.cs" />
     <Compile Include="Controllers\P11DCategoriesController.cs" />
     <Compile Include="Controllers\ProjectCodesController.cs" />
@@ -166,6 +190,18 @@
     <Content Include="log4net.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Connected Services\VDLService\wcfVehicleLookup.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VDLService\wcfVehicleLookup1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VDLService\wcfVehicleLookup2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VDLService\wcfVehicleLookup3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="log4net.Debug.config">
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>
@@ -226,6 +262,12 @@
       <Project>{C417335B-7BE1-45AE-8274-C0B65829C4FC}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\VDLService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

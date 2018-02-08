@@ -48,7 +48,9 @@
             }
         }, 500);
     });
-
+    if ($('#imgLookup').length > 0) {
+        $('#' + txtregistration).change(function() { LookupVehicleDetails(); });
+    }
 });
 var vehicleType = "";
 var carid = 0;
@@ -985,3 +987,30 @@ function ResetCarID()
 {
     carid = 0;
 }
+
+function LookupVehicleDetails() {
+    var registration = $('#'+ txtregistration).val();
+    if (registration && registration.length > 1) {
+        $('#lookupError').text(' ').hide();
+        $('#divWait').show();
+        Spend_Management.svcCars.LookupVehicle(registration, LookupVehicleDetailsComplete);    
+    }
+    
+}
+
+function LookupVehicleDetailsComplete(car) {
+    $('#divWait').hide();
+    if (car !== undefined && car !== null) {
+        $('#' + txtmake).val(car.make);
+        $('#' + txtmodel).val(car.model);
+        $('#' + txtregistration).val(car.registration);
+        $('#' + txtenginesize).val(car.EngineSize);
+        $('#' + cmbvehicletype).val(car.VehicleTypeID);
+        $('#' + cmbcartype).val(car.VehicleEngineTypeId);
+        
+        return;
+    };
+
+    $('#lookupError').text('Could not find vehicle in DVLA database').show();
+}
+

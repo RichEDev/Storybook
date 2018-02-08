@@ -1,4 +1,6 @@
-﻿namespace DutyOfCareAPI.DutyOfCare.LicenceCheck
+﻿using DutyOfCareAPI.DutyOfCare.LicenceCheck.VehicleLookup;
+
+namespace DutyOfCareAPI.DutyOfCare.LicenceCheck
 {
     using System;
     using System.Collections.Generic;

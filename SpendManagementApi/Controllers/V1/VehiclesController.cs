@@ -358,6 +358,21 @@
             return response;
         }
 
+        /// <summary>
+        /// Performs a lookup via an instance of <see cref="PublicAPI.VehicleLookup.IVehicleLookup"/>
+        /// </summary>
+        /// <param name="registrationNumber">The full registration of the car to lookup</param>
+        /// <returns>A GetVehiclesResponse containing all the <see cref="VehicleBasic">Vehicles</see>.</returns>
+        [HttpGet, Route("LookupVehicle/{registrationNumber}")]
+        [AuthAudit(SpendManagementElement.Api, AccessRoleType.View)]
+        public VehicleResponse LookupVehicle(string registrationNumber)
+        {
+            var response = this.InitialiseResponse<VehicleResponse>();
+            response.Item = ((VehicleRepository)this.Repository).LookupVehicle(registrationNumber);
+            
+            return response;
+        }
+
         #endregion Api Methods
 
         private void CheckMultipleAccessRoles(Vehicle item, AccessRoleType typeForVehicle)

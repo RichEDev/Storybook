@@ -59,7 +59,7 @@
             <asp:ServiceReference Path="~/shared/webServices/svcCars.asmx" />
         </Services>
         <Scripts>
-            <asp:ScriptReference Path="~/shared/javaScript/cars.js?date=20161112" />
+            <asp:ScriptReference Path="~/shared/javaScript/cars.js?date=20180206" />
             <asp:ScriptReference Path="~/shared/javaScript/userdefined.js" />
             <asp:ScriptReference Path="~/shared/javaScript/employees.js" />
             <asp:ScriptReference Name="tooltips" />
@@ -204,26 +204,36 @@
                     
                 <div class="formpanel">
                     <div class="sectiontitle">
+                        <asp:Label ID="Label7" runat="server" Text="Vehicle Details"></asp:Label>
+                    </div>
+                    
+                    <div class="twocolumn">
+                        <asp:Label ID="lblregno" runat="server" AssociatedControlID="txtregno" CssClass="mandatory" meta:resourcekey="lblregnoResource1">Registration Number*</asp:Label><span class="inputs"><asp:TextBox ID="txtregno" runat="server" CssClass="fillspan registrationNumber" meta:resourceKey="txtregnoResource1" ValidationGroup="ValidationSummaryAeCar"></asp:TextBox></span><span id="divLookupContainer" runat="server"><img src="/static/icons/16/new-icons/find.png" alt="Cancel" id="imgLookup" onclick="javascript:LookupVehicleDetails();"/></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"><asp:RequiredFieldValidator ID="reqreg" runat="server" ControlToValidate="txtregno" ErrorMessage="Please enter the registration number of this vehicle" meta:resourceKey="reqregResource1" ValidationGroup="ValidationSummaryAeCar">*</asp:RequiredFieldValidator></span>
+                        
+                        <span id="divWait" style="display: none;">
+                            <img alt="searching" src="/shared/images/ajax-loader.gif" style="margin-right: 8px;" height ="12"/>
+                        </span>
+                        <label id="lookupError" style="color:red" ></label>
+                    </div>
+                    <div class="twocolumn">
+                        <asp:Label ID="Label8" runat="server" AssociatedControlID="txtmake" meta:resourcekey="lblmakeResource1" CssClass="mandatory">Make*</asp:Label><span class="inputs"><asp:TextBox ID="txtmake" runat="server" CssClass="fillspan" meta:resourcekey="txtmakeResource1" ValidationGroup="ValidationSummaryAeCar"></asp:TextBox></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"><asp:RequiredFieldValidator ID="reqmake" runat="server" ControlToValidate="txtmake" ErrorMessage="Please enter the make of this vehicle" meta:resourcekey="reqmakeResource1" ValidationGroup="ValidationSummaryAeCar">*</asp:RequiredFieldValidator></span>
+                        <asp:Label ID="Label9" runat="server" AssociatedControlID="txtmodel" CssClass="mandatory" meta:resourcekey="lblmodelResource1">Model*</asp:Label><span class="inputs"><asp:TextBox ID="txtmodel" runat="server" CssClass="fillspan" meta:resourcekey="txtmodelResource1" ValidationGroup="ValidationSummaryAeCar"></asp:TextBox></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"><asp:RequiredFieldValidator ID="reqmodel" runat="server" ControlToValidate="txtmodel" ErrorMessage="Please enter the model of this vehicle" meta:resourcekey="reqmodelResource1" ValidationGroup="ValidationSummaryAeCar">*</asp:RequiredFieldValidator></span>
+                    </div>
+                    <div class="twocolumn">
+                        <asp:Label ID="Label10" runat="server" meta:resourcekey="lblvehicletypeResource1" AssociatedControlID="cmbvehicletype" CssClass="mandatory">Vehicle Type*</asp:Label><span class="inputs"><asp:DropDownList ID="cmbvehicletype" runat="server" CssClass="fillspan" meta:resourceKey="cmbvehicletypeResource1" ValidationGroup="ValidationSummaryAeCar" onchange="OnVehicleTypeChange(this.id)" OnSelectedIndexChanged="cmbvehicletype_SelectedIndexChanged"></asp:DropDownList></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"><asp:CompareValidator ID="rvVehicleType" runat="server" ControlToValidate="cmbvehicletype" ErrorMessage="Please select the vehicle type." Operator="GreaterThan" Type="Integer" ValidationGroup="ValidationSummaryAeCar" ValueToCompare="0">*</asp:CompareValidator></span>
+                        <asp:Label ID="lblcartype" runat="server" meta:resourcekey="lblcartypeResource1" AssociatedControlID="cmbcartype" CssClass="mandatory">Engine Type*</asp:Label><span class="inputs"><asp:DropDownList ID="cmbcartype" runat="server" CssClass="fillspan" onchange="javascript:filterMileageGrid();" meta:resourceKey="cmbcartypeResource1" ValidationGroup="ValidationSummaryAeCar" ></asp:DropDownList></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"><asp:CompareValidator ID="rvEngineType" runat="server" ControlToValidate="cmbcartype" ErrorMessage="Please select the engine type." Operator="GreaterThan" Type="Integer" ValidationGroup="ValidationSummaryAeCar" ValueToCompare="0">*</asp:CompareValidator></span>
+                    </div>
+
+                    <div class="sectiontitle">
                         <asp:Label ID="Label4" runat="server" Text="General Details"></asp:Label>
                     </div>
                     
-                    
-                      <div class="twocolumn">
-                        <asp:Label ID="lblVehicleType" runat="server" meta:resourcekey="lblvehicletypeResource1" AssociatedControlID="cmbvehicletype" CssClass="mandatory">Vehicle Type*</asp:Label><span class="inputs"><asp:DropDownList ID="cmbvehicletype" runat="server" CssClass="fillspan" meta:resourceKey="cmbvehicletypeResource1" ValidationGroup="ValidationSummaryAeCar" onchange="OnVehicleTypeChange(this.id)" OnSelectedIndexChanged="cmbvehicletype_SelectedIndexChanged"></asp:DropDownList></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"><asp:CompareValidator ID="rvVehicleType" runat="server" ControlToValidate="cmbvehicletype" ErrorMessage="Please select the vehicle type." Operator="GreaterThan" Type="Integer" ValidationGroup="ValidationSummaryAeCar" ValueToCompare="0">*</asp:CompareValidator></span>
-                    </div>
-
-
-
                     <div class="twocolumn">
-                        <asp:Label ID="lblmake" runat="server" AssociatedControlID="txtmake" meta:resourcekey="lblmakeResource1" CssClass="mandatory">Make*</asp:Label><span class="inputs"><asp:TextBox ID="txtmake" runat="server" CssClass="fillspan" meta:resourcekey="txtmakeResource1" ValidationGroup="ValidationSummaryAeCar"></asp:TextBox></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"><asp:RequiredFieldValidator ID="reqmake" runat="server" ControlToValidate="txtmake" ErrorMessage="Please enter the make of this vehicle" meta:resourcekey="reqmakeResource1" ValidationGroup="ValidationSummaryAeCar">*</asp:RequiredFieldValidator></span>
-                        <asp:Label ID="lblmodel" runat="server" AssociatedControlID="txtmodel" CssClass="mandatory" meta:resourcekey="lblmodelResource1">Model*</asp:Label><span class="inputs"><asp:TextBox ID="txtmodel" runat="server" CssClass="fillspan" meta:resourcekey="txtmodelResource1" ValidationGroup="ValidationSummaryAeCar"></asp:TextBox></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"><asp:RequiredFieldValidator ID="reqmodel" runat="server" ControlToValidate="txtmodel" ErrorMessage="Please enter the model of this vehicle" meta:resourcekey="reqmodelResource1" ValidationGroup="ValidationSummaryAeCar">*</asp:RequiredFieldValidator></span>
-                    </div>
-                    <div class="twocolumn">
-                        <asp:Label ID="lblregno" runat="server" AssociatedControlID="txtregno" CssClass="mandatory" meta:resourcekey="lblregnoResource1">Registration Number*</asp:Label><span class="inputs"><asp:TextBox ID="txtregno" runat="server" CssClass="fillspan registrationNumber" meta:resourceKey="txtregnoResource1" ValidationGroup="ValidationSummaryAeCar"></asp:TextBox></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"><asp:RequiredFieldValidator ID="reqreg" runat="server" ControlToValidate="txtregno" ErrorMessage="Please enter the registration number of this vehicle" meta:resourceKey="reqregResource1" ValidationGroup="ValidationSummaryAeCar">*</asp:RequiredFieldValidator></span>
+                        
                         <asp:Label ID="lblUom" runat="server" AssociatedControlID="cmbUom" meta:resourcekey="lblUomResource1">Unit of Measure</asp:Label><span class="inputs"><asp:DropDownList ID="cmbUom" runat="server" CssClass="fillspan" onchange="javascript:filterMileageGrid();" ValidationGroup="ValidationSummaryAeCar"><asp:ListItem Selected="True" Value="0">Miles</asp:ListItem><asp:ListItem Value="1">Kilometres</asp:ListItem></asp:DropDownList></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"></span>
                     </div>
                     <div class="twocolumn">
-                        <asp:Label ID="lblcartype" runat="server" meta:resourcekey="lblcartypeResource1" AssociatedControlID="cmbcartype" CssClass="mandatory">Engine Type*</asp:Label><span class="inputs"><asp:DropDownList ID="cmbcartype" runat="server" CssClass="fillspan" onchange="javascript:filterMileageGrid();" meta:resourceKey="cmbcartypeResource1" ValidationGroup="ValidationSummaryAeCar" ></asp:DropDownList></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"><asp:CompareValidator ID="rvEngineType" runat="server" ControlToValidate="cmbcartype" ErrorMessage="Please select the engine type." Operator="GreaterThan" Type="Integer" ValidationGroup="ValidationSummaryAeCar" ValueToCompare="0">*</asp:CompareValidator></span>
+                        
                         <asp:Label ID="Label5" runat="server" AssociatedControlID="txtEngineSize" CssClass="mandatory" Text="Engine Size (cc)*"></asp:Label><span class="inputs"><asp:TextBox ID="txtEngineSize" runat="server" CssClass="fillspan" ValidationGroup="ValidationSummaryAeCar" MaxLength="5"></asp:TextBox></span><span class="inputicon"></span><span class="inputtooltipfield"><img id="imgtooltip383" alt="" class="tooltipicon" onclick="SEL.Tooltip.Show('7fd6e1ed-a9fc-48bc-a6c4-7e05456d8645', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" /></span><span class="inputvalidatorfield"><asp:RequiredFieldValidator ID="rfEngineSize" runat="server" ControlToValidate="txtEngineSize" ErrorMessage="Please enter the engine size (in cc's)" ValidationGroup="ValidationSummaryAeCar">*</asp:RequiredFieldValidator><asp:CompareValidator ID="cvEngineSize" runat="server" ControlToValidate="txtEngineSize" ErrorMessage="Engine size must contain the digits 0-9 only." Operator="DataTypeCheck" Text="*" Type="Integer" ValidationGroup="ValidationSummaryAeCar" Display="Dynamic"></asp:CompareValidator><asp:CompareValidator ID="cvEngineSizeValue" runat="server" ControlToValidate="txtEngineSize" ErrorMessage="The engine size must be 0 or greater" ValidationGroup="ValidationSummaryAeCar" Type="Integer" Operator="GreaterThanEqual" ValueToCompare="0" Display="Dynamic">*</asp:CompareValidator></span>
                     </div>
                     <div class="twocolumn">
@@ -388,7 +398,6 @@
             </div>
         </div>
     </asp:Panel>
-    
     <cc1:ModalPopupExtender ID="modCarDocAttachment" runat="server" TargetControlID="lnkCarDocAttachment" PopupControlID="pnlCarDocAttachments" BackgroundCssClass="modalBackground" CancelControlID="cmdCarDocAttachCancel" ></cc1:ModalPopupExtender>
     <asp:LinkButton ID="lnkCarDocAttachment" runat="server" style="display: none;"></asp:LinkButton>
     <cc1:ModalPopupExtender ID="modOdoReading" runat="server" TargetControlID="lnkOdoReading" PopupControlID="pnlOdo" BackgroundCssClass="modalBackground" CancelControlID="cmdOdoReadingCancel" ></cc1:ModalPopupExtender>

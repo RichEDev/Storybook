@@ -881,12 +881,14 @@
     <Compile Include="TorchPredefinedSection.cs" />
     <Compile Include="TreeNode.cs" />
     <Compile Include="UserDefinedFields\UserDefinedFieldValue.cs" />
+    <Compile Include="Vehicles\FuelTypeFactory.cs" />
     <Compile Include="Vehicles\VehicleEngineTypes.cs" />
     <Compile Include="Vehicles\VehicleJourneyRateThresholdRate.cs" />
     <Compile Include="UserDefinedFields\UdfRecordForAudit.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UserDefinedFields\UdfAuditingDetails.cs" />
+    <Compile Include="Vehicles\VehicleTypeFactory.cs" />
     <Compile Include="Web References\SalesForceApi\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

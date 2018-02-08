@@ -1539,6 +1539,11 @@ namespace SpendManagementLibrary
                 this.SaveAccountProperty(subAccountID, "esrPrimaryAddressOnly", subAccountProperties.EsrPrimaryAddressOnly, employeeID, delegateID);
             }
 
+            if (originalSubAccountProperties.VehicleLookup != subAccountProperties.VehicleLookup)
+            {
+                this.SaveAccountProperty(subAccountID, "VehicleLookup", subAccountProperties.VehicleLookup, employeeID, delegateID);
+            }
+
             this.InvalidateCache(subAccountID);
         }
 
@@ -2763,6 +2768,9 @@ namespace SpendManagementLibrary
                                 break;
                             case "esrPrimaryAddressOnly":
                                 lstAccountProperties.EsrPrimaryAddressOnly = Convert.ToBoolean(Convert.ToInt32(stringValue));
+                                break;
+                            case "VehicleLookup":
+                                lstAccountProperties.VehicleLookup = Convert.ToBoolean(Convert.ToInt32(stringValue));
                                 break;
 
                         }

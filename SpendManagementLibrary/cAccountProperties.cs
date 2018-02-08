@@ -1632,6 +1632,11 @@
         /// </summary>
         public bool EsrPrimaryAddressOnly { get; set; }
 
+        /// <summary>
+        /// Gets or sets wether the use can get vehicle information from an external service.
+        /// </summary>
+        public bool VehicleLookup { get; set; }
+
         #endregion
     }
 }

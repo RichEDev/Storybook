@@ -122,8 +122,6 @@ namespace Spend_Management
                 ScriptManagerProxy1.Scripts.Add(scrRefAutoComplete);
             }
 
-            cEmployees clsEmployees = new cEmployees(nAccountID);
-
             cAccountSubAccounts clsSubAccounts = new cAccountSubAccounts(this.AccountID);
             cAccountProperties reqProperties = clsSubAccounts.getFirstSubAccount().SubAccountProperties.Clone();
 
@@ -157,10 +155,11 @@ namespace Spend_Management
                 if (cMisc.GetCurrentUser().Account.IsNHSCustomer)
                 {
                     this.tabEsr.Visible = true;
-            }
+                }
             }
 
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "editOnly", "var editOnly = false;", true);
+
             if (bShowStartDateOnly)
             {
                 phCarEndDate.Visible = false;
@@ -180,6 +179,8 @@ namespace Spend_Management
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "AEExpense", "var isAeExpense = " + (bIsAeExpenses ? "true" : "false") + ";", true);
 
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "IsPoolCar", "var isPoolCar = " + (bIsPoolCar ? "true" : "false") + ";", true);
+
+            this.divLookupContainer.Visible = reqProperties.VehicleLookup;
 
             if ((this.currentModule == Modules.Greenlight || this.currentModule == Modules.GreenlightWorkforce) || (reqProperties.ShowMileageCatsForUsers == false && this.bAdministrator == false))
             {

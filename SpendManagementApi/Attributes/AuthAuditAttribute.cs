@@ -166,6 +166,8 @@ namespace SpendManagementApi.Attributes
             // set the cMisc CurrentUser
             _cMisc = new cMisc(reqAccount.accountid);
 
+            //TODO:Add authentication to Public API and store result
+
             #endregion Authenticate
 
             #region Check IP Address

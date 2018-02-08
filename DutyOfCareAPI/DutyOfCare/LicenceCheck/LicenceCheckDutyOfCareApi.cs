@@ -1,4 +1,5 @@
-﻿namespace DutyOfCareAPI.DutyOfCare.LicenceCheck
+﻿
+namespace DutyOfCareAPI.DutyOfCare.LicenceCheck
 {
     using System;
     using System.Linq;

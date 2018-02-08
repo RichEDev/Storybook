@@ -170,5 +170,6 @@ public enum SpendManagementElement
     ExpeditePaymentReport=194,
     LogonMessages = 195,
     FuelReceiptToVATCalculation = 196,
-    DvlaConnect = 197
+    DvlaConnect = 197,
+    VehicleLookup = 198
 }

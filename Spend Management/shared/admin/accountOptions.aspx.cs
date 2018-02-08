@@ -105,9 +105,11 @@
             this.corporateCardsSpan.Visible = usingExpenses;
             this.spanGeneralOptionsExpenses.Visible = usingExpenses;
             this.dvlaLicenceElementSection.Visible = currentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect);
+            this.spanVehicleLookups.Visible =
+                currentUser.Account.HasLicensedElement(SpendManagementElement.VehicleLookup);
             this.SetNumberOfRememberedApproversDropDown();
             var clsSubAccounts = new cAccountSubAccounts(currentUser.AccountID);
-
+            
             cAccountProperties reqProperties = clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties;
             var clsEmployees = new cEmployees(currentUser.AccountID);
 
@@ -567,6 +569,9 @@
                     this.ddlDrivingLicenceLookupFrequency.SelectedValue = reqProperties.DrivingLicenceLookupFrequency;
                     this.ddlAutoRevokeOfConsentLookupFrequency.SelectedValue = reqProperties.FrequencyOfConsentRemindersLookup;
                 }
+
+                this.chkVehicleLookup.Checked = reqProperties.VehicleLookup;
+
                 //load the team list in the approver section
                 this.teamListForApprover.Items.AddRange(new cTeams(currentUser.AccountID).CreateDropDown(0));
                 this.cmbLineManagerReminderDays.SelectedValue = reqProperties.RemindApproverOnDOCDocumentExpiryDays.ToString(CultureInfo.InvariantCulture);
@@ -1180,6 +1185,9 @@
             }
             
             reqProperties.EnableAutoUpdateOfExchangeRates = this.chkEnableAutoUpdateOfExchangeRates.Checked;
+
+            reqProperties.VehicleLookup = currentUser.Account.HasLicensedElement(SpendManagementElement.VehicleLookup) && this.chkVehicleLookup.Checked;
+
             clsSubAccounts.SaveAccountProperties(reqProperties, currentUser.EmployeeID, currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
 
             if (reqProperties.EnableCurrentClaimsReminders)
@@ -1444,3 +1452,4 @@
         }
     }
 }
+

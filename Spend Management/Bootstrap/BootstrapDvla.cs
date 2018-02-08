@@ -10,7 +10,7 @@ namespace Spend_Management.Bootstrap
     /// <summary>
     /// <see cref="IDutyOfCareApi"/> bootstrapper
     /// </summary>
-    internal static class BootstrapDvla
+    public static class BootstrapDvla
     {
         /// <summary>
         /// <see cref="IDutyOfCareApi"/> bootstrapper for Duty of Care APIs.
