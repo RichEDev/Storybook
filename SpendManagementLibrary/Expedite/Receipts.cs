@@ -1047,7 +1047,7 @@
                     Image.FromStream(documentMemoryStream);
                 }               
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 return false;
             }
