@@ -1007,7 +1007,7 @@ function LookupVehicleDetailsComplete(car) {
         $('#' + txtenginesize).val(car.EngineSize);
         $('#' + cmbvehicletype).val(car.VehicleTypeID);
         $('#' + cmbcartype).val(car.VehicleEngineTypeId);
-        
+        filterMileageGrid();
         return;
     };
 
