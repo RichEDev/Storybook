@@ -164,6 +164,7 @@ namespace expenses
 
             using (MemoryStream ms = new MemoryStream())
             {
+                t.Position = 0;
                 t.CopyTo(ms);
                 fileData = ms.ToArray();
                 if (!reciepts.CheckReceiptFileIsValid(fileData, extension))
@@ -189,12 +190,12 @@ namespace expenses
                 foreach (Image image in receiptImages)
                 {
                     var currentReceipt = new Receipt
-                                             {
-                                                 CreationMethod = ReceiptCreationMethod.UploadedByClaimant,
-                                                 Extension = "jpg",
-                                                 ModifiedBy = user.EmployeeID,
-                                                 ModifiedOn = DateTime.UtcNow
-                                             };
+                    {
+                        CreationMethod = ReceiptCreationMethod.UploadedByClaimant,
+                        Extension = "jpg",
+                        ModifiedBy = user.EmployeeID,
+                        ModifiedOn = DateTime.UtcNow
+                    };
 
                     bool isCurrentReceiptImage;
                     using (var memoryStream = new MemoryStream())
@@ -205,12 +206,12 @@ namespace expenses
                     }
 
                     outputList.Add(new
-                                       {
-                                           id = currentReceipt.ReceiptId,
-                                           url = currentReceipt.TemporaryUrl,
-                                           isCurrentReceiptImage,
-                                           icon = currentReceipt.IconUrl
-                                       });
+                    {
+                        id = currentReceipt.ReceiptId,
+                        url = currentReceipt.TemporaryUrl,
+                        isCurrentReceiptImage,
+                        icon = currentReceipt.IconUrl
+                    });
                 }
 
                 return new JavaScriptSerializer().Serialize(outputList);
@@ -219,12 +220,12 @@ namespace expenses
             // save and attach the receipt
             var data = new Receipts(user.AccountID, user.EmployeeID);
             var receipt = new Receipt
-                              {
-                                  CreationMethod = ReceiptCreationMethod.UploadedByClaimant,
-                                  Extension = extension,
-                                  ModifiedBy = user.EmployeeID,
-                                  ModifiedOn = DateTime.UtcNow
-                              };
+            {
+                CreationMethod = ReceiptCreationMethod.UploadedByClaimant,
+                Extension = extension,
+                ModifiedBy = user.EmployeeID,
+                ModifiedOn = DateTime.UtcNow
+            };
 
          
   
@@ -232,12 +233,12 @@ namespace expenses
             var isImage = data.CheckIfReceiptIsImageAndOverwriteUrl(receipt, t);
     
             var output = new
-                             {
-                                 id = receipt.ReceiptId,
-                                 url = receipt.TemporaryUrl,
-                                 isImage,
-                                 icon = receipt.IconUrl
-                             };
+            {
+                id = receipt.ReceiptId,
+                url = receipt.TemporaryUrl,
+                isImage,
+                icon = receipt.IconUrl
+            };
 
             return new JavaScriptSerializer().Serialize(output);
         }
