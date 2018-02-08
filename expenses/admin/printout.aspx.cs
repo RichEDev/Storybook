@@ -1,20 +1,15 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-
-using System.Collections.Generic;
-using SpendManagementLibrary;
-using Spend_Management;
-
 namespace expenses.admin
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Web;
+    using System.Web.Services;
+    using System.Web.UI;
+
+    using SpendManagementLibrary;
+
+    using Spend_Management;
+
     /// <summary>
     /// Summary description for printout.
     /// </summary>
@@ -23,122 +18,91 @@ namespace expenses.admin
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
-
-            Title = "Print-Out";
-            Master.title = Title;
-            Master.helpid = 1107;
-            if (IsPostBack == false)
+            this.Title = "Print-Out";
+            this.Master.title = this.Title;
+            this.Master.helpid = 1107;
+            if (this.IsPostBack == false)
             {
                 CurrentUser user = cMisc.GetCurrentUser();
                 user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.DefaultPrintView, true, true);
-                ViewState["accountid"] = user.AccountID;
-                ViewState["employeeid"] = user.EmployeeID;
+                this.ViewState["accountid"] = user.AccountID;
+                this.ViewState["employeeid"] = user.EmployeeID;
 
-                gridprintout.DataSource = getPrintoutGrid();
-                gridprintout.DataBind();
+                string[] gridData = this.CreateGrid(user.AccountID, user.EmployeeID);
+                this.litgrid.Text = gridData[1];
+
+                // set the sel.grid javascript variables
+                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "PrintoutGridVars", cGridNew.generateJS_init("PrintoutGridVars", new List<string>() { gridData[0] }, user.CurrentActiveModule), true);
             }
-        }
-
-        private DataTable getPrintoutGrid()
-        {
-            cMisc clsmisc = new cMisc((int)ViewState["accountid"]);
-            cFields clsfields = new cFields((int)ViewState["accountid"]);
-            object[] values;
-            List<cField> fields = clsfields.getPrintoutFields();
-
-            List<Guid> selectedfields = clsmisc.GetPrintoutFields();
-            DataTable tbl = new DataTable();
-            tbl.Columns.Add("selected", typeof(System.Boolean));
-            tbl.Columns.Add("fieldid", typeof(System.Guid));
-            tbl.Columns.Add("description", typeof(System.String));
-
-            foreach (cField field in fields)
-            {
-                values = new object[3];
-                if (selectedfields.Contains(field.FieldID))
-                {
-                    values[0] = true;
-                }
-                else
-                {
-                    values[0] = false;
-                }
-                values[1] = field.FieldID;
-                values[2] = field.Description;
-                tbl.Rows.Add(values);
-            }
-            return tbl;
-        }
-
-        #region Web Form Designer generated code
-
-        protected override void OnInit(EventArgs e)
-        {
-            //
-            // CODEGEN: This call is required by the ASP.NET Web Form Designer.
-            //
-            InitializeComponent();
-            base.OnInit(e);
         }
 
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// Creates print out grid
         /// </summary>
-        private void InitializeComponent()
+        /// <param name="accountid">The account id of logged in user</param>
+        /// <param name="employeeid">The employee id of logged in user</param>
+        /// <returns>The html and data of the grid</returns>
+        private string[] CreateGrid(int accountid, int employeeid)
         {
-            this.gridprintout.InitializeLayout += new Infragistics.WebUI.UltraWebGrid.InitializeLayoutEventHandler(this.gridprintout_InitializeLayout);
-            this.cmdok.Click += new System.Web.UI.ImageClickEventHandler(this.cmdok_Click);
-
+            cTables clstables = new cTables(accountid);
+            cFields clsfields = new cFields(accountid);
+            List<cNewGridColumn> columns = new List<cNewGridColumn>();
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("7B41BAEF-A51D-4C54-81E5-0F1CB594195D")))); // fieldid
+            columns.Add(new cFieldColumn(clsfields.GetFieldByID(new Guid("327D7EE7-C11A-4B16-8C05-BABF7EFE1F71")))); // description
+            cGridNew clsgrid = new cGridNew(accountid, employeeid, "gridPrintout", clstables.GetTableByID(new Guid("5B32610E-35DB-492A-B6D1-5F392CA4C040")), columns); // fields
+            clsgrid.getColumnByName("fieldid").hidden = true;
+            clsgrid.KeyField = "fieldid";
+            clsgrid.EnableSelect = true;
+            clsgrid.EnableSorting = false;
+            var printoutField = clsfields.GetFieldByID(Guid.Parse("01638BC5-5FA4-4D61-A612-B64D026B402C")); // printout
+            var idfield = clsfields.GetFieldByID(Guid.Parse("D4FA8348-526C-442F-AC2B-B749CFA5D500")); // idfield
+            clsgrid.addFilter(printoutField, ConditionType.Equals, new object[] { true }, null, ConditionJoiner.None);
+            clsgrid.addFilter(idfield, ConditionType.Equals, new object[] { false }, null, ConditionJoiner.And);
+            return clsgrid.generateGrid();
         }
 
-        #endregion
-
-        private void cmdok_Click(object sender, System.Web.UI.ImageClickEventArgs e)
+        /// <summary>
+        /// Gets all selected print out fields
+        /// </summary>
+        /// <param name="accountid">The account id of the logged in user</param>
+        /// <returns>Returns the list of fieldids</returns>
+        [WebMethod(EnableSession = true)]
+        public static List<Guid> GetSelectedFields(int accountid)
         {
-            int count, x;
-            cMisc clsmisc = new cMisc((int)ViewState["accountid"]);
-            int i;
-            count = 0;
-            for (i = 0; i < gridprintout.Rows.Count; i++)
+            cMisc clsMisc = new cMisc(accountid);
+            return clsMisc.GetPrintoutFields();
+        }
+
+        /// <summary>
+        /// Saves selected printout fields
+        /// </summary>
+        /// <param name="accountid">The account id of the logged in user</param>
+        /// <param name="fields">The list of selected fields</param>
+        [WebMethod(EnableSession = true)]
+        public static void SaveSelectedFields(int accountid, List<string> fields)
+        {
+            cMisc clsMisc = new cMisc(accountid);
+            Guid[] fieldIds = new Guid[fields.Count];
+            for (var i = 0; i < fields.Count; i++)
             {
-                if ((bool)gridprintout.Rows[i].Cells.FromKey("selected").Value == true)
+                Guid fieldid;
+                if (Guid.TryParse(fields[i], out fieldid))
                 {
-                    count++;
+                    fieldIds[i] = fieldid;
                 }
             }
 
-            Guid[] fieldids = new Guid[count];
-            x = 0;
-            for (i = 0; i < gridprintout.Rows.Count; i++)
-            {
-                if ((bool)gridprintout.Rows[i].Cells.FromKey("selected").Value == true)
-                {
-                    fieldids[x] = (Guid)gridprintout.Rows[i].Cells.FromKey("fieldid").Value;
-                    x++;
-                }
-            }
-
-            clsmisc.UpdatePrintOut(fieldids);
-            Response.Redirect("../tailoringmenu.aspx", true);
+            clsMisc.UpdatePrintOut(fieldIds);
         }
 
-        private void gridprintout_InitializeLayout(object sender, Infragistics.WebUI.UltraWebGrid.LayoutEventArgs e)
-        {
-            e.Layout.Bands[0].Columns.FromKey("fieldid").Hidden = true;
-            e.Layout.Bands[0].Columns.FromKey("fieldid").Width = 0;
-            e.Layout.Bands[0].Columns.FromKey("description").HeaderText = "Description";
-            e.Layout.Bands[0].Columns.FromKey("description").Width = 200;
-            e.Layout.Bands[0].Columns.FromKey("selected").Type = Infragistics.WebUI.UltraWebGrid.ColumnType.CheckBox;
-            e.Layout.Bands[0].Columns.FromKey("selected").Width = 75;
-            e.Layout.Bands[0].Columns.FromKey("selected").HeaderText = "Selected";
-            e.Layout.Bands[0].Columns.FromKey("selected").AllowUpdate = Infragistics.WebUI.UltraWebGrid.AllowUpdate.Yes;
-            e.Layout.Bands[0].Columns.FromKey("selected").CellStyle.HorizontalAlign = HorizontalAlign.Center;
-        }
-
+        /// <summary>
+        /// Click event if the cancel button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
-            Response.Redirect(cMisc.Path + "/tailoringmenu.aspx", true);
+            this.Response.Redirect(cMisc.Path + "/tailoringmenu.aspx", true);
         }
     }
 }
