@@ -116,7 +116,7 @@
         </div>
     </div>
                     
-	<div id="AddEdiStageModal" style="display: none; overflow: auto; max-height: 500px;">
+	<div id="AddEdiStageModal" style="display: none; overflow: auto; max-height: 600px;">
 	    <div class="sm_panel">
 	        <div class="sectiontitle">
 	            <asp:Label id="Label1" runat="server" meta:resourcekey="Label1Resource1">General Details</asp:Label>
@@ -260,6 +260,7 @@
 	                    <asp:ListItem Value="2" meta:resourcekey="ListItemResource6">Only if claim total exceeds</asp:ListItem>
 	                    <asp:ListItem Value="5" meta:resourcekey="ListItemResource7">Only if claim total is below</asp:ListItem>
 	                    <asp:ListItem Value="3" meta:resourcekey="ListItemResource8">Only if an expense item exceeds allowed amount</asp:ListItem>
+	                    <asp:ListItem Value="9" >Only if an expense item fails validation twice</asp:ListItem>
 	                    <asp:ListItem Value="4" meta:resourcekey="ListItemResource9">Claim includes the following cost code</asp:ListItem>
 	                    <asp:ListItem Value="6" meta:resourcekey="ListItemResource10">Claim includes the following expense item</asp:ListItem>
 	                    <asp:ListItem Value="8" meta:resourcekey="resListItemClaimIncludesDepartment">Claim includes the following department</asp:ListItem>
