@@ -1594,9 +1594,9 @@ public partial class aeexpense : System.Web.UI.Page
                               };
 
             txtbox.Attributes.Add("data-search", "General");
-            txtbox.Attributes.Add("onFocus", "GenerateDropDown(this)");
-            txtbox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes; 
-            
+        //    txtbox.Attributes.Add("onFocus", "GenerateDropDown(this)");
+            txtbox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
+
             TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode_ID" };
             hiddenIdentifier.Style.Add(HtmlTextWriterStyle.Display, "none");
 

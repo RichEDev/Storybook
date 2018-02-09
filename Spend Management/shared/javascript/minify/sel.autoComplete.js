@@ -251,56 +251,22 @@
                                 }
                     });
 
-                    $('[id$=' + cntl + ']').focus(function () {
-                        if (document.activeElement.id !== 'ui-active-menuitem') {
-                            var fieldValue = $(this).val(),
-                                hiddenIdField = $('[id$=' + cntl + '_ID]');
+                    $('input.costcode-autocomplete').focus(function () {
 
-                            if (fieldValue === '') {
-                                hiddenIdField.val('');
-                                $('[id$=' + cntl + ']').trigger("change");
-                                if (triggerFields !== null) {
-                                    SEL.AutoComplete.TriggerFields.Clear(triggerFields);
-                                }
+                            if (!$(this).val()) {
+                                $(this).autocomplete("search", "%%%");
+
                             }
-                            else {
-                                if (hiddenIdField.val() === "-1") {
-                                    if (SEL.AutoComplete.Bind.childFilterList == undefined) {
-                                        SEL.AutoComplete.Bind.childFilterList = null;
-                                    }
-                                    SEL.Data.AbortAjax(SEL.AutoComplete.Data.Request);
-                                    SEL.AutoComplete.Data.Request = $.ajax(
-                                        {
-                                            type: "POST",
-                                            url: appPath + "/shared/webServices/svcAutoComplete.asmx/getAutoCompleteOptions",
-                                            dataType: "json",
-                                            contentType: "application/json; charset=utf-8",
-                                            data: "{ maxRows: " + maxRows + ", matchTable: \"" + matchTableId + "\", displayField: \"" + displayField + "\", matchFields: \"" + matchFieldIDs.split(',') + "\", matchText: \"%" + fieldValue + "%\", useWildcards: false, filters: " + fieldFilters + ", keyIsString: '" + keyIsString + "',childFilterList: " + SEL.AutoComplete.Bind.childFilterList + "  }",
-                                            success: function (data) {
-                                                // If the field has lost focus and the current text is the only result, select it
-                                                if (data.d.length === 1) {
-                                                    hiddenIdField.val(data.d[0].value);
-                                                    $('[id$=' + cntl + ']').trigger("change");
 
-                                                    if (triggerFields !== null) {
-                                                        SEL.AutoComplete.TriggerFields.Update(matchTableId, data.d[0].value, triggerFields);
-                                                    }
+                       
 
-                                                    // if there are no results and the unsuccessfulAutomatchFn function exists    
-                                                } else if (data.d.length === 0 && $.type(unsuccessfulAutomatchFn) === "function") {
-                                                    unsuccessfulAutomatchFn(cntl);
-                                                }
-                                            },
-                                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                                if (textStatus !== "abort") {
-                                                    alert('An error occurred with service call.\n\n' + errorThrown);
-                                                }
-                                            }
-                                        });
-                                }
-                            }
-                        }
-                    });
+
+
+                    
+                        
+
+                    }
+                    );
 
                 });
             },
