@@ -21,8 +21,8 @@
         {
             using (inStream)
             {
-                using (Stream outStream = new MemoryStream())
-                {
+                    Stream outStream = new MemoryStream();
+                
                     byte[] jpegHeader = new byte[2];
                     jpegHeader[0] = (byte)inStream.ReadByte();
                     jpegHeader[1] = (byte)inStream.ReadByte();
@@ -42,8 +42,7 @@
                     while ((readCount = inStream.Read(readBuffer, 0, readBuffer.Length)) > 0)
                         outStream.Write(readBuffer, 0, readCount);
 
-                    return outStream;
-                }
+                    return outStream;          
             }
         }
 
