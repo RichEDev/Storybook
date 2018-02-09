@@ -118,6 +118,7 @@
     <Compile Include="CSSButton.cs" />
     <Compile Include="Helpers\Minify.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Receipts\RemoveExifDataReceipt.cs" />
     <Compile Include="Tree.cs" />
     <Compile Include="TreeCombo.cs" />
     <Compile Include="TreeControl\TreeControls.cs" />
