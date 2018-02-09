@@ -34,7 +34,7 @@ namespace Spend_Management.shared.code.DVLA
         /// <param name="message">The return message</param>
         public void Write(string registration, string code, string message)
         {
-            if (code != "200")
+            if (code != "200" && code != "204")
             {
                 Log.Warn($"Vehicle Lookup for {registration} failed: {code} : {message}");
             }
