@@ -1085,6 +1085,7 @@
     <Compile Include="expenses\code\FlagManagement.cs" />
     <Compile Include="expenses\code\Claims\ClaimSubmission.cs" />
     <Compile Include="expenses\code\SendMessageEnum.cs" />
+    <Compile Include="expenses\code\SignoffGroupValidation.cs" />
     <Compile Include="expenses\code\StringFormatHelper.cs" />
     <Compile Include="IAuditLog.cs" />
     <Compile Include="expenses\webservices\SignoffGroups.asmx.cs">

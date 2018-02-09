@@ -236,23 +236,24 @@
                         },
                         url: '/expenses/webservices/SignoffGroups.asmx/SaveGroup',
                         success: function (r) {
-                            var returnedId = parseInt(r.d);
-                            if (returnedId === -1) {
+                            if (r.d.GroupId === -1) {
                                 SEL.MasterPopup.ShowMasterPopup('A Signoff Group with this name already exists.',
                                     'Message from ' + moduleNameHTML);
-                            } else if (returnedId === -2)
+                            } else if (r.d.GroupId === -2)
                             {
                                 SEL.MasterPopup.ShowMasterPopup('You do not have permission to add a Signoff Group',
                                     'Message from ' + moduleNameHTML);
                             } else {
-                                if (!isNaN(returnedId)) {
-                                    if (SEL.SignoffGroups.DomIDs.SignoffGroup.GroupId === 0) {
-                                        SEL.Grid.updateGridQueryFilterValues("SignoffStagesGrid",
-                                            "161f5786-187b-4bc9-8635-27780bc28321",
-                                            [returnedId],
-                                            []);
-                                    }
-                                    SEL.SignoffGroups.DomIDs.SignoffGroup.GroupId = returnedId;
+
+                                if (SEL.SignoffGroups.DomIDs.SignoffGroup.GroupId === 0) {
+                                    SEL.Grid.updateGridQueryFilterValues("SignoffStagesGrid",
+                                        "161f5786-187b-4bc9-8635-27780bc28321",
+                                        [r.d.GroupId],
+                                        []);
+                                }
+
+                                if (r.d.ValidationMessages === "") {
+                                    SEL.SignoffGroups.DomIDs.SignoffGroup.GroupId = r.d.GroupId;
 
                                     if (SEL.SignoffGroups.DomIDs.SignoffGroup.ShowStageModal) {
                                         SEL.SignoffGroups.SignoffStage.PopulateSignoffTypeDropdown();
@@ -267,7 +268,8 @@
                                         document.location = "/expenses/admin/SignoffGroups.aspx";
                                     }
                                 } else {
-                                    SEL.MasterPopup.ShowMasterPopup(r.d,
+                                    SEL.SignoffGroups.DomIDs.SignoffGroup.GroupId = r.d.GroupId;
+                                    SEL.MasterPopup.ShowMasterPopup(r.d.ValidationMessages,
                                         'Message from ' + moduleNameHTML);
                                 }
                             }

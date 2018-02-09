@@ -84,7 +84,7 @@
 	        <span class="inputicon"></span>
 	        <span class="inputtooltipfield"></span>
 	        <span class="inputvalidatorfield">
-	            <asp:RequiredFieldValidator id="reqgroupname" runat="server" ErrorMessage="Please enter a Name" ControlToValidate="txtgroupname" meta:resourcekey="reqgroupnameResource1" ValidationGroup="vgMain">*</asp:RequiredFieldValidator>
+	            <asp:RequiredFieldValidator id="reqgroupname" runat="server" ErrorMessage="Please enter a Name." ControlToValidate="txtgroupname" meta:resourcekey="reqgroupnameResource1" ValidationGroup="vgMain">*</asp:RequiredFieldValidator>
 	        </span>
 	        <asp:Label runat="server" ID="lblAllowOneStepAuthorisation" AssociatedControlID="chkAllowOneStepAuthorisation">Allow one step authorisation</asp:Label>
 	        <span class="inputs">
@@ -145,7 +145,7 @@
 	            <span class="inputicon"></span>
 	            <span class="inputtooltipfield"></span>
 	            <span class="inputvalidatorfield">
-	                <asp:RequiredFieldValidator id="cmblistValidator" runat="server" ControlToValidate="cmblist" ErrorMessage="Please select a Signoff Person for this stage" Text="*" meta:resourcekey="reqsignoffResource1" ValidationGroup="vgStage"></asp:RequiredFieldValidator>
+	                <asp:RequiredFieldValidator id="cmblistValidator" runat="server" ControlToValidate="cmblist" ErrorMessage="Please select a Signoff Person for this stage." Text="*" meta:resourcekey="reqsignoffResource1" ValidationGroup="vgStage"></asp:RequiredFieldValidator>
 	            </span>
 	        </div>
 
@@ -187,7 +187,7 @@
 	            <span class="inputicon"></span>
 	            <span class="inputtooltipfield"></span>
 	            <span class="inputvalidatorfield">
-	                <asp:RequiredFieldValidator id="cmbholidaylistValidator" runat="server" ErrorMessage="Please select a user responsible whilst the signoff person is on holiday" Enabled="False" ControlToValidate="cmbholidaylist" meta:resourcekey="reqholidaylstResource1"  ValidationGroup="vgStage">*</asp:RequiredFieldValidator>
+	                <asp:RequiredFieldValidator id="cmbholidaylistValidator" runat="server" ErrorMessage="Please select a user responsible whilst the signoff person is on holiday." Enabled="False" ControlToValidate="cmbholidaylist" meta:resourcekey="reqholidaylstResource1"  ValidationGroup="vgStage">*</asp:RequiredFieldValidator>
 	            </span>
 	        </div>
 
@@ -280,8 +280,8 @@
 	            <span class="inputicon"></span>
 	            <span class="inputtooltipfield"></span>
 	            <span class="inputvalidatorfield">
-	                <asp:RequiredFieldValidator id="txtamountRequired" runat="server" ErrorMessage="Please enter an amount" ControlToValidate="txtamount" meta:resourcekey="reqamountResource1" ValidationGroup="vgStage" text="*"></asp:RequiredFieldValidator>
-	                <asp:CompareValidator id="txtamountCompare" runat="server" ErrorMessage="Please enter a valid amount" ControlToValidate="txtamount" Operator="DataTypeCheck" Type="Currency" meta:resourcekey="compamountResource1" ValidationGroup="vgStage" text="*"></asp:CompareValidator>
+	                <asp:RequiredFieldValidator id="txtamountRequired" runat="server" ErrorMessage="Please enter an Amount." ControlToValidate="txtamount" meta:resourcekey="reqamountResource1" ValidationGroup="vgStage" text="*"></asp:RequiredFieldValidator>
+	                <asp:CompareValidator id="txtamountCompare" runat="server" ErrorMessage="Please enter a valid Amount." ControlToValidate="txtamount" Operator="DataTypeCheck" Type="Currency" meta:resourcekey="compamountResource1" ValidationGroup="vgStage" text="*"></asp:CompareValidator>
 	            </span>
 	        </div>
 
@@ -331,7 +331,9 @@
 	                <asp:CheckBox ID="chksinglesignoff" runat="server" meta:resourcekey="chksinglesignoffResource1" AutoPostBack="False"  onchange="javascript:SEL.SignoffGroups.SignoffStage.OneClickSignOffOnChange();"/>
 	            </span>
 	            <span class="inputicon"></span>
-	            <span class="inputtooltipfield"></span>
+	            <span class="inputtooltipfield">
+	                <img id="imgtooltip369" onclick="SEL.Tooltip.Show('8b496e8f-e22f-4dfa-8e98-bb0bbe0d51d0', 'ex', this);" src="../../shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon"/>
+	            </span>
 	            <span class="inputvalidatorfield"></span>
 	            <asp:Label ID="Label11" runat="server" Text='Approvers must sign declaration before approving a claim' meta:resourcekey="lbloneclickResource1" AssociatedControlID="chkdisplaydeclaration"></asp:Label>
 	            <span class="inputs">
@@ -349,7 +351,9 @@
 	                <asp:CheckBox ID="chkApproverJustificationsRequired" runat="server" AutoPostBack="False" onchange="javascript:SEL.SignoffGroups.SignoffStage.ApproverJustificationOnChange();"/>
 	            </span>
 	            <span class="inputicon"></span>
-	            <span class="inputtooltipfield"></span>
+	            <span class="inputtooltipfield">
+	                <img id="imgtooltip368" onclick="SEL.Tooltip.Show('6889C27E-CD62-4695-8FE8-BC39E2DEC3F4', 'ex', this);" src="../../shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon"/>
+	            </span>
 	            <span class="inputvalidatorfield"></span>
 	            <span class="inputs"></span>
 	            <span class="inputicon"></span>

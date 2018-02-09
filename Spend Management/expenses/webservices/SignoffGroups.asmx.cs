@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Services;
-using System.Web.UI.WebControls;
-using SpendManagementLibrary;
-using SpendManagementLibrary.Enumerators;
-using Spend_Management.shared.code.ApprovalMatrix;
-
-namespace Spend_Management.expenses.webservices
+﻿namespace Spend_Management.expenses.webservices
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Services;
+    using System.Web.UI.WebControls;
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Enumerators;
+    using Spend_Management.expenses.code;
+    using Spend_Management.shared.code.ApprovalMatrix;
+
     /// <summary>
     /// Summary description for SignoffGroups
     /// </summary>
@@ -28,14 +29,14 @@ namespace Spend_Management.expenses.webservices
         /// <param name="validate">Whether or not to validate the <see cref="cGroup"/></param>
         /// <returns>The id of the saved <see cref="cGroup"/></returns>
         [WebMethod]
-        public string SaveGroup(int groupId, string groupName, string groupDescription, bool oneClickAuth, bool validate)
+        public SignoffGroupValidation SaveGroup(int groupId, string groupName, string groupDescription, bool oneClickAuth, bool validate)
         {
             var user = cMisc.GetCurrentUser();
 
             if (!user.CheckAccessRole(AccessRoleType.Add, SpendManagementElement.SignOffGroups, true) && 
                 !user.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.SignOffGroups, true))
             {
-                return "-2";
+                return new SignoffGroupValidation($"", -2);
             }
 
             var groups = new cGroups(user.AccountID);
@@ -60,11 +61,11 @@ namespace Spend_Management.expenses.webservices
 
                 if (!stageValidity.Result)
                 {
-                    return $"{stageValidity.Messages.Aggregate((a, b) => a + "<br/>" + b)}";
+                    return new SignoffGroupValidation($"{stageValidity.Messages.Aggregate((a, b) => a + "<br/>" + b)}", groupId);
                 }
             }
             
-            return groupId.ToString();
+            return new SignoffGroupValidation($"", groupId);
         }
 
         /// <summary>
