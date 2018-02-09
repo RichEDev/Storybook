@@ -14,7 +14,7 @@
 
     using SpendManagementHelpers.TreeControl;
 
-    using Spend_Management.shared.code;
+    using Spend_Management.shared.code; 
     using Spend_Management.shared.code.EasyTree;
     using Spend_Management.shared.code.Helpers;
     using SpendManagementLibrary;
@@ -1366,7 +1366,7 @@
                             var fileData = customEntityImageData.GetHtmlImageData(dataRow.ItemArray[index].ToString());
                             if (fileData != null)
                             {
-                                row.Add(column.ColumnName, fileData.fileName);
+                                row.Add(column.ColumnName, fileData.FileName);
                             }
                         }
                         else

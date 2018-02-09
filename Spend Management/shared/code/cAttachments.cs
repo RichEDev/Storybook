@@ -217,9 +217,9 @@ namespace Spend_Management
             cTable table = clsTables.GetTableByID(tableid);
 
 			retAttachment = getAttachmentFromDb(table, attachmentid);
-            auditLog.ViewRecord(SpendManagementElement.Attachments, retAttachment.FileName, currentUser);
+            auditLog.ViewRecord(SpendManagementElement.Attachments, $"{retAttachment.FileName} ({table.TableName} , {retAttachment.attachmentID})", currentUser);
 
-			return retAttachment;
+            return retAttachment;
 		}
 
         /// <summary>

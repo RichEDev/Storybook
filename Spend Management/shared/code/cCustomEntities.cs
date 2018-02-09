@@ -749,10 +749,10 @@ namespace Spend_Management
         /// <param name="auditLog">An instance of audit log. To write a view record</param>
         /// <param name="GuidFileID">The file guid</param>
         /// <returns>List<HTMLImageData></returns> 
-        public HTMLImageData GetCustomEntityAttachmentData(ICurrentUser currentUser, IAuditLog auditLog, string GuidFileID = "")
+        public HtmlImageData GetCustomEntityAttachmentData(ICurrentUser currentUser, IAuditLog auditLog, string GuidFileID = "")
         {            
             var attachment =  CustomEntityImageData.GetData(currentUser.AccountID, GuidFileID);
-            auditLog.ViewRecord(SpendManagementElement.Attachments, attachment.fileName, currentUser);
+            auditLog.ViewRecord(SpendManagementElement.Attachments, $"{attachment}", currentUser);
             return attachment;
         }
 
@@ -764,22 +764,22 @@ namespace Spend_Management
         /// <param name="attributeID"></param>    
         public void SaveHTMLEditorImagesToDisk(int accountID, int entityID, int attributeID)
         {
-            List<HTMLImageData> imgList;
+            List<HtmlImageData> imgList;
             System.Drawing.Image newImage;
             string path;
 
-            imgList = GetCustomEntityAttachmentDataByEntityAndAttribute(accountID, entityID, attributeID);
+            imgList = CustomEntityImageData.GetData(accountID, entityID, attributeID);
 
             if (imgList.Count > 0)
             {
-                foreach (HTMLImageData image in imgList)
+                foreach (HtmlImageData image in imgList)
                 {
-                    using (var stream = new MemoryStream(image.imageData))
+                    using (var stream = new MemoryStream(image.ImageData))
                     {
                         try
                         {
                             newImage = System.Drawing.Image.FromStream(stream);
-                            path = string.Format("{0}\\{1}.{2}", ConfigurationManager.AppSettings["HostedEntityImageLocation"], image.fileID, image.fileType);
+                            path = string.Format("{0}\\{1}.{2}", ConfigurationManager.AppSettings["HostedEntityImageLocation"], image.FileId, image.FileType);
                             newImage.Save(path);
                         }
                         catch (Exception ex)
@@ -791,51 +791,6 @@ namespace Spend_Management
                 }
             }
         }
-
-        /// <summary>
-        /// Gets the attachment data relating to the attachment type attribute or images uploaded in the formatted text boxes via the entity and attribute ID
-        /// </summary>
-        /// <param name="accountid">The account id of the current user</param>
-        /// <param name="enttiyID">The entity id of the greenlight you want to get the images are for</param>
-        /// <param name="attributeID">The attribute id of the field on the greenlight to get the images for</param>
-        /// <returns>List<HTMLImageData></returns> 
-        private List<HTMLImageData> GetCustomEntityAttachmentDataByEntityAndAttribute(int accountID, int entityID, int attributeID)
-        {
-            List<HTMLImageData> imageList = new List<HTMLImageData>();
-            using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(accountID)))
-            {
-                var Sql = "select fileID, fileType, fileName from CustomEntityImageData where entityID = @entityID AND attributeID = @attributeID";
-                expdata.sqlexecute.Parameters.Clear();
-                expdata.sqlexecute.Parameters.AddWithValue("@entityID", entityID);
-                expdata.sqlexecute.Parameters.AddWithValue("@attributeID", attributeID);
-
-                using (var reader = expdata.GetReader(Sql))
-                {
-                    var fileNameOrd = reader.GetOrdinal("fileName");
-
-                    while (reader.Read())
-                    {
-                        var fileGuid = (Guid)reader["fileID"];
-                        var fileId = fileGuid.ToString();
-                        var fileType = (string)reader["fileType"];
-                        string fileName;
-                        if (reader.IsDBNull(fileNameOrd))
-                        {
-                            fileName = string.Empty;
-                        }
-                        else
-                        {
-                            fileName = (string)reader["fileName"];
-                        }
-
-                        imageList.Add(new HTMLImageData(fileId, fileType, fileName, expdata));
-                    }
-
-                }
-            }
-
-            return imageList;
-        }    
 
         /// <summary>
         /// Writes an image to disk based on its fileID

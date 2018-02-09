@@ -982,6 +982,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\AutomapperConfig.cs" />
     <Compile Include="Bootstrap\BootstrapDvla.cs" />
+    <Compile Include="AuditEntry.cs" />
     <Compile Include="cAuditLog.cs" />
     <Compile Include="Expedite\ExpediteEmail.cs" />
     <Compile Include="Expedite\PaymentService.cs" />

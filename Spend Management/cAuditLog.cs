@@ -370,42 +370,4 @@ namespace Spend_Management
 			set { sUsername = value; }
 		}
 	}
-
-    /// <summary>
-	/// Individual audit log entry class
-	/// </summary>
-	public class cAuditEntry
-	{
-		private int nAuditlogid;
-		private string sCompanyid;
-		private string sUsername;
-		private DateTime dtDatestamp;
-		private char cAction;
-		private string sCategory;
-		private string sOldvalue;
-		private string sNewvalue;
-
-		/// <summary>
-		/// Audit log entry constructor
-		/// </summary>
-		/// <param name="auditlogid"></param>
-		/// <param name="companyid"></param>
-		/// <param name="username"></param>
-		/// <param name="datestamp"></param>
-		/// <param name="action"></param>
-		/// <param name="category"></param>
-		/// <param name="oldvalue"></param>
-		/// <param name="newvalue"></param>
-		public cAuditEntry(int auditlogid, string companyid, string username, DateTime datestamp, char action, string category, string oldvalue, string newvalue)
-		{
-			nAuditlogid = auditlogid;
-			sCompanyid = companyid;
-			sUsername = username;
-			dtDatestamp = datestamp;
-			cAction = action;
-			sCategory = category;
-			sOldvalue = oldvalue;
-			sNewvalue = newvalue;
-		}
-	}
 }

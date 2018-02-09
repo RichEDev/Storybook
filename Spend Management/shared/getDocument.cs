@@ -12,6 +12,7 @@ using System.Configuration;
 using System.Runtime.Remoting.Channels;
 using System.Collections;
 using System.Runtime.Remoting.Channels.Http;
+using System.Web.SessionState;
 
 namespace Spend_Management
 {
@@ -24,7 +25,7 @@ namespace Spend_Management
     /// <summary>
     /// getDocument: Handler class used for downloading and saving documents
     /// </summary>
-    public class getDocument : IHttpHandler
+    public class getDocument : IHttpHandler, IReadOnlySessionState
     {
         /// <summary>
         /// 
@@ -42,7 +43,7 @@ namespace Spend_Management
         /// </param>
         void IHttpHandler.ProcessRequest(HttpContext context)
         {
-            CurrentUser curUser = cMisc.GetCurrentUser(context.User.Identity.Name);
+            CurrentUser curUser = cMisc.GetCurrentUser();
             int? delegateId = null;
             if (curUser.isDelegate)
             {
@@ -201,6 +202,8 @@ namespace Spend_Management
                     if (context.Request.QueryString["fileID"] != null)
                     {
                         var customEntities = new cCustomEntities(curUser);
+                        cCustomEntity currentEntity = null;
+                        cCustomEntityView currentView = null;
                         if (context.Request.QueryString["entityid"] != null
                             && context.Request.QueryString["viewid"] != null
                             && context.Request.QueryString["recordId"] != null)
@@ -208,8 +211,8 @@ namespace Spend_Management
                             var viewId = int.Parse(context.Request.QueryString["viewid"]);
                             var entityId = int.Parse(context.Request.QueryString["entityid"]);
                             var recordId = int.Parse(context.Request.QueryString["recordId"]);
-                            var currentEntity = customEntities.getEntityById(entityId);
-                            var currentView = currentEntity.getViewById(viewId);
+                            currentEntity = customEntities.getEntityById(entityId);
+                            currentView = currentEntity.getViewById(viewId);
 
                             if (!customEntities.IsTheDataAccessibleToTheUser(currentView, currentEntity, recordId))
                             {
@@ -225,16 +228,15 @@ namespace Spend_Management
 
                         string fileID = (context.Request.QueryString["fileID"]);
 
-
-                        HTMLImageData fileData = customEntities.GetCustomEntityAttachmentData(curUser, new cAuditLog(curUser.AccountID, curUser.EmployeeID), fileID);
+                        HtmlImageData fileData = customEntities.GetCustomEntityAttachmentData(curUser, new cAuditLog(curUser.AccountID, curUser.EmployeeID), fileID);
 
                         if (fileData != null)
                         {
                             context.Response.Clear();
-                            context.Response.AddHeader("Content-Length", fileData.imageData.Length.ToString());
-                            context.Response.ContentType = fileData.fileType;
-                            context.Response.AddHeader("Content-Disposition", "attachment; filename=" + fileData.fileName.Replace(" ", "_") + ";");
-                            context.Response.OutputStream.Write(fileData.imageData, 0, fileData.imageData.Length);
+                            context.Response.AddHeader("Content-Length", fileData.ImageData.Length.ToString());
+                            context.Response.ContentType = fileData.FileType;
+                            context.Response.AddHeader("Content-Disposition", "attachment; filename=" + fileData.FileName.Replace(" ", "_") + ";");
+                            context.Response.OutputStream.Write(fileData.ImageData, 0, fileData.ImageData.Length);
                             context.Response.End();
                         }
                         return;
@@ -247,15 +249,15 @@ namespace Spend_Management
                         //get file details based on ID
                         cCustomEntities customEntities = new cCustomEntities();
 
-                        HTMLImageData fileData = customEntities.GetCustomEntityAttachmentData(curUser, new cAuditLog(curUser.AccountID, curUser.EmployeeID), fileID);
+                        HtmlImageData fileData = customEntities.GetCustomEntityAttachmentData(curUser, new cAuditLog(curUser.AccountID, curUser.EmployeeID), fileID);
 
                         if (fileData != null)
                         {
                             context.Response.Clear();
-                            context.Response.AddHeader("Content-Length", fileData.imageData.Length.ToString());
-                            context.Response.ContentType = fileData.fileType;
-                            context.Response.AddHeader("Content-Disposition", "attachment; filename=" + fileData.fileName.Replace(" ", "_") + ";");
-                            context.Response.OutputStream.Write(fileData.imageData, 0, fileData.imageData.Length);
+                            context.Response.AddHeader("Content-Length", fileData.ImageData.Length.ToString());
+                            context.Response.ContentType = fileData.FileType;
+                            context.Response.AddHeader("Content-Disposition", "attachment; filename=" + fileData.FileName.Replace(" ", "_") + ";");
+                            context.Response.OutputStream.Write(fileData.ImageData, 0, fileData.ImageData.Length);
                             context.Response.End();
                         }
                         return;

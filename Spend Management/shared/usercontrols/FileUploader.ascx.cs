@@ -189,10 +189,10 @@ namespace Spend_Management.shared.usercontrols
             reqFileUploader.ValidationGroup = "NotMandatory";
             if (this.fileGuid != Guid.Empty)
             {
-                HTMLImageData imageData = CustomEntityImageData.GetData(cMisc.GetCurrentUser().AccountID, this.fileGuid.ToString());
+                HtmlImageData imageData = CustomEntityImageData.GetData(cMisc.GetCurrentUser().AccountID, this.fileGuid.ToString());
                 if (imageData != null)
                 {
-                    string selected = imageData.fileName;
+                    string selected = imageData.FileName;
                     string dotonated = selected;
                     if (selected.Length > 6)
                     {
@@ -200,9 +200,9 @@ namespace Spend_Management.shared.usercontrols
                     }
                     this.attachmentLink.Text = dotonated;
                     this.attachmentLink.ToolTip = selected;
-                    this.attachmentLink.Attributes.Add("referenceValue", imageData.fileID);
+                    this.attachmentLink.Attributes.Add("referenceValue", imageData.FileId);
                     this.AttachmentName = selected;
-                    this.attachmentLink.NavigateUrl = string.Format("javascript:viewFieldLevelAttachment('{0}', {1}, {2}, {3}, '{4}');", imageData.fileID, this.EntityId, this.ViewId, this.RecordId, this.ControlId);
+                    this.attachmentLink.NavigateUrl = string.Format("javascript:viewFieldLevelAttachment('{0}', {1}, {2}, {3}, '{4}');", imageData.FileId, this.EntityId, this.ViewId, this.RecordId, this.ControlId);
                 }
             }
             else

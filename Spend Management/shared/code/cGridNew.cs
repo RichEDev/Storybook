@@ -1922,8 +1922,8 @@ namespace Spend_Management
                                                         output.Append(
                                                             string.Format(
                                                                 "<a href='javascript:viewFieldLevelAttachment(\"{0}\");'>",
-                                                                fileOutput.fileID));
-                                                        output.Append(fileOutput.fileName);
+                                                                fileOutput.FileId));
+                                                        output.Append(fileOutput.FileName);
                                                         output.Append("</a>");
                                                     }
                                                 }

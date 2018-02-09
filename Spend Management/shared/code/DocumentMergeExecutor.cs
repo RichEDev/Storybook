@@ -836,7 +836,7 @@ namespace Spend_Management.shared.code
         private string ProcessAttachmentImage(Guid fileId)
         {
             var customEntities = new cCustomEntities();
-            HTMLImageData fileData = customEntities.GetCustomEntityAttachmentData(
+            HtmlImageData fileData = customEntities.GetCustomEntityAttachmentData(
                 this._currentUser,
                 this._auditLog,
                 fileId.ToString());
@@ -844,20 +844,19 @@ namespace Spend_Management.shared.code
             if (fileData != null)
             {
                 var entities = new cCustomEntities();
-                this._auditLog.ViewRecord(SpendManagementElement.Attachments, fileData.fileName, this._currentUser);
-
-                if (customEntities.CheckFileTypeIsImage(fileData.fileType))
+                
+                if (customEntities.CheckFileTypeIsImage(fileData.FileType))
                 {
                     entities.SaveHTMLEditorImagesToDisk(this._currentUser.AccountID, fileId.ToString());
                     //build html image tag
                     return string.Format(
                         "{0}{1}.{2}",
                         ConfigurationManager.AppSettings["tempDocMergeImageLocation"],
-                        fileData.fileID,
-                        fileData.fileType);
+                        fileData.FileId,
+                        fileData.FileType);
                 }
 
-                if (fileData.fileType.ToLower() == "docx" || fileData.fileType.ToLower() == "doc")
+                if (fileData.FileType.ToLower() == "docx" || fileData.FileType.ToLower() == "doc")
                 {
                     var imageData = entities.GetWordAttachmentsData(this._currentUser.AccountID, fileId.ToString());
                     string htmlData;
@@ -869,7 +868,7 @@ namespace Spend_Management.shared.code
                         {
                             var newDoc = new WordDocument(
                                 stream,
-                                fileData.fileType.ToLower() == "docx" ? FormatType.Word2010 : FormatType.Word2007);
+                                fileData.FileType.ToLower() == "docx" ? FormatType.Word2010 : FormatType.Word2007);
                             var htmlExport = new HTMLExport();
 
                             using (var htmlStream = new MemoryStream())

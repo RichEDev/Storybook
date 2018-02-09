@@ -1686,7 +1686,7 @@ public partial class reports_reportviewer : System.Web.UI.Page
                     var images = this.CustomEntityImageData.GetHtmlImageData(fileGuid.ToString());
                     if (images != null)
                     {
-                        cell.Text = images.fileName;
+                        cell.Text = images.FileName;
                     }
                 }
             }

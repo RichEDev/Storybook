@@ -814,7 +814,7 @@ namespace SpendManagementLibrary
                                 var fileOutput = customEntityImageData.GetHtmlImageData(guid.ToString());
                                 if (fileOutput != null)
                                 {
-                                    AddLookUpDisplayFields(ref lookUpFields, fileOutput.fileName, guid.ToString());
+                                    AddLookUpDisplayFields(ref lookUpFields, fileOutput.FileName, guid.ToString());
                                 }
                                 break;
                             case "B":
