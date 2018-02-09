@@ -21,9 +21,8 @@
         {
             using (inStream)
             {
-                using (outStream)
+                using (Stream outStream = new MemoryStream())
                 {
-                    Stream outStream = new MemoryStream();
                     byte[] jpegHeader = new byte[2];
                     jpegHeader[0] = (byte)inStream.ReadByte();
                     jpegHeader[1] = (byte)inStream.ReadByte();
