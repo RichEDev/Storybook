@@ -19,27 +19,33 @@
         /// </returns>
         public Stream RemoveFromJpg(Stream inStream)
         {
-            Stream outStream = new MemoryStream();
-            byte[] jpegHeader = new byte[2];
-            jpegHeader[0] = (byte)inStream.ReadByte();
-            jpegHeader[1] = (byte)inStream.ReadByte();
-
-            //check if it's a jpg file
-            if (jpegHeader[0] == 0xff && jpegHeader[1] == 0xd8) 
+            using (inStream)
             {
-                SkipAppHeaderSection(inStream);
+                using (outStream)
+                {
+                    Stream outStream = new MemoryStream();
+                    byte[] jpegHeader = new byte[2];
+                    jpegHeader[0] = (byte)inStream.ReadByte();
+                    jpegHeader[1] = (byte)inStream.ReadByte();
+
+                    //check if it's a jpg file
+                    if (jpegHeader[0] == 0xff && jpegHeader[1] == 0xd8)
+                    {
+                        SkipAppHeaderSection(inStream);
+                    }
+
+                    outStream.WriteByte(0xff);
+                    outStream.WriteByte(0xd8);
+
+                    int readCount;
+                    byte[] readBuffer = new byte[4096];
+
+                    while ((readCount = inStream.Read(readBuffer, 0, readBuffer.Length)) > 0)
+                        outStream.Write(readBuffer, 0, readCount);
+
+                    return outStream;
+                }
             }
-
-            outStream.WriteByte(0xff);
-            outStream.WriteByte(0xd8);
-
-            int readCount;
-            byte[] readBuffer = new byte[4096];
-
-            while ((readCount = inStream.Read(readBuffer, 0, readBuffer.Length)) > 0)
-                outStream.Write(readBuffer, 0, readCount);
-
-            return outStream;
         }
 
         /// <summary>
@@ -70,5 +76,4 @@
             inStream.Position -= 2; //skip back two bytes
         }
     }
-
 }

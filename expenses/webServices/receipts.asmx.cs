@@ -17,7 +17,6 @@ namespace expenses
     using Receipts = SpendManagementLibrary.Expedite.Receipts;
     using Syncfusion.Windows.Forms.PdfViewer;
     using System.Drawing;
-
     using SpendManagementHelpers.Receipts;
 
     /// <summary>
@@ -38,6 +37,7 @@ namespace expenses
         public List<AttachedReceipt> GetReceiptsForExpenseItem(int expenseId)
         {
             var user = cMisc.GetCurrentUser();
+
             return new Receipts(user.AccountID, user.EmployeeID).GetByClaimLine(expenseId)
                 .Select(r => AttachedReceipt.FromReceipt(r, user.AccountID)).ToList();
         }
@@ -51,6 +51,7 @@ namespace expenses
         public List<AttachedReceipt> GetReceiptsForClaim(int claimId)
         {
             var user = cMisc.GetCurrentUser();
+
             return new Receipts(user.AccountID, user.EmployeeID).GetByClaim(claimId)
                 .Select(r => AttachedReceipt.FromReceipt(r, user.AccountID)).ToList();
         }
@@ -190,7 +191,7 @@ namespace expenses
                     // Export the pages of the loaded document as bitmap images
                     receiptImages = pdfViewerControl.ExportAsImage(0, pdfViewerControl.PageCount - 1);
                 }
-
+             
                 foreach (Image image in receiptImages)
                 {
                     var currentReceipt =
@@ -234,12 +235,12 @@ namespace expenses
                                   ModifiedOn = DateTime.UtcNow
                               };
 
-
-
             receipt = data.AddReceipt(receipt, fileData);
             var isImage = data.CheckIfReceiptIsImageAndOverwriteUrl(receipt, stream);
 
             var output = new { id = receipt.ReceiptId, url = receipt.TemporaryUrl, isImage, icon = receipt.IconUrl };
+
+            stream.Dispose();
 
             return new JavaScriptSerializer().Serialize(output);
         }
