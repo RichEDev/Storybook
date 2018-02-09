@@ -1327,6 +1327,7 @@ namespace Spend_Management
             gridDetails.enablePaging = bEnablePaging;
             gridDetails.enableSelect = bAllowSelect;
             gridDetails.enableUpdating = bEnableUpdating;
+            gridDetails.EnableSorting = this.EnableSorting;
             gridDetails.deleteLink = sDeleteLink;
             gridDetails.editLink = sEditLink;
             gridDetails.archiveField = sArchiveField;
@@ -4452,6 +4453,7 @@ namespace Spend_Management
         bool bEnableDeleting;
         string sDeleteLink;
         bool bEnablePaging;
+        bool enableSorting;
         int nPageSize;
         bool bShowHeaders;
         bool bShowFooters;
@@ -4492,6 +4494,13 @@ namespace Spend_Management
             get { return sGridID; }
             set { sGridID = value; }
         }
+
+        public bool EnableSorting
+        {
+            get => this.enableSorting;
+            set => this.enableSorting = value;
+        }
+
         public bool enableUpdating
         {
             get { return bEnableUpdating; }

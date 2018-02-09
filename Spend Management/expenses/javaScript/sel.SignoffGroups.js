@@ -893,13 +893,19 @@
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.ApprovalMatrixDiv).hide();
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.FromMyLevelCheckbox).prop("checked", false);
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.ScanAttachDiv).hide();
-                        $(SEL.SignoffGroups.DomIDs.SignoffStage.SingleSignoffCheckbox).prop("disabled", false);
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverEmailCheckbox).prop("disabled", false);
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.DeclarationCheckbox).prop("disabled", false);
-                        $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverJustificationCheckbox).prop("disabled", false);
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).prop("disabled", false);
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.IncludeDropDown).prop("disabled", false);
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.InvlolvementDropDown).prop("disabled", false);
+
+                        if (!$(SEL.SignoffGroups.DomIDs.SignoffStage.SingleSignoffCheckbox).is(":checked") ||
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffDropdown).val() == SEL.SignoffGroups.IDs.SignoffTypes.CostCodeOwner) {
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverJustificationCheckbox).prop("disabled", false);
+                        }
+                        if (!$(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverJustificationCheckbox).is(":checked")) {
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.SingleSignoffCheckbox).prop("disabled", false);
+                        }
                     }
                 }
             }
