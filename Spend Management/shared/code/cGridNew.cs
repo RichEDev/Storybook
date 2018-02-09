@@ -4497,8 +4497,8 @@ namespace Spend_Management
 
         public bool EnableSorting
         {
-            get => this.enableSorting;
-            set => this.enableSorting = value;
+            get { return this.enableSorting; }
+            set { this.enableSorting = value;}
         }
 
         public bool enableUpdating
