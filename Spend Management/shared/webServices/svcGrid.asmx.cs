@@ -59,7 +59,6 @@ namespace Spend_Management.shared.webServices
             clsgrid.showfooters = gridDetails.showFooters;
             clsgrid.showheaders = gridDetails.showHeaders;
             clsgrid.enablearchiving = gridDetails.enableArchiving;
-            clsgrid.EnableSorting = gridDetails.EnableSorting;
             clsgrid.archivelink = gridDetails.archiveLink;
             clsgrid.ArchiveField = gridDetails.archiveField;
             clsgrid.KeyField = gridDetails.keyField;

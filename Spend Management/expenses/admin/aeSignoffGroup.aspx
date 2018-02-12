@@ -84,7 +84,7 @@
 	        <span class="inputicon"></span>
 	        <span class="inputtooltipfield"></span>
 	        <span class="inputvalidatorfield">
-	            <asp:RequiredFieldValidator id="reqgroupname" runat="server" ErrorMessage="Please enter a Name." ControlToValidate="txtgroupname" meta:resourcekey="reqgroupnameResource1" ValidationGroup="vgMain">*</asp:RequiredFieldValidator>
+	            <asp:RequiredFieldValidator id="reqgroupname" runat="server" ErrorMessage="Please enter a valid Name." ControlToValidate="txtgroupname" meta:resourcekey="reqgroupnameResource1" ValidationGroup="vgMain">*</asp:RequiredFieldValidator>
 	        </span>
 	        <asp:Label runat="server" ID="lblAllowOneStepAuthorisation" AssociatedControlID="chkAllowOneStepAuthorisation">Allow one step authorisation</asp:Label>
 	        <span class="inputs">

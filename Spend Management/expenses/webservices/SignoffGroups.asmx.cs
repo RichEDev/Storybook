@@ -324,7 +324,7 @@
                 editlink =
                     "javascript:SEL.SignoffGroups.DomIDs.SignoffGroup.ShowStageModal = true;SEL.SignoffGroups.DomIDs.SignoffStage.StageId = {signoffid};SEL.SignoffGroups.SignoffGroup.Save();",
                 EmptyText = "There are currently no Signoff stages defined",
-                EnableSorting = false
+                EnableSorting = true
             };
 
             grid.addFilter(clsfields.GetFieldByID(new Guid("161F5786-187B-4BC9-8635-27780BC28321")), ConditionType.Equals, new object[] { groupId }, null, ConditionJoiner.None);
