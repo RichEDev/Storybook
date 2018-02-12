@@ -941,6 +941,7 @@ namespace SpendManagementApi.Controllers.V1
             string accountLockedMessage = subAccountProperties.AccountLockedMessage;
             string accountCurrentlyLockedMessage = subAccountProperties.AccountCurrentlyLockedMessage;
             bool canAskForReviews = new EmployeeAppReviewPreference().PermittedToAskEmployeeForReview(user.EmployeeID, user.AccountID);
+            bool automaticVehicleLookup = subAccountProperties.VehicleLookup;
       
 
             IAccessRoleElementPermissions bankAccountElementPermissions = DetermineElementAccess.SetElementPermissions(new ElementAccessPermissions(), user, SpendManagementElement.BankAccounts);
@@ -1010,7 +1011,8 @@ namespace SpendManagementApi.Controllers.V1
                 AccountLockedMessage = accountLockedMessage,
                 AccountCurrentlyLockedMessage = accountCurrentlyLockedMessage,
                 CanAskForReviews = canAskForReviews, 
-                EmployeeId = user.EmployeeID
+                EmployeeId = user.EmployeeID,
+                VehicleLookup = automaticVehicleLookup
 
             };
 

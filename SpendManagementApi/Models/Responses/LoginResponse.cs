@@ -237,5 +237,10 @@ namespace SpendManagementApi.Models.Responses
         /// Gets or sets the current employee Id.
         /// </summary>
         public int EmployeeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the user can get vehicle information from an external service.
+        /// </summary>
+        public bool VehicleLookup { get; set; }
     }
 }

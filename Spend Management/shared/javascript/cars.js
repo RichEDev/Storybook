@@ -601,7 +601,8 @@ function clearCarModal()
     document.getElementById(txtmake).value = "";
     document.getElementById(txtmodel).value = "";
     document.getElementById(txtregistration).value = "";
-    
+    $("#lookupError").hide();
+
     document.getElementById(cmbUom).selectedIndex = 0;
 
     var chkactiveItem = document.getElementById(chkactive);
@@ -627,8 +628,8 @@ function clearCarModal()
     if (txtendodoItem !== null)
     {
         txtendodoItem.value = "";    
-    }
-    
+    }    
+
     var txtenginesizeItem = document.getElementById(txtenginesize);
     if (txtenginesizeItem !== null)
     {
