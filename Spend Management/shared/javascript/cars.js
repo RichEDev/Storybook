@@ -1012,6 +1012,6 @@ function LookupVehicleDetailsComplete(car) {
         return;
     };
 
-    $('#lookupError').text('Could not find vehicle in DVLA database').show();
+    $('#lookupError').text('Could not find vehicle in the DVLA database').show();
 }
 
