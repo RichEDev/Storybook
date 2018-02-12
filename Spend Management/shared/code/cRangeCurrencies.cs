@@ -156,62 +156,6 @@ public class cRangeCurrencies : cCurrencies
     {
         return (cRangeCurrency)list[currencyid];
     }
-
-    /// <summary>
-    /// Get the modified currency date ranges for expensesConnect
-    /// </summary>
-    /// <param name="date">Date of the last expensesConnect data synchronization</param>
-    /// <returns>Collection of modified currency date ranges</returns>
-    public Dictionary<int, cCurrencyRange> getModifiedCurrencyRanges(DateTime date)
-    {
-        DBConnection expdata = new DBConnection(cAccounts.getConnectionString(nAccountID));
-        Dictionary<int, cCurrencyRange> lstCurRanges = new Dictionary<int, cCurrencyRange>();
-        System.Data.SqlClient.SqlDataReader reader;
-        int currencyid, currencyrangeid;
-
-        strsql = "SELECT * FROM currencyranges WHERE createdon > @date OR modifiedon > @date;";
-        expdata.sqlexecute.Parameters.AddWithValue("@date", date);
-        using (reader = expdata.GetReader(strsql))
-        {
-            while (reader.Read())
-            {
-                currencyid = reader.GetInt32(reader.GetOrdinal("currencyid"));
-                currencyrangeid = reader.GetInt32(reader.GetOrdinal("currencyrangeid"));
-
-                if (list.Contains(currencyid))
-                {
-                    cRangeCurrency reqcur = getCurrencyById(currencyid);
-                    cCurrencyRange reqrange = reqcur.getCurrencyRangeById(currencyrangeid);
-                    lstCurRanges.Add(currencyrangeid, reqrange);
-                }
-            }
-            reader.Close();
-        }
-        expdata.sqlexecute.Parameters.Clear();
-
-        return lstCurRanges;
-    }
-
-    /// <summary>
-    /// Get a list of all the currency date range ID's for expensesConnect
-    /// </summary>
-    /// <returns>collection of currency date range ID's</returns>
-    public SortedList<int, int> getCurrencyRangeIds()
-    {
-        DBConnection expdata = new DBConnection(cAccounts.getConnectionString(nAccountID));
-        System.Data.SqlClient.SqlDataReader reader;
-        SortedList<int, int> lstids = new SortedList<int, int>();
-
-        strsql = "SELECT currencyrangeid, currencyid FROM currencyranges";
-        using (reader = expdata.GetReader(strsql))
-        {
-            while (reader.Read())
-            {
-                lstids.Add(reader.GetInt32(reader.GetOrdinal("currencyrangeid")), reader.GetInt32(reader.GetOrdinal("currencyid")));
-            }
-            reader.Close();
-        }
-        return lstids;
-    }
+    
 }
 

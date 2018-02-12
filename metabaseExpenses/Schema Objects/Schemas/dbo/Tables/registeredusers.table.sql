@@ -19,7 +19,6 @@
     [advancesEnabled]         BIT            CONSTRAINT [DF_registeredusers_advancesEnabled] DEFAULT ((1)) NOT NULL,
     [postcodeAnyWhereEnabled] BIT            CONSTRAINT [DF_registeredusers_postcodeAnyWhereEnabled] DEFAULT ((1)) NOT NULL,
     [corporateCardsEnabled]   BIT            CONSTRAINT [DF_registeredusers_corporateCardsEnabled] DEFAULT ((1)) NOT NULL,
-    [expensesConnectLicenses] INT            NULL,
     [reportDatabaseID]        INT            NULL,
     [isNHSCustomer]           BIT            CONSTRAINT [DF_registeredusers_isNHSCustomer] DEFAULT ((0)) NOT NULL,
     [contactHelpDeskAllowed]  BIT            CONSTRAINT [DF_registeredusers_contactHelpDeskAllowed] DEFAULT ((1)) NOT NULL,

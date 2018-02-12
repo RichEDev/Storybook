@@ -24,7 +24,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <SignAssembly>false</SignAssembly>
     <TargetFrameworkProfile />
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -1047,13 +1047,6 @@
     <Compile Include="EnvelopeManagement.aspx.designer.cs">
       <DependentUpon>EnvelopeManagement.aspx</DependentUpon>
     </Compile>
-    <Compile Include="expensesConnect.aspx.cs">
-      <DependentUpon>expensesConnect.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="expensesConnect.aspx.designer.cs">
-      <DependentUpon>expensesConnect.aspx</DependentUpon>
-    </Compile>
     <Compile Include="expensesSvc.asmx.cs">
       <DependentUpon>expensesSvc.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -1595,7 +1588,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="admin\adminExpensesConnectUsers.aspx" />
     <Content Include="admin\aecorporatecard.aspx" />
     <Content Include="admin\aefilterrule.aspx" />
     <Content Include="admin\App_LocalResources\addingexpenses.aspx.resx">
@@ -1899,7 +1891,6 @@
     <Content Include="card_templates\Premier Inn XLS.xml" />
     <Content Include="card_templates\RBS Purchase Card.xml" />
     <Content Include="card_templates\RBS Credit Card.xml" />
-    <Content Include="expensesConnect.aspx" />
     <Content Include="expensesSvc.asmx" />
     <Content Include="blank.htm" />
     <Content Include="icons\16\earth.png" />
@@ -2313,7 +2304,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>11657</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

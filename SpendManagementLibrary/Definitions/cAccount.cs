@@ -32,7 +32,6 @@ namespace SpendManagementLibrary
         private bool bIsNHSCustomer;
         private bool bContactHelpDeskAllowed;
         bool bQuickEntryFormsEnabled, bEmployeeSearchEnabled, bHotelReviewsEnabled, bAdvancesEnabled, bPostcodeAnyWhereEnabled, bCorporateCardsEnabled;
-        private int nExpensesConnectLicenses;
         private int nStartYear;
         private string sPostcodeAnywhereKey;
         private int nLicencedUsers;
@@ -52,7 +51,7 @@ namespace SpendManagementLibrary
         /// Create a new instance of  cAccount class
         /// </summary>
         /// <param name="postCodeAnywherePaymentServiceKey">The PostcodeAnywhere payment service key</param>
-        public cAccount(int accountid, string companyname, string companyid, string contact, int numusers, DateTime expiry, byte accounttype, int dbserverid, string dbserver, string dbname, string dbusername, string dbpassword, bool archived, bool quickEntryFormsEnabled, bool employeeSearchEnabled, bool hotelReviewsEnabled, bool advancesEnabled, bool postcodeAnyWhereEnabled, bool corporateCardsEnabled, int expensesConnectLicenses, int? reportDatabaseID, List<int> hostnameIDs, bool isNHSCustomer, int startYear, bool contactHelpDeskAllowed, string postcodeAnywhereKey, string licencedusers, string connectionString, bool mapsEnabled, bool receiptServiceEnabled, AddressLookupProvider addressLookupProvider, bool addressLookupsChargeable, bool addressLookupPsmaAgreement, bool addressInternationalLookupsAndCoordinates, int addressLookupsRemaining, int addressDistanceLookupsRemaining, string dvlaLookUpLicenceKey, byte? licenceType, bool annualContract, string renewalDate, string contactEmailAddress, bool validationServiceEnabled,bool paymentServiceEnabled, string postCodeAnywherePaymentServiceKey, int? daysToWaitUntilSentEnvelopeIsMissing = null)
+        public cAccount(int accountid, string companyname, string companyid, string contact, int numusers, DateTime expiry, byte accounttype, int dbserverid, string dbserver, string dbname, string dbusername, string dbpassword, bool archived, bool quickEntryFormsEnabled, bool employeeSearchEnabled, bool hotelReviewsEnabled, bool advancesEnabled, bool postcodeAnyWhereEnabled, bool corporateCardsEnabled, int? reportDatabaseID, List<int> hostnameIDs, bool isNHSCustomer, int startYear, bool contactHelpDeskAllowed, string postcodeAnywhereKey, string licencedusers, string connectionString, bool mapsEnabled, bool receiptServiceEnabled, AddressLookupProvider addressLookupProvider, bool addressLookupsChargeable, bool addressLookupPsmaAgreement, bool addressInternationalLookupsAndCoordinates, int addressLookupsRemaining, int addressDistanceLookupsRemaining, string dvlaLookUpLicenceKey, byte? licenceType, bool annualContract, string renewalDate, string contactEmailAddress, bool validationServiceEnabled,bool paymentServiceEnabled, string postCodeAnywherePaymentServiceKey, int? daysToWaitUntilSentEnvelopeIsMissing = null)
         {
             nAccountid = accountid;
             sCompanyname = companyname;
@@ -73,7 +72,6 @@ namespace SpendManagementLibrary
             bAdvancesEnabled = advancesEnabled;
             bPostcodeAnyWhereEnabled = postcodeAnyWhereEnabled;
             bCorporateCardsEnabled = corporateCardsEnabled;
-            nExpensesConnectLicenses = expensesConnectLicenses;
             nReportDatabaseID = reportDatabaseID;
             hostNameIds = hostnameIDs;
             bIsNHSCustomer = isNHSCustomer;
@@ -256,11 +254,6 @@ namespace SpendManagementLibrary
         public bool PostcodeAnyWhereEnabled
         {
             get { return bPostcodeAnyWhereEnabled; }
-        }
-        [Obsolete("", true)]
-        public int expensesConnectLicenses
-        {
-            get { return nExpensesConnectLicenses; }
         }
 
         /// <summary>

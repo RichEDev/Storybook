@@ -5,12 +5,14 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
-using ExpensesLibrary;
+using SpendManagementLibrary;
 using System.Web.Services;
 using expenses.Old_App_Code;
 
 namespace expenses.admin
 {
+    using Spend_Management;
+
     public partial class adminExpensesConnectUsers : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
