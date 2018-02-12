@@ -606,10 +606,9 @@ namespace SpendManagementApi.Repositories
         /// <returns>An instance of <see cref="Vehicle"/> or null</returns>
         public Vehicle LookupVehicle(string registrationNumber)
         {
-            if (this.ActionContext.GeneralOptions.GetGeneralOptionByKeyAndSubAccount("VehicleLookup",
-                this.ActionContext.SubAccountId.Value).Value != "1")
+            if (!this.ActionContext.SubAccounts.getFirstSubAccount().SubAccountProperties.VehicleLookup)
             {
-                throw new ApiException(ApiResources.HttpStatusCodeForbidden, ApiResources.HttpStatusCodeForbidden);
+                return new Vehicle{Registration = registrationNumber, Make = string.Empty, Model = string.Empty, FuelType = 0, VehicleTypeId = 0};
             }
 
             var dvlaApi = BootstrapDvla.CreateNew();
@@ -619,7 +618,7 @@ namespace SpendManagementApi.Repositories
                 return VehicleFactory.New(lookupResult);    
             }
 
-            throw new ApiException(lookupResult.Code, lookupResult.Message);
+            return new Vehicle{Registration = registrationNumber, Make = string.Empty, Model = string.Empty, FuelType = 0, VehicleTypeId = 0};
         }
     }
 }

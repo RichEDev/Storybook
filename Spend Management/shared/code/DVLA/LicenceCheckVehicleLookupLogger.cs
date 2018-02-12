@@ -8,20 +8,20 @@ namespace Spend_Management.shared.code.DVLA
     /// <summary>
     /// A class to manage creation of logs sin a customer database
     /// </summary>
-    public class VehicleLookupLogger : ILookupLogger
+    public class LicenceCheckVehicleLookupLogger : ILookupLogger
     {
         private readonly ICurrentUser _currentUser;
 
         /// <summary>
         /// An instance of <see cref="ILog"/> for logging information.
         /// </summary>
-        private static readonly ILog Log = new LogFactory<VehicleLookupLogger>().GetLogger();
+        private static readonly ILog Log = new LogFactory<LicenceCheckVehicleLookupLogger>().GetLogger();
 
         /// <summary>
-        /// Create a new instance of <see cref="VehicleLookupLogger"/>
+        /// Create a new instance of <see cref="LicenceCheckVehicleLookupLogger"/>
         /// </summary>
         /// <param name="currentUser">An instance of the <see cref="ICurrentUser"/></param>
-        public VehicleLookupLogger(ICurrentUser currentUser)
+        public LicenceCheckVehicleLookupLogger(ICurrentUser currentUser)
         {
             this._currentUser = currentUser;
         }
@@ -36,7 +36,7 @@ namespace Spend_Management.shared.code.DVLA
         {
             if (code != "200" && code != "204")
             {
-                Log.Warn($"Vehicle Lookup for {registration} failed: {code} : {message}");
+                Log.Warn($"Vehicle Lookup for {registration} failed: Licence Check Http response {code} : {message}");
             }
 
             using (var connection = new DatabaseConnection(this._currentUser.Account.ConnectionString))

@@ -48,7 +48,7 @@ namespace Spend_Management.Bootstrap
 
         public static ILookupLogger CreateLogger(ICurrentUser currentUser)
         {
-            return new VehicleLookupLogger(currentUser);
+            return new LicenceCheckVehicleLookupLogger(currentUser);
         }
     }
 }
