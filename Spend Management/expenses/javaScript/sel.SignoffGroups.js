@@ -552,6 +552,11 @@
                                     'Message from ' + moduleNameHTML);
                             }
                         });
+
+                        if ($(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).val()
+                            !== SEL.SignoffGroups.IDs.OnHolidayType.AssignToSomeoneElse) {
+                            window.ValidatorEnable($g(SEL.SignoffGroups.DomIDs.Validators.cmbholidaylist), false);
+                        }
                     },
 
                     PopulateIncludeDropdown: function (value) {
