@@ -1265,12 +1265,12 @@ namespace Spend_Management
         /// <summary>
         /// When to include of last stage must be 'always'.
         /// </summary>
-        public const string WhenToIncludeMustBeSetToAlways = "The last stage of a Signoff Group must always be included.";
+        public const string WhenToIncludeMustBeSetToAlways = "The last stage of a Signoff Group must always have When to Include set as Always.";
 
         /// <summary>
         /// Involvement of last stage must be 'user to check'.
         /// </summary>
-        public const string InvolvementLastStageMustBeSetToUserCheck = "The last stage of a Signoff Group must always be set to User is to check claim.";
+        public const string InvolvementLastStageMustBeSetToUserCheck = "The last stage of a Signoff Group must always have Action set as User is to check claim.";
 
         /// <summary>
         /// Last stage cannot be skipped if the approver is on holiday.

@@ -172,7 +172,7 @@
                                 success: function (r) {
                                     switch (r.d) {
                                         case -1:
-                                            SEL.MasterPopup.ShowMasterPopup('The signoff group cannot be deleted as it is assigned to an employee(s).', 'Message from ' + moduleNameHTML);
+                                            SEL.MasterPopup.ShowMasterPopup('The signoff group cannot be deleted as it is assigned to an employee.', 'Message from ' + moduleNameHTML);
                                             break;
                                         case -2:
                                             SEL.MasterPopup.ShowMasterPopup('The signoff group cannot be deleted as it is assigned to an employee(s) advance group.', 'Message from ' + moduleNameHTML);
