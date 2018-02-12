@@ -325,7 +325,7 @@ namespace Spend_Management
         /// </summary>
         /// <param name="registrationNumber">The registration nunmber to lookup</param>
         /// <returns>An instance of <see cref="cCar"/> or null is the lookup fails.</returns>
-        [WebMethod]
+        [WebMethod(EnableSession=true)]
         public cCar LookupVehicle(string registrationNumber)
         {
             var user = cMisc.GetCurrentUser();
