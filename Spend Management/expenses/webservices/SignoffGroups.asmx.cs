@@ -45,7 +45,7 @@
             if (groupId > 0)
             {
                 currentGroup = groups.GetGroupById(groupId);
-                groups.SaveGroup(groupId, groupName, groupDescription, oneClickAuth, user, 2,
+                groupId = groups.SaveGroup(groupId, groupName, groupDescription, oneClickAuth, user, 2,
                     currentGroup.NotifyClaimantWhenEnvelopeReceived, currentGroup.NotifyClaimantWhenEnvelopeNotReceived);
             }
             else

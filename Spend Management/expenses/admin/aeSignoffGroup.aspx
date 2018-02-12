@@ -171,7 +171,7 @@
 	            <asp:Label id="Label7" runat="server" meta:resourcekey="lblholidayResource1" AssociatedControlID="cmbholidaytype">Holiday approver type</asp:Label>
 	            <span class="inputs">
 	                <asp:DropDownList id="cmbholidaytype" runat="server" Visible="True" AutoPostBack="False" meta:resourcekey="cmbholidaytypeResource1" onchange="javascript:SEL.SignoffGroups.SignoffStage.HolidayApproverOnChange();">
-	                    <asp:ListItem Value="1" meta:resourcekey="ListItemResource17">Budget Holder Responsible</asp:ListItem>
+	                    <asp:ListItem Value="1" meta:resourcekey="ListItemResource17">Budget Holder</asp:ListItem>
 	                    <asp:ListItem Value="2" meta:resourcekey="ListItemResource18">Employee</asp:ListItem>
 	                    <asp:ListItem Value="3" meta:resourcekey="ListItemResource19">Team</asp:ListItem>
 	                    <asp:ListItem Value="4" meta:resourcekey="ListItemResource20">Line Manager</asp:ListItem>
