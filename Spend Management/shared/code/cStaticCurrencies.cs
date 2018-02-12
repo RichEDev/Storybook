@@ -121,42 +121,6 @@ public class cStaticCurrencies : cCurrencies
     //    }
     //    return clsgrid.CreateGrid();
     //}
-
-    /// <summary>
-    /// Get the modified static currencies for expensesConnect
-    /// </summary>
-    /// <param name="date">Date of the last expensesConnect data synchronization</param>
-    /// <returns>Collection of modified static currencies</returns>
-    public Dictionary<string, double> getModifiedStaticCurrencies(DateTime date)
-    {
-        DBConnection expdata = new DBConnection(cAccounts.getConnectionString(nAccountID));
-        System.Data.SqlClient.SqlDataReader reader;
-        Dictionary<string, double> lstStaticCur = new Dictionary<string, double>();
-
-        string curKey;
-        int currencyid, tocurrencyid;
-        double exchangerate;
-
-        strsql = "SELECT * FROM static_exchangerates WHERE createdon > @date";
-        expdata.sqlexecute.Parameters.AddWithValue("@date", date);
-        using (reader = expdata.GetReader(strsql))
-        {
-            while (reader.Read())
-            {
-                currencyid = reader.GetInt32(reader.GetOrdinal("currencyid"));
-                tocurrencyid = reader.GetInt32(reader.GetOrdinal("tocurrencyid"));
-                exchangerate = reader.GetDouble(reader.GetOrdinal("exchangerate"));
-
-                curKey = currencyid.ToString() + "," + tocurrencyid.ToString();
-                lstStaticCur.Add(curKey, exchangerate);
-            }
-            reader.Close();
-        }
-        expdata.sqlexecute.Parameters.Clear();
-
-        return lstStaticCur;
-    }
-
 }
 
 

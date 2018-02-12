@@ -118,7 +118,6 @@
                     int advancesEnabledOrdID = reader.GetOrdinal("advancesEnabled");
                     int postcodeAnyWhereEnabledOrdID = reader.GetOrdinal("postcodeAnyWhereEnabled");
                     int corporateCardsEnabledOrdID = reader.GetOrdinal("corporateCardsEnabled");
-                    int expensesConnectLicensesOrdID = reader.GetOrdinal("expensesConnectLicenses");
                     int reportDatabaseIDOrdID = reader.GetOrdinal("reportDatabaseID");
                     int isNhsCustomerOrdID = reader.GetOrdinal("isNHSCustomer");
                     int contactHelpDeskAllowedOrdID = reader.GetOrdinal("contactHelpDeskAllowed");
@@ -172,7 +171,6 @@
                         string dbName = reader.GetString(dbNameOrdID);
                         string dbUsername = reader.GetString(dbUsernameOrdID);
                         string dbPassword = reader.GetString(dbPasswordOrdID);
-                        int expensesConnectLicenses = reader.IsDBNull(expensesConnectLicensesOrdID) ? 0 : reader.GetInt32(expensesConnectLicensesOrdID);
                         string postcodeAnywhereKey = reader.IsDBNull(postcodeAnywhereKeyOrdID) ? string.Empty : reader.GetString(postcodeAnywhereKeyOrdID);
                         string licencedUsers = reader.IsDBNull(licencedUsersOrdID) ? string.Empty : reader.GetString(licencedUsersOrdID);
                         int? reportDatabaseID = reader.IsDBNull(reportDatabaseIDOrdID) ? (int?)null : reader.GetInt32(reportDatabaseIDOrdID);
@@ -212,7 +210,7 @@
                         #endregion reader contents
                         cEventlog.LogEntry(string.Format("Adding company - {0} to cache.", companyName));
                         
-                        lstAccounts.Add(accountID, new cAccount(accountID, companyName, companyID, contact, numberOfUsers, expiryDate, accountType, dbServerID, dbServer, dbName, dbUsername, dbPassword, archived, quickEntryFormsEnabled, employeeSearchEnabled, hotelReviewsEnabled, advancesEnabled, postcodeAnyWhereEnabled, corporateCardsEnabled, expensesConnectLicenses, reportDatabaseID, hostnameIDs, isNhsCustomer, StartYear, contactHelpDeskAllowed, postcodeAnywhereKey, licencedUsers, connectionStringBuilder.ConnectionString, mapsEnabled, receiptServiceEnabled, addressLookupProvider, addressLookupsChargeable, addressLookupPsmaAgreement, addressInternationalLookupsAndCoordinates, addressLookupsRemaining, addressDistanceLookupsRemaining, dvlaLookUpKey, licenceType, annualContract, renewalDate, contactEmailAddress, validationServiceEnabled,paymentServiceEnabled,postCodeAnywherePaymentServiceKey,daysToWaitBeforeEnvelopeIsMissing));
+                        lstAccounts.Add(accountID, new cAccount(accountID, companyName, companyID, contact, numberOfUsers, expiryDate, accountType, dbServerID, dbServer, dbName, dbUsername, dbPassword, archived, quickEntryFormsEnabled, employeeSearchEnabled, hotelReviewsEnabled, advancesEnabled, postcodeAnyWhereEnabled, corporateCardsEnabled, reportDatabaseID, hostnameIDs, isNhsCustomer, StartYear, contactHelpDeskAllowed, postcodeAnywhereKey, licencedUsers, connectionStringBuilder.ConnectionString, mapsEnabled, receiptServiceEnabled, addressLookupProvider, addressLookupsChargeable, addressLookupPsmaAgreement, addressInternationalLookupsAndCoordinates, addressLookupsRemaining, addressDistanceLookupsRemaining, dvlaLookUpKey, licenceType, annualContract, renewalDate, contactEmailAddress, validationServiceEnabled,paymentServiceEnabled,postCodeAnywherePaymentServiceKey,daysToWaitBeforeEnvelopeIsMissing));
                     }
 
                     reader.Close();
