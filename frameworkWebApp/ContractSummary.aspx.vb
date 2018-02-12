@@ -145,14 +145,13 @@ Namespace Framework2006
             End If
             ViewState("ActiveContract") = activeContractId
 
-            If IsPostBack = False Then
+            If IsPostBack = False Or ViewState("CurTab") Is Nothing Then
                 Dim ActiveViewTab As SummaryTabs
 
                 ActiveViewTab = CType(Request.QueryString("tab"), SummaryTabs)
                 If ActiveViewTab <> ViewState("CurTab") Then
                     ViewState("CurTab") = ActiveViewTab
                 End If
-
             End If
 
             Select Case CType(ViewState("CurTab"), SummaryTabs)
@@ -3998,6 +3997,7 @@ Namespace Framework2006
 
         Protected Sub cmdCAUpdate_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdCAUpdate.Click
             cmdCAUpdate.Enabled = False
+            ViewState("CurTab") = SummaryTabs.ContractAdditional
             Update_ContractAdditional()
             Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractAdditional & "&id=" & ViewState("ActiveContract"), True)
         End Sub
