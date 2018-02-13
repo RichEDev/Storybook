@@ -16,9 +16,12 @@ namespace SpendManagementLibrary.Vehicles
         /// <returns>A valid <see cref="SpendManagementLibrary.Enumerators.CarTypes.VehicleType"/> <seealso cref="SpendManagementLibrary.Enumerators.CarTypes.VehicleType.None"/> when not found</returns>
         public static int Convert(string vehicleType)
         {
-            if (vehicleType == "SCOOTER")
+            switch (vehicleType)
             {
-                return (int) CarTypes.VehicleType.Moped;
+                case "SCOOTER":
+                    return (int) CarTypes.VehicleType.Moped;
+                case "ESTATE":
+                    return (int) CarTypes.VehicleType.Car;
             }
 
             var values = EnumHelpers<CarTypes.VehicleType>.GetValues(CarTypes.VehicleType.Bicycle);

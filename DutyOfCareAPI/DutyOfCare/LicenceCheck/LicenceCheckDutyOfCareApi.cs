@@ -275,7 +275,12 @@ namespace DutyOfCareAPI.DutyOfCare.LicenceCheck
             if (response.Success)
             {
                 var engineCapacity = 0;
-                int.TryParse(response.VehicleData.Cc, out engineCapacity);
+                int.TryParse(response.VehicleData.ExactCc, out engineCapacity);
+                if (engineCapacity == 0)
+                {
+                    int.TryParse(response.VehicleData.Cc, out engineCapacity);
+                }
+ 
                 var result = new VehicleLookupSuccess
                 {
                     Message = response.ResponseMessage.Description,
