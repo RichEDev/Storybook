@@ -2,6 +2,7 @@ Imports System.IO
 Imports FWBase
 Imports FWClasses
 Imports SpendManagementLibrary
+Imports SpendManagementLibrary.Helpers
 Imports Spend_Management
 
 Namespace Framework2006
@@ -39,7 +40,7 @@ Namespace Framework2006
                     AttachmentNotFoundOrInvalid()
                 End If
 
-                If Integer.TryParse(crypt.Decrypt(tmpIdStr), attachmentId) = False Then
+                If Integer.TryParse(crypt.Decrypt(tmpIdStr.Base64Decode()), attachmentId) = False Then
                     AttachmentNotFoundOrInvalid()
                 End If
 
