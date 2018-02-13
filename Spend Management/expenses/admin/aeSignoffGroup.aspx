@@ -111,7 +111,7 @@
                 <asp:Label id="Label2" runat="server" meta:resourcekey="Label2Resource1">Signoff Stages</asp:Label>
 	        </div>
             <asp:Literal runat="server" ID="litGrid"></asp:Literal>
-            <helpers:CSSButton runat="server" ID="btnSave" Text="save" OnClientClick="SEL.SignoffGroups.SignoffGroup.Save(); return false;" UseSubmitBehavior="False" />
+            <helpers:CSSButton runat="server" ID="btnSave" Text="save" OnClientClick="SEL.SignoffGroups.DomIDs.SignoffGroup.ShowStageModal = false;SEL.SignoffGroups.SignoffGroup.Save(); return false;" UseSubmitBehavior="False" />
             <helpers:CSSButton runat="server" ID="btnCancel" Text="cancel" OnClientClick="SEL.SignoffGroups.SignoffGroup.Cancel(); return false;" UseSubmitBehavior="False" />
         </div>
     </div>
