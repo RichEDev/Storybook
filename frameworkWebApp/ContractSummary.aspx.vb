@@ -104,7 +104,7 @@ Namespace Framework2006
             End Select
 
             If doRefresh Then
-                ViewState("CurTab") = tabId
+                Session("CurTab") = tabId
                 If callSetScreen Then
                     RenderUFields(currentUser)
                     SetScreen(tabId, currentUser, activeContractId)
@@ -145,16 +145,16 @@ Namespace Framework2006
             End If
             ViewState("ActiveContract") = activeContractId
 
-            If IsPostBack = False Or ViewState("CurTab") Is Nothing Then
+            If IsPostBack = False Or Session("CurTab") Is Nothing Then
                 Dim ActiveViewTab As SummaryTabs
 
                 ActiveViewTab = CType(Request.QueryString("tab"), SummaryTabs)
-                If ActiveViewTab <> ViewState("CurTab") Then
-                    ViewState("CurTab") = ActiveViewTab
+                If ActiveViewTab <> Session("CurTab") Or Session("CurTab") Is Nothing Then
+                    Session("CurTab") = ActiveViewTab
                 End If
             End If
 
-            Select Case CType(ViewState("CurTab"), SummaryTabs)
+            Select Case CType(Session("CurTab"), SummaryTabs)
                 Case SummaryTabs.ContractDetail
                     Dim cdTable As cTable = tables.getTableByName("contract_details")
                     phCDUFields.Controls.Clear()
@@ -202,7 +202,7 @@ Namespace Framework2006
             End Select
 
             If jscript.Length > 0 Then
-                ScriptManager.RegisterStartupScript(Me, Page.GetType, "udfscript_" & ViewState("CurTab"), jscript.ToString, True)
+                ScriptManager.RegisterStartupScript(Me, Page.GetType, "udfscript_" & Session("CurTab"), jscript.ToString, True)
             End If
         End Sub
 
@@ -220,8 +220,8 @@ Namespace Framework2006
 
             If Me.IsPostBack = False Then
                 ActiveViewTab = CType(Request.QueryString("tab"), SummaryTabs)
-                If ActiveViewTab <> ViewState("CurTab") Then
-                    ViewState("CurTab") = ActiveViewTab
+                If ActiveViewTab <> Session("CurTab") Then
+                    Session("CurTab") = ActiveViewTab
                 End If
 
                 If Request.QueryString("afs") = 1 Then
@@ -243,18 +243,18 @@ Namespace Framework2006
                 End If
 
                 curContract = activeContractId
-                SetViewTab(ViewState("CurTab"), False, curUser, curContract)
+                SetViewTab(Session("CurTab"), False, curUser, curContract)
 
-                ContractSummary_Load(ViewState("CurTab"))
+                ContractSummary_Load(Session("CurTab"))
                 
-                SetScreen(ViewState("CurTab"), curUser, curContract)
+                SetScreen(Session("CurTab"), curUser, curContract)
 
                 
 
                 Dim onloadFunctionAppend As String = ""
                 Dim allowDelete As Boolean = curUser.CheckAccessRole(AccessRoleType.Delete, SpendManagementElement.ContractDetails, False)
 
-                Select Case CType(ViewState("CurTab"), SummaryTabs)
+                Select Case CType(Session("CurTab"), SummaryTabs)
                     Case SummaryTabs.ContractAdditional, SummaryTabs.ContractDetail
                         Dim sql As String
                         Dim db As New cFWDBConnection
@@ -3997,7 +3997,7 @@ Namespace Framework2006
 
         Protected Sub cmdCAUpdate_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles cmdCAUpdate.Click
             cmdCAUpdate.Enabled = False
-            ViewState("CurTab") = SummaryTabs.ContractAdditional
+            Session("CurTab") = SummaryTabs.ContractAdditional
             Update_ContractAdditional()
             Response.Redirect("ContractSummary.aspx?tab=" & SummaryTabs.ContractAdditional & "&id=" & ViewState("ActiveContract"), True)
         End Sub
