@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using SpendManagementLibrary;
 using AjaxControlToolkit;
 using SpendManagementLibrary.Employees;
+using SpendManagementLibrary.Helpers;
 
 namespace Spend_Management
 {
@@ -105,7 +106,7 @@ namespace Spend_Management
 
 				lnkViewClosed.Visible = !lnkViewActive.Visible;
 
-				returnURL.Value = Server.UrlDecode(Request.QueryString["ret"]);
+				returnURL.Value = (Request.QueryString["ret"]).Base64Decode();
 
                 Master.PageSubTitle = txtAppArea.Text;
 			}
@@ -274,7 +275,7 @@ namespace Spend_Management
                 imgbtn.Attributes.Add("onmouseover", "window.status='View Task Details';return true;");
                 imgbtn.Attributes.Add("onmouseout", "window.status='Done';");
                 imgbtn.ToolTip = "View Task Details";
-                imgbtn.Attributes.Add("onclick", "javascript:window.location.href='ViewTask.aspx?rid=" + parentId.ToString() + "&rtid=" + ((int)parentAppArea).ToString() + "&tid=" + curTask.TaskId.ToString() + "&tsret=" + Server.UrlEncode(Request.RawUrl) + "';");
+                imgbtn.Attributes.Add("onclick", "javascript:window.location.href='ViewTask.aspx?rid=" + parentId.ToString() + "&rtid=" + ((int)parentAppArea).ToString() + "&tid=" + curTask.TaskId.ToString() + "&tsret=" + (Request.RawUrl).Base64Encode() + "';");
                 imgbtn.Attributes.Add("style", "cursor: hand;");
                 tcell.Controls.Add(imgbtn);
                 trow.Cells.Add(tcell);
@@ -367,7 +368,7 @@ namespace Spend_Management
 			int parentId = int.Parse(Request.QueryString["pid"]);
 			int parentAppArea = int.Parse(Request.QueryString["paa"]);
 
-			Response.Redirect("~/shared/tasks/TaskSummary.aspx?pid=" + parentId.ToString() + "&paa=" + parentAppArea.ToString() + "&ret=" + Server.UrlEncode(returnURL.Value), true);
+			Response.Redirect("~/shared/tasks/TaskSummary.aspx?pid=" + parentId.ToString() + "&paa=" + parentAppArea.ToString() + "&ret=" + (returnURL.Value).Base64Encode(), true);
 		}
 
 		protected void lnkViewClosed_Click(object sender, EventArgs e)
@@ -375,7 +376,7 @@ namespace Spend_Management
 			int parentId = int.Parse(Request.QueryString["pid"]);
 			int parentAppArea = int.Parse(Request.QueryString["paa"]);
 
-			Response.Redirect("~/shared/tasks/TaskSummary.aspx?vc=1&pid=" + parentId.ToString() + "&paa=" + parentAppArea.ToString() + "&ret=" + Server.UrlEncode(returnURL.Value), true);
+			Response.Redirect("~/shared/tasks/TaskSummary.aspx?vc=1&pid=" + parentId.ToString() + "&paa=" + parentAppArea.ToString() + "&ret=" + returnURL.Value.Base64Encode(), true);
 		}
 	}
 }

@@ -161,5 +161,27 @@
 
             return source;
 	    }
+
+	    /// <summary>
+        /// Encode this current string as a Base64Encoded string
+        /// </summary>
+        /// <param name="source">The string to encode</param>
+        /// <returns>A base 64 encoded string.</returns>
+	    public static string Base64Encode(this string source)
+	    {
+	        var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(source);
+	        return System.Convert.ToBase64String(plainTextBytes);
+	    }
+
+	    /// <summary>
+        /// Decode a base 64 encoded string.
+        /// </summary>
+        /// <param name="base64EncodedData">The base 64 encoded string</param>
+        /// <returns>The decoded string</returns>
+	    public static string Base64Decode(this string base64EncodedData)
+	    {
+	        var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+	        return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+	    }
     }
 }

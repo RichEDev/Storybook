@@ -1,6 +1,7 @@
 Imports System.Web.Configuration
 Imports SpendManagementLibrary
 Imports FWClasses
+Imports SpendManagementLibrary.Helpers
 Imports Spend_Management
 
 Namespace Framework2006
@@ -561,11 +562,11 @@ Namespace Framework2006
                             Case AttachmentType.Secure
                                 strHTML.Append("<td class=""" & rowClass & """ align=""center""><a href=""Attachments.aspx?action=email&attarea=" & Trim(att_area.Text) & "&ref=" & Trim(Session("RefNum")) & "&id=" & Trim(drow.Item("AttachmentId")) & """ title=""Open attachment"" onmouseover=""window.status='Open attachment in new window';return true;"" onmouseout=""window.status='Done';""><img src=""./icons/16/plain/folder_out.png"" alt=""Open"" /></a></td>" & vbNewLine)
                             Case AttachmentType.Audience
-                                strHTML.Append("<td class=""" & rowClass & """ align=""center""><a target=""_blank"" href=""ViewAttachment.aspx?id=" & Server.UrlEncode(crypt.Encrypt(CStr(drow.Item("AttachmentId")))) & """ onmouseover=""window.status='Open the attachment in a new window';return true;"" onmouseout=""window.status='Done';""><img src=""./icons/16/plain/folder_out.png"" alt=""Open"" /></a></td>" & vbNewLine)
+                                strHTML.Append("<td class=""" & rowClass & """ align=""center""><a target=""_blank"" href=""ViewAttachment.aspx?id=" & (crypt.Encrypt(CStr(drow.Item("AttachmentId")))).Base64Encode() & """ onmouseover=""window.status='Open the attachment in a new window';return true;"" onmouseout=""window.status='Done';""><img src=""./icons/16/plain/folder_out.png"" alt=""Open"" /></a></td>" & vbNewLine)
                             Case AttachmentType.Hyperlink
                                 strHTML.Append("<td class=""" & rowClass & """ align=""center""><a target=""_blank"" href=""" & drow.Item("Directory") & """ onmouseover=""window.status='Open hyperlink document';return true;"" onmouseout=""window.status='Done';""><img src=""./icons/16/plain/folder_out.png"" alt=""Open"" /></a></td>" & vbNewLine)
                             Case Else
-                                strHTML.Append("<td class=""" & rowClass & """ align=""center""><a onclick=""javascript:window.open('ViewAttachment.aspx?id=" & Server.UrlEncode(crypt.Encrypt(CStr(drow.Item("AttachmentId")))) & "');"" onmouseover=""window.status='Open the attachment in a new window';return true;"" onmouseout=""window.status='Done';""><img src=""./icons/16/plain/folder_out.png"" alt=""Open"" /></a></td>" & vbNewLine)
+                                strHTML.Append("<td class=""" & rowClass & """ align=""center""><a onclick=""javascript:window.open('ViewAttachment.aspx?id=" & (crypt.Encrypt(CStr(drow.Item("AttachmentId")))).Base64Encode() & "');"" onmouseover=""window.status='Open the attachment in a new window';return true;"" onmouseout=""window.status='Done';""><img src=""./icons/16/plain/folder_out.png"" alt=""Open"" /></a></td>" & vbNewLine)
                         End Select
 
                         If curUser.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.Attachments, False) Then

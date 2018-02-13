@@ -3,6 +3,7 @@ Imports SpendManagementLibrary
 Imports Spend_Management
 Imports System.Collections.Generic
 Imports SpendManagementLibrary.Employees
+Imports SpendManagementLibrary.Helpers
 
 Namespace Framework2006
     Partial Class ProductDetails
@@ -1364,15 +1365,15 @@ Namespace Framework2006
         Protected Sub lnkAddTask_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkAddTask.Click
             Dim varURL As String
             varURL = "tid=0&rid=" & Session("ProductId") & "&rtid=" & AppAreas.PRODUCT_DETAILS
-            Session("TaskRetURL") = Server.UrlEncode("~/ProductDetails.aspx?action=edit&id=" & Session("ProductId") & "&item=" & Session("ProductText"))
+            Session("TaskRetURL") = ("~/ProductDetails.aspx?action=edit&id=" & Session("ProductId") & "&item=" & Session("ProductText")).Base64Encode()
             Response.Redirect("~/shared/tasks/ViewTask.aspx?" & varURL, True)
         End Sub
 
         Protected Sub lnkTaskSummary_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkTaskSummary.Click
             Dim varURL As String
             varURL = "?pid=" & Session("ProductId") & "&paa=" & AppAreas.PRODUCT_DETAILS
-            varURL += "&ret=" & Server.UrlEncode(cMisc.Path + "/ProductDetails.aspx?action=edit&id=" & Session("ProductId") & "&item=" & Session("ProductText"))
-            Session("TaskRetURL") = Server.UrlEncode(cMisc.Path + "/ProductDetails.aspx?action=edit&id=" & Session("ProductId") & "&item=" & Session("ProductText"))
+            varURL += "&ret=" & (cMisc.Path + "/ProductDetails.aspx?action=edit&id=" & Session("ProductId") & "&item=" & Session("ProductText")).Base64Encode()
+            Session("TaskRetURL") = (cMisc.Path + "/ProductDetails.aspx?action=edit&id=" & Session("ProductId") & "&item=" & Session("ProductText")).Base64Encode()
 
             Response.Redirect(cMisc.Path + "/shared/tasks/TaskSummary.aspx" & varURL, True)
         End Sub

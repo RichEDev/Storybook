@@ -584,8 +584,6 @@ Namespace Framework2006
                     Title = "Invoice Notes"
 
                 Case "Supplier"
-                    'cLocks.RemoveLockItem(FWDb, Cache, "VD", Session("ActiveContract"), uinfo)
-
                     Session("NotesForID") = Request.QueryString("supplierid")
                     Session("NotesIDField") = "supplierId"
                     Session("NoteTable") = "supplierNotes"

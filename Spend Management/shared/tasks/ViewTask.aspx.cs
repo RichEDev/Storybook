@@ -12,6 +12,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Text;
 using SpendManagementLibrary;
 using SpendManagementLibrary.Employees;
+using SpendManagementLibrary.Helpers;
 
 namespace Spend_Management
 {
@@ -74,7 +75,7 @@ namespace Spend_Management
 
                 if (Request.QueryString["ret"] != null)
                 {
-                    returnURL.Value = Server.UrlDecode(Request.QueryString["ret"]);
+                    returnURL.Value = (Request.QueryString["ret"]).Base64Decode();
 
                     // check for a direct return link to a certain supplier
                     if (returnURL.Value.Contains("supplier_details.aspx") && returnURL.Value.Contains("sid="))
@@ -136,7 +137,7 @@ namespace Spend_Management
             {
                 if (returnURL.Value != "")
                 {
-                    retParams = "?ret=" + Server.UrlEncode(returnURL.Value);
+                    retParams = "?ret=" + (returnURL.Value).Base64Encode();
                 }
                 Response.Redirect("MyTasks.aspx" + retParams, true);
             }
@@ -286,7 +287,7 @@ namespace Spend_Management
 			// retrieve what the task is regarding
 			if (Request.QueryString["tsret"] != null)
 			{
-				hiddenTSReturnURL.Value = Server.UrlDecode(Request.QueryString["tsret"]);
+				hiddenTSReturnURL.Value = (Request.QueryString["tsret"]).Base64Decode();
 			}
             
 			hiddenRegardingId.Value = regardingId.ToString();
@@ -605,7 +606,7 @@ namespace Spend_Management
                                 strHTML.Append("<option value=\"" + ((int)drow["attachmentType"]).ToString() + (string)drow["Directory"] + "\">" + tmpStr + "</option>\n");
                                 break;
                             default:
-                                strHTML.Append("<option value=\"" + ((int)drow["attachmentType"]).ToString() + Server.UrlEncode(crypt.Encrypt(((int)drow["attachmentId"]).ToString())) + "\">" + tmpStr + "</option>\n");
+                                strHTML.Append("<option value=\"" + ((int)drow["attachmentType"]).ToString() + (crypt.Encrypt(((int)drow["attachmentId"]).ToString())).Base64Encode() + "\">" + tmpStr + "</option>\n");
                                 break;
                         }
                     }

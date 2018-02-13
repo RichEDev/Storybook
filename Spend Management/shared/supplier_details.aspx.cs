@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using SpendManagementLibrary;
 using System.Text;
 using System.Web.Services;
+using SpendManagementLibrary.Helpers;
 
 
 namespace Spend_Management
@@ -266,7 +267,7 @@ namespace Spend_Management
             CurrentUser curUser = cMisc.GetCurrentUser();
             cSuppliers suppliers = new cSuppliers(curUser.AccountID, curUser.CurrentSubAccountId);
             cSupplier supplier = suppliers.getSupplierById(SupplierId);
-            Response.Redirect("~/ViewNotes.aspx?notetype=Supplier&supplierid=" + supplier.SupplierId.ToString() + "&id=-1&item=" + supplier.SupplierName + "&ret=" + Server.UrlEncode(cMisc.Path + "/shared/supplier_details.aspx?t=0&sid=" + SupplierId.ToString()), true);
+            Response.Redirect("~/ViewNotes.aspx?notetype=Supplier&supplierid=" + supplier.SupplierId.ToString() + "&id=-1&item=" + supplier.SupplierName + "&ret=" + (cMisc.Path + "/shared/supplier_details.aspx?t=0&sid=" + SupplierId.ToString()).Base64Encode(), true);
         }
 
         /// <summary>
@@ -276,7 +277,7 @@ namespace Spend_Management
         /// <param name="e"></param>
         protected void lnkAddTask_Click(object sender, EventArgs e)
         {
-            string varURL = "tid=0&rid=" + SupplierId.ToString() + "&rtid=" + ((int)AppliesTo.VENDOR_DETAILS).ToString() + "&ret=" + Server.UrlEncode(cMisc.Path + "/shared/supplier_details.aspx?t=0&sid=" + SupplierId.ToString());
+            string varURL = "tid=0&rid=" + SupplierId.ToString() + "&rtid=" + ((int)AppliesTo.VENDOR_DETAILS).ToString() + "&ret=" + (cMisc.Path + "/shared/supplier_details.aspx?t=0&sid=" + SupplierId.ToString()).Base64Encode();
             Response.Redirect(cMisc.Path + "/shared/tasks/ViewTask.aspx?" + varURL, true);
         }
 
@@ -287,7 +288,7 @@ namespace Spend_Management
         /// <param name="e"></param>
         protected void lnkTaskSummary_Click(object sender, EventArgs e)
         {
-            Response.Redirect(cMisc.Path + "/shared/tasks/TaskSummary.aspx?paa=" + ((int)AppliesTo.VENDOR_DETAILS).ToString() + "&pid=" + SupplierId.ToString() + "&ret=" + Server.UrlEncode(Request.Url.PathAndQuery), true);
+            Response.Redirect(cMisc.Path + "/shared/tasks/TaskSummary.aspx?paa=" + ((int)AppliesTo.VENDOR_DETAILS).ToString() + "&pid=" + SupplierId.ToString() + "&ret=" + (Request.Url.PathAndQuery).Base64Encode(), true);
         }
 
         /// <summary>
@@ -595,7 +596,7 @@ namespace Spend_Management
             {
                 contactGrid.editlink = "";
             }
-            contactGrid.addEventColumn("viewnote", "images/icons/16/plain/folder_closed.png", "../ViewNotes.aspx?item={contactname}&notetype=SupplierContact&id=-1&contactid={contactid}&ret=" + Server.UrlEncode(cMisc.Path + "/shared/supplier_details.aspx?t=1&sid=" + SupplierId.ToString()), "View Contact Notes", "Access contact notes");
+            contactGrid.addEventColumn("viewnote", "images/icons/16/plain/folder_closed.png", "../ViewNotes.aspx?item={contactname}&notetype=SupplierContact&id=-1&contactid={contactid}&ret=" + (cMisc.Path + "/shared/supplier_details.aspx?t=1&sid=" + SupplierId.ToString()).Base64Encode(), "View Contact Notes", "Access contact notes");
             contactGrid.getColumnByName("contactid").hidden = true;
             contactGrid.SortedColumn = contactGrid.getColumnByName("contactname");
             contactGrid.CssClass = "datatbl";

@@ -6,6 +6,7 @@ Imports System.Collections.Generic
 Imports System.Web.Services
 Imports SpendManagementLibrary.Employees
 Imports System.Web.Script.Serialization
+Imports SpendManagementLibrary.Helpers
 
 Namespace Framework2006
     Partial Class ContractSummary
@@ -63,12 +64,12 @@ Namespace Framework2006
             Select Case CType(ViewTab.ActiveViewIndex, SummaryTabs)
                 Case SummaryTabs.ContractDetail, SummaryTabs.ContractAdditional
                     varURL = "?pid=" & ViewState("ActiveContract") & "&paa=" & AppAreas.CONTRACT_DETAILS
-                    varURL += "&ret=" & Server.UrlEncode("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & ViewState("ActiveContract"))
-                    ViewState("TaskRetURL") = Server.UrlEncode("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & ViewState("ActiveContract"))
+                    varURL += "&ret=" & ("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & ViewState("ActiveContract")).ToString().Base64Encode()
+                    ViewState("TaskRetURL") = ("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & ViewState("ActiveContract")).ToString().Base64Encode()
                 Case SummaryTabs.ContractProduct
                     varURL = "?pid=" & ViewState("ActiveContract") & "&paa=" & AppAreas.CONTRACT_PRODUCTS
-                    varURL += "&ret=" & Server.UrlEncode("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & ViewState("ActiveContract"))
-                    ViewState("TaskRetURL") = Server.UrlEncode("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & ViewState("ActiveContract"))
+                    varURL += "&ret=" & ("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & ViewState("ActiveContract")).ToString().Base64Encode()
+                    ViewState("TaskRetURL") = ("~/ContractSummary.aspx?tab=" & ViewTab.ActiveViewIndex & "&id=" & ViewState("ActiveContract")).ToString().Base64Encode()
                 Case SummaryTabs.InvoiceDetail
                 Case SummaryTabs.InvoiceForecast
                 Case Else
@@ -2261,7 +2262,7 @@ Namespace Framework2006
                                     Case AttachmentType.Hyperlink
                                         strHTML.Append("<option value=""" & Trim(drow.Item("AttachmentType")) & drow.Item("Directory") & """>" & tmpStr & "</option>" & vbNewLine)
                                     Case Else
-                                        strHTML.Append("<option value=""" & Trim(drow.Item("AttachmentType")) & Server.UrlEncode(crypt.Encrypt(drow.Item("AttachmentId"))) & """>" & tmpStr & "</option>" & vbNewLine)
+                                        strHTML.Append("<option value=""" & Trim(drow.Item("AttachmentType")) & (crypt.Encrypt(drow.Item("AttachmentId"))).Base64Encode() & """>" & tmpStr & "</option>" & vbNewLine)
                                 End Select
 
                             Next
@@ -3868,8 +3869,9 @@ Namespace Framework2006
             db.DBClose()
 
             Dim varURL As String
+            
             varURL = "tid=0&rid=" & ViewState("ActiveContract") & "&rtid=" & AppAreas.CONTRACT_DETAILS
-            Session("TaskRetURL") = Server.UrlEncode("~/ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & ViewState("ActiveContract"))
+            Session("TaskRetURL") = ("~/ContractSummary.aspx?tab=" & SummaryTabs.ContractDetail & "&id=" & ViewState("ActiveContract")).ToString().Base64Encode()
             Response.Redirect("~/shared/tasks/ViewTask.aspx?" & varURL, True)
         End Sub
 
@@ -5341,8 +5343,8 @@ Namespace Framework2006
                 Dim taskImg As New System.Web.UI.WebControls.Image
                 taskImg.ID = "task" & drow.Item("contractProductId")
 
-                Dim retURL As String = "~/ContractSummary.aspx?id=" & Session("ActiveContract")& "&tab=" & SummaryTabs.ContractProduct 
-                retURL = Server.UrlEncode(retURL)
+                Dim retURL As String = "~/ContractSummary.aspx?id=" & ViewState("ActiveContract") & "&tab=" & SummaryTabs.ContractProduct 
+                retURL = (retURL).Base64Encode()
 
                 If curUser.CheckAccessRole(AccessRoleType.Add, SpendManagementElement.Tasks, False) Then
                     With taskImg
@@ -6586,7 +6588,7 @@ Namespace Framework2006
         Protected Sub lnkAddCPTask_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkAddCPTask.Click
             Dim varURL As String
             varURL = "tid=0&rid=" & Session("ActiveContractProduct") & "&rtid=" & AppAreas.CONTRACT_PRODUCTS
-            Session("TaskRetURL") = Server.UrlEncode("~/ContractSummary.aspx?cpaction=edit&tab=" & SummaryTabs.ContractProduct & "&cpid=" & Session("ActiveContractProduct"))
+            Session("TaskRetURL") = ("~/ContractSummary.aspx?cpaction=edit&tab=" & SummaryTabs.ContractProduct & "&cpid=" & Session("ActiveContractProduct")).ToString().Base64Encode()
             Response.Redirect("~/shared/tasks/ViewTask.aspx?" & varURL, True)
         End Sub
 
@@ -7685,7 +7687,7 @@ Namespace Framework2006
         Protected Sub lnkAddIDTask_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkAddIDTask.Click
             Dim varURL As String
             varURL = "tid=0&rid=" & invID.Text & "&rtid=" & AppAreas.INVOICE_DETAILS
-            Session("TaskRetURL") = Server.UrlEncode("~/ContractSummary.aspx?idaction=edit&tab=" & SummaryTabs.InvoiceDetail & "&invid=" & invID.Text)
+            Session("TaskRetURL") = ("~/ContractSummary.aspx?idaction=edit&tab=" & SummaryTabs.InvoiceDetail & "&invid=" & invID.Text).Base64Encode()
             Response.Redirect("~/shared/tasks/ViewTask.aspx?" & varURL, True)
         End Sub
 #End Region
@@ -9035,7 +9037,7 @@ Namespace Framework2006
         Protected Sub lnkAddIFTask_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lnkAddIFTask.Click
             Dim varURL As String
             varURL = "tid=0&rid=" & Session("ForecastId") & "&rtid=" & AppAreas.INVOICE_FORECASTS
-            Session("TaskRetURL") = Server.UrlEncode("~/ContractSummary.aspx?ifaction=edit&tab=" & SummaryTabs.InvoiceForecast & "&ifid=" & Session("ForecastId"))
+            Session("TaskRetURL") = ("~/ContractSummary.aspx?ifaction=edit&tab=" & SummaryTabs.InvoiceForecast & "&ifid=" & Session("ForecastId")).ToString().Base64Encode()
             Response.Redirect("~/shared/tasks/ViewTask.aspx?" & varURL, True)
         End Sub
 #End Region

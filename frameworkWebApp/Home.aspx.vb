@@ -3,6 +3,7 @@ Imports System.Collections.Generic
 Imports FWClasses
 Imports SpendManagementLibrary
 Imports SpendManagementLibrary.HelpAndSupport
+Imports SpendManagementLibrary.Helpers
 Imports Spend_Management
 Imports Spend_Management.shared.code.GreenLight
 
@@ -386,7 +387,7 @@ Namespace Framework2006
             Dim waitingTasks As Integer = tasks.GetTasksByStatus(TaskStatus.NotStarted, curUser.Employee.employeeid).Count
             hypTasks.Text = waitingTasks.ToString & " Not Started; " & activeTasks.ToString & " In Progress"
             hypTasks.NavigateUrl = "~/shared/tasks/MyTasks.aspx"
-            Session("TaskRetURL") = Server.UrlEncode("~/Home.aspx")
+            Session("TaskRetURL") = ("~/Home.aspx").Base64Encode()
         End Sub
 
         Private Function doSearch(ByVal searchType As String, ByVal searchVal As String, ByVal searchStatus As String, ByVal includeVariations As String) As System.Text.StringBuilder

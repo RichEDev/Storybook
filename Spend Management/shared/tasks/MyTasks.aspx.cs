@@ -12,6 +12,7 @@ using System.Web.UI.WebControls.WebParts;
 using SpendManagementLibrary;
 using AjaxControlToolkit;
 using System.Text;
+using SpendManagementLibrary.Helpers;
 
 namespace Spend_Management
 {
@@ -237,7 +238,7 @@ namespace Spend_Management
 
 			if (returnURL.Value != "")
 			{
-				string retURL = Server.UrlDecode(returnURL.Value);
+				string retURL = (returnURL.Value).Base64Decode();
 				Response.Redirect(retURL, true);
 			}
 			else
