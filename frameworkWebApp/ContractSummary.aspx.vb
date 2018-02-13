@@ -5341,7 +5341,7 @@ Namespace Framework2006
                 Dim taskImg As New System.Web.UI.WebControls.Image
                 taskImg.ID = "task" & drow.Item("contractProductId")
 
-                Dim retURL As String = "~/ContractSummary.aspx?tab=" & SummaryTabs.ContractProduct & "&id=" & ViewState("ActiveContract").ToString()
+                Dim retURL As String = "~/ContractSummary.aspx?id=" & Session("ActiveContract")& "&tab=" & SummaryTabs.ContractProduct 
                 retURL = Server.UrlEncode(retURL)
 
                 If curUser.CheckAccessRole(AccessRoleType.Add, SpendManagementElement.Tasks, False) Then
