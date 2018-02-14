@@ -85,7 +85,7 @@ namespace SpendManagementLibrary.GreenLight
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            return $"{this.FileName} ({this.FileId}, {this.EntityName}, {this.DisplayName})";
+            return $"{this.FileName} / {this.EntityName} ({this.DisplayName})";
         }
     }
 }

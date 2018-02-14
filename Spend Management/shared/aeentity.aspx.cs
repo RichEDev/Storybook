@@ -100,7 +100,7 @@
             Master.UseDynamicCSS = true;
 
             //skips over load events if posted back from the HTML extender AjaxFileUploader
-            if (Request["start"] == null && Request["done"] == null && Request["complete"] == null)
+            if (Request["start"] == null && Request["done"] == null && Request["complete"] == null && (Request.AcceptTypes[0] != "*/*" || Request.Form.Count > 0))
             {
                 int formSelectionListValue = -1;
                 string formSelectionTextValue = null;
@@ -373,9 +373,11 @@
                         clientarray.Append("formFields.push([" + field.attribute.attributeid + ",'" + field.attribute.fieldtype + "']);\n");
                     }
                     ClientScript.RegisterClientScriptBlock(typeof(string), "formfields", clientarray.ToString(), true);
+                    IAuditLog auditLog = new cAuditLog();
                     if (id > 0)
                     {
                         SortedList<int, object> record = clsentities.getEntityRecord(currentEntity, id, entityform);
+                        auditLog.ViewRecord(SpendManagementElement.CustomEntityInstances, $"{currentEntity.entityname} / {entityform.formname} ({id})", user);
 
                         if (currentEntity.EnableLocking)
                         {
