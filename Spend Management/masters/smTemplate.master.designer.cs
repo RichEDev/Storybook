@@ -100,7 +100,7 @@ namespace Spend_Management {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.ToolkitScriptManager scriptman;
+        public global::AjaxControlToolkit.ToolkitScriptManager scriptman;
         
         /// <summary>
         /// header control.
