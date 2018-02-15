@@ -4,13 +4,6 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="styles" runat="server">
     <link href="/static/syncfusion/css/web/default-theme/ej.web.all.css" rel="stylesheet" />
     <style>
-        td:first-child {
-            text-align: left!important;
-        }
-
-        tbody th:first-child {
-            text-align: left!important;
-        }
         th.e-headercell {
             color: #282827!important;
         }
