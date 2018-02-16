@@ -248,6 +248,22 @@
 	            <span class="inputtooltipfield"></span>
 	            <span class="inputvalidatorfield"></span>
 	        </div>
+            
+            <div class="twocolumn" id="divValidation" style="display: none;">
+                <asp:Label id="lblClaimPercentageToValidate" runat="server" meta:resourcekey="lblClaimPercentageToValidateResource1" CssClass="mandatory" AssociatedControlID="txtClaimPercentageToValidate" >Percentage of items to validate per claim*</asp:Label>
+                <span class="inputs">
+                    <asp:TextBox id="txtClaimPercentageToValidate" runat="server" MaxLength="5" ></asp:TextBox>
+                </span>
+                <span class="inputicon"></span>
+                <span class="inputtooltipfield">
+                    <img id="imgtooltip590" onclick="SEL.Tooltip.Show('', 'ex', this);" src="../../shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon" />
+                </span>
+                <span class="inputvalidatorfield">
+                    <asp:RangeValidator ID="rangeClaimPercentageToValidate" runat="server" ErrorMessage="Please enter a Percentage of items to validate per claim between 1% and 100%." ControlToValidate="txtClaimPercentageToValidate" Type="Double" MinimumValue="1" MaximumValue="100" Text="*" ValidationGroup="vgStage" Display="Dynamic"></asp:RangeValidator>
+                    <asp:RegularExpressionValidator ID="regClaimPercentageToValidate" runat="server" ControlToValidate="txtClaimPercentageToValidate" ErrorMessage="Please enter a Percentage of items to validate per claim with a maximum of 2 decimal places." Text="*" ValidationExpression="[0-9]?[0-9]?[0-9]?\.?([0-9][0-9]?)?" ValidationGroup="vgStage" Display="Dynamic"></asp:RegularExpressionValidator>
+                    <asp:RequiredFieldValidator ID="ClaimPercentageToValidateValidator" runat="server" ErrorMessage="Please enter a Percentage of items to validate per claim." ControlToValidate="txtClaimPercentageToValidate" Text="*" ValidationGroup="vgStage" Display="Dynamic"></asp:RequiredFieldValidator>
+                </span>
+            </div>
 
 	        <div class="sectiontitle">
 	            <asp:Label id="Label5" runat="server" meta:resourcekey="Label1Resource1">Involvement</asp:Label>
