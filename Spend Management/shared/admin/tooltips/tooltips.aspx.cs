@@ -83,7 +83,7 @@
             foreach (DataRow row in x.Rows)
             {
                 childRow = x.Columns.Cast<DataColumn>().ToDictionary(col => col.ColumnName, col => row[col]);
-
+                childRow.Add("edit", "<a href=\"edittooltip.aspx?tooltipID=" + row["tooltipID"] + "\"><img src=\"/shared/images/icons/edit.png\" /></a>");
                 parentRow.Add(childRow);
             }
 
