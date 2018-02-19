@@ -444,24 +444,6 @@ public partial class aeexpense {
     protected global::SpendManagementHelpers.CSSButton btnCostCodeSearchCancel;
     
     /// <summary>
-    /// mdlCostCodeSearch control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::AjaxControlToolkit.ModalPopupExtender mdlCostCodeSearch;
-    
-    /// <summary>
-    /// lnkCostCodeSearch control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.LinkButton lnkCostCodeSearch;
-    
-    /// <summary>
     /// litclear control.
     /// </summary>
     /// <remarks>

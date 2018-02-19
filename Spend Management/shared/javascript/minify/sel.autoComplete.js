@@ -253,21 +253,11 @@
 
                     $('input.costcode-autocomplete').focus(function () {
 
-                            if (!$(this).val()) {
-                                $(this).autocomplete("search", "%%%");
-
-                            }
-
-                       
-
-
-
-                    
-                        
-
+                        if (!$(this).val()) {
+                            $(this).autocomplete("search", "%%%");
+                        }
                     }
                     );
-
                 });
             },
 

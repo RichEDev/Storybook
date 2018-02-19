@@ -110,11 +110,7 @@ Sys.Application.add_load(function(application, applicationEventArguments) {
             null,
             null);
 
-        var searchName = $(o).data("search");
-        if (typeof searchName === "string" && searchName !== "") {
-            CostCodeSearches[searchName] =
-                AutoCompleteSearches.New("CostCode", o.id, CostCodeSearchModal, CostCodeSearchPanel);
-        }
+   
     });
 
     // attach cost code autocompletes

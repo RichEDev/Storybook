@@ -1566,9 +1566,6 @@ public partial class aeexpense : System.Web.UI.Page
 
         if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet)
         {
-
- 
-
             if (cellCount == 0)
             {
                 row = new TableRow();
@@ -1594,14 +1591,12 @@ public partial class aeexpense : System.Web.UI.Page
                               };
 
             txtbox.Attributes.Add("data-search", "General");
-        //    txtbox.Attributes.Add("onFocus", "GenerateDropDown(this)");
             txtbox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
 
             TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode_ID" };
             hiddenIdentifier.Style.Add(HtmlTextWriterStyle.Display, "none");
 
             cCostCode costcode = null;
-
 
             if (action == Action.Edit || action == Action.Copy)
             {
@@ -1618,8 +1613,6 @@ public partial class aeexpense : System.Web.UI.Page
             }
             else if (action == Action.Add && itemtype == ItemType.Cash)
             {
-
-
                 if (breakdown.Count > 0 && breakdown[0].costcodeid != 0)
 
                 {
@@ -1628,21 +1621,7 @@ public partial class aeexpense : System.Web.UI.Page
                     //employee has default costcode breakdown so predefine
                     txtbox.Text = costcode.Costcode;
                     hiddenIdentifier.Text = costcode.CostcodeId.ToString();
-                }
-                
-
-
-                //check this session thing
-                //if (Session["costcodeId"] != null && (int)Session["costcodeId"] > 0)
-                //{
-                //    costcode =  ActionContext.CostCodes.GetCostcodeById(expenseitem.costcodebreakdown[0].costcodeid);
-
-                //    if (costcode != null)
-                //    {
-                //        txtbox.Text = costcode.Costcode;
-                //        hiddenIdentifier.Text = costcode.CostcodeId.ToString(CultureInfo.InvariantCulture);
-                //    }
-                //}
+                }              
             }
 
             //don't forget validation or setting if show the description or code name
@@ -1653,9 +1632,7 @@ public partial class aeexpense : System.Web.UI.Page
 
             row.Cells.Add(cell);
 
-            
-
-              cell = new TableCell
+             cell = new TableCell
             {
                 ColumnSpan = 2
             };
@@ -1692,9 +1669,7 @@ public partial class aeexpense : System.Web.UI.Page
             }
            
             row.Cells.Add(cell);
-
-            
-
+           
             cell = new TableCell();
             cell.Text = "&nbsp;";
             row.Cells.Add(cell);
@@ -1917,22 +1892,6 @@ public partial class aeexpense : System.Web.UI.Page
         tbl.Rows.Add(row);
 
         #endregion mobile device information panel
-    }
-
-    private void GenerateCostCodeSearch()
-    {
-      var  txtbox = new TextBox
-                     {
-                         ID = "txtCostCodeAutoComplete",
-                         CssClass = "costcode-autocomplete"
-                     };
-
-        txtbox.Attributes.Add("data-search", "General");
-
-        TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode_ID" };
-        hiddenIdentifier.Style.Add(HtmlTextWriterStyle.Display, "none");
-
-
     }
 
     /// <summary>
