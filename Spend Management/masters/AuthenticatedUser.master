@@ -67,12 +67,9 @@
             <asp:ServiceReference Path="~/shared/webServices/svcTooltip.asmx" InlineScript="false" />
         </Services>
         <Scripts>
-            <asp:ScriptReference Path="~/shared/javascript/minify/sel.main.js" />
-            <asp:ScriptReference Name="common" />
+            <asp:ScriptReference Name="master" />            
+            <asp:ScriptReference Name="common" />            
             <asp:ScriptReference Path="~/shared/javaScript/minify/sel.data.js" />
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.jsonParse.js" />
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
-            <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
         </Scripts>
     </cc1:ToolkitScriptManager>
     <cc1:ModalPopupExtender ID="mdlMasterPopup" runat="server" OnCancelScript="SEL.MasterPopup.HideMasterPopup();" OnOkScript="SEL.MasterPopup.HideMasterPopup();" BackgroundCssClass="modalMasterBackground" PopupControlID="pnlMasterPopup" TargetControlID="lnkMasterPopup" DropShadow="False">

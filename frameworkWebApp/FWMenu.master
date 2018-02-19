@@ -61,11 +61,8 @@
             <asp:ServiceReference Path="~/shared/webServices/svcTooltip.asmx" InlineScript="false" />
         </Services>
         <Scripts>
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.main.js" />
+            <asp:ScriptReference Name="master" />
             <asp:ScriptReference Name="common" />
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.jsonParse.js" />
-            <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
-            <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
             <asp:ScriptReference Path="~/shared/javaScript/sel.menumaster.js" />
         </Scripts>
     </cc1:ToolkitScriptManager>

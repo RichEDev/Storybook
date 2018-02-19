@@ -13,11 +13,9 @@
 		<form method="post" runat="server">
 		    <asp:ScriptManager ID="ScriptManager1" runat="server">
             <Scripts>
-                <asp:ScriptReference Path="~/shared/javascript/minify/sel.main.js" />
+                <asp:ScriptReference Name="jQuery" />
+                <asp:ScriptReference Name="master" />
                 <asp:ScriptReference Name="common" />
-                <asp:ScriptReference Path="~/shared/javaScript/minify/sel.jsonParse.js" />
-                <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
-                <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
             </Scripts>
             <Services>
                 <asp:ServiceReference Path="~/shared/webServices/svcGrid.asmx" InlineScript="false" />

@@ -49,7 +49,7 @@
                 }
                 var grid = SEL.Grid.getGridById(GridID);
                 SEL.Grid.currentPageNum[GridID] = pageNum == undefined ? 1 : pageNum;
-                Spend_Management.shared.webServices.svcGrid.changePage(CurrentUserInfo.AccountID, GridID, SEL.Grid.currentPageNum[GridID], filter, grid, grid.ServiceClassForInitialiseRowEvent, grid.ServiceClassMethodForInitialiseRowEvent, SEL.Grid.changeGridPageComplete, SEL.Grid.changePageFail);
+                Spend_Management.shared.webServices.svcGrid.changePage(GridID, SEL.Grid.currentPageNum[GridID], filter, grid, grid.ServiceClassForInitialiseRowEvent, grid.ServiceClassMethodForInitialiseRowEvent, SEL.Grid.changeGridPageComplete, SEL.Grid.changePageFail);
             },
             getCurrentPageNum: function (GridID) {
                 if (SEL.Grid.currentPageNum[GridID] == undefined) {
@@ -97,7 +97,7 @@
                 SEL.Grid.currentPageNum[GridID] = 1;
                 var scfire = grid == null ? '' : grid.ServiceClassForInitialiseRowEvent;
                 var scmfire = grid == null ? '' : grid.ServiceClassMethodForInitialiseRowEvent;
-                Spend_Management.shared.webServices.svcGrid.sortGrid(CurrentUserInfo.AccountID, GridID, column, filter, grid, is_static, scfire, scmfire, SEL.Grid.sortGridComplete, SEL.Grid.sortGridError);
+                Spend_Management.shared.webServices.svcGrid.sortGrid(GridID, column, filter, grid, is_static, scfire, scmfire, SEL.Grid.sortGridComplete, SEL.Grid.sortGridError);
             },
             sortGridComplete: function (data) {
                 if ($e(data[0]) === true) {
@@ -203,7 +203,7 @@
                     SEL.Grid.currentPageNum[GridID] = 1;
                     var scfire = grid == null ? '' : grid.ServiceClassForInitialiseRowEvent;
                     var scmfire = grid == null ? '' : grid.ServiceClassMethodForInitialiseRowEvent;
-                    Spend_Management.shared.webServices.svcGrid.filterGrid(CurrentUserInfo.AccountID, GridID, filter, grid, scfire, scmfire, SEL.Grid.filterGridComplete, SEL.Grid.filterGridError);
+                    Spend_Management.shared.webServices.svcGrid.filterGrid(GridID, filter, grid, scfire, scmfire, SEL.Grid.filterGridComplete, SEL.Grid.filterGridError);
                 }
                 
             },
@@ -217,7 +217,7 @@
                     SEL.Grid.currentPageNum[GridID] = 1;
                     var scfire = grid == null ? '' : grid.ServiceClassForInitialiseRowEvent;
                     var scmfire = grid == null ? '' : grid.ServiceClassMethodForInitialiseRowEvent;
-                    Spend_Management.shared.webServices.svcGrid.filterGridByCombo(CurrentUserInfo.AccountID, GridID, filter, grid, columnName, scfire, scmfire, SEL.Grid.filterGridComplete, SEL.Grid.filterGridError);
+                    Spend_Management.shared.webServices.svcGrid.filterGridByCombo(GridID, filter, grid, columnName, scfire, scmfire, SEL.Grid.filterGridComplete, SEL.Grid.filterGridError);
                 }
             },
             filterGridCmb: function (GridID, event) {
@@ -231,7 +231,7 @@
                     SEL.Grid.currentPageNum[GridID] = 1;
                     var scfire = grid == null ? '' : grid.ServiceClassForInitialiseRowEvent;
                     var scmfire = grid == null ? '' : grid.ServiceClassMethodForInitialiseRowEvent;
-                    Spend_Management.shared.webServices.svcGrid.filterGridByCmb(CurrentUserInfo.AccountID, GridID, filter, grid, scfire, scmfire, SEL.Grid.filterGridComplete, SEL.Grid.filterGridError);
+                    Spend_Management.shared.webServices.svcGrid.filterGridByCmb(GridID, filter, grid, scfire, scmfire, SEL.Grid.filterGridComplete, SEL.Grid.filterGridError);
                 }
             },
             getSelectedItem: function (comboBox) {

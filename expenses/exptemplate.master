@@ -46,12 +46,9 @@
                 <asp:ServiceReference Path="~/shared/webServices/svcAutoComplete.asmx" />
             </Services>
             <Scripts>
-                <asp:ScriptReference Path="~/shared/javaScript/minify/sel.main.js" />
+                <asp:ScriptReference Name="master" />
                 <asp:ScriptReference Name="common" />
                 <asp:ScriptReference Path="~/shared/javaScript/minify/sel.data.js" />
-                <asp:ScriptReference Path="~/shared/javaScript/minify/sel.jsonParse.js" />
-                <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
-                <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
                 <asp:ScriptReference Path="~/shared/javaScript/minify/sel.autoComplete.js?date=20180115" />
                 <asp:ScriptReference Name="tooltips" />
             </Scripts>

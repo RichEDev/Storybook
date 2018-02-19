@@ -14,14 +14,9 @@
                 <link rel="stylesheet" type="text/css" media="screen" href="<% = ResolveUrl("~/shared/css/styles.aspx") %>" />
                 <cc1:ToolkitScriptManager ID="scriptman" runat="server" EnablePageMethods="True">
                     <Scripts>
-                        <asp:ScriptReference Path="~/shared/javascript/sel.main.js" />
+                        <asp:ScriptReference Name="master"/>
+                        <asp:ScriptReference Name="common"/>
                         <asp:ScriptReference Path="~/shared/javaScript/customEntities.js" />
-                        <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
-                        <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
-                        <asp:ScriptReference Path="~/shared/javascript/sel.common.js" />
-                        <asp:ScriptReference Path="~/shared/javaScript/minify/jsonParse.js" />
-                        <asp:ScriptReference Path="~/shared/javaScript/minify/sel.grid.js" />
-                        <asp:ScriptReference Path="~/shared/javaScript/shared.js" />
                         <asp:ScriptReference Path="~/shared/javaScript/minify/sel.autoComplete.js?date=20180115" />
                         <asp:ScriptReference Path="~/shared/javaScript/sel.tooltips.js" />
                         <asp:ScriptReference Path="~/shared/javaScript/Attachments.js"/>

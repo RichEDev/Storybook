@@ -36,17 +36,17 @@ namespace Spend_Management.shared.webServices
     public class svcGrid : System.Web.Services.WebService
     {
         [WebMethod(EnableSession = true)]
-        public string[] changePage(int accountid, string gridid, int pageNumber, string filter, cJSGridDetail gridDetails, string serviceClassForInitialiseRowEvent = "", string methodForInitialiseRowEvent = "")
+        public string[] changePage(string gridid, int pageNumber, string filter, cJSGridDetail gridDetails, string serviceClassForInitialiseRowEvent = "", string methodForInitialiseRowEvent = "")
         {
-            ConvertFilterTicksToDateTime(accountid, gridDetails);
-            CurrentUser user = cMisc.GetCurrentUser();
+            var user = cMisc.GetCurrentUser();
+            ConvertFilterTicksToDateTime(user.AccountID, gridDetails);
 
-            var clstables = new cTables(accountid);
-            var clsfields = new cFields(accountid);
+            var clstables = new cTables(user.AccountID);
+            var clsfields = new cFields(user.AccountID);
             var basetable = clstables.GetTableByID(gridDetails.baseTableID);
 
 
-            cGridNew clsgrid = this.InitaliseGrid(accountid, gridid, gridDetails, user, clsfields, basetable); 
+            cGridNew clsgrid = this.InitaliseGrid(gridid, gridDetails, user, clsfields, basetable); 
             HookInitialiseRowEvent(serviceClassForInitialiseRowEvent, methodForInitialiseRowEvent, clsgrid);
 
             clsgrid.currentpagenumber = pageNumber;
@@ -121,18 +121,19 @@ namespace Spend_Management.shared.webServices
         }
 
         [WebMethod(EnableSession = true)]
-        public string[] sortGrid(int accountid, string gridid, string newsortcolumnid, string filter, cJSGridDetail gridDetails, int is_static, string serviceClassForInitialiseRowEvent = "", string methodForInitialiseRowEvent = "")
+        public string[] sortGrid(string gridid, string newsortcolumnid, string filter, cJSGridDetail gridDetails, int is_static, string serviceClassForInitialiseRowEvent = "", string methodForInitialiseRowEvent = "")
         {
-            ConvertFilterTicksToDateTime(accountid, gridDetails);
             CurrentUser user = cMisc.GetCurrentUser();
-            cTables clstables = new cTables(accountid);
-            cFields clsfields = new cFields(accountid);
+            ConvertFilterTicksToDateTime(user.AccountID, gridDetails);
+            
+            cTables clstables = new cTables(user.AccountID);
+            cFields clsfields = new cFields(user.AccountID);
             List<cNewGridColumn> columns = new List<cNewGridColumn>();
             cTable basetable = clstables.GetTableByID(gridDetails.baseTableID);
 
             SpendManagementLibrary.SortDirection currentSortdirection = gridDetails.sortDirection;
 
-            cGridNew clsgrid = this.InitaliseGrid(accountid, gridid, gridDetails, user, clsfields, basetable);; 
+            cGridNew clsgrid = this.InitaliseGrid(gridid, gridDetails, user, clsfields, basetable);; 
             
             HookInitialiseRowEvent(serviceClassForInitialiseRowEvent, methodForInitialiseRowEvent, clsgrid);
 
@@ -336,15 +337,15 @@ namespace Spend_Management.shared.webServices
         }
 
         [WebMethod(EnableSession = true)]
-        public string[] filterGrid(int accountid, string gridid, string filter, cJSGridDetail gridDetails, string serviceClassForInitialiseRowEvent = "", string methodForInitialiseRowEvent = "")
+        public string[] filterGrid(string gridid, string filter, cJSGridDetail gridDetails, string serviceClassForInitialiseRowEvent = "", string methodForInitialiseRowEvent = "")
         {
-            return filterGridData(accountid, gridid, filter, gridDetails, false, string.Empty, serviceClassForInitialiseRowEvent, methodForInitialiseRowEvent);
+            return filterGridData(gridid, filter, gridDetails, false, string.Empty, serviceClassForInitialiseRowEvent, methodForInitialiseRowEvent);
         }
 
         [WebMethod(EnableSession = true)]
-        public string[] filterGridByCmb(int accountid, string gridid, string cmbVal, cJSGridDetail gridDetails, string serviceClassForInitialiseRowEvent = "", string methodForInitialiseRowEvent = "")
+        public string[] filterGridByCmb(string gridid, string cmbVal, cJSGridDetail gridDetails, string serviceClassForInitialiseRowEvent = "", string methodForInitialiseRowEvent = "")
         {
-            return filterGridData(accountid, gridid, cmbVal, gridDetails, true, string.Empty, serviceClassForInitialiseRowEvent, methodForInitialiseRowEvent);
+            return filterGridData(gridid, cmbVal, gridDetails, true, string.Empty, serviceClassForInitialiseRowEvent, methodForInitialiseRowEvent);
         }
 
         /// <summary>
@@ -361,9 +362,9 @@ namespace Spend_Management.shared.webServices
         /// <param name="methodForInitialiseRowEvent"></param>
         /// <returns></returns>
         [WebMethod(EnableSession = true)]
-        public string[] filterGridByCombo(int accountid, string gridid, string cmbVal, cJSGridDetail gridDetails, string columnName,  string serviceClassForInitialiseRowEvent = "", string methodForInitialiseRowEvent = "")
+        public string[] filterGridByCombo(string gridid, string cmbVal, cJSGridDetail gridDetails, string columnName,  string serviceClassForInitialiseRowEvent = "", string methodForInitialiseRowEvent = "")
         {
-            return filterGridData(accountid, gridid, cmbVal, gridDetails, false, columnName, serviceClassForInitialiseRowEvent, methodForInitialiseRowEvent);
+            return filterGridData(gridid, cmbVal, gridDetails, false, columnName, serviceClassForInitialiseRowEvent, methodForInitialiseRowEvent);
         }
 
 
@@ -379,16 +380,17 @@ namespace Spend_Management.shared.webServices
         /// <param name="serviceClassForInitialiseRowEvent"></param>
         /// <param name="methodForInitialiseRowEvent"></param>
         /// <returns></returns>
-        private string[] filterGridData(int accountid, string gridid, string filter, cJSGridDetail gridDetails, bool archiveFlag, string filterColumn = "", string serviceClassForInitialiseRowEvent = "", string methodForInitialiseRowEvent = "")
+        private string[] filterGridData(string gridid, string filter, cJSGridDetail gridDetails, bool archiveFlag, string filterColumn = "", string serviceClassForInitialiseRowEvent = "", string methodForInitialiseRowEvent = "")
         {
-            ConvertFilterTicksToDateTime(accountid, gridDetails);
             CurrentUser user = cMisc.GetCurrentUser();
+            ConvertFilterTicksToDateTime(user.AccountID, gridDetails);
+            
 
-            var clstables = new cTables(accountid);
-            var clsfields = new cFields(accountid);
+            var clstables = new cTables(user.AccountID);
+            var clsfields = new cFields(user.AccountID);
             var basetable = clstables.GetTableByID(gridDetails.baseTableID);
 
-            cGridNew clsgrid = this.InitaliseGrid(accountid, gridid, gridDetails, user, clsfields, basetable);
+            cGridNew clsgrid = this.InitaliseGrid(gridid, gridDetails, user, clsfields, basetable);
 
             HookInitialiseRowEvent(serviceClassForInitialiseRowEvent, methodForInitialiseRowEvent, clsgrid);
 
@@ -520,28 +522,25 @@ namespace Spend_Management.shared.webServices
         /// <summary>
         /// The function to initialise a grid from the XML.
         /// </summary>
-        /// <param name="accountid">
-        /// The accountid.
-        /// </param>
         /// <param name="gridid">
-        /// The gridid.
+        ///     The gridid.
         /// </param>
         /// <param name="gridDetails">
-        /// The grid details.
+        ///     The grid details.
         /// </param>
         /// <param name="user">
-        /// The user.
+        ///     The user.
         /// </param>
         /// <param name="clsfields"> 
-        /// The clsfields.
+        ///     The clsfields.
         /// </param>
         /// <param name="basetable">
-        /// The basetable.
+        ///     The basetable.
         /// </param>
         /// <returns>
         /// The <see cref="cGridNew"/>.
         /// </returns>
-        private cGridNew InitaliseGrid(int accountid, string gridid, cJSGridDetail gridDetails, CurrentUser user, cFields clsfields, cTable basetable)
+        private cGridNew InitaliseGrid(string gridid, cJSGridDetail gridDetails, CurrentUser user, cFields clsfields, cTable basetable)
         {
             cGridNew clsgrid;
             List<cNewGridColumn> columns;
@@ -566,7 +565,7 @@ namespace Spend_Management.shared.webServices
             else
             {
                 columns = this.GenerateColumnFromArray(gridDetails.columns, clsfields);
-                clsgrid = new cGridNew(accountid, user.EmployeeID, gridid, basetable, columns);
+                clsgrid = new cGridNew(user.AccountID, user.EmployeeID, gridid, basetable, columns);
             }
 
             return clsgrid;
