@@ -25,8 +25,10 @@
 	[AllocateForPayment]			BIT CONSTRAINT [DF_signoffs_AllocateForPayment] DEFAULT (0) NOT NULL,
 	[IsPostValidationCleanupStage]	BIT CONSTRAINT [DF_signoffs_IsPostValidationCleanupStage] DEFAULT (0) NOT NULL,
 	[ValidationCorrectionThreshold]	INT NULL,
-	[approverJustificationsRequired] [bit] NOT NULL CONSTRAINT [DF_signoffs_approverJustificationsRequired] DEFAULT ((0))
-    CONSTRAINT [PK__signoffs__282DF8C2] PRIMARY KEY CLUSTERED ([signoffid] ASC) WITH (FILLFACTOR = 90),
+	[approverJustificationsRequired] [bit] NOT NULL,
+	[ClaimPercentageToValidate] DECIMAL(18, 2) NULL 
+	CONSTRAINT [DF_signoffs_approverJustificationsRequired] DEFAULT ((0))	
+	CONSTRAINT [PK__signoffs__282DF8C2] PRIMARY KEY CLUSTERED ([signoffid] ASC) WITH (FILLFACTOR = 90),    
     CONSTRAINT [FK_signoffs_groups] FOREIGN KEY ([groupid]) REFERENCES [dbo].[groups] ([groupid]) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

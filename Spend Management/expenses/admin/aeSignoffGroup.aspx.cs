@@ -14,7 +14,7 @@ namespace Spend_Management
     using Spend_Management.expenses.webservices;
     using Spend_Management.shared.code.ApprovalMatrix;
 
-    /// <summary>
+    /// <summary> 
     /// Summary description for aegroup.
     /// </summary>
     public partial class aeSignoffGroup : Page
@@ -56,6 +56,14 @@ namespace Spend_Management
             {
                 this.cmbincludelst.Items.Add(new ListItem("Only if an expense item fails validation twice", "9"));
                 this.cmbsignofftype.Items.Add(SignoffType.SELValidation.ToListItem());
+                this.txtClaimPercentageToValidate.Text = "100";
+
+                this.chkFeatureFlag.Checked = false; //TODO: Remove with feature flag
+
+                if (true)
+                {
+                    this.chkFeatureFlag.Checked = true;
+                }
             }
 
             #endregion

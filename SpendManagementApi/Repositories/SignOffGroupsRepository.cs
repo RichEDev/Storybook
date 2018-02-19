@@ -89,7 +89,8 @@
                         stage.NhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner,
                         stage.AllocateForPayment,
                         stage.IsPostValidationCleanupStage,
-                        stage.ValidationCorrectionThreshold));
+                        stage.ValidationCorrectionThreshold,
+                        stage.ClaimPercentageToValidate)); //TODO: Feature flag
 
         }
 
