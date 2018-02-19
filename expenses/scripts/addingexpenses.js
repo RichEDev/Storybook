@@ -109,8 +109,26 @@ Sys.Application.add_load(function(application, applicationEventArguments) {
             null,
             null,
             null);
-
+      
    
+    });
+
+    $(".costcodeDescription-autocomplete").each(function (i, o) {
+        SEL.AutoComplete.Bind(o.id,
+            15,
+            '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
+            'AF80D035-6093-4721-8AFC-061424D2AB72',
+            '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',
+            null,
+            '{ 0: { "FieldID": "8178629C-5908-4458-89F6-D7EE7438314D", "ConditionType": 1, "ValueOne": "0", "ValueTwo": "", "Order": 0, "JoinViaID": 0 } }',
+            500,
+            null,
+            "False",
+            null,
+            null,
+            null);
+        //desc AF80D035-6093-4721-8AFC-061424D2AB72
+
     });
 
     // attach cost code autocompletes

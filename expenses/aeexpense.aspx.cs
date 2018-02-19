@@ -1583,14 +1583,15 @@ public partial class aeexpense : System.Web.UI.Page
 
             cell = new TableCell();
             cell.CssClass = "inputtd";
-
-             txtbox = new TextBox
-                              {
-                                  ID = "txtCostCode",
-                                  CssClass = "costcode-autocomplete"
-                              };
-
+                
+            txtbox = new TextBox
+                         {
+                             ID = "txtCostCode",
+                             CssClass = reqProperties.UseCostCodeDescription ? "costcodeDescription-autocomplete" : "costcode-autocomplete"
+                         };
+                   
             txtbox.Attributes.Add("data-search", "General");
+            txtbox.Attributes.Add("placeholder", "hint hint");
             txtbox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
 
             TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode_ID" };
@@ -2103,17 +2104,18 @@ public partial class aeexpense : System.Web.UI.Page
 
         if (globalProperties.costcodeson && globalProperties.usecostcodes && globalProperties.usecostcodeongendet == false)
         {
-
             cell = new TableCell();
-
-
             var textBox = new TextBox
-            {
-                ID = "txtCostCode" + index,
-                CssClass = "costcode-autocomplete"
-            };
+                              {
+                                  ID = "txtCostCode" + index,
+                                  CssClass = this.ActionContext.Properties.UseCostCodeDescription
+                                                 ? "costcodeDescription-autocomplete"
+                                                 : "costcode-autocomplete"
+                              };
+
 
             textBox.Attributes.Add("data-search", "General");
+            textBox.Attributes.Add("placeholder", "hint hint");
 
             textBox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
 

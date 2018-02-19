@@ -258,6 +258,13 @@
                         }
                     }
                     );
+                    $('input.costcodeDescription-autocomplete').focus(function () {
+
+                        if (!$(this).val()) {
+                            $(this).autocomplete("search", "%%%");
+                        }
+                    }
+                    );
                 });
             },
 
