@@ -2117,11 +2117,26 @@ public partial class aeexpense : System.Web.UI.Page
             textBox.Attributes.Add("data-search", "General");
             textBox.Attributes.Add("placeholder", "hint hint");
 
+
+
+
             textBox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
 
 
             TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode" + index + "_ID"};          
             hiddenIdentifier.Style.Add(HtmlTextWriterStyle.Display, "none");
+
+            
+            string[] filterAttribute = this.ActionContext.FilterRules.FilterDropdown(FilterType.Costcode, index.ToString(), hiddenIdentifier.ID);
+
+            //  filterAttribute[0] = "";
+
+            if (!filterAttribute.IsNullOrEmpty())
+            {
+
+                textBox.Attributes.Add(filterAttribute[0], filterAttribute[1]);
+                //ddlst.Attributes.Add(filterAttribute[0], filterAttribute[1]);
+            }
 
             //pre populate if edit
 

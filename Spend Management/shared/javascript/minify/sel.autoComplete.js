@@ -264,7 +264,22 @@
                             $(this).autocomplete("search", "%%%");
                         }
                     }
+
                     );
+
+
+                    //$('input.costcodeDescription-autocomplete').autocomplete({
+                       
+                    //    select: function (event, ui) {
+                    //        $(this).val('');
+                      
+                    //            alert(ui.item.label);
+                           
+                          
+                    //    }
+                    //});
+
+                   
                 });
             },
 
