@@ -761,7 +761,10 @@
                         // Updates the select element to have the value of the equivalent option and updates the hidden fields required by the drop down for saving the data of an entity.
                         $listItems.click(function (e) {
                             e.stopPropagation();
-                            $styledSelect.text($(this).find('span.displayName').text());
+                            var labelText = $(this).find('span.displayName').text();
+
+                            $styledSelect.text(SEL.AutoCompleteCombo.Ellipsis(labelText, 25)).attr('title', labelText);
+                            
                             $this.val($(this).attr("value"));
                             $list.hide();
                             var referenceId = $this.prop("id");
@@ -797,6 +800,17 @@
                             });
 
                     });
+            },
+            Ellipsis: function (str, len)
+            {
+                if (len === undefined || len === null) {
+                    len = 32;
+                }
+                if (str.length > len) {
+                    return str.substring(0, len - 4) + '...';
+                }
+
+                return str;
             }
         }
     }

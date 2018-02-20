@@ -17,7 +17,7 @@
                         <asp:ScriptReference Name="master"/>
                         <asp:ScriptReference Name="common"/>
                         <asp:ScriptReference Path="~/shared/javaScript/customEntities.js" />
-                        <asp:ScriptReference Path="~/shared/javaScript/minify/sel.autoComplete.js?date=20180115" />
+                        <asp:ScriptReference Name="autocomplete" />
                         <asp:ScriptReference Path="~/shared/javaScript/sel.tooltips.js" />
                         <asp:ScriptReference Path="~/shared/javaScript/Attachments.js"/>
                     </Scripts>

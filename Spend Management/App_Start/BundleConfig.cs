@@ -155,6 +155,12 @@
                 Path = "~/bundles/knowledge"
             });
 
+            bundles.Add(new ScriptBundle("~/bundles/autocomplete").Include("~/shared/javaScript/minify/sel.autocomplete.js"));
+            ScriptManager.ScriptResourceMapping.AddDefinition("autocomplete", new ScriptResourceDefinition
+            {
+                Path = "~/bundles/autocomplete"
+            });
+
         }
     }
 }

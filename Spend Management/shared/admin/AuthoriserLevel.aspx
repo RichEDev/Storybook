@@ -18,7 +18,7 @@
     <asp:ScriptManagerProxy ID="smProxy" runat="server">
          <Scripts>
             <asp:ScriptReference Path="~/shared/javaScript/minify/sel.AuthoriserLevels.js" />
-             <asp:ScriptReference Path="~/shared/javaScript/minify/sel.autoComplete.js?date=20180115" />
+             <asp:ScriptReference Name="autocomplete" />
 
         </Scripts>
         <Services>
