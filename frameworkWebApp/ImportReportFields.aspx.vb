@@ -322,7 +322,11 @@ Namespace Framework2006
             Dim errstr As String = ""
             Dim FWDb As New cFWDBConnection
             Dim isErr As Boolean = False
-            Dim storePath As String = "./email templates/" & curUser.Account.companyid
+            Dim emailTemplateFilePath As String =  GlobalVariables.GetAppSetting("EmailTemplateFilePath")
+            If Not emailTemplateFilePath.EndsWith("/") Then
+                emailTemplateFilePath = emailTemplateFilePath + "/"
+            End If
+            Dim storePath As String = emailTemplateFilePath & curUser.Account.companyid
 
             Dim fileIn() As String = attachment.PostedFile.FileName.Split("\")
             Dim fileName As String = fileIn(fileIn.GetUpperBound(0))
