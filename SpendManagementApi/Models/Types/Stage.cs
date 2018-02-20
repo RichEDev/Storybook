@@ -239,12 +239,12 @@
 
             if (this.SignOffType != SignoffType.SELValidation && this.ClaimPercentageToValidate != null) //TODO:Feature flag
             {
-                throw new ApiException("Invalid setup", "Claim percentage to validate can only be set for Signoff type of SEL Validation.");
+                throw new ApiException("Invalid Data", "Claim percentage to validate can only be set for Signoff type of SEL Validation.");
             }
 
             if (this.SignOffType == SignoffType.SELValidation && this.ClaimPercentageToValidate == null) //TODO:Feature flag
             {
-                throw new ApiException("Invalid setup", "Claim percentage to validate cannot be null when signoff stage type is SEL Validation.");
+                throw new ApiException("Invalid Data", "Claim percentage to validate cannot be null when Signoff type is SEL Validation.");
             }
         }
 
