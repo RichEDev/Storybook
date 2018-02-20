@@ -94,7 +94,7 @@
                         ExtraLevelsTooptip: null,
                         FromMyLevelLabel: null,
                         FromMyLevelCheckbox: null,
-                        FeatureFlagCheckbox: null, //TODO: Remove with feature flag
+                        FeatureFlag: null, //TODO: Remove with feature flag
                         ClaimPercentageToValidateLabel: null,
                         ClaimPercentageToValidateTextBox: null,
                         IncludeDropDown: null,
@@ -414,12 +414,18 @@
                                 $(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffValuesDropdown).hide();
                                 $(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffValuesLabel).hide();
 
-                                if ($(SEL.SignoffGroups.DomIDs.SignoffStage.FeatureFlagCheckbox).is(":checked")) { //TODO:Remove with feature flag
+                                if (SEL.SignoffGroups.DomIDs.SignoffStage.FeatureFlag === "True") { //TODO:Remove with feature flag
                                     $(SEL.SignoffGroups.DomIDs.SignoffStage.ValidationDiv).show();
-                                    $g(SEL.SignoffGroups.DomIDs.Validators.txtClaimPercentageToValidate).enabled = true;
+                                    $g(SEL.SignoffGroups.DomIDs.Validators.txtClaimPercentageToValidate).enabled = true; 
+                                    if (($(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val() !== "100") && ($(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val() !== "")) {
+                                        $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val();
+                                    } else {
+                                        $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val("100");
+                                    }
                                 } else {
                                     $(SEL.SignoffGroups.DomIDs.SignoffStage.ValidationDiv).hide();
                                     $g(SEL.SignoffGroups.DomIDs.Validators.txtClaimPercentageToValidate).enabled = false;
+                                    $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val("");
                                 }
                                 $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverEmailCheckbox).prop("disabled", true);
                                 $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverEmailCheckbox).prop('checked', false);
@@ -684,7 +690,8 @@
                         var onHolidayType = $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).val();
                         var holidayApproverType = $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayTypeDropdown).val();
                         var holidayApproverValue = $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayListDropdown).val();
-                        var claimPercentageToValidate = $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val(); //TODO: Feature flag
+                        ($(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffDropdown).val() === SEL.SignoffGroups.IDs.SignoffTypes.SELValidation) ? $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val() : $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val(""); //TODO: Feature flag
+                        var claimPercentageToValidate = $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val();
 
                         SEL.Data.Ajax({
                             data: {
@@ -807,7 +814,7 @@
                                 if (r.d.signofftype == SEL.SignoffGroups.IDs.SignoffTypes.SELValidation) { //TODO: Feature flag
                                     $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val(r.d.ClaimPercentageToValidate);
                                 } else {
-                                    $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val("100"); //<----- This is not working right when u save a different type of signoff needs to save null
+                                    $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val(""); 
                                 }
 
                                 switch ($(SEL.SignoffGroups.DomIDs.SignoffStage.IncludeDropDown).val()) {
@@ -876,6 +883,7 @@
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimantEmailCheckbox).prop("checked", false);
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.DeclarationCheckbox).prop("checked", false);
                         $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverJustificationCheckbox).prop("checked", false);
+                        $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val("100");
                     },
 
                     Modal:

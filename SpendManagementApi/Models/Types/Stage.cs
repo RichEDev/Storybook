@@ -182,8 +182,8 @@
         /// <summary>
         /// Gets or sets the percentage of items in a claim that will be sent for validation.
         /// </summary>
-        [Range(0, 100, ErrorMessage = "Please enter a Percentage of items to validate per claim between 0% and 100%.")]
-        [RegularExpression(@"[0-9]?[0-9]?[0-9]?\.?([0-9][0-9]?)?", ErrorMessage = "Please enter a Percentage of items to validate per claim with a maximum of 2 decimal places.")]
+        [Range(0, 100, ErrorMessage = "Please enter a Claim percentage to validate between 0% and 100%.")]
+        [RegularExpression(@"[0-9]?[0-9]?[0-9]?\.?([0-9][0-9]?)?", ErrorMessage = "Please enter a Claim percentage to validate with a maximum of 2 decimal places.")]
         public decimal? ClaimPercentageToValidate { get; set; }  //TODO: Feature flag
 
         public void Validate(IActionContext actionContext)
@@ -237,11 +237,15 @@
                 throw new ApiException("Invalid Validation Correction Threshold", "Valid Validation Correction Threshold must be provided. Refer to Validation Correction Threshold for valid values. Sign off stages provided have not been saved");
             }
 
-            if (this.ClaimPercentageToValidate < 0 || this.ClaimPercentageToValidate > 100) //TODO: Feature flag
+            if (this.SignOffType != SignoffType.SELValidation && this.ClaimPercentageToValidate != null) //TODO:Feature flag
             {
-                throw new ApiException("Invalid Claim Percentage to Validate", "Valid Claim Percentage to Validate must be provided. Refer to Claim Percentage to Validate for valid values. Sign off stages provided have not been saved");
+                throw new ApiException("Invalid setup", "Claim percentage to validate can only be set for Signoff type of SEL Validation.");
             }
 
+            if (this.SignOffType == SignoffType.SELValidation && this.ClaimPercentageToValidate == null) //TODO:Feature flag
+            {
+                throw new ApiException("Invalid setup", "Claim percentage to validate cannot be null when signoff stage type is SEL Validation.");
+            }
         }
 
         public bool Equals(Stage other)

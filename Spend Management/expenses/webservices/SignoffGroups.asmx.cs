@@ -181,7 +181,7 @@
         public int SaveStage(int groupId, int stageId, string selectedSignoffType, bool singleSignoff, bool sendClaimantEmail, bool sendApproverEmail, 
             bool envelopesAreReceived, bool envelopesAreNotReceived, bool displayApproverDeclaration, bool approverJustificationRequired, bool aboveMyLevel, 
             string approverMatrixLevels, string selectedSignoffValue, string noCostCodeOwnerAction, string stageInclusionType, string stageInclusionValue, 
-            string stageInclusionDropdownType, string involvementType, string onHolidayType, string holidayApproverType, string holidayApproverValue, decimal claimPercentageToValidate) //TODO: Feature flag
+            string stageInclusionDropdownType, string involvementType, string onHolidayType, string holidayApproverType, string holidayApproverValue, decimal? claimPercentageToValidate) //TODO: Feature flag
         {
             var user = cMisc.GetCurrentUser();
 

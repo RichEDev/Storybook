@@ -45,7 +45,7 @@
 
             r.SignoffStage.ClaimPercentageToValidateLabel = '#<%= this.lblClaimPercentageToValidate.ClientID%>';
             r.SignoffStage.ClaimPercentageToValidateTextBox = '#<%= this.txtClaimPercentageToValidate.ClientID%>';
-            r.SignoffStage.FeatureFlagCheckbox = '#<%= this.chkFeatureFlag.ClientID%>'; /*TODO: Remove with feature flags*/
+            r.SignoffStage.FeatureFlag = '<%= this.featureFlag%>'; /*TODO: Remove with feature flags*/
 
             r.SignoffStage.IncludeDropDown = '#<%= this.cmbinclude.ClientID %>';
             r.SignoffStage.AmountLabel = '#<%= this.Label6.ClientID %>';
@@ -261,7 +261,7 @@
                 </span>
                 <span class="inputicon"></span>
                 <span class="inputtooltipfield">
-                    <img id="imgtooltip590" onclick="SEL.Tooltip.Show('', 'ex', this);" src="../../shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon" />
+                    <img id="imgtooltip590" onclick="SEL.Tooltip.Show('06CADC6C-346E-490B-9B65-46B6A365B5BB', 'ex', this);" src="../../shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon" />
                 </span>
                 <span class="inputvalidatorfield">
                     <cc1:FilteredTextBoxExtender runat="server" ID="fteClaimPercentageToValidate" FilterMode="ValidChars" ValidChars="0123456789." TargetControlID="txtClaimPercentageToValidate"/>
@@ -269,10 +269,7 @@
                     <asp:RegularExpressionValidator ID="regClaimPercentageToValidate" runat="server" ControlToValidate="txtClaimPercentageToValidate" ErrorMessage="Please enter a Percentage of items to validate per claim with a maximum of 2 decimal places." Text="*" ValidationExpression="[0-9]?[0-9]?[0-9]?\.?([0-9][0-9]?)?" ValidationGroup="vgStage" Display="Dynamic"></asp:RegularExpressionValidator>
                     <asp:RequiredFieldValidator ID="txtClaimPercentageToValidateValidator" runat="server" Enabled="False" ErrorMessage="Please enter a Percentage of items to validate per claim." ControlToValidate="txtClaimPercentageToValidate" ValidationGroup="vgStage" >*</asp:RequiredFieldValidator>
                 </span>
-                <span class="inputs">
-                    <asp:CheckBox ID="chkFeatureFlag" runat="server" ClientIDMode="Static" style="display: none;"></asp:CheckBox> <%--TODO: Remove when done with feature flags--%>
-                </span>
-            </div>
+             </div>
 
 	        <div class="sectiontitle">
 	            <asp:Label id="Label5" runat="server" meta:resourcekey="Label1Resource1">Involvement</asp:Label>

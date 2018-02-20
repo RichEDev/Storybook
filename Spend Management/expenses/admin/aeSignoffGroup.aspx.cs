@@ -19,6 +19,8 @@ namespace Spend_Management
     /// </summary>
     public partial class aeSignoffGroup : Page
     {
+        public bool featureFlag = false;
+
         protected void Page_Load(object sender, System.EventArgs e)
         {
             Title = "Add / Edit Signoff Group";
@@ -56,13 +58,12 @@ namespace Spend_Management
             {
                 this.cmbincludelst.Items.Add(new ListItem("Only if an expense item fails validation twice", "9"));
                 this.cmbsignofftype.Items.Add(SignoffType.SELValidation.ToListItem());
-                this.txtClaimPercentageToValidate.Text = "100";
 
-                this.chkFeatureFlag.Checked = false; //TODO: Remove with feature flag
+                this.featureFlag = false; //TODO: Remove with feature flag
 
                 if (true)
                 {
-                    this.chkFeatureFlag.Checked = true;
+                    this.featureFlag = true;
                 }
             }
 
