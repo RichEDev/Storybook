@@ -8,17 +8,24 @@ namespace Spend_Management
     using System.Web.Services;
     using System.Web.UI;
     using System.Web.UI.WebControls;
+    using BusinessLogic;
+    using SEL.FeatureFlags;
     using SpendManagementLibrary.Employees;
     using Spend_Management;
     using SpendManagementLibrary;
     using Spend_Management.expenses.webservices;
     using Spend_Management.shared.code.ApprovalMatrix;
 
-    /// <summary>
+    /// <summary> 
     /// Summary description for aegroup.
     /// </summary>
     public partial class aeSignoffGroup : Page
     {
+        [Dependency]
+        public IFeatureFlagManager FeatureFlagManager { get; set; }
+
+        public bool featureFlag = false;
+
         protected void Page_Load(object sender, System.EventArgs e)
         {
             Title = "Add / Edit Signoff Group";
@@ -56,6 +63,13 @@ namespace Spend_Management
             {
                 this.cmbincludelst.Items.Add(new ListItem("Only if an expense item fails validation twice", "9"));
                 this.cmbsignofftype.Items.Add(SignoffType.SELValidation.ToListItem());
+
+                this.featureFlag = false; //TODO: Remove with feature flag
+
+                if (FeatureFlagManager.IsEnabled("Signoff Groups Claim Percentage To Validate"))
+                {
+                    this.featureFlag = true;
+                }
             }
 
             #endregion

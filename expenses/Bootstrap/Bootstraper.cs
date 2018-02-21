@@ -31,6 +31,10 @@
     using Configuration.Core;
     using Configuration.Interface;
 
+    using SEL.FeatureFlags;
+    using SEL.FeatureFlags.Configuration;
+    using SEL.FeatureFlags.Context;
+
     using SimpleInjector;
     using SimpleInjector.Diagnostics;
     using SimpleInjector.Integration.Web;
@@ -136,6 +140,12 @@
 
             container.Register<FinancialYearRepository, SqlFinancialYearFactory>(Lifestyle.Transient);
             container.Register<HttpRemotingHandler>(BootstrapHttpRemotingHandler.New);
+
+            container.Register<IFileWatcher, FileWatcher>(Lifestyle.Singleton);
+            container.Register<IFileSystem, FileSystem>(Lifestyle.Singleton);
+            container.Register<IFeatureFlagConfiguration>(() => BootstrapFileSystemConfiguration.CreateNew(container), Lifestyle.Scoped);
+            container.Register<IFeatureFlagsContextProvider, WebFeatureFlagContext>();
+            container.Register<IFeatureFlagManager, FeatureFlagManager>();
 
             RegisterWebPages(container);
 

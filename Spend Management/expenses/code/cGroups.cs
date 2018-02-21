@@ -391,6 +391,7 @@ namespace Spend_Management
                     int nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner_ord =
                         reader.GetOrdinal("nhsassignmentsupervisorapproveswhenmissingcostcodeowner");
                     int approverJustificationRequired_ord = reader.GetOrdinal("approverJustificationsRequired");
+                    int claimPercentageToValidate_ord = reader.GetOrdinal("claimPercentageToValidate");
                     #endregion Ordinals
 
                     while (reader.Read())
@@ -419,6 +420,7 @@ namespace Spend_Management
                         bool approveHigherLevelsOnly = reader.GetBoolean(approveHigherLevelsOnly_ord);
                         bool nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner = reader.GetBoolean(nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner_ord);
                         bool approverJustificationRequired = reader.GetBoolean(approverJustificationRequired_ord);
+                        
                         var reqstage = new cStage(
                             signoffid,
                             signofftype,
@@ -445,7 +447,8 @@ namespace Spend_Management
                             nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner,
                             reader.GetRequiredValue<bool>("AllocateForPayment"),
                             reader.GetRequiredValue<bool>("IsPostValidationCleanupStage"),
-                                reader.GetNullable<int>("ValidationCorrectionThreshold"));
+                                reader.GetNullable<int>("ValidationCorrectionThreshold"),
+                                reader.GetNullable<decimal>("ClaimPercentageToValidate")); //TODO: Feature Flag
 
                         if (!allStages.ContainsKey(groupid))
                         {
@@ -792,8 +795,9 @@ namespace Spend_Management
         /// <param name="nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner">The no cost code owner state of the <see cref="cStage"/></param>
         /// <param name="allocateForPayment">The allocate for payment state of the <see cref="cStage"/></param>
         /// <param name="validationCorrectionThreshold">The validation threshold of the <see cref="cStage"/></param>
+        /// <param name="claimPercentageToValidate">The percentage of item in a claim sent for validation of the <see cref="cStage"/></param>
         /// <returns>The new id of the stage</returns>
-        public int updateStage(int signoffid, SignoffType signofftype, int relid, int include, decimal amount, int notify, int onholiday, SignoffType holidaytype, int holidayid, int includeid, bool claimantmail, bool singlesignoff, bool sendmail, bool displaydeclaration, int userid, int extraApprovalLevels, bool approveHigherLevelsOnly, bool approverJustificationsRequired, bool nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, bool allocateForPayment, int? validationCorrectionThreshold)
+        public int updateStage(int signoffid, SignoffType signofftype, int relid, int include, decimal amount, int notify, int onholiday, SignoffType holidaytype, int holidayid, int includeid, bool claimantmail, bool singlesignoff, bool sendmail, bool displaydeclaration, int userid, int extraApprovalLevels, bool approveHigherLevelsOnly, bool approverJustificationsRequired, bool nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, bool allocateForPayment, int? validationCorrectionThreshold, decimal? claimPercentageToValidate) //TODO: Feature flag
         {
             var currentStage = this.GetStageById(signoffid);
             if (currentStage.AllocateForPayment && !allocateForPayment)
@@ -842,7 +846,8 @@ namespace Spend_Management
                     (object) validationCorrectionThreshold ?? DBNull.Value);
                 expdata.sqlexecute.Parameters.AddWithValue("@approverJustificationsRequired",
                     Convert.ToByte(approverJustificationsRequired));
-
+                expdata.sqlexecute.Parameters.AddWithValue("@ClaimPercentageToValidate", (object) claimPercentageToValidate ?? DBNull.Value); //TODO: Feature flag
+                
                 expdata.ExecuteProc("SaveSignoffStage");
                 expdata.sqlexecute.Parameters.Clear();
             }
@@ -879,7 +884,7 @@ namespace Spend_Management
         /// <param name="isPostValidationCleanupStage">The cleanup stage state of the <see cref="cStage"/></param>
         /// <param name="validationCorrectionThreshold">The validation threshold of the <see cref="cStage"/></param>
         /// <returns>The new id of the stage</returns>
-        public int addStage(int groupid, SignoffType signofftype, int relid, int include, decimal amount, int notify, int onholiday, SignoffType holidaytype, int holidayid, int includeid, bool claimantmail, bool singlesignoff, bool sendmail, bool displaydeclaration, int userid, int signoffid, bool offline, int extraApprovalLevels, bool approveHigherLevelsOnly, bool approverJustificationsRequired, bool nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, bool allocateForPayment, bool isPostValidationCleanupStage, int? validationCorrectionThreshold)
+        public int addStage(int groupid, SignoffType signofftype, int relid, int include, decimal amount, int notify, int onholiday, SignoffType holidaytype, int holidayid, int includeid, bool claimantmail, bool singlesignoff, bool sendmail, bool displaydeclaration, int userid, int signoffid, bool offline, int extraApprovalLevels, bool approveHigherLevelsOnly, bool approverJustificationsRequired, bool nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, bool allocateForPayment, bool isPostValidationCleanupStage, int? validationCorrectionThreshold, decimal? claimPercentageToValidate) //tODO: Feature flag
         {
             DBConnection expdata = new DBConnection(cAccounts.getConnectionString(this.AccountId));
 
@@ -913,6 +918,7 @@ namespace Spend_Management
             expdata.sqlexecute.Parameters.AddWithValue("@IsPostValidationCleanupStage", isPostValidationCleanupStage);
             expdata.sqlexecute.Parameters.AddWithValue("@ValidationCorrectionThreshold", (object)validationCorrectionThreshold ?? DBNull.Value);
             expdata.sqlexecute.Parameters.AddWithValue("@approverJustificationsRequired", Convert.ToByte(approverJustificationsRequired));
+            expdata.sqlexecute.Parameters.AddWithValue("@ClaimPercentageToValidate", (object)claimPercentageToValidate ?? DBNull.Value); //TODO: Feature flag
 
             expdata.sqlexecute.Parameters.AddWithValue("@stage", Byte.MaxValue);
 

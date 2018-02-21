@@ -364,6 +364,60 @@ namespace Spend_Management {
         protected global::System.Web.UI.WebControls.CheckBox chkFromMyLevel;
         
         /// <summary>
+        /// lblClaimPercentageToValidate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblClaimPercentageToValidate;
+        
+        /// <summary>
+        /// txtClaimPercentageToValidate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtClaimPercentageToValidate;
+        
+        /// <summary>
+        /// fteClaimPercentageToValidate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.FilteredTextBoxExtender fteClaimPercentageToValidate;
+        
+        /// <summary>
+        /// rangeClaimPercentageToValidate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator rangeClaimPercentageToValidate;
+        
+        /// <summary>
+        /// regClaimPercentageToValidate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator regClaimPercentageToValidate;
+        
+        /// <summary>
+        /// txtClaimPercentageToValidateValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator txtClaimPercentageToValidateValidator;
+        
+        /// <summary>
         /// Label5 control.
         /// </summary>
         /// <remarks>

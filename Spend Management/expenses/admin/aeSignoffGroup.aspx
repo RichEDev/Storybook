@@ -3,7 +3,7 @@
 <%@ MasterType VirtualPath="~/masters/smForm.master" %>
 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="contentmenu">
-    <script type="text/javascript" src="/expenses/javaScript/sel.SignoffGroups.js?date=201802121353"></script>
+    <script type="text/javascript" src="/expenses/javaScript/sel.SignoffGroups.js?date=20180219"></script>
     <script type="text/javascript" language="javascript">
         (function (r) {
             r.Validators.cmblist = '<%= this.cmblistValidator.ClientID %>';
@@ -12,6 +12,7 @@
             r.Validators.txtExtraLevels = '<%= this.txtExtraLevelsValidator.ClientID %>';
             r.Validators.txtamountRequired = '<%= this.txtamountRequired.ClientID %>';
             r.Validators.txtamountCompare = '<%= this.txtamountCompare.ClientID %>';
+            r.Validators.txtClaimPercentageToValidate = '<%= this.txtClaimPercentageToValidateValidator.ClientID%>';
 
             r.SignoffGroup.GroupId = '<%= this.Request.QueryString["groupid"]%>';
             r.SignoffGroup.GroupName = '#<%= this.txtgroupname.ClientID %>';
@@ -41,6 +42,10 @@
             r.SignoffStage.ExtraLevelsTextBox = '#<%= this.txtExtraLevels.ClientID %>';
             r.SignoffStage.FromMyLevelLabel = '#<%= this.lblFromMyLevel.ClientID %>';
             r.SignoffStage.FromMyLevelCheckbox = '#<%= this.chkFromMyLevel.ClientID %>';
+
+            r.SignoffStage.ClaimPercentageToValidateLabel = '#<%= this.lblClaimPercentageToValidate.ClientID%>';
+            r.SignoffStage.ClaimPercentageToValidateTextBox = '#<%= this.txtClaimPercentageToValidate.ClientID%>';
+            r.SignoffStage.FeatureFlag = '<%= this.featureFlag%>'; /*TODO: Remove with feature flags*/
 
             r.SignoffStage.IncludeDropDown = '#<%= this.cmbinclude.ClientID %>';
             r.SignoffStage.AmountLabel = '#<%= this.Label6.ClientID %>';
@@ -248,6 +253,23 @@
 	            <span class="inputtooltipfield"></span>
 	            <span class="inputvalidatorfield"></span>
 	        </div>
+            
+            <div class="twocolumn" id="divValidation" style="display: none;">
+                <asp:Label id="lblClaimPercentageToValidate" runat="server" meta:resourcekey="lblClaimPercentageToValidateResource1" CssClass="mandatory" AssociatedControlID="txtClaimPercentageToValidate" >Percentage of items to validate per claim*</asp:Label>
+                <span class="inputs">
+                    <asp:TextBox id="txtClaimPercentageToValidate" runat="server" MaxLength="5" ></asp:TextBox>
+                </span>
+                <span class="inputicon"></span>
+                <span class="inputtooltipfield">
+                    <img id="imgtooltip590" onclick="SEL.Tooltip.Show('06CADC6C-346E-490B-9B65-46B6A365B5BB', 'ex', this);" src="../../shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon" />
+                </span>
+                <span class="inputvalidatorfield">
+                    <cc1:FilteredTextBoxExtender runat="server" ID="fteClaimPercentageToValidate" FilterMode="ValidChars" ValidChars="0123456789." TargetControlID="txtClaimPercentageToValidate"/>
+                    <asp:RangeValidator ID="rangeClaimPercentageToValidate" runat="server" ErrorMessage="Please enter a Percentage of items to validate per claim between 0% and 100%." ControlToValidate="txtClaimPercentageToValidate" Type="Double" MinimumValue="0" MaximumValue="100" Text="*" ValidationGroup="vgStage" Display="Dynamic"></asp:RangeValidator>
+                    <asp:RegularExpressionValidator ID="regClaimPercentageToValidate" runat="server" ControlToValidate="txtClaimPercentageToValidate" ErrorMessage="Please enter a Percentage of items to validate per claim with a maximum of 2 decimal places." Text="*" ValidationExpression="[0-9]?[0-9]?[0-9]?\.?([0-9][0-9]?)?" ValidationGroup="vgStage" Display="Dynamic"></asp:RegularExpressionValidator>
+                    <asp:RequiredFieldValidator ID="txtClaimPercentageToValidateValidator" runat="server" Enabled="False" ErrorMessage="Please enter a Percentage of items to validate per claim." ControlToValidate="txtClaimPercentageToValidate" ValidationGroup="vgStage" >*</asp:RequiredFieldValidator>
+                </span>
+             </div>
 
 	        <div class="sectiontitle">
 	            <asp:Label id="Label5" runat="server" meta:resourcekey="Label1Resource1">Involvement</asp:Label>

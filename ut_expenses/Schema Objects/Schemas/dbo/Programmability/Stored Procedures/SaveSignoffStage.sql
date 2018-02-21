@@ -25,23 +25,26 @@
 	@nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner BIT,
 	@AllocateForPayment				BIT,
 	@IsPostValidationCleanupStage	BIT			= null,
-	@ValidationCorrectionThreshold	INT
+	@ValidationCorrectionThreshold	INT,
+	@ClaimPercentageToValidate DECIMAL(3,2)
 AS
-
+BEGIN
 	if @signoffid is null
 	begin
 		insert signoffs
 		(
 			groupid, signofftype, relid, extraApprovalLevels, [include], amount, notify, onholiday, holidaytype, holidayid, stage,
 			includeid, claimantmail, singlesignoff, sendmail, displaydeclaration, createdon, createdby, approveHigherLevelsOnly,
-			nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, approverJustificationsRequired, AllocateForPayment, IsPostValidationCleanupStage, ValidationCorrectionThreshold
+			nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, approverJustificationsRequired, AllocateForPayment, IsPostValidationCleanupStage, ValidationCorrectionThreshold, ClaimPercentageToValidate
 		)
 		values
 		(
 			@groupid, @signofftype, @relid, @extraApprovalLevels, @include, @amount, @notify, @onholiday, @holidaytype, @holidayid, @stage,
 			@includeid, @claimantmail, @singlesignoff, @sendmail, @displaydeclaration, @createdon, @createdby, @approveHigherLevelsOnly,
-			@nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, @approverJustificationsRequired, @AllocateForPayment, @IsPostValidationCleanupStage, @ValidationCorrectionThreshold
+			@nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, @approverJustificationsRequired, @AllocateForPayment, @IsPostValidationCleanupStage, @ValidationCorrectionThreshold, @ClaimPercentageToValidate
 		);
+
+		set @signoffid = @@identity;
 
 		exec dbo.UpdateStageNumbers @groupid;
 
@@ -70,8 +73,10 @@ AS
 			approverJustificationsRequired = @approverJustificationsRequired,
 			nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner = @nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner,
 			AllocateForPayment = @AllocateForPayment,
-			ValidationCorrectionThreshold = @ValidationCorrectionThreshold
+			ValidationCorrectionThreshold = @ValidationCorrectionThreshold,
+			ClaimPercentageToValidate = @ClaimPercentageToValidate
 		where
 			signoffid = @signoffid;
 
-RETURN 0;
+RETURN @signoffid;
+END

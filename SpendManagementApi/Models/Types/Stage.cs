@@ -1,6 +1,7 @@
 ﻿namespace SpendManagementApi.Models.Types
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Globalization;
 
     using SpendManagementApi.Common.Enums;
@@ -178,6 +179,13 @@
         /// </summary>
         public bool ApproverJustificationsRequired { get; set; }
 
+        /// <summary>
+        /// Gets or sets the percentage of items in a claim that will be sent for validation.
+        /// </summary>
+        [Range(0, 100, ErrorMessage = "Please enter a Claim percentage to validate between 0% and 100%.")]
+        [RegularExpression(@"[0-9]?[0-9]?[0-9]?\.?([0-9][0-9]?)?", ErrorMessage = "Please enter a Claim percentage to validate with a maximum of 2 decimal places.")]
+        public decimal? ClaimPercentageToValidate { get; set; }  //TODO: Feature flag
+
         public void Validate(IActionContext actionContext)
         {
             if (!Enum.IsDefined(typeof(SignoffType), this.SignOffType))
@@ -229,6 +237,15 @@
                 throw new ApiException("Invalid Validation Correction Threshold", "Valid Validation Correction Threshold must be provided. Refer to Validation Correction Threshold for valid values. Sign off stages provided have not been saved");
             }
 
+            if (this.SignOffType != SignoffType.SELValidation && this.ClaimPercentageToValidate != null) //TODO:Feature flag
+            {
+                throw new ApiException("Invalid Data", "Claim percentage to validate can only be set for Signoff type of SEL Validation.");
+            }
+
+            if (this.SignOffType == SignoffType.SELValidation && this.ClaimPercentageToValidate == null) //TODO:Feature flag
+            {
+                throw new ApiException("Invalid Data", "Claim percentage to validate cannot be null when Signoff type is SEL Validation.");
+            }
         }
 
         public bool Equals(Stage other)
@@ -249,7 +266,8 @@
                 && this.SignOffType.Equals(other.SignOffType) && this.SingleSignOff.Equals(other.SingleSignOff)
                 && this.AllocateForPayment == other.AllocateForPayment
                 && this.IsPostValidationCleanupStage == other.IsPostValidationCleanupStage
-                && this.ValidationCorrectionThreshold == other.ValidationCorrectionThreshold;
+                && this.ValidationCorrectionThreshold == other.ValidationCorrectionThreshold
+                && this.ClaimPercentageToValidate == other.ClaimPercentageToValidate; //TODO: Feature flag
         }
 
 
@@ -295,8 +313,9 @@
                            AllocateForPayment = stage.AllocateForPayment,
                            ApproverJustificationsRequired = stage.ApproverJustificationsRequired,
                            IsPostValidationCleanupStage = stage.IsPostValidationCleanupStage,
-                           ValidationCorrectionThreshold = stage.ValidationCorrectionThreshold
-                       };
+                           ValidationCorrectionThreshold = stage.ValidationCorrectionThreshold,
+                           ClaimPercentageToValidate = stage.ClaimPercentageToValidate //TODO: Feature flag
+            };
 
             return result;
         }
@@ -376,7 +395,8 @@
                 stage.NhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner,
                 stage.AllocateForPayment,
                 stage.IsPostValidationCleanupStage,
-                stage.ValidationCorrectionThreshold);
+                stage.ValidationCorrectionThreshold,
+                stage.ClaimPercentageToValidate); //TODO: Feature flag
 
             result.NhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner = (int)result.signofftype == (int)SignoffType.AssignmentSupervisor;
 
