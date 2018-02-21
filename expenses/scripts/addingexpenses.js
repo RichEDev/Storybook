@@ -1476,26 +1476,57 @@ function getChildDropDownsComplete(data) {
 }
 
 function popDropdown(ctlid, items) {
-    var $ctl = $("#" + contentID + ctlid);
 
-    if ($ctl.length == 0)
-    {
-        return;
-    }
+    if (ctlid.includes("CostCode")) {
 
-    $ctl.empty();
+        var nobj = [{ "FieldToBuild": "", "Key": 8369, "Value": "", "FormattedText": "" }];
 
-    if (items.length > 1)
-    {
-        $ctl.append($("<option/>")
-            .val("0")
-            .text("[None]"));
-    }
+        var obj = [];
 
-    for (var i = 0; i < items.length; i++) {
-        $ctl.append($("<option/>")
-            .val(items[i][1])
-            .text(items[i][0]));
+        for (var i = 0; i < items.length; i++) {
+
+            var val = (items[i][1]);
+            var t = { "FieldToBuild": "", "Key": val, "Value": "", "FormattedText": "" };
+            obj.push(t);
+        }
+
+     //   console.write(JSON.stringify(obj));
+
+
+        SEL.AutoComplete.Bind("#" + contentID + ctlid,
+            15,
+            '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
+            '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC',
+            '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',
+            null,
+            '{ 0: { "FieldID": "8178629C-5908-4458-89F6-D7EE7438314D", "ConditionType": 1, "ValueOne": "0", "ValueTwo": "", "Order": 0, "JoinViaID": 0 } }',
+            500,
+            null,
+            "False",
+            JSON.stringify(obj),
+            null,
+            null);
+
+    } else {
+        var $ctl = $("#" + contentID + ctlid);
+
+        if ($ctl.length == 0) {
+            return;
+        }
+
+        $ctl.empty();
+
+        if (items.length > 1) {
+            $ctl.append($("<option/>")
+                .val("0")
+                .text("[None]"));
+        }
+
+        for (var i = 0; i < items.length; i++) {
+            $ctl.append($("<option/>")
+                .val(items[i][1])
+                .text(items[i][0]));
+        }
     }
 }
 

@@ -19,7 +19,7 @@
                 triggerParameter.BindMatchTableId = matchTableId;
                 triggerParameter.BindtriggerFields = triggerFields;
                 SEL.AutoCompleteCombo.AutoCompleteDropdownBindParameterList.BindMatchParameterList.push(triggerParameter);
-
+                SEL.AutoComplete.Bind.childFilterList = childFilterList;
                 $(document).ready(function ()
                 {
                     $('[id$=' + cntl + ']')
@@ -265,21 +265,7 @@
                         }
                     }
 
-                    );
-
-
-                    //$('input.costcodeDescription-autocomplete').autocomplete({
-                       
-                    //    select: function (event, ui) {
-                    //        $(this).val('');
-                      
-                    //            alert(ui.item.label);
-                           
-                          
-                    //    }
-                    //});
-
-                   
+                    );                  
                 });
             },
 

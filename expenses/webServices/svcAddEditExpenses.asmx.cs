@@ -243,6 +243,10 @@
 
                 child = new object[] { ctl[0], objlst.ToArray(), ctl[1], parCtlIndex };
             }
+
+            //can I rebind here?
+
+
             return child;
         }
 

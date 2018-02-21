@@ -696,11 +696,11 @@
                     {
                         if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet == false)
                         {
-                            controlname = "cmbcostcode;breakdown";
+                            controlname = "txtCostCode;breakdown";
                         }
                         else if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet)
                         {
-                            controlname = "cmbgencostcode;general";
+                            controlname = "txtCostCode;general";
                         }
                         break;
                     }

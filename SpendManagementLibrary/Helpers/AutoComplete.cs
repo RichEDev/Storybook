@@ -452,8 +452,10 @@ namespace SpendManagementLibrary
             if (childFilterList == null) return retVals;
             var requiredField = fields.GetFieldByName($"att{childFilterList[0].FieldToBuild}", true);
 
-            if (requiredField == null || requiredField.LookupFieldID.ToString() != displayField) return retVals.Count > maxRows ? retVals.GetRange(0, maxRows) : retVals;
+     //       if (requiredField == null || requiredField.LookupFieldID.ToString() != displayField) return retVals.Count > maxRows ? retVals.GetRange(0, maxRows) : retVals;
+         
             retVals = retVals.Where(val => childFilterList.Any(child => child.Key.ToString() == val.value)).ToList();
+  
 
             return retVals.Count > maxRows ? retVals.GetRange(0, maxRows) : retVals;
         }

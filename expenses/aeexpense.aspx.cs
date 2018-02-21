@@ -1591,7 +1591,7 @@ public partial class aeexpense : System.Web.UI.Page
                          };
                    
             txtbox.Attributes.Add("data-search", "General");
-            txtbox.Attributes.Add("placeholder", "hint hint");
+            txtbox.Attributes.Add("placeholder", "Search");
             txtbox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
 
             TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode_ID" };
@@ -2115,7 +2115,7 @@ public partial class aeexpense : System.Web.UI.Page
 
 
             textBox.Attributes.Add("data-search", "General");
-            textBox.Attributes.Add("placeholder", "hint hint");
+            textBox.Attributes.Add("placeholder", "Search");
 
 
 
@@ -4798,19 +4798,19 @@ public partial class aeexpense : System.Web.UI.Page
         {
             for (int i = 0; i < (tblcostcodes.Rows.Count - 1); i++)
             {
-                ddlst = (DropDownList)UpdatePanel1.FindControl("cmbcostcode" + i);
-                if (ddlst != null && ddlst.SelectedValue != "")
+                textBox = (TextBox)UpdatePanel1.FindControl("txtCostCode" + i + "_ID");
+                if (textBox != null && textBox.Text != "")
                 {
-                    populateChildDropdowns(FilterType.Costcode, int.Parse(ddlst.SelectedValue), i.ToString());
+                    populateChildDropdowns(FilterType.Costcode, int.Parse(textBox.Text), i.ToString());
                 }
             }
         }
         else if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet)
         {
-            ddlst = (DropDownList)pnlgeneral.FindControl("cmbgencostcode");
-            if (ddlst != null && ddlst.SelectedValue != "")
+            textBox = (TextBox)pnlgeneral.FindControl("txtCostCode_ID");
+            if (textBox != null && textBox.Text != "")
             {
-                populateChildDropdowns(FilterType.Costcode, int.Parse(ddlst.SelectedValue), "0");
+                populateChildDropdowns(FilterType.Costcode, int.Parse(textBox.Text), "0");
             }
         }
 
@@ -5000,18 +5000,41 @@ public partial class aeexpense : System.Web.UI.Page
             }
 
             var ddlChildren = new List<DropDownList>();
+            var txtChildren = new List<TextBox>();
+
+            bool isForCostCode = ctlid.Contains("txtCostCode");
+
+
+
             items = popDropdown(filterids[i], types[i], id);
 
             switch (area)
             {
                 case "general":
-                    ddlChildren.Add((DropDownList)pnlgeneral.FindControl(ctlid));
+
+                    if (isForCostCode)
+                    {
+                        txtChildren.Add((TextBox)pnlgeneral.FindControl(ctlid)); 
+                    }
+                    else
+                    {
+                       ddlChildren.Add((DropDownList)pnlgeneral.FindControl(ctlid));  
+                    }
+
+                   
                         break;
 
                 case "breakdown":
                         if (ctlindex != "")
                         {
-                        ddlChildren.Add((DropDownList)UpdatePanel1.FindControl(ctlid + ctlindex));
+                            if (isForCostCode)
+                            {
+                                txtChildren.Add((TextBox)UpdatePanel1.FindControl(ctlid + ctlindex));
+                            }
+                            else
+                            {
+                                ddlChildren.Add((DropDownList)UpdatePanel1.FindControl(ctlid + ctlindex));
+                            }                   
                         }
                         else
                         {
@@ -5019,7 +5042,14 @@ public partial class aeexpense : System.Web.UI.Page
 
                             for (int j = 0; j < breakdownrows; j++)
                             {
-                            ddlChildren.Add((DropDownList)UpdatePanel1.FindControl(ctlid + j));
+                                if (isForCostCode)
+                                {
+                                    txtChildren.Add((TextBox)UpdatePanel1.FindControl(ctlid + j));
+                                }
+                                else
+                                {
+                                    ddlChildren.Add((DropDownList)UpdatePanel1.FindControl(ctlid + j));
+                                }                        
                             }
                         }
                         break;
@@ -5030,7 +5060,17 @@ public partial class aeexpense : System.Web.UI.Page
                         if (ctlindex != "")
                         {
                             subpnl = (Panel)pnlspecific.FindControl("pnl" + ctlindex);
-                            ddlChildren.Add((DropDownList)subpnl.FindControl(ctlid + ctlindex));
+
+                            if (isForCostCode)
+                            {
+                                txtChildren.Add((TextBox)subpnl.FindControl(ctlid + ctlindex));  
+                            }
+                            else
+                            {
+                              
+                            ddlChildren.Add((DropDownList)subpnl.FindControl(ctlid + ctlindex));  
+                            }
+
                         }
                         else
                         {
@@ -5041,7 +5081,16 @@ public partial class aeexpense : System.Web.UI.Page
                                 subpnl = (Panel)pnlspecific.FindControl("pnl" + j);
                                 if (subpnl != null)
                                 {
-                                    ddlChildren.Add((DropDownList)subpnl.FindControl(ctlid + j));
+                                    if (isForCostCode)
+                                    {
+                                        txtChildren.Add((TextBox)subpnl.FindControl(ctlid + j));  
+                                    }
+                                    else
+                                    {
+                                       
+                                      ddlChildren.Add((DropDownList)subpnl.FindControl(ctlid + j)); 
+                                    }
+
                                 }
                                         }
                                     }
@@ -5050,6 +5099,7 @@ public partial class aeexpense : System.Web.UI.Page
                             }
 
             ddlChildren.RemoveAll(o => o == null);
+            txtChildren.RemoveAll(o => o == null);
 
             if (items.Count != 0)
             {
@@ -5066,21 +5116,37 @@ public partial class aeexpense : System.Web.UI.Page
                     }
             }
 
+            foreach (var txtbox in txtChildren)
+            {
+                if (!string.IsNullOrEmpty(ctlindex))
+                {
+
+                    if (breakdown[int.Parse(ctlindex)].costcodeid.ToString() != "0")
+                    {
+                           txtbox.Text = breakdown[int.Parse(ctlindex)].costcodeid.ToString();
+                    }
+                     
+                    
+                }
+
+                break;
+            }
+
             foreach (var ddlst in ddlChildren)
             {
                 switch (types[i])
                 {
-                    case FilterType.Costcode:
-                        if (!string.IsNullOrEmpty(ctlindex))
-                        {
-                            if (ddlst.Items.FindByValue(breakdown[int.Parse(ctlindex)].costcodeid.ToString()) != null)
-                            {
-                                //ddlst.Items.FindByValue(breakdown[0].costcodeid.ToString()).Selected = true;
-                                ddlst.SelectedValue = breakdown[int.Parse(ctlindex)].costcodeid.ToString();
-                            }
-                        }
+                    //case FilterType.Costcode:
+                    //    if (!string.IsNullOrEmpty(ctlindex))
+                    //    {
+                    //        if (ddlst.Items.FindByValue(breakdown[int.Parse(ctlindex)].costcodeid.ToString()) != null)
+                    //        {
+                    //            //ddlst.Items.FindByValue(breakdown[0].costcodeid.ToString()).Selected = true;
+                    //            ddlst.SelectedValue = breakdown[int.Parse(ctlindex)].costcodeid.ToString();
+                    //        }
+                    //    }
 
-                        break;
+                    //    break;
                     case FilterType.Department:
                         if (!string.IsNullOrEmpty(ctlindex))
                         {
