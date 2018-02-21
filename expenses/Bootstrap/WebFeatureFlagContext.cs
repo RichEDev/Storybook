@@ -17,6 +17,12 @@
             return requestContext;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebFeatureFlagContext"/> class.
+        /// </summary>
+        /// <param name="identityProvider">
+        /// Initializes the value of <see cref="identityProvider"/>.
+        /// </param>
         public WebFeatureFlagContext(IIdentityProvider identityProvider)
         {
             this._identityProvider = identityProvider;
