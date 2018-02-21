@@ -1,5 +1,6 @@
 using System.Web;
 
+
 [assembly: PreApplicationStartMethod(typeof(expenses.PageInitializerModule), "Initialize")]
 namespace expenses
 {
@@ -16,6 +17,7 @@ namespace expenses
     using System.Web.UI;
     
     using Bootstrap;
+    using SEL.FeatureFlags;
     using SimpleInjector;
 
     using Spend_Management;
@@ -31,6 +33,8 @@ namespace expenses
     public class Global : HttpApplication
     {
         public static ILog Logger = new LogFactory<Global>().GetLogger();
+
+        public static IFeatureFlagManager FeatureFlagManager;
 
         /// <summary>
         /// Required designer variable.
@@ -64,6 +68,7 @@ namespace expenses
         protected void Application_Start(object sender, EventArgs e)
         {
             container = Bootstraper.Bootstrap();
+            
             // Loads global variables
             new GlobalVariables(GlobalVariables.ApplicationType.Web);
 
@@ -130,6 +135,11 @@ namespace expenses
         /// </remarks>
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
+            if (FeatureFlagManager == null)
+            {
+                FeatureFlagManager = container.GetInstance<IFeatureFlagManager>();
+            }
+
             // set extra logging properties
             IExtraContext loggingContext = container.GetInstance<IExtraContext>();
             loggingContext["activityid"] = new TraceActivityId();

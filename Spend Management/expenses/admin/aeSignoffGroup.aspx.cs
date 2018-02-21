@@ -8,6 +8,8 @@ namespace Spend_Management
     using System.Web.Services;
     using System.Web.UI;
     using System.Web.UI.WebControls;
+    using BusinessLogic;
+    using SEL.FeatureFlags;
     using SpendManagementLibrary.Employees;
     using Spend_Management;
     using SpendManagementLibrary;
@@ -19,6 +21,9 @@ namespace Spend_Management
     /// </summary>
     public partial class aeSignoffGroup : Page
     {
+        [Dependency]
+        public IFeatureFlagManager FeatureFlagManager { get; set; }
+
         public bool featureFlag = false;
 
         protected void Page_Load(object sender, System.EventArgs e)
@@ -61,7 +66,7 @@ namespace Spend_Management
 
                 this.featureFlag = false; //TODO: Remove with feature flag
 
-                if (true)
+                if (FeatureFlagManager.IsEnabled("Signoff Groups Claim Percentage To Validate"))
                 {
                     this.featureFlag = true;
                 }
