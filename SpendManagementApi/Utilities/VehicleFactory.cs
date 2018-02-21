@@ -1,12 +1,12 @@
-﻿
-using DutyOfCareAPI.DutyOfCare.LicenceCheck.VehicleLookup;
-using SpendManagementApi.Common.Enums;
-using SpendManagementLibrary.Vehicles;
-using Spend_Management;
-using Vehicle = SpendManagementApi.Models.Types.Vehicle;
-
-namespace SpendManagementApi.Utilities
+﻿namespace SpendManagementApi.Utilities
 {
+    using System;
+    using DutyOfCareAPI.DutyOfCare.LicenceCheck.VehicleLookup;
+    using SpendManagementApi.Common.Enums;
+    using SpendManagementLibrary.Vehicles;
+    using Spend_Management;
+    using Vehicle = SpendManagementApi.Models.Types.Vehicle;
+
     /// <summary>
     /// A class to manage the creation of Vehicles based on a given response.
     /// </summary>
@@ -31,7 +31,11 @@ namespace SpendManagementApi.Utilities
                 Model = lookupResult.Vehicle.Model,
                 FuelType = FuelTypeFactory.Convert(lookupResult.Vehicle.FuelType, cMisc.GetCurrentUser()),
                 Registration = lookupResult.Vehicle.RegistrationNumber,
-                VehicleTypeId = (VehicleType) VehicleTypeFactory.Convert(lookupResult.Vehicle.VehicleType)
+                VehicleTypeId = (VehicleType) VehicleTypeFactory.Convert(lookupResult.Vehicle.VehicleType),
+                TaxExpiry = lookupResult.Vehicle.TaxExpiry,
+                TaxStatus = lookupResult.Vehicle.TaxStatus,
+                MotExpiry = lookupResult.Vehicle.MotExpiry,
+                MotStatus = lookupResult.Vehicle.MotStatus
 
             };
             return result;

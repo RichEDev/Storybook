@@ -144,6 +144,26 @@
         public int UnapprovedVehicleCount { get; set; }
     
         /// <summary>
+        /// Gets or sets the Tax Expiry of this vehicle
+        /// </summary>
+        public DateTime TaxExpiry { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tax status of this vehicle
+        /// </summary>
+        public string TaxStatus { get;set; }
+
+        /// <summary>
+        /// Gets or sets the MOT Expiry of this vehicle
+        /// </summary>
+        public DateTime MotExpiry { get; set; }
+
+        /// <summary>
+        /// Gets or sets the MOT status of this vehicle
+        /// </summary>
+        public string MotStatus { get;set; }
+
+        /// <summary>
         /// Validates this Vehicle.
         /// </summary>
         /// <param name="actionContext">The action context.</param>

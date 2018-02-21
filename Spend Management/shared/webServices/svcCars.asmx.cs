@@ -11,8 +11,10 @@ namespace Spend_Management
     using System.Text;
     using System.Web.Script.Services;
     using System.Web.Services;
+    using Spend_Management.shared.code.DVLA;
     using SpendManagementLibrary;
     using SpendManagementLibrary.Enumerators;
+    using SpendManagementLibrary.Random;
     using System.Web.UI.WebControls;
     using SpendManagementLibrary.FinancialYears;
     using expenses.code;
@@ -211,12 +213,17 @@ namespace Spend_Management
         /// <param name="isShallowSave">
         /// The is shallow save.
         /// </param>
+        /// <param name="vehicletypeid">The vehicle type (Car etc)</param>
+        /// <param name="taxExpiry">The date of the Tax expiry</param>
+        /// <param name="taxStatus">The tax status "Taxed" or not</param>
+        /// <param name="motExpiry">The date of the MOT</param>
+        /// <param name="motStatus">The MOT status "MOT" or not</param>
         /// <returns>
         /// The <see cref="object[]"/>.
         /// </returns>
         [WebMethod(EnableSession=true)]
         [ScriptMethod]
-        public object[] saveCar(int carid, int employeeid, DateTime? startdate, DateTime? enddate, string make, string model, string registration, bool active, int vehicleEngineTypeId, Int64 startodometer, bool fuelcard, int endodometer, byte defaultunit, int enginesize, List<int> mileagecats, List<object> udfs, bool approved, bool exemptfromhometooffice, bool replacePreviousCar, int previousCarId, bool isAdmin, bool isShallowSave, byte? vehicletypeid)
+        public object[] saveCar(int carid, int employeeid, DateTime? startdate, DateTime? enddate, string make, string model, string registration, bool active, int vehicleEngineTypeId, Int64 startodometer, bool fuelcard, int endodometer, byte defaultunit, int enginesize, List<int> mileagecats, List<object> udfs, bool approved, bool exemptfromhometooffice, bool replacePreviousCar, int previousCarId, bool isAdmin, bool isShallowSave, byte? vehicletypeid, string taxExpiry, string taxStatus, string motExpiry, string motStatus)
         {
             CurrentUser user = cMisc.GetCurrentUser();
             cCar car;
@@ -286,6 +293,26 @@ namespace Spend_Management
             }
 
             arrCarVals[0] = clsCars.SaveCar(car);
+
+            DateTime taxExpiryDate;
+
+            if (reqProperties.VehicleLookup && DateTime.TryParse(taxExpiry, out taxExpiryDate))
+            {
+                if (reqProperties.BlockTaxExpiry)
+                {
+                    var taxRepo = new TaxDocumentRepository(user, 
+                        new cCustomEntities(user),
+                        new cFields(user.AccountID),
+                        new cTables(user.AccountID));
+                    taxRepo.Add(taxExpiryDate, (int)arrCarVals[0]);
+                }
+
+                if (reqProperties.BlockMOTExpiry)
+                {
+                    //TODO: create mot record for this car.        
+                }
+            }
+
             clsCars.SaveUserDefinedFieldsValues((int)arrCarVals[0], userdefined, user,car.registration);
 
             if (!isShallowSave && emailMainAdmin && !reqProperties.ActivateCarOnUserAdd)
@@ -346,7 +373,7 @@ namespace Spend_Management
                     return null;
                 }
 
-                result = new cCar(user.AccountID,
+                result = new LookupServiceCar(user.AccountID,
                     user.EmployeeID,
                     0,
                     lookupResult.Vehicle.Make,
@@ -369,7 +396,11 @@ namespace Spend_Management
                     null,
                     false,
                     false,
-                    (byte?) VehicleTypeFactory.Convert(lookupResult.Vehicle.VehicleType));
+                    (byte?) VehicleTypeFactory.Convert(lookupResult.Vehicle.VehicleType),
+                    lookupResult.Vehicle.TaxExpiry,
+                    lookupResult.Vehicle.TaxStatus,
+                    lookupResult.Vehicle.MotExpiry,
+                    lookupResult.Vehicle.MotStatus);
                 
                 return result;
             }

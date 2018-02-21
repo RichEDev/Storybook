@@ -13,7 +13,7 @@ namespace SpendManagementApi.Repositories
     using DutyOfCareAPI.DutyOfCare.LicenceCheck;
     using SpendManagementApi.Common.Enums;
     using SpendManagementApi.Models;
-
+    using Spend_Management.shared.code.DVLA;
     using Utilities;
     using SpendManagementLibrary;
     using SpendManagementLibrary.FinancialYears;
@@ -391,6 +391,23 @@ namespace SpendManagementApi.Repositories
             var vehicleRepository = new VehicleRepository(this.User);
             // get the added / updated db item
             var result = vehicleRepository.Get(carId);
+            if (subAccountProperties.VehicleLookup )
+            {
+                if (subAccountProperties.BlockTaxExpiry)
+                {
+                    var taxRepo = new TaxDocumentRepository(this.User, 
+                        this.ActionContext.CustomEntities,
+                        this.ActionContext.Fields,
+                        this.ActionContext.Tables);
+                    taxRepo.Add(item.TaxExpiry, carId);
+                }
+
+                if (subAccountProperties.BlockMOTExpiry)
+                {
+                    //TODO: create mot record for this car.        
+                }
+            }
+
             result.Id = carId;
             _employeeCarsData.SaveUserDefinedFieldsValues(result.Id, item.UserDefined.ToSortedList(), User, result.Registration);
 

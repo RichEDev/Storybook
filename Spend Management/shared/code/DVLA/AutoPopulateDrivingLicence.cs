@@ -112,27 +112,27 @@
                 var notifications = new NotificationTemplates(curUser);
                 var teams = new cTeams(accountId);
                 var customentities = new cCustomEntities(curUser);
-                var entity = customentities.getEntityByTableId(new Guid(GreenLightSystemGuidConstants.Entity));
-                var viewId = entity.Views.Values.Where(t => t.SystemCustomEntityViewId == new Guid(GreenLightSystemGuidConstants.DrivingLicenceViewForAllDocuments)).Select(view => view.viewid).First();
-                var formId = entity.Forms.Values.First(form => form.SystemCustomEntityFormId == new Guid(GreenLightSystemGuidConstants.DrivingLicenceForm)).formid;
+                var entity = customentities.getEntityByTableId(new Guid(DrivingLicenceConstants.Entity));
+                var viewId = entity.Views.Values.Where(t => t.SystemCustomEntityViewId == new Guid(DrivingLicenceConstants.DrivingLicenceViewForAllDocuments)).Select(view => view.viewid).First();
+                var formId = entity.Forms.Values.First(form => form.SystemCustomEntityFormId == new Guid(DrivingLicenceConstants.DrivingLicenceForm)).formid;
                 var tables = new cTables(accountId);
                 var fields = new cFields(accountId);
                 var clsquery = new cUpdateQuery(accountId, cAccounts.getConnectionString(accountId), null, entity.table, tables, fields);
                 string licenceSource, licenceStatus, licenceTypeCategory;
-                var licencenumber = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.LicenceNumber));
-                var issuenumber = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.IssueNumber));
-                var expirydate = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.ExpiryDate));
-                var validfrom = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.ValidFrom));
-                var employee = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.Employee));
-                var issuingauthority = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.IssuingAuthority));
-                var lookupdate = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.LookupDate));
-                var dvlaStatus = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.DvlaStatus));
-                var directiveIdentifier = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.DirectiveIdentifier));
-                var licenceType = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.LicenceType));
-                var status = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.Status));
-                var source = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.Source));
-                var createdOn = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.CreatedOn));
-                var ModifiedOn = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.ModifiedOn));
+                var licencenumber = fields.GetFieldByID(new Guid(DrivingLicenceConstants.LicenceNumber));
+                var issuenumber = fields.GetFieldByID(new Guid(DrivingLicenceConstants.IssueNumber));
+                var expirydate = fields.GetFieldByID(new Guid(DrivingLicenceConstants.ExpiryDate));
+                var validfrom = fields.GetFieldByID(new Guid(DrivingLicenceConstants.ValidFrom));
+                var employee = fields.GetFieldByID(new Guid(DrivingLicenceConstants.Employee));
+                var issuingauthority = fields.GetFieldByID(new Guid(DrivingLicenceConstants.IssuingAuthority));
+                var lookupdate = fields.GetFieldByID(new Guid(DrivingLicenceConstants.LookupDate));
+                var dvlaStatus = fields.GetFieldByID(new Guid(DrivingLicenceConstants.DvlaStatus));
+                var directiveIdentifier = fields.GetFieldByID(new Guid(DrivingLicenceConstants.DirectiveIdentifier));
+                var licenceType = fields.GetFieldByID(new Guid(DrivingLicenceConstants.LicenceType));
+                var status = fields.GetFieldByID(new Guid(DrivingLicenceConstants.Status));
+                var source = fields.GetFieldByID(new Guid(DrivingLicenceConstants.Source));
+                var createdOn = fields.GetFieldByID(new Guid(DrivingLicenceConstants.CreatedOn));
+                var ModifiedOn = fields.GetFieldByID(new Guid(DrivingLicenceConstants.ModifiedOn));
                 clsquery.addColumn(licencenumber, drivingLicenceDetailsResponse.DrivingLicenceNumber.ToUpper());
                 clsquery.addColumn(issuenumber, drivingLicenceDetailsResponse.IssueNumber);
 
@@ -322,20 +322,20 @@
             CurrentCustomEntityRecord drivingLicenceEntityReferenceList = null;
             var currentUser = cMisc.GetCurrentUser(accountId + "," + employeeId);
             var customentities = new cCustomEntities(currentUser);
-            var entity = customentities.getEntityByTableId(new Guid(GreenLightSystemGuidConstants.ReviewEntity));
+            var entity = customentities.getEntityByTableId(new Guid(DrivingLicenceConstants.ReviewEntity));
             var tables = new cTables(accountId);
             var fields = new cFields(accountId);
             var clsquery = new cUpdateQuery(accountId, cAccounts.getConnectionString(accountId), null, entity.table, tables, fields);
-            var viewId = entity.Views.Values.Where(t => t.SystemCustomEntityViewId == new Guid(GreenLightSystemGuidConstants.DrivingLicenceViewId)).Select(view => view.viewid).First();
-            var checkCode = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.CheckCode));
-            var checkCodeExpiry = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.CheckCodeExpiry));
-            var reviewerNotes = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.ReviewerNotes));
-            var createdOn = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.CreatedOn));
-            var reviewDate = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.ReviewDate));
-            var status = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.StatusOfReview));
-            var createdBy = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.CreatedByOfReview));
-            var reviewedBy = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.ReviewedBy));
-            var drivingLicenceId = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.DrivingLicenceId));
+            var viewId = entity.Views.Values.Where(t => t.SystemCustomEntityViewId == new Guid(DrivingLicenceConstants.DrivingLicenceViewId)).Select(view => view.viewid).First();
+            var checkCode = fields.GetFieldByID(new Guid(DrivingLicenceConstants.CheckCode));
+            var checkCodeExpiry = fields.GetFieldByID(new Guid(DrivingLicenceConstants.CheckCodeExpiry));
+            var reviewerNotes = fields.GetFieldByID(new Guid(DrivingLicenceConstants.ReviewerNotes));
+            var createdOn = fields.GetFieldByID(new Guid(DrivingLicenceConstants.CreatedOn));
+            var reviewDate = fields.GetFieldByID(new Guid(DrivingLicenceConstants.ReviewDate));
+            var status = fields.GetFieldByID(new Guid(DrivingLicenceConstants.StatusOfReview));
+            var createdBy = fields.GetFieldByID(new Guid(DrivingLicenceConstants.CreatedByOfReview));
+            var reviewedBy = fields.GetFieldByID(new Guid(DrivingLicenceConstants.ReviewedBy));
+            var drivingLicenceId = fields.GetFieldByID(new Guid(DrivingLicenceConstants.DrivingLicenceId));
             clsquery.addColumn(checkCode, drivingLicenceReviewRequest.CheckCode);
             clsquery.addColumn(checkCodeExpiry, drivingLicenceReviewRequest.CheckCodeExpiry);
             clsquery.addColumn(reviewerNotes, drivingLicenceReviewRequest.ReviewerNotes);
@@ -366,15 +366,15 @@
         private void InsertEntitlement(int accountId, DrivingLicenceDetailsResponse drivingLicenceDetailsResponse, int drivingLicenceEntityId, cCustomEntities customentities, cTables tables, cFields fields, IDBConnection connection)
         {
             #region Entitlement          
-            var entitlementEntity = customentities.getEntityByTableId(new Guid(GreenLightSystemGuidConstants.EntitlementEntity));
-            var entitlementCode = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.EntitlementCode));
-            var validFrom = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.EntitlementValidFrom));
-            var validTo = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.ValidTo));
-            var type = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.Type));
-            var entitlementvalue = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.EntitlementValue));
-            var autoPopulatedEntitlement = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.AutoPopulatedEntitlement));
-            var createdOn = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.EntitlementCreatedOn));
-            var dateOfIssue = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.DateOfIssue));
+            var entitlementEntity = customentities.getEntityByTableId(new Guid(DrivingLicenceConstants.EntitlementEntity));
+            var entitlementCode = fields.GetFieldByID(new Guid(DrivingLicenceConstants.EntitlementCode));
+            var validFrom = fields.GetFieldByID(new Guid(DrivingLicenceConstants.EntitlementValidFrom));
+            var validTo = fields.GetFieldByID(new Guid(DrivingLicenceConstants.ValidTo));
+            var type = fields.GetFieldByID(new Guid(DrivingLicenceConstants.Type));
+            var entitlementvalue = fields.GetFieldByID(new Guid(DrivingLicenceConstants.EntitlementValue));
+            var autoPopulatedEntitlement = fields.GetFieldByID(new Guid(DrivingLicenceConstants.AutoPopulatedEntitlement));
+            var createdOn = fields.GetFieldByID(new Guid(DrivingLicenceConstants.EntitlementCreatedOn));
+            var dateOfIssue = fields.GetFieldByID(new Guid(DrivingLicenceConstants.DateOfIssue));
 
             foreach (var entitlementdetails in drivingLicenceDetailsResponse.Entitlements)
             {
@@ -427,17 +427,17 @@
         {
             #region Endorsement
 
-            var endorsementEntity = customentities.getEntityByTableId(new Guid(GreenLightSystemGuidConstants.EndorsementEntity));
-            var code = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.Code));
-            var numberOfPoints = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.NumberOfPoints));
-            var disqualificationEndDate = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.DisqualificationEndDate));
-            var convictionDate = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.ConvictionDate));
-            var offenceDate = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.OffenceDate));
-            var isDisqualified = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.IsDisqualified));
-            var endorsement = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.Endorsement));
-            var autoPopulatedEndorsement = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.AutoPopulatedEndorsement));
-            var createdOn = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.EndorsementCreatedOn));
-            var modifiedOn = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.EndorsementModifiedOn));
+            var endorsementEntity = customentities.getEntityByTableId(new Guid(DrivingLicenceConstants.EndorsementEntity));
+            var code = fields.GetFieldByID(new Guid(DrivingLicenceConstants.Code));
+            var numberOfPoints = fields.GetFieldByID(new Guid(DrivingLicenceConstants.NumberOfPoints));
+            var disqualificationEndDate = fields.GetFieldByID(new Guid(DrivingLicenceConstants.DisqualificationEndDate));
+            var convictionDate = fields.GetFieldByID(new Guid(DrivingLicenceConstants.ConvictionDate));
+            var offenceDate = fields.GetFieldByID(new Guid(DrivingLicenceConstants.OffenceDate));
+            var isDisqualified = fields.GetFieldByID(new Guid(DrivingLicenceConstants.IsDisqualified));
+            var endorsement = fields.GetFieldByID(new Guid(DrivingLicenceConstants.Endorsement));
+            var autoPopulatedEndorsement = fields.GetFieldByID(new Guid(DrivingLicenceConstants.AutoPopulatedEndorsement));
+            var createdOn = fields.GetFieldByID(new Guid(DrivingLicenceConstants.EndorsementCreatedOn));
+            var modifiedOn = fields.GetFieldByID(new Guid(DrivingLicenceConstants.EndorsementModifiedOn));
 
             foreach (KeyValuePair<string, EndorsementDetails> endorsementdetailsitem in endorsementList)
             {
@@ -516,7 +516,7 @@
             int recordId = 0;
             var employees = new cEmployees(accountId);
             recordId = employees.GetLatestDrivingLicenceRecordForEmployee(drivingLicenceDetailsResponse.EmployeeId, drivingLicenceDetailsResponse.DrivingLicenceNumber);
-            cCustomEntityForm autoDrivingLicenceForm = entity.GetFormByGuid(new Guid(GreenLightSystemGuidConstants.DrivingLicenceForm));
+            cCustomEntityForm autoDrivingLicenceForm = entity.GetFormByGuid(new Guid(DrivingLicenceConstants.DrivingLicenceForm));
             cTables tables = new cTables(accountId);
             Dictionary<string, EndorsementDetails> allEndorsements = new Dictionary<string, EndorsementDetails>();
             Dictionary<string, EndorsementDetails> deletedEndorsements = new Dictionary<string, EndorsementDetails>();
@@ -526,27 +526,27 @@
                 SortedList<int, object> drivingLicenceRecord = customentities.getEntityRecord(entity, recordId, autoDrivingLicenceForm);
 
                 //If Issue number is modified then new DL is inserted
-                if (Convert.ToInt32(drivingLicenceDetailsResponse.IssueNumber) > Convert.ToInt32(drivingLicenceRecord[customentities.getAttributeByFieldId(new Guid(GreenLightSystemGuidConstants.IssueNumber)).attributeid]))
+                if (Convert.ToInt32(drivingLicenceDetailsResponse.IssueNumber) > Convert.ToInt32(drivingLicenceRecord[customentities.getAttributeByFieldId(new Guid(DrivingLicenceConstants.IssueNumber)).attributeid]))
                 {
                     return 0;
                 }
 
                 //If issue number is not modified then compare the endorsements
-                var endorsementEntity = customentities.getEntityByTableId(new Guid(GreenLightSystemGuidConstants.EndorsementEntity));
+                var endorsementEntity = customentities.getEntityByTableId(new Guid(DrivingLicenceConstants.EndorsementEntity));
                 Dictionary<int, cOneToManyRelationship> endorsementOtm = new Dictionary<int, cOneToManyRelationship>();
                 // get available relationships attributes for the entities              
                 customentities.getRelationshipAttributes(entity.entityid, endorsementEntity.entityid, ref endorsementOtm);
-                var code = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.Code));
-                var numberOfPoints = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.NumberOfPoints));
-                var disqualificationEndDate = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.DisqualificationEndDate));
-                var convictionDate = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.ConvictionDate));
-                var offenceDate = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.OffenceDate));
-                var isDisqualified = fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.IsDisqualified));
+                var code = fields.GetFieldByID(new Guid(DrivingLicenceConstants.Code));
+                var numberOfPoints = fields.GetFieldByID(new Guid(DrivingLicenceConstants.NumberOfPoints));
+                var disqualificationEndDate = fields.GetFieldByID(new Guid(DrivingLicenceConstants.DisqualificationEndDate));
+                var convictionDate = fields.GetFieldByID(new Guid(DrivingLicenceConstants.ConvictionDate));
+                var offenceDate = fields.GetFieldByID(new Guid(DrivingLicenceConstants.OffenceDate));
+                var isDisqualified = fields.GetFieldByID(new Guid(DrivingLicenceConstants.IsDisqualified));
                 List<EndorsementDetails> existingListEndorsement = new List<EndorsementDetails>();
                 foreach (KeyValuePair<int, cOneToManyRelationship> kvp in endorsementOtm)
                 {
                     // Check for autolookup endorsement relationship attribute
-                    if ((cOneToManyRelationship)kvp.Value == customentities.getAttributeByFieldId(new Guid(GreenLightSystemGuidConstants.AutoPopulatedEndorsement)))
+                    if ((cOneToManyRelationship)kvp.Value == customentities.getAttributeByFieldId(new Guid(DrivingLicenceConstants.AutoPopulatedEndorsement)))
                     {
                         cQueryBuilder endorsementQuery = new cQueryBuilder(accountId, cAccounts.getConnectionString(accountId), System.Configuration.ConfigurationManager.ConnectionStrings["metabase"].ConnectionString, endorsementEntity.table, tables, fields);
                         endorsementQuery.addColumn(code);
@@ -556,7 +556,7 @@
                         endorsementQuery.addColumn(offenceDate);
                         endorsementQuery.addColumn(isDisqualified);
                         endorsementQuery.addColumn(fields.GetFieldByID(endorsementEntity.getKeyField().fieldid));
-                        endorsementQuery.addFilter(new cQueryFilter(fields.GetFieldByID(new Guid(GreenLightSystemGuidConstants.Endorsement)), ConditionType.Equals, new List<object>() { recordId }, null, ConditionJoiner.None, null)); // null as on the query bt ?   !!!!!!
+                        endorsementQuery.addFilter(new cQueryFilter(fields.GetFieldByID(new Guid(DrivingLicenceConstants.Endorsement)), ConditionType.Equals, new List<object>() { recordId }, null, ConditionJoiner.None, null)); // null as on the query bt ?   !!!!!!
 
                         using (IDataReader drOutput = endorsementQuery.getReader())
                         {

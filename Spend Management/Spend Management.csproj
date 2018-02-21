@@ -1179,6 +1179,7 @@
     <Compile Include="shared\code\DVLA\EmployeeToPopulateDrivingLicence.cs" />
     <Compile Include="shared\code\DutyOfCareEmailTemplates.cs" />
     <Compile Include="shared\code\DVLA\LicenceCheckVehicleLookupLogger.cs" />
+    <Compile Include="shared\code\DVLA\TaxDocumentRepository.cs" />
     <Compile Include="shared\code\EasyTree\CustomMenuNode.cs" />
     <Compile Include="shared\code\EasyTree\FilteredFields.cs" />
     <Compile Include="shared\code\EasyTree\ReportCommonColumns.cs" />
@@ -1194,7 +1195,8 @@
     <Compile Include="shared\code\EasyTree\EasyTreeNode.cs" />
     <Compile Include="shared\code\EasyTree\Nodes.cs" />
     <Compile Include="shared\code\GreenLight\CustomMenuStructureItem.cs" />
-    <Compile Include="shared\code\GreenLight\GreenLightSystemGuidConstants.cs" />
+    <Compile Include="shared\code\GreenLight\DrivingLicenceConstants.cs" />
+    <Compile Include="shared\code\GreenLight\TaxDocumentConstants.cs" />
     <Compile Include="shared\code\IVat.cs" />
     <Compile Include="shared\code\LogonMessages.cs" />
     <Compile Include="shared\code\Logon\cMessageModules.cs" />

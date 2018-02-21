@@ -573,6 +573,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Random\FileDataRequest.cs" />
+    <Compile Include="Random\LookupServiceCar.cs" />
     <Compile Include="ReportChart.cs" />
     <Compile Include="Notifications.cs" />
     <Compile Include="Definitions\JoinVia\cJoinStep.cs" />

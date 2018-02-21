@@ -58,6 +58,7 @@ var isAttach = false;
 var isShallowSave = false;
 var odometerid = 0;
 var mcChecks = [];
+var lastLookup = null;
 
 function saveCar(commit) 
 {
@@ -152,7 +153,16 @@ function saveCar(commit)
 
     var userdefined = getItemsFromPanel('ValidationSummaryAeCar');
 
-   Spend_Management.svcCars.saveCar(carid, nEmployeeid, startdate, enddate, make, model, registration, active, vehicleEngineTypeId, startodometer, fuelcard, endodometer, defaultunit, enginesize, mileagecats, userdefined, approved, exemptfromhometooffice, replacePreviousCar, previousCarId, isAdmin, isShallowSave, vehicletypeid, saveCarComplete, commandFail);
+    var taxExpiry, taxStatus, motExpiry, motStatus;
+    if (lastLookup != null) {
+        taxExpiry = lastLookup.TaxExpiry;
+        taxStatus = lastLookup.TaxStatus;
+        motExpiry = lastLookup.MotExpiry;
+        motStatus = lastLookup.MotStatus;
+    }
+
+
+   Spend_Management.svcCars.saveCar(carid, nEmployeeid, startdate, enddate, make, model, registration, active, vehicleEngineTypeId, startodometer, fuelcard, endodometer, defaultunit, enginesize, mileagecats, userdefined, approved, exemptfromhometooffice, replacePreviousCar, previousCarId, isAdmin, isShallowSave, vehicletypeid, taxExpiry,  taxStatus,  motExpiry,  motStatus, saveCarComplete, commandFail);
 }
 
 function saveCarComplete(data) 
@@ -297,10 +307,11 @@ function vehicleDocuments(messageHeader, isadmin) {
     }
     else {
         var message = "";
+        var alreadyTaxed = lastLookup != null && lastLookup.TaxStatus === "Taxed";
         if (CurrentUserInfo.AllowEmpToSpecifyCarDOCOnAdd === true || isadmin ===true)
         {
             var title = " The following documents must be added and approved before <br /> any claims for mileage can be made for this vehicle.<br />";
-            if (CurrentUserInfo.Vehicle.BlockTax === "true") {
+            if (CurrentUserInfo.Vehicle.BlockTax === "true" && !alreadyTaxed) {
                 if (message === "") { message = title; }
                 message = message + "<br />\u2022 Tax";
             }
@@ -1008,10 +1019,12 @@ function LookupVehicleDetailsComplete(car) {
         $('#' + txtenginesize).val(car.EngineSize);
         $('#' + cmbvehicletype).val(car.VehicleTypeID);
         $('#' + cmbcartype).val(car.VehicleEngineTypeId);
+        lastLookup = car;
         filterMileageGrid();
         return;
     };
 
-    $('#lookupError').text('Could not find vehicle in the DVLA database').show();
+    lastLookup = null;
+    $('#lookupError').text('Could not find the vehicle in DVLA database').show();
 }
 

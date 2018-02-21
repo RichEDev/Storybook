@@ -1,5 +1,7 @@
 ﻿namespace DutyOfCareAPI.DutyOfCare.LicenceCheck.VehicleLookup
 {
+    using System;
+    
     /// <summary>
     /// A simple vehicle used for <see cref="IVehicleLookupResult"/>
     /// </summary>
@@ -34,5 +36,25 @@
         /// Gets or sets the type of vehicle (car, motorcycle etc.)
         /// </summary>
         public string VehicleType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Tax expiry date
+        /// </summary>
+        public DateTime TaxExpiry { get; set; }
+
+        /// <summary>
+        /// Gets or set the Tax status description
+        /// </summary>
+        public string TaxStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the MotExpiry Date
+        /// </summary>
+        public DateTime MotExpiry { get; set; }
+
+        /// <summary>
+        /// Gets or sets the MotStatus description
+        /// </summary>
+        public string MotStatus { get; set; }
     }
 }
