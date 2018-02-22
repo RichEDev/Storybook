@@ -205,14 +205,6 @@
       <DependentUpon>App.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
-    <None Include="App.Release.config">
-      <DependentUpon>App.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="App.Automated Build.config">
-      <DependentUpon>App.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="App.Production.config">
       <DependentUpon>App.config</DependentUpon>
       <SubType>Designer</SubType>

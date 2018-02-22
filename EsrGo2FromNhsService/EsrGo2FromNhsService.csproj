@@ -129,12 +129,6 @@
       <DependentUpon>App.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
-    <None Include="App.Release.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
-    <None Include="App.Automated Build.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
     <None Include="App.Production.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
@@ -144,7 +138,12 @@
     <None Include="App.Testing.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
-    <None Include="log4net.Automated Build.config">
+    <None Include="log4net.Main.config">
+      <DependentUpon>log4net.config</DependentUpon>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="log4net.Testing.config">
       <DependentUpon>log4net.config</DependentUpon>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

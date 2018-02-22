@@ -98,12 +98,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Release.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
-    <None Include="App.Automated Build.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
     <None Include="App.Production.config">
       <DependentUpon>App.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -120,6 +114,14 @@
       <DependentUpon>App.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
+    <None Include="log4net.Main.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+    </None>
+    <None Include="log4net.Testing.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+    </None>
     <None Include="log4net.config">
       <SubType>Designer</SubType>
     </None>
@@ -128,10 +130,6 @@
       <DependentUpon>log4net.config</DependentUpon>
     </None>
     <None Include="log4net.Production.config">
-      <SubType>Designer</SubType>
-      <DependentUpon>log4net.config</DependentUpon>
-    </None>
-    <None Include="log4net.Automated Build.config">
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>
     </None>

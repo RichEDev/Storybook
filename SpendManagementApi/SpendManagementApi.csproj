@@ -994,6 +994,11 @@
     <Content Include="Content\themes\base\bootstrap.css.map" />
     <Compile Include="Models\Types\CustomEntityForm.cs" />
     <Content Include="log4net.config" />
+    <None Include="log4net.Testing.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="log4net.Debug.config">
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>
@@ -1003,9 +1008,10 @@
       <DependentUpon>log4net.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="log4net.Automated Build.config">
+    <None Include="log4net.Main.config">
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\PublishProfiles\Local IIS.pubxml" />
     <None Include="Properties\PublishProfiles\Cloud.pubxml" />
@@ -1030,10 +1036,6 @@
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Content\Site.css">
     </Content>
     <Content Include="Views\Web.config">
@@ -1051,10 +1053,6 @@
     </Content>
     <Content Include="Areas\HelpPage\Views\Help\Overview.cshtml">
     </Content>
-    <None Include="Web.Automated Build.config">
-      <DependentUpon>Web.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Web.Production.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
