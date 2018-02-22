@@ -84,9 +84,9 @@
     <CodeAnalysisRuleSet>expenses.Production.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <!-- Customizable Output Directory Opt-In for TFS Build (web application projects) -->
-  <!--<PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
     <OutDir>$(TeamBuildOutDir)</OutDir>
-  </PropertyGroup>-->
+  </PropertyGroup>
   <!--<Target Name="PublishWebSites" AfterTargets="Publish">
     <ItemGroup Label="ItemsForDeploymment">
       <Folders Include="$(publishUrl)\**\*.*" />
