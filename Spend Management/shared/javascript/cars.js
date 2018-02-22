@@ -153,12 +153,12 @@ function saveCar(commit)
 
     var userdefined = getItemsFromPanel('ValidationSummaryAeCar');
 
-    var taxExpiry, taxStatus, motExpiry, motStatus;
+    var taxExpiry = '', taxStatus = '', motExpiry = '', motStatus = '';
     if (lastLookup != null) {
         taxExpiry = lastLookup.TaxExpiry;
-        taxStatus = lastLookup.TaxStatus;
+        taxStatus = lastLookup.IsMotValid;
         motExpiry = lastLookup.MotExpiry;
-        motStatus = lastLookup.MotStatus;
+        motStatus = lastLookup.IsMotValid;
     }
 
 
@@ -307,7 +307,8 @@ function vehicleDocuments(messageHeader, isadmin) {
     }
     else {
         var message = "";
-        var alreadyTaxed = lastLookup != null && lastLookup.TaxStatus === "Taxed";
+        var alreadyTaxed = lastLookup != null && lastLookup.IsTaxValid;
+        var alreadyMot = lastLookup != null && lastLookup.IsMotValid;
         if (CurrentUserInfo.AllowEmpToSpecifyCarDOCOnAdd === true || isadmin ===true)
         {
             var title = " The following documents must be added and approved before <br /> any claims for mileage can be made for this vehicle.<br />";
@@ -315,7 +316,7 @@ function vehicleDocuments(messageHeader, isadmin) {
                 if (message === "") { message = title; }
                 message = message + "<br />\u2022 Tax";
             }
-            if (CurrentUserInfo.Vehicle.BlockMOT === "true") {
+            if (CurrentUserInfo.Vehicle.BlockMOT === "true" && !alreadyMot) {
                 if (message === "") { message = title; }
                 message = message + "<br />\u2022 MOT";
             }

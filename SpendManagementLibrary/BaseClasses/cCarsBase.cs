@@ -34,70 +34,126 @@ namespace SpendManagementLibrary
         /// <param name="employeeID">The employee to return the cars for</param>
         /// <param name="connection">A connection object to override the standard one for unit testing</param>
         /// <returns>The list of cars</returns>
-        protected List<cCar> GetEmployeeCarsCollection(int employeeID, IDBConnection connection = null)
+        protected List<cCar> GetEmployeeCarsCollection(int employeeID)
         {
-            using (IDBConnection expdata = connection ?? new DatabaseConnection(sConnectionString))
+            using (IDBConnection expdata = new DatabaseConnection(sConnectionString))
             {
-                var cars = new SortedList<int, cCar>();
+                var cars = new List<cCar>();
                 var ids = new List<int>();
 
                 cTable tbl = clsTables.GetTableByID(new Guid("a184192f-74b6-42f7-8fdb-6dcf04723cef"));
                 cTable udftbl = clsTables.GetTableByID(tbl.UserDefinedTableID);
 
-                const string SQL = "SELECT employeeid, carid, make, model, registration, startdate, enddate, cartypeid, odometer, active, fuelcard, endodometer, createdon, createdby, modifiedon, modifiedby, default_unit, enginesize, approved, exemptfromhometooffice, vehicletypeid FROM dbo.cars WHERE employeeid = @employeeid OR carid IN (SELECT carid FROM dbo.pool_car_users WHERE employeeid = @employeeid)";
+                const string SQL = "SELECT employeeid, carid, make, model, registration, startdate, enddate, cartypeid, odometer, active, fuelcard, endodometer, createdon, createdby, modifiedon, modifiedby, default_unit, enginesize, approved, exemptfromhometooffice, vehicletypeid, taxexpiry, taxvalid, motexpiry, motvalid FROM dbo.cars WHERE employeeid = @employeeid OR carid IN (SELECT carid FROM dbo.pool_car_users WHERE employeeid = @employeeid)";
 
                 expdata.sqlexecute.Parameters.AddWithValue("@employeeid", employeeID);
 
-                using (IDataReader reader = expdata.GetReader(SQL))
+                cars = this.ExtractCarsFromReader(expdata, SQL);
+
+                foreach (cCar car in cars)
                 {
-                    while (reader.Read())
-                    {
-                        int caremployeeid = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
-                        int carid = reader.GetInt32(1);
-                        string make = reader.GetString(2);
-                        string model = reader.GetString(3);
-                        string registration = reader.GetString(4);
-                        DateTime startdate = reader.IsDBNull(5) ? new DateTime(1900, 01, 01) : reader.GetDateTime(5);
-                        DateTime enddate = reader.IsDBNull(6) ? new DateTime(1900, 01, 01) : reader.GetDateTime(6);
-                        int vehicleEngineTypeId = reader.IsDBNull(7) ? 0 : reader.GetByte(7);
-                        Int64 odometer = reader.IsDBNull(8) ? 0 : reader.GetInt64(8);
-                        bool active = reader.GetBoolean(9);
-                        bool fuelcard = reader.GetBoolean(10);
-                        int endodometer = reader.IsDBNull(11) ? 0 : reader.GetInt32(11);
-                        DateTime createdon = reader.IsDBNull(12) ? new DateTime(1900, 01, 01) : reader.GetDateTime(12);
-                        int createdby = reader.IsDBNull(13) ? 0 : reader.GetInt32(13);
-                        DateTime modifiedon = reader.IsDBNull(14) ? new DateTime(1900, 01, 01) : reader.GetDateTime(14);
-                        int modifiedby = reader.IsDBNull(15) ? 0 : reader.GetInt32(15);
-                        MileageUOM defaultuom = (MileageUOM)reader.GetByte(16);
-                        int engineSize = reader.IsDBNull(17) ? 0 : reader.GetInt32(17);
-                        bool approved = reader.IsDBNull(18) || reader.GetBoolean(18);
-                        bool exemptfromhometooffice = reader.GetBoolean(19);
-                        byte vehicletypeid = reader.IsDBNull(20) ? (byte)0 : reader.GetByte(20);
-
-                        ids.Add(carid);
-                        cars.Add(carid, new cCar(nAccountID, caremployeeid, carid, make, model, registration, startdate, enddate, active, new List<int>(), vehicleEngineTypeId, odometer, fuelcard, endodometer, defaultuom, engineSize, createdon, createdby, modifiedon, modifiedby, approved, exemptfromhometooffice, vehicletypeid));
-                    }
-
-                    reader.Close();
+                    ids.Add(car.carid);
                 }
 
-                if (ids.Count > 0)
+                if (cars.Count > 0)
                 {
                     SortedList<int, SortedList<int, object>> userdefined = clsUserDefinedFields.GetRecords(udftbl, ids, clsTables, clsFields);
                     SortedList<int, List<int>> carMileageCategories = GetCarMileageCats(ids);
                     SortedList<int, List<cOdometerReading>> odometerReadings = GetOdometerReadings(ids);
 
-                    foreach (int id in cars.Keys)
+                    foreach (cCar car in cars)
                     {
-                        if (carMileageCategories.ContainsKey(id))
+                        if (carMileageCategories.ContainsKey(car.carid))
                         {
-                            cars[id].mileagecats = carMileageCategories[id];
+                            car.mileagecats = carMileageCategories[car.carid];
                         }
                     }
                 }
 
-                return cars.Values.ToList();
+                return cars.ToList();
             }
+        }
+
+        private List<cCar> ExtractCarsFromReader(IDBConnection expdata, string sql)
+        {
+            var cars = new List<cCar>();
+            using (IDataReader reader = expdata.GetReader(sql))
+            {
+                var employeeIdOrd = reader.GetOrdinal("employeeid");
+                var carIdOrd = reader.GetOrdinal("carid");
+                var makeOrd = reader.GetOrdinal("make");
+                var modelOrd = reader.GetOrdinal("model");
+                var registrationOrd = reader.GetOrdinal("registration");
+                var startDateOrd = reader.GetOrdinal("startdate");
+                var endDateOrd = reader.GetOrdinal("enddate");
+                var carTypeIdOrd = reader.GetOrdinal("cartypeid");
+                var odomoterOrd = reader.GetOrdinal("odometer");
+                var activeOrd = reader.GetOrdinal("active");
+                var fuelcardOrd = reader.GetOrdinal("fuelcard");
+                var endOdomoterOrd = reader.GetOrdinal("endodometer");
+                var createdOnOrd = reader.GetOrdinal("CreatedOn");
+                var createdByOrd = reader.GetOrdinal("CreatedBy");
+                var modifiedOnOrd = reader.GetOrdinal("ModifiedOn");
+                var modifiedByOrd = reader.GetOrdinal("ModifiedBy");
+                var defaultUnitOrd = reader.GetOrdinal("default_unit");
+                var engineSizeOrd = reader.GetOrdinal("enginesize");
+                var approvedOrd = reader.GetOrdinal("approved");
+                var exemptOrd = reader.GetOrdinal("exemptfromhometooffice");
+                var vehicleTypeOrd = reader.GetOrdinal("vehicletypeid");
+                var taxExpiryOrd = reader.GetOrdinal("taxexpiry");
+                var taxValidOrd = reader.GetOrdinal("taxvalid");
+                var motExpiryOrd = reader.GetOrdinal("motexpiry");
+                var motValidOrd = reader.GetOrdinal("motvalid");
+                while (reader.Read())
+                {
+                    int caremployeeid = reader.IsDBNull(employeeIdOrd) ? 0 : reader.GetInt32(employeeIdOrd);
+                    int carid = reader.GetInt32(carIdOrd);
+                    string make = reader.GetString(makeOrd);
+                    string model = reader.GetString(modelOrd);
+                    string registration = reader.GetString(registrationOrd);
+                    DateTime startdate = reader.IsDBNull(startDateOrd) ? new DateTime(1900, 01, 01) : reader.GetDateTime(startDateOrd);
+                    DateTime enddate = reader.IsDBNull(endDateOrd) ? new DateTime(1900, 01, 01) : reader.GetDateTime(endDateOrd);
+                    int vehicleEngineTypeId = reader.IsDBNull(carTypeIdOrd) ? 0 : reader.GetByte(carTypeIdOrd);
+                    Int64 odometer = reader.IsDBNull(odomoterOrd) ? 0 : reader.GetInt64(odomoterOrd);
+                    bool active = reader.GetBoolean(activeOrd);
+                    bool fuelcard = reader.GetBoolean(fuelcardOrd);
+                    int endodometer = reader.IsDBNull(endOdomoterOrd) ? 0 : reader.GetInt32(endOdomoterOrd);
+                    DateTime createdon = reader.IsDBNull(createdOnOrd) ? new DateTime(1900, 01, 01) : reader.GetDateTime(createdOnOrd);
+                    int createdby = reader.IsDBNull(createdByOrd) ? 0 : reader.GetInt32(createdByOrd);
+                    DateTime modifiedon = reader.IsDBNull(modifiedOnOrd) ? new DateTime(1900, 01, 01) : reader.GetDateTime(modifiedOnOrd);
+                    int modifiedby = reader.IsDBNull(modifiedByOrd) ? 0 : reader.GetInt32(modifiedByOrd);
+                    MileageUOM defaultuom = (MileageUOM) reader.GetByte(defaultUnitOrd);
+                    int engineSize = reader.IsDBNull(engineSizeOrd) ? 0 : reader.GetInt32(engineSizeOrd);
+                    bool approved = reader.IsDBNull(approvedOrd) || reader.GetBoolean(approvedOrd);
+                    bool exemptfromhometooffice = reader.GetBoolean(exemptOrd);
+                    byte vehicletypeid = reader.IsDBNull(vehicleTypeOrd) ? (byte) 0 : reader.GetByte(vehicleTypeOrd);
+                    DateTime? taxExpiry = null;
+                    if (!reader.IsDBNull(taxExpiryOrd))
+                    {
+                        taxExpiry = reader.GetDateTime(taxExpiryOrd);
+                    }
+
+                    var taxValid = !reader.IsDBNull(taxValidOrd) && reader.GetBoolean(taxValidOrd);
+
+                    DateTime? motExpiry = null;
+                    if (!reader.IsDBNull(motExpiryOrd))
+                    {
+                        motExpiry = reader.GetDateTime(motExpiryOrd);
+                    }
+
+                    var motValid = !reader.IsDBNull(motValidOrd) && reader.GetBoolean(motValidOrd);
+
+                    cars.Add(
+                        new cCar(this.nAccountID, caremployeeid, carid, make, model, registration, startdate, enddate, active,
+                            new List<int>(), vehicleEngineTypeId, odometer, fuelcard, endodometer, defaultuom, engineSize,
+                            createdon, createdby, modifiedon, modifiedby, approved, exemptfromhometooffice, vehicletypeid,
+                            taxExpiry, taxValid, motExpiry, motValid));
+                }
+
+                reader.Close();
+            }
+
+            return cars;
         }
 
         public SortedList<int, object> GetUserDefinedFieldsList(int carId)
@@ -119,69 +175,11 @@ namespace SpendManagementLibrary
         /// <returns></returns>
         protected List<cCar> GetPoolCarsCollection()
         {
-            var expdata = new DBConnection(sConnectionString);
-            string strsql;
-            SqlDataReader reader;
-            SortedList<int, object> userdefined;
-            int carid;
-            string make, model, registration;
-            DateTime startdate, enddate;
-            bool active;
-            int endodometer;
-            Int64 odometer;
-            bool fuelcard;
-            DateTime createdon, modifiedon;
-            int createdby, modifiedby;
-            List<cCar> cars = new List<cCar>();
-            int engineSize = 0;
-            bool approved, exemptfromhometooffice;
-            byte vehicletypeid;
-
-            cTable tbl = clsTables.GetTableByID(new Guid("a184192f-74b6-42f7-8fdb-6dcf04723cef"));
-            cTable udftbl = clsTables.GetTableByID(tbl.UserDefinedTableID);
-            strsql = "SELECT * FROM cars WHERE employeeid IS NULL";
-
-            SortedList<AttachDocumentType, string> doctypes;
-
-            MileageUOM defaultuom;
-
-            using (reader = expdata.GetReader(strsql))
+            using (var expdata = new DatabaseConnection(sConnectionString))
             {
-                while (reader.Read())
-                {
-                    carid = reader.GetInt32(reader.GetOrdinal("carid"));
-                    make = reader.GetString(reader.GetOrdinal("make"));
-                    model = reader.GetString(reader.GetOrdinal("model"));
-                    registration = reader.GetString(reader.GetOrdinal("registration"));
-                    startdate = reader.IsDBNull(reader.GetOrdinal("startdate")) == false ? reader.GetDateTime(reader.GetOrdinal("startdate")) : new DateTime(1900, 01, 01);
-                    enddate = reader.IsDBNull(reader.GetOrdinal("enddate")) == false ? reader.GetDateTime(reader.GetOrdinal("enddate")) : new DateTime(1900, 01, 01);
-                    var vehicleEngineTypeId = reader.IsDBNull(reader.GetOrdinal("cartypeid")) == false ? reader.GetByte(reader.GetOrdinal("cartypeid")) : 0;
-                    odometer = reader.IsDBNull(reader.GetOrdinal("odometer")) == false ? reader.GetInt64(reader.GetOrdinal("odometer")) : 0;
-                    active = reader.GetBoolean(reader.GetOrdinal("active"));
-                    fuelcard = reader.GetBoolean(reader.GetOrdinal("fuelcard"));
-                    endodometer = reader.IsDBNull(reader.GetOrdinal("endodometer")) == false ? reader.GetInt32(reader.GetOrdinal("endodometer")) : 0; 
-                    createdon = reader.IsDBNull(reader.GetOrdinal("createdon")) == true ? new DateTime(1900, 01, 01) : reader.GetDateTime(reader.GetOrdinal("createdon"));
-                    createdby = reader.IsDBNull(reader.GetOrdinal("createdby")) == true ? 0 : reader.GetInt32(reader.GetOrdinal("createdby"));
-                    modifiedon = reader.IsDBNull(reader.GetOrdinal("modifiedon")) == true ? new DateTime(1900, 01, 01) : reader.GetDateTime(reader.GetOrdinal("modifiedon"));
-                    modifiedby = reader.IsDBNull(reader.GetOrdinal("modifiedby")) == true ? 0 : reader.GetInt32(reader.GetOrdinal("modifiedby"));
-                    userdefined = clsUserDefinedFields.GetRecord(udftbl, carid, clsTables, clsFields);
-                    defaultuom = (MileageUOM)reader.GetByte(reader.GetOrdinal("default_unit"));
-
-                    if (!reader.IsDBNull(reader.GetOrdinal("enginesize")))
-                    {
-                        engineSize = reader.GetInt32(reader.GetOrdinal("enginesize"));
-                    }
-
-                    approved = reader.IsDBNull(reader.GetOrdinal("approved")) || reader.GetBoolean(reader.GetOrdinal("approved"));
-                    exemptfromhometooffice = reader.GetBoolean(reader.GetOrdinal("exemptfromhometooffice"));
-                    vehicletypeid = !reader.IsDBNull(reader.GetOrdinal("VehicleTypeId")) ? reader.GetByte(reader.GetOrdinal("VehicleTypeId")) : (byte)0;
-
-                    cars.Add(new cCar(nAccountID, 0, carid, make, model, registration, startdate, enddate, active, GetCarMileageCats(carid), vehicleEngineTypeId, odometer, fuelcard, endodometer, defaultuom, engineSize, createdon, createdby, modifiedon, modifiedby, approved, exemptfromhometooffice, vehicletypeid));
-                }
-                reader.Close();
+                string strsql = "SELECT * FROM cars WHERE employeeid IS NULL";
+                return this.ExtractCarsFromReader(expdata, strsql);
             }
-
-            return cars;
         }
 
         /// <summary>
@@ -192,83 +190,13 @@ namespace SpendManagementLibrary
         /// <returns>Car details</returns>
         public cCar GetCarFromDB(int carID, bool ensureEmployeeIsPopulated = false)
         {
-            DBConnection expdata = new DBConnection(sConnectionString);
-            string strsql;
-            System.Data.SqlClient.SqlDataReader reader;
-            SortedList<int, object> userdefined;
-
-            string make, model, registration;
-            DateTime? startdate, enddate;
-            bool active;
-            int endodometer;
-            Int64 odometer;
-            bool fuelcard;
-            DateTime createdon, modifiedon;
-            int createdby, modifiedby;
-            cCar car = null;
-            SortedList<AttachDocumentType, string> doctypes;
-            MileageUOM defaultuom;
-            int enginesize = 0;
-            bool approved, exemptfromhometooffice;
-            int employeeId = 0;
-            int employeeOrdinal;
-            byte vehicletypeid;
-
-            cTable tbl = clsTables.GetTableByID(new Guid("a184192f-74b6-42f7-8fdb-6dcf04723cef"));
-            cTable udftbl = clsTables.GetTableByID(tbl.UserDefinedTableID);
-
-            strsql = "select * from cars where carid = @carid;";
-            expdata.sqlexecute.Parameters.AddWithValue("@carid", carID);
-
-            using (reader = expdata.GetReader(strsql))
+            using (var expdata = new DatabaseConnection(sConnectionString))
             {
-                while (reader.Read())
-                {
-                    make = reader.GetString(reader.GetOrdinal("make"));
-                    model = reader.GetString(reader.GetOrdinal("model"));
-                    registration = reader.GetString(reader.GetOrdinal("registration"));
-
-                    startdate = reader.IsDBNull(reader.GetOrdinal("startdate"))
-                                    ? (DateTime?)null
-                                    : reader.GetDateTime(reader.GetOrdinal("startdate"));
-
-                    enddate = reader.IsDBNull(reader.GetOrdinal("enddate"))
-                            ? (DateTime?)null
-                            : reader.GetDateTime(reader.GetOrdinal("enddate"));
-
-                    var vehicleEngineTypeId = reader.IsDBNull(reader.GetOrdinal("cartypeid")) == false ? reader.GetByte(reader.GetOrdinal("cartypeid")) : 0;
-                    odometer = reader.IsDBNull(reader.GetOrdinal("odometer")) == false ? reader.GetInt64(reader.GetOrdinal("odometer")) : 0;
-                    active = reader.GetBoolean(reader.GetOrdinal("active"));
-                    fuelcard = reader.GetBoolean(reader.GetOrdinal("fuelcard"));
-                    endodometer = reader.IsDBNull(reader.GetOrdinal("endodometer")) == false ? reader.GetInt32(reader.GetOrdinal("endodometer")) : 0;
-                    createdon = reader.IsDBNull(reader.GetOrdinal("createdon")) == true ? new DateTime(1900, 01, 01) : reader.GetDateTime(reader.GetOrdinal("createdon"));
-                    createdby = reader.IsDBNull(reader.GetOrdinal("createdby")) == true ? 0 : reader.GetInt32(reader.GetOrdinal("createdby"));
-                    modifiedon = reader.IsDBNull(reader.GetOrdinal("modifiedon")) == true ? new DateTime(1900, 01, 01) : reader.GetDateTime(reader.GetOrdinal("modifiedon"));
-                    modifiedby = reader.IsDBNull(reader.GetOrdinal("modifiedby")) == true ? 0 : reader.GetInt32(reader.GetOrdinal("modifiedby"));
-                    userdefined = clsUserDefinedFields.GetRecord(udftbl, carID, clsTables, clsFields);
-                    defaultuom = (MileageUOM)reader.GetByte(reader.GetOrdinal("default_unit"));
-                    if (!reader.IsDBNull(reader.GetOrdinal("enginesize")))
-                    {
-                        enginesize = reader.GetInt32(reader.GetOrdinal("enginesize"));
-                    }
-
-                    approved = reader.IsDBNull(reader.GetOrdinal("approved")) || reader.GetBoolean(reader.GetOrdinal("approved"));
-                    exemptfromhometooffice = reader.GetBoolean(reader.GetOrdinal("exemptfromhometooffice"));
-                    vehicletypeid = reader.IsDBNull(reader.GetOrdinal("vehicletypeid")) == false ? reader.GetByte(reader.GetOrdinal("vehicletypeid")) : (byte)0;
-
-                    employeeOrdinal = reader.GetOrdinal("employeeid");
-                    if (!reader.IsDBNull(employeeOrdinal))
-                    {
-                        employeeId = ensureEmployeeIsPopulated ? reader.GetInt32(employeeOrdinal) : 0;
-                    }
-
-                    car = new cCar(nAccountID, employeeId, carID, make, model, registration, startdate, enddate, active, GetCarMileageCats(carID), vehicleEngineTypeId, odometer, fuelcard, endodometer, defaultuom, enginesize, createdon, createdby, modifiedon, modifiedby, approved, exemptfromhometooffice, vehicletypeid);
-
-                }
-                reader.Close();
+                string strsql;
+                strsql = "select * from cars where carid = @carid;";
+                expdata.sqlexecute.Parameters.AddWithValue("@carid", carID);
+                return this.ExtractCarsFromReader(expdata, strsql).FirstOrDefault();
             }
-
-            return car;
         }
 
         protected List<int> GetCarMileageCats(int carID)
@@ -568,6 +496,28 @@ namespace SpendManagementLibrary
                 data.sqlexecute.Parameters.AddWithValue("@CUemployeeID", 0);
                 data.sqlexecute.Parameters.AddWithValue("@CUdelegateID", DBNull.Value);
             }
+
+            if (car.TaxExpiry.HasValue)
+            {
+                data.sqlexecute.Parameters.AddWithValue("@taxexpiry", car.TaxExpiry.Value);
+            }
+            else
+            {
+                data.sqlexecute.Parameters.AddWithValue("@taxexpiry", DBNull.Value);
+            }
+
+            if (car.MotExpiry.HasValue)
+            {
+                data.sqlexecute.Parameters.AddWithValue("@motexpiry", car.MotExpiry.Value);
+            }
+            else
+            {
+                data.sqlexecute.Parameters.AddWithValue("@motexpiry", DBNull.Value);
+            }
+
+            data.sqlexecute.Parameters.AddWithValue("@Istaxvalid", car.IsTaxValid);
+            data.sqlexecute.Parameters.AddWithValue("@Ismotvalid", car.IsMotValid);
+
             data.sqlexecute.Parameters.Add("@identity", System.Data.SqlDbType.Int);
             data.sqlexecute.Parameters["@identity"].Direction = System.Data.ParameterDirection.ReturnValue;
             data.ExecuteProc("saveCar");

@@ -37,36 +37,78 @@ namespace SpendManagementLibrary
         {
         }
 
-        public cCar(int accountid, int employeeid, int carid, string make, string model, string regno, DateTime? startdate, DateTime? enddate, bool active, List<int> mileagecats, int vehicleEngineTypeId, Int64 odometer, bool fuelcard, int endodometer, MileageUOM defaultuom, int engineSize, DateTime? createdon, int createdby, DateTime? modifiedon, int? modifiedby, bool approved, bool exemptfromhometooffice, byte? VehicleTypeId )
+        /// <summary>
+        /// Create a new instance of <see cref="cCar"/>
+        /// </summary>
+        /// <param name="accountid">The ID of the account</param>
+        /// <param name="employeeid">The ID of the Employee that uses the car (0 for a pool car)</param>
+        /// <param name="carid">The ID of this <see cref="cCar"/></param>
+        /// <param name="make">The Make of the Vehicle</param>
+        /// <param name="model">The Model of the Vehicle</param>
+        /// <param name="regno">The Registration number of the vehicle</param>
+        /// <param name="startdate">The date the vehcle was available from</param>
+        /// <param name="enddate">the date the vehicle stoped being available</param>
+        /// <param name="active">Is the vehicle active</param>
+        /// <param name="mileagecats">A <see cref="List{T}"/>Of <seealso cref="cMileageCat"/> IDs used for this vehicle</param>
+        /// <param name="vehicleEngineTypeId">The Engine type of the Vehicle</param>
+        /// <param name="odometer">Start Odometer reading</param>
+        /// <param name="fuelcard">Does this vehicle use a fuel card</param>
+        /// <param name="endodometer">End odometer reading</param>
+        /// <param name="defaultuom">Unit of measure (miles / kilometers)</param>
+        /// <param name="engineSize">The size of the engine in cc</param>
+        /// <param name="createdon">Creation Date</param>
+        /// <param name="createdby">Employee ID of the creator</param>
+        /// <param name="modifiedon">Modified Date</param>
+        /// <param name="modifiedby">Employee ID of the modifier</param>
+        /// <param name="approved">Is this vehicle approved for use</param>
+        /// <param name="exemptfromhometooffice">If this vehicle expempt from home to office rules.</param>
+        /// <param name="VehicleTypeId">The type of vehicle (car, HGV etc)</param>
+        /// <param name="taxExpiry">The Date the tax expires (if available)</param>
+        /// <param name="isTaxValid">Is the tax valid (at time of creation)</param>
+        /// <param name="motExpiry">The date the Mot Expires (if available)</param>
+        /// <param name="isMotValid">If the Mot valid (at time of creation)</param>
+        public cCar(int accountid, int employeeid, int carid, string make, string model, string regno, DateTime? startdate, DateTime? enddate, bool active, List<int> mileagecats, int vehicleEngineTypeId, Int64 odometer, bool fuelcard, int endodometer, MileageUOM defaultuom, int engineSize, DateTime? createdon, int createdby, DateTime? modifiedon, int? modifiedby, bool approved, bool exemptfromhometooffice, byte? VehicleTypeId, DateTime? taxExpiry, bool isTaxValid, DateTime? motExpiry, bool isMotValid )
         {
-            nAccountid = accountid;
-            nEmployeeid = employeeid;
-            nCarid = carid;
-            sMake = make;
-            sModel = model;
-            sRegno = regno;
-            dtStartdate = startdate;
-            dtEnddate = enddate;
-            bActive = active;
+            this.nAccountid = accountid;
+            this.nEmployeeid = employeeid;
+            this.nCarid = carid;
+            this.sMake = make;
+            this.sModel = model;
+            this.sRegno = regno;
+            this.dtStartdate = startdate;
+            this.dtEnddate = enddate;
+            this.bActive = active;
+            this.nOdometer = odometer;
+            this.bFuelcard = fuelcard;
+            this.nEndodometer = endodometer;
+            this.dtCreatedon = createdon;
+            this.nCreatedby = createdby;
+            this.dtModifiedon = modifiedon;
+            this.nModifiedby = modifiedby;
+            this.lstMileagecats = mileagecats;
+            this.eDefaultUom = defaultuom;
+            this.nEngineSize = engineSize;
+            this.bApproved = approved;
+            this.bExemptFromHomeToOffice = exemptfromhometooffice;
+            this.bVehicletypeid = VehicleTypeId;
             this.VehicleEngineTypeId = vehicleEngineTypeId;
-            nOdometer = odometer;
-            bFuelcard = fuelcard;
-            nEndodometer = endodometer;
-            dtCreatedon = createdon;
-            nCreatedby = createdby;
-            dtModifiedon = modifiedon;
-            nModifiedby = modifiedby;
-            lstMileagecats = mileagecats;
-            eDefaultUom = defaultuom;
-            nEngineSize = engineSize;
-            bApproved = approved;
-            bExemptFromHomeToOffice = exemptfromhometooffice;
-            bVehicletypeid = VehicleTypeId;
+            this.TaxExpiry = taxExpiry;
+            this.IsTaxValid = isTaxValid;
+            this.MotExpiry = motExpiry;
+            this.IsMotValid = isMotValid;
+
         }
 
+        /// <summary>Creates a new <see cref="cCar"/> that is a copy of the current instance.</summary>
+        /// <returns>A new <see cref="cCar"/> that is a copy of this instance.</returns>
+        /// <filterpriority>2</filterpriority>
         public object Clone()
         {
-            return new cCar(this.accountid, this.employeeid, this.carid, this.make, this.model, this.registration, this.startdate, this.enddate, this.active, this.mileagecats, this.VehicleEngineTypeId, this.odometer, this.fuelcard, this.endodometer, this.defaultuom, this.EngineSize, this.createdon, this.createdby, this.modifiedon, this.modifiedby, this.Approved, this.ExemptFromHomeToOffice, this.VehicleTypeID);
+            return new cCar(this.accountid, this.employeeid, this.carid, this.make, this.model, this.registration,
+                this.startdate, this.enddate, this.active, this.mileagecats, this.VehicleEngineTypeId, this.odometer,
+                this.fuelcard, this.endodometer, this.defaultuom, this.EngineSize, this.createdon, this.createdby,
+                this.modifiedon, this.modifiedby, this.Approved, this.ExemptFromHomeToOffice, this.VehicleTypeID,
+                this.TaxExpiry, this.IsTaxValid, this.MotExpiry, this.IsMotValid);
         }
 
         //checks to see whether the car is active on the date specified
@@ -252,6 +294,26 @@ namespace SpendManagementLibrary
         {
             get { return bExemptFromHomeToOffice; }
         }
+
+        /// <summary>
+        /// Gets or sets the Tax Expiry of this vehicle
+        /// </summary>
+        public DateTime? TaxExpiry { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tax status of this vehicle
+        /// </summary>
+        public bool IsTaxValid { get;set; }
+
+        /// <summary>
+        /// Gets or sets the MOT Expiry of this vehicle
+        /// </summary>
+        public DateTime? MotExpiry { get; set; }
+
+        /// <summary>
+        /// Gets or sets the MOT status of this vehicle
+        /// </summary>
+        public bool IsMotValid { get;set; }
         #endregion
     }
 

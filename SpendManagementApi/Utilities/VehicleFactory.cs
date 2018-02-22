@@ -32,10 +32,10 @@
                 FuelType = FuelTypeFactory.Convert(lookupResult.Vehicle.FuelType, cMisc.GetCurrentUser()),
                 Registration = lookupResult.Vehicle.RegistrationNumber,
                 VehicleTypeId = (VehicleType) VehicleTypeFactory.Convert(lookupResult.Vehicle.VehicleType),
-                TaxExpiry = lookupResult.Vehicle.TaxExpiry,
-                TaxStatus = lookupResult.Vehicle.TaxStatus,
-                MotExpiry = lookupResult.Vehicle.MotExpiry,
-                MotStatus = lookupResult.Vehicle.MotStatus
+                TaxExpiry = lookupResult.Vehicle.TaxExpiry.ToString("dd/MM/yyyy"),
+                IsTaxValid = lookupResult.Vehicle.TaxStatus == "Taxed",
+                MotExpiry = lookupResult.Vehicle.MotExpiry.ToString("dd/MM/yyyy"),
+                IsMotValid = lookupResult.Vehicle.MotStatus == "MOT"
 
             };
             return result;

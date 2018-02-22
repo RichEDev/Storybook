@@ -2598,7 +2598,7 @@ namespace Spend_Management
                         lstMileageCats.Add(mileageCat.mileageid);
                     }
                 }
-                clsEmployeeCars.SaveCar(new cCar(AccountID, empID, car.carid, carMake, carModel, regNo, car.startdate, car.enddate, car.active, lstMileageCats, engineType, startOdometerReading, car.fuelcard, car.endodometer, car.defaultuom, engineSize, car.createdon, car.createdby, DateTime.UtcNow, employeeid, car.Approved, car.ExemptFromHomeToOffice, vehicleTypeId), false);
+                clsEmployeeCars.SaveCar(new cCar(AccountID, empID, car.carid, carMake, carModel, regNo, car.startdate, car.enddate, car.active, lstMileageCats, engineType, startOdometerReading, car.fuelcard, car.endodometer, car.defaultuom, engineSize, car.createdon, car.createdby, DateTime.UtcNow, employeeid, car.Approved, car.ExemptFromHomeToOffice, vehicleTypeId, car.TaxExpiry, car.IsTaxValid, car.MotExpiry, car.IsMotValid), false);
                 clsLogging.saveLogItem(logID, LogReasonType.SuccessUpdate, element, "Updated car " + carMake + " " + carModel + " with reg no " + regNo);
                 break;
             }
@@ -2608,7 +2608,7 @@ namespace Spend_Management
                 if (mileageCat != null)
                 {
                     lstMileageCats.Add(mileageCat.mileageid);
-                    clsEmployeeCars.SaveCar(new cCar(AccountID, empID, 0, carMake, carModel, regNo, null, null, true, lstMileageCats, engineType, startOdometerReading, false, 0, MileageUOM.Mile, engineSize, DateTime.UtcNow, employeeid, null, null, true, false, vehicleTypeId), false);
+                    clsEmployeeCars.SaveCar(new cCar(AccountID, empID, 0, carMake, carModel, regNo, null, null, true, lstMileageCats, engineType, startOdometerReading, false, 0, MileageUOM.Mile, engineSize, DateTime.UtcNow, employeeid, null, null, true, false, vehicleTypeId, null, false, null, false), false);
                     clsLogging.saveLogItem(logID, LogReasonType.SuccessAdd, element, "Added car " + carMake + " " + carModel + " with reg no " + regNo);
                 }
             }

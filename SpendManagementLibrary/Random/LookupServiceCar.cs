@@ -36,35 +36,11 @@ namespace SpendManagementLibrary.Random
         /// <param name="exemptfromhometooffice">True if the vehicle is exempt from any hoe to office rules</param>
         /// <param name="VehicleTypeId">The type of vehicle </param>
         /// <param name="taxExpiry">The date of the Tax expiry</param>
-        /// <param name="taxStatus">The tax status "Taxed" or not</param>
+        /// <param name="isTaxValid">The tax status "Taxed" or not</param>
         /// <param name="motExpiry">The date of the MOT</param>
-        /// <param name="motStatus">The MOT status "MOT" or not</param>
-        public LookupServiceCar(int accountid, int employeeid, int carid, string make, string model, string regno, DateTime? startdate, DateTime? enddate, bool active, List<int> mileagecats, int vehicleEngineTypeId, long odometer, bool fuelcard, int endodometer, MileageUOM defaultuom, int engineSize, DateTime? createdon, int createdby, DateTime? modifiedon, int? modifiedby, bool approved, bool exemptfromhometooffice, byte? VehicleTypeId, DateTime taxExpiry, string taxStatus, DateTime motExpiry, string motStatus) : base(accountid, employeeid, carid, make, model, regno, startdate, enddate, active, mileagecats, vehicleEngineTypeId, odometer, fuelcard, endodometer, defaultuom, engineSize, createdon, createdby, modifiedon, modifiedby, approved, exemptfromhometooffice, VehicleTypeId)
+        /// <param name="isMotValid">The MOT status "MOT" or not</param>
+        public LookupServiceCar(int accountid, int employeeid, int carid, string make, string model, string regno, DateTime? startdate, DateTime? enddate, bool active, List<int> mileagecats, int vehicleEngineTypeId, long odometer, bool fuelcard, int endodometer, MileageUOM defaultuom, int engineSize, DateTime? createdon, int createdby, DateTime? modifiedon, int? modifiedby, bool approved, bool exemptfromhometooffice, byte? VehicleTypeId, DateTime? taxExpiry, bool isTaxValid, DateTime? motExpiry, bool isMotValid) : base(accountid, employeeid, carid, make, model, regno, startdate, enddate, active, mileagecats, vehicleEngineTypeId, odometer, fuelcard, endodometer, defaultuom, engineSize, createdon, createdby, modifiedon, modifiedby, approved, exemptfromhometooffice, VehicleTypeId, taxExpiry, isTaxValid, motExpiry, isMotValid)
         {
-            this.TaxExpiry = taxExpiry;
-            this.TaxStatus = taxStatus;
-            this.MotExpiry = motExpiry;
-            this.MotStatus = motStatus;
         }
-
-        /// <summary>
-        /// Gets or sets the Tax expiry date
-        /// </summary>
-        public DateTime TaxExpiry { get; set; }
-
-        /// <summary>
-        /// Gets or set the Tax status description
-        /// </summary>
-        public string TaxStatus { get; set; }
-
-        /// <summary>
-        /// Gets or sets the MotExpiry Date
-        /// </summary>
-        public DateTime MotExpiry { get; set; }
-
-        /// <summary>
-        /// Gets or sets the MotStatus description
-        /// </summary>
-        public string MotStatus { get; set; }
     }
 }

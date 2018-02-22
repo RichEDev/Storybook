@@ -517,6 +517,7 @@
     <Compile Include="Helpers\InboundRecordValue.cs" />
     <Compile Include="Helpers\InboundValueTypes.cs" />
     <Compile Include="Helpers\ListItemFactory.cs" />
+    <Compile Include="Helpers\NullableDateTimeHelper.cs" />
     <Compile Include="Helpers\ValidationResponses.cs" />
     <Compile Include="Helpers\ValueTypes.cs" />
     <Compile Include="Holidays\Holiday.cs" />

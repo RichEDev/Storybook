@@ -7,7 +7,7 @@
     using System.Linq;
     using Attributes.Validation;
     using SpendManagementApi.Common;
-
+    using SpendManagementLibrary.Helpers;
     using Common;
     using Interfaces;
     using Employees;
@@ -146,22 +146,22 @@
         /// <summary>
         /// Gets or sets the Tax Expiry of this vehicle
         /// </summary>
-        public DateTime TaxExpiry { get; set; }
+        public string TaxExpiry { get; set; }
 
         /// <summary>
         /// Gets or sets the tax status of this vehicle
         /// </summary>
-        public string TaxStatus { get;set; }
+        public bool IsTaxValid { get;set; }
 
         /// <summary>
         /// Gets or sets the MOT Expiry of this vehicle
         /// </summary>
-        public DateTime MotExpiry { get; set; }
+        public string MotExpiry { get; set; }
 
         /// <summary>
         /// Gets or sets the MOT status of this vehicle
         /// </summary>
-        public string MotStatus { get;set; }
+        public bool IsMotValid { get;set; }
 
         /// <summary>
         /// Validates this Vehicle.
@@ -647,7 +647,11 @@
                 vehicle.ModifiedById,
                 vehicle.Approved,
                 vehicle.IsExemptFromHomeToLocationMileage,
-                (byte)vehicle.VehicleTypeId);
+                (byte)vehicle.VehicleTypeId,
+                NullableDateTimeHelper.Parse(vehicle.TaxExpiry),
+                vehicle.IsTaxValid,
+                NullableDateTimeHelper.Parse(vehicle.MotExpiry),
+                vehicle.IsMotValid);
             return car;
         }
     }

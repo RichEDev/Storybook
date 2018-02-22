@@ -1630,7 +1630,11 @@ public partial class register : Page
                 null,
                 false,
                 false,
-                vehicletypeid);
+                vehicletypeid,
+                null,
+                false,
+                null,
+                false);
 
             var clsEmployeeCars = new cEmployeeCars(accountId, reqEmp.EmployeeID);
             clsEmployeeCars.SaveCar(reqCar);

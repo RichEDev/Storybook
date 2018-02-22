@@ -1184,6 +1184,7 @@
     <Compile Include="shared\code\DVLA\EmployeeToPopulateDrivingLicence.cs" />
     <Compile Include="shared\code\DutyOfCareEmailTemplates.cs" />
     <Compile Include="shared\code\DVLA\LicenceCheckVehicleLookupLogger.cs" />
+    <Compile Include="shared\code\DVLA\MotDocumentRepository.cs" />
     <Compile Include="shared\code\DVLA\TaxDocumentRepository.cs" />
     <Compile Include="shared\code\EasyTree\CustomMenuNode.cs" />
     <Compile Include="shared\code\EasyTree\FilteredFields.cs" />

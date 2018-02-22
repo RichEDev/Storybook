@@ -1,8 +1,4 @@
-﻿using DutyOfCareAPI.DutyOfCare.LicenceCheck.VehicleLookup;
-using SpendManagementLibrary.Employees;
-using SpendManagementLibrary.Vehicles;
-using Spend_Management.Bootstrap;
-
+﻿
 namespace Spend_Management
 {
     using System;
@@ -19,6 +15,10 @@ namespace Spend_Management
     using SpendManagementLibrary.FinancialYears;
     using expenses.code;
     using SpendManagementLibrary.Employees.DutyOfCare;
+    using SpendManagementLibrary.Employees;
+    using SpendManagementLibrary.Helpers;
+    using SpendManagementLibrary.Vehicles;
+    using Spend_Management.Bootstrap;
 
     /// <summary>
     /// Summary description for svcCars
@@ -36,8 +36,6 @@ namespace Spend_Management
         /// <param name="grid">The grid</param>
         public static void AddVehicleTypes(ref cGridNew grid)
         {
-
-
             foreach (CarTypes.VehicleType value in Enum.GetValues(typeof(CarTypes.VehicleType)))
             {
                 string text = Enum.GetName(typeof(CarTypes.VehicleType), value);
@@ -280,36 +278,54 @@ namespace Spend_Management
                 clsCars = new cPoolCars(user.AccountID);
             }
 
+            DateTime? taxExpiryDate = NullableDateTimeHelper.Parse(taxExpiry);
+            DateTime? motExpiryDate = NullableDateTimeHelper.Parse(motExpiry);
+            var taxValid = taxStatus.ToLower() == "true";
+            var motValid = motStatus.ToLower() == "true";
+
             if (carid > 0)
             {
                 cCar oldcar = clsCars.GetCarByID(carid);
                 carPreviouslyActive = oldcar.active;
+                if (!taxExpiryDate.HasValue)
+                {
+                    taxExpiryDate = oldcar.TaxExpiry;
+                    taxValid = oldcar.IsTaxValid;
+                    motExpiryDate = oldcar.MotExpiry;
+                    motValid = oldcar.IsMotValid;
+                }
 
-                car = new cCar(user.AccountID, employeeid, carid, make, model, registration, startdate, enddate, active, mileagecats, vehicleEngineTypeId, startodometer, fuelcard, endodometer,  mileageUnit, enginesize, oldcar.createdon, oldcar.createdby, DateTime.Now, user.EmployeeID, approved, exemptfromhometooffice, vehicletypeid);
+                car = new cCar(user.AccountID, employeeid, carid, make, model, registration, startdate, enddate, active, mileagecats, vehicleEngineTypeId, startodometer, fuelcard, endodometer,  mileageUnit, enginesize, oldcar.createdon, oldcar.createdby, DateTime.Now, user.EmployeeID, approved, exemptfromhometooffice, vehicletypeid, taxExpiryDate, taxValid, motExpiryDate, motValid);
             }
             else
             {
-                car = new cCar(user.AccountID, employeeid, carid, make, model, registration, startdate, enddate, active, mileagecats, vehicleEngineTypeId, startodometer, fuelcard, endodometer, mileageUnit, enginesize, DateTime.Now, user.EmployeeID, null, null, approved, exemptfromhometooffice, vehicletypeid);
+                car = new cCar(user.AccountID, employeeid, carid, make, model, registration, startdate, enddate, active, mileagecats, vehicleEngineTypeId, startodometer, fuelcard, endodometer, mileageUnit, enginesize, DateTime.Now, user.EmployeeID, null, null, approved, exemptfromhometooffice, vehicletypeid, taxExpiryDate, taxValid, motExpiryDate, motValid);
             }
 
             arrCarVals[0] = clsCars.SaveCar(car);
 
-            DateTime taxExpiryDate;
-
-            if (reqProperties.VehicleLookup && DateTime.TryParse(taxExpiry, out taxExpiryDate))
+            
+            if (reqProperties.VehicleLookup && car.employeeid > 0)
             {
-                if (reqProperties.BlockTaxExpiry)
+                if (reqProperties.BlockTaxExpiry && taxExpiryDate.HasValue)
                 {
                     var taxRepo = new TaxDocumentRepository(user, 
                         new cCustomEntities(user),
                         new cFields(user.AccountID),
                         new cTables(user.AccountID));
-                    taxRepo.Add(taxExpiryDate, (int)arrCarVals[0]);
+                    taxRepo.Add(taxExpiryDate.Value, (int)arrCarVals[0]);
                 }
 
                 if (reqProperties.BlockMOTExpiry)
                 {
-                    //TODO: create mot record for this car.        
+                    if (reqProperties.BlockMOTExpiry && motExpiryDate.HasValue)
+                    {
+                        var taxRepo = new MotDocumentRepository(user, 
+                            new cCustomEntities(user),
+                            new cFields(user.AccountID),
+                            new cTables(user.AccountID));
+                        taxRepo.Add(motExpiryDate.Value, (int)arrCarVals[0]);
+                    }      
                 }
             }
 
@@ -398,9 +414,9 @@ namespace Spend_Management
                     false,
                     (byte?) VehicleTypeFactory.Convert(lookupResult.Vehicle.VehicleType),
                     lookupResult.Vehicle.TaxExpiry,
-                    lookupResult.Vehicle.TaxStatus,
+                    lookupResult.Vehicle.TaxStatus == "Taxed",
                     lookupResult.Vehicle.MotExpiry,
-                    lookupResult.Vehicle.MotStatus);
+                    lookupResult.Vehicle.MotStatus == "MOT");
                 
                 return result;
             }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using System.Globalization;
+using Microsoft.Ajax.Utilities;
 using Spend_Management.Bootstrap;
 
 namespace SpendManagementApi.Repositories
@@ -393,18 +394,25 @@ namespace SpendManagementApi.Repositories
             var result = vehicleRepository.Get(carId);
             if (subAccountProperties.VehicleLookup )
             {
-                if (subAccountProperties.BlockTaxExpiry)
+                DateTime taxExpiry;
+                if (subAccountProperties.BlockTaxExpiry && DateTime.TryParseExact(item.TaxExpiry, "dd/MM/yyyy",null,DateTimeStyles.None, out taxExpiry ))
                 {
                     var taxRepo = new TaxDocumentRepository(this.User, 
                         this.ActionContext.CustomEntities,
                         this.ActionContext.Fields,
                         this.ActionContext.Tables);
-                    taxRepo.Add(item.TaxExpiry, carId);
+                    taxRepo.Add(taxExpiry, carId);
                 }
 
-                if (subAccountProperties.BlockMOTExpiry)
+                DateTime motExpiry;
+
+                if (subAccountProperties.BlockMOTExpiry&& DateTime.TryParseExact(item.MotExpiry, "dd/MM/yyyy",null,DateTimeStyles.None, out motExpiry ))
                 {
-                    //TODO: create mot record for this car.        
+                    var motRepo = new MotDocumentRepository(this.User,
+                        this.ActionContext.CustomEntities,
+                        this.ActionContext.Fields,
+                        this.ActionContext.Tables);
+                    motRepo.Add(motExpiry, carId);
                 }
             }
 

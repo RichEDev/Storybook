@@ -39,6 +39,8 @@
     [insuranceAttachID]      INT           NULL,
     [serviceAttachID]        INT           NULL,
 	[ESRVehicleId]			 INT		   NULL, 
-    [vehicletypeid] TINYINT NULL
+    [vehicletypeid]			 TINYINT	   NULL,
+	[TaxValid]				 BIT		   NULL,
+	[MotValid]				 BIT		   NULL
 );
 

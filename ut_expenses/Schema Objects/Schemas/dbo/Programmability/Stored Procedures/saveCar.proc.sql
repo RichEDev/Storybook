@@ -11,21 +11,7 @@
 	@odometer bigint,
 	@fuelcard bit,
 	@endodometer int,
-	@taxexpiry DateTime,
-	@taxlastchecked DateTime,
-	@taxcheckedby int,
-	@mottestnumber nvarchar(50),
-	@motlastchecked DateTime,
-	@motcheckedby int,
-	@motexpiry DateTime,
-	@insurancenumber nvarchar(50),
-	@insuranceexpiry DateTime,
-	@insurancelastchecked DateTime,
-	@insurancecheckedby int,
-	@serviceexpiry DateTime,
-	@servicelastchecked DateTime,
-	@servicecheckedby int,
-	@defaultunit tinyint,
+    @defaultunit tinyint,
 	@enginesize int,
 	@approved bit,
 	@exemptFromHomeToOffice bit,
@@ -33,7 +19,11 @@
 	@userid int,
 	@CUemployeeID INT,
 	@CUdelegateID INT,
-	@vehicletypeid tinyint
+	@vehicletypeid tinyint,
+	@isTaxvalid    bit,
+	@isMotValid    bit,
+	@taxExpiry	DateTime,
+	@motExpiry	DateTime
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -42,8 +32,8 @@ BEGIN
 
     if @carid = 0
 		begin
-			insert into cars (employeeid, make, model, registration, startdate, enddate, cartypeid, active, odometer, fuelcard, endodometer, taxexpiry, taxlastchecked, taxcheckedby, motexpiry, motlastchecked, motcheckedby, mottestnumber, insuranceexpiry, insurancelastchecked, insurancecheckedby, insurancenumber, serviceexpiry, servicelastchecked, servicecheckedby, default_unit, enginesize, approved, createdon, createdby, exemptFromHomeToOffice,vehicletypeid)
-                values (@employeeid,@make,@model,@registration,@startdate,@enddate,@cartypeid,@active,@odometer,@fuelcard,@endodometer,@taxexpiry,@taxlastchecked,@taxcheckedby,@motexpiry,@motlastchecked,@motcheckedby, @mottestnumber, @insuranceexpiry, @insurancelastchecked, @insurancecheckedby, @insurancenumber, @serviceexpiry, @servicelastchecked, @servicecheckedby, @defaultunit, @engineSize, @approved, @date, @userid,@exemptFromHomeToOffice,@vehicletypeid);
+			insert into cars (employeeid, make, model, registration, startdate, enddate, cartypeid, active, odometer, fuelcard, endodometer, default_unit, enginesize, approved, createdon, createdby, exemptFromHomeToOffice,vehicletypeid, taxexpiry, TaxValid, motexpiry, MotValid)
+                values (@employeeid,@make,@model,@registration,@startdate,@enddate,@cartypeid,@active,@odometer,@fuelcard,@endodometer, @defaultunit, @engineSize, @approved, @date, @userid,@exemptFromHomeToOffice,@vehicletypeid, @taxexpiry, @istaxvalid, @motexpiry, @isMotValid);
 			set @carid = scope_identity();
 
 			if @CUemployeeID > 0
@@ -64,29 +54,15 @@ BEGIN
 			declare @oldodometer bigint;
 			declare @oldfuelcard bit;
 			declare @oldendodometer int;
-			declare @oldtaxexpiry DateTime;
-			declare @oldtaxlastchecked DateTime;
-			declare @oldtaxcheckedby int;
-			declare @oldmottestnumber nvarchar(50);
-			declare @oldmotlastchecked DateTime;
-			declare @oldmotcheckedby int;
-			declare @oldmotexpiry DateTime;
-			declare @oldinsurancenumber nvarchar(50);
-			declare @oldinsuranceexpiry DateTime;
-			declare @oldinsurancelastchecked DateTime;
-			declare @oldinsurancecheckedby int;
-			declare @oldserviceexpiry DateTime;
-			declare @oldservicelastchecked DateTime;
-			declare @oldservicecheckedby int;
 			declare @olddefaultunit tinyint;
 			declare @oldenginesize int;
 			declare @oldapproved bit;
 			declare @oldexemptFromHomeToOffice bit;
 			declare @oldvehicletypeid tinyint;
 
-			select @oldstartdate = startdate, @oldenddate = enddate, @oldmake = make, @oldmodel = model, @oldregistration = registration, @oldcartypeid = cartypeid, @oldactive = active, @oldodometer = odometer, @oldfuelcard = fuelcard, @oldendodometer = endodometer, @oldtaxexpiry = taxexpiry, @oldtaxlastchecked = taxlastchecked, @oldtaxcheckedby = taxcheckedby, @oldmottestnumber = mottestnumber, @oldmotlastchecked = motlastchecked, @oldmotcheckedby = motcheckedby, @oldmotexpiry = motexpiry, @oldinsurancenumber = insurancenumber, @oldinsuranceexpiry = insuranceexpiry, @oldinsurancelastchecked = insurancelastchecked, @oldinsurancecheckedby = insurancecheckedby, @oldserviceexpiry = serviceexpiry, @oldservicelastchecked = servicelastchecked, @oldservicecheckedby = servicecheckedby, @olddefaultunit = default_unit, @oldenginesize = enginesize, @oldapproved = approved, @oldexemptFromHomeToOffice = exemptFromHomeToOffice, @oldvehicletypeid = vehicletypeid from cars where carid = @carid;
+			select @oldstartdate = startdate, @oldenddate = enddate, @oldmake = make, @oldmodel = model, @oldregistration = registration, @oldcartypeid = cartypeid, @oldactive = active, @oldodometer = odometer, @oldfuelcard = fuelcard, @oldendodometer = endodometer, @olddefaultunit = default_unit, @oldenginesize = enginesize, @oldapproved = approved, @oldexemptFromHomeToOffice = exemptFromHomeToOffice, @oldvehicletypeid = vehicletypeid from cars where carid = @carid;
 
-			update cars set make = @make, model = @model, registration = @registration, odometer = @odometer, startdate = @startdate, enddate = @enddate, cartypeid = @cartypeid, active = @active, fuelcard = @fuelcard, endodometer = @endodometer, taxexpiry = @taxexpiry, taxlastchecked = @taxlastchecked, taxcheckedby = @taxcheckedby, motexpiry = @motexpiry, motlastchecked = @motlastchecked, motcheckedby = @motcheckedby, mottestnumber = @mottestnumber, insuranceexpiry = @insuranceexpiry, insurancelastchecked = @insurancelastchecked, insurancecheckedby = @insurancecheckedby, insurancenumber = @insurancenumber, serviceexpiry = @serviceexpiry, servicelastchecked = @servicelastchecked, servicecheckedby = @servicecheckedby, default_unit = @defaultunit, enginesize=@engineSize, approved=@approved, modifiedon = @date, modifiedby = @userid, exemptFromHomeToOffice = @exemptFromHomeToOffice, vehicletypeid = @vehicletypeid where carid = @carid;
+			update cars set make = @make, model = @model, registration = @registration, odometer = @odometer, startdate = @startdate, enddate = @enddate, cartypeid = @cartypeid, active = @active, fuelcard = @fuelcard, endodometer = @endodometer, default_unit = @defaultunit, enginesize=@engineSize, approved=@approved, modifiedon = @date, modifiedby = @userid, exemptFromHomeToOffice = @exemptFromHomeToOffice, vehicletypeid = @vehicletypeid, taxexpiry=@taxExpiry, TaxValid=@isTaxvalid, motexpiry=@motExpiry, MotValid=@isMotValid where carid = @carid;
 
 					if @CUemployeeID > 0
 			BEGIN
@@ -121,35 +97,7 @@ BEGIN
 				if (@oldfuelcard <> @fuelcard) or (@oldfuelcard is NULL and @fuelcard is not NULL) 
 						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, '9d3081c9-789d-49df-8764-1a3d4f32ae29', @oldfuelcard, @fuelcard, @registration, NULL;
 				if (@oldendodometer <> @endodometer) or (@oldendodometer is NULL and @endodometer is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, 'cf725092-d2f0-48b0-a359-d8149750de81', @oldendodometer, @endodometer, @registration, NULL;
-				if (@oldtaxexpiry <> @taxexpiry) or (@oldtaxexpiry is NULL and @taxexpiry is not NULL)
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, '3e49160f-349a-466f-b9bf-6f1015b8415a', @oldtaxexpiry, @taxexpiry, @registration, NULL;
-				if (@oldtaxlastchecked <> @taxlastchecked) or (@oldtaxlastchecked is NULL and @taxlastchecked is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, '22f22e47-7756-4ceb-b2ce-9d7008be8e6a', @oldtaxlastchecked, @taxlastchecked, @registration, NULL;
-				if (@oldtaxcheckedby <> @taxcheckedby) or (@oldtaxcheckedby is NULL and @taxcheckedby is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, '184C7C86-4228-4B9D-805E-5FAEB0B42DE3', @oldtaxcheckedby, @taxcheckedby, @registration, NULL;
-				if (@oldmottestnumber <> @mottestnumber) or (@oldmottestnumber is NULL and @mottestnumber is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, '77a9770f-12c9-4966-98ce-6300ce5fbb57', @oldmottestnumber, @mottestnumber, @registration, NULL;
-				if (@oldmotlastchecked <> @motlastchecked) or (@oldmotlastchecked is NULL and @motlastchecked is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, 'b1c98355-ae47-4bd1-b4a8-71622acc1b2f', @oldmotlastchecked, @motlastchecked, @registration, NULL;
-				if (@oldmotcheckedby <> @motcheckedby) or (@oldmotcheckedby is NULL and @motcheckedby is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, '082BCA3A-A172-4601-8CFE-52A4DDE3A16C', @oldmotcheckedby, @motcheckedby, @registration, NULL;
-				if (@oldmotexpiry <> @motexpiry) or (@oldmotexpiry is NULL and @motexpiry is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, 'eedfb5e6-848b-4c5f-9cb9-20e20ace0f7d', @oldmotexpiry, @motexpiry, @registration, NULL;
-				if (@oldinsurancenumber <> @insurancenumber) or (@oldinsurancenumber is NULL and @insurancenumber is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, '5d90d3a4-40da-403b-b417-2ac445393a37', @oldinsurancenumber, @insurancenumber, @registration, NULL;
-				if (@oldinsuranceexpiry <> @insuranceexpiry) or (@oldinsuranceexpiry is NULL and @insuranceexpiry is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, 'bab44a26-5690-4f3e-8003-206ee3fb673f', @oldinsuranceexpiry, @insuranceexpiry, @registration, NULL;
-				if (@oldinsurancelastchecked <> @insurancelastchecked) or (@oldinsurancelastchecked is NULL and @insurancelastchecked is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, '7c8b48f2-6299-400c-85c0-d6584232cddf', @oldinsurancelastchecked, @insurancelastchecked, @registration, NULL;
-				if (@oldinsurancecheckedby <> @insurancecheckedby) or (@oldinsurancecheckedby is NULL and @insurancecheckedby is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, 'A8A75016-A8C6-4CFD-8487-FC661022749C', @oldinsurancecheckedby, @insurancecheckedby, @registration, NULL;
-				if (@oldserviceexpiry <> @serviceexpiry) or (@oldserviceexpiry is NULL and @serviceexpiry is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, 'a380a705-c14b-4a07-a510-2f1a34fada98', @oldserviceexpiry, @serviceexpiry, @registration, NULL;
-				if (@oldservicelastchecked <> @servicelastchecked) or (@oldservicelastchecked is NULL and @servicelastchecked is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, '766682af-1fde-43f5-941d-8c5fcad1c7db', @oldservicelastchecked, @servicelastchecked, @registration, NULL;
-				if (@oldservicecheckedby <> @servicecheckedby) or (@oldservicecheckedby is NULL and @servicecheckedby is not NULL) 
-						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, '09F003F9-1F32-4CD9-A83E-2804AEA72F8B', @oldservicecheckedby, @servicecheckedby, @registration, NULL;
+						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, 'cf725092-d2f0-48b0-a359-d8149750de81', @oldendodometer, @endodometer, @registration, NULL;					
 				if (@olddefaultunit <> @defaultunit) or (@olddefaultunit is NULL and @defaultunit is not NULL) 
 						exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 13, @carid, 'f64ae656-cb64-4a9b-88fe-50d73538166a', @olddefaultunit, @defaultunit, @registration, NULL;
 				if (@oldenginesize <> @enginesize) or (@oldenginesize is NULL and @enginesize is not NULL) 
