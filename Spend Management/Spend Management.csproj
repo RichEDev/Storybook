@@ -641,6 +641,7 @@
     <Content Include="shared\images\iphone.jpg" />
     <Content Include="shared\images\iphone.png" />
     <Content Include="shared\images\maintenance.jpg" />
+    <Content Include="shared\javaScript\tooltips.js" />
     <Content Include="shared\noBankAccount.aspx" />
     <Content Include="shared\usercontrols\bankAccounts.ascx" />
     <Content Include="shared\usercontrols\BottomScripts.ascx" />
