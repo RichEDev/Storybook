@@ -510,6 +510,7 @@
     </Content>
     <Content Include="shared\information\PaymentHistory.aspx" />
     <Content Include="shared\javaScript\common.js" />
+    <Content Include="shared\javaScript\exportoptions.js" />
     <Content Include="shared\javaScript\minify\CustomMenuStructure.js" />
     <Content Include="shared\javaScript\dvlaCheck.js" />
     <Content Include="shared\javaScript\jstree.js" />
@@ -648,6 +649,7 @@
     <Content Include="shared\images\iphone.jpg" />
     <Content Include="shared\images\iphone.png" />
     <Content Include="shared\images\maintenance.jpg" />
+    <Content Include="shared\javaScript\tooltips.js" />
     <Content Include="shared\noBankAccount.aspx" />
     <Content Include="shared\usercontrols\bankAccounts.ascx" />
     <Content Include="shared\usercontrols\BottomScripts.ascx" />

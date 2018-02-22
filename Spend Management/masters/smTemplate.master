@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
     <link id="favLink" runat="server" rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link id="jQueryCss" runat="server" type="text/css" href="/static/js/jQuery/jquery-ui-1.9.2.custom.css" rel="Stylesheet" />
+    <link href="/static/syncfusion/css/web/default-theme/ej.web.all.css" rel="stylesheet" />
     <title><asp:Literal ID="litpagetitle" runat="server" meta:resourcekey="litpagetitleResource1"/></title>
      <uc1:top_scripts ID="css_scripts" runat="server" />
 

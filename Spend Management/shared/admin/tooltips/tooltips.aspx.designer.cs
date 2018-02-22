@@ -13,15 +13,6 @@ namespace Spend_Management {
     public partial class tooltips {
         
         /// <summary>
-        /// gridtooltips control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Infragistics.WebUI.UltraWebGrid.UltraWebGrid gridtooltips;
-        
-        /// <summary>
         /// hlClose control.
         /// </summary>
         /// <remarks>

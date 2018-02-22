@@ -210,15 +210,6 @@ public partial class reports_exportoptions {
     protected global::System.Web.UI.WebControls.Image Image6;
     
     /// <summary>
-    /// gridflatfile control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::Infragistics.WebUI.UltraWebGrid.UltraWebGrid gridflatfile;
-    
-    /// <summary>
     /// lblfooter control.
     /// </summary>
     /// <remarks>
@@ -261,7 +252,7 @@ public partial class reports_exportoptions {
     /// Auto-generated field.
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
-    protected global::System.Web.UI.WebControls.ImageButton cmdok;
+    protected global::System.Web.UI.HtmlControls.HtmlImage cmdok;
     
     /// <summary>
     /// usrTooltip control.
