@@ -140,16 +140,39 @@ public partial class reports_exportoptions : System.Web.UI.Page
     /// <summary>
     /// Saves the export options
     /// </summary>
-    /// <param name="optdelimitertab">Checks if Delimiter is enabled or not</param>
-    /// <param name="txtdelimiter">The value of Delimiter, if enabled</param>
-    /// <param name="cmbfooterValue">The footer report value</param>
-    /// <param name="reportId">The report id</param>
-    /// <param name="showheadersexcel">Checks if Excel Options header is enabled or not</param>
-    /// <param name="showheaderscsv">Checks if CSV Options header is enabled or not</param>
-    /// <param name="showheadersflatfile">Checks if Flat File Options header is enabled or not</param>
-    /// <param name="removecarriagereturns">Checks if Carriage Returns should be removed ot not</param>
-    /// <param name="encloseinspeechmarks">Checks if Speech Marks should be enabled</param>
-    /// <param name="fieldLengths">The JSON of field length values</param>
+    /// <param name="optdelimitertab">
+    /// Checks if Delimiter is enabled or not
+    /// </param>
+    /// <param name="txtdelimiter">
+    /// The value of Delimiter, if enabled
+    /// </param>
+    /// <param name="cmbfooterValue">
+    /// The footer report value
+    /// </param>
+    /// <param name="reportId">
+    /// The report id
+    /// </param>
+    /// <param name="showheadersexcel">
+    /// Checks if Excel Options header is enabled or not
+    /// </param>
+    /// <param name="showheaderscsv">
+    /// Checks if CSV Options header is enabled or not
+    /// </param>
+    /// <param name="showheadersflatfile">
+    /// Checks if Flat File Options header is enabled or not
+    /// </param>
+    /// <param name="removecarriagereturns">
+    /// Checks if Carriage Returns should be removed ot not
+    /// </param>
+    /// <param name="encloseinspeechmarks">
+    /// Checks if Speech Marks should be enabled
+    /// </param>
+    /// <param name="fieldLengths">
+    /// The JSON of field length values
+    /// </param>
+    /// <returns>
+    /// The <see cref="bool"/> true when export options have successfulyy saved.
+    /// </returns>
     [WebMethod(EnableSession = true)]
     public static bool SaveExportOptions(bool optdelimitertab, string txtdelimiter, string cmbfooterValue, string reportId, bool showheadersexcel, bool showheaderscsv, bool showheadersflatfile, bool removecarriagereturns, bool encloseinspeechmarks, string fieldLengths)
     {
@@ -202,7 +225,7 @@ public partial class reports_exportoptions : System.Web.UI.Page
     /// <param name="subaccountID">The sub account id of the logged in user</param>
     /// <param name="basetable">The ID of base table used to create the report</param>
     /// <param name="reportid">The report ID</param>
-    /// <returns></returns>
+    /// <returns>Returns the list of footer reports</returns>
     public ListItem[] CreateFooterList(int accountID, int subaccountID, Guid basetable, Guid reportid)
     {
         cReports clsreports = new cReports(accountID,subaccountID);
