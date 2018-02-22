@@ -63,10 +63,6 @@
     <CodeAnalysisRuleSet>EsrNhsHubFileTransferService.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <!-- Customizable Output Directory Opt-In for TFS Build (non-web application projects) -->
-  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
-    <OutputPath>$(TeamBuildOutDir)\_PublishedServices\$(MSBuildProjectName)</OutputPath>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Testing|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Testing\</OutputPath>
@@ -86,6 +82,10 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>EsrNhsHubFileTransferService.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <!-- Customizable Output Directory Opt-In for TFS Build (non-web application projects) -->
+  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+    <OutputPath>$(TeamBuildOutDir)\_PublishedServices\$(MSBuildProjectName)</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">

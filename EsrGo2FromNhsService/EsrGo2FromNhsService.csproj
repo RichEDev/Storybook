@@ -60,10 +60,6 @@
     <CodeAnalysisRuleSet>EsrGo2FromNhsService.Production.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <!-- Customizable Output Directory Opt-In for TFS Build (non-web application projects) -->
-  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
-    <OutputPath>$(TeamBuildOutDir)\_PublishedServices\$(MSBuildProjectName)</OutputPath>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Testing|AnyCPU'">
     <OutputPath>bin\Testing\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -85,6 +81,10 @@
     <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
     <CodeAnalysisRuleSet>EsrGo2FromNhsService.Production.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <!-- Customizable Output Directory Opt-In for TFS Build (non-web application projects) -->
+  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+    <OutputPath>$(TeamBuildOutDir)\_PublishedServices\$(MSBuildProjectName)</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
