@@ -125,10 +125,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <!-- Customizable Output Directory Opt-In for TFS Build (web application projects) -->
-  <!--<PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
     <OutDir>$(TeamBuildOutDir)</OutDir>
-    <NoWarn>42353,42354,42355</NoWarn>
-  </PropertyGroup>-->
+  </PropertyGroup>
   <!--<Target Name="PublishWebSites" AfterTargets="Publish">
     <ItemGroup Label="ItemsForDeploymment">
       <Folders Include="$(publishUrl)\**\*.*" />
