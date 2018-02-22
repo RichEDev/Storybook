@@ -1,3 +1,4 @@
+Imports System.IO
 Imports FWClasses
 Imports FWReportsLibrary
 Imports SpendManagementLibrary
@@ -318,20 +319,20 @@ Namespace Framework2006
         Private Sub UploadTemplate()
             Dim curUser As CurrentUser = cMisc.GetCurrentUser()
             Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, New cAccountSubAccounts(curUser.Account.accountid).getSubAccountsCollection, curUser.CurrentSubAccountId)
-            Dim path, sql As String
+            Dim fullFileName, sql As String
             Dim errstr As String = ""
             Dim FWDb As New cFWDBConnection
             Dim isErr As Boolean = False
             Dim emailTemplateFilePath As String =  GlobalVariables.GetAppSetting("EmailTemplateFilePath")
-            If Not emailTemplateFilePath.EndsWith("/") Then
-                emailTemplateFilePath = emailTemplateFilePath + "/"
+            If Not emailTemplateFilePath.EndsWith("\") And Not emailTemplateFilePath.EndsWith("/") Then
+                emailTemplateFilePath = emailTemplateFilePath + "\"
             End If
             Dim storePath As String = emailTemplateFilePath & curUser.Account.companyid
 
             Dim fileIn() As String = attachment.PostedFile.FileName.Split("\")
             Dim fileName As String = fileIn(fileIn.GetUpperBound(0))
 
-            path = Server.MapPath(System.IO.Path.Combine(storePath, fileName))
+            fullFileName = System.IO.Path.Combine(storePath, fileName)
 
             FWDb.DBOpen(fws, False)
 
@@ -352,18 +353,22 @@ Namespace Framework2006
 
             'Error?
             If isErr = False Then
-                If System.IO.Directory.Exists(Server.MapPath(storePath)) = False Then
-                    System.IO.Directory.CreateDirectory(Server.MapPath(storePath))
+                If System.IO.Directory.Exists(storePath) = False Then
+                    System.IO.Directory.CreateDirectory(storePath)
                 End If
 
-                If System.IO.File.Exists(path) = True Then
-                    System.IO.File.Delete(path)
+                If System.IO.File.Exists(fullFileName) = True Then
+                    System.IO.File.Delete(fullFileName)
                 End If
-                attachment.PostedFile.SaveAs(path)
+
+                Dim streamWriter As New StreamWriter(fullFileName, FileMode.Create)
+                attachment.PostedFile.InputStream.CopyTo(streamWriter.BaseStream)
+                streamWriter.Flush()
+                streamWriter.Close()
 
                 ' open file, get headers
                 Dim x As New FWCommon.EmailTemplates
-                Dim res As System.Collections.Specialized.NameValueCollection = x.ReadTemplate(path)
+                Dim res As System.Collections.Specialized.NameValueCollection = x.ReadTemplate(fullFileName)
 
                 Dim templateType As Integer = Integer.Parse(res("templateType"))
                 Dim templateName As String = res("templateTitle")
