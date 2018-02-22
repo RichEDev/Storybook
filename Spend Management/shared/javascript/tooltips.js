@@ -17,11 +17,9 @@
             allowPaging: true,
             allowGrouping: true,
             allowSorting: true,
-            groupSettings: { groupedColumns: ["page"] },
+            groupSettings: { groupedColumns: ["page"], showUngroupButton: false, showDropArea: false},
             allowTextWrap: true,
             textWrapSettings: { wrapMode: "both" }
         });
-
-        $(".e-ungroupbutton").remove();
     }
 });
