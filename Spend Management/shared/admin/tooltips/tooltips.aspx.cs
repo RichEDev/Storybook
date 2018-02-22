@@ -68,9 +68,12 @@
             }
         }
 
-
+        /// <summary>
+        /// Gets the data set for tooltips
+        /// </summary>
+        /// <returns>Returns the JSON of grid data</returns>
         [WebMethod]
-        public static string GetGriDataSet()
+        public static string GetGridDataSet()
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
             var clshelp = new cHelp(currentUser.AccountID);

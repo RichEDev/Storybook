@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    PageMethods.GetGriDataSet(InitialiseGrid);
+    PageMethods.GetGridDataSet(InitialiseGrid);
 
     function InitialiseGrid(data) {
 
