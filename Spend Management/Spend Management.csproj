@@ -503,6 +503,7 @@
     </Content>
     <Content Include="shared\information\PaymentHistory.aspx" />
     <Content Include="shared\javaScript\common.js" />
+    <Content Include="shared\javaScript\exportoptions.js" />
     <Content Include="shared\javaScript\minify\CustomMenuStructure.js" />
     <Content Include="shared\javaScript\dvlaCheck.js" />
     <Content Include="shared\javaScript\jstree.js" />

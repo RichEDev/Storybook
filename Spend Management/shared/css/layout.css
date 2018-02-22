@@ -3770,7 +3770,6 @@ div > textarea#txtAreaViewLogs {
     margin: 10px 0 4px 0;
 }
 
-
-#tooltipsGrid th.e-headercell {
+#tooltipsGrid th.e-headercell, #gridFlatFile th.e-headercell {
     color: #282827;
 }
