@@ -84,9 +84,9 @@
     <CodeAnalysisRuleSet>expenses.Production.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <!-- Customizable Output Directory Opt-In for TFS Build (web application projects) -->
-  <!--<PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
     <OutDir>$(TeamBuildOutDir)</OutDir>
-  </PropertyGroup>-->
+  </PropertyGroup>
   <!--<Target Name="PublishWebSites" AfterTargets="Publish">
     <ItemGroup Label="ItemsForDeploymment">
       <Folders Include="$(publishUrl)\**\*.*" />
@@ -739,18 +739,24 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Feature.Flags.json" />
+    <None Include="log4net.Main.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+     </None>
     <None Include="log4net.Debug.config">
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>
     </None>
+    <None Include="log4net.Testing.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     <None Include="log4net.Production.config">
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="log4net.Automated Build.config">
-      <SubType>Designer</SubType>
-      <DependentUpon>log4net.config</DependentUpon>
     </None>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.CorporateDiligence.config">
@@ -763,13 +769,6 @@
     <None Include="Web.Mobile.config">
       <DependentUpon>Web.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Automated Build.config">
-      <DependentUpon>Web.config</DependentUpon>
-      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Main.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2295,6 +2294,24 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Testing|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisRuleSet>expenses.Production.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Main|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisRuleSet>expenses.Production.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

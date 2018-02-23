@@ -60,6 +60,28 @@
     <CodeAnalysisRuleSet>EsrGo2FromNhsService.Production.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Testing|AnyCPU'">
+    <OutputPath>bin\Testing\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisRuleSet>EsrGo2FromNhsService.Production.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Main|AnyCPU'">
+    <OutputPath>bin\Main\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisRuleSet>EsrGo2FromNhsService.Production.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <!-- Customizable Output Directory Opt-In for TFS Build (non-web application projects) -->
   <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
     <OutputPath>$(TeamBuildOutDir)\_PublishedServices\$(MSBuildProjectName)</OutputPath>
@@ -107,12 +129,6 @@
       <DependentUpon>App.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
-    <None Include="App.Release.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
-    <None Include="App.Automated Build.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
     <None Include="App.Production.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
@@ -122,7 +138,12 @@
     <None Include="App.Testing.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
-    <None Include="log4net.Automated Build.config">
+    <None Include="log4net.Main.config">
+      <DependentUpon>log4net.config</DependentUpon>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="log4net.Testing.config">
       <DependentUpon>log4net.config</DependentUpon>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

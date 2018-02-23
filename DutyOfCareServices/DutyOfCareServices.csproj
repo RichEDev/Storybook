@@ -60,6 +60,26 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Testing|AnyCPU'">
+    <OutputPath>bin\Testing\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Main|AnyCPU'">
+    <OutputPath>bin\Main\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <!-- Customizable Output Directory Opt-In for TFS Build (web application projects) -->
   <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
     <OutputPath>$(TeamBuildOutDir)\_PublishedServices\$(MSBuildProjectName)</OutputPath>
@@ -100,12 +120,6 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="App.Release.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
-    <None Include="App.Automated Build.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
     <None Include="App.Production.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
@@ -120,15 +134,19 @@
       <DependentUpon>App.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
+    <None Include="log4net.Main.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+    </None>
+    <None Include="log4net.Testing.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>log4net.config</DependentUpon>
+    </None>
     <None Include="log4net.Debug.config">
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>
     </None>
     <None Include="log4net.Production.config">
-      <SubType>Designer</SubType>
-      <DependentUpon>log4net.config</DependentUpon>
-    </None>
-    <None Include="log4net.Automated Build.config">
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>
     </None>
