@@ -1213,6 +1213,7 @@
     <Compile Include="shared\code\Validation\BankAccount\IBankAccountValidator.cs" />
     <Compile Include="shared\code\Validation\BankAccount\PostCodeAnywhere\BankAccountPostCodeAnywhereValidFactory.cs" />
     <Compile Include="shared\code\Validation\BankAccount\PostCodeAnywhere\PostCodeAnywhereBankAccountValidator.cs" />
+    <Compile Include="shared\code\VehicleValidatorCheck.cs" />
     <Compile Include="shared\ExpensesMobileResetPasswordRedirect.aspx.cs">
       <DependentUpon>ExpensesMobileResetPasswordRedirect.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

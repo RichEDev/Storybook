@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Text;
+    using System.Linq;
     using System.Web.UI.WebControls;
 
     /// <summary>
@@ -21,7 +22,7 @@
         /// <param name="expenseItemDate">date of the expense item</param>
         /// <param name="activeCars">The cars to check duty of care results for</param>
         /// <returns>List of documents which are not valid with a bool value whether manual licence is valid or not</returns>
-        public Dictionary<List<DocumentExpiryResult>, bool> PassesDutyOfCare(int accountId, List<cCar> activeCars, int employeeId, DateTime expenseItemDate, bool hasDvlaLookupKeyAndDvlaConnectLicenceElement)
+        public Dictionary<List<DocumentExpiryResult>, bool> PassesDutyOfCare(int accountId, List<cCar> activeCars, int employeeId, DateTime expenseItemDate, bool hasDvlaLookupKeyAndDvlaConnectLicenceElement, cAccountProperties accountProperties, IVehicleValidator vehicleValidator)
         {
             var listOfDofCDocuments = new List<DocumentExpiryResult>();
             var results = new Dictionary<List<DocumentExpiryResult>, bool>();

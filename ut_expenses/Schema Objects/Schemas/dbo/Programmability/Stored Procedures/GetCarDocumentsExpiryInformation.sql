@@ -1,7 +1,4 @@
-﻿IF exists (select * from sys.procedures where name = 'GetCarDocumentsExpiryInformation') 
-	drop procedure GetCarDocumentsExpiryInformation;
-GO
-SET NOCOUNT ON;
+﻿
 
 DECLARE @sqlQuery1 NVARCHAR(MAX);
 DECLARE @sqlQuery3 NVARCHAR(MAX);
@@ -27,9 +24,9 @@ SELECT @InsuranceValueId = cast(valueid AS NVARCHAR(10)) FROM customEntityAttrib
 SELECT @BreakdownValueId = cast(valueid AS NVARCHAR(10)) FROM customEntityAttributeListItems WHERE attributeid = @attVehicleTypeValue	AND item = 'Breakdown Cover';
 INSERT INTO @StatusValueId SELECT valueid FROM customEntityAttributeListItems WHERE attributeid = @attStatusValue	AND item IN ('Reviewed-OK', 'Automatic Lookup');
 
-declare @ValueList nvarchar(1000) ;
-select @valueList = COALESCE(@ValueList + ',','') + cast(c1 as nvarchar(10))  from @StatusValueId;
-set @ValueList = ' IN (' + @ValueList + ')';
+DECLARE @ValueList NVARCHAR(1000) ;
+SELECT @valueList = COALESCE(@ValueList + ',','') + CAST(c1 AS NVARCHAR(10))  FROM @StatusValueId;
+SET @ValueList = ' IN (' + @ValueList + ')';
 
 
 SET NOCOUNT OFF;

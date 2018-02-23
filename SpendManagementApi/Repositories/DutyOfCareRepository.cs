@@ -8,6 +8,8 @@
     using SpendManagementApi.Interfaces;
     using SpendManagementApi.Models.Responses;
     using SpendManagementApi.Models.Types;
+    using SpendManagementLibrary.Interfaces;
+    using Spend_Management.shared.code;
 
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees.DutyOfCare;
@@ -71,6 +73,8 @@
         {
             List<cCar> activeCars = new List<cCar>();
             var date = this.DetermineExpenseDate(expenseDate);
+            var subAccounts = new cAccountSubAccounts(this.User.AccountID);
+            cAccountProperties accountProperties = subAccounts.getSubAccountById(this.User.CurrentSubAccountId).SubAccountProperties;            
 
             if (employeeId > 0)
             {
@@ -88,7 +92,9 @@
                 activeCars,
                 employeeId > 0 ? employeeId : this.User.EmployeeID,
                 date,
-                this.User.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect));
+                this.User.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), 
+                accountProperties, 
+                new VehicleValidatorCheck(cMisc.GetCurrentUser(), accountProperties));
 
             string consentMessage = string.Empty;
             bool isManualDocumentValid = dutyOfCareResults.FirstOrDefault().Value;

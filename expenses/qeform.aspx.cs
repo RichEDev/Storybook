@@ -14,6 +14,7 @@ namespace expenses
     using SpendManagementLibrary.Employees;
     using Syncfusion.XlsIO;
     using SpendManagementLibrary.Employees.DutyOfCare;
+    using Spend_Management.shared.code;
 
     public partial class qeform : Page
     {
@@ -128,7 +129,7 @@ namespace expenses
             int employeeid = (int)this.ViewState["employeeid"];
             Employee reqemp = clsemployees.GetEmployeeById(employeeid);
             cEmployeeCars clsEmployeeCars = new cEmployeeCars((int)ViewState["accountid"], employeeid);
-            var documentExpiryResult = new DutyOfCareDocuments().PassesDutyOfCare(user.AccountID, clsEmployeeCars.GetActiveCars(includePoolCars: false), employeeid, Convert.ToDateTime(this.todaysDate), user.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect));
+            var documentExpiryResult = new DutyOfCareDocuments().PassesDutyOfCare(user.AccountID, clsEmployeeCars.GetActiveCars(includePoolCars: false), employeeid, Convert.ToDateTime(this.todaysDate), user.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), accountProperties, new VehicleValidatorCheck(cMisc.GetCurrentUser(), accountProperties));
             #region header
 
 

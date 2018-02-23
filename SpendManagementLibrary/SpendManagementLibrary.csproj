@@ -552,6 +552,7 @@
     <Compile Include="Interfaces\IMasterPage.cs" />
     <Compile Include="Interfaces\IDutyOfCareDocument .cs" />
     <Compile Include="Interfaces\IValidatable.cs" />
+    <Compile Include="Interfaces\IVehicleValidator.cs" />
     <Compile Include="JourneyDeductionRules\FixedDeductionIfStartOrFinishHome.cs" />
     <Compile Include="JourneyDeductionRules\IJourneyDistances.cs" />
     <Compile Include="JourneyDeductionRules\JourneyDistances.cs" />
