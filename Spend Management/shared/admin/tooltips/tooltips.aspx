@@ -8,7 +8,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="contentleft" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="contentmain" runat="server">
-    <script src="/shared/javaScript/tooltips.js?date=22022018"></script>
+    <script src="/shared/javaScript/tooltipsgrid.js?date=22022018"></script>
     <div class="formpanel formpanel_padding">
         <div id="tooltipsGrid"></div>
     <div class="formbuttons">
