@@ -305,7 +305,7 @@ namespace Spend_Management
             arrCarVals[0] = clsCars.SaveCar(car);
 
             
-            if (reqProperties.VehicleLookup && car.employeeid > 0)
+            if (reqProperties.VehicleLookup && car.employeeid > 0 && carid == 0)
             {
                 if (reqProperties.BlockTaxExpiry && taxExpiryDate.HasValue)
                 {

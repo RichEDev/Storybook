@@ -52,11 +52,26 @@
             foreach (var car in activeCars)
             {
                 if (!string.IsNullOrEmpty(car.registration))
-                { 
-                var documents = documentsInformation.GetCarExpiryInformation(accountId, car.carid, expenseItemDate);
-                foreach (IDutyOfCareDocument document in documents)
                 {
-                    result = document.HasExpired(expenseItemDate.Date);
+
+                    var documents = documentsInformation.GetCarExpiryInformation(accountId, car.carid, expenseItemDate);
+
+                    if (accountProperties.VehicleLookup)
+                    {
+                        var hasExpired = this.HasTaxOrMotExpiredForThisVehicle(documents, expenseItemDate); //if expired update car
+                        if (hasExpired && (car.IsMotValid || car.IsTaxValid)) 
+                        {
+                            var updatedCar = vehicleValidator.ValidateCar(car);
+                            if (updatedCar.IsTaxValid && updatedCar.IsMotValid) //if valid after update get docs
+                            {
+                                documents = documentsInformation.GetCarExpiryInformation(accountId, car.carid, expenseItemDate);
+                            }
+                        }
+                    }
+               
+                    foreach (IDutyOfCareDocument document in documents)
+                    {
+                        result = document.HasExpired(expenseItemDate.Date);
 
                         if (result.HasExpired)
                         {
@@ -99,6 +114,25 @@
 
             return classOneBusinessInfo;
 
+        }
+
+        /// <summary>
+        /// Checks to see if any MOT or Tax documents have expired.
+        /// </summary>
+        /// <param name="documents">A <see cref="List{T}"/>of <seealso cref="IDutyOfCareDocument"/></param>
+        /// <param name="expenseItemDate">The date to check against.</param>
+        /// <returns>True if either MOT or tax have expired.</returns>
+        private bool HasTaxOrMotExpiredForThisVehicle(List<IDutyOfCareDocument> documents, DateTime expenseItemDate)
+        {
+            foreach (IDutyOfCareDocument document in documents.Where(d => d.GetType() == typeof(TaxDocument) || d.GetType() == typeof(MOTDocument)))
+            {
+                if (document.HasExpired(expenseItemDate).HasExpired)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
         
     }

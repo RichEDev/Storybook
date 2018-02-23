@@ -1,8 +1,6 @@
-﻿CREATE PROCEDURE [dbo].[GetCarDocumentsExpiryInformation]
-@carId INT,
-@expenseItemDate DATETIME
-AS
-BEGIN
+﻿IF exists (select * from sys.procedures where name = 'GetCarDocumentsExpiryInformation') 
+	drop procedure GetCarDocumentsExpiryInformation;
+GO
 SET NOCOUNT ON;
 
 DECLARE @sqlQuery1 NVARCHAR(MAX);
@@ -12,7 +10,7 @@ DECLARE @TaxValueId NVARCHAR(10);
 DECLARE @MotValueId NVARCHAR(10);
 DECLARE @InsuranceValueId NVARCHAR(10);
 DECLARE @BreakdownValueId NVARCHAR(10);
-DECLARE @StatusValueId NVARCHAR(10);
+DECLARE @StatusValueId IntPk;
 
 DECLARE @vehicleDocumentsTableId VARCHAR(20) = [dbo].[GetEntityId]('F0247D8E-FAD3-462D-A19D-C9F793F984E8', 1);
 DECLARE @attVehicleType VARCHAR(20) = [dbo].[GetAttributeId]('F190DA6F-DC4E-4B54-92C2-1EB68451EFC9', 1);
@@ -27,13 +25,22 @@ SELECT @TaxValueId = cast(valueid AS NVARCHAR(10)) FROM customEntityAttributeLis
 SELECT @MotValueId = cast(valueid AS NVARCHAR(10)) FROM customEntityAttributeListItems WHERE attributeid = @attVehicleTypeValue AND item = 'MOT';
 SELECT @InsuranceValueId = cast(valueid AS NVARCHAR(10)) FROM customEntityAttributeListItems WHERE attributeid = @attVehicleTypeValue AND item = 'Insurance';
 SELECT @BreakdownValueId = cast(valueid AS NVARCHAR(10)) FROM customEntityAttributeListItems WHERE attributeid = @attVehicleTypeValue	AND item = 'Breakdown Cover';
-SELECT @StatusValueId = valueid FROM customEntityAttributeListItems WHERE attributeid = @attStatusValue	AND item = 'Reviewed-OK';
+INSERT INTO @StatusValueId SELECT valueid FROM customEntityAttributeListItems WHERE attributeid = @attStatusValue	AND item IN ('Reviewed-OK', 'Automatic Lookup');
+
+declare @ValueList nvarchar(1000) ;
+select @valueList = COALESCE(@ValueList + ',','') + cast(c1 as nvarchar(10))  from @StatusValueId;
+set @ValueList = ' IN (' + @ValueList + ')';
+
 
 SET NOCOUNT OFF;
 
 SET @sqlQuery1 ='
-
-    DECLARE @Taxexpiry DATETIME
+CREATE PROCEDURE [dbo].[GetCarDocumentsExpiryInformation]
+@carId INT,
+@expenseItemDate DATETIME
+AS
+BEGIN
+	DECLARE @Taxexpiry DATETIME
 	DECLARE @Motexpiry DATETIME
 	DECLARE @Insuranceexpiry DATETIME
 	DECLARE @BreakdownCoverexpiry DATETIME
@@ -48,19 +55,19 @@ SET @sqlQuery1 ='
 	DECLARE @breakdowncoverReviewed BIT = 0
 
 	IF EXISTS(SELECT TOP 1 * FROM ' + @vehicleDocumentsTableId +'
-	WHERE ' + @attVehicleType +' = ' + @TaxValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId  AND ' + @attStatus +' = ' + @StatusValueId +'
+	WHERE ' + @attVehicleType +' = ' + @TaxValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId  AND ' + @attStatus + @ValueList +'
 	ORDER BY ' + @attStatus +' DESC ,' + @attExpireDate +' DESC)
 	BEGIN
 	SELECT TOP 1 @Taxexpiry=' + @attExpireDate +'
-		  ,@taxReviewed = case when ' + @attStatus +' = ' + @StatusValueId + ' THEN 1 ELSE 0 END 
+		  ,@taxReviewed = case when ' + @attStatus + @ValueList +' THEN 1 ELSE 0 END 
 	FROM ' + @vehicleDocumentsTableId +'
 	WHERE ' + @attVehicleType +' = ' + @TaxValueId + ' AND (' + @attExpireDate +' IS NOT NULL) AND ' + @attVehicle + ' = @carId 
 	ORDER BY ' + @attStatus +' DESC ,' + @attExpireDate +' DESC
 	END
 	ELSE
 	BEGIN
-	SELECT  @Taxexpiry=' + @attExpireDate +'
-		  ,@taxReviewed = case when ' + @attStatus +' = ' + @StatusValueId + ' THEN 1 ELSE 0 END 
+	SELECT TOP 1 @Taxexpiry=' + @attExpireDate +'
+		  ,@taxReviewed = case when ' + @attStatus + @ValueList +' THEN 1 ELSE 0 END 
 	FROM ' + @vehicleDocumentsTableId +'
 	WHERE ' + @attVehicleType +' = ' + @TaxValueId + ' AND (' + @attExpireDate +' IS NOT NULL) AND ' + @attVehicle + ' = @carId 
 	ORDER BY '+ @attExpireDate +' ASC
@@ -68,30 +75,30 @@ SET @sqlQuery1 ='
 	'
 	SET @sqlQuery2 ='
 	IF EXISTS(SELECT TOP 1 * FROM ' + @vehicleDocumentsTableId +'
-	WHERE ' + @attVehicleType +' = ' + @MotValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId  AND ' + @attStatus +' = ' + @StatusValueId +'
+	WHERE ' + @attVehicleType +' = ' + @MotValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId  AND ' + @attStatus + @ValueList +'
 	ORDER BY ' + @attStatus +' DESC ,' + @attExpireDate +' DESC)
 	BEGIN
 	SELECT TOP 1 @Motexpiry=' + @attExpireDate +'
-		  ,@motReviewed = case when ' + @attStatus +' = ' + @StatusValueId + ' THEN 1 ELSE 0 END 
+		  ,@motReviewed = case when ' + @attStatus + @ValueList +' THEN 1 ELSE 0 END 
 	FROM ' + @vehicleDocumentsTableId +'
 	WHERE ' + @attVehicleType +' = ' + @MotValueId + ' AND (' + @attStartDate + '  IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +' OR @expenseItemDate > ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId
 	ORDER BY ' + @attStatus +' DESC ,' + @attExpireDate +' DESC
 	END
 	ELSE
 	BEGIN
-	SELECT @Motexpiry=' + @attExpireDate +'
-		  ,@motReviewed = case when ' + @attStatus +' = ' + @StatusValueId + ' THEN 1 ELSE 0 END 
+	SELECT TOP 1 @Motexpiry=' + @attExpireDate +'
+		  ,@motReviewed = case when ' + @attStatus + @ValueList +' THEN 1 ELSE 0 END 
 	FROM ' + @vehicleDocumentsTableId +'
 	WHERE ' + @attVehicleType +' = ' + @MotValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +' OR @expenseItemDate > ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId 
 	ORDER BY '+ @attExpireDate +' ASC
 	END
 
 	IF EXISTS(SELECT TOP 1 * FROM ' + @vehicleDocumentsTableId +'
-	WHERE ' + @attVehicleType +' = ' + @InsuranceValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId  AND ' + @attStatus +' = ' + @StatusValueId +'
+	WHERE ' + @attVehicleType +' = ' + @InsuranceValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId  AND ' + @attStatus + @ValueList +'
 	ORDER BY ' + @attStatus +' DESC ,' + @attExpireDate +' DESC)
 	BEGIN
 	SELECT TOP 1 @Insuranceexpiry=' + @attExpireDate +'
-		  ,@insuranceReviewed = case when ' + @attStatus +' = ' + @StatusValueId + ' THEN 1 ELSE 0 END 
+		  ,@insuranceReviewed = case when ' + @attStatus + @ValueList +' THEN 1 ELSE 0 END 
 	FROM ' + @vehicleDocumentsTableId +'
 	WHERE ' + @attVehicleType +' = ' + @InsuranceValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +' OR @expenseItemDate > ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId
 	ORDER BY ' + @attStatus +' DESC , ' + @attExpireDate +' DESC
@@ -99,26 +106,26 @@ SET @sqlQuery1 ='
 	ELSE
 	BEGIN
 	SELECT  @Insuranceexpiry=' + @attExpireDate +'
-		  ,@insuranceReviewed = case when ' + @attStatus +' = ' + @StatusValueId + ' THEN 1 ELSE 0 END 
+		  ,@insuranceReviewed = case when ' + @attStatus + @ValueList +' THEN 1 ELSE 0 END 
 	FROM ' + @vehicleDocumentsTableId +'
 	WHERE ' + @attVehicleType +' = ' + @InsuranceValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +' OR @expenseItemDate > ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId 
 	ORDER BY ' + @attExpireDate +' ASC
 	END
 
 	IF EXISTS(SELECT TOP 1 * FROM ' + @vehicleDocumentsTableId +'
-	WHERE ' + @attVehicleType +' = ' + @BreakdownValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId  AND ' + @attStatus +' = ' + @StatusValueId +'
+	WHERE ' + @attVehicleType +' = ' + @BreakdownValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId  AND ' + @attStatus + @ValueList +'
 	ORDER BY ' + @attStatus +' DESC ,' + @attExpireDate +' DESC)
 	BEGIN
 	SELECT TOP 1 @BreakdownCoverexpiry=' + @attExpireDate +'
-		  ,@breakdowncoverReviewed = case when ' + @attStatus +' = ' + @StatusValueId + ' THEN 1 ELSE 0 END 
+		  ,@breakdowncoverReviewed = case when ' + @attStatus + @ValueList +' THEN 1 ELSE 0 END 
 	FROM ' + @vehicleDocumentsTableId +'
 	WHERE ' + @attVehicleType +' = ' + @BreakdownValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +' OR @expenseItemDate >' + @attExpireDate +') AND ' + @attVehicle + ' = @carId
 	ORDER BY ' + @attStatus +' DESC ,' + @attExpireDate +' DESC
 	END
 	ELSE
 	BEGIN
-	SELECT  @BreakdownCoverexpiry=' + @attExpireDate +'
-		  ,@breakdowncoverReviewed = case when ' + @attStatus +' = ' + @StatusValueId + ' THEN 1 ELSE 0 END 
+	SELECT top 1 @BreakdownCoverexpiry=' + @attExpireDate +'
+		  ,@breakdowncoverReviewed = case when ' + @attStatus + @ValueList +' THEN 1 ELSE 0 END 
 	FROM ' + @vehicleDocumentsTableId +'
 	WHERE ' + @attVehicleType +' = ' + @BreakdownValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +' OR @expenseItemDate >' + @attExpireDate +') AND ' + @attVehicle + ' = @carId 
 	ORDER BY '+@attExpireDate +' ASC
@@ -138,5 +145,4 @@ END';
 
 SET @sqlQuery3 = @sqlQuery1 + @sqlQuery2
 EXEC sp_executesql @sqlQuery3
-
-END
+GO
