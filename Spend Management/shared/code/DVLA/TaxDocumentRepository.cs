@@ -59,6 +59,8 @@
             var sorn = this._fields.GetFieldByID(new Guid(TaxDocumentConstants.Sorn));
             var checkedByVehicleOwner = this._fields.GetFieldByID(new Guid(TaxDocumentConstants.CheckedbyVehicleOwner));
             var documentAttribute = entity.GetAttributeByFieldId(documentType.FieldID);
+            var createdOn = this._fields.GetFieldByID(new Guid(TaxDocumentConstants.CreatedOn));
+            var createdBy = this._fields.GetFieldByID(new Guid(TaxDocumentConstants.CreatedBy));
             if (documentAttribute is cListAttribute)
             {
                 var list = documentAttribute as cListAttribute;
@@ -91,6 +93,8 @@
             clsquery.addColumn(vehicleId, carId);
             clsquery.addColumn(sorn, 0);
             clsquery.addColumn(checkedByVehicleOwner, 0);
+            clsquery.addColumn(createdOn, DateTime.Now.Date);
+            clsquery.addColumn(createdBy, this._currentUser.EmployeeID);
             var result = clsquery.executeInsertStatement();
             taxDocumentEntityReferenceList.EntityId = entity.entityid;
             taxDocumentEntityReferenceList.RecordId = result;

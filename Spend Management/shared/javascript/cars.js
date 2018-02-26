@@ -1006,6 +1006,7 @@ function LookupVehicleDetails() {
     if (registration && registration.length > 1) {
         $('#lookupError').text(' ').hide();
         $('#divWait').show();
+        lastLookup = null;
         Spend_Management.svcCars.LookupVehicle(registration, LookupVehicleDetailsComplete);    
     }
     
@@ -1025,7 +1026,7 @@ function LookupVehicleDetailsComplete(car) {
         return;
     };
 
-    lastLookup = null;
+    
     $('#lookupError').text('Could not find the vehicle in DVLA database').show();
 }
 

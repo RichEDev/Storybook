@@ -50,5 +50,14 @@
         /// </summary>
         public const string DoYouRequireAnMot = "F430AE0C-9A46-49C8-8F91-068DB4B33C9B";
 
+        /// <summary>
+        /// The guid for the created by field
+        /// </summary>
+        public const string CreatedBy = "73DEF820-521A-4371-BA9F-ACF01E68F428";
+
+        /// <summary>
+        /// The guid for the created on field.
+        /// </summary>
+        public const string CreatedOn = "3B2372E3-3486-4C61-B412-A83436A3CCCB";
     }
 }
