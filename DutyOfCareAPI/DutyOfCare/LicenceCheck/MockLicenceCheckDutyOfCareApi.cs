@@ -373,7 +373,7 @@ namespace DutyOfCareAPI.DutyOfCare.LicenceCheck
                 Message = "OK",
                 Vehicle = new Vehicle
                 {
-                    RegistrationNumber = "Test" + DateTime.Now.ToString(),
+                    RegistrationNumber = "Test" + Guid.NewGuid(),
                     Make = "test",
                     Model = "tester",
                     FuelType = "Petrol",

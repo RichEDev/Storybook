@@ -279,7 +279,17 @@ namespace Spend_Management
             }
 
             DateTime? taxExpiryDate = NullableDateTimeHelper.Parse(taxExpiry);
+            if (taxExpiryDate == DateTime.MinValue)
+            {
+                taxExpiryDate = null;
+            }
+
             DateTime? motExpiryDate = NullableDateTimeHelper.Parse(motExpiry);
+            if (motExpiryDate == DateTime.MinValue)
+            {
+                motExpiryDate = null;
+            }
+
             var taxValid = taxStatus.ToLower() == "true";
             var motValid = motStatus.ToLower() == "true";
 
