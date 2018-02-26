@@ -40,6 +40,9 @@
                     return null;
                 }
 
+                var oldTaxValidValue = vehicle.IsTaxValid;
+                var oldMotValidValue = vehicle.IsMotValid;
+
                 vehicle.TaxExpiry = lookupResult.Vehicle.TaxExpiry;
                 vehicle.IsTaxValid = lookupResult.Vehicle.TaxStatus == "Taxed";
                 vehicle.MotExpiry = lookupResult.Vehicle.MotExpiry;
@@ -50,7 +53,7 @@
 
                 if (this._accountProperties.VehicleLookup)
                 {
-                    if (this._accountProperties.BlockTaxExpiry && vehicle.IsTaxValid)
+                    if (this._accountProperties.BlockTaxExpiry && vehicle.IsTaxValid && !oldTaxValidValue)
                     {
                         var taxRepo = new TaxDocumentRepository(this._currentUser,
                             new cCustomEntities(this._currentUser),
@@ -59,7 +62,7 @@
                         taxRepo.Add(vehicle.TaxExpiry.Value, vehicle.carid);
                     }
 
-                    if (this._accountProperties.BlockMOTExpiry && vehicle.IsMotValid)
+                    if (this._accountProperties.BlockMOTExpiry && vehicle.IsMotValid && !oldMotValidValue)
                     {
                         var taxRepo = new MotDocumentRepository(this._currentUser,
                             new cCustomEntities(this._currentUser),

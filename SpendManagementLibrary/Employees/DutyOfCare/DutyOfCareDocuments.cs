@@ -59,11 +59,11 @@
 
                     if (accountProperties.VehicleLookup)
                     {
-                        var hasExpired = this.HasTaxOrMotExpiredForThisVehicle(documents, expenseItemDate); //if expired update car
-                        if (hasExpired && (car.IsMotValid || car.IsTaxValid)) 
+                        var updatedCar = this.UpdateTaxAndMotExpiryOnVehicle(documents, expenseItemDate, car); //if expired update car
+                        if ((car.IsMotValid && !updatedCar.IsMotValid) || (car.IsTaxValid && !updatedCar.IsTaxValid))
                         {
-                            var updatedCar = vehicleValidator.ValidateCar(car);
-                            if (updatedCar.IsTaxValid && updatedCar.IsMotValid) //if valid after update get docs
+                            var validatedCar = vehicleValidator.ValidateCar(updatedCar);
+                            if (validatedCar.IsTaxValid && validatedCar.IsMotValid) //if valid after update get docs
                             {
                                 documents = documentsInformation.GetCarExpiryInformation(accountId, car.carid, expenseItemDate);
                             }
@@ -122,18 +122,30 @@
         /// </summary>
         /// <param name="documents">A <see cref="List{T}"/>of <seealso cref="IDutyOfCareDocument"/></param>
         /// <param name="expenseItemDate">The date to check against.</param>
-        /// <returns>True if either MOT or tax have expired.</returns>
-        private bool HasTaxOrMotExpiredForThisVehicle(List<IDutyOfCareDocument> documents, DateTime expenseItemDate)
+        /// <param name="car">An instance of <see cref="cCar"/>That needs to have documments validated</param>
+        /// <returns>A cloned instance of <see cref="cCar"/>with the IsTaxValid and IsMotValid properties re-set based on the given documents.</returns>
+        private cCar UpdateTaxAndMotExpiryOnVehicle(List<IDutyOfCareDocument> documents, DateTime expenseItemDate, cCar car)
         {
-            foreach (IDutyOfCareDocument document in documents.Where(d => d.GetType() == typeof(TaxDocument) || d.GetType() == typeof(MOTDocument)))
+            var result = car.Clone() as cCar;
+            if (result != null)
             {
-                if (document.HasExpired(expenseItemDate).HasExpired)
+                foreach (IDutyOfCareDocument document in documents.Where(d => d.GetType() == typeof(TaxDocument) || d.GetType() == typeof(MOTDocument)))
                 {
-                    return true;
+                    if (document.HasExpired(expenseItemDate).HasExpired)
+                    {
+                        if (document is TaxDocument)
+                        {
+                            result.IsTaxValid = false;
+                        }
+                        else
+                        {
+                            result.IsMotValid = false;
+                        }
+                    }
                 }
             }
 
-            return false;
+            return result;
         }
         
     }
