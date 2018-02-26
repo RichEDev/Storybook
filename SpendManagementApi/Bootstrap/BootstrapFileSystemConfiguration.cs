@@ -12,10 +12,10 @@
     internal class BootstrapFileSystemConfiguration
     {
         /// <summary>
-        /// Creates an instance of <see cref="IAccount"/> for the <see cref="UserIdentity"/> and this request.
+        /// Creates an instance of <see cref="IFeatureFlagConfiguration"/>.
         /// </summary>
         /// <param name="container">An instance of the DI container to get the current user from.</param>
-        /// <returns>an instance of <see cref="IAccount"/> for the <see cref="UserIdentity"/> and this request or null if the <see cref="UserIdentity"/> is in an invalid state.</returns>
+        /// <returns>an instance of <see cref="IFeatureFlagConfiguration"/>.</returns>
         public static IFeatureFlagConfiguration CreateNew(Container container)
         {
             IConfigurationManager configurationManager = container.GetInstance<IConfigurationManager>();

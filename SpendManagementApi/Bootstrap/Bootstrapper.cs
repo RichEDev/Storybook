@@ -1,10 +1,6 @@
 ﻿using Common.Logging;
 using Common.Logging.Log4Net;
 
-using SEL.FeatureFlags;
-using SEL.FeatureFlags.Configuration;
-using SEL.FeatureFlags.Context;
-
 using Utilities.Cryptography;
 
 namespace SpendManagementApi.Bootstrap
@@ -21,6 +17,9 @@ namespace SpendManagementApi.Bootstrap
     using CacheDataAccess.Caching;
     using Configuration.Core;
     using Configuration.Interface;
+    using SEL.FeatureFlags;
+    using SEL.FeatureFlags.Configuration;
+    using SEL.FeatureFlags.Context;
     using SimpleInjector;
     using SimpleInjector.Lifestyles;
     using SQLDataAccess;
