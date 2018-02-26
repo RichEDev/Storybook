@@ -96,7 +96,7 @@
         /// </summary>
         public const int DefaultValidationCorrectionThreshold = 10;
 
-        public cStage(int signoffId, SignoffType signoffType, int relId, int extraApprovalLevels, StageInclusionType include, decimal amount, int notify, byte stage, byte onHoliday, SignoffType holidayType, int holidayId, int includeId, bool claimantMail, bool singleSignOff, bool sendMail, bool displayDeclaration, DateTime createdOn, int createdBy, DateTime modifiedOn, int modifiedBy, bool fromMyLevelOnly, bool approverJustificationsRequired, bool nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, bool allocateForPayment, bool isPostValidationCleanupStage, int? validationCorrectionThreshold, decimal? claimPercentageToValidate) //TODO: Feature flag
+        public cStage(int signoffId, SignoffType signoffType, int relId, int extraApprovalLevels, StageInclusionType include, decimal amount, int notify, byte stage, byte onHoliday, SignoffType holidayType, int holidayId, int includeId, bool claimantMail, bool singleSignOff, bool sendMail, bool displayDeclaration, DateTime createdOn, int createdBy, DateTime modifiedOn, int modifiedBy, bool fromMyLevelOnly, bool approverJustificationsRequired, bool nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, bool allocateForPayment, bool isPostValidationCleanupStage, int? validationCorrectionThreshold, decimal? claimPercentageToValidate)
         {
             this.signoffid = signoffId;
             this.signofftype = signoffType;
@@ -124,7 +124,7 @@
             this.AllocateForPayment = allocateForPayment;
             this.IsPostValidationCleanupStage = isPostValidationCleanupStage;
             this.ValidationCorrectionThreshold = validationCorrectionThreshold;
-            this.ClaimPercentageToValidate = claimPercentageToValidate; //TODO: Feature flag
+            this.ClaimPercentageToValidate = claimPercentageToValidate;
         }
 
         public int signoffid { get; private set; }
@@ -201,7 +201,7 @@
         /// <summary>
         /// The percentage of claim items to send for validation
         /// </summary>
-        public decimal? ClaimPercentageToValidate { get; set; } //TODO: Feature flag
+        public decimal? ClaimPercentageToValidate { get; set; }
 
         public cGroup GetGroup(SortedList list)
         {

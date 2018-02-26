@@ -45,7 +45,7 @@
 
             r.SignoffStage.ClaimPercentageToValidateLabel = '#<%= this.lblClaimPercentageToValidate.ClientID%>';
             r.SignoffStage.ClaimPercentageToValidateTextBox = '#<%= this.txtClaimPercentageToValidate.ClientID%>';
-            r.SignoffStage.FeatureFlag = '<%= this.featureFlag%>'; /*TODO: Remove with feature flags*/
+            r.SignoffStage.FeatureFlag = '<%= this.featureFlag%>'; /*TODO: Signoff Groups Claim Percentage To Validate Feature Flag*/
 
             r.SignoffStage.IncludeDropDown = '#<%= this.cmbinclude.ClientID %>';
             r.SignoffStage.AmountLabel = '#<%= this.Label6.ClientID %>';

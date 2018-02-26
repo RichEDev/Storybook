@@ -181,7 +181,7 @@
         public int SaveStage(int groupId, int stageId, string selectedSignoffType, bool singleSignoff, bool sendClaimantEmail, bool sendApproverEmail, 
             bool envelopesAreReceived, bool envelopesAreNotReceived, bool displayApproverDeclaration, bool approverJustificationRequired, bool aboveMyLevel, 
             string approverMatrixLevels, string selectedSignoffValue, string noCostCodeOwnerAction, string stageInclusionType, string stageInclusionValue, 
-            string stageInclusionDropdownType, string involvementType, string onHolidayType, string holidayApproverType, string holidayApproverValue, decimal? claimPercentageToValidate) //TODO: Feature flag
+            string stageInclusionDropdownType, string involvementType, string onHolidayType, string holidayApproverType, string holidayApproverValue, decimal? claimPercentageToValidate)
         {
             var user = cMisc.GetCurrentUser();
 
@@ -285,11 +285,11 @@
 
             if (stageId > 0)
             {
-                groups.updateStage(stageId, signofftype, relid, (int)include, amount, notify, onholiday, holidaytype, holidayid, includeid, sendClaimantEmail, singleSignoff, sendApproverEmail, displayApproverDeclaration, user.AccountID, extraLevels, approveHigherLevelsOnly, approverJustificationRequired, nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, allocateForPayment, validationCorrectionThreshold, claimPercentageToValidate); //TODO: Feature flag
+                groups.updateStage(stageId, signofftype, relid, (int)include, amount, notify, onholiday, holidaytype, holidayid, includeid, sendClaimantEmail, singleSignoff, sendApproverEmail, displayApproverDeclaration, user.AccountID, extraLevels, approveHigherLevelsOnly, approverJustificationRequired, nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, allocateForPayment, validationCorrectionThreshold, claimPercentageToValidate);
             }
             else
             {
-                stageId = groups.addStage(groupId, signofftype, relid, (int)include, amount, notify, onholiday, holidaytype, holidayid, includeid, sendClaimantEmail, singleSignoff, sendApproverEmail, displayApproverDeclaration, user.AccountID, 0, false, extraLevels, approveHigherLevelsOnly, approverJustificationRequired, nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, allocateForPayment, false, validationCorrectionThreshold, claimPercentageToValidate); //TODO: Feature flag
+                stageId = groups.addStage(groupId, signofftype, relid, (int)include, amount, notify, onholiday, holidaytype, holidayid, includeid, sendClaimantEmail, singleSignoff, sendApproverEmail, displayApproverDeclaration, user.AccountID, 0, false, extraLevels, approveHigherLevelsOnly, approverJustificationRequired, nhsAssignmentSupervisorApprovesWhenMissingCostCodeOwner, allocateForPayment, false, validationCorrectionThreshold, claimPercentageToValidate);
             }
 
             return stageId;
