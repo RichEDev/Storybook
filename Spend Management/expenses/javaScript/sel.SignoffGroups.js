@@ -94,7 +94,7 @@
                         ExtraLevelsTooptip: null,
                         FromMyLevelLabel: null,
                         FromMyLevelCheckbox: null,
-                        FeatureFlag: null, //TODO: Remove with feature flag
+                        FeatureFlag: null, //TODO: Signoff Groups Claim Percentage To Validate Feature Flag
                         ClaimPercentageToValidateLabel: null,
                         ClaimPercentageToValidateTextBox: null,
                         IncludeDropDown: null,
@@ -341,7 +341,7 @@
                         window.ValidatorEnable($g(SEL.SignoffGroups.DomIDs.Validators.cmblist), false);
                         window.ValidatorEnable($g(SEL.SignoffGroups.DomIDs.Validators.DropDownLineManagerAssignmentSupervisor), false);
                         window.ValidatorEnable($g(SEL.SignoffGroups.DomIDs.Validators.txtExtraLevels), false);
-                        window.ValidatorEnable($g(SEL.SignoffGroups.DomIDs.Validators.txtClaimPercentageToValidate), false); //TODO: Feature flag
+                        window.ValidatorEnable($g(SEL.SignoffGroups.DomIDs.Validators.txtClaimPercentageToValidate), false); 
                         SEL.SignoffGroups.SignoffStage.Modal.Reset();
                         var value = $(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffDropdown).val();
                         switch (value) {
@@ -414,7 +414,7 @@
                                 $(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffValuesDropdown).hide();
                                 $(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffValuesLabel).hide();
 
-                                if (SEL.SignoffGroups.DomIDs.SignoffStage.FeatureFlag === "True") { //TODO:Remove with feature flag
+                                if (SEL.SignoffGroups.DomIDs.SignoffStage.FeatureFlag === "True") { //TODO: Signoff Groups Claim Percentage To Validate Feature Flag
                                     $(SEL.SignoffGroups.DomIDs.SignoffStage.ValidationDiv).show();
                                     $g(SEL.SignoffGroups.DomIDs.Validators.txtClaimPercentageToValidate).enabled = true; 
                                     if (($(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val() !== "100") && ($(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val() !== "")) {
@@ -690,8 +690,14 @@
                         var onHolidayType = $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayDropdown).val();
                         var holidayApproverType = $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayTypeDropdown).val();
                         var holidayApproverValue = $(SEL.SignoffGroups.DomIDs.SignoffStage.HolidayListDropdown).val();
-                        ($(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffDropdown).val() === SEL.SignoffGroups.IDs.SignoffTypes.SELValidation) ? $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val() : $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val(""); //TODO: Feature flag
+                        ($(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffDropdown).val() === SEL.SignoffGroups.IDs.SignoffTypes.SELValidation) ? $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val() : $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val("");
                         var claimPercentageToValidate = $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val();
+                        //TODO: Signoff Groups Claim Percentage To Validate Feature Flag Remove the following if when we don't need feature flags anymore
+                        if (SEL.SignoffGroups.DomIDs.SignoffStage.FeatureFlag === "True") { 
+                            claimPercentageToValidate = $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val();
+                        } else if ($(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffDropdown).val() === SEL.SignoffGroups.IDs.SignoffTypes.SELValidation) {
+                            claimPercentageToValidate = "100";
+                        }
 
                         SEL.Data.Ajax({
                             data: {
@@ -716,7 +722,7 @@
                                 onHolidayType: onHolidayType,
                                 holidayApproverType: holidayApproverType,
                                 holidayApproverValue: holidayApproverValue,
-                                claimPercentageToValidate: claimPercentageToValidate //TODO: Feature flag
+                                claimPercentageToValidate: claimPercentageToValidate 
                             },
                             url: '/expenses/webservices/SignoffGroups.asmx/SaveStage',
                             success: function (r) {
@@ -811,7 +817,7 @@
                                     $(SEL.SignoffGroups.DomIDs.SignoffStage.CostCodeOwnerDropDown).val("LineManager");
                                 }
 
-                                if (r.d.signofftype == SEL.SignoffGroups.IDs.SignoffTypes.SELValidation) { //TODO: Feature flag
+                                if (r.d.signofftype == SEL.SignoffGroups.IDs.SignoffTypes.SELValidation) {
                                     $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val(r.d.ClaimPercentageToValidate);
                                 } else {
                                     $(SEL.SignoffGroups.DomIDs.SignoffStage.ClaimPercentageToValidateTextBox).val(""); 
@@ -911,7 +917,7 @@
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.SignoffValuesLabel).show();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.CostCodeOwnerDiv).hide();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.ApprovalMatrixDiv).hide();
-                            $(SEL.SignoffGroups.DomIDs.SignoffStage.ValidationDiv).hide(); //TODO: Feature flag
+                            $(SEL.SignoffGroups.DomIDs.SignoffStage.ValidationDiv).hide(); 
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.FromMyLevelCheckbox).prop("checked", false);
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.ScanAttachDiv).hide();
                             $(SEL.SignoffGroups.DomIDs.SignoffStage.ApproverEmailCheckbox).prop("disabled", false);

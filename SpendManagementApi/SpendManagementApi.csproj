@@ -99,6 +99,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SEL.FeatureFlags, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SEL.FeatureFlags.1.0.0.3\lib\net461\SEL.FeatureFlags.dll</HintPath>
+    </Reference>
     <Reference Include="SimpleInjector, Version=4.0.11.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.4.0.11\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
@@ -232,7 +235,9 @@
     <Compile Include="Attributes\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Attributes\Validation\ValidEnumValueAttribute.cs" />
     <Compile Include="Bootstrap\BootstrapAccount.cs" />
+    <Compile Include="Bootstrap\BootstrapFileSystemConfiguration.cs" />
     <Compile Include="Bootstrap\Bootstrapper.cs" />
+    <Compile Include="Bootstrap\WebFeatureFlagContext.cs" />
     <Compile Include="Bootstrap\WebIdentityContext.cs" />
     <Compile Include="Common\ActionContext.cs" />
     <Compile Include="Common\ApiControllerSelector.cs" />
@@ -994,6 +999,7 @@
     <Content Include="Content\themes\base\bootstrap.css.map" />
     <Compile Include="Models\Types\CustomEntityForm.cs" />
     <Content Include="log4net.config" />
+    <Content Include="Feature.Flags.json" />
     <None Include="log4net.Testing.config">
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>

@@ -1,5 +1,6 @@
 ﻿using Common.Logging;
 using Common.Logging.Log4Net;
+
 using Utilities.Cryptography;
 
 namespace SpendManagementApi.Bootstrap
@@ -16,6 +17,9 @@ namespace SpendManagementApi.Bootstrap
     using CacheDataAccess.Caching;
     using Configuration.Core;
     using Configuration.Interface;
+    using SEL.FeatureFlags;
+    using SEL.FeatureFlags.Configuration;
+    using SEL.FeatureFlags.Context;
     using SimpleInjector;
     using SimpleInjector.Lifestyles;
     using SQLDataAccess;
@@ -77,6 +81,12 @@ namespace SpendManagementApi.Bootstrap
             // This registration should register all implementations of IDataFactory<,> within the SqlDataAccess project. 
             container.Register(typeof(IDataFactory<,>), new[] { typeof(SqlAccountFactory).Assembly });
             container.Register(typeof(IDataFactoryCustom<,>), new[] { typeof(SqlProjectCodesWithUserDefinedValuesFactory).Assembly });
+
+            container.Register<IFileWatcher, FileWatcher>();
+            container.Register<IFileSystem, FileSystem>();
+            container.Register<IFeatureFlagConfiguration>(() => BootstrapFileSystemConfiguration.CreateNew(container));
+            container.Register<IFeatureFlagsContextProvider, WebFeatureFlagContext>();
+            container.Register<IFeatureFlagManager, FeatureFlagManager>();
 
             // This is an extension method from the integration package.
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);

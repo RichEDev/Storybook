@@ -64,7 +64,7 @@ namespace Spend_Management
                 this.cmbincludelst.Items.Add(new ListItem("Only if an expense item fails validation twice", "9"));
                 this.cmbsignofftype.Items.Add(SignoffType.SELValidation.ToListItem());
 
-                this.featureFlag = false; //TODO: Remove with feature flag
+                this.featureFlag = false; //TODO: Signoff Groups Claim Percentage To Validate Feature Flag
 
                 if (FeatureFlagManager.IsEnabled("Signoff Groups Claim Percentage To Validate"))
                 {
