@@ -638,26 +638,30 @@
                                         {
                                             result.Reason = SubmitRejectionReason.CreditCardHasUreconciledItems;
                                             return result;
-                        }
-                    }
+                                        }
+                                    }
                                 }
                             }
 
-                            if (statement.Corporatecard.blockunmatched)
-                    {
-                                SortedList<int, cExpenseItem> lstItems = clsclaims.getExpenseItemsFromDB(claimId);
-                                bool unallocatedItems =
-                                    lstItems.Values.Any(
-                                        item => item.itemtype == ItemType.CreditCard && item.transactionid == 0);
-
-                                if (unallocatedItems)
-                        {
-                                    result.Reason = SubmitRejectionReason.EmployeeHasUnmatchedCardItems;
-                                    return result;
-                        }
-                            }
                         }
                     }
+                }
+            }
+
+            var clsSubAccounts = new cAccountSubAccounts(user.AccountID);
+
+            cAccountProperties properties = clsSubAccounts.getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
+            if (properties.BlockUnmachedExpenseItemsBeingSubmitted)
+            {
+                SortedList<int, cExpenseItem> lstItems = clsclaims.getExpenseItemsFromDB(claimId);
+                bool unallocatedItems =
+                    lstItems.Values.Any(
+                        item => ((item.itemtype == ItemType.CreditCard && credit) || (item.itemtype == ItemType.PurchaseCard && purchase)) && item.transactionid == 0);
+
+                if (unallocatedItems)
+                {
+                    result.Reason = SubmitRejectionReason.EmployeeHasUnmatchedCardItems;
+                    return result;
                 }
             }
 
@@ -675,9 +679,6 @@
             {
                 delegateid = (int)this.Session["myid"];
                             }
-
-            cAccountSubAccounts subAccounts = new cAccountSubAccounts(user.AccountID);
-            cAccountProperties properties = subAccounts.getFirstSubAccount().SubAccountProperties;
 
             var currentOdometerReadings = new Dictionary<int, cOdometerReading>();
             if (odometerReadings != null)

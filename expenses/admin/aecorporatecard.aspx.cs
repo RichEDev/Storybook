@@ -65,7 +65,6 @@ namespace expenses.admin
                     //Option not implemented and needs thought on how to do
                     //chkreconciledbyadmin.Checked = card.reconciledbyadministrator;
                     chksingleclaim.Checked = card.singleclaim;
-                    chkblockunmatched.Checked = card.blockunmatched;
                     this.txtFileIdentifier.Text = card.FileIdentifier;
                 }
             }
@@ -80,7 +79,6 @@ namespace expenses.admin
             //Option not implemented and needs thought on how to do
             bool reconciledbyadministrator = false; //chkreconciledbyadmin.Checked;
             bool singleclaim = chksingleclaim.Checked;
-            bool blockunmatched = chkblockunmatched.Checked;
             var fileIdentifier = this.txtFileIdentifier.Text;
             if (cmbassignitem.SelectedValue != "0")
             {
@@ -95,12 +93,12 @@ namespace expenses.admin
             ICurrentUser user = cMisc.GetCurrentUser();
             if (oldcard == null)
             {
-                newcard = new cCorporateCard(provider, claimantsettlesbill, DateTime.Now, (int)this.ViewState["employeeid"], null, null, allocateditem, blockcash, reconciledbyadministrator, singleclaim, blockunmatched, fileIdentifier);
+                newcard = new cCorporateCard(provider, claimantsettlesbill, DateTime.Now, (int)this.ViewState["employeeid"], null, null, allocateditem, blockcash, reconciledbyadministrator, singleclaim, fileIdentifier);
                 clscorporatecards.AddCorporateCard(newcard, user);
             }
             else
             {
-                newcard = new cCorporateCard(provider, claimantsettlesbill, oldcard.createdon, oldcard.createdby, DateTime.Now, (int)this.ViewState["employeeid"], allocateditem, blockcash, reconciledbyadministrator, singleclaim, blockunmatched, fileIdentifier);
+                newcard = new cCorporateCard(provider, claimantsettlesbill, oldcard.createdon, oldcard.createdby, DateTime.Now, (int)this.ViewState["employeeid"], allocateditem, blockcash, reconciledbyadministrator, singleclaim, fileIdentifier);
                 clscorporatecards.UpdateCorporateCard(newcard, user);
             }
 

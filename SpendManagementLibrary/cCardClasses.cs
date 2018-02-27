@@ -302,9 +302,8 @@
         private bool bBlockCash;
         private bool bReconciledByAdministrator;
         private bool bSingleClaim;
-        private bool bBlockUnmatched;
 
-        public cCorporateCard(cCardProvider cardprovider, bool claimantsettlesbill, DateTime createdon, int createdby, DateTime? modifiedon, int? modifiedby, int? allocateditem, bool blockcash, bool reconciledbyadministrator, bool singleclaim, bool blockunmatched, string fileIdentifier)
+        public cCorporateCard(cCardProvider cardprovider, bool claimantsettlesbill, DateTime createdon, int createdby, DateTime? modifiedon, int? modifiedby, int? allocateditem, bool blockcash, bool reconciledbyadministrator, bool singleclaim, string fileIdentifier)
         {
             cpCardProvider = cardprovider;
             bClaimantSettlesBill = claimantsettlesbill;
@@ -316,7 +315,6 @@
             bBlockCash = blockcash;
             bReconciledByAdministrator = reconciledbyadministrator;
             bSingleClaim = singleclaim;
-            bBlockUnmatched = blockunmatched;
             this.FileIdentifier = fileIdentifier;
         }
 
@@ -360,10 +358,6 @@
         public bool singleclaim
         {
             get { return bSingleClaim; }
-        }
-        public bool blockunmatched
-        {
-            get { return bBlockUnmatched; }
         }
 
         /// <summary>

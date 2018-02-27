@@ -38,9 +38,6 @@
 			</tr>
 			<tr><td class="labeltd">Do not allow cash items to be submitted if there are outstanding credit card items to be reconciled</td><td class="inputtd">
                 <asp:CheckBox ID="chkblockcash" runat="server" /></td></tr>
-            <tr><td class="labeltd">
-                <asp:Label ID="Label1" runat="server" Text="Do not allow unmatched items to be submitted"></asp:Label></td><td class="inputtd">
-                    <asp:CheckBox ID="chkblockunmatched" runat="server" /></td></tr>
         </table>
     </div>
     <div class="inputpanel">

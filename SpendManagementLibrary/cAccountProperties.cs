@@ -15,7 +15,7 @@
         private int nSubAccountID;
 
         private int nAccountID;
-        
+
         private string sEmailServerAddress;
 
         private bool bShowProductInSearch;
@@ -515,7 +515,7 @@
         private string sColoursTooltipBackground;
 
         private string sColoursTooltipText;
- 
+
         private string sColoursGreenLightField;
 
         private string sColoursGreenLightSectionText;
@@ -547,7 +547,7 @@
         //Duty of care email reminder for claimant on document expiry
         /// </summary>
         private bool remindClaimantOnDOCDocumentExpiryDays;
-        
+
         /// <summary>
         //Duty of care email reminder for line manager on claimant's document expiry
         /// </summary>
@@ -560,7 +560,7 @@
         {
 
         }
-        
+
         /// <summary>
         /// Copeis this object.
         /// </summary>
@@ -789,11 +789,11 @@
 
         public bool FlagDate { get; set; }
 
-        
+
 
         public int MainAdministrator { get; set; }
 
-        
+
 
         public bool SearchEmployees { get; set; }
 
@@ -911,7 +911,7 @@
 
         public bool SingleClaimPC { get; set; }
 
-        
+
 
         public Guid? DrilldownReport { get; set; }
 
@@ -1322,7 +1322,7 @@
         /// <summary>
         /// Alters the Table Header Colour
         /// </summary>
-        public string ColoursTableHeaderText{ get; set; }
+        public string ColoursTableHeaderText { get; set; }
 
         /// <summary>
         /// Alters the Tab Option Colour
@@ -1351,12 +1351,12 @@
         /// <summary>
         /// Alters the Alternate Row Colour
         /// </summary>
-        public string ColoursAlternateRowText{ get; set; }
+        public string ColoursAlternateRowText { get; set; }
 
         /// <summary>
         /// Alters the Field Colour
         /// </summary>
-        public string ColoursFieldText{ get; set; }
+        public string ColoursFieldText { get; set; }
 
 
         /// <summary>
@@ -1511,14 +1511,14 @@
         /// Gets or sets a value indicating whether or not to display addresses imported by ESR in address search results
         /// </summary>
         public bool DisplayEsrAddressesInSearchResults { get; set; }
-        
-    
+
+
         /// <summary>
         /// The number of days to wait after an envelope is marked as sent before 
         /// a notification is sent to the claimant asking for an update.
         /// </summary>
         public int NotifyWhenEnvelopeNotReceivedDays { get; set; }
-        
+
         /// <summary>
         /// The number of days before the email reminder sent to claimant on DOC Document Expiry 
         /// A reminder email is sent to claimant on DOC Document Expiry
@@ -1631,6 +1631,11 @@
         /// Gets or sets enabling primary home addresses only for esr
         /// </summary>
         public bool EsrPrimaryAddressOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether expense items should be blocked from being submitted if it has been set as a credit or purchase card item but not matched to a credit card transaction
+        /// </summary>
+        public bool BlockUnmachedExpenseItemsBeingSubmitted { get; set; }
 
         /// <summary>
         /// Gets or sets wether the use can get vehicle information from an external service.

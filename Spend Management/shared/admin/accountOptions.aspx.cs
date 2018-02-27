@@ -347,6 +347,7 @@
                 this.chkEmployeeSpecifyCarDOC.Checked = reqProperties.AllowEmpToSpecifyCarDOCOnAdd;
                 cmbCountdown.SelectedValue = reqProperties.CountdownTimer.ToString(CultureInfo.InvariantCulture);
                 cmbIdleTimeout.SelectedValue = reqProperties.IdleTimeout.ToString(CultureInfo.InvariantCulture);
+                chkBlockUnmatchedExpenseItemsBeingSubmitted.Checked = reqProperties.BlockUnmachedExpenseItemsBeingSubmitted;
                 #endregion General Options
 
                 #region Regional Settings
@@ -1185,6 +1186,7 @@
             }
             
             reqProperties.EnableAutoUpdateOfExchangeRates = this.chkEnableAutoUpdateOfExchangeRates.Checked;
+            reqProperties.BlockUnmachedExpenseItemsBeingSubmitted = this.chkBlockUnmatchedExpenseItemsBeingSubmitted.Checked;
 
             reqProperties.VehicleLookup = currentUser.Account.HasLicensedElement(SpendManagementElement.VehicleLookup) && this.chkVehicleLookup.Checked;
 

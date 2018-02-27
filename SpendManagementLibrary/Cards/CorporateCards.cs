@@ -124,7 +124,6 @@
             expdata.sqlexecute.Parameters.AddWithValue("@blockcash", Convert.ToByte(card.blockcash));
             expdata.sqlexecute.Parameters.AddWithValue("@reconciledbyadministrator", Convert.ToByte(card.reconciledbyadministrator));
             expdata.sqlexecute.Parameters.AddWithValue("@singleclaim", Convert.ToByte(card.singleclaim));
-            expdata.sqlexecute.Parameters.AddWithValue("@blockunmatched", Convert.ToByte(card.blockunmatched));
             expdata.sqlexecute.Parameters.AddWithValue("@fileIdentifier", card.FileIdentifier);
             if (user.isDelegate)
             {
@@ -281,7 +280,6 @@
             expdata.sqlexecute.Parameters.AddWithValue("@blockcash", Convert.ToByte(card.blockcash));
             expdata.sqlexecute.Parameters.AddWithValue("@reconciledbyadministrator", Convert.ToByte(card.reconciledbyadministrator));
             expdata.sqlexecute.Parameters.AddWithValue("@singleclaim", Convert.ToByte(card.singleclaim));
-            expdata.sqlexecute.Parameters.AddWithValue("@blockunmatched", Convert.ToByte(card.blockunmatched));
             expdata.sqlexecute.Parameters.AddWithValue("@fileIdentifier", card.FileIdentifier);
             if (user.isDelegate)
             {
@@ -326,7 +324,7 @@
             IDBConnection expdata = connection ?? new DatabaseConnection(cAccounts.getConnectionString(this.Accountid));
 
             const string Sql =
-                "select cardproviderid, claimants_settle_bill, createdon, createdby, modifiedon, modifiedby, allocateditem, blockcash, reconciled_by_admin, singleclaim, blockunmatched, FileIdentifier from dbo.corporate_cards";
+                "select cardproviderid, claimants_settle_bill, createdon, createdby, modifiedon, modifiedby, allocateditem, blockcash, reconciled_by_admin, singleclaim, FileIdentifier from dbo.corporate_cards";
 
             expdata.sqlexecute.CommandText = Sql;
 
@@ -345,7 +343,6 @@
                     var blockcash = (bool)reader["blockcash"];
                     var reconciledbyadministrator = (bool)reader["reconciled_by_admin"];
                     var singleclaim = (bool)reader["singleclaim"];
-                    var blockunmatched = (bool)reader["blockunmatched"];
                     var fileIdentifier = reader.IsDBNull(fileIdentifierOrd)
                         ? string.Empty
                         : reader.GetString(fileIdentifierOrd);
@@ -360,7 +357,6 @@
                         blockcash, 
                         reconciledbyadministrator, 
                         singleclaim, 
-                        blockunmatched,
                         fileIdentifier);
                     returnValue.Add(provider.cardproviderid, card);
                 }

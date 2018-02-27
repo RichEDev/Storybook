@@ -1539,6 +1539,11 @@ namespace SpendManagementLibrary
                 this.SaveAccountProperty(subAccountID, "esrPrimaryAddressOnly", subAccountProperties.EsrPrimaryAddressOnly, employeeID, delegateID);
             }
 
+            if (originalSubAccountProperties.BlockUnmachedExpenseItemsBeingSubmitted != subAccountProperties.BlockUnmachedExpenseItemsBeingSubmitted)
+            {
+                this.SaveAccountProperty(subAccountID, "BlockUnmachedExpenseItemsBeingSubmitted", subAccountProperties.BlockUnmachedExpenseItemsBeingSubmitted, employeeID, delegateID);
+            }
+            
             if (originalSubAccountProperties.VehicleLookup != subAccountProperties.VehicleLookup)
             {
                 this.SaveAccountProperty(subAccountID, "VehicleLookup", subAccountProperties.VehicleLookup, employeeID, delegateID);
@@ -1779,7 +1784,7 @@ namespace SpendManagementLibrary
                         {
                             stringValue = reader.GetString(stringValueOrd).Trim();
                         }
-                        
+
                         switch (stringKey)
                         {
                             case "emailServerAddress":
@@ -2562,7 +2567,7 @@ namespace SpendManagementLibrary
                                 lstAccountProperties.ColoursAlternateRowBackground = stringValue;
                                 break;
                             case "coloursAlternateRowText":
-                                lstAccountProperties.ColoursAlternateRowText= stringValue;
+                                lstAccountProperties.ColoursAlternateRowText = stringValue;
                                 break;
                             case "coloursMenuOptionHoverText":
                                 lstAccountProperties.ColoursMenuOptionHoverText = stringValue;
@@ -2741,7 +2746,7 @@ namespace SpendManagementLibrary
                             case "EnableAutoUpdateOfExchangeRatesActivatedDate":
                                 if (stringValue == string.Empty)
                                 {
-                                    lstAccountProperties.EnableAutoUpdateOfExchangeRatesActivatedDate = null; 
+                                    lstAccountProperties.EnableAutoUpdateOfExchangeRatesActivatedDate = null;
                                 }
                                 else
                                 {
@@ -2749,11 +2754,11 @@ namespace SpendManagementLibrary
                                     {
                                         lstAccountProperties.EnableAutoUpdateOfExchangeRatesActivatedDate = Convert.ToDateTime(stringValue);
                                     }
-                                    catch (Exception )
+                                    catch (Exception)
                                     {
                                         lstAccountProperties.EnableAutoUpdateOfExchangeRatesActivatedDate = null;
                                     }
-                                    
+
                                 }
 
                                 break;
@@ -2768,6 +2773,9 @@ namespace SpendManagementLibrary
                                 break;
                             case "esrPrimaryAddressOnly":
                                 lstAccountProperties.EsrPrimaryAddressOnly = Convert.ToBoolean(Convert.ToInt32(stringValue));
+                                break;
+                            case "BlockUnmachedExpenseItemsBeingSubmitted":
+                                lstAccountProperties.BlockUnmachedExpenseItemsBeingSubmitted = Convert.ToBoolean(Convert.ToInt32(stringValue));
                                 break;
                             case "VehicleLookup":
                                 lstAccountProperties.VehicleLookup = Convert.ToBoolean(Convert.ToInt32(stringValue));

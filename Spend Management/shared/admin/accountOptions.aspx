@@ -309,16 +309,16 @@
                                     <asp:label ID="lblEnableAutoUpdateOfExchangeRates" Text="Allow automatic daily update of exchange rates" runat="server" AssociatedControlID="chkEnableAutoUpdateOfExchangeRates"></asp:label>
                                     <span class="inputs"><asp:CheckBox ID="chkEnableAutoUpdateOfExchangeRates" ClientIDMode="Static" runat="server" onchange="hideProvidersIfChecked();" /></span>
                                     <span class="inputicon">
-                                    <img id="enableAutoUpdateOfExchangeRatesTooltip" alt="" class="tooltipicon" onclick="SEL.Tooltip.Show('B7DE681E-AD78-4B6D-8EB1-9A3989017C99', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" />
-                                    </span><span class="inputtooltipfield">&nbsp;</span><span class="inputvalidatorfield">&nbsp;</span>
+                                    
+                                    </span><span class="inputtooltipfield"><img id="enableAutoUpdateOfExchangeRatesTooltip" alt="" class="tooltipicon" onclick="SEL.Tooltip.Show('B7DE681E-AD78-4B6D-8EB1-9A3989017C99', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" /></span><span class="inputvalidatorfield">&nbsp;</span>
                                    <span id="exchangeRateProvider">
                                         <asp:Label ID="lblExchangeRateProvider" runat="server" Text="Exchange rate provider" meta:resourcekey="lblExchangeRateProviderResource" AssociatedControlID="ddlExchangeRateProvider"></asp:Label>
                                         <span class="inputs">
                                             <asp:DropDownList ID="ddlExchangeRateProvider" runat="server">
                                                 <asp:ListItem Value="1">Open Exchange Rates</asp:ListItem>
                                             </asp:DropDownList></span><span class="inputicon"></span>
-                                        <img id="exchangeRateProviderTooltip" alt="" class="tooltipicon" onclick="SEL.Tooltip.Show('B06FA9F7-8EEF-45F3-897F-5E3CDF886B15', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" />
-                                        <span class="inputtooltipfield">&nbsp;</span><span class="inputvalidatorfield">&nbsp;</span>
+                                        
+                                        <span class="inputtooltipfield"><img id="exchangeRateProviderTooltip" alt="" class="tooltipicon" onclick="SEL.Tooltip.Show('B06FA9F7-8EEF-45F3-897F-5E3CDF886B15', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" /></span><span class="inputvalidatorfield">&nbsp;</span>
 
                                        
                                     </span>
@@ -331,11 +331,14 @@
                                         <asp:CheckBox ID="chkInternalTickets" runat="server" />
                                     </span>
                                     <span class="inputicon">
-                                        <img class="tooltipicon" onclick="SEL.Tooltip.Show('736FC38A-B03C-4BFA-BF9A-AC9D5BE2AAD3', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" /></span>
-                                    <span class="inputtooltipfield">&nbsp;</span>
+                                        </span>
+                                    <span class="inputtooltipfield"><img class="tooltipicon" onclick="SEL.Tooltip.Show('736FC38A-B03C-4BFA-BF9A-AC9D5BE2AAD3', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" /></span>
                                     <span class="inputvalidatorfield">&nbsp;</span>
                                 </div>
-
+                                
+                                    <div class="sectiontitle">Corporate Cards</div>
+                                    <div class="twocolumn"><asp:Label runat="server" AssociatedControlID="chkBlockUnmatchedExpenseItemsBeingSubmitted">Do not allow unmatched expense items to be submitted</asp:Label><span class="inputs"><asp:CheckBox runat="server" ID="chkBlockUnmatchedExpenseItemsBeingSubmitted"></asp:CheckBox></span><span class="inputicon"></span><span class="inputtooltipfield"><img id="imgTooltipDoNotAllowUnmatchedExpenseItems" onclick="SEL.Tooltip.Show('55244FA2-E168-4EFF-AEE4-EFA23487183D', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon" /></span><span class="inputvalidatorfield"></span></div>
+                                
                             </span>
                         </div>
                     </ContentTemplate>
@@ -404,7 +407,7 @@
                                 <span class="inputvalidatorfield">&nbsp;</span>
                             </div>
                         </div>
-
+                        
                     </ContentTemplate>
                 </cc1:TabPanel>
                 <cc1:TabPanel runat="server" HeaderText="Employee Options" ID="tabEmployees">
