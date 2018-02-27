@@ -76,7 +76,7 @@ BEGIN
 	SELECT TOP 1 @Motexpiry=' + @attExpireDate +'
 		  ,@motReviewed = case when ' + @attStatus + @ValueList +' THEN 1 ELSE 0 END 
 	FROM ' + @vehicleDocumentsTableId +'
-	WHERE ' + @attVehicleType +' = ' + @MotValueId + ' AND (' + @attStartDate + '  IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +' OR @expenseItemDate > ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId
+	WHERE ' + @attVehicleType +' = ' + @MotValueId + ' AND (' + @attExpireDate +' IS NOT NULL OR @expenseItemDate > ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId
 	ORDER BY ' + @attStatus +' DESC ,' + @attExpireDate +' DESC
 	END
 	ELSE
@@ -84,7 +84,7 @@ BEGIN
 	SELECT TOP 1 @Motexpiry=' + @attExpireDate +'
 		  ,@motReviewed = case when ' + @attStatus + @ValueList +' THEN 1 ELSE 0 END 
 	FROM ' + @vehicleDocumentsTableId +'
-	WHERE ' + @attVehicleType +' = ' + @MotValueId + ' AND (' + @attStartDate + ' IS NULL OR @expenseItemDate BETWEEN ' + @attStartDate + ' AND ' + @attExpireDate +' OR @expenseItemDate > ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId 
+	WHERE ' + @attVehicleType +' = ' + @MotValueId + ' AND (' + @attExpireDate +' IS NOT NULL OR @expenseItemDate > ' + @attExpireDate +') AND ' + @attVehicle + ' = @carId 
 	ORDER BY '+ @attExpireDate +' ASC
 	END
 
