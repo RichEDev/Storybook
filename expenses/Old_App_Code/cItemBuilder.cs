@@ -354,7 +354,8 @@ public class cItemBuilder
         if (subcat.mileageapp || subcat.calculation == CalculationType.ExcessMileage)
         {
             var activeCars = this.clsEmployeeCars.GetActiveCars(this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? date : DateTime.Now, false);
-            var dutyOfCareExpiredDocuments = DutyOfCareDocuments.PassesDutyOfCare(accountid, activeCars, employeeid, this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? date : DateTime.Now, this.currentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), this.accountProperties, new VehicleValidatorCheck(this.currentUser, this.accountProperties)).FirstOrDefault();
+            var dutyOfCareExpiredDocuments = DutyOfCareDocuments.PassesDutyOfCare(accountid, activeCars, employeeid, this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? date : DateTime.Now, this.currentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), this.accountProperties, new VehicleValidatorCheck(this.currentUser, this.accountProperties, this.clsEmployeeCars)).FirstOrDefault();
+            
             documentExpiryResults = dutyOfCareExpiredDocuments.Key;
             isManualDocumentValid = dutyOfCareExpiredDocuments.Value;
 
@@ -661,7 +662,7 @@ public class cItemBuilder
 
                 if (documentExpiryResults == null)
                 {
-                    var dutyOfCareExpiredDocuments = DutyOfCareDocuments.PassesDutyOfCare(accountid, this.clsEmployeeCars.GetActiveCars(includePoolCars: false), employeeid, this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? date : DateTime.Now, this.currentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), this.accountProperties, new VehicleValidatorCheck(this.currentUser, this.accountProperties)).FirstOrDefault();
+                    var dutyOfCareExpiredDocuments = DutyOfCareDocuments.PassesDutyOfCare(accountid, this.clsEmployeeCars.GetActiveCars(includePoolCars: false), employeeid, this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? date : DateTime.Now, this.currentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), this.accountProperties, new VehicleValidatorCheck(this.currentUser, this.accountProperties, this.clsEmployeeCars)).FirstOrDefault();
                     documentExpiryResults = dutyOfCareExpiredDocuments.Key;
                     isManualDocumentValid = dutyOfCareExpiredDocuments.Value;
                 }
@@ -742,7 +743,7 @@ public class cItemBuilder
         {
             if (documentExpiryResults == null)
             {
-                var dutyOfCareExpiredDocuments = DutyOfCareDocuments.PassesDutyOfCare(accountid, this.clsEmployeeCars.GetActiveCars(includePoolCars: false), employeeid, this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? date : DateTime.Now, this.currentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), this.accountProperties, new VehicleValidatorCheck(this.currentUser, this.accountProperties)).FirstOrDefault();
+                var dutyOfCareExpiredDocuments = DutyOfCareDocuments.PassesDutyOfCare(accountid, this.clsEmployeeCars.GetActiveCars(includePoolCars: false), employeeid, this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? date : DateTime.Now, this.currentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), this.accountProperties, new VehicleValidatorCheck(this.currentUser, this.accountProperties, this.clsEmployeeCars)).FirstOrDefault();
                 documentExpiryResults = dutyOfCareExpiredDocuments.Key;
                 isManualDocumentValid = dutyOfCareExpiredDocuments.Value;
             }
@@ -3445,7 +3446,7 @@ public class cItemBuilder
             activeCars = activeCars.Where(currentCar => currentCar.carid == carid).ToList();
         }
 
-        var dutyOfCareExpiredDocuments = DutyOfCareDocuments.PassesDutyOfCare(accountid, activeCars, employeeid, this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? expenseItemDate : DateTime.Now, this.currentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), this.accountProperties, new VehicleValidatorCheck(this.currentUser, this.accountProperties)).FirstOrDefault();
+        var dutyOfCareExpiredDocuments = DutyOfCareDocuments.PassesDutyOfCare(accountid, activeCars, employeeid, this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? expenseItemDate : DateTime.Now, this.currentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), this.accountProperties, new VehicleValidatorCheck(this.currentUser, this.accountProperties, this.clsEmployeeCars)).FirstOrDefault();
         var documentExpiryResults = dutyOfCareExpiredDocuments.Key;
         var isManualDocumentValid = dutyOfCareExpiredDocuments.Value;
         var class1BusinessResults = DutyOfCareDocuments.Class1BusinessInformation(accountid, activeCars, this.accountProperties.UseDateOfExpenseForDutyOfCareChecks ? expenseItemDate : DateTime.Now);

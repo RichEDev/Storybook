@@ -2836,7 +2836,7 @@ public partial class aeexpense : System.Web.UI.Page
                 var dutyOfCareDocument = new DutyOfCareDocuments();
                 var class1BusinessResults = new List<ListItem>();
                 
-                var documentExpiryResults = dutyOfCareDocument.PassesDutyOfCare(this.ActionContext.CurrentUser.AccountID, activeCars, this.ActionContext.CurrentUser.EmployeeID, reqProperties.UseDateOfExpenseForDutyOfCareChecks ? reqExpenseItem.date : DateTime.Now, this.ActionContext.CurrentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), reqProperties, new VehicleValidatorCheck(cMisc.GetCurrentUser(), reqProperties)).Keys.First();
+                var documentExpiryResults = dutyOfCareDocument.PassesDutyOfCare(this.ActionContext.CurrentUser.AccountID, activeCars, this.ActionContext.CurrentUser.EmployeeID, reqProperties.UseDateOfExpenseForDutyOfCareChecks ? reqExpenseItem.date : DateTime.Now, this.ActionContext.CurrentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), reqProperties, new VehicleValidatorCheck(cMisc.GetCurrentUser(), reqProperties, this.ActionContext.EmployeeCars)).Keys.First();
                 if (documentExpiryResults.Count == 0 && subcat.RequireClass1BusinessInsurance)
                 {
                     class1BusinessResults = dutyOfCareDocument.Class1BusinessInformation(this.ActionContext.CurrentUser.AccountID, activeCars, reqProperties.UseDateOfExpenseForDutyOfCareChecks ? reqExpenseItem.date : DateTime.Now);

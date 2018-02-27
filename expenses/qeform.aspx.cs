@@ -129,7 +129,7 @@ namespace expenses
             int employeeid = (int)this.ViewState["employeeid"];
             Employee reqemp = clsemployees.GetEmployeeById(employeeid);
             cEmployeeCars clsEmployeeCars = new cEmployeeCars((int)ViewState["accountid"], employeeid);
-            var documentExpiryResult = new DutyOfCareDocuments().PassesDutyOfCare(user.AccountID, clsEmployeeCars.GetActiveCars(includePoolCars: false), employeeid, Convert.ToDateTime(this.todaysDate), user.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), accountProperties, new VehicleValidatorCheck(cMisc.GetCurrentUser(), accountProperties));
+            var documentExpiryResult = new DutyOfCareDocuments().PassesDutyOfCare(user.AccountID, clsEmployeeCars.GetActiveCars(includePoolCars: false), employeeid, Convert.ToDateTime(this.todaysDate), user.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), accountProperties, new VehicleValidatorCheck(cMisc.GetCurrentUser(), accountProperties, clsEmployeeCars));
             #region header
 
 

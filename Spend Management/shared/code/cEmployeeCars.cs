@@ -112,6 +112,9 @@ namespace Spend_Management
             return cars;
         }
 
+        /// <summary>
+        /// Reset the internal list of employee cars and flush the cache item.
+        /// </summary>
         private void ResetCache()
         {
             cache.Delete(this.nAccountID, CacheKey, this.nEmployeeID.ToString());

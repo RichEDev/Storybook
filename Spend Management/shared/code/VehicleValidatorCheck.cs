@@ -13,15 +13,18 @@
     {
         private readonly ICurrentUser _currentUser;
         private readonly cAccountProperties _accountProperties;
+        private readonly cEmployeeCars _clsEmployeeCars;
         private readonly IDutyOfCareApi _dutyOfCareApi;
 
         /// <summary>
         /// A new instance of <see cref="VehicleValidatorCheck"/>
         /// </summary>
-        public VehicleValidatorCheck(ICurrentUser currentUser, cAccountProperties accountProperties)
+        public VehicleValidatorCheck(ICurrentUser currentUser, cAccountProperties accountProperties,
+            cEmployeeCars clsEmployeeCars)
         {
             this._currentUser = currentUser;
             this._accountProperties = accountProperties;
+            this._clsEmployeeCars = clsEmployeeCars;
             this._dutyOfCareApi = BootstrapDvla.CreateNew();
         }
 
@@ -48,8 +51,7 @@
                 vehicle.MotExpiry = lookupResult.Vehicle.MotExpiry;
                 vehicle.IsMotValid = lookupResult.Vehicle.MotStatus == "MOT";
 
-                cEmployeeCars employeeCar = new cEmployeeCars(vehicle.accountid, vehicle.employeeid);
-                employeeCar.SaveCar(vehicle);
+                this._clsEmployeeCars.SaveCar(vehicle);
 
                 if (this._accountProperties.VehicleLookup)
                 {

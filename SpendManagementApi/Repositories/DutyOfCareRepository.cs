@@ -94,7 +94,7 @@
                 date,
                 this.User.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect), 
                 accountProperties, 
-                new VehicleValidatorCheck(cMisc.GetCurrentUser(), accountProperties));
+                new VehicleValidatorCheck(cMisc.GetCurrentUser(), accountProperties, this.ActionContext.EmployeeCars));
 
             string consentMessage = string.Empty;
             bool isManualDocumentValid = dutyOfCareResults.FirstOrDefault().Value;
