@@ -90,7 +90,30 @@
 </asp:Content>
 
 <asp:Content ID="submenuContent" ContentPlaceHolderID="contentleft" runat="Server">
+  <%--  <script type="text/javascript" language="javascript">
 
+        Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function (sender, args) {
+           
+            console.info(SEL.Expenses.CostCodeBreakdown);
+
+            if (SEL.Expenses.CostCodeBreakdown != undefined) {
+
+                for (var i = 0; i < SEL.Expenses.CostCodeBreakdown.length; i++) {
+
+                    if (SEL.Expenses.CostCodeBreakdown[i].control.includes("CostCode")) {
+                        popDropdown(SEL.Expenses.CostCodeBreakdown[i].control, SEL.Expenses.CostCodeBreakdown[i].items);
+                    }
+
+                
+                }
+
+            }
+
+
+          
+    //        popDropdown(SEL.Expenses.CostCodeBreakdown[0]);
+        });
+    </script>--%>
     <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
         <Scripts>
             <asp:ScriptReference Path="~/scripts/addingexpenses.js?date=20170907" />
@@ -164,7 +187,7 @@
                 var enforcedJourneyRateOption = $("select[id*='cmbmileagecat'][data-enforced=true] option:selected", this);
                 var selectedCarOption = $("select[id*=cmbcar] option:selected", this);
                 if (enforcedJourneyRateOption.data("uom") == "km" && selectedCarOption.data("defaultuom") == "mile" &&
-                        $(".userentereddistance", this).val()) {
+                    $(".userentereddistance", this).val()) {
                     errorMsg = "You cannot claim for '" + selectedCarOption.text() + "' which is in miles " +
                         "as the journey rate is enforced as '" + enforcedJourneyRateOption.text() + "' which is in km.";
                     return;
@@ -212,7 +235,7 @@
         }
 
     </script>
-
+  
     <div class="panel">
         <asp:Literal ID="lititemcomment" runat="server" meta:resourcekey="lititemcommentResource1"></asp:Literal>
 

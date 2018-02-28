@@ -841,7 +841,7 @@
                     sFilterid += rule.filterid.ToString() + ";";
                 }
             }
-            txtbox.Attributes.Add("onchange", "popChildDropDowns('" + txtbox.ID + "','" + sType + "','" + sFilterid + "','" + ctlindex + "'," + accountid + ")");
+            txtbox.Attributes.Add("onblur", "popChildDropDowns('" + txtbox.ID + "','" + sType + "','" + sFilterid + "','" + ctlindex + "'," + accountid + ")");
         }
 
         public void ruleCheck()

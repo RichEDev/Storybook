@@ -97,7 +97,7 @@ Sys.Application.add_load(function(application, applicationEventArguments) {
     // attach cost code autocompletes
     $(".costcode-autocomplete").each(function(i, o) {
         SEL.AutoComplete.Bind(o.id,
-            15,
+            25,
             '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
             '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC',
             '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',
@@ -115,7 +115,7 @@ Sys.Application.add_load(function(application, applicationEventArguments) {
 
     $(".costcodeDescription-autocomplete").each(function (i, o) {
         SEL.AutoComplete.Bind(o.id,
-            15,
+            25,
             '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
             'AF80D035-6093-4721-8AFC-061424D2AB72',
             '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',
@@ -1477,10 +1477,15 @@ function getChildDropDownsComplete(data) {
 
 function popDropdown(ctlid, items) {
 
+    //if (!SEL.Expenses.CostCodeBreakdown) SEL.Expenses.CostCodeBreakdown = [];
+    //SEL.Expenses.CostCodeBreakdown.push({
+    //    control: ctlid,
+    //    items: items
+    //});
+
     if (ctlid.includes("CostCode")) {
 
-        var nobj = [{ "FieldToBuild": "", "Key": 8369, "Value": "", "FormattedText": "" }];
-
+      
         var obj = [];
 
         for (var i = 0; i < items.length; i++) {
@@ -1490,11 +1495,8 @@ function popDropdown(ctlid, items) {
             obj.push(t);
         }
 
-     //   console.write(JSON.stringify(obj));
-
-
         SEL.AutoComplete.Bind("#" + contentID + ctlid,
-            15,
+            25,
             '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
             '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC',
             '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',

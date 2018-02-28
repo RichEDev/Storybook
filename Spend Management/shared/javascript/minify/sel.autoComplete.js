@@ -1,11 +1,11 @@
 ﻿(function (SEL, $, $g, $f, $e)
 {
     var scriptName = "AutoComplete";
-
+  
     function execute()
     {
         SEL.registerNamespace("SEL.AutoComplete");
-
+        SEL.filterRules = [];
         SEL.AutoComplete = {
             Data: {
                 Request:null
@@ -20,6 +20,24 @@
                 triggerParameter.BindtriggerFields = triggerFields;
                 SEL.AutoCompleteCombo.AutoCompleteDropdownBindParameterList.BindMatchParameterList.push(triggerParameter);
                 SEL.AutoComplete.Bind.childFilterList = childFilterList;
+
+                var isCostCodeRelated = true;
+
+                if (isCostCodeRelated) {
+
+                    var removeIndex = SEL.filterRules.map(function (item) { return item.id; }).indexOf(cntl);
+
+                    // remove object if exists
+                    SEL.filterRules.splice(removeIndex, 1);
+
+                    var obj = {};
+                    obj["id"] = cntl;
+                    obj["filter"] = JSON.stringify(childFilterList);
+
+                    SEL.filterRules.push(obj);
+                }
+
+
                 $(document).ready(function ()
                 {
                     $('[id$=' + cntl + ']')
@@ -60,7 +78,12 @@
                                 if (autoCompleteFieldIDs === "null" || autoCompleteFieldIDs === null) {
                                     displayAutocompleteMultipleResultsFields = "False";
                                 }
-                                if (SEL.AutoComplete.Bind.childFilterList == undefined) {
+
+                                //if (isCostCodeRelated) {
+                                //    SEL.AutoComplete.Bind.childFilterList = 
+                                //}
+
+                                else if (SEL.AutoComplete.Bind.childFilterList == undefined) {
                                     SEL.AutoComplete.Bind.childFilterList = null;
                                 }
                                 if (displayAutocompleteMultipleResultsFields === "False") {
