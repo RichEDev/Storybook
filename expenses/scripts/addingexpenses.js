@@ -1485,17 +1485,21 @@ function popDropdown(ctlid, items) {
 
     if (ctlid.includes("CostCode")) {
 
-      
-        var obj = [];
+
+        var control = contentID + ctlid;
+        //clear anything already set
+        $('[id$=' + control + ']').val("");
+
+        var filterRules = [];
 
         for (var i = 0; i < items.length; i++) {
 
             var val = (items[i][1]);
-            var t = { "FieldToBuild": "", "Key": val, "Value": "", "FormattedText": "" };
-            obj.push(t);
+            var filter = { "FieldToBuild": "", "Key": val, "Value": "", "FormattedText": "" };
+            filterRules.push(filter);
         }
 
-        SEL.AutoComplete.Bind("#" + contentID + ctlid,
+        SEL.AutoComplete.Bind('#' + control,
             25,
             '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
             '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC',
@@ -1505,7 +1509,7 @@ function popDropdown(ctlid, items) {
             500,
             null,
             "False",
-            JSON.stringify(obj),
+            JSON.stringify(filterRules),
             null,
             null);
 

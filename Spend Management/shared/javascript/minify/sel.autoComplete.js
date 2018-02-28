@@ -79,6 +79,7 @@
                                     displayAutocompleteMultipleResultsFields = "False";
                                 }
 
+                                //read filter rules from array
                                 //if (isCostCodeRelated) {
                                 //    SEL.AutoComplete.Bind.childFilterList = 
                                 //}
