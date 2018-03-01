@@ -260,7 +260,7 @@
             meta:resourcekey="wizregisterResource1">
             <WizardSteps>
                 <asp:WizardStep runat="server" Title="Step 1 - Employee Name" StepType="Start" meta:resourcekey="WizardStepResource1">
-                    <tooltip:tooltip id="usrTooltip" runat="server"></tooltip:tooltip>
+                    
                     <div class="inputpanel">
                         <div class="inputpaneltitle">
                             <asp:Label ID="lblnamelbl" runat="server" Text="Employee Name &amp;amp; Logon Details" meta:resourcekey="lblnamelblResource1"></asp:Label></div>
@@ -627,6 +627,7 @@
                     <asp:Literal ID="litmileage" runat="server" meta:resourcekey="litmileageResource1"></asp:Literal>
                 </asp:WizardStep>
                 <asp:WizardStep runat="server" Title="User Defined Fields" meta:resourcekey="WizardStepResource13">
+                    <tooltip:tooltip id="usrTooltip" runat="server"></tooltip:tooltip>
                     <div class="inputpanel">
                         <div class="inputpaneltitle">
                             <asp:Label ID="lblotherinfo" runat="server" Text="Other Information" meta:resourcekey="lblotherinfoResource1"></asp:Label>

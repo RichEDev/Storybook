@@ -113,7 +113,7 @@
         /// <returns></returns>
         private string addIFrame(string tooltipString)
         {
-             return "<div class=\"stooltipcontent\">" + tooltipString + "</div><!--[if lte IE 6.5]><iframe class=\"iframe_ie6_tooltip\" src=\"/blank.htm\"></iframe><![endif]--></div></div>"; 
+             return "<div>" + tooltipString + "</div><!--[if lte IE 6.5]><iframe class=\"iframe_ie6_tooltip\" src=\"/blank.htm\"></iframe><![endif]--></div></div>"; 
         }
 
         /// <summary>
