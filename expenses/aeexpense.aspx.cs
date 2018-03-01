@@ -461,7 +461,7 @@ public partial class aeexpense : System.Web.UI.Page
 
 
         generateGeneralDetails();
-        //GenerateCostcodeBreakdown(false);
+      //  GenerateCostcodeBreakdown(false);
         GenerateCostcodeBreakdown();
 
         generateSpecificDetails();
@@ -2389,8 +2389,8 @@ public partial class aeexpense : System.Web.UI.Page
         tbl.Rows.Clear();
 
 
-        //GenerateCostcodeBreakdown(false);
-        GenerateCostcodeBreakdown();
+       GenerateCostcodeBreakdown(false);
+       // GenerateCostcodeBreakdown();
         filterDropdownsOnPageStart();
     }
 
@@ -5182,6 +5182,22 @@ public partial class aeexpense : System.Web.UI.Page
                         sb.Append("500, null, \"False\"," + json + ", null, null);");
 
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "myscript" + txtbox.ID, sb.ToString(), true);
+
+
+                        //    $('input.costcode-autocomplete').focus(function () {
+
+                        //    if (!$(this).val()) {
+                        //        $(this).autocomplete("search", "%%%");
+                        //    }
+                        //}
+
+                        var scripty = new StringBuilder();
+                        scripty.Append("$('ctl00_contentmain_" + txtbox.ID + "').focus(function () {");
+                        scripty.Append("if (!$(this).val()) {");
+                        scripty.Append("$(this).autocomplete(\"search\", \"%%%\");");
+                        scripty.Append(" }})");
+
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "myscriptsearc" + txtbox.ID, scripty.ToString(), true);
 
                     }
 

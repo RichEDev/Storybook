@@ -21,14 +21,21 @@
                 SEL.AutoCompleteCombo.AutoCompleteDropdownBindParameterList.BindMatchParameterList.push(triggerParameter);
                 SEL.AutoComplete.Bind.childFilterList = childFilterList;
 
-                var isCostCodeRelated = true;
+                var isCostCodeRelated = false;
 
+                if (cntl.includes("CostCode")) {
+                    isCostCodeRelated = true;
+                }
+                       
                 if (isCostCodeRelated) {
 
                     var removeIndex = SEL.filterRules.map(function (item) { return item.id; }).indexOf(cntl);
 
-                    // remove object if exists
-                    SEL.filterRules.splice(removeIndex, 1);
+                    if (removeIndex > -1) {
+                        // remove object if exists
+                        SEL.filterRules.splice(removeIndex, 1);
+                    }
+                 
 
                     var obj = {};
                     obj["id"] = cntl;
@@ -80,9 +87,11 @@
                                 }
 
                                 //read filter rules from array
-                                //if (isCostCodeRelated) {
-                                //    SEL.AutoComplete.Bind.childFilterList = 
-                                //}
+                                if (isCostCodeRelated) {
+
+                                    var item = SEL.filterRules.filter(x => x.id === this.element.context.id);
+                                    SEL.AutoComplete.Bind.childFilterList = item["0"].filter;
+                                }
 
                                 else if (SEL.AutoComplete.Bind.childFilterList == undefined) {
                                     SEL.AutoComplete.Bind.childFilterList = null;
