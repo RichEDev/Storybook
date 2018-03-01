@@ -1528,11 +1528,7 @@ function popDropdown(ctlid, items) {
                 .text("[None]"));
         }
 
-        $('ctl00_contentmain_txtCostCode1').focus(function() {
-            if (!$(this).val()) {
-                $(this).autocomplete("search", "%%%");
-            }
-        });
+   
 
         for (var i = 0; i < items.length; i++) {
             $ctl.append($("<option/>")

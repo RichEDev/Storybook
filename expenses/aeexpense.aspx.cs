@@ -462,14 +462,9 @@ public partial class aeexpense : System.Web.UI.Page
 
         generateGeneralDetails();
 
-        if (IsPostBack)
-        {
-            GenerateCostcodeBreakdown(false);
-        }
-        else
-        {
-            GenerateCostcodeBreakdown();
-        }
+     
+        GenerateCostcodeBreakdown();
+        
            
         generateSpecificDetails();
 
@@ -1921,7 +1916,7 @@ public partial class aeexpense : System.Web.UI.Page
     /// <summary>
     /// Generates the Costcode break down control
     /// </summary>
-    private void GenerateCostcodeBreakdown(bool buildCC = true)
+    private void GenerateCostcodeBreakdown()
     {
         var misc = this.ActionContext.Misc;
         cGlobalProperties globalProperties = misc.GetGlobalProperties((int)ViewState["accountid"]);
@@ -2027,7 +2022,7 @@ public partial class aeexpense : System.Web.UI.Page
         foreach (cDepCostItem item in breakdown)
         {
             total += item.percentused;
-            tbl.Rows.Add(AddCostcodeRow(count, item, buildCC));
+            tbl.Rows.Add(AddCostcodeRow(count, item));
             count++;
         }
 
@@ -2061,7 +2056,7 @@ public partial class aeexpense : System.Web.UI.Page
     /// <param name="index">The index of the DepCostItem</param>
     /// <param name="breakdownItem">The DepCostItem</param>
     /// <returns>A TableRow</returns>
-    private TableRow AddCostcodeRow(int index, cDepCostItem breakdownItem, bool buildCC = true)
+    private TableRow AddCostcodeRow(int index, cDepCostItem breakdownItem)
     {
         var misc = this.ActionContext.Misc;
         cGlobalProperties globalProperties = misc.GetGlobalProperties((int)ViewState["accountid"]);
@@ -2137,13 +2132,13 @@ public partial class aeexpense : System.Web.UI.Page
 
             textBox.ID = "txtCostCode" + index;
 
-            if (buildCC)
-            {
+
+            //if filter rules apply then apply then later with autocomplete bind, else apply the auto complete 
+
+        
                 textBox.CssClass = this.ActionContext.Properties.UseCostCodeDescription
                                        ? "costcodeDescription-autocomplete"
                                        : "costcode-autocomplete"; 
-            }
-
      
 
             textBox.Attributes.Add("data-search", "General");
@@ -2396,7 +2391,7 @@ public partial class aeexpense : System.Web.UI.Page
         tbl.Rows.Clear();
 
 
-       GenerateCostcodeBreakdown(false);
+       GenerateCostcodeBreakdown();
        // GenerateCostcodeBreakdown();
         filterDropdownsOnPageStart();
     }
@@ -5173,6 +5168,9 @@ public partial class aeexpense : System.Web.UI.Page
 
                     if (list.Count > 0)
                     {
+                        //remove previous autocomplete binding
+                        txtbox.CssClass = "";
+
                         var jsonSerialiser = new JavaScriptSerializer();
                         var json = JsonConvert.SerializeObject(list);
                         
@@ -5198,33 +5196,21 @@ public partial class aeexpense : System.Web.UI.Page
                         //    }
                         //}
 
-                        var scripty = new StringBuilder();
-                        scripty.Append("$('#ctl00_contentmain_" + txtbox.ID + "').focus(function () {");
-                        scripty.Append("if (!$(this).val()) {");
-                        scripty.Append("$(this).autocomplete(\"search\", \"%%%\");");
-                        scripty.Append(" }})");
-
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "myscriptsearc" + txtbox.ID, scripty.ToString(), true);
+                    
 
                     }
 
-              
+                  //var scripty = new StringBuilder();
+                  //      scripty.Append("('#ctl00_contentmain_" + txtbox.ID + "').focus(function () {");
+                  //      scripty.Append("if (!(this).val()) {");
+                  //      scripty.Append("(this).autocomplete(\"search\", \"%%%\");");
+                  //      scripty.Append(" }})");
+
+                  //      ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "myscriptsearc" + txtbox.ID, scripty.ToString(), true);
                 
 
-                    //SEL.AutoComplete.Bind("#" + contentID + ctlid,
-                    //    25,
-                    //    '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
-                    //    '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC',
-                    //    '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',
-                    //    null,
-                    //    '{ 0: { "FieldID": "8178629C-5908-4458-89F6-D7EE7438314D", "ConditionType": 1, "ValueOne": "0", "ValueTwo": "", "Order": 0, "JoinViaID": 0 } }',
-                    //    500,
-                    //    null,
-                    //    "False",
-                    //    JSON.stringify(obj),
-                    //    null,
-                    //    null);
-
+                 
+                
                
 
                     //register start up script with ddl details.
