@@ -5199,7 +5199,7 @@ public partial class aeexpense : System.Web.UI.Page
                         //}
 
                         var scripty = new StringBuilder();
-                        scripty.Append("$('ctl00_contentmain_" + txtbox.ID + "').focus(function () {");
+                        scripty.Append("$('#ctl00_contentmain_" + txtbox.ID + "').focus(function () {");
                         scripty.Append("if (!$(this).val()) {");
                         scripty.Append("$(this).autocomplete(\"search\", \"%%%\");");
                         scripty.Append(" }})");
