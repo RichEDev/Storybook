@@ -43,7 +43,7 @@
 
             // Do we need to validate this bank account?
             var country = this._countries.getCountryById(bankAccount.CountryId);
-            if (country.GlobalCountryId != 232)
+            if (country == null || country.GlobalCountryId != 232)
             {
                 // No validation available as not UK.
                 return new SpendManagementNoValidation();
