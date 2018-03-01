@@ -43,7 +43,7 @@
 		/// </summary>
 		/// <param name="deviceRegistration">Mobile Device Installation details <see cref="MobileDeviceInstallation"/>.</param>
 		/// <returns>Returns Mobile Device Installation detail after registration.</returns>
-		public async Task<MobileDeviceInstallation> Regsiter(MobileDeviceInstallation deviceRegistration)
+		public async Task<MobileDeviceInstallation> RegisterAsync(MobileDeviceInstallation deviceRegistration)
 		{
 			NotificationHubClient hub = NotificationHubClient.CreateClientFromConnectionString(this.azureHubConnectionString, this.azureHubName);
 			if (string.IsNullOrWhiteSpace(deviceRegistration.RegistrationId))
@@ -93,7 +93,7 @@
 		/// </summary>
 		/// <param name="deviceRegistration">Mobile Device Installation details <see cref="MobileDeviceInstallation"/>.</param>
 		/// <returns>Returns true for successful deregistration otherwise false.</returns>
-		public async Task<bool> DeRegister(MobileDeviceInstallation deviceRegistration)
+		public async Task<bool> DeRegisterAsync(MobileDeviceInstallation deviceRegistration)
 		{
 			try
 			{
@@ -114,7 +114,7 @@
 		///  Updates the registration time to live for devices on hub. Do not call it once time to live has been set.
 		/// </summary>
 		/// <returns>Returns true for successful otherwise false.</returns>
-		public async Task<bool> UpdateRegistrationTimeOnHub()
+		public async Task<bool> UpdateRegistrationTimeOnHubAsync()
 		{
 			try
 			{
@@ -130,6 +130,6 @@
 				return false;
 			}
 
-		}
+		}		
 	}
 }

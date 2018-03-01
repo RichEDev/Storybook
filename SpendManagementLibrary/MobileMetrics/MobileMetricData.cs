@@ -29,7 +29,10 @@
 		/// <param name="registeredTag">
 		/// The Registered Tag.
 		/// </param>
-		public MobileMetricData(int mobileDeviceId, int employeeId, bool allowNotifications, bool registered, string pushChannel, string registrationId, string registeredTag)
+		/// <param name="registeredPlatform">
+		/// The Registered Platform.
+		/// </param>
+		public MobileMetricData(int mobileDeviceId, int employeeId, bool allowNotifications, bool registered, string pushChannel, string registrationId, string registeredTag,string registeredPlatform)
 		{
 			this.MobileDeviceId = mobileDeviceId;
 			this.RegistrationId = registrationId;
@@ -38,6 +41,7 @@
 			this.AllowNotifications = allowNotifications;
 			this.EmployeeId = employeeId;
 			this.RegisteredTag = registeredTag;
+			this.MobilePlatform = registeredPlatform;
 		}
 
 		/// <summary>
@@ -74,5 +78,10 @@
 		/// Gets the Registered Tag.
 		/// </summary>
 		public string RegisteredTag { get; }
+
+		/// <summary>
+		/// Gets the Mobile Platform.
+		/// </summary>
+		public string MobilePlatform { get; }
 	}
 }

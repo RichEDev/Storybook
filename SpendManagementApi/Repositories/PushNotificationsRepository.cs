@@ -65,7 +65,7 @@ namespace SpendManagementApi.Repositories
 					Tags = new HashSet<string> { request.MobileDeviceId + this.User.EmployeeID.ToString() + this.User.AccountID }
 				};
 
-				var result = await mobileDeviceInstallationService.Regsiter(mobileDeviceInstallation);
+				var result = await mobileDeviceInstallationService.RegisterAsync(mobileDeviceInstallation);
 				if (result != null)
 				{
 					return this.UpdateAndGetMobileMetricDetails(request.MobileDeviceId, true, result);
@@ -106,7 +106,7 @@ namespace SpendManagementApi.Repositories
 					Tags = new HashSet<string> { request.MobileDeviceId + this.User.EmployeeID.ToString() + this.User.AccountID }
 				};
 
-				var result = await mobileDeviceInstallationService.DeRegister(mobileDeviceInstallation);
+				var result = await mobileDeviceInstallationService.DeRegisterAsync(mobileDeviceInstallation);
 
 				if (result)
 				{
@@ -135,7 +135,7 @@ namespace SpendManagementApi.Repositories
 		/// <returns>Returns true for successful otherwise false.</returns>
 		public async Task<bool> UpdateRegistrationTimeOnHub()
 		{
-			return await new MobileDeviceInstallationService(this.azureHubConnectionString, this.azureHubName).UpdateRegistrationTimeOnHub();
+			return await new MobileDeviceInstallationService(this.azureHubConnectionString, this.azureHubName).UpdateRegistrationTimeOnHubAsync();
 		}
 
 		/// <summary>
