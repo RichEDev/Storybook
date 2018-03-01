@@ -461,9 +461,16 @@ public partial class aeexpense : System.Web.UI.Page
 
 
         generateGeneralDetails();
-      //  GenerateCostcodeBreakdown(false);
-        GenerateCostcodeBreakdown();
 
+        if (IsPostBack)
+        {
+            GenerateCostcodeBreakdown(false);
+        }
+        else
+        {
+            GenerateCostcodeBreakdown();
+        }
+           
         generateSpecificDetails();
 
         filterDropdownsOnPageStart();
@@ -5179,7 +5186,7 @@ public partial class aeexpense : System.Web.UI.Page
                         sb.Append("'359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',");
                         sb.Append("null,");
                         sb.Append("'{ 0: { \"FieldID\": \"8178629C-5908-4458-89F6-D7EE7438314D\", \"ConditionType\": 1, \"ValueOne\": \"0\", \"ValueTwo\": \"\", \"Order\": 0, \"JoinViaID\": 0 } }',");
-                        sb.Append("500, null, \"False\"," + json + ", null, null);");
+                        sb.Append("500, null, \"False\"," + json + ", \"False\", null);");
 
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "myscript" + txtbox.ID, sb.ToString(), true);
 

@@ -1499,7 +1499,7 @@ function popDropdown(ctlid, items) {
             filterRules.push(filter);
         }
 
-        SEL.AutoComplete.Bind('#' + control,
+        SEL.AutoComplete.Bind(control,
             25,
             '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
             '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC',
@@ -1509,8 +1509,8 @@ function popDropdown(ctlid, items) {
             500,
             null,
             "False",
-            JSON.stringify(filterRules),
-            null,
+            filterRules,
+            "False",
             null);
 
     } else {
