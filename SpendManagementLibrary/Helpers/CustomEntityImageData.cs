@@ -53,7 +53,7 @@ namespace SpendManagementLibrary.Helpers
             using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(accountid)))
             {
                 var Sql =
-                    "select customentities.entity_name, cea.display_name,fileID, fileType, fileName from CustomEntityImageData inner join customEntities on customEntities.entityid = CustomEntityImageData.entityID inner join customEntityAttributes as cea on cea.attributeid = CustomEntityImageData.attributeID where entityID = @entityID AND attributeID = @attributeID";
+                    "select customentities.entity_name, cea.display_name,fileID, fileType, fileName from CustomEntityImageData inner join customEntities on customEntities.entityid = CustomEntityImageData.entityID inner join customEntityAttributes as cea on cea.attributeid = CustomEntityImageData.attributeID where CustomEntityImageData.entityID = @entityID AND CustomEntityImageData.attributeID = @attributeID";
                 expdata.sqlexecute.Parameters.Clear();
                 expdata.sqlexecute.Parameters.AddWithValue("@entityID", entityId);
                 expdata.sqlexecute.Parameters.AddWithValue("@attributeID", attributeId);

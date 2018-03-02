@@ -24,7 +24,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <SignAssembly>false</SignAssembly>
     <TargetFrameworkProfile />
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -743,7 +743,7 @@
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-     </None>
+    </None>
     <None Include="log4net.Debug.config">
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>
@@ -752,7 +752,7 @@
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
+    </None>
     <None Include="log4net.Production.config">
       <SubType>Designer</SubType>
       <DependentUpon>log4net.config</DependentUpon>
@@ -2327,7 +2327,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>11657</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
