@@ -1,10 +1,11 @@
-﻿using DutyOfCareAPI.DutyOfCare.LicenceCheck.VehicleLookup;
-
-namespace DutyOfCareAPI.DutyOfCare.LicenceCheck
+﻿namespace DutyOfCareAPI.DutyOfCare.LicenceCheck
 {
     using System;
     using System.Collections.Generic;
     using System.Net;
+    using System.Globalization;
+    using DutyOfCareAPI.DutyOfCare.LicenceCheck.VehicleLookup;
+    using DutyOfCareAPI.VDLVehicleLookup;
 
     using DutyOfCareAPI.DutyOfCareLicenceCheckApi;
 
@@ -13,6 +14,8 @@ namespace DutyOfCareAPI.DutyOfCare.LicenceCheck
     /// </summary>
     public class MockLicenceCheckDutyOfCareApi : IDutyOfCareApi
     {
+        private readonly NetworkCredential _credentials;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MockLicenceCheckDutyOfCareApi"/> class. 
         /// Create a new <see cref="LicenceCheckDutyOfCareApi"/>object.
@@ -25,6 +28,7 @@ namespace DutyOfCareAPI.DutyOfCare.LicenceCheck
         /// </param>
         public MockLicenceCheckDutyOfCareApi(NetworkCredential credentials, string licenceCheckUrl)
         {
+            this._credentials = credentials;
             this.LicencePortalUrl = licenceCheckUrl;
         }
 
@@ -367,24 +371,51 @@ namespace DutyOfCareAPI.DutyOfCare.LicenceCheck
         /// <returns>An instance of <see cref="IVehicleLookupResult"/></returns>
         public IVehicleLookupResult Lookup(string registrationNumber, ILookupLogger lookupLogger)
         {
-            var result = new VehicleLookupSuccess
+            var service = new VDLServiceClient();
+            var response = service.GetAdvancedVehicleData(this._credentials.UserName, this._credentials.Password, registrationNumber);
+            lookupLogger.Write(registrationNumber, response.ResponseMessage.Code, response.ResponseMessage.Description);
+            if (response.Success)
             {
-                Code = "200",
-                Message = "OK",
-                Vehicle = new Vehicle
+                var engineCapacity = 0;
+                int.TryParse(response.VehicleData.ExactCc, out engineCapacity);
+                if (engineCapacity == 0)
                 {
-                    RegistrationNumber = "Test" + Guid.NewGuid(),
-                    Make = "test",
-                    Model = "tester",
-                    FuelType = "Petrol",
-                    EngineCapacity = 100,
-                    VehicleType = "Car"
+                    int.TryParse(response.VehicleData.Cc, out engineCapacity);
                 }
-            };
 
-            lookupLogger.Write(registrationNumber, result.Code, result.Message);
+                var registrationDate = DateTime.MinValue;
+                DateTime.TryParseExact(response.VehicleData.DateOfRegistration, "ddMMyyyy", null, DateTimeStyles.None, out registrationDate);
 
-            return result;
+                var motDueDate = response.VehicleData.MotExpiry == DateTime.MinValue && response.VehicleData.MotStatus == "MOT"
+                    ? registrationDate.AddYears(3)
+                    : response.VehicleData.MotExpiry;
+
+
+                var result = new VehicleLookupSuccess
+                {
+                    Message = response.ResponseMessage.Description,
+                    Code = response.ResponseMessage.Code,
+                    Vehicle = new Vehicle
+                    {
+                        RegistrationNumber = response.VehicleData.VRM,
+                        Model = response.VehicleData.DvlaModel,
+                        Make = response.VehicleData.DvlaMake,
+                        FuelType = response.VehicleData.Fuel,
+                        EngineCapacity = engineCapacity,
+                        VehicleType = string.IsNullOrEmpty(response.VehicleData.VehicleType) ? response.VehicleData.BodyStyle : response.VehicleData.VehicleType,
+                        TaxExpiry = response.VehicleData.TaxExpiry,
+                        TaxStatus = response.VehicleData.TaxStatus,
+                        MotExpiry = motDueDate,
+                        MotStatus = response.VehicleData.MotStatus,
+                    }
+                };
+
+                return result;
+            }
+            else
+            {
+                return new VehicleLookupFailed(response.ResponseMessage.Code, response.ResponseMessage.Description);
+            }
         }
 
         /// <summary>
