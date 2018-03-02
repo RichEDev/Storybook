@@ -45,7 +45,7 @@ namespace Spend_Management
                         text = String.Empty;
                         break;
                     default:
-                        text = cCarsBase.GetEnumDescription(value);
+                        text = CarsBase.GetEnumDescription(value);
                         break;
                 }
                 ((cFieldColumn)grid.getColumnByName("vehicletypeid")).addValueListItem((int)value, text);
@@ -268,7 +268,7 @@ namespace Spend_Management
                 approved = true;
             }
 
-            cCarsBase clsCars = null;
+            CarsBase clsCars = null;
             if (employeeid > 0) // if the car is an employee car instantiate through employeecars else pool car
             {
                 clsCars = new cEmployeeCars(user.AccountID, employeeid);
@@ -676,7 +676,7 @@ namespace Spend_Management
             var years = FinancialYears.ActiveYears(currentUser);
             int financialYearID = 0;
             var employeeHasYear = false;
-            cCarsBase clsCars = null;
+            CarsBase clsCars = null;
             if (employeeId == 0)
             {
                 clsCars = new cPoolCars(currentUser.AccountID);

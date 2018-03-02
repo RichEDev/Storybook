@@ -191,7 +191,7 @@ namespace Spend_Management
 				this.exemptFromHomeToOffice.Style.Add(HtmlTextWriterStyle.Display, "none");
 			}
 
-            cCarsBase clsCars = null;
+            CarsBase clsCars = null;
             if (bIsPoolCar)
             {
                 clsCars = new cPoolCars(AccountID);
@@ -256,12 +256,12 @@ namespace Spend_Management
 
             if (!this.IsPostBack)
             {
-                cCarsBase.AddCarEngineTypesToDropDownList(currentUser, ref this.cmbcartype);    
+                CarsBase.AddCarEngineTypesToDropDownList(currentUser, ref this.cmbcartype);    
             }
 
             if (!this.IsPostBack)
             {
-                cCarsBase.AddVehicleTypesToDropDownList(ref this.cmbvehicletype);
+                CarsBase.AddVehicleTypesToDropDownList(ref this.cmbvehicletype);
         }
         }
 

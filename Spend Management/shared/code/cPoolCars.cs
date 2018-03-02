@@ -14,7 +14,7 @@ namespace Spend_Management
     /// <summary>
     /// Car class for dealing with pool cars, caches account's pool cars
     /// </summary>
-    public class cPoolCars : cCarsBase
+    public class cPoolCars : CarsBase
     {
         Utilities.DistributedCaching.Cache cache = new Utilities.DistributedCaching.Cache();
 

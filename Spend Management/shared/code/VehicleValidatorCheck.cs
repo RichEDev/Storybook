@@ -5,6 +5,7 @@
     using Bootstrap;
     using SpendManagementLibrary;
     using Spend_Management.shared.code.DVLA;
+    using System;
 
     /// <summary>
     /// An interface to define the operations allowed when validating a vehicle.
@@ -50,6 +51,16 @@
                 vehicle.IsTaxValid = lookupResult.Vehicle.TaxStatus == "Taxed";
                 vehicle.MotExpiry = lookupResult.Vehicle.MotExpiry;
                 vehicle.IsMotValid = lookupResult.Vehicle.MotStatus == "MOT";
+
+                if (vehicle.modifiedon == DateTime.MinValue || vehicle.modifiedon == null)
+                {
+                    vehicle.modifiedon = DateTime.Now;
+                }
+
+                if (vehicle.modifiedby == 0 || vehicle.modifiedby == null)
+                {
+                    vehicle.modifiedby = this._currentUser.EmployeeID;
+                }
 
                 this._clsEmployeeCars.SaveCar(vehicle);
 

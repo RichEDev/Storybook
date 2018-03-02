@@ -22,7 +22,7 @@ namespace Spend_Management
     /// <summary>
     /// Car class for dealing with cars relating to an employee, caches per employee
     /// </summary>
-    public class cEmployeeCars : cCarsBase
+    public class cEmployeeCars : CarsBase
     {
         Utilities.DistributedCaching.Cache cache = new Utilities.DistributedCaching.Cache();
 

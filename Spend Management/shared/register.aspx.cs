@@ -909,7 +909,7 @@ public partial class register : Page
             string brandName = (clsModule != null) ? clsModule.BrandNamePlainText : "Expenses";
             this.requsername.ErrorMessage = "Please enter a username you would like to logon to " + brandName + @" with";
 
-            cCarsBase.AddVehicleTypesToDropDownList(ref this.cmbvehicletype);
+            CarsBase.AddVehicleTypesToDropDownList(ref this.cmbvehicletype);
 
             txtaddresssearch.Attributes["rel"] = addressidhidden.ClientID;
         }
@@ -1275,7 +1275,7 @@ public partial class register : Page
                 this.reqmake.Enabled = this.chkusecar.Checked;
                 this.reqmodel.Enabled = this.chkusecar.Checked;
 
-                cCarsBase.AddCarEngineTypesToDropDownList(currentUser, ref this.cmbcartype);
+                CarsBase.AddCarEngineTypesToDropDownList(currentUser, ref this.cmbcartype);
 
                 this.reqreg.Enabled = !isBicycleSelected && this.chkusecar.Checked;
                 this.reqenginetype.Enabled = !isBicycleSelected && this.chkusecar.Checked;
