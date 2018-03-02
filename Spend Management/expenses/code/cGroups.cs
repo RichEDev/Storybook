@@ -846,8 +846,16 @@ namespace Spend_Management
                     (object) validationCorrectionThreshold ?? DBNull.Value);
                 expdata.sqlexecute.Parameters.AddWithValue("@approverJustificationsRequired",
                     Convert.ToByte(approverJustificationsRequired));
-                expdata.sqlexecute.Parameters.AddWithValue("@ClaimPercentageToValidate", (object) claimPercentageToValidate ?? DBNull.Value);
-                
+
+                if (claimPercentageToValidate.HasValue == false)
+                {
+                    expdata.sqlexecute.Parameters.AddWithValue("@ClaimPercentageToValidate", DBNull.Value);
+                }
+                else
+                {
+                    expdata.sqlexecute.Parameters.AddWithValue("@ClaimPercentageToValidate", claimPercentageToValidate);
+                }
+
                 expdata.ExecuteProc("SaveSignoffStage");
                 expdata.sqlexecute.Parameters.Clear();
             }
@@ -919,7 +927,15 @@ namespace Spend_Management
             expdata.sqlexecute.Parameters.AddWithValue("@IsPostValidationCleanupStage", isPostValidationCleanupStage);
             expdata.sqlexecute.Parameters.AddWithValue("@ValidationCorrectionThreshold", (object)validationCorrectionThreshold ?? DBNull.Value);
             expdata.sqlexecute.Parameters.AddWithValue("@approverJustificationsRequired", Convert.ToByte(approverJustificationsRequired));
-            expdata.sqlexecute.Parameters.AddWithValue("@ClaimPercentageToValidate", (object)claimPercentageToValidate ?? DBNull.Value);
+
+            if (claimPercentageToValidate.HasValue == false)
+            {
+                expdata.sqlexecute.Parameters.AddWithValue("@ClaimPercentageToValidate", DBNull.Value);
+            }
+            else
+            {
+                expdata.sqlexecute.Parameters.AddWithValue("@ClaimPercentageToValidate", claimPercentageToValidate);
+            }
 
             expdata.sqlexecute.Parameters.AddWithValue("@stage", Byte.MaxValue);
 

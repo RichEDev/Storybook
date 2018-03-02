@@ -26,7 +26,7 @@
 	@AllocateForPayment				BIT,
 	@IsPostValidationCleanupStage	BIT			= null,
 	@ValidationCorrectionThreshold	INT,
-	@ClaimPercentageToValidate DECIMAL(3,2)
+	@ClaimPercentageToValidate DECIMAL(5,2)
 AS
 BEGIN
 	if @signoffid is null
