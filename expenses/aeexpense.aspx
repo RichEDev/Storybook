@@ -276,7 +276,9 @@
     </div>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional"
         ChildrenAsTriggers="True">
+     
         <ContentTemplate>
+            <asp:HiddenField runat="server" ID="hdnShowCostCodeDescription" />
             <asp:Literal ID="litcostcodeheader" runat="server" meta:resourcekey="litcostcodeheaderResource1"></asp:Literal>
             <asp:Table ID="tblcostcodes" runat="server" meta:resourcekey="tblcostcodesResource1">
             </asp:Table>

@@ -1440,8 +1440,8 @@ function getChildDropDownsComplete(data) {
 
     switch (data[2]) {
         case 'general':
-            {
-                popDropdown(data[0], items)
+        {
+            popDropdown(data[0], items);
                 break;
             }
         case 'individual':
@@ -1477,12 +1477,7 @@ function getChildDropDownsComplete(data) {
 
 function popDropdown(ctlid, items) {
 
-    //if (!SEL.Expenses.CostCodeBreakdown) SEL.Expenses.CostCodeBreakdown = [];
-    //SEL.Expenses.CostCodeBreakdown.push({
-    //    control: ctlid,
-    //    items: items
-    //});
-
+  
     if (ctlid.includes("CostCode")) {
 
 
@@ -1499,10 +1494,20 @@ function popDropdown(ctlid, items) {
             filterRules.push(filter);
         }
 
+        //determine to show desc or cc
+
+        var showDescription = document.getElementById('ctl00_contentmain_hdnShowCostCodeDescription').value;
+        var displayField;
+        if (showDescription === 'true') {
+            displayField = 'AF80D035-6093-4721-8AFC-061424D2AB72';
+        } else {
+            displayField = '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC';
+        }
+
         SEL.AutoComplete.Bind(control,
             25,
             '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
-            '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC',
+            displayField,
             '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',
             null,
             '{ 0: { "FieldID": "8178629C-5908-4458-89F6-D7EE7438314D", "ConditionType": 1, "ValueOne": "0", "ValueTwo": "", "Order": 0, "JoinViaID": 0 } }',

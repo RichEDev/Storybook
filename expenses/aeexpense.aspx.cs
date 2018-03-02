@@ -1918,6 +1918,13 @@ public partial class aeexpense : System.Web.UI.Page
     /// </summary>
     private void GenerateCostcodeBreakdown()
     {
+        HiddenField hdnShowCostCodeDescription = (HiddenField)pnlgeneral.FindControl("hdnShowCostCodeDescription");
+   
+        if (hdnShowCostCodeDescription.Value == string.Empty)
+        {
+            hdnShowCostCodeDescription.Value = this.ActionContext.Properties.UseCostCodeDescription.ToString().ToLower();
+        }
+
         var misc = this.ActionContext.Misc;
         cGlobalProperties globalProperties = misc.GetGlobalProperties((int)ViewState["accountid"]);
 
@@ -2392,7 +2399,7 @@ public partial class aeexpense : System.Web.UI.Page
 
 
        GenerateCostcodeBreakdown();
-       // GenerateCostcodeBreakdown();
+     
         filterDropdownsOnPageStart();
     }
 
@@ -5034,7 +5041,15 @@ public partial class aeexpense : System.Web.UI.Page
 
             bool isForCostCode = ctlid.Contains("txtCostCode");
 
+            var showCostCodeDescription = false;
 
+            if (isForCostCode)
+            {
+                if (this.ActionContext.Properties.UseCostCodeDescription)
+                {
+                    showCostCodeDescription = true;
+                }
+            }
 
             items = popDropdown(filterids[i], types[i], id);
 
@@ -5173,20 +5188,23 @@ public partial class aeexpense : System.Web.UI.Page
 
                         var jsonSerialiser = new JavaScriptSerializer();
                         var json = JsonConvert.SerializeObject(list);
-                        
-                        
+
+                        string displayField;
+
+                        displayField = showCostCodeDescription ? "AF80D035-6093-4721-8AFC-061424D2AB72" : "359DFAC9-74E6-4BE5-949F-3FB224B1CBFC";
+                                           
                         var sb = new StringBuilder();
                         sb.Append("SEL.AutoComplete.Bind(");
                         sb.Append("'ctl00_contentmain_" + txtbox.ID + "',");
                         sb.Append("25,");
                         sb.Append("'02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',");
-                        sb.Append("'359DFAC9-74E6-4BE5-949F-3FB224B1CBFC',");
+                        sb.Append("'" + displayField + "',");
                         sb.Append("'359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',");
                         sb.Append("null,");
                         sb.Append("'{ 0: { \"FieldID\": \"8178629C-5908-4458-89F6-D7EE7438314D\", \"ConditionType\": 1, \"ValueOne\": \"0\", \"ValueTwo\": \"\", \"Order\": 0, \"JoinViaID\": 0 } }',");
                         sb.Append("500, null, \"False\"," + json + ", \"False\", null);");
 
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "myscript" + txtbox.ID, sb.ToString(), true);
+                        ScriptManager.RegisterStartupScript (this, this.GetType(), "myscript" + txtbox.ID, sb.ToString(), true);
 
 
                         //    $('input.costcode-autocomplete').focus(function () {
@@ -5217,8 +5235,9 @@ public partial class aeexpense : System.Web.UI.Page
 
                     if (breakdown[int.Parse(ctlindex)].costcodeid.ToString() != "0")
                     {
-                       var costcode = ActionContext.CostCodes.GetCostcodeById( breakdown[int.Parse(ctlindex)].costcodeid);
-                        txtbox.Text = costcode.Description;
+                        var costcode = ActionContext.CostCodes.GetCostcodeById(breakdown[int.Parse(ctlindex)].costcodeid);
+
+                        txtbox.Text = showCostCodeDescription ? costcode.Description : costcode.Costcode;
                     }                                   
                 }
 
