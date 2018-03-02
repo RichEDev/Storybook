@@ -89,7 +89,7 @@
 
             }
 
-            clsquery.addColumn(expiryDate, motExpiryDate);
+            clsquery.addColumn(expiryDate, motExpiryDate.AddDays(-1));
             clsquery.addColumn(vehicleId, carId);
             clsquery.addColumn(motRequired, 1);
             clsquery.addColumn(checkedByVehicleOwner, 0);

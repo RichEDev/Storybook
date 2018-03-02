@@ -89,7 +89,7 @@
 
             }
 
-            clsquery.addColumn(expiryDate, taxExpiryDate);
+            clsquery.addColumn(expiryDate, taxExpiryDate.AddDays(-1));
             clsquery.addColumn(vehicleId, carId);
             clsquery.addColumn(sorn, 0);
             clsquery.addColumn(checkedByVehicleOwner, 0);
