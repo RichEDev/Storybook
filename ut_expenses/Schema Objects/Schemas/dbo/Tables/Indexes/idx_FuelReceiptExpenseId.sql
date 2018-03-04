@@ -1,0 +1,1 @@
+﻿CREATE INDEX idx_FuelReceiptExpenseId ON SavedExpensesFuelReceiptToMileageAllocations (FuelReceiptExpenseId);

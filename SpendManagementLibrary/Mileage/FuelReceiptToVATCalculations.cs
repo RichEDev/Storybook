@@ -27,6 +27,7 @@
                 var accountConnectionString = cAccounts.getConnectionString(accountId);
                 using (var connection = new DatabaseConnection(accountConnectionString))
                 {
+                    connection.sqlexecute.CommandTimeout = 3600;
                     connection.ExecuteProc("ProcessFuelReceiptToMileageAllocations");
                     isUpdated = 1;
                     connection.ClearParameters();

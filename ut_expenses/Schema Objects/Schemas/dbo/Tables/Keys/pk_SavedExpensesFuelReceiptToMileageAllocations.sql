@@ -1,0 +1,1 @@
+﻿ALTER TABLE SavedExpensesFuelReceiptToMileageAllocations ADD CONSTRAINT pk_SavedExpensesFuelReceiptToMileageAllocations PRIMARY KEY (FuelReceiptToMileageAllocationId)
