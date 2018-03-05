@@ -38,7 +38,6 @@
             using (IDBConnection expdata = new DatabaseConnection(sConnectionString))
             {
                 var cars = new List<cCar>();
-                var ids = new List<int>();
 
                 cTable tbl = clsTables.GetTableByID(new Guid("a184192f-74b6-42f7-8fdb-6dcf04723cef"));
                 cTable udftbl = clsTables.GetTableByID(tbl.UserDefinedTableID);
@@ -49,25 +48,6 @@
 
                 cars = this.ExtractCarsFromReader(expdata, SQL);
 
-                foreach (cCar car in cars)
-                {
-                    ids.Add(car.carid);
-                }
-
-                if (cars.Count > 0)
-                {
-                    SortedList<int, SortedList<int, object>> userdefined = clsUserDefinedFields.GetRecords(udftbl, ids, clsTables, clsFields);
-                    SortedList<int, List<int>> carMileageCategories = GetCarMileageCats(ids);
-                    SortedList<int, List<cOdometerReading>> odometerReadings = GetOdometerReadings(ids);
-
-                    foreach (cCar car in cars)
-                    {
-                        if (carMileageCategories.ContainsKey(car.carid))
-                        {
-                            car.mileagecats = carMileageCategories[car.carid];
-                        }
-                    }
-                }
 
                 return cars.ToList();
             }
@@ -76,6 +56,9 @@
         private List<cCar> ExtractCarsFromReader(IDBConnection expdata, string sql)
         {
             var cars = new List<cCar>();
+            var ids = new List<int>();
+
+
             using (IDataReader reader = expdata.GetReader(sql))
             {
                 var employeeIdOrd = reader.GetOrdinal("employeeid");
@@ -110,16 +93,24 @@
                     string make = reader.GetString(makeOrd);
                     string model = reader.GetString(modelOrd);
                     string registration = reader.GetString(registrationOrd);
-                    DateTime startdate = reader.IsDBNull(startDateOrd) ? new DateTime(1900, 01, 01) : reader.GetDateTime(startDateOrd);
-                    DateTime enddate = reader.IsDBNull(endDateOrd) ? new DateTime(1900, 01, 01) : reader.GetDateTime(endDateOrd);
+                    DateTime startdate = reader.IsDBNull(startDateOrd)
+                        ? new DateTime(1900, 01, 01)
+                        : reader.GetDateTime(startDateOrd);
+                    DateTime enddate = reader.IsDBNull(endDateOrd)
+                        ? new DateTime(1900, 01, 01)
+                        : reader.GetDateTime(endDateOrd);
                     int vehicleEngineTypeId = reader.IsDBNull(carTypeIdOrd) ? 0 : reader.GetByte(carTypeIdOrd);
                     Int64 odometer = reader.IsDBNull(odomoterOrd) ? 0 : reader.GetInt64(odomoterOrd);
                     bool active = reader.GetBoolean(activeOrd);
                     bool fuelcard = reader.GetBoolean(fuelcardOrd);
                     int endodometer = reader.IsDBNull(endOdomoterOrd) ? 0 : reader.GetInt32(endOdomoterOrd);
-                    DateTime createdon = reader.IsDBNull(createdOnOrd) ? new DateTime(1900, 01, 01) : reader.GetDateTime(createdOnOrd);
+                    DateTime createdon = reader.IsDBNull(createdOnOrd)
+                        ? new DateTime(1900, 01, 01)
+                        : reader.GetDateTime(createdOnOrd);
                     int createdby = reader.IsDBNull(createdByOrd) ? 0 : reader.GetInt32(createdByOrd);
-                    DateTime modifiedon = reader.IsDBNull(modifiedOnOrd) ? new DateTime(1900, 01, 01) : reader.GetDateTime(modifiedOnOrd);
+                    DateTime modifiedon = reader.IsDBNull(modifiedOnOrd)
+                        ? new DateTime(1900, 01, 01)
+                        : reader.GetDateTime(modifiedOnOrd);
                     int modifiedby = reader.IsDBNull(modifiedByOrd) ? 0 : reader.GetInt32(modifiedByOrd);
                     MileageUOM defaultuom = (MileageUOM) reader.GetByte(defaultUnitOrd);
                     int engineSize = reader.IsDBNull(engineSizeOrd) ? 0 : reader.GetInt32(engineSizeOrd);
@@ -147,9 +138,22 @@
                             new List<int>(), vehicleEngineTypeId, odometer, fuelcard, endodometer, defaultuom, engineSize,
                             createdon, createdby, modifiedon, modifiedby, approved, exemptfromhometooffice, vehicletypeid,
                             taxExpiry, taxValid, motExpiry, motValid));
+                    ids.Add(carid);
                 }
 
                 reader.Close();
+            }
+
+            if (ids.Count > 0)
+            {
+                SortedList<int, List<int>> carMileageCategories = this.GetCarMileageCats(ids);
+                foreach (cCar car in cars)
+                {
+                    if (carMileageCategories.ContainsKey(car.carid))
+                    {
+                        car.mileagecats = carMileageCategories[car.carid];
+                    }
+                }
             }
 
             return cars;
