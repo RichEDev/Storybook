@@ -460,12 +460,9 @@ public partial class aeexpense : System.Web.UI.Page
         this.Master.title = Title;
 
 
-        generateGeneralDetails();
-
-     
+        generateGeneralDetails();    
         GenerateCostcodeBreakdown();
-        
-           
+                   
         generateSpecificDetails();
 
         filterDropdownsOnPageStart();
@@ -1583,10 +1580,6 @@ public partial class aeexpense : System.Web.UI.Page
             cell.Text = costCodeField.description + ":";
             row.Cells.Add(cell);
 
-            //create searchbox 
-            //apply filter on select 
-       
-
             cell = new TableCell();
             cell.CssClass = "inputtd";
                 
@@ -1599,14 +1592,10 @@ public partial class aeexpense : System.Web.UI.Page
             txtbox.Attributes.Add("data-search", "General");
             txtbox.Attributes.Add("placeholder", "Search");
             txtbox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
-
-        
-
+       
             TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode_ID" };
             hiddenIdentifier.Style.Add(HtmlTextWriterStyle.Display, "none");
-
             string[] filterAttribute = this.ActionContext.FilterRules.FilterDropdown(FilterType.Costcode, string.Empty, hiddenIdentifier.ID);
-
 
             if (!filterAttribute.IsNullOrEmpty())
             {
@@ -1615,35 +1604,31 @@ public partial class aeexpense : System.Web.UI.Page
           
             }
 
-            cCostCode costcode = null;
+            cCostCode costCode = null;
 
             if (action == Action.Edit || action == Action.Copy)
             {
                 if (expenseitem.costcodebreakdown[0].costcodeid > 0)
                 {
-                    costcode = ActionContext.CostCodes.GetCostcodeById(expenseitem.costcodebreakdown[0].costcodeid);
+                    costCode = this.ActionContext.CostCodes.GetCostcodeById(expenseitem.costcodebreakdown[0].costcodeid);
 
-                    if (costcode != null)
+                    if (costCode != null)
                     {
-                        txtbox.Text = costcode.Costcode;
-                        hiddenIdentifier.Text = costcode.CostcodeId.ToString(CultureInfo.InvariantCulture);
+                        txtbox.Text = costCode.Costcode;
+                        hiddenIdentifier.Text = costCode.CostcodeId.ToString(CultureInfo.InvariantCulture);
                     }
                 }
             }
             else if (action == Action.Add && itemtype == ItemType.Cash)
             {
                 if (breakdown.Count > 0 && breakdown[0].costcodeid != 0)
-
                 {
-                    costcode = ActionContext.CostCodes.GetCostcodeById(breakdown[0].costcodeid);
-
-                    //employee has default costcode breakdown so predefine
-                    txtbox.Text = costcode.Costcode;
-                    hiddenIdentifier.Text = costcode.CostcodeId.ToString();
+                    //apply predefined costcode breakdown
+                    costCode = this.ActionContext.CostCodes.GetCostcodeById(breakdown[0].costcodeid);
+                    txtbox.Text = costCode.Costcode;
+                    hiddenIdentifier.Text = costCode.CostcodeId.ToString();
                 }              
             }
-
-            //don't forget validation or setting if show the description or code name
 
             cell.Controls.Add(txtbox);
             cell.Controls.Add(hiddenIdentifier);
@@ -2127,49 +2112,30 @@ public partial class aeexpense : System.Web.UI.Page
             }
         }
 
-
-
         if (globalProperties.costcodeson && globalProperties.usecostcodes && globalProperties.usecostcodeongendet == false)
         {
             cell = new TableCell();
-            var textBox = new TextBox();
-
-
-      
-
-            textBox.ID = "txtCostCode" + index;
-
-
-            //if filter rules apply then apply then later with autocomplete bind, else apply the auto complete 
-
-        
-                textBox.CssClass = this.ActionContext.Properties.UseCostCodeDescription
-                                       ? "costcodeDescription-autocomplete"
-                                       : "costcode-autocomplete"; 
-     
+            var textBox = new TextBox
+                              {
+                                  ID = "txtCostCode" + index,
+                                  CssClass = this.ActionContext.Properties.UseCostCodeDescription
+                                                 ? "costcodeDescription-autocomplete"
+                                                 : "costcode-autocomplete"
+                              };
 
             textBox.Attributes.Add("data-search", "General");
             textBox.Attributes.Add("placeholder", "Search");
-
             textBox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
-
-
             TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode" + index + "_ID"};          
             hiddenIdentifier.Style.Add(HtmlTextWriterStyle.Display, "none");
-
-            
+           
             string[] filterAttribute = this.ActionContext.FilterRules.FilterDropdown(FilterType.Costcode, index.ToString(), hiddenIdentifier.ID);
-
 
             if (!filterAttribute.IsNullOrEmpty())
             {
-
-                textBox.Attributes.Add(filterAttribute[0], filterAttribute[1]);
-          
+                textBox.Attributes.Add(filterAttribute[0], filterAttribute[1]);         
             }
-
-            //pre populate if edit
-
+       
             var costCode = this.ActionContext.CostCodes.GetCostcodeById(breakdownItem.costcodeid);
 
             if (costCode != null)
@@ -2177,11 +2143,6 @@ public partial class aeexpense : System.Web.UI.Page
                 textBox.Text = costCode.Costcode;
                 hiddenIdentifier.Text = costCode.CostcodeId.ToString(); 
             }
-
-
-
-
-            //filters
 
             cell.Controls.Add(textBox);
             cell.Controls.Add(hiddenIdentifier);
@@ -2193,10 +2154,6 @@ public partial class aeexpense : System.Web.UI.Page
 
                 if ((itemtype == ItemType.Cash && costCodeField.mandatory) || (itemtype == ItemType.CreditCard && costCodeField.mandatorycc) || (itemtype == ItemType.PurchaseCard && costCodeField.mandatorypc))
                 {
-                  
-                  
-
-
                    var custval = new CustomValidator
                                   {
                                       ClientValidationFunction = "SEL.Expenses.Validate.CostCode.GeneralDetailsMandatory",
@@ -2211,43 +2168,8 @@ public partial class aeexpense : System.Web.UI.Page
                     cell.Controls.Add(custval);
                     row.Cells.Add(cell);
                 }
-            }
-        
-
-            //cell = new TableCell();
-            //ddlst = new DropDownList();
-            //ddlst.ID = "cmbcostcode" + index;
-
-            //string[] filterAttribute = this.ActionContext.FilterRules.FilterDropdown(FilterType.Costcode, index.ToString(), ddlst.ID);
-
-            //if (!filterAttribute.IsNullOrEmpty())
-            //{
-            //    ddlst.Attributes.Add(filterAttribute[0], filterAttribute[1]);
-            //}
-
-            //ddlst.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
-            //ddlst.Items.AddRange(this.ActionContext.CostCodes.CreateDropDown(globalProperties.usecostcodedesc, includeNoneOption: true).ToArray());
-
-            //if (ddlst.Items.FindByValue(breakdownItem.costcodeid.ToString()) != null)
-            //{
-            //    ddlst.SelectedValue = breakdownItem.costcodeid.ToString();
-            //}
-
-            //cell.Controls.Add(ddlst);
-            //row.Cells.Add(cell);
-
-            //if (user.CanEditCostCodes)
-            //{
-            //    cFieldToDisplay cc = misc.GetGeneralFieldByCode("costcode");
-
-            //    if ((itemtype == ItemType.Cash && cc.mandatory) || (itemtype == ItemType.CreditCard && cc.mandatorycc) || (itemtype == ItemType.PurchaseCard && cc.mandatorypc))
-            //    {
-            //        CompareValidator compCostCodeVal = GenerateCompareValidator(hiddenIdentifier.Text, cc.description);
-            //        cell.Controls.Add(compCostCodeVal);
-            //        row.Cells.Add(cell);
-            //    }
-            // }
-            }
+            }        
+        }
 
         if (globalProperties.projectcodeson && globalProperties.useprojectcodes && globalProperties.useprojectcodeongendet == false)
         {
@@ -2297,10 +2219,6 @@ public partial class aeexpense : System.Web.UI.Page
         };
 
         txtbox.TextChanged += txtpercentage_TextChanged;
-
-
-        //var filterRules = new cFilterRules((int)ViewState["accountid"]);
-        //filterRules.filterTextbox(ref txtbox,FilterType.Costcode, index.ToString());
 
         cell.Controls.Add(txtbox);
 
@@ -2357,7 +2275,6 @@ public partial class aeexpense : System.Web.UI.Page
         };
         return compVal;
     }
-
 
     void delete_Click(object sender, ImageClickEventArgs e)
     {
@@ -2449,20 +2366,17 @@ public partial class aeexpense : System.Web.UI.Page
 
             if (clsproperties.usecostcodes && clsproperties.costcodeson && clsproperties.usecostcodeongendet == false)
             {
-                var cctxtboxBreakdown = (TextBox)tbl.FindControl("txtCostCode" + (i -1) + "_ID");
-                if (cctxtboxBreakdown.Text != string.Empty)
+                var costCodeBreakdownTextBox = (TextBox)tbl.FindControl("txtCostCode" + (i - 1) + "_ID");
+
+                if (costCodeBreakdownTextBox.Text != string.Empty)
                 {
-                       costcodeid = Convert.ToInt32(cctxtboxBreakdown.Text);
-                }
-               
+                   int.TryParse(costCodeBreakdownTextBox.Text, out costcodeid);
+                }               
             }
             else if (clsproperties.usecostcodes && clsproperties.costcodeson && clsproperties.usecostcodeongendet)
             {
-               var cctxtbox = (TextBox)pnlgeneral.FindControl("txtCostCode_ID");
-      
-                costcodeid = Convert.ToInt32(cctxtbox.Text);
-                //ddlst = (DropDownList)pnlgeneral.FindControl("cmbgencostcode");
-                //int.TryParse(Request[ddlst.ClientID.Replace("_", "$")], out costcodeid);
+                var costCodeTextbox = (TextBox)pnlgeneral.FindControl("txtCostCode_ID");
+                int.TryParse(costCodeTextbox.Text, out costcodeid);            
             }
 
             if (clsproperties.useprojectcodes && clsproperties.projectcodeson && clsproperties.useprojectcodeongendet == false)
@@ -5037,13 +4951,12 @@ public partial class aeexpense : System.Web.UI.Page
             }
 
             var ddlChildren = new List<DropDownList>();
-            var txtChildren = new List<TextBox>();
+            var txtBoxChildren = new List<TextBox>();
 
-            bool isForCostCode = ctlid.Contains("txtCostCode");
-
+            bool filterRuleForCostCode = ctlid.Contains("txtCostCode");
             var showCostCodeDescription = false;
 
-            if (isForCostCode)
+            if (filterRuleForCostCode)
             {
                 if (this.ActionContext.Properties.UseCostCodeDescription)
                 {
@@ -5057,48 +4970,46 @@ public partial class aeexpense : System.Web.UI.Page
             {
                 case "general":
 
-                    if (isForCostCode)
+                    if (filterRuleForCostCode)
                     {
-                        txtChildren.Add((TextBox)pnlgeneral.FindControl(ctlid)); 
+                        txtBoxChildren.Add((TextBox)pnlgeneral.FindControl(ctlid));
                     }
                     else
                     {
-                       ddlChildren.Add((DropDownList)pnlgeneral.FindControl(ctlid));  
+                        ddlChildren.Add((DropDownList)pnlgeneral.FindControl(ctlid));
                     }
-
-                   
-                        break;
+                    break;
 
                 case "breakdown":
-                        if (ctlindex != "")
+                    if (ctlindex != "")
+                    {
+                        if (filterRuleForCostCode)
                         {
-                            if (isForCostCode)
-                            {
-                                txtChildren.Add((TextBox)UpdatePanel1.FindControl(ctlid + ctlindex));
-                            }
-                            else
-                            {
-                                ddlChildren.Add((DropDownList)UpdatePanel1.FindControl(ctlid + ctlindex));
-                            }                   
+                            txtBoxChildren.Add((TextBox)UpdatePanel1.FindControl(ctlid + ctlindex));
                         }
                         else
                         {
-                            int breakdownrows = int.Parse(ViewState["breakdownrows"].ToString());
+                            ddlChildren.Add((DropDownList)UpdatePanel1.FindControl(ctlid + ctlindex));
+                        }
+                    }
+                    else
+                    {
+                        int breakdownrows = int.Parse(ViewState["breakdownrows"].ToString());
 
-                            for (int j = 0; j < breakdownrows; j++)
+                        for (int j = 0; j < breakdownrows; j++)
+                        {
+                            if (filterRuleForCostCode)
                             {
-                                if (isForCostCode)
-                                {
-                                    txtChildren.Add((TextBox)UpdatePanel1.FindControl(ctlid + j));
-                                }
-                                else
-                                {
-                                    ddlChildren.Add((DropDownList)UpdatePanel1.FindControl(ctlid + j));
-                                }                        
+                                txtBoxChildren.Add((TextBox)UpdatePanel1.FindControl(ctlid + j));
+                            }
+                            else
+                            {
+                                ddlChildren.Add((DropDownList)UpdatePanel1.FindControl(ctlid + j));
                             }
                         }
-                        break;
-                    
+                    }
+                    break;
+
                 case "individual":
                     {
                         Panel subpnl;
@@ -5106,14 +5017,14 @@ public partial class aeexpense : System.Web.UI.Page
                         {
                             subpnl = (Panel)pnlspecific.FindControl("pnl" + ctlindex);
 
-                            if (isForCostCode)
+                            if (filterRuleForCostCode)
                             {
-                                txtChildren.Add((TextBox)subpnl.FindControl(ctlid + ctlindex));  
+                                txtBoxChildren.Add((TextBox)subpnl.FindControl(ctlid + ctlindex));
                             }
                             else
                             {
-                              
-                            ddlChildren.Add((DropDownList)subpnl.FindControl(ctlid + ctlindex));  
+
+                                ddlChildren.Add((DropDownList)subpnl.FindControl(ctlid + ctlindex));
                             }
 
                         }
@@ -5126,25 +5037,25 @@ public partial class aeexpense : System.Web.UI.Page
                                 subpnl = (Panel)pnlspecific.FindControl("pnl" + j);
                                 if (subpnl != null)
                                 {
-                                    if (isForCostCode)
+                                    if (filterRuleForCostCode)
                                     {
-                                        txtChildren.Add((TextBox)subpnl.FindControl(ctlid + j));  
+                                        txtBoxChildren.Add((TextBox)subpnl.FindControl(ctlid + j));
                                     }
                                     else
                                     {
-                                       
-                                      ddlChildren.Add((DropDownList)subpnl.FindControl(ctlid + j)); 
+
+                                        ddlChildren.Add((DropDownList)subpnl.FindControl(ctlid + j));
                                     }
 
-                                }
-                                        }
-                                    }
-                        break;
                                 }
                             }
+                        }
+                        break;
+                    }
+            }
 
             ddlChildren.RemoveAll(o => o == null);
-            txtChildren.RemoveAll(o => o == null);
+            txtBoxChildren.RemoveAll(x => x == null);
 
             if (items.Count != 0)
             {
@@ -5153,91 +5064,67 @@ public partial class aeexpense : System.Web.UI.Page
                 {
                     ListItem noneItem = (includeNone ? ddlChild.Items.FindByValue("0") : null);
                     ddlChild.Items.Clear();
+
                     if (noneItem != null)
                     {
                         ddlChild.Items.Add(noneItem);
-                        }
-                    ddlChild.Items.AddRange(items.ToArray());
                     }
+
+                    ddlChild.Items.AddRange(items.ToArray());
+                }
             }
 
-            foreach (var txtbox in txtChildren)
+            foreach (var txtbox in txtBoxChildren)
             {
                 if (!string.IsNullOrEmpty(ctlindex))
-                {
-                    //string ids = "#" + "ctl00_contentmain_txtcostcode1";
-
-                    var list = new List<AutoCompleteChildFieldValues>();
+                {              
+                    var autoCompleteFilterRuleValues = new List<AutoCompleteChildFieldValues>();
 
                     foreach (var item in items)
                     {
-                        var d = new AutoCompleteChildFieldValues();
-                        d.FieldToBuild = "";
-                        d.Key = Convert.ToInt32(item.Value);
-                        d.Value = "";
-                        d.FormattedText = string.Empty;
-                        list.Add(d);
+                        var autoCompleteValue =
+                            new AutoCompleteChildFieldValues
+                                {
+                                    FieldToBuild = string.Empty,
+                                    Key = Convert.ToInt32(item.Value),
+                                    Value = string.Empty,
+                                    FormattedText = string.Empty
+                                };
 
-                      
+                        autoCompleteFilterRuleValues.Add(autoCompleteValue);                      
                     }
 
-                    if (list.Count > 0)
+                    if (autoCompleteFilterRuleValues.Count > 0)
                     {
-                        //remove previous autocomplete binding
+                        //remove previous auto-complete binding
                         txtbox.CssClass = "";
-
-                        var jsonSerialiser = new JavaScriptSerializer();
-                        var json = JsonConvert.SerializeObject(list);
-
-                        string displayField;
-
-                        displayField = showCostCodeDescription ? "AF80D035-6093-4721-8AFC-061424D2AB72" : "359DFAC9-74E6-4BE5-949F-3FB224B1CBFC";
-                                           
-                        var sb = new StringBuilder();
-                        sb.Append("SEL.AutoComplete.Bind(");
-                        sb.Append("'ctl00_contentmain_" + txtbox.ID + "',");
-                        sb.Append("25,");
-                        sb.Append("'02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',");
-                        sb.Append("'" + displayField + "',");
-                        sb.Append("'359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',");
-                        sb.Append("null,");
-                        sb.Append("'{ 0: { \"FieldID\": \"8178629C-5908-4458-89F6-D7EE7438314D\", \"ConditionType\": 1, \"ValueOne\": \"0\", \"ValueTwo\": \"\", \"Order\": 0, \"JoinViaID\": 0 } }',");
-                        sb.Append("500, null, \"False\"," + json + ", \"False\", null);");
-
-                        ScriptManager.RegisterStartupScript (this, this.GetType(), "myscript" + txtbox.ID, sb.ToString(), true);
-
-
-                        //    $('input.costcode-autocomplete').focus(function () {
-
-                        //    if (!$(this).val()) {
-                        //        $(this).autocomplete("search", "%%%");
-                        //    }
-                        //}
-
                     
+                        var serializedFilterRules = JsonConvert.SerializeObject(autoCompleteFilterRuleValues);
+                        var displayField = showCostCodeDescription ? "AF80D035-6093-4721-8AFC-061424D2AB72" : "359DFAC9-74E6-4BE5-949F-3FB224B1CBFC";
+                                           
+                        var autoCompleteScript = new StringBuilder();
+                        autoCompleteScript.Append("SEL.AutoComplete.Bind(");
+                        autoCompleteScript.Append("'ctl00_contentmain_" + txtbox.ID + "',");
+                        autoCompleteScript.Append("25,");
+                        autoCompleteScript.Append("'02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',");
+                        autoCompleteScript.Append("'" + displayField + "',");
+                        autoCompleteScript.Append("'359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',");
+                        autoCompleteScript.Append("null,");
+                        autoCompleteScript.Append("'{ 0: { \"FieldID\": \"8178629C-5908-4458-89F6-D7EE7438314D\", \"ConditionType\": 1, \"ValueOne\": \"0\", \"ValueTwo\": \"\", \"Order\": 0, \"JoinViaID\": 0 } }',");
+                        autoCompleteScript.Append("500, null, \"False\"," + serializedFilterRules + ", \"False\", null);");
 
+                        autoCompleteScript.Append("('#ctl00_contentmain_" + txtbox.ID + "').focus(function () {");
+                        autoCompleteScript.Append("if (!(this).val()) {");
+                        autoCompleteScript.Append("(this).autocomplete(\"search\", \"%%%\");");
+                        autoCompleteScript.Append(" }})");
+
+                        ScriptManager.RegisterStartupScript (this, this.GetType(), "autoComplete" + txtbox.ID, autoCompleteScript.ToString(), true);                  
                     }
-
-                  //var scripty = new StringBuilder();
-                  //      scripty.Append("('#ctl00_contentmain_" + txtbox.ID + "').focus(function () {");
-                  //      scripty.Append("if (!(this).val()) {");
-                  //      scripty.Append("(this).autocomplete(\"search\", \"%%%\");");
-                  //      scripty.Append(" }})");
-
-                  //      ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "myscriptsearc" + txtbox.ID, scripty.ToString(), true);
-                
-
-                 
-                
-               
-
-                    //register start up script with ddl details.
-
+          
                     if (breakdown[int.Parse(ctlindex)].costcodeid.ToString() != "0")
                     {
-                        var costcode = ActionContext.CostCodes.GetCostcodeById(breakdown[int.Parse(ctlindex)].costcodeid);
-
-                        txtbox.Text = showCostCodeDescription ? costcode.Description : costcode.Costcode;
+                        var costCode = this.ActionContext.CostCodes.GetCostcodeById(breakdown[int.Parse(ctlindex)].costcodeid);
+                        txtbox.Text = showCostCodeDescription ? costCode.Description : costCode.Costcode;
                     }                                   
                 }
 

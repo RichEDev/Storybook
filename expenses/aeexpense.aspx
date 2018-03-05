@@ -90,33 +90,9 @@
 </asp:Content>
 
 <asp:Content ID="submenuContent" ContentPlaceHolderID="contentleft" runat="Server">
-  <%--  <script type="text/javascript" language="javascript">
-
-        Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function (sender, args) {
-           
-            console.info(SEL.Expenses.CostCodeBreakdown);
-
-            if (SEL.Expenses.CostCodeBreakdown != undefined) {
-
-                for (var i = 0; i < SEL.Expenses.CostCodeBreakdown.length; i++) {
-
-                    if (SEL.Expenses.CostCodeBreakdown[i].control.includes("CostCode")) {
-                        popDropdown(SEL.Expenses.CostCodeBreakdown[i].control, SEL.Expenses.CostCodeBreakdown[i].items);
-                    }
-
-                
-                }
-
-            }
-
-
-          
-    //        popDropdown(SEL.Expenses.CostCodeBreakdown[0]);
-        });
-    </script>--%>
     <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
         <Scripts>
-            <asp:ScriptReference Path="~/scripts/addingexpenses.js?date=20170907" />
+            <asp:ScriptReference Path="~/scripts/addingexpenses.js?date=20180305" />
             <asp:ScriptReference Path="~/shared/javascript/attachments.js" />
             <asp:ScriptReference Name="tooltips" />
             <asp:ScriptReference Name="expenses" />
@@ -153,8 +129,7 @@
         var OrganisationSearch = null;
         var OrganisationSearchModal = '<% = mdlOrganisationSearch.ClientID %>';
         var OrganisationSearchPanel = '<% = pnlOrganisationSearch.ClientID %>';
-        var CostCodeSearchPanel = '<% = pnlCostCodeSearch.ClientID %>';
-
+   
         $(document).ready(function() { 
             
             (function(s) {
@@ -275,8 +250,7 @@
         </asp:UpdatePanel>
     </div>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional"
-        ChildrenAsTriggers="True">
-     
+        ChildrenAsTriggers="True">     
         <ContentTemplate>
             <asp:HiddenField runat="server" ID="hdnShowCostCodeDescription" />
             <asp:Literal ID="litcostcodeheader" runat="server" meta:resourcekey="litcostcodeheaderResource1"></asp:Literal>
@@ -354,18 +328,6 @@
     </asp:Panel>
     <cc1:ModalPopupExtender runat="server" ID="mdlOrganisationSearch" BackgroundCssClass="modalBackground" TargetControlID="lnkOrganisationSearch" PopupControlID="pnlOrganisationSearch" CancelControlID="btnOrganisationSearchCancel" />
     <asp:LinkButton runat="server" ID="lnkOrganisationSearch" Style="display: none;"></asp:LinkButton>
-   
-    <asp:Panel runat="server" ID="pnlCostCodeSearch" CssClass="modalpanel formpanel" Style="display: none;">
-        <div class="sectiontitle">
-            <asp:Label runat="server" ID="lblCostCodeSearchTitle">Cost Code</asp:Label>
-            Search
-        </div>
-        <div class="searchgrid"></div>
-        <div class="formbuttons">
-            <helpers:CSSButton runat="server" ID="btnCostCodeSearchCancel" Text="cancel" OnClientClick="return false;" UseSubmitBehavior="False" />
-        </div>
-    </asp:Panel>
-
     <div id="flagSummary">
 
         <div id="divFlags"></div>

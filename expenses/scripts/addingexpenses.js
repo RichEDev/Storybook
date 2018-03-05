@@ -108,9 +108,7 @@ Sys.Application.add_load(function(application, applicationEventArguments) {
             "False",
             null,
             null,
-            null);
-      
-   
+            null);  
     });
 
     $(".costcodeDescription-autocomplete").each(function (i, o) {
@@ -127,22 +125,8 @@ Sys.Application.add_load(function(application, applicationEventArguments) {
             null,
             null,
             null);
-        //desc AF80D035-6093-4721-8AFC-061424D2AB72
-
     });
-
-    // attach cost code autocompletes
-    $(".costcode-ddl").each(function (i, o) {
-        SEL.AutoComplete.source();
-
-       
-    });
-
 });
-
-function GenerateDropDown(x) {
-    x.value = '%%%';
-}
 
 function MileageDetailsUpdated(controlUpdated) {
     if (controlUpdated.InitialValue != controlUpdated.value && controlUpdated.value != "") {
@@ -1480,9 +1464,9 @@ function popDropdown(ctlid, items) {
   
     if (ctlid.includes("CostCode")) {
 
-
         var control = contentID + ctlid;
-        //clear anything already set
+
+        //clear any value already set
         $('[id$=' + control + ']').val("");
 
         var filterRules = [];
@@ -1494,10 +1478,9 @@ function popDropdown(ctlid, items) {
             filterRules.push(filter);
         }
 
-        //determine to show desc or cc
-
         var showDescription = document.getElementById('ctl00_contentmain_hdnShowCostCodeDescription').value;
         var displayField;
+
         if (showDescription === 'true') {
             displayField = 'AF80D035-6093-4721-8AFC-061424D2AB72';
         } else {
@@ -1532,8 +1515,6 @@ function popDropdown(ctlid, items) {
                 .val("0")
                 .text("[None]"));
         }
-
-   
 
         for (var i = 0; i < items.length; i++) {
             $ctl.append($("<option/>")
