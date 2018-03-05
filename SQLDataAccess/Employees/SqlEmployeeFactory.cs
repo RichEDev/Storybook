@@ -39,7 +39,7 @@
                 if (employee == null)
                 {
                     employee = this.Get(id);
-                    this._cacheFactory.Add(employee);
+                    this._cacheFactory.Save(employee);
                 }
 
                 return employee;
@@ -51,9 +51,9 @@
         /// </summary>
         /// <param name="employee">The <see cref="IEmployee"/> to add or update.</param>
         /// <returns>The unique identifier for the <see cref="IEmployee"/>.</returns>
-        public IEmployee Add(IEmployee employee)
+        public IEmployee Save(IEmployee employee)
         {
-            this._cacheFactory.Add(employee);
+            this._cacheFactory.Save(employee);
 
             return employee;
         }

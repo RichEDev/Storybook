@@ -70,7 +70,7 @@
                 if (field == null)
                 {
                     field = this.Get(id).FirstOrDefault();
-                    this.Add(field);
+                    this.Save(field);
                 }
 
                 return field;

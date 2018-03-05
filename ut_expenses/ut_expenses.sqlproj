@@ -7099,6 +7099,14 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_savedexpenses_vat_with_expenseid_subcatid_date_claimid.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_savedexpenses_subcatid_with_expenseid_vat_date_claimid.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_SavedExpensesFuelReceiptToMileageAllocations_fuelreceiptexpenseid_with_fuelreceiptvatamountallocated.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\WalletReceipts.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\ProcessedReceipts.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SaveWalletReceipt.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\DeleteWalletReceipt.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SaveProcessedReceiptData.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_ProcessedReceipts_WalletReceipts.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_WalletReceipts.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_ProcessedReceipts.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ut_expenses.refactorlog">

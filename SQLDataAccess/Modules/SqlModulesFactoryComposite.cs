@@ -58,7 +58,7 @@
                 if (productModule == null)
                 {
                     productModule = this.Get(id);
-                    this._cacheFactory.Add(productModule);
+                    this._cacheFactory.Save(productModule);
                 }
 
                 return productModule;
@@ -74,9 +74,9 @@
         /// <returns>
         /// The <see cref="IProductModule"/>.
         /// </returns>
-        public IProductModule Add(IProductModule entity)
+        public IProductModule Save(IProductModule entity)
         {
-            return this._cacheFactory.Add(entity);
+            return this._cacheFactory.Save(entity);
         }
 
         /// <summary>

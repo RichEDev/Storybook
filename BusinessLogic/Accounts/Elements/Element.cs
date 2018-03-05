@@ -1,8 +1,11 @@
 ﻿namespace BusinessLogic.Accounts.Elements
 {
+    using System;
+
     /// <summary>
     /// <see cref="Element">Element</see> defines 
     /// </summary>
+    [Serializable]
     public class Element : IElement
     {
         /// <summary>

@@ -54,7 +54,7 @@
                 if (table == null)
                 {
                     table = this.Get(id);
-                    this.Add(table);
+                    this.Save(table);
                 }
 
                 return table;

@@ -55,11 +55,11 @@
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public T Add(T entity)
+        public T Save(T entity)
         {
             if (entity != null)
             {
-                this._baseRepository.Add(entity);
+                this._baseRepository.Save(entity);
             }
 
             return entity;

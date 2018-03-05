@@ -1081,6 +1081,6 @@
             }          
         }
 
-		#endregion Private Helpers
-	}
+        #endregion Private Helpers
+    }
 }

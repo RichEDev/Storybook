@@ -133,7 +133,7 @@ namespace Spend_Management
             }
 
             var projectcode = new ProjectCodeWithUserDefinedFields(new ProjectCode(projectcodeid, projectCodeName, description, archived, rechargeable), udf);
-            var createdProjectCode = this.ProjectCodesRepository.Add(projectcode);
+            var createdProjectCode = this.ProjectCodesRepository.Save(projectcode);
 
             if (createdProjectCode.Id == -1)
             {

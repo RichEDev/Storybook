@@ -96,7 +96,7 @@
 
                     if (account != null)
                     {
-                        this._cacheFactory.Add(account);
+                        this._cacheFactory.Save(account);
                     }
                 }
 
@@ -113,14 +113,14 @@
         /// <returns>
         /// The <see cref="IAccount"/>.
         /// </returns>
-        public IAccount Add(IAccount entity)
+        public IAccount Save(IAccount entity)
         {
             if (entity == null)
             {
                 return null;
             }
 
-            return this._cacheFactory.Add(entity);
+            return this._cacheFactory.Save(entity);
         }
 
         /// <summary>

@@ -6,17 +6,17 @@
     /// <typeparam name="T">
     /// The type of entity which is being added.
     /// </typeparam>
-    public interface IAdd<T> where T : class
+    public interface ISave<T> where T : class
     {
         /// <summary>
-        /// Adds an instance of <see cref="T"/> to the collection
+        /// Saves an instance of <see cref="T"/> to the collection
         /// </summary>
         /// <param name="entity">
-        /// The <see cref="T"/> you want to add
+        /// The <see cref="T"/> you want to save
         /// </param>
         /// <returns>
-        /// The <see cref="T"/> added to the collection.
+        /// The <see cref="T"/> saved to the collection.
         /// </returns>
-        T Add(T entity);
+        T Save(T entity);
     }
 }

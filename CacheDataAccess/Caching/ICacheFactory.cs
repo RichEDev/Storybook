@@ -3,7 +3,7 @@ using BusinessLogic.Interfaces;
 
 namespace CacheDataAccess.Caching
 {
-    public interface ICacheFactory<T, TK> : IGetBy<T, TK>, IAdd<T>
+    public interface ICacheFactory<T, TK> : IGetBy<T, TK>, ISave<T>
         where T : class, IIdentifier<TK>
     {
     }

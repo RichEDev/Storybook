@@ -169,6 +169,11 @@
         EmployeeBankAccounts = 191,
         AuthoriserLevel = 192,
         Scheduler = 193,
-        ExpeditePaymentReport = 194
+        ExpeditePaymentReport = 194,
+        LogonMessages = 195,
+        FuelReceiptToVATCalculation = 196,
+        DvlaConnect = 197,
+        VehicleLookup = 198,
+        ReceiptReader = 199
     }
 }

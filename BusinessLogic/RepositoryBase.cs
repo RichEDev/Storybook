@@ -17,7 +17,7 @@
     /// </typeparam>
     /// <typeparam name="TK">The data type of the Id of <typeparamref name="T"/>.
     /// </typeparam>
-    public class RepositoryBase<T, TK> : IGetBy<T, TK>, IAdd<T>
+    public class RepositoryBase<T, TK> : IGetBy<T, TK>, ISave<T>
         where T : class, IIdentifier<TK>
     {
         /// <summary>
@@ -60,7 +60,7 @@
         /// </summary>
         /// <param name="entity">The <see cref="T"/> to add or update.</param>
         /// <returns>The unique identifier for the <see cref="T"/>.</returns>
-        public virtual T Add(T entity)
+        public virtual T Save(T entity)
         {
             if (entity != null)
             {

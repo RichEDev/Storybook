@@ -4,24 +4,34 @@ using Common.Logging.Log4Net;
 namespace PublicAPI.Bootstrap
 {
     using System.Web.Http;
+
     using BusinessLogic;
     using BusinessLogic.Accounts;
     using BusinessLogic.Cache;
     using BusinessLogic.Identity;
+    using BusinessLogic.Images;
     using BusinessLogic.DataConnections;
     using BusinessLogic.Fields;
     using BusinessLogic.Tables;
     using BusinessLogic.UserDefinedFields;
+
     using CacheDataAccess.Caching;
+
     using Configuration.Core;
     using Configuration.Interface;
+
+    using SEL.MessageBrokers;
+    using SEL.MessageBrokers.RabbitMQ;
+
     using SimpleInjector;
     using SimpleInjector.Lifestyles;
+
     using SQLDataAccess;
     using SQLDataAccess.Accounts;
     using SQLDataAccess.ProjectCodes;
     using SQLDataAccess.Tables;
     using SQLDataAccess.UserDefinedFieldValues;
+
     using Utilities.Cryptography;
 
     /// <summary>
@@ -47,7 +57,7 @@ namespace PublicAPI.Bootstrap
 
             container.Register<IIdentityContextProvider, WebIdentityContext>();
             container.Register<IIdentityProvider, IdentityProvider>();
-            
+
             // Logging
             container.Register<IExtraContext, Log4NetContextAdapter>();
             container.RegisterConditional(typeof(ILog), c => typeof(Log4NetAdapter<>).MakeGenericType(c.Consumer.ImplementationType), Lifestyle.Singleton, c => true);
@@ -65,7 +75,10 @@ namespace PublicAPI.Bootstrap
             container.Register(typeof(RepositoryBase<,>), typeof(RepositoryBase<,>));
             container.Register(typeof(IMetabaseCacheFactory<,>), typeof(MetabaseCacheFactory<,>));
             container.Register(typeof(IAccountCacheFactory<,>), typeof(AccountCacheFactory<,>));
-            
+            container.Register(typeof(IRpcClient), typeof(RabbitMqRpcClient));
+            container.Register(typeof(IImageConversion), typeof(JpgImageConversion));
+            container.Register(typeof(IImageManipulation), typeof(JpgImageManipulation));
+
             container.Register<UserDefinedFieldValueRepository, SqlUserDefinedFieldValuesFactory>(Lifestyle.Transient);
             container.RegisterCollection(typeof(UserDefinedFieldValueRepository), new[] { typeof(SqlUserDefinedFieldValuesFactory) });
 

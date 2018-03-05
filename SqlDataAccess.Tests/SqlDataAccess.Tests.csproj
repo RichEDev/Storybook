@@ -123,11 +123,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Accounts\SqlAccountWithElementsFactoryTests.cs" />
+    <Compile Include="Elements\SqlElementFactoryTests.cs" />
     <Compile Include="Helpers\IdentityContextStub.cs" />
     <Compile Include="P11DCategories\SqlP11DCategoryTests.cs" />
     <Compile Include="Accounts\SqlAccountFactoryTests.cs" />
     <Compile Include="Helpers\DataReaderHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Receipts\SqlWalletReceiptsFactoryTests.cs" />
     <Compile Include="SqlDataParametersTests.cs" />
     <Compile Include="UserdefinedFieldValues\SqlUserDefinedFieldFactoryTests.cs" />
   </ItemGroup>

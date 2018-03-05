@@ -111,6 +111,8 @@
     <Compile Include="AccessRoles\ReportsAccess\ReportingAccess.cs" />
     <Compile Include="AccessRoles\ReportsAccess\SelectedAccessRoles.cs" />
     <Compile Include="Accounts\Account.cs" />
+    <Compile Include="Accounts\Elements\IAccountWithElement.cs" />
+    <Compile Include="Accounts\Elements\AccountWithElements.cs" />
     <Compile Include="Cache\AccountCacheKey.cs" />
     <Compile Include="Cache\CacheKey.cs" />
     <Compile Include="Cache\IAccountCacheKey.cs" />
@@ -159,11 +161,22 @@
     <Compile Include="Identity\IIdentityContextProvider.cs" />
     <Compile Include="Identity\IIdentityProvider.cs" />
     <Compile Include="Identity\UserIdentity.cs" />
+    <Compile Include="Images\IImageConversion.cs" />
+    <Compile Include="Images\IImageManipulation.cs" />
+    <Compile Include="Images\JpgImageConversion.cs" />
+    <Compile Include="Images\JpgImageManipulation.cs" />
+    <Compile Include="Receipts\WalletReceiptStatus.cs" />
+    <Compile Include="SELCloud\CloudWalletReceipt.cs" />
+    <Compile Include="SELCloud\ICloudReceipt.cs" />
     <Compile Include="JoinVia\IJoinVia.cs" />
     <Compile Include="P11DCategories\IP11DCategory.cs" />
     <Compile Include="P11DCategories\P11DCategory.cs" />
     <Compile Include="ProjectCodes\IProjectCodeWithUserDefinedFields.cs" />
     <Compile Include="ProjectCodes\ProjectCodeWithUserDefinedFields.cs" />
+    <Compile Include="Receipts\IProcessedReceipt.cs" />
+    <Compile Include="Receipts\IReceipt.cs" />
+    <Compile Include="Receipts\IWalletReceipt.cs" />
+    <Compile Include="Receipts\WalletReceipt.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="Fields\FieldFactory.cs" />
     <Compile Include="Fields\IFieldFactory.cs" />
@@ -262,6 +275,10 @@
       <Project>{85dfc378-171e-46c8-9c54-74cbe66368ac}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SELCloud\SELCloud.csproj">
+      <Project>{02441bad-714d-483d-acde-dde2a29bee85}</Project>
+      <Name>SELCloud</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{C417335B-7BE1-45AE-8274-C0B65829C4FC}</Project>
       <Name>Utilities</Name>
@@ -276,7 +293,6 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

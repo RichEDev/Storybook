@@ -4,6 +4,7 @@
     using BusinessLogic.ProjectCodes;
     using BusinessLogic.UserDefinedFields;
     using BusinessLogic.P11DCategories;
+    using BusinessLogic.Receipts;
     using DTO;
 
     /// <summary>
@@ -25,6 +26,7 @@
                 cfg.CreateMap<IEnumerable<ProjectCodeDto>, IEnumerable<ProjectCodeWithUserDefinedFields>>();
                 cfg.CreateMap<IEnumerable<P11DCategoryDto>, IEnumerable<P11DCategory>>().ReverseMap();
                 cfg.CreateMap<P11DCategoryDto, P11DCategory>().ReverseMap();
+                cfg.CreateMap<WalletReceiptDto, WalletReceipt>().ReverseMap();
             });
         }
 

@@ -133,7 +133,7 @@ namespace SpendManagementApi.Repositories
         {
             item.UserDefined = UdfValidator.Validate(item.UserDefined, this.ActionContext, "userdefinedProjectcodes");
 
-            var result = this._projectCodes.Add(item.To(this.ActionContext));
+            var result = this._projectCodes.Save(item.To(this.ActionContext));
 
             if (result.Id > 1)
             {

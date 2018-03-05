@@ -80,7 +80,7 @@
                     if (projectCodes != null && projectCodes.Count > 0)
                     {
                         p11DCategory = projectCodes[0];
-                        this._cacheFactory.Add(p11DCategory);
+                        this._cacheFactory.Save(p11DCategory);
                     }
                 }
 
@@ -93,7 +93,7 @@
         /// </summary>
         /// <param name="p11DCategory">The <see cref="IP11DCategory"/> to add or update.</param>
         /// <returns>The unique identifier for the <see cref="IP11DCategory"/>.</returns>
-        public virtual IP11DCategory Add(IP11DCategory p11DCategory)
+        public virtual IP11DCategory Save(IP11DCategory p11DCategory)
         {
             if (p11DCategory == null)
             {
@@ -135,7 +135,7 @@
 
             if (p11DCategory.Id > 0)
             {
-                p11DCategory = this._cacheFactory.Add(p11DCategory);
+                p11DCategory = this._cacheFactory.Save(p11DCategory);
             }
 
             return p11DCategory;

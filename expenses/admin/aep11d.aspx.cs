@@ -160,7 +160,7 @@ namespace expenses
 
             if (this.action == "2")
             {
-                var createdP11DCategory = this.P11DCategoriesRepository.Add(new P11DCategory(int.Parse(this.txtpdcatid.Text), pdname));
+                var createdP11DCategory = this.P11DCategoriesRepository.Save(new P11DCategory(int.Parse(this.txtpdcatid.Text), pdname));
                 if (createdP11DCategory.Id == -1)
                 {
                     this.DisplayDuplicateMessage();
@@ -172,7 +172,7 @@ namespace expenses
             }
             else
             {
-                var createdP11DCategory= this.P11DCategoriesRepository.Add(new P11DCategory(0, pdname));
+                var createdP11DCategory= this.P11DCategoriesRepository.Save(new P11DCategory(0, pdname));
                 if (createdP11DCategory.Id == -1)
                 {
                     this.DisplayDuplicateMessage();

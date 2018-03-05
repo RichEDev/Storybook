@@ -61,7 +61,7 @@
         public IHttpActionResult Post([FromBody]P11DCategoryDto value)
         {
             IP11DCategory p11DCategory = MapObjects.Map<P11DCategory>(value);
-            p11DCategory = this._p11DCategories.Value.Add(p11DCategory);
+            p11DCategory = this._p11DCategories.Value.Save(p11DCategory);
             value = MapObjects.Map<P11DCategoryDto>(p11DCategory);
 
             return this.Json(value);
@@ -79,7 +79,7 @@
         public IHttpActionResult Put([FromBody]P11DCategoryDto value)
         {
             IP11DCategory p11DCategory = MapObjects.Map<P11DCategory>(value);
-            p11DCategory = this._p11DCategories.Value.Add(p11DCategory);
+            p11DCategory = this._p11DCategories.Value.Save(p11DCategory);
             value = MapObjects.Map<P11DCategoryDto>(p11DCategory);
 
             return this.Json(value);

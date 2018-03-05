@@ -91,7 +91,7 @@
                 Assert.Equal(account, this.SUT[account.Id]);
 
                 // If the account is not in cache a get and an add will occur, this tests that no add was called
-                this.CacheFactory.DidNotReceiveWithAnyArgs().Add(account);
+                this.CacheFactory.DidNotReceiveWithAnyArgs().Save(account);
             }
 
             /// <summary>
@@ -119,7 +119,7 @@
                 this.MetabaseDataConnections.Received(1).GetReader(Arg.Any<string>());
 
                 // Ensure that when an IAccount is returned from the SqlAccountFactory Get method it is then inserted into cache.
-                this.CacheFactory.DidNotReceiveWithAnyArgs().Add(Arg.Any<IAccount>());
+                this.CacheFactory.DidNotReceiveWithAnyArgs().Save(Arg.Any<IAccount>());
             }
 
             /// <summary>
@@ -170,7 +170,7 @@
                 this.MetabaseDataConnections.Received(1).GetReader(Arg.Any<string>());
 
                 // Ensure that when an IAccount is returned from the SqlAccountFactory Get method it is then inserted into cache.
-                this.CacheFactory.ReceivedWithAnyArgs(1).Add(Arg.Any<IAccount>());
+                this.CacheFactory.ReceivedWithAnyArgs(1).Save(Arg.Any<IAccount>());
             }
         }
 
@@ -187,14 +187,14 @@
             {
                 IAccount account = Substitute.For<IAccount>();
 
-                this.SUT.Add(account);
-                this.CacheFactory.Received(1).Add(account);
+                this.SUT.Save(account);
+                this.CacheFactory.Received(1).Save(account);
             }
 
             [Fact]
             public void NullEntity_Add_ShouldReturnNull()
             {
-                Assert.Null(this.SUT.Add(null));
+                Assert.Null(this.SUT.Save(null));
             }
         }
     }

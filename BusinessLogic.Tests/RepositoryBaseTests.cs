@@ -31,7 +31,7 @@
             [Fact]
             public void Null_Add_IsNull()
             {
-                Assert.Null(this._sut.Add(null));
+                Assert.Null(this._sut.Save(null));
             }
 
             /// <summary>
@@ -43,7 +43,7 @@
                 IDatabaseServer databaseServer = Substitute.For<IDatabaseServer>();
                 databaseServer.Id = 43;
 
-                this._sut.Add(databaseServer);
+                this._sut.Save(databaseServer);
 
                 Assert.Equal(databaseServer.Id, this._sut[43].Id);
             }
@@ -65,10 +65,10 @@
                 databaseServerUpdated.Id = 42;
                 databaseServerUpdated.Hostname.Returns("updatedHostname");
 
-                this._sut.Add(databaseServerOriginal);
+                this._sut.Save(databaseServerOriginal);
                 Assert.Equal(databaseServerOriginal.Hostname, this._sut[42].Hostname);
 
-                this._sut.Add(databaseServerUpdated);
+                this._sut.Save(databaseServerUpdated);
                 Assert.Equal(databaseServerUpdated.Hostname, this._sut[42].Hostname);
             }
         }
@@ -82,7 +82,7 @@
                 entity.Id.Returns(51);
 
                 RepositoryStub sut = new RepositoryStub(new NullLoggerWrapper());
-                sut.Add(entity);
+                sut.Save(entity);
 
                 Assert.Equal(entity, sut[51]);
             }
@@ -96,7 +96,7 @@
                 RepositoryStub sut = new RepositoryStub(new NullLoggerWrapper());
 
                 // Add an entity to make sure it doesn't return a random/first one etc.
-                sut.Add(entity);
+                sut.Save(entity);
 
                 Assert.Null(sut[99]);
             }

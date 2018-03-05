@@ -72,7 +72,7 @@
                 if (field == null)
                 {
                     field = this.Get(id);
-                    this.Add(field);
+                    this.Save(field);
                 }
 
                 return field;

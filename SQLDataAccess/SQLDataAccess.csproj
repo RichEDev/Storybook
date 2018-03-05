@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accounts\SqlAccountFactory.cs" />
+    <Compile Include="Accounts\SqlAccountWithElementsFactory.cs" />
     <Compile Include="CustomEntities\SqlCustomEntityFieldListValuesFactory.cs" />
     <Compile Include="CustomEntities\SqlCustomEntityFieldsFactory.cs" />
     <Compile Include="CustomEntities\SqlCustomEntityValueFieldFactory.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="ProjectCodes\SqlProjectCodesFactory.cs" />
     <Compile Include="ProjectCodes\SqlProjectCodesWithUserDefinedValuesFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Receipts\SqlWalletReceiptsFactory.cs" />
     <Compile Include="SqlDataConnection.cs" />
     <Compile Include="SqlDataParameters.cs" />
     <Compile Include="Tables\SqlTableFactory.cs" />
@@ -129,6 +131,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{85dfc378-171e-46c8-9c54-74cbe66368ac}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SELCloud\SELCloud.csproj">
+      <Project>{02441bad-714d-483d-acde-dde2a29bee85}</Project>
+      <Name>SELCloud</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{C417335B-7BE1-45AE-8274-C0B65829C4FC}</Project>

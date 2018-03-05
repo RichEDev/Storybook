@@ -40,7 +40,7 @@ namespace CacheDataAccess.Tests.Caching
             public void ValidParameters_Ctor_CanAccessCacheFactory()
             {
                 AccountCacheFactory<IProjectCode, int> sut = new AccountCacheFactory<IProjectCode, int>(new RepositoryBase<IProjectCode, int>(this.Log), Substitute.For<ICache<IProjectCode, int>>(), new AccountCacheKey<int>(Substitute.For<IAccount>()), this.Log);
-                IProjectCode projectCode = sut.Add(Substitute.For<IProjectCode>());
+                IProjectCode projectCode = sut.Save(Substitute.For<IProjectCode>());
 
                 Assert.NotNull(projectCode);
             }
@@ -77,7 +77,7 @@ namespace CacheDataAccess.Tests.Caching
 
                 CacheFactory<IAccount, int> sut = new MetabaseCacheFactory<IAccount, int>(this.RepositoryBase, this.Cache, this.CacheKey, this.Log);
 
-                Assert.Equal(account, sut.Add(account));
+                Assert.Equal(account, sut.Save(account));
 
                 // Make sure the method to add to memory was also called
 
@@ -106,7 +106,7 @@ namespace CacheDataAccess.Tests.Caching
                 IList<IAccount> response = sut.Add(new List<IAccount>());
 
                 Assert.Equal(0, response.Count);
-                this.RepositoryBase.Received(0).Add(Arg.Any<IAccount>());
+                this.RepositoryBase.Received(0).Save(Arg.Any<IAccount>());
             }
 
             [Fact]
@@ -138,7 +138,7 @@ namespace CacheDataAccess.Tests.Caching
 
                 Assert.Equal(3, response.Count);
 
-                this.RepositoryBase.Received(accounts.Count).Add(Arg.Any<IAccount>());
+                this.RepositoryBase.Received(accounts.Count).Save(Arg.Any<IAccount>());
                 this.Cache.Received(1).HashAdd(Arg.Any<ICacheKey<int>>(), Arg.Any<string>(), Arg.Any<IDictionary<string, object>>());
 
                 Assert.True(this.RepositoryBase[1] != null);
@@ -169,7 +169,7 @@ namespace CacheDataAccess.Tests.Caching
             {
                 IAccount account = Substitute.For<IAccount>();
                 account.Id = 1;
-                this.RepositoryBase.Add(account);
+                this.RepositoryBase.Save(account);
 
                 CacheFactory<IAccount, int> sut = new MetabaseCacheFactory<IAccount, int>(this.RepositoryBase, this.Cache, this.CacheKey, this.Log);
 
@@ -305,7 +305,7 @@ namespace CacheDataAccess.Tests.Caching
             public void Delete_Called_CallsCacheDelete()
             {
                 CacheFactory<IAccount, int> sut = new MetabaseCacheFactory<IAccount, int>(this.RepositoryBase, this.Cache, this.CacheKey, this.Log);
-                this.RepositoryBase.Add(new Account(55, null, false));
+                this.RepositoryBase.Save(new Account(55, null, false));
                 this.Cache.HashDelete(Arg.Any<IMetabaseCacheKey<int>>(), Arg.Any<string>(), Arg.Any<string>()).Returns(true);
 
                 // Check that it returns the correct response as from the ICache

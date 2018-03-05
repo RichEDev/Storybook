@@ -47,7 +47,7 @@
                 if (databaseServer == null)
                 {
                     databaseServer = this.Get(id);
-                    this._cacheFactory.Add(databaseServer);
+                    this._cacheFactory.Save(databaseServer);
                 }
 
                 return databaseServer;
@@ -63,9 +63,9 @@
         /// <returns>
         /// The <see cref="IDatabaseServer"/> inserted into the collection.
         /// </returns>
-        public IDatabaseServer Add(IDatabaseServer entity)
+        public IDatabaseServer Save(IDatabaseServer entity)
         {
-            return this._cacheFactory.Add(entity);
+            return this._cacheFactory.Save(entity);
         }
 
         /// <summary>

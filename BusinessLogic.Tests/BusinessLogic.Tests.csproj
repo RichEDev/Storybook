@@ -118,16 +118,21 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Accounts\AccountTests.cs" />
+    <Compile Include="Accounts\Elements\ElementTests.cs" />
+    <Compile Include="Accounts\Elements\AccountWithElementsTests.cs" />
     <Compile Include="Cache\GetByCustomTests.cs" />
     <Compile Include="Cache\MetabaseCacheKeyTests.cs" />
     <Compile Include="Cache\AccountCacheKeyTests.cs" />
     <Compile Include="Database\MetabaseCatalogueTests.cs" />
     <Compile Include="DataConnections\DataParametersTests.cs" />
+    <Compile Include="Images\ImageTests.cs" />
     <Compile Include="P11DCategories\P11DCategoryTests.cs" />
     <Compile Include="ProjectCodes\ProjectCodeTests.cs" />
     <Compile Include="ProjectCodes\ProjectCodeWithUserDefinedFieldsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Receipts\WalletReceiptsTests.cs" />
     <Compile Include="RepositoryBaseTests.cs" />
+    <Compile Include="SELCloud\CloudWalletReceiptTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -143,6 +148,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{85DFC378-171E-46C8-9C54-74CBE66368AC}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SELCloud\SELCloud.csproj">
+      <Project>{02441bad-714d-483d-acde-dde2a29bee85}</Project>
+      <Name>SELCloud</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{C417335B-7BE1-45AE-8274-C0B65829C4FC}</Project>

@@ -58,7 +58,7 @@
                 if (accessRole == null)
                 {
                     accessRole = this.Get(id);
-                    this._cacheFactory.Add(accessRole);
+                    this._cacheFactory.Save(accessRole);
                 }
 
                 return accessRole;
@@ -74,9 +74,9 @@
         /// <returns>
         /// The <see cref="IAccessRole"/> returned by <see cref="CacheFactory{T,TK}"/>.
         /// </returns>
-        public IAccessRole Add(IAccessRole entity)
+        public IAccessRole Save(IAccessRole entity)
         {
-            return this._cacheFactory.Add(entity);
+            return this._cacheFactory.Save(entity);
         }
 
         /// <summary>

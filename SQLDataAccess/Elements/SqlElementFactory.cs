@@ -5,7 +5,8 @@
 
     using System.Collections.Generic;
     using System.Linq;
-    
+
+    using BusinessLogic;
     using BusinessLogic.Accounts.Elements;
     using BusinessLogic.DataConnections;
 
@@ -24,18 +25,21 @@
         /// <summary>
         /// Backing cache entity to retrieve objects from cache.
         /// </summary>
-        private readonly MetabaseCacheFactory<IElement, int> _cacheFactory;
+        private readonly IMetabaseCacheFactory<IElement, int> _cacheFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlElementFactory"/> class.
         /// </summary>
         /// <param name="cacheFactory">An instance of <see cref="CacheFactory{T,TK}"/> enabling caching on <see cref="SqlElementFactory"/></param>
-        /// <param name="customerDataConnection">
+        /// <param name="metabaseDataConnection">
         /// The customer data connection.
         /// </param>
-        public SqlElementFactory(MetabaseCacheFactory<IElement, int> cacheFactory, IMetabaseDataConnection<SqlParameter> customerDataConnection)
+        public SqlElementFactory(IMetabaseCacheFactory<IElement, int> cacheFactory, IMetabaseDataConnection<SqlParameter> metabaseDataConnection)
         {
-            this._metabaseDataConnection = customerDataConnection;
+            Guard.ThrowIfNull(cacheFactory, nameof(cacheFactory));
+            Guard.ThrowIfNull(metabaseDataConnection, nameof(metabaseDataConnection));
+
+            this._metabaseDataConnection = metabaseDataConnection;
             this._cacheFactory = cacheFactory;
         }
 
@@ -56,7 +60,7 @@
 
                     if (entity != null)
                     {
-                        this._cacheFactory.Add(entity); 
+                        this._cacheFactory.Save(entity); 
                     }
                 }
 
@@ -106,7 +110,20 @@
         }
 
         /// <summary>
-        /// Popualtes a List of <see cref="IElement">IElement</see> from the database
+        /// Gets a list of all available <see cref="IElement"/>
+        /// </summary>
+        /// <returns>The list of <see cref="IElement"/></returns>
+        public List<IElement> Get()
+        {
+            var strSQL = "SELECT elementID, categoryID, elementName, description, accessRolesCanEdit, accessRolesCanAdd, accessRolesCanDelete, elementFriendlyName, accessRolesApplicable FROM dbo.elementsBase";
+            this._metabaseDataConnection.Parameters.Clear();
+            var lstElements = this.ReadFromDatabase(strSQL);
+
+            return lstElements;
+        }
+
+        /// <summary>
+        /// Populates a List of <see cref="IElement">IElement</see> from the database
         /// </summary>
         /// <param name="sql">
         /// The SQL to execute
@@ -136,7 +153,7 @@
                     var canDelete = reader.GetBoolean(accessRolesCanDeleteOrd);
                     var friendlyName = reader.GetString(elementFriendlyNameOrd);
                     var accessRolesApplicable = reader.GetBoolean(accessRolesApplicableOrd);
-                    IElement tmpElement = new Element(elementId, categoryId, elementName, description, canAdd, canEdit, canDelete, friendlyName, accessRolesApplicable);
+                    IElement tmpElement = new Element(elementId, categoryId, elementName, description, canEdit, canAdd, canDelete, friendlyName, accessRolesApplicable);
                     lstElements.Add(tmpElement);
                 }
             }

@@ -608,6 +608,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Random\FileDataRequest.cs" />
+    <Compile Include="Receipts\ProcessedReceipt.cs" />
+    <Compile Include="Receipts\ProcessedReceipts.cs" />
     <Compile Include="Random\LookupServiceCar.cs" />
     <Compile Include="ReportChart.cs" />
     <Compile Include="Notifications.cs" />

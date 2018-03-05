@@ -6,22 +6,32 @@ using Utilities.Cryptography;
 namespace SpendManagementApi.Bootstrap
 {
     using System.Web.Http;
+
     using BusinessLogic;
     using BusinessLogic.Accounts;
     using BusinessLogic.Cache;
     using BusinessLogic.DataConnections;
     using BusinessLogic.Fields;
     using BusinessLogic.Identity;
+    using BusinessLogic.Images;
     using BusinessLogic.Tables;
     using BusinessLogic.UserDefinedFields;
+
     using CacheDataAccess.Caching;
+
     using Configuration.Core;
     using Configuration.Interface;
+
     using SEL.FeatureFlags;
     using SEL.FeatureFlags.Configuration;
     using SEL.FeatureFlags.Context;
+
+    using SEL.MessageBrokers;
+    using SEL.MessageBrokers.RabbitMQ;
+
     using SimpleInjector;
     using SimpleInjector.Lifestyles;
+
     using SQLDataAccess;
     using SQLDataAccess.Accounts;
     using SQLDataAccess.ProjectCodes;
@@ -68,7 +78,10 @@ namespace SpendManagementApi.Bootstrap
             container.Register(typeof(RepositoryBase<,>), typeof(RepositoryBase<,>));
             container.Register(typeof(IMetabaseCacheFactory<,>), typeof(MetabaseCacheFactory<,>));
             container.Register(typeof(IAccountCacheFactory<,>), typeof(AccountCacheFactory<,>));
-            
+            container.Register(typeof(IRpcClient), typeof(RabbitMqRpcClient));
+            container.Register(typeof(IImageConversion), typeof(JpgImageConversion));
+            container.Register(typeof(IImageManipulation), typeof(JpgImageManipulation));
+
             container.Register<UserDefinedFieldValueRepository, SqlUserDefinedFieldValuesFactory>(Lifestyle.Transient);
             container.RegisterCollection(typeof(UserDefinedFieldValueRepository), new[] { typeof(SqlUserDefinedFieldValuesFactory) });
 

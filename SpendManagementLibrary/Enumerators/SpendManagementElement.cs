@@ -171,5 +171,6 @@ public enum SpendManagementElement
     LogonMessages = 195,
     FuelReceiptToVATCalculation = 196,
     DvlaConnect = 197,
-    VehicleLookup = 198
+    VehicleLookup = 198,
+    ReceiptReader = 199
 }

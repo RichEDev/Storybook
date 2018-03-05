@@ -140,7 +140,7 @@
 
                     if (entity != null)
                     {
-                        this._baseRepository.Add(entity);
+                        this._baseRepository.Save(entity);
                     }
                 }
 
@@ -153,13 +153,13 @@
         /// </summary>
         /// <param name="entity">The instance of <see cref="T"/> to add to memory and cache</param>
         /// <returns>The <see cref="T"/>.</returns>
-        public T Add(T entity)
+        public T Save(T entity)
         {
             if (entity != null)
             {
                 this.OnAdd?.Invoke(entity);
                 this.HashAdd("list", entity.Id.ToString(), entity);
-                this._baseRepository.Add(entity);
+                this._baseRepository.Save(entity);
             }
             
             return entity;
@@ -180,7 +180,7 @@
 
                 foreach (T entity in entities)
                 {
-                    this._baseRepository.Add(entity);
+                    this._baseRepository.Save(entity);
                     cacheList.Add(entity.Id.ToString(), entity);
                 }
 

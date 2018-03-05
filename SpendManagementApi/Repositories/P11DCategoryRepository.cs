@@ -100,7 +100,7 @@ namespace SpendManagementApi.Repositories
 
         private P11DCategory SaveP11DCategory(P11DCategory item)
         {
-            var result = this._p11DCategories.Add(item.To(this.ActionContext));
+            var result = this._p11DCategories.Save(item.To(this.ActionContext));
 
             if (result.Id > 1)
             {

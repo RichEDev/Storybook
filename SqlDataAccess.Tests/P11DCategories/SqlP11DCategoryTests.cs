@@ -90,7 +90,7 @@
                 Assert.Equal(p11DCategory, this.SUT[p11DCategory.Id]);
 
                 // If the P11DCategory is not in cache a get and an add will occur, this tests that no add was called
-                this.CacheFactory.DidNotReceiveWithAnyArgs().Add(p11DCategory);
+                this.CacheFactory.DidNotReceiveWithAnyArgs().Save(p11DCategory);
             }
 
             /// <summary>
@@ -118,7 +118,7 @@
                 this.CustomerDataConnection.Received(1).GetReader(Arg.Any<string>());
 
                 // Ensure that when an IAccount is returned from the SqlAccountFactory Get method it is then inserted into cache.
-                this.CacheFactory.DidNotReceiveWithAnyArgs().Add(Arg.Any<IP11DCategory>());
+                this.CacheFactory.DidNotReceiveWithAnyArgs().Save(Arg.Any<IP11DCategory>());
             }
 
             /// <summary>
@@ -155,7 +155,7 @@
                 this.CustomerDataConnection.Received(1).GetReader(Arg.Any<string>());
 
                 // Ensure that when an IAccount is returned from the SqlAccountFactory Get method it is then inserted into cache.
-                this.CacheFactory.ReceivedWithAnyArgs(1).Add(Arg.Any<IP11DCategory>());
+                this.CacheFactory.ReceivedWithAnyArgs(1).Save(Arg.Any<IP11DCategory>());
             }
         }
 
@@ -182,10 +182,10 @@
                 this.Logger.IsDebugEnabled.Returns(true);
 
                 // Add the P11DCategory
-                this.SUT.Add(p11DCategory);
+                this.SUT.Save(p11DCategory);
 
                 // Ensure the P11DCategory was added to cache
-                this.CacheFactory.Received(1).Add(p11DCategory);
+                this.CacheFactory.Received(1).Save(p11DCategory);
 
                 // Ensure Id was set correctly on returned P11DCategory
                 Assert.Equal(id, p11DCategory.Id);
@@ -207,10 +207,10 @@
                 this.Logger.IsDebugEnabled.Returns(true);
 
                 // Add the P11DCategory
-                this.SUT.Add(p11DCategory);
+                this.SUT.Save(p11DCategory);
 
                 // Ensure the P11DCategory was not added to cache
-                this.CacheFactory.DidNotReceive().Add(p11DCategory);
+                this.CacheFactory.DidNotReceive().Save(p11DCategory);
 
                 // Ensure the returned P11DCategory has an invalid Id
                 Assert.Equal(-1, p11DCategory.Id);
@@ -222,7 +222,7 @@
             [Fact]
             public void NullEntity_Add_ShouldReturnNull()
             {
-                Assert.Null(this.SUT.Add(null));
+                Assert.Null(this.SUT.Save(null));
             }
         }
 

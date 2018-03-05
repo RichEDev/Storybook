@@ -32,6 +32,12 @@
                     case int _:
                         dataReader.GetInt32(Arg.Is(i)).Returns(Convert.ToInt32(rowData[i]));
                         break;
+                    case DateTime _:
+                        dataReader.GetDateTime(Arg.Is(i)).Returns(Convert.ToDateTime(rowData[i]));
+                        break;
+                    case bool _:
+                        dataReader.GetBoolean(Arg.Is(i)).Returns(Convert.ToBoolean(rowData[i]));
+                        break;
                     default:
                         throw new InvalidCastException($"({rowData[i].GetType()}){rowData[i]} is not currently caught, you will need to add support for it.");
                 }

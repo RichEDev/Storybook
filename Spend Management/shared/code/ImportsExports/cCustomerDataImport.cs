@@ -1130,12 +1130,12 @@ namespace Spend_Management
                     new Guid(ReportFields.P11DCategoriesPDName), p11DCat);
             if (p11DCategoryId > 0)
             {
-                this.P11DCategoriesRepository.Add(new P11DCategory(p11DCategoryId, p11DCat));
+                this.P11DCategoriesRepository.Save(new P11DCategory(p11DCategoryId, p11DCat));
                 clsLogging.saveLogItem(logID, LogReasonType.SuccessUpdate, element, "Updated P11D " + p11DCat);
             }
             else
             {
-                this.P11DCategoriesRepository.Add(new P11DCategory(0, p11DCat));
+                this.P11DCategoriesRepository.Save(new P11DCategory(0, p11DCat));
                 clsLogging.saveLogItem(logID, LogReasonType.SuccessAdd, element, "Added P11D " + p11DCat);
             }
         }

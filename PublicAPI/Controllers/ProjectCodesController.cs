@@ -61,7 +61,7 @@
         public IHttpActionResult Post([FromBody]ProjectCodeDto value)
         {
             IProjectCodeWithUserDefinedFields projectCode = MapObjects.Map<ProjectCodeWithUserDefinedFields>(value);
-            projectCode = this._projectCodes.Value.Add(projectCode);
+            projectCode = this._projectCodes.Value.Save(projectCode);
             value = MapObjects.Map<ProjectCodeDto>(projectCode);
             
             return this.Json(value);
@@ -79,7 +79,7 @@
         public IHttpActionResult Put([FromBody]ProjectCodeDto value)
         {
             IProjectCodeWithUserDefinedFields projectCode = MapObjects.Map<ProjectCodeWithUserDefinedFields>(value);
-            projectCode = this._projectCodes.Value.Add(projectCode);
+            projectCode = this._projectCodes.Value.Save(projectCode);
             value = MapObjects.Map<ProjectCodeDto>(projectCode);
 
             return this.Json(value);

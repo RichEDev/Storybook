@@ -83,7 +83,7 @@
                     {
                         projectCode = projectCodes[0];
                         this._cacheFactory.OnAdd += this.AddToMap;
-                        this._cacheFactory.Add(projectCode);
+                        this._cacheFactory.Save(projectCode);
                     }
                 }
 
@@ -96,7 +96,7 @@
         /// </summary>
         /// <param name="projectCode">The <see cref="IProjectCode"/> to add or update.</param>
         /// <returns>The unique identifier for the <see cref="IProjectCode"/>.</returns>
-        public virtual IProjectCode Add(IProjectCode projectCode)
+        public virtual IProjectCode Save(IProjectCode projectCode)
         {
             if (projectCode == null)
             {
@@ -145,7 +145,7 @@
             if (projectCode.Id > 0)
             {
                 this._cacheFactory.OnAdd += this.AddToMap;
-                projectCode = this._cacheFactory.Add(projectCode);
+                projectCode = this._cacheFactory.Save(projectCode);
             }
 
             return projectCode;
@@ -183,7 +183,7 @@
             }
 
 
-            projectCode = this._cacheFactory.Add(projectCode);
+            projectCode = this._cacheFactory.Save(projectCode);
 
             return projectCode.Archived;
         }

@@ -80,9 +80,9 @@
         /// <returns>
         /// The saved instance of <see cref="IProjectCode">IProjectCode</see>
         /// </returns>
-        public IProjectCodeWithUserDefinedFields Add(IProjectCodeWithUserDefinedFields entity)
+        public IProjectCodeWithUserDefinedFields Save(IProjectCodeWithUserDefinedFields entity)
         {
-            IProjectCodeWithUserDefinedFields result = this._projectCodesFactory.Add(entity) as IProjectCodeWithUserDefinedFields;
+            IProjectCodeWithUserDefinedFields result = this._projectCodesFactory.Save(entity) as IProjectCodeWithUserDefinedFields;
             
             // Check the Id to ensure it saved correctly (positive id) and was not a duplicate (negative id)/failed save
             if (result != null && result.Id > 0)
