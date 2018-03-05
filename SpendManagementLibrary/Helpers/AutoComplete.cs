@@ -449,16 +449,23 @@ namespace SpendManagementLibrary
                 }
             }
 
+            var sortedResults = retVals.OrderBy(x => x.label).ToList(); 
+
             if (childFilterList == null)
             {
-               return retVals.OrderBy(x => x.label).ToList(); 
+                return sortedResults;
             }
-                  
-            var requiredField = fields.GetFieldByName($"att{childFilterList[0].FieldToBuild}", true);
 
-            retVals = retVals.Where(val => childFilterList.Any(child => child.Key.ToString() == val.value)).OrderBy(x => x.label).ToList();
+            var requiredAttachmentField = fields.GetFieldByName($"att{childFilterList[0].FieldToBuild}", true);
+
+            if (requiredAttachmentField == null || requiredAttachmentField.LookupFieldID.ToString() != displayField)
+            {
+                return sortedResults.Count > maxRows ? sortedResults.GetRange(0, maxRows) : retVals;
+            }
+
+            sortedResults = sortedResults.Where(val => childFilterList.Any(child => child.Key.ToString() == val.value)).ToList();
  
-            return retVals.Count > maxRows ? retVals.GetRange(0, maxRows) : retVals;
+            return sortedResults.Count > maxRows ? sortedResults.GetRange(0, maxRows) : sortedResults;
         }
 
         /// <summary>
