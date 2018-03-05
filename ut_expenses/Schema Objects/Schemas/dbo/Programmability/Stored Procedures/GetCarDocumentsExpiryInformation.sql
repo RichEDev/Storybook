@@ -1,4 +1,10 @@
-﻿DECLARE @sqlQuery1 NVARCHAR(MAX);
+﻿CREATE PROCEDURE [dbo].[GetCarDocumentsExpiryInformation]
+@carId INT,
+@expenseItemDate DATETIME
+AS
+BEGIN
+
+DECLARE @sqlQuery1 NVARCHAR(MAX);
 DECLARE @sqlQuery3 NVARCHAR(MAX);
 DECLARE @sqlQuery2 NVARCHAR(MAX);
 DECLARE @TaxValueId NVARCHAR(10);
@@ -140,4 +146,4 @@ END';
 
 SET @sqlQuery3 = @sqlQuery1 + @sqlQuery2
 EXEC sp_executesql @sqlQuery3
-GO
+END
