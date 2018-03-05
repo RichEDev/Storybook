@@ -202,7 +202,7 @@
                             },
                             create: function() {
                                 $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
-                                    if (displayAutocompleteMultipleResultsFields === "False") {
+                                    if (displayAutocompleteMultipleResultsFields === null || displayAutocompleteMultipleResultsFields === "False") {
                                         return $("<li class='ui-menu-item'></li>")
                                             .data("item.autocomplete", item)
                                             .append("<a>" + item.label + "</a>")
