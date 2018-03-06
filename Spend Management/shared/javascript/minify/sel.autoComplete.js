@@ -1,11 +1,11 @@
 ﻿(function (SEL, $, $g, $f, $e)
 {
     var scriptName = "AutoComplete";
-
+  
     function execute()
     {
         SEL.registerNamespace("SEL.AutoComplete");
-
+        SEL.filterRules = [];
         SEL.AutoComplete = {
             Data: {
                 Request:null
@@ -19,6 +19,31 @@
                 triggerParameter.BindMatchTableId = matchTableId;
                 triggerParameter.BindtriggerFields = triggerFields;
                 SEL.AutoCompleteCombo.AutoCompleteDropdownBindParameterList.BindMatchParameterList.push(triggerParameter);
+                SEL.AutoComplete.Bind.childFilterList = childFilterList;
+
+                var applyFilterRulesForCostCode = false;
+
+                if (cntl.includes("CostCode")) {
+                    applyFilterRulesForCostCode = true;
+                }
+                       
+                if (applyFilterRulesForCostCode) {
+
+                    //check if filter rule already exists in array
+                    var removeIndex = SEL.filterRules.map(function (item) { return item.id; }).indexOf(cntl);
+
+                    if (removeIndex > -1) {
+                        // remove object if exists, so we can readd with new filter rules
+                        SEL.filterRules.splice(removeIndex, 1);
+                    }
+                 
+                    var obj = {};
+                    obj["id"] = cntl;
+                    obj["filter"] = JSON.stringify(childFilterList);
+
+                    SEL.filterRules.push(obj);
+                }
+
 
                 $(document).ready(function ()
                 {
@@ -60,7 +85,13 @@
                                 if (autoCompleteFieldIDs === "null" || autoCompleteFieldIDs === null) {
                                     displayAutocompleteMultipleResultsFields = "False";
                                 }
-                                if (SEL.AutoComplete.Bind.childFilterList == undefined) {
+
+                                if (applyFilterRulesForCostCode) {
+                                    var item = SEL.filterRules.filter(x => x.id === this.element.context.id);
+                                    SEL.AutoComplete.Bind.childFilterList = item["0"].filter;
+                                }
+
+                                else if (SEL.AutoComplete.Bind.childFilterList == undefined) {
                                     SEL.AutoComplete.Bind.childFilterList = null;
                                 }
                                 if (displayAutocompleteMultipleResultsFields === "False") {
@@ -171,7 +202,7 @@
                             },
                             create: function() {
                                 $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
-                                    if (displayAutocompleteMultipleResultsFields === "False") {
+                                    if (displayAutocompleteMultipleResultsFields === null || displayAutocompleteMultipleResultsFields === "False") {
                                         return $("<li class='ui-menu-item'></li>")
                                             .data("item.autocomplete", item)
                                             .append("<a>" + item.label + "</a>")
@@ -250,6 +281,22 @@
                                     }
                                 }
                     });
+
+                    $('input.costcode-autocomplete').focus(function () {
+
+                        if (!$(this).val()) {
+                            $(this).autocomplete("search", "%%%");
+                        }
+                    }
+                    );
+                    $('input.costcodeDescription-autocomplete').focus(function () {
+
+                        if (!$(this).val()) {
+                            $(this).autocomplete("search", "%%%");
+                        }
+                    }
+
+                    );
                 });
             },
 

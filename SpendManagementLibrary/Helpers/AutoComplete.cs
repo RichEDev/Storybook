@@ -447,15 +447,29 @@ namespace SpendManagementLibrary
                         }
                     }
                 }
-            }           
+            }
 
-            if (childFilterList == null) return retVals;
-            var requiredField = fields.GetFieldByName($"att{childFilterList[0].FieldToBuild}", true);
+            var sortedResults = retVals.OrderBy(x => x.label).ToList(); 
 
-            if (requiredField == null || requiredField.LookupFieldID.ToString() != displayField) return retVals.Count > maxRows ? retVals.GetRange(0, maxRows) : retVals;
-            retVals = retVals.Where(val => childFilterList.Any(child => child.Key.ToString() == val.value)).ToList();
+            if (childFilterList == null)
+            {
+                return sortedResults;
+            }
+  
+            if (childFilterList[0].FieldToBuild != string.Empty)
+            {
+                var requiredAttachmentField = fields.GetFieldByName($"att{childFilterList[0].FieldToBuild}", true);
 
-            return retVals.Count > maxRows ? retVals.GetRange(0, maxRows) : retVals;
+                if (requiredAttachmentField == null || requiredAttachmentField.LookupFieldID.ToString() != displayField)
+                {
+                    return sortedResults.Count > maxRows ? sortedResults.GetRange(0, maxRows) : retVals;
+                }           
+            }
+    
+            sortedResults = sortedResults
+                .Where(val => childFilterList.Any(child => child.Key.ToString() == val.value)).ToList();
+
+            return sortedResults.Count > maxRows ? sortedResults.GetRange(0, maxRows) : sortedResults;           
         }
 
         /// <summary>

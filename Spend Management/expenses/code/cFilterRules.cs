@@ -733,11 +733,11 @@
                     {
                         if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet == false)
                         {
-                            controlname = "cmbcostcode;breakdown";
+                            controlname = "txtCostCode;breakdown";
                         }
                         else if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet)
                         {
-                            controlname = "cmbgencostcode;general";
+                            controlname = "txtCostCode;general";
                         }
                         break;
                     }
@@ -878,7 +878,7 @@
                     sFilterid += rule.filterid.ToString() + ";";
                 }
             }
-            txtbox.Attributes.Add("onchange", "popChildDropDowns('" + txtbox.ID + "','" + sType + "','" + sFilterid + "','" + ctlindex + "'," + accountid + ")");
+            txtbox.Attributes.Add("onblur", "popChildDropDowns('" + txtbox.ID + "','" + sType + "','" + sFilterid + "','" + ctlindex + "'," + accountid + ")");
         }
 
         public void ruleCheck()

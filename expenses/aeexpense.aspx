@@ -90,10 +90,9 @@
 </asp:Content>
 
 <asp:Content ID="submenuContent" ContentPlaceHolderID="contentleft" runat="Server">
-
     <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
         <Scripts>
-            <asp:ScriptReference Path="~/scripts/addingexpenses.js?date=20170907" />
+            <asp:ScriptReference Path="~/scripts/addingexpenses.js?date=20180305" />
             <asp:ScriptReference Path="~/shared/javascript/attachments.js" />
             <asp:ScriptReference Name="tooltips" />
             <asp:ScriptReference Name="expenses" />
@@ -130,7 +129,7 @@
         var OrganisationSearch = null;
         var OrganisationSearchModal = '<% = mdlOrganisationSearch.ClientID %>';
         var OrganisationSearchPanel = '<% = pnlOrganisationSearch.ClientID %>';
-
+   
         $(document).ready(function() { 
             
             (function(s) {
@@ -163,7 +162,7 @@
                 var enforcedJourneyRateOption = $("select[id*='cmbmileagecat'][data-enforced=true] option:selected", this);
                 var selectedCarOption = $("select[id*=cmbcar] option:selected", this);
                 if (enforcedJourneyRateOption.data("uom") == "km" && selectedCarOption.data("defaultuom") == "mile" &&
-                        $(".userentereddistance", this).val()) {
+                    $(".userentereddistance", this).val()) {
                     errorMsg = "You cannot claim for '" + selectedCarOption.text() + "' which is in miles " +
                         "as the journey rate is enforced as '" + enforcedJourneyRateOption.text() + "' which is in km.";
                     return;
@@ -211,7 +210,7 @@
         }
 
     </script>
-
+  
     <div class="panel">
         <asp:Literal ID="lititemcomment" runat="server" meta:resourcekey="lititemcommentResource1"></asp:Literal>
 
@@ -251,8 +250,9 @@
         </asp:UpdatePanel>
     </div>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional"
-        ChildrenAsTriggers="True">
+        ChildrenAsTriggers="True">     
         <ContentTemplate>
+            <asp:HiddenField runat="server" ID="hdnShowCostCodeDescription" />
             <asp:Literal ID="litcostcodeheader" runat="server" meta:resourcekey="litcostcodeheaderResource1"></asp:Literal>
             <asp:Table ID="tblcostcodes" runat="server" meta:resourcekey="tblcostcodesResource1">
             </asp:Table>
@@ -328,9 +328,6 @@
     </asp:Panel>
     <cc1:ModalPopupExtender runat="server" ID="mdlOrganisationSearch" BackgroundCssClass="modalBackground" TargetControlID="lnkOrganisationSearch" PopupControlID="pnlOrganisationSearch" CancelControlID="btnOrganisationSearchCancel" />
     <asp:LinkButton runat="server" ID="lnkOrganisationSearch" Style="display: none;"></asp:LinkButton>
-
-
-
     <div id="flagSummary">
 
         <div id="divFlags"></div>

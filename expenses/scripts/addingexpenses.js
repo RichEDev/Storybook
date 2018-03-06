@@ -1,12 +1,12 @@
 ﻿// On page load and every .Net forms postback
-Sys.Application.add_load(function (application, applicationEventArguments) {
+Sys.Application.add_load(function(application, applicationEventArguments) {
 
     // rebind any existing address widgets to the replaced element
     if (applicationEventArguments._isPartialLoad) {
         $.address.rebind();
     }
 
-    var extractIds = function (str) {
+    var extractIds = function(str) {
         var result = null;
         var match = /(\d+)_(\d+)/.exec(str);
 
@@ -22,7 +22,7 @@ Sys.Application.add_load(function (application, applicationEventArguments) {
 
 
     // create a any new address widgets if necessary
-    $("input[type=text].ui-sel-address-picker").each(function (index, element) {
+    $("input[type=text].ui-sel-address-picker").each(function(index, element) {
 
         // bind/rebind all mileage address fields 
         var field = $(element);
@@ -30,22 +30,23 @@ Sys.Application.add_load(function (application, applicationEventArguments) {
 
         // add expense item specific behaviour for "home" and "office" addresses and mileage calculations
         field.on({
-            "focus": function () {
+            "focus": function() {
                 // legacy address modal
                 this.InitialValue = element.value;
             },
-            "blur": function () {
+            "blur": function() {
                 SEL.AddressesAndTravel.PopulateAddressPickerByKeyword(field);
             }
         });
 
         // when the hidden field changes update the mileage caculation for the row
-        hiddenField.on("change", function () {
-            var ids = extractIds(field.attr("id"));
-            if (ids !== null) {
-                processMileageValue(ids.id, ids.stepId);
-            }
-        });
+        hiddenField.on("change",
+            function() {
+                var ids = extractIds(field.attr("id"));
+                if (ids !== null) {
+                    processMileageValue(ids.id, ids.stepId);
+                }
+            });
 
         // if the widget hasn't already been created, create it
         var found = false;
@@ -71,18 +72,59 @@ Sys.Application.add_load(function (application, applicationEventArguments) {
     });
 
     // attach organisation autocompletes
-    $(".organisation-autocomplete").each(function (i, o) {
-        SEL.AutoComplete.Bind(o.id, 15,
+    $(".organisation-autocomplete").each(function(i, o) {
+        SEL.AutoComplete.Bind(o.id,
+            15,
             '7bdaf84e-a373-4008-83d1-9e18aaa47f8e',
             '4d0f2409-0705-4f0f-9824-42057b25aebe',
-            '4d0f2409-0705-4f0f-9824-42057b25aebe, ac87c4c4-9107-4555-b2a3-27109b3ebfbb', null,
+            '4d0f2409-0705-4f0f-9824-42057b25aebe, ac87c4c4-9107-4555-b2a3-27109b3ebfbb',
+            null,
             '{ 0: { "FieldID": "4B7873D6-8EDC-44D4-94F7-B8ABCBD87692", "ConditionType": 1, "ValueOne": "0", "ValueTwo": "", "Order": 0, "JoinViaID": 0 } }',
-            500, null, "False", null, null, SEL.Expenses.Validate.Organisation.SaveIfNotExists);
+            500,
+            null,
+            "False",
+            null,
+            null,
+            SEL.Expenses.Validate.Organisation.SaveIfNotExists);
 
         var searchName = $(o).data("search");
         if (typeof searchName === "string" && searchName !== "") {
-            OrganisationSearches[searchName] = AutoCompleteSearches.New("Organisation", o.id, OrganisationSearchModal, OrganisationSearchPanel);
+            OrganisationSearches[searchName] =
+                AutoCompleteSearches.New("Organisation", o.id, OrganisationSearchModal, OrganisationSearchPanel);
         }
+    });
+
+    // attach cost code autocompletes
+    $(".costcode-autocomplete").each(function(i, o) {
+        SEL.AutoComplete.Bind(o.id,
+            25,
+            '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
+            '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC',
+            '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',
+            null,
+            '{ 0: { "FieldID": "8178629C-5908-4458-89F6-D7EE7438314D", "ConditionType": 1, "ValueOne": "0", "ValueTwo": "", "Order": 0, "JoinViaID": 0 } }',
+            500,
+            null,
+            "False",
+            null,
+            null,
+            null);  
+    });
+
+    $(".costcodeDescription-autocomplete").each(function (i, o) {
+        SEL.AutoComplete.Bind(o.id,
+            25,
+            '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
+            'AF80D035-6093-4721-8AFC-061424D2AB72',
+            '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',
+            null,
+            '{ 0: { "FieldID": "8178629C-5908-4458-89F6-D7EE7438314D", "ConditionType": 1, "ValueOne": "0", "ValueTwo": "", "Order": 0, "JoinViaID": 0 } }',
+            500,
+            null,
+            "False",
+            null,
+            null,
+            null);
     });
 });
 
@@ -1382,8 +1424,8 @@ function getChildDropDownsComplete(data) {
 
     switch (data[2]) {
         case 'general':
-            {
-                popDropdown(data[0], items)
+        {
+            popDropdown(data[0], items);
                 break;
             }
         case 'individual':
@@ -1418,26 +1460,67 @@ function getChildDropDownsComplete(data) {
 }
 
 function popDropdown(ctlid, items) {
-    var $ctl = $("#" + contentID + ctlid);
 
-    if ($ctl.length == 0)
-    {
-        return;
-    }
+  
+    if (ctlid.includes("CostCode")) {
 
-    $ctl.empty();
+        var control = contentID + ctlid;
 
-    if (items.length > 1)
-    {
-        $ctl.append($("<option/>")
-            .val("0")
-            .text("[None]"));
-    }
+        //clear any value already set
+        $('[id$=' + control + ']').val("");
 
-    for (var i = 0; i < items.length; i++) {
-        $ctl.append($("<option/>")
-            .val(items[i][1])
-            .text(items[i][0]));
+        var filterRules = [];
+
+        for (var i = 0; i < items.length; i++) {
+
+            var val = (items[i][1]);
+            var filter = { "FieldToBuild": "", "Key": val, "Value": "", "FormattedText": "" };
+            filterRules.push(filter);
+        }
+
+        var showDescription = document.getElementById('ctl00_contentmain_hdnShowCostCodeDescription').value;
+        var displayField;
+
+        if (showDescription === 'true') {
+            displayField = 'AF80D035-6093-4721-8AFC-061424D2AB72';
+        } else {
+            displayField = '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC';
+        }
+
+        SEL.AutoComplete.Bind(control,
+            25,
+            '02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',
+            displayField,
+            '359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',
+            null,
+            '{ 0: { "FieldID": "8178629C-5908-4458-89F6-D7EE7438314D", "ConditionType": 1, "ValueOne": "0", "ValueTwo": "", "Order": 0, "JoinViaID": 0 } }',
+            500,
+            null,
+            "False",
+            filterRules,
+            "False",
+            null);
+
+    } else {
+        var $ctl = $("#" + contentID + ctlid);
+
+        if ($ctl.length == 0) {
+            return;
+        }
+
+        $ctl.empty();
+
+        if (items.length > 1) {
+            $ctl.append($("<option/>")
+                .val("0")
+                .text("[None]"));
+        }
+
+        for (var i = 0; i < items.length; i++) {
+            $ctl.append($("<option/>")
+                .val(items[i][1])
+                .text(items[i][0]));
+        }
     }
 }
 
