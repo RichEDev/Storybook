@@ -1608,7 +1608,7 @@ public partial class aeexpense : System.Web.UI.Page
 
             if (action == Action.Edit || action == Action.Copy)
             {
-                if (expenseitem.costcodebreakdown[0].costcodeid > 0)
+                if (expenseitem.costcodebreakdown != null && expenseitem.costcodebreakdown.Count > 0 && expenseitem.costcodebreakdown[0].costcodeid > 0)        
                 {
                     costCode = this.ActionContext.CostCodes.GetCostcodeById(expenseitem.costcodebreakdown[0].costcodeid);
 
