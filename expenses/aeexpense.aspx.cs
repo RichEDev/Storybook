@@ -5113,7 +5113,6 @@ public partial class aeexpense : System.Web.UI.Page
                         autoCompleteScript.Append("'{ 0: { \"FieldID\": \"8178629C-5908-4458-89F6-D7EE7438314D\", \"ConditionType\": 1, \"ValueOne\": \"0\", \"ValueTwo\": \"\", \"Order\": 0, \"JoinViaID\": 0 } }',");
                         autoCompleteScript.Append("500, null, \"False\"," + serializedFilterRules + ", \"False\", null);");
                    
-
                         ScriptManager.RegisterStartupScript (this, this.GetType(), "autoComplete" + txtbox.ID, autoCompleteScript.ToString(), true);                  
                     }
           
@@ -5131,17 +5130,6 @@ public partial class aeexpense : System.Web.UI.Page
             {
                 switch (types[i])
                 {
-                    //case FilterType.Costcode:
-                    //    if (!string.IsNullOrEmpty(ctlindex))
-                    //    {
-                    //        if (ddlst.Items.FindByValue(breakdown[int.Parse(ctlindex)].costcodeid.ToString()) != null)
-                    //        {
-                    //            //ddlst.Items.FindByValue(breakdown[0].costcodeid.ToString()).Selected = true;
-                    //            ddlst.SelectedValue = breakdown[int.Parse(ctlindex)].costcodeid.ToString();
-                    //        }
-                    //    }
-
-                    //    break;
                     case FilterType.Department:
                         if (!string.IsNullOrEmpty(ctlindex))
                         {
