@@ -10,7 +10,8 @@ BEGIN
 	IF (@StatusValue = 0)
 	BEGIN
 		UPDATE WalletReceipts
-		SET [Status] = 1;
+		SET [Status] = 1
+		WHERE WalletReceiptId = @WalletReceiptId
 
 		SELECT WalletReceiptId, FileExtension
 			,STATUS
