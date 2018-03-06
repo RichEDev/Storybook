@@ -90,11 +90,18 @@
                 databaseConnection.AddWithValue("@WalletReceiptId ", walletReceiptId);
 
                 using (var reader = databaseConnection.GetReader(
-                    "SELECT FileExtension, Status FROM WalletReceipts WHERE WalletReceiptId = @WalletReceiptId"))
+                    "GetProcessedReceipt", CommandType.StoredProcedure))
                 {
                     databaseConnection.sqlexecute.Parameters.Clear();
                     while (reader.Read())
                     {
+                        processedReceipt.WalletReceiptId = reader.GetInt32(reader.GetOrdinal("WalletReceiptId"));
+
+                        if (processedReceipt.WalletReceiptId == -1)
+                        {
+                            continue;
+                        }
+
                         processedReceipt.FileExtension = reader.GetString(reader.GetOrdinal("FileExtension"));
                         processedReceipt.Status = reader.GetInt32(reader.GetOrdinal("Status"));
                         processedReceipt.ReceiptData = this.GetReceiptFromCloud(walletReceiptId,processedReceipt.FileExtension);

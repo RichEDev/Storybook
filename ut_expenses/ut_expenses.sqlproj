@@ -7215,6 +7215,7 @@
     <None Include="Schema Objects\Schemas\dbo\Tables\Statistics\_dta_stat_811918014_1_52.sql" />
     <None Include="Schema Objects\Schemas\dbo\Tables\Statistics\_dta_stat_811918014_52_51_22.sql" />
     <None Include="Schema Objects\Schemas\dbo\Tables\Statistics\_dta_stat_811918014_52_51_1_22.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetProcessedReceipt.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Pre-Deployment\Script.PreDeployment.sql" />
