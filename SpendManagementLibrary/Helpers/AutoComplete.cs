@@ -455,17 +455,21 @@ namespace SpendManagementLibrary
             {
                 return sortedResults;
             }
-
-            var requiredAttachmentField = fields.GetFieldByName($"att{childFilterList[0].FieldToBuild}", true);
-
-            if (requiredAttachmentField == null || requiredAttachmentField.LookupFieldID.ToString() != displayField)
+  
+            if (childFilterList[0].FieldToBuild != string.Empty)
             {
-                return sortedResults.Count > maxRows ? sortedResults.GetRange(0, maxRows) : retVals;
-            }
+                var requiredAttachmentField = fields.GetFieldByName($"att{childFilterList[0].FieldToBuild}", true);
 
-            sortedResults = sortedResults.Where(val => childFilterList.Any(child => child.Key.ToString() == val.value)).ToList();
- 
-            return sortedResults.Count > maxRows ? sortedResults.GetRange(0, maxRows) : sortedResults;
+                if (requiredAttachmentField == null || requiredAttachmentField.LookupFieldID.ToString() != displayField)
+                {
+                    return sortedResults.Count > maxRows ? sortedResults.GetRange(0, maxRows) : retVals;
+                }           
+            }
+    
+            sortedResults = sortedResults
+                .Where(val => childFilterList.Any(child => child.Key.ToString() == val.value)).ToList();
+
+            return sortedResults.Count > maxRows ? sortedResults.GetRange(0, maxRows) : sortedResults;           
         }
 
         /// <summary>
