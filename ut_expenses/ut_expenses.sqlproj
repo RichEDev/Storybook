@@ -7216,6 +7216,9 @@
     <None Include="Schema Objects\Schemas\dbo\Tables\Statistics\_dta_stat_811918014_52_51_22.sql" />
     <None Include="Schema Objects\Schemas\dbo\Tables\Statistics\_dta_stat_811918014_52_51_1_22.sql" />
     <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetProcessedReceipt.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_WalletReceipts_WalletReceiptId.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_ProcessedReceipts_WalletReceiptId.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_ProcessedReceipts_ProcessedReceiptId.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Pre-Deployment\Script.PreDeployment.sql" />

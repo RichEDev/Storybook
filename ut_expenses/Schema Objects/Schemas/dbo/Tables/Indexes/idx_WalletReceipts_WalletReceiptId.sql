@@ -1,0 +1,1 @@
+﻿CREATE INDEX idx_WalletReceipts_WalletReceiptId ON WalletReceipts (WalletReceiptId);

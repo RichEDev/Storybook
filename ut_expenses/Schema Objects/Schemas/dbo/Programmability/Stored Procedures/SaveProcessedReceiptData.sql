@@ -11,7 +11,7 @@ BEGIN
 	VALUES (@WalletReceiptId, @Date, @Total, @Merchant)
 
 	UPDATE [dbo].[WalletReceipts]
-	SET [Status] = 1
+	SET [Status] = 2
 	WHERE WalletReceiptId = @WalletReceiptId 
 
 	RETURN SCOPE_IDENTITY();

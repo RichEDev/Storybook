@@ -1,0 +1,1 @@
+﻿CREATE INDEX idx_ProcessedReceipts_WalletReceiptId ON ProcessedReceipts (WalletReceiptId);
