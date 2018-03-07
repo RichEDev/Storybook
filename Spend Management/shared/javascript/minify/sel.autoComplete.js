@@ -171,7 +171,7 @@
                                     }
                                 });
                             },
-                            minLength: cntl.includes("CostCode") ? 1 : 3,
+                            minLength: 3,
                             delay : msDelay,
                             select: function (event, ui)
                             {
@@ -286,13 +286,26 @@
                                 }
                     });
 
+
+
                     $('input.costcode-autocomplete, input.costcodeDescription-autocomplete').focus(function () {
+
+                        $(this).autocomplete("option", "minLength", 1);
 
                         if (!$(this).val()) {
                             $(this).autocomplete("search", "%%%");
                         }
                     });
                 });
+            },
+
+            Rich: function (element) {
+
+                $(element).autocomplete("option", "minLength", 0);
+
+                if (!$(element).val()) {
+                    $(element).autocomplete("search", "%%%");
+                }
             },
 
             TriggerFields:

@@ -5113,7 +5113,7 @@ public partial class aeexpense : System.Web.UI.Page
                         autoCompleteScript.Append("'{ 0: { \"FieldID\": \"8178629C-5908-4458-89F6-D7EE7438314D\", \"ConditionType\": 1, \"ValueOne\": \"0\", \"ValueTwo\": \"\", \"Order\": 0, \"JoinViaID\": 0 } }',");
                         autoCompleteScript.Append("500, null, \"False\"," + serializedFilterRules + ", \"False\", null);");
                    
-                        autoCompleteScript.Append("document.getElementById('ctl00_contentmain_" + txtbox.ID + "').setAttribute(\"onfocus\", \"rich(this)\")");
+                        autoCompleteScript.Append("document.getElementById('ctl00_contentmain_" + txtbox.ID + "').setAttribute(\"onfocus\", \"SEL.AutoComplete.Rich(this)\")");
                         //document.getElementById("txtbox.ID").setAttribute("onfocus", "rich()");
 
                         //autoCompleteScript.Append("$('#ctl00_contentmain_" + txtbox.ID + "').focus(function () {");
