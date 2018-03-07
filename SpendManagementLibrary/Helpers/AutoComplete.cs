@@ -228,7 +228,7 @@ namespace SpendManagementLibrary
                    + string.Join(",", lookupMatchFields.ConvertAll(x => x.ToString())) + "', '"
                     + autoCompleteDisplayFields + "', '" 
                     + filters + "', "
-                   + msLookupDelay.ToString() + ", " + triggers + ", '" + keyFieldIsString + "', '" + null + "', '"
+                   + msLookupDelay.ToString() + ", " + triggers + ", '" + keyFieldIsString + "', '" + "null" + "', '"
                     + displayAutocompleteMultipleResultsFields + "');";
         }
 

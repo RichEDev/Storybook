@@ -23,7 +23,7 @@
              
                 var applyFilterRulesForCostCode = false;
 
-                if (cntl.includes("CostCode")) {
+                if (cntl.includes("txtCostCode")) {
                     applyFilterRulesForCostCode = true;
                    // SEL.AutoComplete.minLength = 1;
                 }
@@ -299,9 +299,9 @@
                 });
             },
 
-            Rich: function (element) {
+            SetCostCodeAutoCompleteOptions: function (element) {
 
-                $(element).autocomplete("option", "minLength", 0);
+                $(element).autocomplete("option", "minLength", 1);
 
                 if (!$(element).val()) {
                     $(element).autocomplete("search", "%%%");
