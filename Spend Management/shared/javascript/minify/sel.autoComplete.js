@@ -20,11 +20,15 @@
                 triggerParameter.BindtriggerFields = triggerFields;
                 SEL.AutoCompleteCombo.AutoCompleteDropdownBindParameterList.BindMatchParameterList.push(triggerParameter);
                 SEL.AutoComplete.Bind.childFilterList = childFilterList;
-
+             
                 var applyFilterRulesForCostCode = false;
 
                 if (cntl.includes("CostCode")) {
                     applyFilterRulesForCostCode = true;
+                   // SEL.AutoComplete.minLength = 1;
+                }
+                else {
+                //    SEL.AutoComplete.minLength = 3;
                 }
                        
                 if (applyFilterRulesForCostCode) {
@@ -167,7 +171,7 @@
                                     }
                                 });
                             },
-                            minLength : 3,
+                            minLength: cntl.includes("CostCode") ? 1 : 3,
                             delay : msDelay,
                             select: function (event, ui)
                             {
@@ -282,21 +286,12 @@
                                 }
                     });
 
-                    $('input.costcode-autocomplete').focus(function () {
+                    $('input.costcode-autocomplete, input.costcodeDescription-autocomplete').focus(function () {
 
                         if (!$(this).val()) {
                             $(this).autocomplete("search", "%%%");
                         }
-                    }
-                    );
-                    $('input.costcodeDescription-autocomplete').focus(function () {
-
-                        if (!$(this).val()) {
-                            $(this).autocomplete("search", "%%%");
-                        }
-                    }
-
-                    );
+                    });
                 });
             },
 

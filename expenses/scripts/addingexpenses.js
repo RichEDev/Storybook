@@ -1387,6 +1387,13 @@ function padInteger(num) {
     return s.substr(s.length - 2);
 }
 
+function rich(element) {
+    if (!$(element).val()) {
+        $(element).autocomplete("search", "%%%");
+    }
+}
+
+
 
 function popChildDropDowns(parCtlName, type, filterid, parCtlIndex, accountid) {
     parddlst = document.getElementById(contentID + parCtlName)
