@@ -24,8 +24,12 @@
                 var applyFilterRulesForCostCode = false;
 
                 if (cntl.includes("txtCostCode")) {
-                    applyFilterRulesForCostCode = true;             
-                }             
+                    applyFilterRulesForCostCode = true;
+                   // SEL.AutoComplete.minLength = 1;
+                }
+                else {
+                //    SEL.AutoComplete.minLength = 3;
+                }
                        
                 if (applyFilterRulesForCostCode) {
 
@@ -167,7 +171,7 @@
                                     }
                                 });
                             },
-                            minLength : 3,
+                            minLength: 3,
                             delay : msDelay,
                             select: function (event, ui)
                             {
@@ -281,6 +285,8 @@
                                     }
                                 }
                     });
+
+
 
                     $('input.costcode-autocomplete, input.costcodeDescription-autocomplete').focus(function () {
 
