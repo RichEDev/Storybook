@@ -275,11 +275,10 @@
 
                         if (e.keyCode == 8 || e.keyCode == 46) {
 
-                            //check if the last char is being deleted
                             if (!$(this).val()) {
                                 $(this).autocomplete("search", "%%%");
                             }
-                        }
+                        }                                
                     });
                 });
             },
