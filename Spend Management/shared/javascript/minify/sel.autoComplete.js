@@ -20,13 +20,13 @@
                 triggerParameter.BindtriggerFields = triggerFields;
                 SEL.AutoCompleteCombo.AutoCompleteDropdownBindParameterList.BindMatchParameterList.push(triggerParameter);
                 SEL.AutoComplete.Bind.childFilterList = childFilterList;
-
+             
                 var applyFilterRulesForCostCode = false;
 
-                if (cntl.includes("CostCode")) {
+                if (cntl.includes("txtCostCode")) {
                     applyFilterRulesForCostCode = true;
                 }
-                       
+
                 if (applyFilterRulesForCostCode) {
 
                     //check if filter rule already exists in array
@@ -282,22 +282,24 @@
                                 }
                     });
 
-                    $('input.costcode-autocomplete').focus(function () {
+                    $('input.costcode-autocomplete, input.costcodeDescription-autocomplete').focus(function () {
+
+                        $(this).autocomplete("option", "minLength", 1);
 
                         if (!$(this).val()) {
                             $(this).autocomplete("search", "%%%");
                         }
-                    }
-                    );
-                    $('input.costcodeDescription-autocomplete').focus(function () {
-
-                        if (!$(this).val()) {
-                            $(this).autocomplete("search", "%%%");
-                        }
-                    }
-
-                    );
+                    });
                 });
+            },
+
+            SetCostCodeAutoCompleteOptions: function (element) {
+
+                $(element).autocomplete("option", "minLength", 1);
+
+                if (!$(element).val()) {
+                    $(element).autocomplete("search", "%%%");
+                }
             },
 
             TriggerFields:
@@ -811,7 +813,8 @@
                             var labelText = $(this).find('span.displayName').text();
 
                             $styledSelect.text(SEL.AutoCompleteCombo.Ellipsis(labelText, 25)).attr('title', labelText);
-                            
+
+                            $styledSelect.text($(this).find('span.displayName').text());
                             $this.val($(this).attr("value"));
                             $list.hide();
                             var referenceId = $this.prop("id");
@@ -848,15 +851,13 @@
 
                     });
             },
-            Ellipsis: function (str, len)
-            {
+            Ellipsis: function (str, len) {
                 if (len === undefined || len === null) {
                     len = 32;
                 }
                 if (str.length > len) {
                     return str.substring(0, len - 4) + '...';
                 }
-
                 return str;
             }
         }
