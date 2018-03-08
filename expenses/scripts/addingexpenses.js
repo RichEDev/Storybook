@@ -1462,7 +1462,7 @@ function getChildDropDownsComplete(data) {
 function popDropdown(ctlid, items) {
 
   
-    if (ctlid.includes("CostCode")) {
+    if (ctlid.indexOf("CostCode") !== -1) {
 
         var control = contentID + ctlid;
 
