@@ -1,0 +1,1207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://www.checkmydrivinglicence.com/quickcheckapi" elementFormDefault="qualified" targetNamespace="http://www.checkmydrivinglicence.com/quickcheckapi" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://secureapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" />
+  <xs:import schemaLocation="https://secureapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="https://secureapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:element name="DriverNumberBuild">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="firstname" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="middlename" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="surname" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dateOfBirth" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="sex" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="includeLicenceIssueNumberPart" type="xs:boolean" />
+        <xs:element minOccurs="0" name="defaultPartD" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DriverNumberBuildResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DriverNumberBuildResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DriverNumberRegEx">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DriverNumberRegExResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DriverNumberRegExResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GuidRegEx">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GuidRegExResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GuidRegExResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SimplePing">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="request" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SimplePingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="SimplePingResult" nillable="true" type="q1:StatusResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ValidateUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ValidateUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ValidateUserResult" nillable="true" type="q2:StatusResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckLicence">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="data" nillable="true" type="q3:CheckLicenceData" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="additionalData" nillable="true" type="q4:MandateAdditionalData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckLicenceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="CheckLicenceResult" nillable="true" type="q5:CheckResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLicenceData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="data" nillable="true" type="q6:GetLicenceData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLicenceDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GetLicenceDataResult" nillable="true" type="q7:CheckResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllDriverLicences">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+        <xs:element minOccurs="0" name="skip" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllDriverLicencesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GetAllDriverLicencesResult" nillable="true" type="q8:AllDriversLicencesReponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DriverLicenceCount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DriverLicenceCountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="DriverLicenceCountResult" nillable="true" type="q9:IntegerResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDriverCheckCount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverNumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDriverCheckCountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GetDriverCheckCountResult" nillable="true" type="q10:InformationResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCategoryRestrictionCodes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCategoryRestrictionCodesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GetCategoryRestrictionCodesResult" nillable="true" type="q11:CategoryRestrictionsCodesResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLicenceCategories">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLicenceCategoriesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GetLicenceCategoriesResult" nillable="true" type="q12:LicenceCategoriesResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEndorsementCodes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEndorsementCodesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GetEndorsementCodesResult" nillable="true" type="q13:EndorsementOffenceCodesResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLastLicenceCheckDate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLastLicenceCheckDateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GetLastLicenceCheckDateResult" nillable="true" type="q14:DateResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMessageCodes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMessageCodesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GetMessageCodesResult" nillable="true" type="q15:MessageCodeResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnEntitlementInformationFromCode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnEntitlementInformationFromCodeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReturnEntitlementInformationFromCodeResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnEntitlementDetailsFromCode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="directive" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnEntitlementDetailsFromCodeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReturnEntitlementDetailsFromCodeResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnLicenceEndorsementExplanation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnLicenceEndorsementExplanationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReturnLicenceEndorsementExplanationResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnLicence">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverNumber" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnLicenceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ReturnLicenceResult" nillable="true" type="q16:CheckResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnRevoked">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnRevokedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ReturnRevokedResult" nillable="true" type="q17:ArrayOfCheckResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnRiskLicences">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="type" type="q18:RiskType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnRiskLicencesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ReturnRiskLicencesResult" nillable="true" type="q19:ArrayOfCheckResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnDisqualifiedLicences">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnDisqualifiedLicencesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ReturnDisqualifiedLicencesResult" nillable="true" type="q20:ArrayOfCheckResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnLicenceAsJson">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="data" nillable="true" type="q21:CheckLicenceData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnLicenceAsJsonResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ReturnLicenceAsJsonResult" nillable="true" type="q22:SimpleResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnLicenceAsXml">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="data" nillable="true" type="q23:CheckLicenceData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnLicenceAsXmlResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ReturnLicenceAsXmlResult" nillable="true" type="q24:SimpleResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InvalidateAllConsent">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InvalidateAllConsentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="InvalidateAllConsentResult" nillable="true" type="q25:SimpleResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateMandate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="mandateDataRecord" nillable="true" type="q26:MandateDataRecord" />
+        <xs:element minOccurs="0" name="yourReference" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="store" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateMandateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GenerateMandateResult" nillable="true" type="q27:MandateCreateResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsValidMandateInForce">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsValidMandateInForceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="IsValidMandateInForceResult" nillable="true" type="q28:BooleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HasDriverGivenEConsent">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HasDriverGivenEConsentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="HasDriverGivenEConsentResult" nillable="true" type="q29:BooleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MandateExpiryDate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MandateExpiryDateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="MandateExpiryDateResult" nillable="true" type="q30:InformationResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InvalidateMandate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverNumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="mandateId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InvalidateMandateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="InvalidateMandateResult" nillable="true" type="q31:ActionResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsMandateApproved">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="mandateId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsMandateApprovedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="IsMandateApprovedResult" nillable="true" type="q32:BooleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllCompanyDrivers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllCompanyDriversResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="AllCompanyDriversResult" nillable="true" type="q33:DriverListResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateSystemDriver">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="data" nillable="true" type="q34:CreateDriverData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateSystemDriverResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="CreateSystemDriverResult" nillable="true" type="q35:DriverResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ArchiveStoredDriver">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ArchiveStoredDriverResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ArchiveStoredDriverResult" nillable="true" type="q36:BooleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ArchiveAccountCompany">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ArchiveAccountCompanyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ArchiveAccountCompanyResult" nillable="true" type="q37:BooleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateSystemDriverPartial">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="data" nillable="true" type="q38:CreateSystemDriverConsentData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateSystemDriverPartialResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="CreateSystemDriverPartialResult" nillable="true" type="q39:DriverEconsentResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RejectedMandates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RejectedMandatesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="RejectedMandatesResult" nillable="true" type="q40:RejectedMandatesResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AcknowledgeReceiptOfRejectedMandates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q41="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="mandateIds" nillable="true" type="q41:ArrayOflong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AcknowledgeReceiptOfRejectedMandatesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="AcknowledgeReceiptOfRejectedMandatesResult" nillable="true" type="q42:BooleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateStoredDriverDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="data" nillable="true" type="q43:CreateDriverData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateStoredDriverDetailsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="UpdateStoredDriverDetailsResult" nillable="true" type="q44:DriverResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllValidLicencesByApplicationReference">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="applicationReference" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllValidLicencesByApplicationReferenceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="AllValidLicencesByApplicationReferenceResult" nillable="true" type="q45:LicenceListResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestConsent">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="dataRecord" nillable="true" type="q46:EConsentDataRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestConsentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="RequestConsentResult" nillable="true" type="q47:EConsentResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendConsentPin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q48="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="consentReference" type="q48:guid" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendConsentPinResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="SendConsentPinResult" nillable="true" type="q49:SmsPinResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendConsentPinWithMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q50="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="consentReference" type="q50:guid" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendConsentPinWithMessageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="SendConsentPinWithMessageResult" nillable="true" type="q51:SmsPinResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ValidateConsentPin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q52="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="consentReference" type="q52:guid" />
+        <xs:element minOccurs="0" name="pin" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ValidateConsentPinResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ValidateConsentPinResult" nillable="true" type="q53:PinValidationResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateConsentEmailSentDate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q54="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="consentReference" type="q54:guid" />
+        <xs:element minOccurs="0" name="sentDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateConsentEmailSentDateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="UpdateConsentEmailSentDateResult" nillable="true" type="q55:SimpleResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateConsentDriverResponsedDate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q56="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="consentReference" type="q56:guid" />
+        <xs:element minOccurs="0" name="sentDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateConsentDriverResponsedDateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="UpdateConsentDriverResponsedDateResult" nillable="true" type="q57:SimpleResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MarkConsentGranted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q58="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="consentReference" type="q58:guid" />
+        <xs:element minOccurs="0" name="sentDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+        <xs:element minOccurs="0" name="includeCPC" type="xs:boolean" />
+        <xs:element minOccurs="0" name="includeTacho" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MarkConsentGrantedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q59="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="MarkConsentGrantedResult" nillable="true" type="q59:SimpleResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MarkTachoOrCPCConsentGiven">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q60="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="data" nillable="true" type="q60:AdditionalConsentRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MarkTachoOrCPCConsentGivenResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q61="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="MarkTachoOrCPCConsentGivenResult" nillable="true" type="q61:SimpleResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateConsentMismatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q62="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="consentReference" type="q62:guid" />
+        <xs:element xmlns:q63="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="updateRecord" nillable="true" type="q63:UpdateMismatchRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateConsentMismatchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="UpdateConsentMismatchResult" nillable="true" type="q64:BooleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetConsentExpiryDate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q65="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="consentReference" type="q65:guid" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetConsentExpiryDateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GetConsentExpiryDateResult" nillable="true" type="q66:DateResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetResponseExpiryDate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q67="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="consentReference" type="q67:guid" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetResponseExpiryDateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q68="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GetResponseExpiryDateResult" nillable="true" type="q68:DateResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateDatePinValidated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q69="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="consentReference" type="q69:guid" />
+        <xs:element minOccurs="0" name="validatedDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateDatePinValidatedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q70="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="UpdateDatePinValidatedResult" nillable="true" type="q70:SimpleResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ValidateEConsentPersonalDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q71="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="data" nillable="true" type="q71:ValidateEConsentPersonalDetailsData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ValidateEConsentPersonalDetailsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q72="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ValidateEConsentPersonalDetailsResult" nillable="true" type="q72:ValidateEConsentPersonalDetailsResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InvalidateConsent">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q73="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="consentReference" type="q73:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InvalidateConsentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q74="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="InvalidateConsentResult" nillable="true" type="q74:SimpleResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HasDriverOptedOutOfEConsent">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HasDriverOptedOutOfEConsentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q75="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="HasDriverOptedOutOfEConsentResult" nillable="true" type="q75:OptedOutConsentResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAvailableCredits">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAvailableCreditsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q76="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GetAvailableCreditsResult" nillable="true" type="q76:InformationResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCreditUsage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCreditUsageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q77="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="GetCreditUsageResult" nillable="true" type="q77:CreditUsageResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllValidLicences">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="skip" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllValidLicencesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q78="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="AllValidLicencesResult" nillable="true" type="q78:LicenceListResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllValidLicencesCount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllValidLicencesCountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q79="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="AllValidLicencesCountResult" nillable="true" type="q79:InformationResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllValidLicencesBetweenDates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllValidLicencesBetweenDatesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q80="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="AllValidLicencesBetweenDatesResult" nillable="true" type="q80:LicenceListResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllAccountCompanyCodes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllAccountCompanyCodesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q81="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="AllAccountCompanyCodesResult" nillable="true" type="q81:AccountsListResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllValidLicencesByReference">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="applicationRef" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="skip" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllValidLicencesByReferenceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q82="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="AllValidLicencesByReferenceResult" nillable="true" type="q82:LicenceListResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LicenceChangeHistories">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+        <xs:element xmlns:q83="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="licenceIds" nillable="true" type="q83:ArrayOflong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LicenceChangeHistoriesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q84="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="LicenceChangeHistoriesResult" nillable="true" type="q84:ChangeHistoryResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestVehicleLookup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="registration" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestVehicleLookupResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q85="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="RequestVehicleLookupResult" nillable="true" type="q85:VehicleDataResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemainingVehicleLookUpCredits">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemainingVehicleLookUpCreditsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q86="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="RemainingVehicleLookUpCreditsResult" nillable="true" type="q86:ValueResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransferCreditsToCompanyCode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="fromCompanyCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="toCompanyCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="amount" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransferCreditsToCompanyCodeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q87="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="TransferCreditsToCompanyCodeResult" nillable="true" type="q87:TransferResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateNewCompany">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q88="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="data" nillable="true" type="q88:CreateCompanyData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateNewCompanyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q89="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="CreateNewCompanyResult" nillable="true" type="q89:CompanyResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateExistingCompany">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q90="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="data" nillable="true" type="q90:UpdateCompanyData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateExistingCompanyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q91="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="UpdateExistingCompanyResult" nillable="true" type="q91:CompanyResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestSmsService">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="mobile" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestSmsServiceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q92="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="TestSmsServiceResult" nillable="true" type="q92:SimpleResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestCircuit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="value" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestCircuitResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q93="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="TestCircuitResult" nillable="true" type="q93:SystemResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AccountCompanyList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AccountCompanyListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q94="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="AccountCompanyListResult" nillable="true" type="q94:ListResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InvalidateEConsentBySecurityCode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element xmlns:q95="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="securityCode" type="q95:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InvalidateEConsentBySecurityCodeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q96="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="InvalidateEConsentBySecurityCodeResult" nillable="true" type="q96:BooleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnLicenceDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnLicenceDetailsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q97="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ReturnLicenceDetailsResult" nillable="true" type="q97:LicenceDetailsResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnDriverRisk">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="driverId" type="xs:long" />
+        <xs:element minOccurs="0" name="overrideData" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReturnDriverRiskResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q98="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" minOccurs="0" name="ReturnDriverRiskResult" nillable="true" type="q98:DriverRiskResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

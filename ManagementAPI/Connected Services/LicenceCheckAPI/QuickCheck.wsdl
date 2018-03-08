@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://www.checkmydrivinglicence.com/quickcheckapi" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.checkmydrivinglicence.com/quickcheckapi" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.checkmydrivinglicence.com/quickcheckapi/Imports">
+      <xsd:import schemaLocation="https://secureapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd0" namespace="http://www.checkmydrivinglicence.com/quickcheckapi" />
+      <xsd:import schemaLocation="https://secureapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://secureapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI.Classes" />
+      <xsd:import schemaLocation="https://secureapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="https://secureapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/wcfQuickCheckAPI" />
+      <xsd:import schemaLocation="https://secureapi.licencecheck.co.uk/QuickCheck.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/RiskAndLicenceManager.SupportClasses" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IQuickCheck_DriverNumberBuild_InputMessage">
+    <wsdl:part name="parameters" element="tns:DriverNumberBuild" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_DriverNumberBuild_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DriverNumberBuildResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_DriverNumberRegEx_InputMessage">
+    <wsdl:part name="parameters" element="tns:DriverNumberRegEx" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_DriverNumberRegEx_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DriverNumberRegExResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GuidRegEx_InputMessage">
+    <wsdl:part name="parameters" element="tns:GuidRegEx" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GuidRegEx_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GuidRegExResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_SimplePing_InputMessage">
+    <wsdl:part name="parameters" element="tns:SimplePing" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_SimplePing_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SimplePingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ValidateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateUser" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ValidateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_CheckLicence_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLicence" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_CheckLicence_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLicenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetLicenceData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLicenceData" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetLicenceData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLicenceDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetAllDriverLicences_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllDriverLicences" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetAllDriverLicences_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllDriverLicencesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_DriverLicenceCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:DriverLicenceCount" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_DriverLicenceCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DriverLicenceCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetDriverCheckCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDriverCheckCount" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetDriverCheckCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDriverCheckCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetCategoryRestrictionCodes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategoryRestrictionCodes" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetCategoryRestrictionCodes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategoryRestrictionCodesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetLicenceCategories_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLicenceCategories" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetLicenceCategories_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLicenceCategoriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetEndorsementCodes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEndorsementCodes" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetEndorsementCodes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEndorsementCodesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetLastLicenceCheckDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLastLicenceCheckDate" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetLastLicenceCheckDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLastLicenceCheckDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetMessageCodes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMessageCodes" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetMessageCodes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMessageCodesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnEntitlementInformationFromCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnEntitlementInformationFromCode" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnEntitlementInformationFromCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnEntitlementInformationFromCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnEntitlementDetailsFromCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnEntitlementDetailsFromCode" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnEntitlementDetailsFromCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnEntitlementDetailsFromCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnLicenceEndorsementExplanation_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnLicenceEndorsementExplanation" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnLicenceEndorsementExplanation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnLicenceEndorsementExplanationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnLicence_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnLicence" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnLicence_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnLicenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnRevoked_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnRevoked" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnRevoked_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnRevokedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnRiskLicences_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnRiskLicences" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnRiskLicences_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnRiskLicencesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnDisqualifiedLicences_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnDisqualifiedLicences" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnDisqualifiedLicences_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnDisqualifiedLicencesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnLicenceAsJson_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnLicenceAsJson" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnLicenceAsJson_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnLicenceAsJsonResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnLicenceAsXml_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnLicenceAsXml" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnLicenceAsXml_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnLicenceAsXmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_InvalidateAllConsent_InputMessage">
+    <wsdl:part name="parameters" element="tns:InvalidateAllConsent" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_InvalidateAllConsent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InvalidateAllConsentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GenerateMandate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateMandate" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GenerateMandate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateMandateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_IsValidMandateInForce_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsValidMandateInForce" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_IsValidMandateInForce_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsValidMandateInForceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_HasDriverGivenEConsent_InputMessage">
+    <wsdl:part name="parameters" element="tns:HasDriverGivenEConsent" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_HasDriverGivenEConsent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HasDriverGivenEConsentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_MandateExpiryDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:MandateExpiryDate" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_MandateExpiryDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MandateExpiryDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_InvalidateMandate_InputMessage">
+    <wsdl:part name="parameters" element="tns:InvalidateMandate" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_InvalidateMandate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InvalidateMandateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_IsMandateApproved_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsMandateApproved" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_IsMandateApproved_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsMandateApprovedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllCompanyDrivers_InputMessage">
+    <wsdl:part name="parameters" element="tns:AllCompanyDrivers" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllCompanyDrivers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AllCompanyDriversResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_CreateSystemDriver_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateSystemDriver" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_CreateSystemDriver_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateSystemDriverResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ArchiveStoredDriver_InputMessage">
+    <wsdl:part name="parameters" element="tns:ArchiveStoredDriver" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ArchiveStoredDriver_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ArchiveStoredDriverResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ArchiveAccountCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:ArchiveAccountCompany" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ArchiveAccountCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ArchiveAccountCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_CreateSystemDriverPartial_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateSystemDriverPartial" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_CreateSystemDriverPartial_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateSystemDriverPartialResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_RejectedMandates_InputMessage">
+    <wsdl:part name="parameters" element="tns:RejectedMandates" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_RejectedMandates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RejectedMandatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AcknowledgeReceiptOfRejectedMandates_InputMessage">
+    <wsdl:part name="parameters" element="tns:AcknowledgeReceiptOfRejectedMandates" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AcknowledgeReceiptOfRejectedMandates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AcknowledgeReceiptOfRejectedMandatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_UpdateStoredDriverDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateStoredDriverDetails" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_UpdateStoredDriverDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateStoredDriverDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllValidLicencesByApplicationReference_InputMessage">
+    <wsdl:part name="parameters" element="tns:AllValidLicencesByApplicationReference" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllValidLicencesByApplicationReference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AllValidLicencesByApplicationReferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_RequestConsent_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestConsent" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_RequestConsent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestConsentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_SendConsentPin_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendConsentPin" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_SendConsentPin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendConsentPinResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_SendConsentPinWithMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendConsentPinWithMessage" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_SendConsentPinWithMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendConsentPinWithMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ValidateConsentPin_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateConsentPin" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ValidateConsentPin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateConsentPinResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_UpdateConsentEmailSentDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateConsentEmailSentDate" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_UpdateConsentEmailSentDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateConsentEmailSentDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_UpdateConsentDriverResponsedDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateConsentDriverResponsedDate" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_UpdateConsentDriverResponsedDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateConsentDriverResponsedDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_MarkConsentGranted_InputMessage">
+    <wsdl:part name="parameters" element="tns:MarkConsentGranted" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_MarkConsentGranted_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MarkConsentGrantedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_MarkTachoOrCPCConsentGiven_InputMessage">
+    <wsdl:part name="parameters" element="tns:MarkTachoOrCPCConsentGiven" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_MarkTachoOrCPCConsentGiven_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MarkTachoOrCPCConsentGivenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_UpdateConsentMismatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateConsentMismatch" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_UpdateConsentMismatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateConsentMismatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetConsentExpiryDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetConsentExpiryDate" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetConsentExpiryDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetConsentExpiryDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetResponseExpiryDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetResponseExpiryDate" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetResponseExpiryDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetResponseExpiryDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_UpdateDatePinValidated_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateDatePinValidated" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_UpdateDatePinValidated_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateDatePinValidatedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ValidateEConsentPersonalDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateEConsentPersonalDetails" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ValidateEConsentPersonalDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateEConsentPersonalDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_InvalidateConsent_InputMessage">
+    <wsdl:part name="parameters" element="tns:InvalidateConsent" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_InvalidateConsent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InvalidateConsentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_HasDriverOptedOutOfEConsent_InputMessage">
+    <wsdl:part name="parameters" element="tns:HasDriverOptedOutOfEConsent" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_HasDriverOptedOutOfEConsent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HasDriverOptedOutOfEConsentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetAvailableCredits_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvailableCredits" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetAvailableCredits_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvailableCreditsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetCreditUsage_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCreditUsage" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_GetCreditUsage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCreditUsageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllValidLicences_InputMessage">
+    <wsdl:part name="parameters" element="tns:AllValidLicences" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllValidLicences_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AllValidLicencesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllValidLicencesCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:AllValidLicencesCount" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllValidLicencesCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AllValidLicencesCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllValidLicencesBetweenDates_InputMessage">
+    <wsdl:part name="parameters" element="tns:AllValidLicencesBetweenDates" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllValidLicencesBetweenDates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AllValidLicencesBetweenDatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllAccountCompanyCodes_InputMessage">
+    <wsdl:part name="parameters" element="tns:AllAccountCompanyCodes" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllAccountCompanyCodes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AllAccountCompanyCodesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllValidLicencesByReference_InputMessage">
+    <wsdl:part name="parameters" element="tns:AllValidLicencesByReference" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AllValidLicencesByReference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AllValidLicencesByReferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_LicenceChangeHistories_InputMessage">
+    <wsdl:part name="parameters" element="tns:LicenceChangeHistories" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_LicenceChangeHistories_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LicenceChangeHistoriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_RequestVehicleLookup_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestVehicleLookup" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_RequestVehicleLookup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestVehicleLookupResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_RemainingVehicleLookUpCredits_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemainingVehicleLookUpCredits" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_RemainingVehicleLookUpCredits_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemainingVehicleLookUpCreditsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_TransferCreditsToCompanyCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:TransferCreditsToCompanyCode" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_TransferCreditsToCompanyCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TransferCreditsToCompanyCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_CreateNewCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNewCompany" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_CreateNewCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNewCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_UpdateExistingCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateExistingCompany" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_UpdateExistingCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateExistingCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_TestSmsService_InputMessage">
+    <wsdl:part name="parameters" element="tns:TestSmsService" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_TestSmsService_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestSmsServiceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_TestCircuit_InputMessage">
+    <wsdl:part name="parameters" element="tns:TestCircuit" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_TestCircuit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestCircuitResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AccountCompanyList_InputMessage">
+    <wsdl:part name="parameters" element="tns:AccountCompanyList" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_AccountCompanyList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AccountCompanyListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_InvalidateEConsentBySecurityCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:InvalidateEConsentBySecurityCode" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_InvalidateEConsentBySecurityCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InvalidateEConsentBySecurityCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnLicenceDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnLicenceDetails" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnLicenceDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnLicenceDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnDriverRisk_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnDriverRisk" />
+  </wsdl:message>
+  <wsdl:message name="IQuickCheck_ReturnDriverRisk_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnDriverRiskResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IQuickCheck">
+    <wsdl:operation name="DriverNumberBuild">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/DriverNumberBuild" message="tns:IQuickCheck_DriverNumberBuild_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/DriverNumberBuildResponse" message="tns:IQuickCheck_DriverNumberBuild_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DriverNumberRegEx">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/DriverNumberRegEx" message="tns:IQuickCheck_DriverNumberRegEx_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/DriverNumberRegExResponse" message="tns:IQuickCheck_DriverNumberRegEx_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GuidRegEx">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GuidRegEx" message="tns:IQuickCheck_GuidRegEx_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GuidRegExResponse" message="tns:IQuickCheck_GuidRegEx_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SimplePing">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/SimplePing" message="tns:IQuickCheck_SimplePing_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/SimplePingResponse" message="tns:IQuickCheck_SimplePing_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ValidateUser" message="tns:IQuickCheck_ValidateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ValidateUserResponse" message="tns:IQuickCheck_ValidateUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckLicence">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/CheckLicence" message="tns:IQuickCheck_CheckLicence_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/CheckLicenceResponse" message="tns:IQuickCheck_CheckLicence_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLicenceData">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetLicenceData" message="tns:IQuickCheck_GetLicenceData_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetLicenceDataResponse" message="tns:IQuickCheck_GetLicenceData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllDriverLicences">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetAllDriverLicences" message="tns:IQuickCheck_GetAllDriverLicences_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetAllDriverLicencesResponse" message="tns:IQuickCheck_GetAllDriverLicences_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DriverLicenceCount">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/DriverLicenceCount" message="tns:IQuickCheck_DriverLicenceCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/DriverLicenceCountResponse" message="tns:IQuickCheck_DriverLicenceCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDriverCheckCount">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetDriverCheckCount" message="tns:IQuickCheck_GetDriverCheckCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetDriverCheckCountResponse" message="tns:IQuickCheck_GetDriverCheckCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCategoryRestrictionCodes">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetCategoryRestrictionCodes" message="tns:IQuickCheck_GetCategoryRestrictionCodes_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetCategoryRestrictionCodesResponse" message="tns:IQuickCheck_GetCategoryRestrictionCodes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLicenceCategories">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetLicenceCategories" message="tns:IQuickCheck_GetLicenceCategories_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetLicenceCategoriesResponse" message="tns:IQuickCheck_GetLicenceCategories_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEndorsementCodes">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetEndorsementCodes" message="tns:IQuickCheck_GetEndorsementCodes_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetEndorsementCodesResponse" message="tns:IQuickCheck_GetEndorsementCodes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastLicenceCheckDate">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetLastLicenceCheckDate" message="tns:IQuickCheck_GetLastLicenceCheckDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetLastLicenceCheckDateResponse" message="tns:IQuickCheck_GetLastLicenceCheckDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessageCodes">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetMessageCodes" message="tns:IQuickCheck_GetMessageCodes_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetMessageCodesResponse" message="tns:IQuickCheck_GetMessageCodes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnEntitlementInformationFromCode">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnEntitlementInformationFromCode" message="tns:IQuickCheck_ReturnEntitlementInformationFromCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnEntitlementInformationFromCodeResponse" message="tns:IQuickCheck_ReturnEntitlementInformationFromCode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnEntitlementDetailsFromCode">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnEntitlementDetailsFromCode" message="tns:IQuickCheck_ReturnEntitlementDetailsFromCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnEntitlementDetailsFromCodeResponse" message="tns:IQuickCheck_ReturnEntitlementDetailsFromCode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLicenceEndorsementExplanation">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceEndorsementExplanation" message="tns:IQuickCheck_ReturnLicenceEndorsementExplanation_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceEndorsementExplanationResponse" message="tns:IQuickCheck_ReturnLicenceEndorsementExplanation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLicence">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicence" message="tns:IQuickCheck_ReturnLicence_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceResponse" message="tns:IQuickCheck_ReturnLicence_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnRevoked">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnRevoked" message="tns:IQuickCheck_ReturnRevoked_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnRevokedResponse" message="tns:IQuickCheck_ReturnRevoked_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnRiskLicences">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnRiskLicences" message="tns:IQuickCheck_ReturnRiskLicences_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnRiskLicencesResponse" message="tns:IQuickCheck_ReturnRiskLicences_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnDisqualifiedLicences">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnDisqualifiedLicences" message="tns:IQuickCheck_ReturnDisqualifiedLicences_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnDisqualifiedLicencesResponse" message="tns:IQuickCheck_ReturnDisqualifiedLicences_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLicenceAsJson">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceAsJson" message="tns:IQuickCheck_ReturnLicenceAsJson_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceAsJsonResponse" message="tns:IQuickCheck_ReturnLicenceAsJson_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLicenceAsXml">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceAsXml" message="tns:IQuickCheck_ReturnLicenceAsXml_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceAsXmlResponse" message="tns:IQuickCheck_ReturnLicenceAsXml_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InvalidateAllConsent">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/InvalidateAllConsent" message="tns:IQuickCheck_InvalidateAllConsent_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/InvalidateAllConsentResponse" message="tns:IQuickCheck_InvalidateAllConsent_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateMandate">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GenerateMandate" message="tns:IQuickCheck_GenerateMandate_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GenerateMandateResponse" message="tns:IQuickCheck_GenerateMandate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsValidMandateInForce">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/IsValidMandateInForce" message="tns:IQuickCheck_IsValidMandateInForce_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/IsValidMandateInForceResponse" message="tns:IQuickCheck_IsValidMandateInForce_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="HasDriverGivenEConsent">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/HasDriverGivenEConsent" message="tns:IQuickCheck_HasDriverGivenEConsent_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/HasDriverGivenEConsentResponse" message="tns:IQuickCheck_HasDriverGivenEConsent_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MandateExpiryDate">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/MandateExpiryDate" message="tns:IQuickCheck_MandateExpiryDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/MandateExpiryDateResponse" message="tns:IQuickCheck_MandateExpiryDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InvalidateMandate">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/InvalidateMandate" message="tns:IQuickCheck_InvalidateMandate_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/InvalidateMandateResponse" message="tns:IQuickCheck_InvalidateMandate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsMandateApproved">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/IsMandateApproved" message="tns:IQuickCheck_IsMandateApproved_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/IsMandateApprovedResponse" message="tns:IQuickCheck_IsMandateApproved_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AllCompanyDrivers">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllCompanyDrivers" message="tns:IQuickCheck_AllCompanyDrivers_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllCompanyDriversResponse" message="tns:IQuickCheck_AllCompanyDrivers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateSystemDriver">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/CreateSystemDriver" message="tns:IQuickCheck_CreateSystemDriver_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/CreateSystemDriverResponse" message="tns:IQuickCheck_CreateSystemDriver_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ArchiveStoredDriver">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ArchiveStoredDriver" message="tns:IQuickCheck_ArchiveStoredDriver_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ArchiveStoredDriverResponse" message="tns:IQuickCheck_ArchiveStoredDriver_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ArchiveAccountCompany">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ArchiveAccountCompany" message="tns:IQuickCheck_ArchiveAccountCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ArchiveAccountCompanyResponse" message="tns:IQuickCheck_ArchiveAccountCompany_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateSystemDriverPartial">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/CreateSystemDriverPartial" message="tns:IQuickCheck_CreateSystemDriverPartial_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/CreateSystemDriverPartialResponse" message="tns:IQuickCheck_CreateSystemDriverPartial_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RejectedMandates">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/RejectedMandates" message="tns:IQuickCheck_RejectedMandates_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/RejectedMandatesResponse" message="tns:IQuickCheck_RejectedMandates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AcknowledgeReceiptOfRejectedMandates">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AcknowledgeReceiptOfRejectedMandates" message="tns:IQuickCheck_AcknowledgeReceiptOfRejectedMandates_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AcknowledgeReceiptOfRejectedMandatesResponse" message="tns:IQuickCheck_AcknowledgeReceiptOfRejectedMandates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateStoredDriverDetails">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateStoredDriverDetails" message="tns:IQuickCheck_UpdateStoredDriverDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateStoredDriverDetailsResponse" message="tns:IQuickCheck_UpdateStoredDriverDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AllValidLicencesByApplicationReference">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicencesByApplicationReference" message="tns:IQuickCheck_AllValidLicencesByApplicationReference_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicencesByApplicationReferenceResponse" message="tns:IQuickCheck_AllValidLicencesByApplicationReference_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestConsent">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/RequestConsent" message="tns:IQuickCheck_RequestConsent_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/RequestConsentResponse" message="tns:IQuickCheck_RequestConsent_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendConsentPin">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/SendConsentPin" message="tns:IQuickCheck_SendConsentPin_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/SendConsentPinResponse" message="tns:IQuickCheck_SendConsentPin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendConsentPinWithMessage">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/SendConsentPinWithMessage" message="tns:IQuickCheck_SendConsentPinWithMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/SendConsentPinWithMessageResponse" message="tns:IQuickCheck_SendConsentPinWithMessage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateConsentPin">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ValidateConsentPin" message="tns:IQuickCheck_ValidateConsentPin_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ValidateConsentPinResponse" message="tns:IQuickCheck_ValidateConsentPin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateConsentEmailSentDate">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateConsentEmailSentDate" message="tns:IQuickCheck_UpdateConsentEmailSentDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateConsentEmailSentDateResponse" message="tns:IQuickCheck_UpdateConsentEmailSentDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateConsentDriverResponsedDate">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateConsentDriverResponsedDate" message="tns:IQuickCheck_UpdateConsentDriverResponsedDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateConsentDriverResponsedDateResponse" message="tns:IQuickCheck_UpdateConsentDriverResponsedDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MarkConsentGranted">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/MarkConsentGranted" message="tns:IQuickCheck_MarkConsentGranted_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/MarkConsentGrantedResponse" message="tns:IQuickCheck_MarkConsentGranted_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MarkTachoOrCPCConsentGiven">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/MarkTachoOrCPCConsentGiven" message="tns:IQuickCheck_MarkTachoOrCPCConsentGiven_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/MarkTachoOrCPCConsentGivenResponse" message="tns:IQuickCheck_MarkTachoOrCPCConsentGiven_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateConsentMismatch">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateConsentMismatch" message="tns:IQuickCheck_UpdateConsentMismatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateConsentMismatchResponse" message="tns:IQuickCheck_UpdateConsentMismatch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConsentExpiryDate">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetConsentExpiryDate" message="tns:IQuickCheck_GetConsentExpiryDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetConsentExpiryDateResponse" message="tns:IQuickCheck_GetConsentExpiryDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResponseExpiryDate">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetResponseExpiryDate" message="tns:IQuickCheck_GetResponseExpiryDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetResponseExpiryDateResponse" message="tns:IQuickCheck_GetResponseExpiryDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDatePinValidated">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateDatePinValidated" message="tns:IQuickCheck_UpdateDatePinValidated_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateDatePinValidatedResponse" message="tns:IQuickCheck_UpdateDatePinValidated_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateEConsentPersonalDetails">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ValidateEConsentPersonalDetails" message="tns:IQuickCheck_ValidateEConsentPersonalDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ValidateEConsentPersonalDetailsResponse" message="tns:IQuickCheck_ValidateEConsentPersonalDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InvalidateConsent">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/InvalidateConsent" message="tns:IQuickCheck_InvalidateConsent_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/InvalidateConsentResponse" message="tns:IQuickCheck_InvalidateConsent_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="HasDriverOptedOutOfEConsent">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/HasDriverOptedOutOfEConsent" message="tns:IQuickCheck_HasDriverOptedOutOfEConsent_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/HasDriverOptedOutOfEConsentResponse" message="tns:IQuickCheck_HasDriverOptedOutOfEConsent_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableCredits">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetAvailableCredits" message="tns:IQuickCheck_GetAvailableCredits_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetAvailableCreditsResponse" message="tns:IQuickCheck_GetAvailableCredits_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCreditUsage">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetCreditUsage" message="tns:IQuickCheck_GetCreditUsage_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/GetCreditUsageResponse" message="tns:IQuickCheck_GetCreditUsage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AllValidLicences">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicences" message="tns:IQuickCheck_AllValidLicences_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicencesResponse" message="tns:IQuickCheck_AllValidLicences_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AllValidLicencesCount">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicencesCount" message="tns:IQuickCheck_AllValidLicencesCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicencesCountResponse" message="tns:IQuickCheck_AllValidLicencesCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AllValidLicencesBetweenDates">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicencesBetweenDates" message="tns:IQuickCheck_AllValidLicencesBetweenDates_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicencesBetweenDatesResponse" message="tns:IQuickCheck_AllValidLicencesBetweenDates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AllAccountCompanyCodes">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllAccountCompanyCodes" message="tns:IQuickCheck_AllAccountCompanyCodes_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllAccountCompanyCodesResponse" message="tns:IQuickCheck_AllAccountCompanyCodes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AllValidLicencesByReference">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicencesByReference" message="tns:IQuickCheck_AllValidLicencesByReference_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AllValidLicencesByReferenceResponse" message="tns:IQuickCheck_AllValidLicencesByReference_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LicenceChangeHistories">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/LicenceChangeHistories" message="tns:IQuickCheck_LicenceChangeHistories_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/LicenceChangeHistoriesResponse" message="tns:IQuickCheck_LicenceChangeHistories_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestVehicleLookup">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/RequestVehicleLookup" message="tns:IQuickCheck_RequestVehicleLookup_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/RequestVehicleLookupResponse" message="tns:IQuickCheck_RequestVehicleLookup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemainingVehicleLookUpCredits">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/RemainingVehicleLookUpCredits" message="tns:IQuickCheck_RemainingVehicleLookUpCredits_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/RemainingVehicleLookUpCreditsResponse" message="tns:IQuickCheck_RemainingVehicleLookUpCredits_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TransferCreditsToCompanyCode">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/TransferCreditsToCompanyCode" message="tns:IQuickCheck_TransferCreditsToCompanyCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/TransferCreditsToCompanyCodeResponse" message="tns:IQuickCheck_TransferCreditsToCompanyCode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewCompany">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/CreateNewCompany" message="tns:IQuickCheck_CreateNewCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/CreateNewCompanyResponse" message="tns:IQuickCheck_CreateNewCompany_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateExistingCompany">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateExistingCompany" message="tns:IQuickCheck_UpdateExistingCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/UpdateExistingCompanyResponse" message="tns:IQuickCheck_UpdateExistingCompany_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TestSmsService">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/TestSmsService" message="tns:IQuickCheck_TestSmsService_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/TestSmsServiceResponse" message="tns:IQuickCheck_TestSmsService_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TestCircuit">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/TestCircuit" message="tns:IQuickCheck_TestCircuit_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/TestCircuitResponse" message="tns:IQuickCheck_TestCircuit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AccountCompanyList">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AccountCompanyList" message="tns:IQuickCheck_AccountCompanyList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/AccountCompanyListResponse" message="tns:IQuickCheck_AccountCompanyList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InvalidateEConsentBySecurityCode">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/InvalidateEConsentBySecurityCode" message="tns:IQuickCheck_InvalidateEConsentBySecurityCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/InvalidateEConsentBySecurityCodeResponse" message="tns:IQuickCheck_InvalidateEConsentBySecurityCode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnLicenceDetails">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceDetails" message="tns:IQuickCheck_ReturnLicenceDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnLicenceDetailsResponse" message="tns:IQuickCheck_ReturnLicenceDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnDriverRisk">
+      <wsdl:input wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnDriverRisk" message="tns:IQuickCheck_ReturnDriverRisk_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.checkmydrivinglicence.com/quickcheckapi/IQuickCheck/ReturnDriverRiskResponse" message="tns:IQuickCheck_ReturnDriverRisk_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

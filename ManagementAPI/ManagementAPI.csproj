@@ -17,7 +17,7 @@
     <AssemblyName>ManagementAPI</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -31,6 +31,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -60,6 +61,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -67,6 +71,9 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -184,35 +191,196 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Attribute\InternalSelenityMethodAttribute.cs" />
     <Compile Include="Common\ApiErrorDetail.cs" />
     <Compile Include="Common\ApiException.cs" />
     <Compile Include="Common\Context.cs" />
     <Compile Include="Common\Enum\ApiStatusCode.cs" />
+    <Compile Include="Connected Services\LicenceCheckAPI\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
-    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\InfoMessageController.cs" />
+    <Compile Include="Controllers\LicenceCheckController.cs" />
+    <Compile Include="Enums\ProductEnum.cs" />
     <Compile Include="Factory\RepositoryFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Repositories\Employee\IEmployeeRepository.cs" />
+    <Compile Include="Enums\AddressLookupProviderEnum.cs" />
+    <Compile Include="Interface\Account\IAccount.cs" />
+    <Compile Include="Enums\LicenceTypeEnum.cs" />
+    <Compile Include="Interface\InformationMessage\IInformationMessage.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AccountApiResponse.cs" />
+    <Compile Include="Models\DatabaseHelper.cs" />
+    <Compile Include="Models\DatabaseServer.cs" />
+    <Compile Include="Filters\ExceptionFilter.cs" />
+    <Compile Include="Models\HostnameLicensedElementBundle.cs" />
+    <Compile Include="Models\Hostnames.cs" />
+    <Compile Include="Models\InformationMessage.cs" />
+    <Compile Include="Models\LicenceCheckForm.cs" />
+    <Compile Include="Models\LicensedElement.cs" />
+    <Compile Include="Models\Responses\Account\AccountResponse.cs" />
+    <Compile Include="Models\Responses\InformationMessage\InformationMessageResponse.cs" />
+    <Compile Include="Models\TextPlainErrorResult.cs" />
+    <Compile Include="Models\UnhandledExceptionHandler.cs" />
+    <Compile Include="Repositories\Accounts\AccountRepository.cs" />
+    <Compile Include="Repositories\Accounts\IAccountRepository.cs" />
     <Compile Include="Interface\IApiResponse.cs" />
-    <Compile Include="Employee\IEmployee.cs" />
     <Compile Include="Interface\IRepository.cs" />
-    <Compile Include="Employee\Employee.cs" />
     <Compile Include="Models\Responses\ApiResponse.cs" />
     <Compile Include="Common\ApiResponseInformation.cs" />
-    <Compile Include="Models\Responses\Employee\EmployeeResponse.cs" />
     <Compile Include="Interface\IResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
-    <Compile Include="Repositories\Employee\EmployeeRepository.cs" />
+    <Compile Include="Repositories\InfoMessage\IInfoMessageRepository.cs" />
+    <Compile Include="Repositories\InfoMessage\InfoMessageRepository.cs" />
+    <Compile Include="Repositories\LicenceCheck\LicenceCheckRepository.cs" />
+    <Compile Include="SecureData.cs" />
     <Compile Include="Utilities\IPValidator.cs" />
+    <Compile Include="ViewModels\AccountViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.AccountsListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.BooleanResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.CategoryRestrictionsCodesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.CheckResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.CompanyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.CreditUsageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.DateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.DriverEconsentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.DriverListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.DriverResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.EConsentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.EndorsementOffenceCodesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.InformationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.LicenceCategoriesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.LicenceDetailsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.LicenceListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.MessageCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.OptedOutConsentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.ReturnRiskLicencesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.SimpleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.StatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\LicenceCheckAPI\configuration91.svcinfo" />
+    <None Include="Connected Services\LicenceCheckAPI\configuration.svcinfo" />
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.ActionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.AllDriversLicencesReponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.ChangeHistoryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.DriverRiskResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.IntegerResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.ListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.MandateCreateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.PinValidationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.RejectedMandatesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.SmsPinResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.SystemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.TransferResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.ValidateEConsentPersonalDetailsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.ValueResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\LicenceCheckAPI\ManagementAPI.LicenceCheckAPI.VehicleDataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\LicenceCheckAPI\QuickCheck.wsdl" />
+    <None Include="Connected Services\LicenceCheckAPI\QuickCheck.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LicenceCheckAPI\QuickCheck1.wsdl" />
+    <None Include="Connected Services\LicenceCheckAPI\QuickCheck1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LicenceCheckAPI\QuickCheck2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LicenceCheckAPI\QuickCheck3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LicenceCheckAPI\QuickCheck4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LicenceCheckAPI\QuickCheck5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LicenceCheckAPI\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\LicenceCheckAPI\QuickCheck.disco" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -248,7 +416,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -265,7 +435,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Requests\" />
+    <Folder Include="Views\DatabaseAndAudit\" />
+    <Folder Include="Views\LicenceCheck\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -287,6 +458,12 @@
       <Project>{9bdaa543-ac54-47a1-8bdd-c7bf34f2f005}</Project>
       <Name>SpendManagementLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\LicenceCheckAPI\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -316,7 +493,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>41087</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:41087/</IISUrl>
+          <IISUrl>http://development.managementapi.localhost/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
