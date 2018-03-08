@@ -270,6 +270,18 @@
                             $(this).autocomplete("search", "%%%");
                         }
                     });
+
+                    $('input.costcode-autocomplete, input.costcodeDescription-autocomplete').keydown(function (e) {
+
+                        if (e.keyCode == 8 || e.keyCode == 46) {
+
+                            //check if the last char is being deleted
+                            if ($(this).val().length === 1) {
+                                $(this).val('');
+                                $(this).autocomplete("search", "%%%");
+                            }
+                        }                                
+                    });
                 });
             },
 
