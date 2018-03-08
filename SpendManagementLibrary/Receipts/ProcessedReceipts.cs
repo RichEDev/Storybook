@@ -115,6 +115,20 @@
         }
 
         /// <summary>
+        /// Set the wallet receipt status from In progress to new
+        /// </summary>
+        /// <param name="walletReceiptId">The id of the wallet receipt</param>
+        public void ResetReceipt(int walletReceiptId)
+        {
+            using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(this.AccountId)))
+            {
+                databaseConnection.AddWithValue("@WalletReceiptId ", walletReceiptId);
+                databaseConnection.ExecuteProc("ResetWalletReceipt");
+                databaseConnection.sqlexecute.Parameters.Clear();
+            }
+        }
+
+        /// <summary>
         /// Gets the receipt data from the cloud
         /// </summary>
         /// <param name="receiptId">The id of the receipt</param>

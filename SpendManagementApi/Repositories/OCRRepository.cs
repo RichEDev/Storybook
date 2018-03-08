@@ -26,9 +26,22 @@
         }
 
         /// <summary>
-        /// Get a <see cref="ApiProcessedReceipt"/>
+        /// Reset a <see cref="ApiProcessedReceipt" is in/>
         /// </summary>
         /// <param name="accountId">The id of the account the <see cref="ApiProcessedReceipt" is in/></param>
+        /// <param name="walletReceiptId">The wallet receipt in the <see cref="ApiProcessedReceipt"/></param>
+        /// <returns>Success of the posting of the data</returns>
+        public int Post(int accountId, int walletReceiptId)
+        {
+            var processedReceipts = new ProcessedReceipts(accountId);
+            processedReceipts.ResetReceipt(walletReceiptId);
+            return 0;
+        }
+
+        /// <summary>
+        /// Get a <see cref="ApiProcessedReceipt"/>
+        /// </summary>
+        /// <param name="accountId">The id of the account the <see cref="ApiProcessedReceipt"/> is in</param>
         /// <param name="walletReceiptId">The wallet receipt in the <see cref="ApiProcessedReceipt"/></param>
         /// <returns>A <see cref="ApiProcessedReceipt"/></returns>
         public ApiProcessedReceipt Get(int accountId, int walletReceiptId)

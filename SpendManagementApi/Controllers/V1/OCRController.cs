@@ -44,5 +44,20 @@
             response.Item = new OCRRepository().Post(processedReceipt);
             return response;
         }
+
+        /// <summary>
+        /// Put a wallet receipt back from in progress to new
+        /// </summary>
+        /// <param name="accountId">The id of the account you want to reset the receipt on</param>
+        /// <param name="walletReceiptId">The id of the receipt</param>
+        /// <returns>0 is successful</returns>
+        [HttpPost, Route("{accountId:int}/{walletReceiptId:int}")]
+        [InternalSelenityMethod, ApiExplorerSettings(IgnoreApi = true)]
+        public NumericResponse ResetWalletReceipt(int accountId, int walletReceiptId)
+        {
+            var response = this.InitialiseResponse<NumericResponse>();
+            response.Item = new OCRRepository().Post(accountId, walletReceiptId);
+            return response;
+        }
     }
 }

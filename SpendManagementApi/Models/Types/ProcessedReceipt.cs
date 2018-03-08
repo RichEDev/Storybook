@@ -58,6 +58,7 @@
         /// <returns>This, the API type.</returns>
         public ProcessedReceipt From(SpendManagementLibrary.Receipts.ProcessedReceipt original)
         {
+            this.AccountId = original.AccountId;
             this.WalletReceiptId = original.WalletReceiptId;
             this.FileExtension = original.FileExtension;
             this.ReceiptData = original.ReceiptData;
