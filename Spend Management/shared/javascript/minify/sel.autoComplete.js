@@ -21,7 +21,7 @@
 
                 var applyFilterRulesForCostCode = false;
 
-                if (cntl.includes("txtCostCode")) {
+                if (cntl.indexOf("txtCostCode") !== -1) {
                     applyFilterRulesForCostCode = true;
                 }
 
@@ -80,8 +80,21 @@
                                     }
 
                                     if (applyFilterRulesForCostCode) {
-                                        var item = SEL.filterRules.filter(x => x.id === this.element.context.id);
-                                        SEL.AutoComplete.Bind.childFilterList = item["0"].filter;
+
+                                        var item = null;
+                                     
+                                        for (var i = 0; i < SEL.filterRules.length; i++) {
+
+                                            if (SEL.filterRules[i].id === this.element.context.id) {
+                                                item = SEL.filterRules[i];
+                                            }
+                                        }
+
+                                        if (item !== null) {
+                                            SEL.AutoComplete.Bind.childFilterList = item.filter;
+                                        } else {
+                                            SEL.AutoComplete.Bind.childFilterList = null;
+                                        }                                      
                                     }
 
                                     else if (SEL.AutoComplete.Bind.childFilterList == undefined) {
