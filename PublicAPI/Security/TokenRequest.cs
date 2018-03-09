@@ -20,6 +20,11 @@
         public int AccountId;
 
         /// <summary>
+        /// Gets or sets the secret key used for logon
+        /// </summary>
+        public string SecretKey { get; set; }
+
+        /// <summary>
         /// The delegateId if the employee using the API is logged in as a delegate.
         /// </summary>
         public int? DelegateId;

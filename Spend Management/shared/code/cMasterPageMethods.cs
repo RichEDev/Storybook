@@ -500,7 +500,7 @@ namespace Spend_Management
             RestRequest request = new RestRequest("/Token", Method.POST) { RequestFormat = DataFormat.Json};
             var reqProperties = new cAccountSubAccounts(CurrentUser.AccountID).getFirstSubAccount().SubAccountProperties;
             var idleTimeout = reqProperties.IdleTimeout == 0 ? 5 : reqProperties.IdleTimeout * 60;
-            string json = $"\"accountId\":\"{this.CurrentUser.AccountID}\", \"employeeId\":\"{this.CurrentUser.EmployeeID}\", \"TimeoutMinutes\":\"{idleTimeout}\"";
+            string json = $"\"accountId\":\"{this.CurrentUser.AccountID}\", \"employeeId\":\"{this.CurrentUser.EmployeeID}\", \"TimeoutMinutes\":\"{idleTimeout}\", \"SecretKey\":\"{ConfigurationManager.AppSettings["PublicApiLogonSecret"]}\"";
 
             if (this.CurrentUser.isDelegate)
             {
@@ -517,6 +517,7 @@ namespace Spend_Management
             }
             
             string url = ConfigurationManager.AppSettings["PublicApiUrl"];
+
             return "<script type='text/javascript' language='javascript'>var publicApiUrl = '" + url + "'; var publicApiToken = '" + token + "';</script>";
         }
 
