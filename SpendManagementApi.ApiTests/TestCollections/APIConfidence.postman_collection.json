@@ -2146,7 +2146,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n\t\"AccountId\" : 262,\n\t\"EmployeeId\" : 53604,\n\t\"TimeoutMinutes\" : 100\n}"
+                  "raw": "{\n\t\"AccountId\" : 262,\n\t\"EmployeeId\" : 53604,\n\t\"SecretKey\" : \"sdsdJnNXplWE21312\"\n\t\"TimeoutMinutes\" : 100\n}"
                 },
                 "url": "{{PublicAPIUrl}}Token/",
                 "description": ""
