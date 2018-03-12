@@ -1,7 +1,7 @@
 {
 	"info": {
 		"name": "APIConfidence copy",
-		"_postman_id": "d0488c1d-9c5d-48d4-bb1e-5cda7e3ab168",
+		"_postman_id": "ad84eb12-b076-4edf-a967-743acb76064f",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -2610,7 +2610,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "8870a7b6-2255-4c2b-b5de-690ae8c0adc2",
+										"id": "d5869f04-b3e0-49b2-a69f-099268e89a69",
 										"type": "text/javascript",
 										"exec": [
 											"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -2634,6 +2634,7 @@
 											"};",
 											"",
 											"postman.setEnvironmentVariable(\"P11DCategoryId\", data.Id);",
+											"postman.setEnvironmentVariable(\"P11DCategoryName\", data.Name);",
 											"",
 											"tests[\"P11DCategory - Schema\"] = tv4.validate(data, schema, false, true);"
 										]
@@ -2678,7 +2679,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "63bfece5-a3d8-475e-9113-95f78d9f2cb9",
+										"id": "28f0607c-5dba-40de-a88e-3314e21ba3ce",
 										"type": "text/javascript",
 										"exec": [
 											"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -2703,7 +2704,7 @@
 											"",
 											"tests[\"P11DCategory - Schema\"] = tv4.validate(data, schema, false, true);",
 											"tests[\"P11DCategory - Id Equals\"] = data.Id = environment[\"P11DCategoryId\"];",
-											"tests[\"P11DCategory - Name Equals\"] = data.Name === environment[\"CollectionGUID\"];"
+											"tests[\"P11DCategory - Name Equals\"] = data.Name === environment[\"P11DCategoryName\"];"
 										]
 									}
 								}
@@ -2742,7 +2743,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "59f6e3ef-a978-4536-be8e-4faf881c87a5",
+										"id": "0c095caf-f0f5-4320-8f6f-766d771416dd",
 										"type": "text/javascript",
 										"exec": [
 											"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -2767,7 +2768,9 @@
 											"",
 											"tests[\"P11DCategory - Schema\"] = tv4.validate(data, schema, false, true);",
 											"tests[\"P11DCategory - Id Equals\"] = data.Id = environment[\"P11DCategoryId\"];",
-											"tests[\"P11DCategory - Name Equals\"] = data.Name === environment[\"CollectionGUID\"] + \" Updated\";"
+											"tests[\"P11DCategory - Name Equals\"] = data.Name === environment[\"P11DCategoryName\"] + \" Updated\";",
+											"",
+											"postman.setEnvironmentVariable(\"P11DCategoryName\", data.Name);"
 										]
 									}
 								}
@@ -2789,7 +2792,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"Id\" : \"{{P11DCategoryId}}\",\n\t\"Name\" : \"{{CollectionGUID}} Updated\"\n}"
+									"raw": "{\n\t\"Id\" : \"{{P11DCategoryId}}\",\n\t\"Name\" : \"{{P11DCategoryName}} Updated\"\n}"
 								},
 								"url": {
 									"raw": "{{PublicAPIUrl}}P11DCategories/",
@@ -2924,17 +2927,18 @@
 				"id": "ae56a5d3-fca7-4655-8d1d-24844dba8899",
 				"type": "text/javascript",
 				"exec": [
-					"var generateGuid = function () {",
-					"    function _p8(s) {",
-					"        var p = (Math.random().toString(16)+\"000000000\").substr(2,8);",
-					"        return s ? \"-\" + p.substr(0,4) + \"-\" + p.substr(4,4) : p ;",
+					"if (!pm.environment.get(\"guid\")) {",
+					"    var generateGuid = function () {",
+					"        function _p8(s) {",
+					"            var p = (Math.random().toString(16)+\"000000000\").substr(2,8);",
+					"            return s ? \"-\" + p.substr(0,4) + \"-\" + p.substr(4,4) : p ;",
+					"        }",
+					"        ",
+					"        return _p8() + _p8(true) + _p8(true) + _p8();",
 					"    }",
 					"    ",
-					"    return _p8() + _p8(true) + _p8(true) + _p8();",
-					"}",
-					"",
-					"pm.environment.set(\"CollectionGUID\", generateGuid());",
-					""
+					"    pm.environment.set(\"CollectionGUID\", generateGuid());",
+					"}"
 				]
 			}
 		},
