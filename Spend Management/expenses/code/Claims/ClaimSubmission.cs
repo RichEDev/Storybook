@@ -885,10 +885,16 @@ namespace Spend_Management.expenses.code.Claims
 									connection.sqlexecute.Parameters.AddWithValue("@employeeid", claim.employeeid);
 									connection.ExecuteSQL(sql);
 
-									var claims = new cClaims(claim.accountid);
-									var expenseItemsIds = claims.getExpenseItemsFromDB(claim.claimid).Keys.ToList();
+                                    var claims = new cClaims(claim.accountid);
+                                    var claimItems = claims.getExpenseItemsFromDB(claim.claimid);
+                                    var expenseItemsIds = claimItems.Keys.ToList();
 
-									if (reqstage.sendmail)
+								    if (signofftype == SignoffType.SELValidation)
+								    {
+								        this.SendItemsForValidation(claimItems, reqstage);
+								    }
+
+                                    if (reqstage.sendmail)
 									{
 										try
 										{
@@ -1765,34 +1771,123 @@ namespace Spend_Management.expenses.code.Claims
 			}
 		}
 
-		/// <summary>
-		///     Set the ItemChecker Id on each claim item for a stage back to NULL
-		/// </summary>
-		/// <param name="claim"></param>
-		internal void ResetItemCheckers(cClaim claim)
-		{
-			using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(_user.AccountID)))
-			{
-				const string sql = "UPDATE savedexpenses SET itemCheckerId = NULL WHERE claimid = @claimId";
-				expdata.sqlexecute.Parameters.AddWithValue("@claimId", claim.claimid);
-				expdata.ExecuteSQL(sql);
-			}
-		}
-		/// <summary>
-		/// Determine Default Authoriser is Present or not
-		/// </summary>
-		/// <returns></returns>
-		public bool ClaimCanBeSubmittedBasedOnDefaultAuthoriser()
-		{
-			bool isDefaultAuthoriserPresent = false;
-			using (IDBConnection expdata = new DatabaseConnection(cAccounts.getConnectionString(_user.AccountID)))
-			{
-				expdata.sqlexecute.Parameters.Clear();
-				isDefaultAuthoriserPresent = expdata.ExecuteScalar<bool>("dbo.DetermineDefaultUserPresent", CommandType.StoredProcedure);
-				expdata.sqlexecute.Parameters.Clear();
-			}
-			return isDefaultAuthoriserPresent;
-		}
-		#endregion
-	}
+        /// <summary>
+        ///     Set the ItemChecker Id on each claim item for a stage back to NULL
+        /// </summary>
+        /// <param name="claim"></param>
+        internal void ResetItemCheckers(cClaim claim)
+        {
+            using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(_user.AccountID)))
+            {
+                const string sql = "UPDATE savedexpenses SET itemCheckerId = NULL WHERE claimid = @claimId";
+                expdata.sqlexecute.Parameters.AddWithValue("@claimId", claim.claimid);
+                expdata.ExecuteSQL(sql);
+            }
+        }
+        /// <summary>
+        /// Determine Default Authoriser is Present or not
+        /// </summary>
+        /// <returns></returns>
+        public bool ClaimCanBeSubmittedBasedOnDefaultAuthoriser()
+        {
+            bool isDefaultAuthoriserPresent = false;
+            using (IDBConnection expdata = new DatabaseConnection(cAccounts.getConnectionString(_user.AccountID)))
+            {
+                expdata.sqlexecute.Parameters.Clear();
+                isDefaultAuthoriserPresent = expdata.ExecuteScalar<bool>("dbo.DetermineDefaultUserPresent", CommandType.StoredProcedure);
+                expdata.sqlexecute.Parameters.Clear();
+            }
+            return isDefaultAuthoriserPresent;
+        }
+
+        private void SendItemsForValidation(SortedList<int, cExpenseItem> claimItems, cStage stage)
+        {
+            decimal percentageOfItemsToValidate = this.GetPercentageOfItemsToValidate(stage.signoffid);
+
+            // from claimItems get the list of items that can be sent to validation 
+            //var itemsThatCanBeValidated = claimItems.Where(x => x.Value.receiptattached && x.Value.ValidationProgress == 0).Select(x => x.Key).ToList();
+
+            var itemsThatCanBeValidated = new SortedList<int, cExpenseItem>();
+
+            foreach (var item in claimItems)
+            {
+                if (item.Value.receiptattached && item.Value.ValidationProgress == 0)
+                {
+                    itemsThatCanBeValidated.Add(item.Key, item.Value);
+                }
+            }
+            
+            // apply the percentage to select the items 
+            decimal numberOfItemsToBeValidated = (itemsThatCanBeValidated.Count * percentageOfItemsToValidate) / 100;
+
+            var random = new Random();
+
+            // round up the number of items
+            var numberOfItemsToBeValidatedPrecision = numberOfItemsToBeValidated - Math.Truncate(numberOfItemsToBeValidated);
+
+            decimal roundedNumberOfItemsToBeValidated;
+
+            // if the precision is 0.5 toss coin to decide if the item will be included or not
+            if (numberOfItemsToBeValidatedPrecision == 0.5M)
+            {
+                roundedNumberOfItemsToBeValidated = random.Next(0, 2) == 0
+                    ? numberOfItemsToBeValidated - 0.5M
+                    :numberOfItemsToBeValidated + 0.5M;
+            }
+            else
+            {
+                roundedNumberOfItemsToBeValidated = Math.Round(numberOfItemsToBeValidated, 0);
+            }
+            
+            int max = itemsThatCanBeValidated.Count;
+
+            var numberOfItemsNotSendForValidation = itemsThatCanBeValidated.Count - roundedNumberOfItemsToBeValidated;
+
+            // update the items that need to go for validation
+            for (var i = 0; i < numberOfItemsNotSendForValidation; i++)
+            {
+                int index = random.Next(0, max);
+
+                // set the state of the items that won't be send for validation
+                this.PreventSendingItemForValidation(itemsThatCanBeValidated.Keys[index], itemsThatCanBeValidated.Values[index], ExpenseValidationProgress.NotSelectedForValidation);
+
+                // removing the item from the list ensures that duplicates won't occur 
+                itemsThatCanBeValidated.RemoveAt(index);
+                max--;
+            }
+        }
+
+        private void PreventSendingItemForValidation(int expenseId, cExpenseItem item, ExpenseValidationProgress sendForValidation)
+        {
+            var validationManager = new ExpenseValidationManager(this._user.AccountID);
+            validationManager.UpdateProgressForExpenseItem(expenseId, item.ValidationProgress, sendForValidation);
+        }
+
+        private decimal GetPercentageOfItemsToValidate(int signoffStageId)
+        {
+            decimal percentageOfItemsToValidate = 0;
+
+            using (var connection = new DatabaseConnection(cAccounts.getConnectionString(this._user.AccountID)))
+            {
+                connection.sqlexecute.Parameters.AddWithValue("@stageId", signoffStageId);
+
+                using (var reader = connection.GetReader("GetPercentageOfClaimItemsForValidation", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                    { 
+                        percentageOfItemsToValidate = reader.GetNullable<decimal>("ClaimPercentageToValidate") ?? 100;
+                    }
+
+                   reader.Close();
+                }
+
+                connection.sqlexecute.Parameters.Clear();
+            }
+
+            return percentageOfItemsToValidate;
+
+        }
+
+        #endregion
+    }
 }

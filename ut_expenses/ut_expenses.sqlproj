@@ -7107,6 +7107,7 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_ProcessedReceipts_WalletReceipts.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_WalletReceipts.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_ProcessedReceipts.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetPercentageOfClaimItemsForValidation.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ut_expenses.refactorlog">

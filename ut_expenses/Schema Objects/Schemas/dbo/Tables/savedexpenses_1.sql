@@ -80,6 +80,6 @@
     [WorkAddressId] INT NULL, 
     [MobileMetricDeviceId] INT NULL, 
 	CreatedVia AS Case when mobilemetricdeviceId is  Null then 'Web' ELSE 'Mobile' END
-    CONSTRAINT [PK_savedexpenses_current] PRIMARY KEY NONCLUSTERED ([expenseid] ASC)
+    CONSTRAINT [PK_savedexpenses_current] PRIMARY KEY NONCLUSTERED ([expenseid] ASC) 
 )
 

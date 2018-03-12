@@ -90,7 +90,7 @@
                         stage.AllocateForPayment,
                         stage.IsPostValidationCleanupStage,
                         stage.ValidationCorrectionThreshold,
-                        stage.ClaimPercentageToValidate)); //TODO: Feature flag
+                        stage.ClaimPercentageToValidate));
 
         }
 

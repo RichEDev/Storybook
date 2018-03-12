@@ -21,9 +21,6 @@ namespace Spend_Management
     /// </summary>
     public partial class aeSignoffGroup : Page
     {
-        [Dependency]
-        public IFeatureFlagManager FeatureFlagManager { get; set; }
-
         public bool featureFlag = false;
 
         protected void Page_Load(object sender, System.EventArgs e)
@@ -63,13 +60,6 @@ namespace Spend_Management
             {
                 this.cmbincludelst.Items.Add(new ListItem("Only if an expense item fails validation twice", "9"));
                 this.cmbsignofftype.Items.Add(SignoffType.SELValidation.ToListItem());
-
-                this.featureFlag = false; //TODO: Signoff Groups Claim Percentage To Validate Feature Flag
-
-                if (FeatureFlagManager.IsEnabled("Signoff Groups Claim Percentage To Validate"))
-                {
-                    this.featureFlag = true;
-                }
             }
 
             #endregion

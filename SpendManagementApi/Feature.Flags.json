@@ -1,7 +1,7 @@
 ﻿[
   {
-    "Enabled": true,
-    "Name": "Signoff Groups Claim Percentage To Validate",
+    "Enabled": false,
+    "Name": "Feature Name",
     "Strategies": []
   }
 ]

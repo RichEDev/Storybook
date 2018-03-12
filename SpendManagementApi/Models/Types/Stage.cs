@@ -245,12 +245,9 @@
                 throw new ApiException("Invalid Data", "Claim percentage to validate can only be set for Signoff type of SEL Validation.");
             }
 
-            if (WebApiApplication.container.GetInstance<IFeatureFlagManager>().IsEnabled("Signoff Groups Claim Percentage To Validate")) //TODO: Signoff Groups Claim Percentage To Validate Feature Flag
+            if (this.SignOffType == SignoffType.SELValidation && this.ClaimPercentageToValidate == null)
             {
-                if (this.SignOffType == SignoffType.SELValidation && this.ClaimPercentageToValidate == null)
-                {
-                    throw new ApiException("Invalid Data", "Claim percentage to validate cannot be null when Signoff type is SEL Validation.");
-                }
+                throw new ApiException("Invalid Data", "Claim percentage to validate cannot be null when Signoff type is SEL Validation.");
             }
         }
 

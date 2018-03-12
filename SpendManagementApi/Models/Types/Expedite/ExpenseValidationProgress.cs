@@ -14,6 +14,18 @@
         ValidationServiceDisabled = -20,
 
         /// <summary>
+        /// The expense item was not included in the percentage of items that were validated.
+        /// </summary>
+        [Display(Name = "Expense item did not get validated")]
+        NotValidated = -12,
+
+        /// <summary>
+        /// The expense item is not included in the percentage of items that will be validated.
+        /// </summary>
+        [Display(Name = "Expense item not selected for validation")]
+        NotSelectedForValidation = -11,
+
+        /// <summary>
         /// Unable to validate because the option on the subcat is turned off.
         /// </summary>
         [Display(Name = "Validation disabled on expense template")]

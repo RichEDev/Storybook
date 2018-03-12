@@ -263,8 +263,22 @@ namespace SpendManagementApi.Repositories.Expedite
             validationManager.UpdateOperatorProgressForExpenseItem(expenseItem.expenseid,
                 DALEnum.ExpediteOperatorValidationProgress.Available);
 
-            // advance the claim if all items are complete or don't require validation
             var expenseItems = claims.getExpenseItemsFromDB(claim.claimid);
+            var isValidationComplete = expenseItems.All(i => i.Value.ValidationProgress != DALEnum.ExpenseValidationProgress.Required);
+
+            if (isValidationComplete)
+            {
+                foreach (var item in expenseItems)
+                {
+                    if (item.Value.ValidationProgress == DALEnum.ExpenseValidationProgress.NotSelectedForValidation)
+                    {
+                        validationManager.UpdateProgressForExpenseItem(item.Value.expenseid, item.Value.ValidationProgress, DALEnum.ExpenseValidationProgress.NotValidated);
+                    }
+                }
+                
+            }
+
+            // advance the claim if all items are complete or don't require validation
             var resultsAllowAdvance = expenseItems.All(i => i.Value.ValidationProgress > DALEnum.ExpenseValidationProgress.WaitingForClaimant || i.Value.ValidationProgress < DALEnum.ExpenseValidationProgress.Required);
 
             if (resultsAllowAdvance)

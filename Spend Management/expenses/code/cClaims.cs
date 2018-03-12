@@ -3711,10 +3711,19 @@ namespace Spend_Management
 			var clsSubcats = new cSubcats(accountid);
 			var lstDelItems = new List<cExpenseItem>();
 
-			// Delete any reimbursable fuel card items
-			foreach (cExpenseItem item in expenseItems.Values)
-			{
-				SubcatBasic subcat = clsSubcats.GetSubcatBasic(item.subcatid);
+            List<SignoffType> claimStages = this.GetSignoffStagesAsTypes(claim);
+          
+
+            foreach (cExpenseItem item in expenseItems.Values)
+            {
+                if (claimStages.Contains(SignoffType.SELValidation) && item.ValidationProgress == ExpenseValidationProgress.NotSelectedForValidation)
+                {
+                    var validationManager = new ExpenseValidationManager(this.accountid);
+                    validationManager.UpdateProgressForExpenseItem(item.expenseid, item.ValidationProgress, ExpenseValidationProgress.Required);
+                }
+
+                // Delete any reimbursable fuel card items
+                SubcatBasic subcat = clsSubcats.GetSubcatBasic(item.subcatid);
 
 				if (subcat != null)
 				{
