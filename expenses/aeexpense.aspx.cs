@@ -2151,22 +2151,40 @@ public partial class aeexpense : System.Web.UI.Page
             if (user.CanEditCostCodes)
             {
                 cFieldToDisplay costCodeField = misc.GetGeneralFieldByCode("costcode");
+                CustomValidator costCodeValidator;
 
                 if ((itemtype == ItemType.Cash && costCodeField.mandatory) || (itemtype == ItemType.CreditCard && costCodeField.mandatorycc) || (itemtype == ItemType.PurchaseCard && costCodeField.mandatorypc))
                 {
-                   var custval = new CustomValidator
-                                  {
-                                      ClientValidationFunction = "SEL.Expenses.Validate.CostCode.GeneralDetailsMandatory",
-                                      ControlToValidate = textBox.ID,
-                                      ID = "custCostCodeid" + index,
-                                      ValidationGroup = "vgAeExpenses",
-                                      ValidateEmptyText = true,
-                                      ErrorMessage = "Please enter a valid " + costCodeField.description + ".",
-                                      Text = "*", AccessKey = index.ToString()
-                                  };
+                    costCodeValidator = new CustomValidator
+                    {
+                        ClientValidationFunction = "SEL.Expenses.Validate.CostCode.GeneralDetailsMandatory",
+                        ControlToValidate = textBox.ID,
+                        ID = "custCostCodeid" + index,
+                        ValidationGroup = "vgAeExpenses",
+                        ValidateEmptyText = true,
+                        ErrorMessage = "Please enter a valid " + costCodeField.description + ".",
+                        Text = "*",
+                        AccessKey = index.ToString()
+                    };
 
-                    cell.Controls.Add(custval);
+                    cell.Controls.Add(costCodeValidator);
                     row.Cells.Add(cell);
+                }
+                else
+                {
+                    costCodeValidator = new CustomValidator
+                    {
+                        ClientValidationFunction = "SEL.Expenses.Validate.CostCode.GeneralDetailsNotMandatory",
+                        ControlToValidate = textBox.ID,
+                        ID = "custCostCode" + index,
+                        ValidationGroup = "vgAeExpenses",
+                        ValidateEmptyText = false,
+                        ErrorMessage = costCodeField.description + " is not valid. Please enter a value in the box provided.",
+                        Text = "*",
+                        AccessKey = index.ToString()
+                    };
+
+                    cell.Controls.Add(costCodeValidator);
                 }
             }        
         }
