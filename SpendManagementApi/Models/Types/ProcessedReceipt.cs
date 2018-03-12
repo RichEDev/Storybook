@@ -38,6 +38,11 @@
         public DateTime? Date { get; set; }
 
         /// <summary>
+        /// The date the <see cref="WalletReceipt"/> was created on
+        /// </summary>
+        public new DateTime? CreatedOn { get; set; }
+
+        /// <summary>
         /// The merchant found on the <see cref="WalletReceipt"/>
         /// </summary>
         public string Merchant { get; set; }
@@ -65,6 +70,7 @@
             this.Total = original.Total;
             this.Date = original.Date;
             this.Status = original.Status;
+            this.CreatedOn = original.CreatedDate;
 
             return this;
         }
@@ -83,6 +89,7 @@
                     Status = this.Status,
                     WalletReceiptId = this.WalletReceiptId,
                     FileExtension = this.FileExtension,
+                    CreatedDate =  this.CreatedOn,
                     ReceiptData = this.ReceiptData
                 };
 

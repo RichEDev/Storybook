@@ -129,6 +129,8 @@
             }
 
             UserIdentity identity = this._identityProvider.GetUserIdentity();
+            receipt.CreatedBy = identity.EmployeeId;
+            receipt.CreatedOn = DateTime.Now;
 
             if (this._logger.IsDebugEnabled)
             {
@@ -157,7 +159,7 @@
             this._customerDataConnection.Parameters.Clear();
 
             this._customerDataConnection.Parameters.Add(new SqlParameter("@fileExtension", SqlDbType.NVarChar) { Value = receipt.FileExtension });
-            
+
             this._customerDataConnection.Parameters.Add(new SqlParameter("@CreatedBy", SqlDbType.Int) { Value = receipt.CreatedBy });
 
             this._customerDataConnection.Parameters.Add(new SqlParameter("@Status", SqlDbType.Int) { Value = receipt.Status });
@@ -169,7 +171,6 @@
             this._customerDataConnection.Parameters.ReturnValue = "@returnvalue";
 
             receipt.Id = this._customerDataConnection.ExecuteProc<int>("SaveWalletReceipt");
-            receipt.CreatedOn = DateTime.Now;
 
             this._customerDataConnection.Parameters.Clear();
 
@@ -177,8 +178,6 @@
             {
                 this._logger.DebugFormat($"Add completed with id {receipt.Id}.");
             }
-
-            this._identityProvider.GetUserIdentity();
 
             new CloudWalletReceipt().Save($"Wallet{receipt.Id}.{receipt.FileExtension}", conversion, identity.AccountId.ToString());
 
@@ -270,7 +269,7 @@
             List<IWalletReceipt> receipts = new List<IWalletReceipt>();
 
             string sql =
-                @"SELECT WalletReceipts.WalletReceiptId, WalletReceipts.FileExtension, WalletReceipts.[Status], ProcessedReceipts.[Date], ProcessedReceipts.Total, WalletReceipts.CreatedOn, WalletReceipts.CreatedBy FROM WalletReceipts FULL OUTER JOIN ProcessedReceipts ON ProcessedReceipts.WalletReceiptId = WalletReceipts.WalletReceiptId WHERE WalletReceipts.CreatedBy = @employeeId";
+                @"SELECT WalletReceipts.WalletReceiptId, WalletReceipts.FileExtension, WalletReceipts.[Status], ProcessedReceipts.[Date], ProcessedReceipts.Total, ProcessedReceipts.Merchant, WalletReceipts.CreatedOn, WalletReceipts.CreatedBy FROM WalletReceipts FULL OUTER JOIN ProcessedReceipts ON ProcessedReceipts.WalletReceiptId = WalletReceipts.WalletReceiptId WHERE WalletReceipts.CreatedBy = @employeeId";
 
             this._customerDataConnection.Parameters.Add(new SqlParameter("@employeeId", SqlDbType.Int) { Value = identity.EmployeeId });
 
@@ -287,6 +286,7 @@
                 int statusOrdinal = reader.GetOrdinal("Status");
                 int dateOrdinal = reader.GetOrdinal("Date");
                 int totalOrdinal = reader.GetOrdinal("Total");
+                int merchantOrdinal = reader.GetOrdinal("Merchant");
                 int createdOnOrdinal = reader.GetOrdinal("CreatedOn");
                 int createdByOrdinal = reader.GetOrdinal("CreatedBy");
 
@@ -294,7 +294,7 @@
                 {
                     int receiptId = reader.GetInt32(receiptIdOrdinal);
                     string fileExtension = reader.GetString(fileExtensionOrdinal);
-                    int status = reader.GetInt32(statusOrdinal);
+                    int status = reader.GetByte(statusOrdinal);
 
                     DateTime? date = null;
                     if (!reader.IsDBNull(dateOrdinal))
@@ -308,6 +308,12 @@
                         total = reader.GetDecimal(totalOrdinal);
                     }
 
+                    string merchant = string.Empty;
+                    if (!reader.IsDBNull(merchantOrdinal))
+                    {
+                        merchant = reader.GetString(merchantOrdinal);
+                    }
+
                     int createdBy = reader.GetInt32(createdByOrdinal);
                     DateTime createdOn = reader.GetDateTime(createdOnOrdinal);
 
@@ -317,6 +323,7 @@
                         Status = status,
                         Date = date,
                         Total = total,
+                        Merchant = merchant,
                         CreatedBy = createdBy,
                         CreatedOn = createdOn
                     };

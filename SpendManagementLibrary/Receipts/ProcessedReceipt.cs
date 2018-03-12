@@ -38,6 +38,11 @@
         public DateTime? Date { get; set; }
 
         /// <summary>
+        /// The date the receipt was saved of the <see cref="ProcessedReceipt"/>
+        /// </summary>
+        public DateTime? CreatedDate { get; set; }
+
+        /// <summary>
         /// Merchant of the <see cref="ProcessedReceipt"/>
         /// </summary>
         public string Merchant { get; set; }

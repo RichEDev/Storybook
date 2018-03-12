@@ -69,7 +69,6 @@
             var user = this._identity.Value.GetUserIdentity();
 
             IWalletReceipt walletReceipt = MapObjects.Map<WalletReceipt>(value);
-            walletReceipt.CreatedBy = user.EmployeeId;
             walletReceipt = this._walletReceipts.Value.Save(walletReceipt);
 
             //Fire and forget so the request isn't left hanging while waiting for a server

@@ -7221,6 +7221,8 @@
     <None Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_ProcessedReceipts_WalletReceiptId.sql" />
     <None Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_ProcessedReceipts_ProcessedReceiptId.sql" />
     <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\ResetWalletReceipt.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_WalletReceipts_CreatedBy.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_WalletReceipts_employees.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Pre-Deployment\Script.PreDeployment.sql" />

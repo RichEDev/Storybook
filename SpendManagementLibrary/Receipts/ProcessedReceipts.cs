@@ -102,8 +102,9 @@
                             continue;
                         }
 
+                        processedReceipt.CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedOn"));
                         processedReceipt.FileExtension = reader.GetString(reader.GetOrdinal("FileExtension"));
-                        processedReceipt.Status = reader.GetInt32(reader.GetOrdinal("Status"));
+                        processedReceipt.Status = reader.GetByte(reader.GetOrdinal("Status"));
                         processedReceipt.ReceiptData = this.GetReceiptFromCloud(walletReceiptId,processedReceipt.FileExtension);
                     }
 
