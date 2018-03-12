@@ -2113,7 +2113,8 @@ public partial class aeexpense : System.Web.UI.Page
             }
         }
 
-        if (globalProperties.costcodeson && globalProperties.usecostcodes && globalProperties.usecostcodeongendet == false)
+        if (globalProperties.costcodeson && globalProperties.usecostcodes
+            && globalProperties.usecostcodeongendet == false)
         {
             cell = new TableCell();
             var textBox = new TextBox
@@ -2127,22 +2128,26 @@ public partial class aeexpense : System.Web.UI.Page
             textBox.Attributes.Add("data-search", "General");
             textBox.Attributes.Add("placeholder", "Search");
             textBox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
-            TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode" + index + "_ID"};          
+            TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode" + index + "_ID" };
             hiddenIdentifier.Style.Add(HtmlTextWriterStyle.Display, "none");
-           
-            string[] filterAttribute = this.ActionContext.FilterRules.FilterDropdown(FilterType.Costcode, index.ToString(), hiddenIdentifier.ID);
+
+            string[] filterAttribute =
+                    this.ActionContext.FilterRules.FilterDropdown(
+                    FilterType.Costcode,
+                    index.ToString(),
+                    hiddenIdentifier.ID);
 
             if (!filterAttribute.IsNullOrEmpty())
             {
-                textBox.Attributes.Add(filterAttribute[0], filterAttribute[1]);         
+                textBox.Attributes.Add(filterAttribute[0], filterAttribute[1]);
             }
-       
+
             var costCode = this.ActionContext.CostCodes.GetCostcodeById(breakdownItem.costcodeid);
 
             if (costCode != null)
             {
                 textBox.Text = costCode.Costcode;
-                hiddenIdentifier.Text = costCode.CostcodeId.ToString(); 
+                hiddenIdentifier.Text = costCode.CostcodeId.ToString();
             }
 
             cell.Controls.Add(textBox);
@@ -2152,24 +2157,43 @@ public partial class aeexpense : System.Web.UI.Page
             if (user.CanEditCostCodes)
             {
                 cFieldToDisplay costCodeField = misc.GetGeneralFieldByCode("costcode");
+                CustomValidator costCodeValidator;
+                string clientValidationFunction;
+                string errorDescription;
+                bool validateEmptyText;
 
-                if ((itemtype == ItemType.Cash && costCodeField.mandatory) || (itemtype == ItemType.CreditCard && costCodeField.mandatorycc) || (itemtype == ItemType.PurchaseCard && costCodeField.mandatorypc))
+                if ((itemtype == ItemType.Cash && costCodeField.mandatory)
+                    || (itemtype == ItemType.CreditCard && costCodeField.mandatorycc)
+                    || (itemtype == ItemType.PurchaseCard && costCodeField.mandatorypc))
                 {
-                   var custval = new CustomValidator
-                                  {
-                                      ClientValidationFunction = "SEL.Expenses.Validate.CostCode.GeneralDetailsMandatory",
-                                      ControlToValidate = textBox.ID,
-                                      ID = "custCostCodeid" + index,
-                                      ValidationGroup = "vgAeExpenses",
-                                      ValidateEmptyText = true,
-                                      ErrorMessage = "Please enter a valid " + costCodeField.description + ".",
-                                      Text = "*", AccessKey = index.ToString()
-                                  };
-
-                    cell.Controls.Add(custval);
-                    row.Cells.Add(cell);
+                    clientValidationFunction = "SEL.Expenses.Validate.CostCode.GeneralDetailsMandatory";
+                    errorDescription = "Please enter a valid " + costCodeField.description + ".";
+                    validateEmptyText = true;
                 }
-            }        
+                else
+                {
+                    clientValidationFunction = "SEL.Expenses.Validate.CostCode.GeneralDetailsNotMandatory";
+                    errorDescription = costCodeField.description
+                                       + " is not valid. Please enter a value in the box provided.";
+                    validateEmptyText = false;
+                }
+
+                costCodeValidator = new CustomValidator
+                                        {
+                                            ClientValidationFunction = clientValidationFunction,
+                                            ControlToValidate = textBox.ID,
+                                            ID = "custCostCodeid" + index,
+                                            ValidationGroup = "vgAeExpenses",
+                                            ValidateEmptyText = validateEmptyText,
+                                            ErrorMessage = errorDescription,
+                                            Text = "*",
+                                            AccessKey = index.ToString()
+                                        };
+
+                cell.Controls.Add(costCodeValidator);
+                row.Cells.Add(cell);
+            }
+
         }
 
         if (globalProperties.projectcodeson && globalProperties.useprojectcodes && globalProperties.useprojectcodeongendet == false)
@@ -5120,7 +5144,8 @@ public partial class aeexpense : System.Web.UI.Page
                         ScriptManager.RegisterStartupScript (this, this.GetType(), "autoComplete" + txtbox.ID, autoCompleteScript.ToString(), true);                  
                     }
           
-                    if (breakdown[int.Parse(ctlindex)].costcodeid.ToString() != "0")
+                    //0 if not set, -1 if invalid cost code entered
+                    if (breakdown[int.Parse(ctlindex)].costcodeid.ToString() != "0" && breakdown[int.Parse(ctlindex)].costcodeid.ToString() != "-1")
                     {
                         var costCode = this.ActionContext.CostCodes.GetCostcodeById(breakdown[int.Parse(ctlindex)].costcodeid);
                         txtbox.Text = showCostCodeDescription ? costCode.Description : costCode.Costcode;
