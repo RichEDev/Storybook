@@ -5132,7 +5132,7 @@ public partial class aeexpense : System.Web.UI.Page
                         autoCompleteScript.Append("25,");
                         autoCompleteScript.Append("'02009E21-AA1D-4E0D-908A-4E9D73DDFBDF',");
                         autoCompleteScript.Append("'" + displayField + "',");
-                        autoCompleteScript.Append("'359DFAC9-74E6-4BE5-949F-3FB224B1CBFC, AF80D035-6093-4721-8AFC-061424D2AB72',");
+                        autoCompleteScript.Append("'" + displayField + "',");
                         autoCompleteScript.Append("null,");
                         autoCompleteScript.Append("'{ 0: { \"FieldID\": \"8178629C-5908-4458-89F6-D7EE7438314D\", \"ConditionType\": 1, \"ValueOne\": \"0\", \"ValueTwo\": \"\", \"Order\": 0, \"JoinViaID\": 0 } }',");
                         autoCompleteScript.Append("500, null, \"False\"," + serializedFilterRules + ", \"False\", null);");
