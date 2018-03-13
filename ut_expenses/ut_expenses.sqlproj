@@ -7223,6 +7223,7 @@
     <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\ResetWalletReceipt.sql" />
     <None Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_WalletReceipts_CreatedBy.sql" />
     <None Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_WalletReceipts_employees.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_ProcessedReceipts_WalletReceiptId_DateTotalMerchant.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Pre-Deployment\Script.PreDeployment.sql" />
