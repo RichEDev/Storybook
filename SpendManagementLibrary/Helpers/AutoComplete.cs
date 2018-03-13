@@ -352,6 +352,7 @@ namespace SpendManagementLibrary
                         {
                             qb.addColumn(basetable.GetPrimaryKey());
                             qb.addColumn(fieldToDisplay);
+                            qb.addSortableColumn(fieldToDisplay, SortDirection.Ascending);
 
                             List<cQueryFilter> matchFieldFilters = new List<cQueryFilter>();
 
@@ -388,7 +389,7 @@ namespace SpendManagementLibrary
                                     FieldFilters.FieldFilterValues filterValues = FieldFilters.GetFilterValuesFromFieldFilter(fieldFilter, currentUser);
 
                                     qb.addFilter(fieldFilter.Field, fieldFilter.Conditiontype, filterValues.valueOne, filterValues.valueTwo, ConditionJoiner.And, fieldFilter.JoinVia);
-
+                                 
                                 }
                             }
 
