@@ -13,8 +13,7 @@ BEGIN
 		SET [Status] = 1
 		WHERE WalletReceiptId = @WalletReceiptId
 
-		SELECT WalletReceiptId, FileExtension
-			,STATUS
+		SELECT WalletReceiptId, FileExtension, [Status], CreatedOn
 		FROM WalletReceipts
 		WHERE WalletReceiptId = @WalletReceiptId
 	END
@@ -25,3 +24,4 @@ BEGIN
 	
 	END
 END
+GO
