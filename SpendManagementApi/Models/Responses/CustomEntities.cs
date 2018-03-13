@@ -52,4 +52,12 @@
     public class AttachmentResponse : ApiResponse<Attachment>
     {
     }
+
+    /// <summary>
+    /// Response object for a single <see cref="CustomEntity">Custom Entity</see>
+    /// </summary>
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public class CustomEntityResponse : ApiResponse<CustomEntity>
+    {
+    }
 }

@@ -1,5 +1,6 @@
 ﻿namespace SpendManagementApi.Controllers.V1
 {
+    using System;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
@@ -69,6 +70,36 @@
             {
                 throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.NotFound, "Attachment not found."));
             }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Delete an instance of a <see cref="CustomEntityRecord"/>
+        /// </summary>
+        /// <param name="id">The System ID of the GreenLight</param>
+        /// <param name="recordId">The ID of the record instance to delete</param>
+        /// <returns>A list of <see cref="CustomEntityRecord"/></returns>
+        [HttpDelete, Route("{id}/{recordId:int}")]
+        [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
+        public CustomEntityRecordResponse Delete([FromUri] Guid id, [FromUri] int recordId)
+        {
+            var response = this.InitialiseResponse<CustomEntityRecordResponse>();
+            response.Item = ((CustomEntityRecordRepository) this.Repository).Delete(recordId, id);
+            return response;
+        }
+
+        /// <summary>Save an instance of a system GreenLight
+        /// </summary>
+        /// <param name="id">The ID of the entity that the record is associated to.</param>
+        /// <param name="record"></param>
+        /// <returns>A list of <see cref="CustomEntityRecord"/></returns>
+        [HttpPut, Route("{id}")]
+        [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
+        public CustomEntityRecordResponse Save([FromUri] Guid id, [FromBody] CustomEntityRecord record) 
+        {
+            var response = this.InitialiseResponse<CustomEntityRecordResponse>();
+            response.Item = ((CustomEntityRecordRepository)this.Repository).Save(id, record);
 
             return response;
         }

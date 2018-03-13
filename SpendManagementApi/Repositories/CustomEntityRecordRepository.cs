@@ -1,5 +1,9 @@
 ﻿namespace SpendManagementApi.Repositories
 {
+    using System;
+    using SpendManagementApi.Models.Common;
+    using SpendManagementApi.Utilities;
+
     using System.Collections.Generic;
     using System.Data;
     using System.Globalization;
@@ -208,6 +212,88 @@
             cAttachment originalAttachment = attachments.getAttachment(string.Format("custom_{0}_attachments", entityId), attachmentId);
 
             return Attachment.From(originalAttachment);
+        }
+
+        /// <summary>
+        /// Delete a custom entity instance record
+        /// </summary>
+        /// <param name="recordId">The ID of the record instance to delete</param>
+        /// <param name="entityId">The ID of the entity that the record is associated to.</param>
+        /// <returns>An instance of the deleted record</returns>
+        public CustomEntityRecord Delete(int recordId, int entityId)
+        {            
+            var item = base.Delete(recordId);
+            var entity = this.ActionContext.CustomEntities.getEntityById(entityId);
+            var result = this.ActionContext.CustomEntities.DeleteCustomEntityRecord(entity, recordId, 0);
+            if (item == null || result == -1)
+            {
+                throw new ApiException(ApiResources.ApiErrorDeleteUnsuccessful,
+                    ApiResources.ApiErrorDeleteUnsuccessfulMessage);
+            }            
+
+            return item;
+        }
+
+        /// <summary>
+        /// Delete a custom entity instance record
+        /// </summary>
+        /// <param name="recordId">The ID of the record instance to delete</param>
+        /// <param name="entityId">The system ID of the entity that the record is associated to.</param>
+        /// <returns>An instance of the deleted record</returns>
+        public CustomEntityRecord Delete(int recordId, Guid entityId)
+        {
+            var entity =
+                this.ActionContext.CustomEntities.CustomEntities.Values.FirstOrDefault(ent =>
+                    ent.SystemCustomEntityId == entityId);
+            if (entity != null)
+            {
+                var result = this.ActionContext.CustomEntities.DeleteCustomEntityRecord(entity, recordId, 0);
+                if (result == -1)
+                {
+                    throw new ApiException(ApiResources.ApiErrorDeleteUnsuccessful,
+                        ApiResources.ApiErrorDeleteUnsuccessfulMessage);
+                }            
+
+                return new CustomEntityRecord();
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Save an instance record of a system GreenLight
+        /// </summary>
+        /// <param name="entityId">the ID of the system greenlight to save</param>
+        /// <param name="record">An instacne of <see cref="CustomEntityRecord"/>to save</param>
+        /// <returns>A new instance of <see cref="CustomEntityRecord"/></returns>
+        public CustomEntityRecord Save(Guid entityId, CustomEntityRecord record)
+        {
+            var entity = this.ActionContext.CustomEntities.CustomEntities.Values.FirstOrDefault(e =>
+                e.SystemCustomEntityId.HasValue && e.SystemCustomEntityId.Value == entityId);
+            if (entity == null)
+            {
+                return null;
+            }
+
+            var query = new cUpdateQuery(this.ActionContext.AccountId,
+                cAccounts.getConnectionString(this.ActionContext.AccountId), GlobalVariables.MetabaseConnectionString,
+                entity.table, this.ActionContext.Tables, this.ActionContext.Fields);
+            if (record.Data == null)
+            {
+                return null;
+            }
+
+            foreach (KeyValuePair<object, object> values in record.Data)
+            {
+                var fieldId = new Guid(values.Key.ToString());
+                var field = this.ActionContext.Fields.GetFieldByID(fieldId);
+                var attribute = entity.GetAttributeByFieldId(fieldId);
+                var actualValue = AttributeValueFactory.Convert(attribute, values.Value, this.ActionContext.Fields);
+                query.addColumn(field, actualValue);
+            }
+
+            record.Id = query.executeInsertStatement();
+            return record;
         }
     }
 }

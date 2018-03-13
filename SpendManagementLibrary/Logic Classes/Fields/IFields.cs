@@ -134,5 +134,15 @@
         /// </summary>
         /// <returns>A <see cref="List{T}"/>of <see cref="cField"/> that are required for printout</returns>
         List<cField> getPrintoutFields();
+
+        /// <summary>
+        /// Create a query and search in a specific field for a given value.
+        /// </summary>
+        /// <param name="fieldId">The ID of the fields to search</param>
+        /// <param name="searchType">TRhe search type as defined by <see cref="ConditionType"/></param>
+        /// <param name="searchValue">The value to search for</param>
+        /// <param name="maxResults">The maximum number of results to return</param>
+        /// <returns>An array of objects</returns>
+        string[] SearchFieldByFieldID(Guid fieldId, ConditionType searchType, string searchValue, int maxResults);
     }
 }
