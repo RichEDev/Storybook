@@ -8,7 +8,7 @@
         /// <summary>
         /// The receipt is not to be processed
         /// </summary>
-        Skip = -1,
+        Skip = 255,
 
         /// <summary>
         /// The receipt needs to be processed
