@@ -37,6 +37,11 @@
         public DateTime? Date { get; set; }
 
         /// <summary>
+        /// Gets or sets the merchant for this <see cref="WalletReceipt"/>.
+        /// </summary>
+        public string Merchant { get; set; }
+
+        /// <summary>
         /// Gets or sets the file extension for this <see cref="WalletReceipt"/>.
         /// </summary>
         public string Extension { get; set; }
@@ -62,6 +67,7 @@
             this.ReceiptData = original.ReceiptData;
             this.Total = original.Total;
             this.Date = original.Date;
+            this.Merchant = original.Merchant;
             this.Status = original.Status;
             this.CreatedById = original.CreatedBy;
             this.CreatedOn = original.CreatedOn;
@@ -80,6 +86,7 @@
                 {
                     Date = this.Date,
                     Total = this.Total,
+                    Merchant = this.Merchant,
                     Status = this.Status,
                     CreatedBy = this.CreatedById,
                     CreatedOn = this.CreatedOn
