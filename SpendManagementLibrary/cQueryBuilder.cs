@@ -1831,9 +1831,12 @@ namespace SpendManagementLibrary
                                 if (queryField.JoinVia != null)
                                 {
                                     tmpFieldName = cReport.ReplaceTableNameWithJoinViaAlias(queryField, tmpFieldName);
+                                    output.Append("[" + tmpFieldName + "]");
                                 }
-
-                                output.Append("[" + tmpFieldName + "]");
+                                else
+                                {
+                                    output.Append(tmpFieldName + " " );
+                                }
                             }
                             else
                             {
