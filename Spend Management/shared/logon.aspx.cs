@@ -242,13 +242,6 @@
 
             if (User.Identity.Name != string.Empty)
             {
-                if (this.Session["myid"] != null)
-                {
-                    var employeeId = (int)Session["myid"];
-                    Session.Abandon();
-                    FormsAuthentication.RedirectFromLoginPage(employeeId.ToString(CultureInfo.InvariantCulture), false);
-                    Session.Remove("myid");
-                }
                 if (string.IsNullOrEmpty(Request.QueryString["previewId"]))
                 {
                     Response.Redirect("~/shared/process.aspx?process=1", true);
