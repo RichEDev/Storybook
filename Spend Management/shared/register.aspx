@@ -239,7 +239,7 @@
 
             </Scripts>
         </asp:ScriptManagerProxy>
-
+    <tooltip:tooltip id="usrTooltip" runat="server"></tooltip:tooltip>
         <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" meta:resourcekey="ValidationSummary1Resource1" />
         &nbsp;<asp:Wizard ID="wizregister" runat="server" ActiveStepIndex="0"
             OnFinishButtonClick="WizregisterFinishButtonClick" DisplaySideBar="False"
@@ -258,6 +258,7 @@
             StepPreviousButtonImageUrl="~/shared/images/buttons/pagebutton_previous.gif"
             StepPreviousButtonType="Image" Width="800"
             meta:resourcekey="wizregisterResource1">
+    
             <WizardSteps>
                 <asp:WizardStep runat="server" Title="Step 1 - Employee Name" StepType="Start" meta:resourcekey="WizardStepResource1">
                     
@@ -627,7 +628,6 @@
                     <asp:Literal ID="litmileage" runat="server" meta:resourcekey="litmileageResource1"></asp:Literal>
                 </asp:WizardStep>
                 <asp:WizardStep runat="server" Title="User Defined Fields" meta:resourcekey="WizardStepResource13">
-                    <tooltip:tooltip id="usrTooltip" runat="server"></tooltip:tooltip>
                     <div class="inputpanel">
                         <div class="inputpaneltitle">
                             <asp:Label ID="lblotherinfo" runat="server" Text="Other Information" meta:resourcekey="lblotherinfoResource1"></asp:Label>

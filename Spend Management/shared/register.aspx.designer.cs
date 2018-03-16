@@ -30,6 +30,15 @@ public partial class register {
     protected global::System.Web.UI.ScriptManagerProxy ScriptManagerProxy1;
     
     /// <summary>
+    /// usrTooltip control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::Spend_Management.tooltip usrTooltip;
+    
+    /// <summary>
     /// ValidationSummary1 control.
     /// </summary>
     /// <remarks>
@@ -46,15 +55,6 @@ public partial class register {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.Wizard wizregister;
-    
-    /// <summary>
-    /// usrTooltip control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::Spend_Management.tooltip usrTooltip;
     
     /// <summary>
     /// lblnamelbl control.
