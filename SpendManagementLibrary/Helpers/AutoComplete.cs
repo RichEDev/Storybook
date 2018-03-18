@@ -341,7 +341,7 @@ namespace SpendManagementLibrary
                 //Is the display field costcode description or cost code?
                 if (displayFieldId == new Guid("AF80D035-6093-4721-8AFC-061424D2AB72") || displayFieldId == new Guid("359DFAC9-74E6-4BE5-949F-3FB224B1CBFC"))
                 {
-                    retVals = GetCostCodeResult(matchText, displayFieldId, currentUser);
+                    retVals = GetCostCodeResult(matchText, displayFieldId, currentUser, useWildcards);
 
                 }
                 else
@@ -492,7 +492,7 @@ namespace SpendManagementLibrary
             return sortedResults.Count > maxRows ? sortedResults.GetRange(0, maxRows) : sortedResults;           
         }
 
-        private static List<sAutoCompleteResult> GetCostCodeResult(string searchTerm, Guid displayFieldId, ICurrentUserBase currentUser)
+        private static List<sAutoCompleteResult> GetCostCodeResult(string searchTerm, Guid displayFieldId, ICurrentUserBase currentUser, bool useWildCard)
         {
             var list = new List<sAutoCompleteResult>();
 
@@ -503,28 +503,45 @@ namespace SpendManagementLibrary
 
             var field = fieldToDisplay.FieldName;
 
-            string sql1 = "SELECT TOP 25 CostCodeId, " + field + " FROM costcodes WHERE " + field;
- 
+            var sql1 = "SELECT TOP 25 CostCodeId, " + field + " FROM costcodes WHERE " + field ;         
+            string sql2 = " = '" + noWildCard + "'";
 
-            StringBuilder sb = new StringBuilder();
-            sb.Append(sql1);
-            sb.Append(" = '" + noWildCard + "'");
+            string sql3 = "union ";
+            string sql4 = " LIKE '%" + searchTerm + "%'";
+            string sql5 = " ORDER BY " + field;
 
-            sb.Append(" UNION ");
-            sb.Append(sql1);
-            sb.Append(" LIKE '%" + searchTerm + "%'");
-            sb.Append(" ORDER BY " + field);
 
+            //StringBuilder sb = new StringBuilder();
+            //sb.Append(sql1);
+            //sb.Append(" = '" + noWildCard + "'");
+
+            //sb.Append(" UNION ");
+            //sb.Append(sql1);
+            //sb.Append(" LIKE '%" + searchTerm + "%'");
+            //sb.Append(" ORDER BY " + field);
+
+           
 
             using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(currentUser.AccountID)))
             {
                 databaseConnection.sqlexecute.Parameters.Clear();
 
-                using (IDataReader reader = databaseConnection.GetReader(sb.ToString()))
+                var sqlll = "";
+
+                if (!useWildCard)
+                {
+                    sqlll = sql1 + sql2;
+                }
+                else
+                {
+                    sqlll = sql1 + sql2 + sql3 + sql1 + sql4 + sql5;
+                }
+
+                using (IDataReader reader = databaseConnection.GetReader(sqlll))
                 {
                     while (reader.Read())
                     {
-                      var entry = new sAutoCompleteResult();
+                        var entry = new sAutoCompleteResult();
 
                         entry.value = reader.GetInt32(reader.GetOrdinal("costcodeid")).ToString();
                         entry.label = reader.GetString(reader.GetOrdinal(field));
