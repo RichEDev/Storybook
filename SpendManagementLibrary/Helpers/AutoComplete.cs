@@ -332,117 +332,136 @@ namespace SpendManagementLibrary
 
             Guid displayFieldId;
             cFields fields = new cFields();
-          
+
             if (Guid.TryParseExact(displayField, "D", out displayFieldId))
             {
-                cTables tables = new cTables();
-                cTable basetable = new cTable();
-                List<Guid> matchFieldIDs;
 
-                if (InitialiseMatchingData(currentUser, matchTable, matchFields, ref matchText, useWildcards, out matchFieldIDs, ref tables, ref fields, ref basetable))
+
+
+                //Is the display field costcode description or cost code?
+                if (displayFieldId == new Guid("AF80D035-6093-4721-8AFC-061424D2AB72") || displayFieldId == new Guid("359DFAC9-74E6-4BE5-949F-3FB224B1CBFC"))
                 {
-                    if (basetable != null)
+                    retVals = GetCostCodeResult(matchText, displayFieldId, currentUser);
+
+                }
+                else
+                {
+
+
+
+
+                    //if displayfield is cost code or costcode desc. 
+                    //new method to set retvalues with union
+
+                    cTables tables = new cTables();
+                    cTable basetable = new cTable();
+                    List<Guid> matchFieldIDs;
+
+                    if (InitialiseMatchingData(currentUser, matchTable, matchFields, ref matchText, useWildcards, out matchFieldIDs, ref tables, ref fields, ref basetable))
                     {
-                        cQueryBuilder qb = new cQueryBuilder(currentUser.AccountID, cAccounts.getConnectionString(currentUser.AccountID),
-                                                             ConfigurationManager.ConnectionStrings["metabase"].ConnectionString, basetable,
-                                                             tables, fields, childFilterList != null && childFilterList.Count > 0 ? 0: maxRows);
-                        cField fieldToDisplay = fields.GetFieldByID(displayFieldId);
-
-                        if (fieldToDisplay != null)
+                        if (basetable != null)
                         {
-                            qb.addColumn(basetable.GetPrimaryKey());
-                            qb.addColumn(fieldToDisplay);
-                            qb.addSortableColumn(fieldToDisplay, SortDirection.Ascending);
+                            cQueryBuilder qb = new cQueryBuilder(currentUser.AccountID, cAccounts.getConnectionString(currentUser.AccountID),
+                                                                 ConfigurationManager.ConnectionStrings["metabase"].ConnectionString, basetable,
+                                                                 tables, fields, childFilterList != null && childFilterList.Count > 0 ? 0 : maxRows);
+                            cField fieldToDisplay = fields.GetFieldByID(displayFieldId);
 
-                            List<cQueryFilter> matchFieldFilters = new List<cQueryFilter>();
-
-                            // Add each of the Match Fields
-                            if (matchFieldIDs.Count > 0)
+                            if (fieldToDisplay != null)
                             {
-                                foreach (Guid id in matchFieldIDs)
+                                qb.addColumn(basetable.GetPrimaryKey());
+                                qb.addColumn(fieldToDisplay);
+                                qb.addSortableColumn(fieldToDisplay, SortDirection.Ascending);
+
+                                List<cQueryFilter> matchFieldFilters = new List<cQueryFilter>();
+
+                                // Add each of the Match Fields
+                                if (matchFieldIDs.Count > 0)
                                 {
-                                    cField curMatchField = fields.GetFieldByID(id);
-
-                                    matchFieldFilters.Add(new cQueryFilter(curMatchField, ConditionType.Like, new List<object> { matchText }, null, ConditionJoiner.Or, null));
-                                }
-
-                                qb.addFilterGroup(new cQueryFilterGroup(matchFieldFilters, ConditionJoiner.And));
-                            }
-
-                            // Add each of the filters
-                            if (filters != null)
-                            {
-                                foreach (JSFieldFilter curFilter in filters.Values)
-                                {
-                                    if (curFilter.IsParentFilter)
+                                    foreach (Guid id in matchFieldIDs)
                                     {
-                                        continue;
+                                        cField curMatchField = fields.GetFieldByID(id);
+
+                                        matchFieldFilters.Add(new cQueryFilter(curMatchField, ConditionType.Like, new List<object> { matchText }, null, ConditionJoiner.Or, null));
                                     }
 
-                                    FieldFilter fieldFilter = FieldFilters.JsToCs(curFilter, currentUser);
-
-                                    if (fieldFilter == null)
-                                    {
-                                        continue;
-                                    }
-
-                                    FieldFilters.FieldFilterValues filterValues = FieldFilters.GetFilterValuesFromFieldFilter(fieldFilter, currentUser);
-
-                                    qb.addFilter(fieldFilter.Field, fieldFilter.Conditiontype, filterValues.valueOne, filterValues.valueTwo, ConditionJoiner.And, fieldFilter.JoinVia);
-                                 
+                                    qb.addFilterGroup(new cQueryFilterGroup(matchFieldFilters, ConditionJoiner.And));
                                 }
-                            }
 
-                            if (basetable.GetSubAccountIDField() != null)
-                            {
-                                qb.addFilter(basetable.GetSubAccountIDField(), ConditionType.Equals, new object[] { currentUser.CurrentSubAccountId }, null, ConditionJoiner.And, null);
-                            }
-
-                            // make sure the match fields are present, or all records will be shown
-                            if (matchFieldFilters.Count > 0)
-                            {
-                                using (SqlDataReader reader = qb.getReader())
+                                // Add each of the filters
+                                if (filters != null)
                                 {
-                                    while (reader.Read())
+                                    foreach (JSFieldFilter curFilter in filters.Values)
                                     {
-                                        sAutoCompleteResult entry;
-                                        if (!keyIsString)
+                                        if (curFilter.IsParentFilter)
                                         {
-                                            if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(string))
+                                            continue;
+                                        }
+
+                                        FieldFilter fieldFilter = FieldFilters.JsToCs(curFilter, currentUser);
+
+                                        if (fieldFilter == null)
+                                        {
+                                            continue;
+                                        }
+
+                                        FieldFilters.FieldFilterValues filterValues = FieldFilters.GetFilterValuesFromFieldFilter(fieldFilter, currentUser);
+
+                                        qb.addFilter(fieldFilter.Field, fieldFilter.Conditiontype, filterValues.valueOne, filterValues.valueTwo, ConditionJoiner.And, fieldFilter.JoinVia);
+
+                                    }
+                                }
+
+                                if (basetable.GetSubAccountIDField() != null)
+                                {
+                                    qb.addFilter(basetable.GetSubAccountIDField(), ConditionType.Equals, new object[] { currentUser.CurrentSubAccountId }, null, ConditionJoiner.And, null);
+                                }
+
+                                // make sure the match fields are present, or all records will be shown
+                                if (matchFieldFilters.Count > 0)
+                                {
+                                    using (SqlDataReader reader = qb.getReader())
+                                    {
+                                        while (reader.Read())
+                                        {
+                                            sAutoCompleteResult entry;
+                                            if (!keyIsString)
                                             {
-                                                entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
-                                                entry.label = Convert.ToString(reader.GetValue(1));
-                                            }
-                                            else if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(long))
-                                            {
-                                                entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
-                                                entry.label = reader.GetInt64(1).ToString(CultureInfo.InvariantCulture);
-                                            }
-                                            else if (reader.GetFieldType(0) == typeof(int) && reader.GetFieldType(1) == typeof(string))
-                                            {
-                                                entry.value = reader.GetInt32(0).ToString(CultureInfo.InvariantCulture);
-                                                entry.label = Convert.ToString(reader.GetValue(1));
+                                                if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(string))
+                                                {
+                                                    entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
+                                                    entry.label = Convert.ToString(reader.GetValue(1));
+                                                }
+                                                else if (reader.GetFieldType(0) == typeof(long) && reader.GetFieldType(1) == typeof(long))
+                                                {
+                                                    entry.value = reader.GetInt64(0).ToString(CultureInfo.InvariantCulture);
+                                                    entry.label = reader.GetInt64(1).ToString(CultureInfo.InvariantCulture);
+                                                }
+                                                else if (reader.GetFieldType(0) == typeof(int) && reader.GetFieldType(1) == typeof(string))
+                                                {
+                                                    entry.value = reader.GetInt32(0).ToString(CultureInfo.InvariantCulture);
+                                                    entry.label = Convert.ToString(reader.GetValue(1));
+                                                }
+                                                else
+                                                {
+                                                    continue;
+                                                }
                                             }
                                             else
                                             {
-                                                continue;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (reader.GetFieldType(0) != typeof(string) || reader.GetFieldType(1) != typeof(string))
-                                            {
-                                                continue;
+                                                if (reader.GetFieldType(0) != typeof(string) || reader.GetFieldType(1) != typeof(string))
+                                                {
+                                                    continue;
+                                                }
+
+                                                entry.value = Convert.ToString(reader.GetValue(0));
+                                                entry.label = Convert.ToString(reader.GetValue(1));
                                             }
 
-                                            entry.value = Convert.ToString(reader.GetValue(0));
-                                            entry.label = Convert.ToString(reader.GetValue(1));
+                                            retVals.Add(entry);
                                         }
 
-                                        retVals.Add(entry);
+                                        reader.Close();
                                     }
-
-                                    reader.Close();
                                 }
                             }
                         }
@@ -472,6 +491,60 @@ namespace SpendManagementLibrary
 
             return sortedResults.Count > maxRows ? sortedResults.GetRange(0, maxRows) : sortedResults;           
         }
+
+        private static List<sAutoCompleteResult> GetCostCodeResult(string searchTerm, Guid displayFieldId, ICurrentUserBase currentUser)
+        {
+            var list = new List<sAutoCompleteResult>();
+
+            cFields fields = new cFields();
+            cField fieldToDisplay = fields.GetFieldByID(displayFieldId);
+            string orignalSearchTerm = searchTerm;
+            string noWildCard = orignalSearchTerm.Replace("%", String.Empty);
+
+            var field = fieldToDisplay.FieldName;
+
+            string sql1 = "SELECT TOP 25 CostCodeId, " + field + " FROM costcodes WHERE " + field;
+ 
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(sql1);
+            sb.Append(" = '" + noWildCard + "'");
+
+            sb.Append(" UNION ");
+            sb.Append(sql1);
+            sb.Append(" LIKE '%" + searchTerm + "%'");
+            sb.Append(" ORDER BY " + field);
+
+
+            using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(currentUser.AccountID)))
+            {
+                databaseConnection.sqlexecute.Parameters.Clear();
+
+                using (IDataReader reader = databaseConnection.GetReader(sb.ToString()))
+                {
+                    while (reader.Read())
+                    {
+                      var entry = new sAutoCompleteResult();
+
+                        entry.value = reader.GetInt32(reader.GetOrdinal("costcodeid")).ToString();
+                        entry.label = reader.GetString(reader.GetOrdinal(field));
+                        list.Add(entry);
+                    }
+
+                    reader.Close();
+                }
+
+            }
+        
+
+            //var entry = new sAutoCompleteResult();
+            //entry.value = Convert.ToString(reader.GetValue(0));
+            //entry.label = Convert.ToString(reader.GetValue(1));
+
+
+            return list;
+        }
+
 
         /// <summary>
         /// Returns ID and display for for auto complete extender (jQuery) to for dynamic data sources
