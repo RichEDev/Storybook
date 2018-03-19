@@ -1026,7 +1026,7 @@ namespace SpendManagementLibrary
             using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(currentUser.AccountID)))
             {        
                 databaseConnection.sqlexecute.Parameters.Clear();
-                databaseConnection.AddWithValue("@SearchTerm", searchTerm);
+                databaseConnection.AddWithValue("@SearchTerm", searchTerm.Replace("%", string.Empty));
                 databaseConnection.AddWithValue("@SearchTermWildCard", "%" + searchTerm + "%");
 
                 //determine which sql where clause to build up. 
