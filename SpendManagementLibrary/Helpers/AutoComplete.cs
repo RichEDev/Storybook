@@ -1011,21 +1011,23 @@ namespace SpendManagementLibrary
         /// </returns>
         private static List<sAutoCompleteResult> GetCostCodeAutoCompleteResults(string searchTerm, Guid displayFieldId, ICurrentUserBase currentUser, bool useWildCard)
         {
-            var list = new List<sAutoCompleteResult>();
+            var autoCompleteResults = new List<sAutoCompleteResult>();
 
             cFields fields = new cFields();
             cField fieldToDisplay = fields.GetFieldByID(displayFieldId);     
             string field = fieldToDisplay.FieldName;
 
             var sqlSelect = $"SELECT TOP 25 CostCodeId, {field} FROM CostCodes WHERE {field}";         
-            var sqlNoWildCardWhereClause = $" = \'{searchTerm.Replace("%", string.Empty)}\'";
-            var sqlUnion = "UNION ";
-            var sqlLikeWithWildCard = $" LIKE \'%{searchTerm}%\'";
+            var sqlNoWildCardWhereClause = " = @SearchTerm";
+            var sqlUnion = " UNION ";
+            var sqlLikeWithWildCard = " LIKE + @SearchTermWildCard";
             var sqlOrderBy = $" ORDER BY {field}";
 
             using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(currentUser.AccountID)))
-            {
+            {        
                 databaseConnection.sqlexecute.Parameters.Clear();
+                databaseConnection.AddWithValue("@SearchTerm", searchTerm);
+                databaseConnection.AddWithValue("@SearchTermWildCard", "%" + searchTerm + "%");
 
                 //determine which sql where clause to build up. 
                 var sql = !useWildCard ? $"{sqlSelect}{sqlNoWildCardWhereClause}" : $"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnion}{sqlSelect}{sqlLikeWithWildCard}{sqlOrderBy}";
@@ -1040,14 +1042,14 @@ namespace SpendManagementLibrary
                                             label = reader.GetString(reader.GetOrdinal(field))
                                         };
 
-                        list.Add(entry);
+                        autoCompleteResults.Add(entry);
                     }
 
                     reader.Close();
                 }
             }
 
-            return list;
+            return autoCompleteResults;
         }
 
     }
