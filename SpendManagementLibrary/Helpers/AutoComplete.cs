@@ -335,24 +335,14 @@ namespace SpendManagementLibrary
 
             if (Guid.TryParseExact(displayField, "D", out displayFieldId))
             {
-
-
-
                 //Is the display field costcode description or cost code?
                 if (displayFieldId == new Guid("AF80D035-6093-4721-8AFC-061424D2AB72") || displayFieldId == new Guid("359DFAC9-74E6-4BE5-949F-3FB224B1CBFC"))
                 {
-                    retVals = GetCostCodeResult(matchText, displayFieldId, currentUser, useWildcards);
+                    retVals = GetCostCodeAutoCompleteResults(matchText, displayFieldId, currentUser, useWildcards);
 
                 }
                 else
                 {
-
-
-
-
-                    //if displayfield is cost code or costcode desc. 
-                    //new method to set retvalues with union
-
                     cTables tables = new cTables();
                     cTable basetable = new cTable();
                     List<Guid> matchFieldIDs;
@@ -491,77 +481,6 @@ namespace SpendManagementLibrary
 
             return sortedResults.Count > maxRows ? sortedResults.GetRange(0, maxRows) : sortedResults;           
         }
-
-        private static List<sAutoCompleteResult> GetCostCodeResult(string searchTerm, Guid displayFieldId, ICurrentUserBase currentUser, bool useWildCard)
-        {
-            var list = new List<sAutoCompleteResult>();
-
-            cFields fields = new cFields();
-            cField fieldToDisplay = fields.GetFieldByID(displayFieldId);
-            string orignalSearchTerm = searchTerm;
-            string noWildCard = orignalSearchTerm.Replace("%", String.Empty);
-
-            var field = fieldToDisplay.FieldName;
-
-            var sql1 = "SELECT TOP 25 CostCodeId, " + field + " FROM costcodes WHERE " + field ;         
-            string sql2 = " = '" + noWildCard + "'";
-
-            string sql3 = "union ";
-            string sql4 = " LIKE '%" + searchTerm + "%'";
-            string sql5 = " ORDER BY " + field;
-
-
-            //StringBuilder sb = new StringBuilder();
-            //sb.Append(sql1);
-            //sb.Append(" = '" + noWildCard + "'");
-
-            //sb.Append(" UNION ");
-            //sb.Append(sql1);
-            //sb.Append(" LIKE '%" + searchTerm + "%'");
-            //sb.Append(" ORDER BY " + field);
-
-           
-
-            using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(currentUser.AccountID)))
-            {
-                databaseConnection.sqlexecute.Parameters.Clear();
-
-                var sqlll = "";
-
-                if (!useWildCard)
-                {
-                    sqlll = sql1 + sql2;
-                }
-                else
-                {
-                    sqlll = sql1 + sql2 + sql3 + sql1 + sql4 + sql5;
-                }
-
-                using (IDataReader reader = databaseConnection.GetReader(sqlll))
-                {
-                    while (reader.Read())
-                    {
-                        var entry = new sAutoCompleteResult();
-
-                        entry.value = reader.GetInt32(reader.GetOrdinal("costcodeid")).ToString();
-                        entry.label = reader.GetString(reader.GetOrdinal(field));
-                        list.Add(entry);
-                    }
-
-                    reader.Close();
-                }
-
-            }
-        
-
-            //var entry = new sAutoCompleteResult();
-            //entry.value = Convert.ToString(reader.GetValue(0));
-            //entry.label = Convert.ToString(reader.GetValue(1));
-
-
-            return list;
-        }
-
 
         /// <summary>
         /// Returns ID and display for for auto complete extender (jQuery) to for dynamic data sources
@@ -1071,5 +990,65 @@ namespace SpendManagementLibrary
             }
             return false;
         }
+
+        /// <summary>
+        /// A method for getting the cost code auto complete results
+        /// </summary>
+        /// <param name="searchTerm">
+        /// The search term.
+        /// </param>
+        /// <param name="displayFieldId">
+        /// The display field id.
+        /// </param>
+        /// <param name="currentUser">
+        /// The current user.
+        /// </param>
+        /// <param name="useWildCard">
+        /// Whether to use a wildcard search. Will be false when the on blur event validates the entered costcode
+        /// </param>
+        /// <returns>
+        /// The a list of <see cref="sAutoCompleteResult"/>.
+        /// </returns>
+        private static List<sAutoCompleteResult> GetCostCodeAutoCompleteResults(string searchTerm, Guid displayFieldId, ICurrentUserBase currentUser, bool useWildCard)
+        {
+            var list = new List<sAutoCompleteResult>();
+
+            cFields fields = new cFields();
+            cField fieldToDisplay = fields.GetFieldByID(displayFieldId);     
+            string field = fieldToDisplay.FieldName;
+
+            var sqlSelect = $"SELECT TOP 25 CostCodeId, {field} FROM CostCodes WHERE {field}";         
+            var sqlNoWildCardWhereClause = $" = \'{searchTerm.Replace("%", string.Empty)}\'";
+            var sqlUnion = "UNION ";
+            var sqlLikeWithWildCard = $" LIKE \'%{searchTerm}%\'";
+            var sqlOrderBy = $" ORDER BY {field}";
+
+            using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(currentUser.AccountID)))
+            {
+                databaseConnection.sqlexecute.Parameters.Clear();
+
+                //determine which sql where clause to build up. 
+                var sql = !useWildCard ? $"{sqlSelect}{sqlNoWildCardWhereClause}" : $"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnion}{sqlSelect}{sqlLikeWithWildCard}{sqlOrderBy}";
+
+                using (IDataReader reader = databaseConnection.GetReader(sql))
+                {
+                    while (reader.Read())
+                    {
+                        var entry = new sAutoCompleteResult
+                                        {
+                                            value = reader.GetInt32(reader.GetOrdinal("costcodeid")).ToString(),
+                                            label = reader.GetString(reader.GetOrdinal(field))
+                                        };
+
+                        list.Add(entry);
+                    }
+
+                    reader.Close();
+                }
+            }
+
+            return list;
+        }
+
     }
 }
