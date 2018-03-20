@@ -1019,6 +1019,7 @@ namespace SpendManagementLibrary
 
             var sqlSelect = $"SELECT TOP 25 CostCodeId, {field} FROM CostCodes WHERE {field}";         
             var sqlNoWildCardWhereClause = " = @SearchTerm";
+            var sqlUnarchived = " AND Archived = 0";
             var sqlUnion = " UNION ";
             var sqlLikeWithWildCard = " LIKE + @SearchTermWildCard";
             var sqlOrderBy = $" ORDER BY {field}";
@@ -1030,7 +1031,7 @@ namespace SpendManagementLibrary
                 databaseConnection.AddWithValue("@SearchTermWildCard", "%" + searchTerm + "%");
 
                 //determine which sql where clause to build up. 
-                var sql = !useWildCard ? $"{sqlSelect}{sqlNoWildCardWhereClause}" : $"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnion}{sqlSelect}{sqlLikeWithWildCard}{sqlOrderBy}";
+                var sql = !useWildCard ? $"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnarchived}" : $"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnion}{sqlSelect}{sqlLikeWithWildCard}{sqlUnarchived}{sqlOrderBy}";
 
                 using (IDataReader reader = databaseConnection.GetReader(sql))
                 {
