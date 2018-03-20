@@ -335,8 +335,8 @@ namespace SpendManagementLibrary
 
             if (Guid.TryParseExact(displayField, "D", out displayFieldId))
             {
-                //Is the display field costcode description or cost code?
-                if (displayFieldId == new Guid("AF80D035-6093-4721-8AFC-061424D2AB72") || displayFieldId == new Guid("359DFAC9-74E6-4BE5-949F-3FB224B1CBFC"))
+                //Is this for an auto complete request and is the display field costcode description or cost code ?
+                if (maxRows > 0 && (displayFieldId == new Guid("AF80D035-6093-4721-8AFC-061424D2AB72") || displayFieldId == new Guid("359DFAC9-74E6-4BE5-949F-3FB224B1CBFC")))
                 {
                     retVals = GetCostCodeAutoCompleteResults(matchText, displayFieldId, currentUser, useWildcards);
 

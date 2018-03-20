@@ -1615,7 +1615,7 @@ public partial class aeexpense : System.Web.UI.Page
 
                     if (costCode != null)
                     {
-                        txtbox.Text = costCode.Costcode;
+                        txtbox.Text = this.ActionContext.Properties.UseCostCodeDescription ? costCode.Description : costCode.Costcode;
                         hiddenIdentifier.Text = costCode.CostcodeId.ToString(CultureInfo.InvariantCulture);
                     }
                 }
@@ -1626,7 +1626,7 @@ public partial class aeexpense : System.Web.UI.Page
                 {
                     //apply predefined costcode breakdown
                     costCode = this.ActionContext.CostCodes.GetCostcodeById(breakdown[0].costcodeid);
-                    txtbox.Text = costCode.Costcode;
+                    txtbox.Text = this.ActionContext.Properties.UseCostCodeDescription ? costCode.Description : costCode.Costcode;
                     hiddenIdentifier.Text = costCode.CostcodeId.ToString();
                 }              
             }
@@ -2146,7 +2146,7 @@ public partial class aeexpense : System.Web.UI.Page
 
             if (costCode != null)
             {
-                textBox.Text = costCode.Costcode;
+                textBox.Text = this.ActionContext.Properties.UseCostCodeDescription ? costCode.Description : costCode.Costcode;
                 hiddenIdentifier.Text = costCode.CostcodeId.ToString();
             }
 
