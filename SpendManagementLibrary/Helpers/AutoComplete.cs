@@ -1031,7 +1031,7 @@ namespace SpendManagementLibrary
                 databaseConnection.AddWithValue("@SearchTermWildCard", "%" + searchTerm + "%");
 
                 //determine which sql where clause to build up. 
-                var sql = !useWildCard ? $"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnarchived}" : $"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnion}{sqlSelect}{sqlLikeWithWildCard}{sqlUnarchived}{sqlOrderBy}";
+                var sql = !useWildCard ? $"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnarchived}" : $"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnarchived}{sqlUnion}{sqlSelect}{sqlLikeWithWildCard}{sqlUnarchived}{sqlOrderBy}";
 
                 using (IDataReader reader = databaseConnection.GetReader(sql))
                 {
