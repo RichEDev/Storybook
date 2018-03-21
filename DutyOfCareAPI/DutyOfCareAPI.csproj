@@ -70,10 +70,18 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -95,10 +103,14 @@
     <Compile Include="DutyOfCare\LicenceCheck\TestLicenseCheckApi.cs" />
     <Compile Include="DutyOfCare\LicenceCheck\VehicleLookup\IVehicleLookup.cs" />
     <Compile Include="DutyOfCare\LicenceCheck\VehicleLookup\IVehicleLookupResult.cs" />
+    <Compile Include="DutyOfCare\LicenceCheck\VehicleLookup\LicenceCheck.cs" />
     <Compile Include="DutyOfCare\LicenceCheck\VehicleLookup\Vehicle.cs" />
     <Compile Include="DutyOfCare\LicenceCheck\VehicleLookup\VehicleLookupFailed.cs" />
     <Compile Include="DutyOfCare\LicenceCheck\VehicleLookup\VehicleLookupSucess.cs" />
     <Compile Include="DutyOfCare\Mode.cs" />
+    <Compile Include="DutyOfCare\VehicleSmart\VehicleLookup\VehicleDetails.cs" />
+    <Compile Include="DutyOfCare\VehicleSmart\VehicleLookup\VehicleSmart.cs" />
+    <Compile Include="DutyOfCare\VehicleSmart\VehicleLookup\VehicleSmartLookup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\DutyOfCareLicenceCheckApi\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -114,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\ExpensesLicenceCheckAPI.LicenceCheckApi.AccountsListResponse.datasource" />
     <None Include="Properties\DataSources\ExpensesLicenceCheckAPI.LicenceCheckApi.ActionResponse.datasource" />
     <None Include="Properties\DataSources\ExpensesLicenceCheckAPI.LicenceCheckApi.BooleanResponse.datasource" />

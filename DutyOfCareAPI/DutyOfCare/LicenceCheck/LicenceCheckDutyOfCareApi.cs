@@ -27,6 +27,11 @@
         private DutyOfCare.Mode _mode;
 
         /// <summary>
+        /// An instance of <see cref="IVehicleLookup"/> created as part of the bootstrap.
+        /// </summary>
+        public IVehicleLookup VehicleLookup { get; set; }
+
+        /// <summary>
         ///Licence portal url base of Mode(Test/Live)
         /// </summary>
         public string LicencePortalUrl { get; set; }
@@ -269,52 +274,9 @@
         /// <returns>An instance of <see cref="IVehicleLookupResult"/></returns>
         public IVehicleLookupResult Lookup(string registrationNumber, ILookupLogger lookupLogger)
         {
-            var service = new VDLServiceClient();
-            var response = service.GetAdvancedVehicleData(this._credentials.UserName, this._credentials.Password, registrationNumber);
-            lookupLogger.Write(registrationNumber, response.ResponseMessage.Code, response.ResponseMessage.Description);
-            if (response.Success)
-            {
-                var engineCapacity = 0;
-                int.TryParse(response.VehicleData.ExactCc, out engineCapacity);
-                if (engineCapacity == 0)
-                {
-                    int.TryParse(response.VehicleData.Cc, out engineCapacity);
-                }
-
-                var registrationDate = DateTime.MinValue;
-                DateTime.TryParseExact(response.VehicleData.DateOfRegistration, "ddMMyyyy", null, DateTimeStyles.None, out registrationDate);
-
-                var motDueDate = response.VehicleData.MotExpiry == DateTime.MinValue && response.VehicleData.MotStatus == "MOT"
-                    ? registrationDate.AddYears(3)
-                    : response.VehicleData.MotExpiry;
-
-
-                var result = new VehicleLookupSuccess
-                {
-                    Message = response.ResponseMessage.Description,
-                    Code = response.ResponseMessage.Code,
-                    Vehicle = new Vehicle
-                    {
-                        RegistrationNumber = response.VehicleData.VRM,
-                        Model = response.VehicleData.DvlaModel,
-                        Make = response.VehicleData.DvlaMake,
-                        FuelType = response.VehicleData.Fuel,
-                        EngineCapacity = engineCapacity,
-                        VehicleType = string.IsNullOrEmpty(response.VehicleData.VehicleType) ? response.VehicleData.BodyStyle : response.VehicleData.VehicleType,
-                        TaxExpiry = response.VehicleData.TaxExpiry,
-                        TaxStatus = response.VehicleData.TaxStatus,
-                        MotExpiry = motDueDate,
-                        MotStatus = response.VehicleData.MotStatus,
-                    }
-                };
-
-                return result;
-            }
-            else
-            {
-                return new VehicleLookupFailed(response.ResponseMessage.Code, response.ResponseMessage.Description);
-            }
+            return this.VehicleLookup.Lookup(registrationNumber, lookupLogger);
         }
+
 
         private static DrivingLicenceDetailsResponse SetTheDrivingLicenceInformation(int employeeId, CheckResponse response)
         {

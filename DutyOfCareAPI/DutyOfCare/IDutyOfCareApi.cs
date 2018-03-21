@@ -1,20 +1,24 @@
-﻿using DutyOfCareAPI.DutyOfCare.LicenceCheck.VehicleLookup;
-
-namespace DutyOfCareAPI.DutyOfCare
+﻿namespace DutyOfCareAPI.DutyOfCare
 {
     using System;
 
+    using DutyOfCareAPI.DutyOfCare.LicenceCheck.VehicleLookup;
     using DutyOfCareLicenceCheckApi;
 
     /// <summary>
     /// Interface for all the Duty of care API operations
     /// </summary>
-    public interface IDutyOfCareApi
+    public interface IDutyOfCareApi 
     {
         /// <summary>
         /// Gets or sets the licence portal url of the licence check.
         /// </summary>
         string LicencePortalUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets an instance of <see cref="IVehicleLookup"/> created as part of the bootstrap.
+        /// </summary>
+        IVehicleLookup VehicleLookup { get; set; }
 
         /// <summary>
         /// GetConsentPortalAccess Method send request to Licence check API to get the Security code to access the Portal and submit the consent for an employee
@@ -28,7 +32,7 @@ namespace DutyOfCareAPI.DutyOfCare
         /// <param name="dateOfBirth">Date of birth of the meployee</param>
         /// <param name="sex">Sex of employee</param>
         /// <returns>GetConsentPortalAccessResponse response object</returns>
-        GetConsentPortalAccessResponse GetConsentPortalAccess(string clientCode, string firstName, string lastName, string drivingLicenceNumber, string emailAdress,string middleName, string sex, DateTime dateOfBirth);
+        GetConsentPortalAccessResponse GetConsentPortalAccess(string clientCode, string firstName, string lastName, string drivingLicenceNumber, string emailAdress, string middleName, string sex, DateTime dateOfBirth);
 
         /// <summary>
         /// Invalidates the claimants consent. 
@@ -71,7 +75,7 @@ namespace DutyOfCareAPI.DutyOfCare
         /// The <see cref="DrivingLicenceDetailsResponse"/>.
         /// Driving licence details
         /// </returns>
-        DrivingLicenceDetailsResponse GetDrivingLicence(string drivingLicenceNumber, string firstname, string surname, DateTime dateOfBirth, Sex sex, long driverId, int employeeId,bool initialLookUp, string clientCode);
+        DrivingLicenceDetailsResponse GetDrivingLicence(string drivingLicenceNumber, string firstname, string surname, DateTime dateOfBirth, Sex sex, long driverId, int employeeId, bool initialLookUp, string clientCode);
 
         /// <summary>
         /// Checks whether or not the provided driver has valid consent on record.
@@ -83,10 +87,9 @@ namespace DutyOfCareAPI.DutyOfCare
         /// <summary>
         /// Lookup a vehicle based on the registration number
         /// </summary>
-        /// <param name="registrationNumber"></param>
+        /// <param name="registrationNumber">The registration of the vehicle to look up</param>
         /// <param name="lookupLogger">An instance of <see cref="ILookupLogger"/></param>
         /// <returns>An instance of <see cref="IVehicleLookupResult"/></returns>
         IVehicleLookupResult Lookup(string registrationNumber, ILookupLogger lookupLogger);
-
     }
 }

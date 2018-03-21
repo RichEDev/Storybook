@@ -1,10 +1,12 @@
-﻿using Spend_Management.shared.code.DVLA;
-
-namespace Spend_Management.Bootstrap
+﻿namespace Spend_Management.Bootstrap
 {
+    using System.Net;
+
     using DutyOfCareAPI.DutyOfCare;
     using DutyOfCareAPI.DutyOfCare.LicenceCheck;
-    using System.Net;
+    using DutyOfCareAPI.DutyOfCare.VehicleSmart.VehicleLookup;
+    
+    using Spend_Management.shared.code.DVLA;
     using SpendManagementLibrary;
 
     /// <summary>
@@ -43,9 +45,16 @@ namespace Spend_Management.Bootstrap
                     break;
             }
 
+            api.VehicleLookup = new VehicleSmart();
+
             return api;
         }
 
+        /// <summary>
+        /// Create an instance of the <see cref="ILookupLogger"/> class
+        /// </summary>
+        /// <param name="currentUser">The <see cref="ICurrentUser"/>for the current logged on user</param>
+        /// <returns>A valid <see cref="ICurrentUser"/></returns>
         public static ILookupLogger CreateLogger(ICurrentUser currentUser)
         {
             return new LicenceCheckVehicleLookupLogger(currentUser);
