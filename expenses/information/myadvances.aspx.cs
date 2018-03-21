@@ -172,7 +172,7 @@ namespace expenses
 
                 litgrid.Text = clsgrid.CreateGrid();      
                 
-                clsfloats.AuditViewAdvances($"Advances for {user.Employee.FullName}", user);
+                clsfloats.AuditViewAdvances($"Advances for {user.Employee.FullNameUsername}", user);
 			}
 		}
 

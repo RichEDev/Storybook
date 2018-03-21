@@ -416,7 +416,7 @@
                 ClientScript.RegisterStartupScript(this.GetType(), "js", js.ToString(), true);
                 ClientScript.RegisterStartupScript(this.GetType(), "claimselectorJS", "SEL.ClaimSelector.RootClaimSelector = '" + fromClaimSelectorAsString + "';", true);
 
-                claims.AuditViewClaim(claim, user);
+                claims.AuditViewClaim(SpendManagementElement.Claims, claim, user);
             }
 
             var journeyDetailsControl = (journey_details)LoadControl("~/expenses/usercontrols/journey_details.ascx");

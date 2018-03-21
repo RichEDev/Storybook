@@ -90,7 +90,7 @@ namespace expenses.information
 	        if (user.isDelegate && user.Delegate.EmployeeID != user.EmployeeID)
 	        {
 	            var auditLog = new cAuditLog();
-	            auditLog.ViewRecord(SpendManagementElement.Holidays, $"Holidays for {user.Employee.FullName}", user);
+	            auditLog.ViewRecord(SpendManagementElement.Holidays, $"Holidays for {user.Employee.FullNameUsername}", user);
 	        }
 	    }
 	}

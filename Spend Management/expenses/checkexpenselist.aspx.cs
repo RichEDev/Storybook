@@ -224,7 +224,7 @@ namespace Spend_Management
 
                 ClientScript.RegisterStartupScript(this.GetType(), "js", js.ToString(), true);
 
-                claims.AuditViewClaim(claim, user);
+                claims.AuditViewClaim(SpendManagementElement.CheckAndPay, claim, user);
             }
 
             var journeyDetailsControl = (journey_details)LoadControl("~/expenses/usercontrols/journey_details.ascx");
