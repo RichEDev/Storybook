@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Web.Script.Serialization;
+    using System.Web.UI.WebControls;
 
     using SpendManagementLibrary;
     using SpendManagementLibrary.Enumerators.Expedite;
@@ -222,7 +223,8 @@
                     if (viewType == UserView.Current)
                     {
                         cCardStatements statements = new cCardStatements(user.AccountID);
-                        this.ddlstStatements.Items.AddRange(statements.createStatementDropDown(user.EmployeeID));
+                        ListItem[] corporateCardStatements = statements.createStatementDropDown(user.EmployeeID);
+                        this.ddlstStatements.Items.AddRange(corporateCardStatements);
                         this.ddlstStatements.Attributes.Add("onchange", "SEL.Claims.ClaimViewer.DdlstStatement_onchange()");
                         if (this.ddlstStatements.Items.Count > 0)
                         {
@@ -233,6 +235,8 @@
                             string[] grid = statements.generateCardTransactionGrid(Convert.ToInt32(this.ddlstStatements.Items[0].Value), user.EmployeeID);
                             this.litCardTransactionsGrid.Text = grid[1];
                             this.Page.ClientScript.RegisterStartupScript(this.GetType(), "gridTransactionsVars", cGridNew.generateJS_init("gridTransactionsVars", new List<string> { grid[0] }, user.CurrentActiveModule), true);
+
+                            this.AuditViewClaimCorporateCardStatements(claim, corporateCardStatements, user);
                         }
                         else
                         {
@@ -411,6 +415,8 @@
                 string fromClaimSelectorAsString = fromClaimSelector ? "true" : "false";
                 ClientScript.RegisterStartupScript(this.GetType(), "js", js.ToString(), true);
                 ClientScript.RegisterStartupScript(this.GetType(), "claimselectorJS", "SEL.ClaimSelector.RootClaimSelector = '" + fromClaimSelectorAsString + "';", true);
+
+                claims.AuditViewClaim(claim, user);
             }
 
             var journeyDetailsControl = (journey_details)LoadControl("~/expenses/usercontrols/journey_details.ascx");
@@ -493,6 +499,22 @@
             string claimName = this.Request.QueryString["claimName"] != null ? this.Request.QueryString["claimName"] : string.Empty;
             string filterValue = this.Request.QueryString["filterValue"] != null ? this.Request.QueryString["filterValue"] : string.Empty;
             Response.Redirect("/expenses/claimSelector.aspx?claimSelector=true&claimant=" + claimant + "&pageNumber=" + pageNumber + "&claimName=" + claimName + "&filterValue=" + filterValue);
+        }
+
+        private void AuditViewClaimCorporateCardStatements(cClaim claim, ListItem[] corporateCardStatements, CurrentUser user)
+        {
+            if ((user.EmployeeID != claim.employeeid || (user.isDelegate && user.Delegate.EmployeeID != claim.employeeid)) && corporateCardStatements.Length > 0)
+            {
+                var statements = string.Empty;
+
+                foreach (var statement in corporateCardStatements)
+                {
+                    statements += (statement.Text + ", ");
+                }
+
+                var auditLog = new cAuditLog();
+                auditLog.ViewRecord(SpendManagementElement.Claims, $"Corporate Card Statements for claim {claim.name}: {statements.Remove(statements.Length - 2)}", user);
+            }
         }
     }
 }

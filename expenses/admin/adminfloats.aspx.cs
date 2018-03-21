@@ -79,9 +79,9 @@ namespace expenses
 				litgrid.Text = getGrid(false);
 
 				litactive.Text = getGrid(true);
-				
-				
-			}
+
+			    clsfloats.AuditViewAdvances("Advances", user);
+            }
 		}
 
 		private string getGrid(bool active)

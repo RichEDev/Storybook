@@ -34,6 +34,8 @@ namespace expenses.information
 
 			    // set the sel.grid javascript variables
 			    Page.ClientScript.RegisterStartupScript(this.GetType(), "HolidaysGridVars", cGridNew.generateJS_init("HolidaysGridVars", new List<string>() { gridData[0] }, user.CurrentActiveModule), true);
+
+                this.AuditViewHolidays(user);
             }
 		}
 
@@ -82,5 +84,14 @@ namespace expenses.information
 
             Response.Redirect(sPreviousURL, true);
         }
+
+	    private void AuditViewHolidays(CurrentUser user)
+	    {
+	        if (user.isDelegate && user.Delegate.EmployeeID != user.EmployeeID)
+	        {
+	            var auditLog = new cAuditLog();
+	            auditLog.ViewRecord(SpendManagementElement.Holidays, $"Holidays for {user.Employee.FullName}", user);
+	        }
+	    }
 	}
 }

@@ -83,6 +83,20 @@ namespace Spend_Management.shared.webServices
         /// Obtain an address object
         /// </summary>
         /// <param name="addressIdentifier">The address to get</param>
+        /// <returns>-999 if the user does not have permission, a negative code on error or a positive on success</returns>
+        [WebMethod(EnableSession = true), ScriptMethod]
+        public Address GetForEdit(int addressIdentifier, int labelId)
+        {
+            var address = GetForClaimOwner(addressIdentifier, labelId, null);
+            CurrentUser currentUser = cMisc.GetCurrentUser();
+            this.AuditViewAddress(address, currentUser);
+            return address;
+        }
+
+        /// <summary>
+        /// Obtain an address object
+        /// </summary>
+        /// <param name="addressIdentifier">The address to get</param>
         /// <param name="claimOwnerId">The employee who this claim is for, if not the current user (e.g. when approving)</param>
         /// <returns>-999 if the user does not have permission, a negative code on error or a positive on success</returns>
         [WebMethod(EnableSession = true), ScriptMethod]
@@ -975,6 +989,17 @@ namespace Spend_Management.shared.webServices
             /// Determines if claimant is allowed to choose from multiple work addresses
             /// </summary>
             public bool AllowMultipleWorkAddresses;
+        }
+
+        /// <summary>
+        /// Audits an address
+        /// </summary>
+        /// <param name="address">The address to audit</param>
+        /// <param name="user">The current user</param>
+        private void AuditViewAddress(Address address, CurrentUser user)
+        {
+            cAuditLog auditLog = new cAuditLog();
+            auditLog.ViewRecord(SpendManagementElement.Addresses, $"{address.Line1}, {address.City}, {address.Postcode}", user);
         }
     }
 }

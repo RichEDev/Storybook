@@ -50,8 +50,6 @@ namespace expenses.admin
                     {
                         cmbstatement.Items.FindByValue(Request.QueryString["statementid"]).Selected = true;
                     }
-
-                    
                 }
             }
         }
@@ -65,6 +63,7 @@ namespace expenses.admin
         void gridtransactions_InitializeDataSource(object sender, Infragistics.WebUI.UltraWebGrid.UltraGridEventArgs e)
         {
             getTransactions();
+            this.AuditViewCardStatement(this.cmbstatement.SelectedItem.Text);
         }
 
         protected void cmdok_Click(object sender, ImageClickEventArgs e)
@@ -165,6 +164,13 @@ namespace expenses.admin
         protected void gridtransactions_InitializeRow(object sender, Infragistics.WebUI.UltraWebGrid.RowEventArgs e)
         {
             
+        }
+
+        private void AuditViewCardStatement(string cardStatement)
+        {
+            CurrentUser user = cMisc.GetCurrentUser();
+            cAuditLog auditLog = new cAuditLog();
+            auditLog.ViewRecord(SpendManagementElement.CorporateCards, cardStatement, user);
         }
     }
 }

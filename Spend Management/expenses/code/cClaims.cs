@@ -7001,5 +7001,19 @@ namespace Spend_Management
         {
             return employeeCars.GetActiveCars().Where(e => e.fuelcard == true).ToList();
         }
+
+        /// <summary>
+        /// Audits the view of a claim
+        /// </summary>
+        /// <param name="claim">The claim to audit</param>
+        /// <param name="user">The <see cref="CurrentUser"/></param>
+        public void AuditViewClaim(cClaim claim, CurrentUser user)
+        {
+            if (user.EmployeeID != claim.employeeid || (user.isDelegate && user.Delegate.EmployeeID != claim.employeeid))
+            {
+                cAuditLog auditLog = new cAuditLog();
+                auditLog.ViewRecord(SpendManagementElement.Claims, claim.name, user);
+            }
+        }
     }
 }

@@ -62,6 +62,8 @@ namespace expenses.information
                     holiday = holidays.GetHolidayById(holidayid);
                     dtstart.Text = holiday.StartDate.ToShortDateString();
                     dtend.Text = holiday.EndDate.ToShortDateString();
+
+                    this.AuditViewHolidays(holiday, user);
                 }
                 else
                 {
@@ -128,6 +130,15 @@ namespace expenses.information
 
             Response.Redirect("holidays.aspx", true);
 
+        }
+
+        private void AuditViewHolidays(Holiday holiday,CurrentUser user)
+        {
+            if (user.isDelegate && user.Delegate.EmployeeID != user.EmployeeID)
+            {
+                var auditLog = new cAuditLog();
+                auditLog.ViewRecord(SpendManagementElement.Holidays, $"{user.Employee.FullName}: {holiday.StartDate.ToShortDateString()} - {holiday.EndDate.ToShortDateString()}", user);
+            }
         }
     }
 }

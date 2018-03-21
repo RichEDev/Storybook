@@ -33,6 +33,9 @@ namespace expenses.admin
                 ViewState["accountid"] = user.AccountID;
                 ViewState["employeeid"] = user.EmployeeID;
                 ViewState["subAccountID"] = user.CurrentSubAccountId;
+
+                cFloats floats = new cFloats((int)ViewState["accountid"]);
+                floats.AuditViewAdvances($"Settled Advances", user);
             }
         }
 

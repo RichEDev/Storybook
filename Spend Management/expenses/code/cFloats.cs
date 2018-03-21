@@ -1231,6 +1231,20 @@ namespace Spend_Management
             return this.list.Values.Where(advance => advance.employeeid == employeeId).Where(advance => advance.settled == false).ToList();        
         }
 
+        /// <summary>
+        /// Audits the view of advances
+        /// </summary>
+        /// <param name="value">The value that will be added in the audit log</param>
+        /// <param name="user">The <see cref="CurrentUser"/></param>
+        public void AuditViewAdvances(string value, CurrentUser user)
+        {
+            if (user.isDelegate && user.Delegate.EmployeeID != user.EmployeeID)
+            {
+                var auditLog = new cAuditLog();
+                auditLog.ViewRecord(SpendManagementElement.Advances, value, user);
+            }
+        }
+
         #endregion
 
         #region Methods

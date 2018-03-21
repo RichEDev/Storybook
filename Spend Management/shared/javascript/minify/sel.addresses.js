@@ -283,7 +283,7 @@
                     // attempt to retrieve address
                     SEL.Data.Ajax({
                         data: { "addressIdentifier": addressIdentifier, "labelId": 0 },
-                        methodName: "Get",
+                        methodName: "GetForEdit",
                         serviceName: "svcAddresses",
 
                         success: function(data)

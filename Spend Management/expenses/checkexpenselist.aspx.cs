@@ -223,6 +223,8 @@ namespace Spend_Management
                 js.Append("});");
 
                 ClientScript.RegisterStartupScript(this.GetType(), "js", js.ToString(), true);
+
+                claims.AuditViewClaim(claim, user);
             }
 
             var journeyDetailsControl = (journey_details)LoadControl("~/expenses/usercontrols/journey_details.ascx");

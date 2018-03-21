@@ -170,7 +170,9 @@ namespace expenses
                     }
 				}
 
-                litgrid.Text = clsgrid.CreateGrid();              
+                litgrid.Text = clsgrid.CreateGrid();      
+                
+                clsfloats.AuditViewAdvances($"Advances for {user.Employee.FullName}", user);
 			}
 		}
 

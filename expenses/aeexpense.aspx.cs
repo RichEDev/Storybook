@@ -2446,7 +2446,9 @@ public partial class aeexpense : System.Web.UI.Page
         int transactionid = (int)ViewState["transactionid"];
         SortedList<int, cExpenseItem> expitems = (SortedList<int, cExpenseItem>)ViewState["items"];
         bool cardAutomaticAllocation = false;
-
+        cClaims claims = this.ActionContext.Claims;
+        var claimid = this.getClaimId(this.ActionContext.CurrentUser.EmployeeID);
+        cClaim claim = claims.getClaimById(claimid);
         ExpenseItem mobileItem = null;
         if (ViewState["mobileID"] != null && (int)ViewState["mobileID"] > 0)
         {
@@ -2479,6 +2481,10 @@ public partial class aeexpense : System.Web.UI.Page
                 {
                     items = reqemp.GetSubCategories().SubCategories;
                 }
+
+                var transactionDate = transaction.transactiondate.HasValue ? transaction.transactiondate.Value.Date.ToShortDateString() : "";
+
+                this.AuditViewExpense(claim, $"Card Transaction: {transactionDate}, {transaction.description}, {this.RedactCardNumber(transaction)}, {transaction.transactionamount:0.00}", this.ActionContext.CurrentUser);
             }
             else if (mobileItem != null)
             {
@@ -2503,9 +2509,6 @@ public partial class aeexpense : System.Web.UI.Page
                 this.hdnWorkAddressId.Value = expenseitem.WorkAddressId.ToString();
             }
         }
-
-
-
 
         int countryid = reqProperties.HomeCountry;
         int currencyid = (int)reqProperties.BaseCurrency;
@@ -2564,6 +2567,8 @@ public partial class aeexpense : System.Web.UI.Page
                 pnlspecific.Controls.Add(generateDropDowns(null, mobileJourney));
 
                 pnlspecific.Controls.Add(clsbuilder.generateItem("0", reqsubcat, null, null, false, date, reqemp, Request, this.ActionContext));
+
+                this.AuditViewExpense(claim, $"Mobile Journey: {mobileJourney.JourneyDate}, {reqsubcat.subcat}", this.ActionContext.CurrentUser);
             }
             else if (ViewState["subcatid"] != null)
             {
@@ -2608,6 +2613,8 @@ public partial class aeexpense : System.Web.UI.Page
                     }
 
                     pnlspecific.Controls.Add(clsbuilder.generateItem("0", reqsubcat, null, expenseitem, false, action == Action.Edit && hdnDate.Value == "" ? expenseitem.date : date, reqemp, Request, this.ActionContext));
+
+                    this.AuditViewExpense(claim, $"{expenseitem.refnum}, {expenseitem.date.ToShortDateString()}, {reqsubcat.subcat}, {expenseitem.total:0.00}", this.ActionContext.CurrentUser);
                 }
                 else if (mobileJourney != null)
                 {
@@ -2630,7 +2637,6 @@ public partial class aeexpense : System.Web.UI.Page
         }
         else
         {
-
             if (action == Action.Add || ((action == Action.Edit || action == Action.Copy) && ((int)ViewState["transactionid"] > 0 && cardAutomaticAllocation)))
             {
                 FlagManagement flagManagement = this.ActionContext.FlagManagement;
@@ -2696,9 +2702,43 @@ public partial class aeexpense : System.Web.UI.Page
                         }
                         pnlspecific.Controls.Add(clsbuilder.generateItem(i.ToString(), reqsubcat, null, expenseitem, false, date, reqemp, Request, this.ActionContext));
                     }
+
+                    if (mobileItem != null)
+                    {
+                        this.AuditViewExpense(claim, $"Mobile Item: {mobileItem.Date}, {reqsubcat.subcat}, {mobileItem.Total:0.00}", this.ActionContext.CurrentUser);
+                    }
                 }
             }
         }
+    }
+
+    private void AuditViewExpense(cClaim claim, string value, ICurrentUser user)
+    {
+        if (this.IsPostBack) return;
+
+        if (user.EmployeeID != claim.employeeid || (user.isDelegate && user.Delegate.EmployeeID != claim.employeeid))
+        {
+            cAuditLog auditLog = new cAuditLog();
+            auditLog.ViewRecord(SpendManagementElement.Expenses, value, user);
+        }
+    }
+
+    private string RedactCardNumber(cCardTransaction transaction)
+    {
+        var cardNumber = string.Empty; 
+
+        if (this.IsPostBack) return cardNumber;
+
+        if (transaction.cardnumber.StartsWith("XXXX")) return transaction.cardnumber;
+
+        for (var i = 0; i < transaction.cardnumber.Length - 4; i++)
+        {
+            cardNumber += "X";
+        }
+
+        cardNumber += transaction.cardnumber.Substring(transaction.cardnumber.Length - 4);
+
+        return cardNumber;
     }
 
     private int getClaimId(int employeeid)
