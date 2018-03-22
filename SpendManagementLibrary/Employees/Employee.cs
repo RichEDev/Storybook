@@ -830,28 +830,37 @@
         {
             cSecureData secureData = new cSecureData();
 
-            string oldPasswordHashed =
-                System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(currentPassword,
-                    System.Web.Configuration.FormsAuthPasswordFormat.MD5.ToString());
-            string oldPasswordEncrypted = this.PasswordMethod == PasswordEncryptionMethod.RijndaelManaged
-                ? secureData.Encrypt(currentPassword)
-                : encryptor.Encrypt(currentPassword);
-            string newPasswordEncryped = encryptor.Encrypt(newPassword);
-
             if (checkOldPassword)
             {
-                if (this.Password != oldPasswordEncrypted && this.Password != oldPasswordHashed && this.Password != currentPassword)
+                switch (this.PasswordMethod)
                 {
-                    return 1;
-                }
-            }
+                    case PasswordEncryptionMethod.RijndaelManaged:
+                        string oldPasswordHashed =
+                            System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(currentPassword,
+                                System.Web.Configuration.FormsAuthPasswordFormat.MD5.ToString());
+                        string oldPasswordEncrypted = secureData.Encrypt(currentPassword);
+                        if (this.Password != oldPasswordEncrypted && this.Password != oldPasswordHashed && this.Password != currentPassword)
+                        {
+                            return 1;
+                        }
+                                                          
+                        break;
+                    case PasswordEncryptionMethod.SaltedHash:
+                        if (!encryptor.Verify(currentPassword, this.Password))
+                        {
+                            return 1;
+                        }
 
+                        break;
+                }    
+            }
+            
             if (checkNewPassword != 0)
             {
                 return 2;
             }
 
-            this.Password = newPasswordEncryped;
+            this.Password = encryptor.Encrypt(newPassword);
             this.PasswordMethod = PasswordEncryptionMethod.SaltedHash;
             this.LastChange = DateTime.UtcNow;
             this.LogonRetryCount = 0;
