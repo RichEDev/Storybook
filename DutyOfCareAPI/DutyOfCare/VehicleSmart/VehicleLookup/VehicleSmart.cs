@@ -36,8 +36,18 @@
                     vehicleData.MotExpiryDate = vehicleData.MotExpiryDateDvsa;
                 }
 
-                var motDueDate = vehicleData.MotExpiryDate.Length > 10 ? DateTime.ParseExact(vehicleData.MotExpiryDate.Substring(0, 10), "yyyy-MM-dd", null) : DateTime.MinValue;
-                var taxDueDate = vehicleData.TaxDueDate.Length > 10 ? DateTime.ParseExact(vehicleData.TaxDueDate.Substring(0, 10), "yyyy-MM-dd", null) : DateTime.MinValue;
+                var motDueDate = !string.IsNullOrEmpty(vehicleData.MotExpiryDate) && vehicleData.MotExpiryDate.Length > 10 ? DateTime.ParseExact(vehicleData.MotExpiryDate.Substring(0, 10), "yyyy-MM-dd", null) : DateTime.MinValue;
+                if (!vehicleData.Motd && motDueDate > DateTime.Today)
+                {
+                    vehicleData.Motd = true;
+                }
+
+                var taxDueDate = !string.IsNullOrEmpty(vehicleData.TaxDueDate) && vehicleData.TaxDueDate.Length > 10 ? DateTime.ParseExact(vehicleData.TaxDueDate.Substring(0, 10), "yyyy-MM-dd", null) : DateTime.MinValue;
+                if (!vehicleData.Taxed && taxDueDate > DateTime.Today)
+                {
+                    vehicleData.Taxed = true;
+                }
+
                 var carType = string.Empty;
 
                 switch (vehicleData.VehicleTypeApproval)
@@ -69,9 +79,14 @@
 
                 if (string.IsNullOrEmpty(carType))
                 {
-                    if (vehicleData.Wheelplan == "2 WHEEL")
+                    switch (vehicleData.Wheelplan)
                     {
-                        carType = "MOTORCYCLE";
+                        case "2 WHEEL":
+                            carType = "MOTORCYCLE";
+                            break;
+                        case "2 AXLE RIGID BODY":
+                            carType = "CAR";
+                            break;
                     }
                 }
 
