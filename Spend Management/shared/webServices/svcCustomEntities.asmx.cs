@@ -798,7 +798,7 @@
                 builtIn = false;
             }
 
-            attribute = new cOneToManyRelationship(attributeid, attributename, displayname, description, tooltip, mandatory, builtIn, createdon, createdby, modifiedon, modifiedby, relatedtable, fieldid, viewid, relatedentity.entityid, auditidentifier, entityid, false, false);
+            attribute = new cOneToManyRelationship(attributeid, attributename, displayname, description, tooltip, mandatory, builtIn, createdon, createdby, modifiedon, modifiedby, relatedtable, fieldid, viewid, relatedentity.entityid, auditidentifier, entityid, false, false, false);
             int presaveId = attributeid;
 
             attributeid = clsentities.saveRelationship(entityid, attribute, isParentFilter); // -1 duplicate, -2 circular reference
@@ -851,11 +851,12 @@
         /// <param name="displayInMobile">Whether to show the attribute for mobile users</param>
         /// <param name="boolAttribute">Specifies whether a user will have access to the image library when uploading an attachment or strip fonts from formatted text box</param>
         /// <param name="builtIn">Specifies whether the attribute is a system attribute</param>
+        /// <param name="encrypted">Sepcifies whether the attribute has the data encrypted in the datastore.</param>
         /// <returns>Object array containing attribute id, 0 or 1 if Audit Identifier and Display Name</returns>
         [WebMethod(EnableSession = true)]
-        public string[] saveAttribute(int accountid, int employeeid, int entityid, int attributeid, string displayname, string description, string tooltip, bool mandatory, FieldType fieldtype, int? maxlength, AttributeFormat format, string defaultvalue, byte precision, string[] lstitems, int workflowid, string advicePanelText, bool auditidentifier, bool isunique, bool populateExistingRecordsDefault, bool displayInMobile, bool boolAttribute = false, bool builtIn = false)
+        public string[] saveAttribute(int accountid, int employeeid, int entityid, int attributeid, string displayname, string description, string tooltip, bool mandatory, FieldType fieldtype, int? maxlength, AttributeFormat format, string defaultvalue, byte precision, string[] lstitems, int workflowid, string advicePanelText, bool auditidentifier, bool isunique, bool populateExistingRecordsDefault, bool displayInMobile, bool boolAttribute, bool builtIn, bool encrypted)
         {
-            return cCustomEntities.SaveGeneralAttribute(employeeid, entityid, attributeid, displayname, description, tooltip, mandatory, fieldtype, maxlength, format, defaultvalue, precision, lstitems, workflowid, advicePanelText, auditidentifier, isunique, populateExistingRecordsDefault, boolAttribute, displayInMobile, builtIn);
+            return cCustomEntities.SaveGeneralAttribute(employeeid, entityid, attributeid, displayname, description, tooltip, mandatory, fieldtype, maxlength, format, defaultvalue, precision, lstitems, workflowid, advicePanelText, auditidentifier, isunique, populateExistingRecordsDefault, boolAttribute, displayInMobile, builtIn, encrypted);
         }
 
         [WebMethod(EnableSession = true)]
@@ -936,7 +937,7 @@
 
             if (attribute.GetType() == typeof(cListAttribute))
             {
-                return new cListAttribute(attribute.attributeid, attribute.attributename, attribute.displayname, attribute.description, attribute.tooltip, attribute.mandatory, attribute.fieldtype, attribute.createdon, attribute.createdby, attribute.modifiedon, attribute.modifiedby, null, attribute.fieldid, attribute.isauditidentifer, attribute.isunique, ((cListAttribute)attribute).format, false, false, attribute.DisplayInMobile, attribute.BuiltIn);
+                return new cListAttribute(attribute.attributeid, attribute.attributename, attribute.displayname, attribute.description, attribute.tooltip, attribute.mandatory, attribute.fieldtype, attribute.createdon, attribute.createdby, attribute.modifiedon, attribute.modifiedby, null, attribute.fieldid, attribute.isauditidentifer, attribute.isunique, ((cListAttribute)attribute).format, false, false, attribute.DisplayInMobile, attribute.BuiltIn, attribute.IsSystemAttribute);
             }
             return attribute;
         }
@@ -1618,7 +1619,7 @@
                 createdon = attribute.createdon;
             }
 
-            summary_attribute = new cSummaryAttribute(attributeid, attributename, displayname, description, createdon, createdby, modifiedon, modifiedby, Guid.Empty, elements, columns, source_entity.entityid, false, false);
+            summary_attribute = new cSummaryAttribute(attributeid, attributename, displayname, description, createdon, createdby, modifiedon, modifiedby, Guid.Empty, elements, columns, source_entity.entityid, false, false, false);
 
             attributeid = clsentities.saveSummaryAttribute(entityid, summary_attribute);
 

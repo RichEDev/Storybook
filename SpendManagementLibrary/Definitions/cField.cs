@@ -95,6 +95,8 @@ namespace SpendManagementLibrary
         /// </summary>
         public Guid? TreeGroup { get; set; }
 
+        public bool Encrypted { get; }
+
         #region cTable/cField properties
 
         public cTable GetRelatedTable()
@@ -194,7 +196,112 @@ namespace SpendManagementLibrary
 
         public cField() { }
 
-        public cField(int accountID, Guid fieldID, Guid tableID, Guid viewGroupID, Guid lookupFieldID, Guid relatedTableID, Guid lookupTableID, string fieldName, string fieldType, string description, string comment, bool normalView, bool idField, bool genList, bool canTotal, int width, bool valueList, bool allowImport, bool mandatory, bool printOut, int length, bool workflowUpdate, bool workflowSearch, string relabelParam, string classPropertyName, SortedList<object, string> listItems, bool useForLookup, FieldSourceType fieldSource, FieldCategory fieldCat, bool isForeignKey, string friendlyNameTo, string friendlyNameFrom, Guid? treeGroup)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="cField"/> class.
+        /// </summary>
+        /// <param name="accountID">
+        /// The account id.
+        /// </param>
+        /// <param name="fieldID">
+        /// The field id.
+        /// </param>
+        /// <param name="tableID">
+        /// The table id.
+        /// </param>
+        /// <param name="viewGroupID">
+        /// The view group id.
+        /// </param>
+        /// <param name="lookupFieldID">
+        /// The lookup field id.
+        /// </param>
+        /// <param name="relatedTableID">
+        /// The related table id.
+        /// </param>
+        /// <param name="lookupTableID">
+        /// The lookup table id.
+        /// </param>
+        /// <param name="fieldName">
+        /// The field name.
+        /// </param>
+        /// <param name="fieldType">
+        /// The field type.
+        /// </param>
+        /// <param name="description">
+        /// The description.
+        /// </param>
+        /// <param name="comment">
+        /// The comment.
+        /// </param>
+        /// <param name="normalView">
+        /// Used in the "normal" claims view
+        /// </param>
+        /// <param name="idField">
+        /// Is this an id field (not primary key)
+        /// </param>
+        /// <param name="genList">
+        /// Is this field a "genlist"
+        /// </param>
+        /// <param name="canTotal">
+        /// Can this field be totaled
+        /// </param>
+        /// <param name="width">
+        /// The width.
+        /// </param>
+        /// <param name="valueList">
+        /// Is this field a value list
+        /// </param>
+        /// <param name="allowImport">
+        /// Allowed to import this field.
+        /// </param>
+        /// <param name="mandatory">
+        /// Is this field mandatory (used in imports).
+        /// </param>
+        /// <param name="printOut">
+        /// Available in the print view.
+        /// </param>
+        /// <param name="length">
+        /// The length of the field.
+        /// </param>
+        /// <param name="workflowUpdate">
+        /// Available in workflow update.
+        /// </param>
+        /// <param name="workflowSearch">
+        /// Available in workflow search.
+        /// </param>
+        /// <param name="relabelParam">
+        /// The relabel param.
+        /// </param>
+        /// <param name="classPropertyName">
+        /// The class property name.
+        /// </param>
+        /// <param name="listItems">
+        /// The items in a list (if this is a list item field)
+        /// </param>
+        /// <param name="useForLookup">
+        /// Used for Lookup.
+        /// </param>
+        /// <param name="fieldSource">
+        /// Where did this field come from <see cref="FieldSourceType"/>.
+        /// </param>
+        /// <param name="fieldCat">
+        /// The "type" of field <see cref="FieldCategory"/>
+        /// </param>
+        /// <param name="isForeignKey">
+        /// Is this field a foreign key
+        /// </param>
+        /// <param name="friendlyNameTo">
+        /// The "friendly name" used when this is the target of a join in the reports viewer.
+        /// </param>
+        /// <param name="friendlyNameFrom">
+        /// The "friendly name" used when this is the source of a join in the reports viewer.
+        /// </param>
+        /// <param name="treeGroup">
+        /// The "group" that the field is displayed inside in the report viewer
+        /// </param>
+        /// <param name="encrypted">
+        /// Is this field encrypted.
+        /// </param>
+        public cField(int accountID, Guid fieldID, Guid tableID, Guid viewGroupID, Guid lookupFieldID, Guid relatedTableID, Guid lookupTableID, string fieldName, string fieldType, string description, string comment, bool normalView, bool idField, bool genList, bool canTotal, int width, bool valueList, bool allowImport, bool mandatory, bool printOut, int length, bool workflowUpdate, bool workflowSearch, string relabelParam, string classPropertyName, SortedList<object, string> listItems, bool useForLookup, FieldSourceType fieldSource, FieldCategory fieldCat, bool isForeignKey, string friendlyNameTo, string friendlyNameFrom, Guid? treeGroup, bool encrypted)
         {
             this.AccountID = accountID;
             this.FieldID = fieldID;
@@ -229,12 +336,15 @@ namespace SpendManagementLibrary
             this.FriendlyNameTo = friendlyNameTo;
             this.FriendlyNameFrom = friendlyNameFrom;
             this.TreeGroup = treeGroup;
+            this.Encrypted = encrypted;
         }
 
         /// <summary>
-        /// Instatiate a new version of <see cref="cField"/> based on an existing field
+        /// Initializes a new instance of the <see cref="cField"/> class based on an existing instance.
         /// </summary>
-        /// <param name="field">The <see cref="cField"/> to copy</param>
+        /// <param name="field">
+        /// The field to "clone".
+        /// </param>
         public cField(cField field)
         {
             if (field == null)
@@ -275,6 +385,7 @@ namespace SpendManagementLibrary
             this.FriendlyNameTo = field.FriendlyNameTo;
             this.FriendlyNameFrom = field.FriendlyNameFrom;
             this.TreeGroup = field.TreeGroup;
+            this.Encrypted = field.Encrypted;
         }
     }
 }

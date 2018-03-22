@@ -133,7 +133,8 @@
                 true,
                 false,
                 false,
-                true);
+                true,
+                false);
 
             var employeeTextAttribute = new cTextAttribute(
                 attributeId,
@@ -156,7 +157,9 @@
                 false,
                 true,
                 false,
-                true);
+                true,
+                false,
+                false);
 
             var employeeLargeTextAttribute = new cTextAttribute(
                 attributeId,
@@ -179,7 +182,9 @@
                 false,
                 true,
                 false,
-                true);
+                true,
+                false,
+                false);
 
             var employeeDateTimeAttribute = new cDateTimeAttribute(
                 attributeId,
@@ -200,7 +205,8 @@
                 true,
                 false,
                 false,
-                true);
+                true,
+                false);
 
             return PrepareUserDefinedFields(ref attributeId,
                 ref attributeName,

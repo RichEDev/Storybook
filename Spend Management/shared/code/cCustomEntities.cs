@@ -1397,7 +1397,7 @@ namespace Spend_Management
             bool sysAttribute = false;
             bool boolAttribute = false;
 
-            const string Sql = "select entityid, attributeid, display_name, description, tooltip, mandatory, DisplayInMobile, createdon, createdby, modifiedon, modifiedby, fieldtype, fieldid, is_key_field, is_audit_identity, is_unique, maxlength, format, precision, defaultvalue, relatedtable, relationshiptype, viewid, related_entity, workflowid, allowEdit, allowDelete, advicePanelText, aliasTableID, relationshipDisplayField, maxRows, system_attribute, BoolAttribute, BuiltIn from customEntityAttributes where fieldtype <> @lookupType";
+            const string Sql = "select entityid, attributeid, display_name, description, tooltip, mandatory, DisplayInMobile, createdon, createdby, modifiedon, modifiedby, fieldtype, fieldid, is_key_field, is_audit_identity, is_unique, maxlength, format, precision, defaultvalue, relatedtable, relationshiptype, viewid, related_entity, workflowid, allowEdit, allowDelete, advicePanelText, aliasTableID, relationshipDisplayField, maxRows, system_attribute, BoolAttribute, BuiltIn, encrypted from customEntityAttributes where fieldtype <> @lookupType";
             expdata.sqlexecute.Parameters.Clear();
             expdata.sqlexecute.Parameters.AddWithValue("@lookupType", (int)FieldType.LookupDisplayField);
 
@@ -1439,6 +1439,7 @@ namespace Spend_Management
                 int systemAttribute_Ord = reader.GetOrdinal("system_attribute");
                 int boolAttribute_Ord = reader.GetOrdinal("BoolAttribute");
                 int builtIn_Ord = reader.GetOrdinal("BuiltIn");
+                int encryptedOrd = reader.GetOrdinal("Encrypted");
 
                 #endregion
 
@@ -1475,6 +1476,7 @@ namespace Spend_Management
                     mandatory = reader.GetBoolean(mandatory_Ord);
                     displayInMobile = reader.GetBoolean(displayInMobile_Ord);
                     builtIn = reader.GetBoolean(builtIn_Ord);
+                    var encrypted = reader.GetBoolean(encryptedOrd);
                     createdon = reader.GetDateTime(createdon_Ord);
                     createdby = reader.GetInt32(createdby_Ord);
                     if (reader.IsDBNull(modifiedon_Ord))
@@ -1568,7 +1570,7 @@ namespace Spend_Management
                             }
 
                             format = (AttributeFormat)reader.GetByte(format_Ord);
-                            attributes.Add(attributeid, new cTextAttribute(attributeid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, maxlength, format, fieldid, isauditidentifier, isunique, allowEdit, allowDelete, boolAttribute, displayInMobile, builtIn, sysAttribute));
+                            attributes.Add(attributeid, new cTextAttribute(attributeid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, maxlength, format, fieldid, isauditidentifier, isunique, allowEdit, allowDelete, boolAttribute, displayInMobile, builtIn, sysAttribute, encrypted));
                             break;
                         case FieldType.Integer:
                             attributes.Add(attributeid, new cNumberAttribute(attributeid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, 0, fieldid, iskeyfield, isauditidentifier, isunique, allowEdit, allowDelete, displayInMobile, builtIn, sysAttribute));
@@ -1680,7 +1682,7 @@ namespace Spend_Management
                             break;
                         case FieldType.Contact:
                             format = (AttributeFormat) reader.GetByte(format_Ord);
-                            attributes.Add(attributeid, new cContactAttribute(attributeid, attributename, displayname, description, tooltip, mandatory, createdon, createdby, modifiedon, modifiedby, fieldid, format, isauditidentifier, isunique, allowEdit, allowDelete, displayInMobile, builtIn));
+                            attributes.Add(attributeid, new cContactAttribute(attributeid, attributename, displayname, description, tooltip, mandatory, createdon, createdby, modifiedon, modifiedby, fieldid, format, isauditidentifier, isunique, allowEdit, allowDelete, displayInMobile, builtIn, encrypted));
                             break;
                     }
                 }
@@ -2410,9 +2412,10 @@ namespace Spend_Management
         /// <param name="boolAttribute">Specifies whether a user will have access to the image library when uploading an attachment or whether the fonts will be stripped from a formatted text box.</param>
         /// <param name="displayInMobile">Specifies whether this attribute will show to users of the mobile application.</param>
         /// <param name="builtIn">Specifies whether this attribute will be a system attribute</param>
+        /// <param name="encrypted">Specifies whether this attribute will be encrypted</param>
         /// <returns>Object array containing attribute id, 0 or 1 if Audit Identifier and Display Name</returns>
         /// <exception cref="Exception"></exception>
-        public static string[] SaveGeneralAttribute(int employeeid, int entityid, int attributeid, string displayname, string description, string tooltip, bool mandatory, FieldType fieldtype, int? maxlength, AttributeFormat format, string defaultvalue, byte precision, string[] lstitems, int workflowid, string advicePanelText, bool auditidentifier, bool isunique, bool populateExistingRecordsDefault, bool boolAttribute, bool displayInMobile, bool builtIn)
+        public static string[] SaveGeneralAttribute(int employeeid, int entityid, int attributeid, string displayname, string description, string tooltip, bool mandatory, FieldType fieldtype, int? maxlength, AttributeFormat format, string defaultvalue, byte precision, string[] lstitems, int workflowid, string advicePanelText, bool auditidentifier, bool isunique, bool populateExistingRecordsDefault, bool boolAttribute, bool displayInMobile, bool builtIn, bool encrypted)
         {
             CurrentUser user = cMisc.GetCurrentUser();
             string attributename = displayname;
@@ -2425,6 +2428,7 @@ namespace Spend_Management
             cCustomEntities clsentities = new cCustomEntities(user);
             cCustomEntity entity = clsentities.getEntityById(entityid);
             cAttribute attribute = null;
+            bool currentEncrypted = false;
 
             string[] arrReturn = new string[3];
 
@@ -2438,6 +2442,7 @@ namespace Spend_Management
                 createdon = attribute.createdon;
                 fieldid = attribute.fieldid;
                 currentBuiltIn = attribute.BuiltIn;
+                currentEncrypted = attribute.Encrypted;
             }
 
             // only allow the attribute to be set as built-in/system if the user is "adminonly"
@@ -2452,32 +2457,32 @@ namespace Spend_Management
                 case FieldType.LargeText:
                     attribute = new cTextAttribute(attributeid, attributename, displayname, description, tooltip, mandatory,
                                                    fieldtype, createdon, createdby, modifiedon, modifiedby, maxlength, format,
-                                                   fieldid, auditidentifier, isunique, false, false, boolAttribute, displayInMobile, builtIn);
+                                                   fieldid, auditidentifier, isunique, false, false, boolAttribute, displayInMobile, builtIn, false, encrypted);
                     break;
                 case FieldType.DateTime:
                     attribute = new cDateTimeAttribute(attributeid, attributename, displayname, description, tooltip, mandatory,
                                                        fieldtype, createdon, createdby, modifiedon, modifiedby, format, fieldid,
-                                                       auditidentifier, isunique, false, false, displayInMobile, builtIn);
+                                                       auditidentifier, isunique, false, false, displayInMobile, builtIn, false);
                     break;
                 case FieldType.TickBox:
                     attribute = new cTickboxAttribute(attributeid, attributename, displayname, description, tooltip, mandatory,
                                                       fieldtype, createdon, createdby, modifiedon, modifiedby, defaultvalue,
-                                                      fieldid, auditidentifier, isunique, false, false, displayInMobile, builtIn);
+                                                      fieldid, auditidentifier, isunique, false, false, displayInMobile, builtIn, false);
                     break;
                 case FieldType.Integer:
                     attribute = new cNumberAttribute(attributeid, attributename, displayname, description, tooltip, mandatory,
                                                      FieldType.Integer, createdon, createdby, modifiedon, modifiedby, 0, fieldid,
-                                                     false, auditidentifier, isunique, false, false, displayInMobile, builtIn);
+                                                     false, auditidentifier, isunique, false, false, displayInMobile, builtIn, false);
                     break;
                 case FieldType.Currency:
                     attribute = new cNumberAttribute(attributeid, attributename, displayname, description, tooltip, mandatory,
                                                      FieldType.Currency, createdon, createdby, modifiedon, modifiedby, 2,
-                                                     fieldid, false, auditidentifier, isunique, false, false, displayInMobile, builtIn);
+                                                     fieldid, false, auditidentifier, isunique, false, false, displayInMobile, builtIn, false);
                     break;
                 case FieldType.Number:
                     attribute = new cNumberAttribute(attributeid, attributename, displayname, description, tooltip, mandatory,
                                                      FieldType.Number, createdon, createdby, modifiedon, modifiedby, precision,
-                                                     fieldid, false, auditidentifier, isunique, false, false, displayInMobile, builtIn);
+                                                     fieldid, false, auditidentifier, isunique, false, false, displayInMobile, builtIn, false);
                     break;
                 case FieldType.List:
                     var list = new SortedList<int, cListAttributeElement>();
@@ -2513,19 +2518,20 @@ namespace Spend_Management
                         false,
                         false,
                         displayInMobile,
-                        builtIn);
+                        builtIn,
+                        false);
                     break;
                 case FieldType.RunWorkflow:
                     cWorkflows clsworkflows = new cWorkflows(user);
                     cWorkflow workflow = clsworkflows.GetWorkflowByID(workflowid);
                     attribute = new cRunWorkflowAttribute(attributeid, attributename, displayname, description, tooltip,
                                                           mandatory, createdon, createdby, modifiedon, modifiedby, fieldid,
-                                                          workflow, false, false, displayInMobile, builtIn);
+                                                          workflow, false, false, displayInMobile, builtIn, false);
                     break;
                 case FieldType.Comment:
                     attribute = new cCommentAttribute(attributeid, attributename, displayname, description, tooltip, mandatory,
                                                       createdon, createdby, modifiedon, modifiedby, advicePanelText, fieldid,
-                                                      auditidentifier, isunique, false, false, displayInMobile, builtIn);
+                                                      auditidentifier, isunique, false, false, displayInMobile, builtIn, false);
                     break;
                 case FieldType.Attachment:
                     attribute = new cAttachmentAttribute(attributeid, attributename, displayname, description, tooltip, mandatory,
@@ -2537,7 +2543,7 @@ namespace Spend_Management
                 case FieldType.Contact:
                     attribute = new cContactAttribute(attributeid, attributename, displayname, description, tooltip,
                                                     mandatory, createdon, createdby, modifiedon, modifiedby, fieldid, format, auditidentifier,
-                                                    isunique, false, false, displayInMobile, builtIn);
+                                                    isunique, false, false, displayInMobile, builtIn, encrypted);
                     break;
                 default:
                     throw new Exception("FieldType." + fieldtype +
@@ -2569,6 +2575,17 @@ namespace Spend_Management
             {
                 entity.BuiltIn = true;
                 clsentities.saveEntity(entity);
+            }
+
+            if (!currentEncrypted && attribute.Encrypted)
+            {
+                if (attribute.attributeid == 0)
+                {
+                    attribute.attributeid = attributeid;
+                }
+
+                var encryptor = new CustomEntityAttributeEncryptor(user);
+                encryptor.Encrypt(attribute, entity.table.TableID);
             }
 
             return arrReturn;
@@ -2656,6 +2673,7 @@ namespace Spend_Management
             expdata.sqlexecute.Parameters.AddWithValue("@commentText", DBNull.Value);
             expdata.sqlexecute.Parameters.AddWithValue("@relationshipType", (int)RelationshipType.None);
             expdata.sqlexecute.Parameters.AddWithValue("@builtIn", Convert.ToByte(attribute.BuiltIn));
+            expdata.sqlexecute.Parameters.AddWithValue("@encrypted", Convert.ToByte(attribute.Encrypted));
 
             if (attribute.GetType() == typeof(cTextAttribute))
             {

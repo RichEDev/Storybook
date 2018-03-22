@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "shared/javaScript/minify/sel.masterPopup.min.js",
+    "inputFiles": [
+      "shared/javaScript/minify/sel.masterPopup.js"
+    ]
+  },
+  {
+    "outputFileName": "shared/javaScript/customEntityAdmin.min.js",
+    "inputFiles": [
+      "shared/javaScript/customEntityAdmin.js"
+    ]
+  }
+]

@@ -38,6 +38,7 @@
     [BoolAttribute] BIT NOT NULL DEFAULT 0, 
     [DisplayInMobile] BIT NOT NULL DEFAULT 0,
 	[BuiltIn] BIT NOT NULL DEFAULT 0, 
-    [SystemCustomEntityAttributeID] UNIQUEIDENTIFIER NULL
+    [SystemCustomEntityAttributeID] UNIQUEIDENTIFIER NULL,
+	[Encrypted]		BIT		NOT NULL DEFAULT ((0))
 );
 

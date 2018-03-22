@@ -2,6 +2,8 @@
 var selectedViewID;
 var listItemEditMode = false;
 var shallowSavePerformed = false;
+var attributeEncrypted = false;
+var editMode = false;
 
 function addModalControlFocusOnShowOrHideEvent(modalid, controltofocus, showing) {
     if (showing){
@@ -250,11 +252,11 @@ function saveAttribute()
     var CommentText = '';
     var auditidentifier = $g(auditidentifierid).checked;
     var isunique = $g(isuniqueid).checked;
+    var encrypted = $g(encrypt).checked;
     var cmbDisplayWidth = $g(cmbDisplayWidthID);
     var display_width = cmbDisplayWidth.options[cmbDisplayWidth.selectedIndex].value;
     var boolAttribute = false;
     var builtIn = $("#" + chkattributebuiltinid).is(":checked");
-
     maxlength = null;
 
     var populateDefaults = false;
@@ -351,10 +353,10 @@ function saveAttribute()
             break;
     }
 
-    Spend_Management.svcCustomEntities.saveAttribute(CurrentUserInfo.AccountID, employeeid, entityid, attributeid, attibutename, description, tooltip, mandatory, type, maxlength, format, defaultvalue, precision, listItems, workflowid, CommentText, auditidentifier, isunique, populateDefaults, showInMobile, boolAttribute, builtIn,
+    var saveFunction = function () {Spend_Management.svcCustomEntities.saveAttribute(CurrentUserInfo.AccountID, employeeid, entityid, attributeid, attibutename, description, tooltip, mandatory, type, maxlength, format, defaultvalue, precision, listItems, workflowid, CommentText, auditidentifier, isunique, populateDefaults, showInMobile, boolAttribute, builtIn, encrypted,
         function (data)
         {
-            if (data[0] == -1)
+            if (data[0] === -1)
             {
                 SEL.MasterPopup.ShowMasterPopup('An attribute or relationship with this Display name already exists.', 'Message from ' + moduleNameHTML);
             }
@@ -382,6 +384,13 @@ function saveAttribute()
         },
         WebServiceError
     );
+    }
+
+    if ( editMode && !attributeEncrypted && encrypted) {
+        SEL.MasterPopup.ShowMasterConfirm("The 'Encrypt' option is irreversible. Once activated, all data stored for this attribute will be encrypted. Are you sure you want to continue?", 'Message from ' + moduleNameHTML, saveFunction, function () { });
+    } else {
+        saveFunction();
+    }
 }
 
 
@@ -484,6 +493,8 @@ function NewAttribute() {
     SEL.CustomEntityAdministration.IDs.Attribute = 0;
     clearAttributeForm();
     showAttributeModal();
+    editMode = false;
+    attributeEncrypted = false;
 }
 
 function editAttribute(attid, fieldtype, isParentFilter)
@@ -544,6 +555,7 @@ function clearBasicAttributeDetails() {
     $g(cmbattributetypeid).selectedIndex = 0;
     $g(chkattributemandatoryid).disabled = false;
     $('#' + txtmaxlengthid).css('display', '');
+    $('#' + encrypt).prop('checked', false);
 }
 
 function clearAdvancedAttributeDetails() {
@@ -581,6 +593,7 @@ function getAttribute(attid) {
     Spend_Management.svcCustomEntities.getAttribute(CurrentUserInfo.AccountID, entityid, attid, getAttributeComplete);
 }
 function getAttributeComplete(attribute) {
+    editMode = true;
     $g('divAttributeSectionHeader').innerHTML = 'Attribute: ' + attribute.displayname;
     $g(txtattributenameid).value = attribute.displayname;
     $g(txtattributedescriptionid).value = attribute.description;
@@ -588,6 +601,15 @@ function getAttributeComplete(attribute) {
     $g(chkattributemandatoryid).checked = attribute.mandatory;
     $g(chkDisplayInMobile).checked = attribute.DisplayInMobile;
     $('#' + chkattributebuiltinid).prop('checked', attribute.BuiltIn);
+    $('#' + encrypt).prop('checked', attribute.Encrypted);
+
+    $('#' + encrypt).attr('disabled', false);
+    attributeEncrypted = attribute.Encrypted;
+
+    if (attributeEncrypted) {
+        
+        $('#' + encrypt).attr('disabled', true);
+    }
 
     if (CurrentUserInfo.AdminOverride) {
         $('#' + chkattributebuiltinid).prop('disabled', false);
@@ -878,6 +900,8 @@ function showSpecificFieldsOnAttributeModal()
         $('#divAdviceText').slideUp(200);
     }
 
+    $('.encrypt').hide();
+
     switch (type)
     {
         case '':
@@ -886,6 +910,7 @@ function showSpecificFieldsOnAttributeModal()
             $('#divTextOptions').slideDown(200, function ()
             {
                 ShowDisplayWidthOptions('text', false);
+                $('.encrypt').show();
             });            
             break;
         case '4':
@@ -894,6 +919,7 @@ function showSpecificFieldsOnAttributeModal()
             {
                 ShowDisplayWidthOptions('list', false);
                 SEL.CustomEntityAdministration.Base.AddShortCuts('listAttribute');
+                $('#' + encrypt).attr('checked', false);
             });
             var valueArray = [];
             $('#' + lstitemsid).data(lstitemsid, valueArray);
@@ -901,19 +927,24 @@ function showSpecificFieldsOnAttributeModal()
         case '5':
             $('#divDisplayWidthOptions').slideUp(200);
             $('#divTickboxOptions').slideDown(200);
+            $('#' + encrypt).attr('checked', false);
             break;
         case '3':
             $('#divDisplayWidthOptions').slideUp(200);
             $('#divDateOptions').slideDown(200);
+            $('#' + encrypt).attr('checked', false);
             break;
         case '7':
             $('#divDecimalOptions').slideDown(200);
+            $('#' + encrypt).attr('checked', false);
             break;
         case '10':                                   
             $('#divLargeTextOptions').slideDown(200);
+            $('.encrypt').show();
             break;
         case '11':
             $('#divWorkflowOptions').slideDown(200);
+            $('#' + encrypt).attr('checked', false);
             break;
         case '19':
             $('#divtooltip').css('position', 'inherit').slideUp(200);
@@ -926,6 +957,7 @@ function showSpecificFieldsOnAttributeModal()
                 $g(auditidentifierid).checked = false;
                 $g(auditidentifierid).disabled = false;
                 $g(isuniqueid).checked = false;
+                $('#' + encrypt).attr('checked', false);
             });
             break;
         case '22':
@@ -934,11 +966,12 @@ function showSpecificFieldsOnAttributeModal()
             $g(auditidentifierid).checked = false;             
             $g(isuniqueid).checked = false;          
             $('#divImageLibrary').slideDown(200, function () {
-
+                $('#' + encrypt).attr('checked', false);
             });
             break;
         case '23':
             $("#divContactOptions").css("position", "inherit").slideDown(200);
+            $('.encrypt').show();
             break;
         default:
             break;

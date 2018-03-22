@@ -127,7 +127,7 @@ using System.Web.Http;
                 Attribute =
                     new cListAttribute(0, "AttributeName", "DisplayName", "Description", "Tooltip", false,
                         FieldType.List, new DateTime(2000, 1, 1), 1, null, null, null, Guid.Empty, false, true,
-                        (AttributeFormat)Common.Enum.AttributeFormat.ListStandard, true, true, false, false)
+                        (AttributeFormat)Common.Enum.AttributeFormat.ListStandard, true, true, false, false, false)
             };
 
 

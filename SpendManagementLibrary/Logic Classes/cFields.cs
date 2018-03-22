@@ -150,7 +150,7 @@ namespace SpendManagementLibrary
                 listGenItems = GetGenListItems(nAccountID);
                 db = connection ?? new DatabaseConnection(GlobalVariables.MetabaseConnectionString);
                 strSQL +=
-                    " SELECT fieldid, tableid, field, fieldtype, description, comment, normalview, idfield, viewgroupid, genlist, width, cantotal, printout, valuelist, allowimport, mandatory, amendedon, lookuptable, lookupfield, useforlookup, workflowUpdate, workflowSearch, length, relabel, relabel_param, CAST(0 AS INT) AS fieldFrom, classPropertyName, relatedTable, NULL as fieldCategory, IsForeignKey, friendlyNameTo, friendlyNameFrom, treeGroup from [dbo].[fields_base]";
+                    " SELECT fieldid, tableid, field, fieldtype, description, comment, normalview, idfield, viewgroupid, genlist, width, cantotal, printout, valuelist, allowimport, mandatory, amendedon, lookuptable, lookupfield, useforlookup, workflowUpdate, workflowSearch, length, relabel, relabel_param, CAST(0 AS INT) AS fieldFrom, classPropertyName, relatedTable, NULL as fieldCategory, IsForeignKey, friendlyNameTo, friendlyNameFrom, treeGroup, CAST(0 AS BIT) AS [Encrypted] from [dbo].[fields_base]";
             }
             else
             {
@@ -158,7 +158,7 @@ namespace SpendManagementLibrary
                 listUserdfinedItems = GetUserdefinedListItems(nAccountID);
                 db = connection ?? new DatabaseConnection(cAccounts.getConnectionString(nAccountID));
                 strSQL +=
-                    " SELECT fieldid, tableid, field, fieldtype, description, comment, normalview, idfield, viewgroupid, genlist, width, cantotal, printout, valuelist, allowimport, mandatory, amendedon, lookuptable, lookupfield, useforlookup, workflowUpdate, workflowSearch, length, CAST(0 as Bit) as relabel, '' as relabel_param, fieldFrom, CAST(NULL as nvarchar(100)) AS classPropertyName, relatedTable, fieldCategory, IsForeignKey, null as friendlyNameTo, null as friendlyNameFrom from [dbo].[Customerfields]";
+                    " SELECT fieldid, tableid, field, fieldtype, description, comment, normalview, idfield, viewgroupid, genlist, width, cantotal, printout, valuelist, allowimport, mandatory, amendedon, lookuptable, lookupfield, useforlookup, workflowUpdate, workflowSearch, length, CAST(0 as Bit) as relabel, '' as relabel_param, fieldFrom, CAST(NULL as nvarchar(100)) AS classPropertyName, relatedTable, fieldCategory, IsForeignKey, null as friendlyNameTo, null as friendlyNameFrom, [Encrypted] from [dbo].[Customerfields]";
             }
 
             const string recordsetError = "The SQL should return the date, then the fields.";
@@ -188,14 +188,12 @@ namespace SpendManagementLibrary
                 int valueList_ordID = reader.GetOrdinal("valuelist");
                 int allowImport_ordID = reader.GetOrdinal("allowimport");
                 int mandatory_ordID = reader.GetOrdinal("mandatory");
-                int amendedOn_ordID = reader.GetOrdinal("amendedon");
                 int lookupTable_ordID = reader.GetOrdinal("lookuptable");
                 int lookupField_ordID = reader.GetOrdinal("lookupfield");
                 int useForLookup_ordID = reader.GetOrdinal("useforlookup");
                 int workflowUpdate_ordID = reader.GetOrdinal("workflowUpdate");
                 int workflowSearchable_ordID = reader.GetOrdinal("workflowSearch");
                 int length_ordID = reader.GetOrdinal("length");
-                int reLabel_ordID = reader.GetOrdinal("relabel");
                 int reLabelParam_ordID = reader.GetOrdinal("relabel_param");
                 int fieldFrom_ordID = reader.GetOrdinal("fieldFrom");
                 int classPropertyName_ordID = reader.GetOrdinal("classPropertyName");
@@ -204,6 +202,7 @@ namespace SpendManagementLibrary
                 int isForeignKey_ordID = reader.GetOrdinal("IsForeignKey");
                 int friendlyNameTo_ordID = reader.GetOrdinal("friendlyNameTo");
                 int friendlyNameFrom_ordID = reader.GetOrdinal("friendlyNameFrom");
+                int encryptedOrdinal = reader.GetOrdinal("encrypted");
                 var treeGroupOrd = 0;
                 if (nAccountID == 0)
                 {
@@ -231,14 +230,12 @@ namespace SpendManagementLibrary
                     valueList = reader.GetBoolean(valueList_ordID);
                     allowImport = reader.GetBoolean(allowImport_ordID);
                     mandatory = reader.GetBoolean(mandatory_ordID);
-                    amendedOn = reader.IsDBNull(amendedOn_ordID) ? new DateTime(1900, 1, 1) : reader.GetDateTime(amendedOn_ordID);
                     lookupTableID = reader.IsDBNull(lookupTable_ordID) ? Guid.Empty : reader.GetGuid(lookupTable_ordID);
                     lookUpFieldID = reader.IsDBNull(lookupField_ordID) ? Guid.Empty : reader.GetGuid(lookupField_ordID);
                     useForLookup = reader.GetBoolean(useForLookup_ordID);
                     workflowUpdate = reader.GetBoolean(workflowUpdate_ordID);
                     workflowSearchable = reader.GetBoolean(workflowSearchable_ordID);
                     length = reader.IsDBNull(length_ordID) ? 0 : reader.GetInt32(length_ordID);
-                    reLabel = reader.GetBoolean(reLabel_ordID);
                     reLabelParam = reader.IsDBNull(reLabelParam_ordID) ? string.Empty : reader.GetString(reLabelParam_ordID);
                     fieldFrom = (cField.FieldSourceType)reader.GetInt32(fieldFrom_ordID);
                     classPropertyName = reader.IsDBNull(classPropertyName_ordID) ? string.Empty : reader.GetString(classPropertyName_ordID);
@@ -250,9 +247,10 @@ namespace SpendManagementLibrary
                     Guid? treeGroup = null;
                     if (nAccountID == 0 && !reader.IsDBNull(treeGroupOrd))
                     {
-                        treeGroup =  reader.GetGuid(treeGroupOrd);
+                        treeGroup = reader.GetGuid(treeGroupOrd);
                     }
-                    
+
+                    var encrypted = reader.GetBoolean(encryptedOrdinal);
 
                     #region Value List
 
@@ -337,7 +335,8 @@ namespace SpendManagementLibrary
                         isForeignKey,
                         friendlyNameTo,
                         friendlyNameFrom,
-                        treeGroup);
+                        treeGroup,
+                        encrypted);
                     lstCachedFields.GetOrAdd(tmpField.FieldID, tmpField);
                 }
                 reader.Close();
@@ -374,10 +373,10 @@ namespace SpendManagementLibrary
             {
                 while (reader.Read())
                 {
-                    gFieldID = reader.GetGuid(1); //reader.GetOrdinal("fieldid"));
-                    listValue = reader.GetString(2); //reader.GetOrdinal("listvalue"));
-                    listItem = reader.GetString(0); //reader.GetOrdinal("listitem"));
-                    valueType = reader.GetString(3); //reader.GetOrdinal("valuetype"));
+                    gFieldID = reader.GetGuid(1); 
+                    listValue = reader.GetString(2); 
+                    listItem = reader.GetString(0); 
+                    valueType = reader.GetString(3); 
 
                     if (lstAllGenItems.ContainsKey(gFieldID) == false)
                     {

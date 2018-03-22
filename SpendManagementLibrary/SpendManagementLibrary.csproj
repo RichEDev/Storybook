@@ -322,18 +322,34 @@
     <Compile Include="API\ApiLicensingThreshold.cs" />
     <Compile Include="ApprovalMatrix.cs" />
     <Compile Include="ApprovalMatrixLevel.cs" />
+    <Compile Include="AttributeFormat.cs" />
     <Compile Include="BaseClasses\BankAccountsBase.cs" />
     <Compile Include="Cards\CorporateCardImportLog.cs" />
     <Compile Include="CardStatement.cs" />
     <Compile Include="Cards\CorporateCards.cs" />
     <Compile Include="Cards\CreditCardTransaction.cs" />
+    <Compile Include="cAttachmentAttribute.cs" />
+    <Compile Include="cAttribute.cs" />
     <Compile Include="cCarriageReturn.cs" />
+    <Compile Include="cCommentAttribute.cs" />
+    <Compile Include="cContactAttribute.cs" />
     <Compile Include="cCostCentreBreakdown.cs" />
+    <Compile Include="cCurrencyListAttribute.cs" />
+    <Compile Include="cCustomEntityAccess.cs" />
+    <Compile Include="cCustomEntityForm.cs" />
+    <Compile Include="cCustomEntityFormAccess.cs" />
+    <Compile Include="cCustomEntityFormField.cs" />
+    <Compile Include="cCustomEntityFormSection.cs" />
+    <Compile Include="cCustomEntityFormTab.cs" />
     <Compile Include="cCustomEntityView.cs" />
+    <Compile Include="cCustomEntityViewAccess.cs" />
+    <Compile Include="cCustomEntityViewField.cs" />
     <Compile Include="cCustomMenuElement.cs" />
+    <Compile Include="cDateTimeAttribute.cs" />
     <Compile Include="cEmployeeCar.cs" />
     <Compile Include="cEmployeeHomeAddress.cs" />
     <Compile Include="cGeneralOptions.cs" />
+    <Compile Include="cHyperlinkAttribute.cs" />
     <Compile Include="cJourneyStep.cs" />
     <Compile Include="Claims\AllocateClaimResult.cs" />
     <Compile Include="Claims\ClaimEmailDetails.cs" />
@@ -345,7 +361,19 @@
     <Compile Include="Claims\ApproverClaim.cs" />
     <Compile Include="Claims\SubmitClaimResult.cs" />
     <Compile Include="Claims\SubmitRejectionReason.cs" />
+    <Compile Include="cListAttribute.cs" />
+    <Compile Include="cListAttributeElement.cs" />
+    <Compile Include="cManyToOneRelationship.cs" />
+    <Compile Include="cNumberAttribute.cs" />
     <Compile Include="ColFunction.cs" />
+    <Compile Include="cOneToManyRelationship.cs" />
+    <Compile Include="cRelationshipTextBoxAttribute.cs" />
+    <Compile Include="cRunWorkflowAttribute.cs" />
+    <Compile Include="cSummaryAttribute.cs" />
+    <Compile Include="cSummaryAttributeColumn.cs" />
+    <Compile Include="cSummaryAttributeElement.cs" />
+    <Compile Include="cTextAttribute.cs" />
+    <Compile Include="cTickboxAttribute.cs" />
     <Compile Include="CustomEntityAutoCompleteResult.cs" />
     <Compile Include="Definitions\AutocompleteChildField.cs" />
     <Compile Include="Definitions\AutoCompleteChildFieldValues.cs" />
@@ -422,6 +450,7 @@
     <Compile Include="Expedite\Receipts.cs" />
     <Compile Include="Expedite\ValidationResult.cs" />
     <Compile Include="ExpenseItems\AllowSelectedExpenseItemsResult.cs" />
+    <Compile Include="FieldCategory.cs" />
     <Compile Include="Flags\AssociatedExpense.cs" />
     <Compile Include="Flags\AssociatedExpenseItem.cs" />
     <Compile Include="Flags\DuplicateFlaggedItem.cs" />
@@ -516,6 +545,7 @@
     <Compile Include="ForeignVatRate.cs" />
     <Compile Include="GeneralOptions\GeneralOption.cs" />
     <Compile Include="GeneralOptions\GeneralOptions.cs" />
+    <Compile Include="GreenLightSortColumn.cs" />
     <Compile Include="GroupStages.cs" />
     <Compile Include="Helpers\ConvertKilometersToMiles.cs" />
     <Compile Include="Helpers\ConvertMilesToKilometers.cs" />
@@ -557,6 +587,8 @@
     <Compile Include="JourneyDeductionRules\IJourneyDistances.cs" />
     <Compile Include="JourneyDeductionRules\JourneyDistances.cs" />
     <Compile Include="JourneyDeductionRules\JuniorDoctorRotation.cs" />
+    <Compile Include="jsGreenLightViewSortColumn.cs" />
+    <Compile Include="jsSummaryColumnData.cs" />
     <Compile Include="Logic Classes\AutoUpdateExchangeRateModifier.cs" />
     <Compile Include="Logic Classes\DateRangeExchangeRateModifier.cs" />
     <Compile Include="Logic Classes\ExchangeRateModifier.cs" />
@@ -569,6 +601,7 @@
     <Compile Include="Account\BankAccount.cs" />
     <Compile Include="Logic Classes\MonthlyExchangeRateModifier.cs" />
     <Compile Include="Logic Classes\StaticExchangeRateModifier.cs" />
+    <Compile Include="LookupDisplayField.cs" />
     <Compile Include="Mileage\FuelReceiptToVATCalculations.cs" />
     <Compile Include="Logic Classes\Fields\IFields.cs" />
     <Compile Include="Logic Classes\Tables\ITables.cs" />
@@ -611,6 +644,7 @@
     <Compile Include="Receipts\ProcessedReceipt.cs" />
     <Compile Include="Receipts\ProcessedReceipts.cs" />
     <Compile Include="Random\LookupServiceCar.cs" />
+    <Compile Include="RelationshipType.cs" />
     <Compile Include="ReportChart.cs" />
     <Compile Include="Notifications.cs" />
     <Compile Include="Definitions\JoinVia\cJoinStep.cs" />
@@ -905,13 +939,20 @@
     <Compile Include="Report\TreeGroup.cs" />
     <Compile Include="Report\TreeGroups.cs" />
     <Compile Include="sAutoCompleteResult.cs" />
+    <Compile Include="sCEFieldDetails.cs" />
+    <Compile Include="sCEFormSection.cs" />
+    <Compile Include="sCEFormTab.cs" />
+    <Compile Include="sCustomField.cs" />
     <Compile Include="Selectinator\jsSelectinator.cs" />
     <Compile Include="Selectinator\SelectinatorParentFilter.cs" />
+    <Compile Include="sForm.cs" />
     <Compile Include="SingleSignOn.cs" />
     <Compile Include="sOnlineRoleInfo.cs" />
     <Compile Include="Enumerators\SpendManagementElement.cs" />
     <Compile Include="API\UserNamePasswordValidator.cs" />
     <Compile Include="Enumerators\StageInclusionType.cs" />
+    <Compile Include="sSummary.cs" />
+    <Compile Include="sSummaryColumn.cs" />
     <Compile Include="SubcatBasic.cs" />
     <Compile Include="SubcatItemRoleBasic.cs" />
     <Compile Include="sView.cs" />
@@ -926,6 +967,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UserDefinedFields\UdfAuditingDetails.cs" />
+    <Compile Include="ViewMenuIcon.cs" />
+    <Compile Include="ViewMenuIconResults.cs" />
     <Compile Include="Vehicles\VehicleTypeFactory.cs" />
     <Compile Include="Web References\SalesForceApi\Reference.cs">
       <AutoGen>True</AutoGen>

@@ -141,25 +141,25 @@ namespace SpendManagementLibrary
                                         maxlength = reader.GetInt32(reader.GetOrdinal("maxlength"));
                                     }
                                     format = (AttributeFormat)reader.GetByte(reader.GetOrdinal("format"));
-                                    attribute = new cTextAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, maxlength, format, fieldid, false, false, false, false, false, false, false);
+                                    attribute = new cTextAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, maxlength, format, fieldid, false, false, false, false, false, false, false, false, false);
                                     break;
                                 case FieldType.Integer:
-                                    attribute = new cNumberAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, 0, fieldid, false, false, false, false, false, false, false);
+                                    attribute = new cNumberAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, 0, fieldid, false, false, false, false, false, false, false, false);
                                     break;
                                 case FieldType.Number:
                                     byte precision = reader.IsDBNull(reader.GetOrdinal("precision")) ? (byte)0 : reader.GetByte(reader.GetOrdinal("precision"));
-                                    attribute = new cNumberAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, precision, fieldid, false, false, false, false, false, false, false);
+                                    attribute = new cNumberAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, precision, fieldid, false, false, false, false, false, false, false, false);
                                     break;
                                 case FieldType.Currency:
-                                    attribute = new cNumberAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, 2, fieldid, false, false, false, false, false, false, false);
+                                    attribute = new cNumberAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, 2, fieldid, false, false, false, false, false, false, false, false);
                                     break;
                                 case FieldType.DateTime:
                                     format = (AttributeFormat)reader.GetByte(reader.GetOrdinal("format"));
-                                    attribute = new cDateTimeAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, format, fieldid, false, false, false, false, false, false);
+                                    attribute = new cDateTimeAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, format, fieldid, false, false, false, false, false, false, false);
                                     break;
                                 case FieldType.TickBox:
                                     string defaultvalue = reader.IsDBNull(reader.GetOrdinal("defaultvalue")) == true ? "" : reader.GetString(reader.GetOrdinal("defaultvalue"));
-                                    attribute = new cTickboxAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, defaultvalue, fieldid, false, false, false, false, false, false);
+                                    attribute = new cTickboxAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, defaultvalue, fieldid, false, false, false, false, false, false, false);
                                     break;
                                 case FieldType.Relationship:
                                     relatedtableid = reader.GetGuid(reader.GetOrdinal("relatedtable"));
@@ -178,7 +178,7 @@ namespace SpendManagementLibrary
                                         matchFields = lstMatchFields[userdefineid];
                                     }
 
-                                    attribute = new cManyToOneRelationship(userdefineid, attributename, displayname, description, tooltip, mandatory, false, createdon, createdby, modifiedon, modifiedby, relatedtable, fieldid, false, false, false, null, displayField, matchFields, maxRows);
+                                    attribute = new cManyToOneRelationship(userdefineid, attributename, displayname, description, tooltip, mandatory, false, createdon, createdby, modifiedon, modifiedby, relatedtable, fieldid, false, false, false, null, displayField, matchFields, maxRows, new List<Guid>(), new SortedList<int, FieldFilter>(), false, null);
                                     break;
                                 case FieldType.List:
                                     SortedList<int, cListAttributeElement> items;
@@ -188,7 +188,7 @@ namespace SpendManagementLibrary
                                         items = new SortedList<int, cListAttributeElement>();
                                     }
                                     format = AttributeFormat.ListStandard; // list wide / standard format not implemented in udfs yet
-                                    attribute = new cListAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, items, fieldid, false, false, format, false, false, false, false);
+                                    attribute = new cListAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, items, fieldid, false, false, format, false, false, false, false, false);
                                     break;
                                 case FieldType.DynamicHyperlink:
                                 case FieldType.Hyperlink:
@@ -204,7 +204,7 @@ namespace SpendManagementLibrary
 
                                     string hyperlinkPath;
                                     hyperlinkPath = reader.IsDBNull(reader.GetOrdinal("hyperlinkPath")) == true ? "" : reader.GetString(reader.GetOrdinal("hyperlinkPath"));
-                                    attribute = new cHyperlinkAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, fieldid, false, false, hyperlinkText, hyperlinkPath, false, false, false, false);
+                                    attribute = new cHyperlinkAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, fieldid, false, false, hyperlinkText, hyperlinkPath, false, false, false, false, false);
                                     break;
                                 case FieldType.RelationshipTextbox:
                                     if (reader.IsDBNull(reader.GetOrdinal("relatedTable")) == true)
@@ -216,7 +216,7 @@ namespace SpendManagementLibrary
                                         relationshipTextBoxRelatedtableID = reader.GetGuid(reader.GetOrdinal("relatedTable"));
                                         relationshipTextBoxRelatedtable = clsTables.GetTableByID(relationshipTextBoxRelatedtableID);
                                     }
-                                    attribute = new cRelationshipTextBoxAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, relationshipTextBoxRelatedtable, fieldid, false, false, false, false, false);
+                                    attribute = new cRelationshipTextBoxAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, relationshipTextBoxRelatedtable, fieldid, false, false, false, false, false, false);
                                     break;
 
                             }

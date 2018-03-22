@@ -2840,6 +2840,7 @@ namespace Spend_Management
                         false,
                         false,
                         false,
+                        false,
                         false);
                     break;
                 case FieldType.DateTime:
@@ -2863,6 +2864,7 @@ namespace Spend_Management
                         false,
                         false,
                         false,
+                        false,
                         false);
                     break;
                 case FieldType.Integer:
@@ -2880,6 +2882,7 @@ namespace Spend_Management
                         modifiedby,
                         0,
                         fieldid,
+                        false,
                         false,
                         false,
                         false,
@@ -2911,6 +2914,8 @@ namespace Spend_Management
                         false,
                         false,
                         false,
+                        false,
+                        false,
                         false);
                     break;
                 case FieldType.Number:
@@ -2930,6 +2935,7 @@ namespace Spend_Management
                         modifiedby,
                         bytePrecision,
                         fieldid,
+                        false,
                         false,
                         false,
                         false,
@@ -2961,6 +2967,8 @@ namespace Spend_Management
                         false,
                         false,
                         false,
+                        false,
+                        false,
                         false);
                     break;
                 case FieldType.TickBox:
@@ -2978,6 +2986,7 @@ namespace Spend_Management
                         modifiedby,
                         defaultValue,
                         fieldid,
+                        false,
                         false,
                         false,
                         false,
@@ -3018,6 +3027,7 @@ namespace Spend_Management
                         false,
                         false,
                         false,
+                        false,
                         false);
                     break;
                 case FieldType.Hyperlink:
@@ -3041,6 +3051,7 @@ namespace Spend_Management
                         false,
                         false,
                         false,
+                        false,
                         false);
                     break;
                 case FieldType.DynamicHyperlink:
@@ -3061,6 +3072,7 @@ namespace Spend_Management
                         false,
                         string.Empty,
                         string.Empty,
+                        false,
                         false,
                         false,
                         false,
@@ -3102,7 +3114,11 @@ namespace Spend_Management
                         null,
                         displayFieldID,
                         lgMatchFields,
-                        maxRows);
+                        maxRows,
+                        new List<Guid>(),
+                        new SortedList<int, FieldFilter>(),
+                        false,
+                        null);
                     break;
             }
 

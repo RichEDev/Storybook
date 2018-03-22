@@ -25,7 +25,8 @@
 @triggerDisplayFieldId uniqueidentifier,
 @relatedtable uniqueidentifier,
 @boolAttribute bit = 0,
-@builtIn bit
+@builtIn bit,
+@encrypted bit
 AS
 DECLARE @count INT;
 DECLARE @masterTableName nvarchar(250) = (SELECT masterTableName FROM [customEntities] WHERE entityid = @entityid);
@@ -41,7 +42,7 @@ BEGIN
 	IF @count > 0
 		RETURN -1;
 		
- insert into [customEntityAttributes] (entityid, display_name, [description], tooltip, mandatory, DisplayInMobile, fieldtype, createdby, createdon, maxlength, format, defaultvalue, [precision], workflowid, is_audit_identity, advicePanelText, related_entity, is_unique, TriggerAttributeId, TriggerJoinViaId, TriggerDisplayFieldId, CacheExpiry, relatedtable, BoolAttribute) values (@entityid, @displayname, @description, @tooltip, @mandatory, @displayInMobile, @fieldtype, @userid, @date, @maxlength, @format, @defaultvalue, @precision, @workflowid, @isauditidentity, @commentText, @related_entityid, @isunique, @triggerAttributeId, @triggerJoinViaId, @triggerDisplayFieldId, GETUTCDATE(), @relatedtable, @boolAttribute)
+ insert into [customEntityAttributes] (entityid, display_name, [description], tooltip, mandatory, DisplayInMobile, fieldtype, createdby, createdon, maxlength, format, defaultvalue, [precision], workflowid, is_audit_identity, advicePanelText, related_entity, is_unique, TriggerAttributeId, TriggerJoinViaId, TriggerDisplayFieldId, CacheExpiry, relatedtable, BoolAttribute, [encrypted]) values (@entityid, @displayname, @description, @tooltip, @mandatory, @displayInMobile, @fieldtype, @userid, @date, @maxlength, @format, @defaultvalue, @precision, @workflowid, @isauditidentity, @commentText, @related_entityid, @isunique, @triggerAttributeId, @triggerJoinViaId, @triggerDisplayFieldId, GETUTCDATE(), @relatedtable, @boolAttribute, @encrypted)
 	set @attributeid = scope_identity()
 	
 	IF @fieldtype not in (11, 19, 21)
@@ -174,7 +175,7 @@ BEGIN
 	IF @oldBuiltIn = 1 AND @builtIn = 0
 		SET @builtIn = 1
 
-	update [customEntityAttributes] set display_name = @displayname, [description] = @description, tooltip = @tooltip, mandatory = @mandatory, DisplayInMobile = @displayInMobile, modifiedby = @userid, modifiedon = @date, maxlength = @maxlength, format = @format, defaultvalue = @defaultvalue, workflowid = @workflowid, is_audit_identity = @isauditidentity, advicePanelText = @commentText, related_entity = @related_entityid, is_unique = @isunique, TriggerAttributeId = @triggerAttributeId, TriggerJoinViaId = @triggerJoinViaId, TriggerDisplayFieldId = @triggerDisplayFieldId, CacheExpiry = GETUTCDATE(), BoolAttribute = @boolAttribute where attributeid = @attributeid;
+	update [customEntityAttributes] set display_name = @displayname, [description] = @description, tooltip = @tooltip, mandatory = @mandatory, DisplayInMobile = @displayInMobile, modifiedby = @userid, modifiedon = @date, maxlength = @maxlength, format = @format, defaultvalue = @defaultvalue, workflowid = @workflowid, is_audit_identity = @isauditidentity, advicePanelText = @commentText, related_entity = @related_entityid, is_unique = @isunique, TriggerAttributeId = @triggerAttributeId, TriggerJoinViaId = @triggerJoinViaId, TriggerDisplayFieldId = @triggerDisplayFieldId, CacheExpiry = GETUTCDATE(), BoolAttribute = @boolAttribute, [Encrypted] = @encrypted where attributeid = @attributeid;
 		
 	update customFields set [description] = @displayname, comment = @description, mandatory = @mandatory, amendedon = getdate(), [length] = ISNULL(@maxlength, 0), width = ISNULL(@maxlength, 50) where field = 'att' + cast(@attributeid as nvarchar);
 end

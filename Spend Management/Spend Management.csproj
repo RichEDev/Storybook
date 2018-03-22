@@ -510,6 +510,9 @@
     </Content>
     <Content Include="shared\information\PaymentHistory.aspx" />
     <Content Include="shared\javaScript\common.js" />
+    <Content Include="shared\javaScript\customEntityAdmin.min.js">
+      <DependentUpon>customEntityAdmin.js</DependentUpon>
+    </Content>
     <Content Include="shared\javaScript\exportoptions.js" />
     <Content Include="shared\javaScript\minify\CustomMenuStructure.js" />
     <Content Include="shared\javaScript\dvlaCheck.js" />
@@ -871,6 +874,7 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="bundleconfig.json" />
     <None Include="Service References\EsrNhsHub\service.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1174,6 +1178,7 @@
     <Compile Include="shared\code\AvailableModules.cs" />
     <Compile Include="shared\code\BankAccounts.cs" />
     <Compile Include="shared\code\ChangeApproverPermissionBase.cs" />
+    <Compile Include="shared\code\CustomEntityAttributeEncryptor.cs" />
     <Compile Include="shared\code\CustomEntityFormDetails.cs" />
     <Compile Include="shared\code\DrivingLicence.cs" />
     <Compile Include="shared\code\DrivingLicenceReview.cs" />
