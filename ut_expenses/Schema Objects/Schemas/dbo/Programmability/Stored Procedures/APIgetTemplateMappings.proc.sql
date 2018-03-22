@@ -10,7 +10,7 @@ IF @templateMappingID = 0
                       esrTrusts.trustVPD, fields.tableid
 FROM         importTemplateMappings INNER JOIN
                       importTemplates ON importTemplateMappings.templateID = importTemplates.templateID INNER JOIN
-                      esrTrusts ON importTemplates.NHSTrustID = esrTrusts.trustID INNER JOIN
+                      esrTrusts ON importTemplates.NHSTrustID = esrTrusts.trustID  AND ESRTRUSTS.ESRVersionNumber = 2 INNER JOIN
                       fields ON importTemplateMappings.fieldID = fields.fieldid
 	END
 ELSE
@@ -21,7 +21,7 @@ ELSE
                       esrTrusts.trustVPD, fields.tableid
 FROM         importTemplateMappings INNER JOIN
                       importTemplates ON importTemplateMappings.templateID = importTemplates.templateID INNER JOIN
-                      esrTrusts ON importTemplates.NHSTrustID = esrTrusts.trustID INNER JOIN
+                      esrTrusts ON importTemplates.NHSTrustID = esrTrusts.trustID  AND ESRTRUSTS.ESRVersionNumber = 2 INNER JOIN
                       fields ON importTemplateMappings.fieldID = fields.fieldid
 	WHERE templateMappingID = @templateMappingID
 	END
