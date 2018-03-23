@@ -387,7 +387,7 @@ function saveAttribute()
     }
 
     if ( editMode && !attributeEncrypted && encrypted) {
-        SEL.MasterPopup.ShowMasterConfirm("The 'Encrypt' option is irreversible. Once activated, all data stored for this attribute will be encrypted. Are you sure you want to continue?", 'Message from ' + moduleNameHTML, saveFunction, function () { });
+        SEL.MasterPopup.ShowMasterConfirm("The 'Encrypt' option is irreversible. Once activated, all data stored for this attribute will be encrypted. Are you sure you want to continue?", 'Message from ' + moduleNameHTML, saveFunction, function () { }, 'encrypt');
     } else {
         saveFunction();
     }

@@ -238,8 +238,15 @@ namespace SpendManagementLibrary
             lstFilterStrings.Add(filter);
         }
 
+        /// <summary>
+        /// Set the criteria parameters for the current query.
+        /// </summary>
+        /// <param name="expdata">
+        /// The current instance of <see cref="DBConnection"/>
+        /// </param>
         public void setCriteriaParameters(ref DBConnection expdata)
         {
+            expdata.sqlexecute.Parameters.AddWithValue("@salt", "2FD583C9-BF7E-4B4E-B6E6-5FC9375AD069");
             if (!string.IsNullOrEmpty(WhereClause))
             {
                 foreach (cQueryFilter filter in lstCriteria)
@@ -249,8 +256,6 @@ namespace SpendManagementLibrary
             }
             else
             {
-
-
                 int filterNumber = 0;
 
                 foreach (cQueryFilterGroup filterGroup in lstFilterGroup)
@@ -672,15 +677,6 @@ namespace SpendManagementLibrary
                           where x.field != field
                           select x).ToList();
 
-            //foreach (cQueryField queryfield in lstColumns)
-            //{
-            //    if (queryfield.field == field)
-            //    {
-            //        lstColumns.Remove(queryfield);
-            //        break;
-            //    }
-            //}
-
         }
 
         private string generateSelect()
@@ -838,6 +834,11 @@ namespace SpendManagementLibrary
                         else
                         {
                             fieldname = "[" + queryField.field.GetParentTable().TableName + "].[" + queryField.field.FieldName + "]";
+                        }
+
+                        if (queryField.field.Encrypted)
+                        {
+                            fieldname = $"CAST(DECRYPTBYPASSPHRASE(@salt, {fieldname} ) AS NVARCHAR(Max))";
                         }
                     }
                     else
@@ -1003,7 +1004,6 @@ namespace SpendManagementLibrary
             }
             if (bPagingActivated)
             {
-                //string subselect = output.ToString().Substring(7, output.Length - 7);
                 foreach (cQueryField field in lstColumns)  // what are we actually doing here?     !!!!!!!!
                 {
                     output.Replace("[" + field.field.GetParentTable().TableName + "].", "");
@@ -1016,17 +1016,17 @@ namespace SpendManagementLibrary
                 }
                 else
                 {
+                    var fieldName = string.Empty;
                     if (lstSortedColumns[0].JoinVia != null)
                     {
                         if (lstSortedColumns[0].field.FieldName.Contains("dbo."))
                         {
-                            var tmpFieldName = lstSortedColumns[0].field.FieldName;
-                            tmpFieldName = cReport.ReplaceTableNameWithJoinViaAlias(lstSortedColumns[0], tmpFieldName);
-                            output.Append(tmpFieldName);
+                            fieldName = this.lstSortedColumns[0].field.FieldName;
+                            fieldName = cReport.ReplaceTableNameWithJoinViaAlias(this.lstSortedColumns[0], fieldName);
                         }
                         else
                         {
-                            output.Append("[").Append(lstSortedColumns[0].JoinVia.TableAlias).Append("].[").Append(lstSortedColumns[0].field.FieldName).Append("] ");
+                            fieldName = $"[{this.lstSortedColumns[0].JoinVia.TableAlias}].[{this.lstSortedColumns[0].field.FieldName}] ";
                         }
                     }
                     else
@@ -1038,15 +1038,22 @@ namespace SpendManagementLibrary
                             case "FI":
                             case "FS":
                             case "FU":
-                                output.Append(lstSortedColumns[0].field.FieldName);
+                                fieldName = this.lstSortedColumns[0].field.FieldName;
+                                
                                 break;
                             default:
-                                output.Append("[").Append(this.lstSortedColumns[0].field.GetParentTable().TableName).Append("].[").Append(lstSortedColumns[0].field.FieldName).Append("] ");
+                                fieldName = $"[{this.lstSortedColumns[0].field.GetParentTable().TableName}].[{this.lstSortedColumns[0].field.FieldName}] ";
+                                
                                 break;
                         }
-
-
                     }
+
+                    if (this.lstSortedColumns[0].field.Encrypted)
+                    {
+                        fieldName = $"CAST(DECRYPTBYPASSPHRASE(@salt, {fieldName} ) AS NVARCHAR(Max)) ";
+                    }
+
+                    output.Append(fieldName);
                 }
 
 
@@ -1058,11 +1065,10 @@ namespace SpendManagementLibrary
                 {
                     output.Append("DESC");
                 }
+
                 output.Append(") ");
 
-
                 output.Append(" AS row, ");
-                //output.Append(subselect);
                 foreach (cQueryField queryField in lstColumns)
                 {
                     if (queryField.JoinVia != null)
@@ -1072,6 +1078,11 @@ namespace SpendManagementLibrary
                     else
                     {
                         fieldname = "[" + queryField.field.GetParentTable().TableName + "].[" + queryField.field.FieldName + "]";
+                    }
+
+                    if (queryField.field.Encrypted)
+                    {
+                        fieldname = $"CAST(DECRYPTBYPASSPHRASE(@salt, {fieldname} ) AS NVARCHAR(Max))";
                     }
 
                     switch (queryField.selectType)
@@ -1530,6 +1541,11 @@ namespace SpendManagementLibrary
                         }
                     }
 
+                    if (filter.field.Encrypted)
+                    {
+                        whereField = $"CAST(DECRYPTBYPASSPHRASE(@salt, {whereField} ) AS NVARCHAR(Max))";
+                    }
+
                     output.Append(whereField + " ");
 
                     bool includeNulls = false;
@@ -1796,22 +1812,23 @@ namespace SpendManagementLibrary
             output.Append("ORDER BY ");
             foreach (cQueryField queryField in lstSortedColumns)
             {
+                var fieldName = string.Empty;
                 if (bPagingActivated)
                 {
                     if (!string.IsNullOrEmpty(queryField.alias))
                     {
-                        output.Append("[" + queryField.alias + "]");
+                        fieldName = "[" + queryField.alias + "_sorted]";
                     }
                     else
                     {
                         if (!queryField.showListItemText && !(queryField.field.GenList && queryField.field.ListItems.Count == 0 && queryField.field.FieldSource == cField.FieldSourceType.CustomEntity))
                         {
-                            output.Append("[" + queryField.field.FieldName + "]");
+                            fieldName = "[" + queryField.field.FieldName + "]";
                         }
                         else
                         {
                             cField relatedFieldValueField = clsfields.GetFieldByID(queryField.field.GetLookupTable().KeyFieldID);
-                            output.Append("[" + relatedFieldValueField.FieldName + "_text]");
+                            fieldName = "[" + relatedFieldValueField.FieldName + "_text]";
                         }
                     }
                 }
@@ -1819,7 +1836,7 @@ namespace SpendManagementLibrary
                 {
                     if (!string.IsNullOrEmpty(queryField.alias))
                     {
-                        output.Append("[" + queryField.alias + "]");
+                        fieldName = "[" + queryField.alias + "]";
                     }
                     else
                     {
@@ -1842,11 +1859,11 @@ namespace SpendManagementLibrary
                             {
                                 if (queryField.JoinVia != null)
                                 {
-                                    output.Append("[" + queryField.JoinVia.TableAlias + "].[" + queryField.field.FieldName + "]");
+                                    fieldName = "[" + queryField.JoinVia.TableAlias + "].[" + queryField.field.FieldName + "]";
                                 }
                                 else
                                 {
-                                    output.Append("[" + queryField.field.GetParentTable().TableName + "].[" + queryField.field.FieldName + "]");
+                                    fieldName = "[" + queryField.field.GetParentTable().TableName + "].[" + queryField.field.FieldName + "]";
                                 }
                             }
                         }
@@ -1854,20 +1871,27 @@ namespace SpendManagementLibrary
                         {
                             if (!queryField.showListItemText && queryField.field.ListItems.Count > 0)
                             {
-                                output.Append("[" + queryField.field.FieldName + "_text]");
+                                fieldName = "[" + queryField.field.FieldName + "_text]";
                             }
                             else if (queryField.field.GenList && queryField.field.ListItems.Count == 0 && queryField.field.FieldSource == cField.FieldSourceType.CustomEntity)
                             {
                                 cField relatedFieldValueField = clsfields.GetFieldByID(queryField.field.GetLookupTable().KeyFieldID);
-                                output.Append("[" + relatedFieldValueField.FieldName + "_text]");
+                                fieldName = "[" + relatedFieldValueField.FieldName + "_text]";
                             }
                             else
                             {
-                                output.Append("[" + queryField.field.FieldName + "]");
+                                fieldName = "[" + queryField.field.FieldName + "]";
                             }
                         }
                     }
                 }
+
+                if (queryField.field.Encrypted && !fieldName.EndsWith("_text]"))
+                {
+                    fieldName = $"CAST(DECRYPTBYPASSPHRASE(@salt, {fieldName} ) AS NVARCHAR(Max))";
+                }
+
+                output.Append(fieldName);
 
                 output.Append(queryField.SortDirection == SortDirection.Ascending ? " ASC" : " DESC");
                 output.Append(",");
@@ -1932,12 +1956,23 @@ namespace SpendManagementLibrary
             {
                 output.Append("[" + column.field.FieldName + "], ");
             }
+
             output.Remove(output.Length - 2, 2);
             output.Append(") VALUES (");
-            foreach (SqlParameter parameter in lstParameters)
+            for (var index = 0; index < this.lstParameters.Count; index++)
             {
-                output.Append(parameter.ParameterName + ", ");
+                var column = this.lstColumns[index];
+                SqlParameter parameter = this.lstParameters[index];
+                if (column.field.Encrypted)
+                {
+                    output.Append($"ENCRYPTBYPASSPHRASE(@salt, {parameter.ParameterName} ),");
+                }
+                else
+                {
+                    output.Append(parameter.ParameterName + ", ");    
+                }
             }
+
             output.Remove(output.Length - 2, 2);
             output.Append(");select @identity = @@identity;");
             return output.ToString();
@@ -1949,7 +1984,10 @@ namespace SpendManagementLibrary
             output.Append("UPDATE [dbo].[" + basetable.TableName + "] SET ");
             foreach (cQueryField column in lstColumns)
             {
-                output.Append("[" + column.field.FieldName + "] = " + lstParameters[lstColumns.IndexOf(column)].ParameterName + ", ");
+                output.Append(
+                    column.field.Encrypted
+                        ? $"[{column.field.FieldName}] = ENCRYPTBYPASSPHRASE(@salt, {this.lstParameters[this.lstColumns.IndexOf(column)].ParameterName}), "
+                        : $"[{column.field.FieldName}] = {this.lstParameters[this.lstColumns.IndexOf(column)].ParameterName}, ");
             }
             output.Remove(output.Length - 2, 2);
             output.Append(" " + generateWhere(false));
@@ -1967,6 +2005,7 @@ namespace SpendManagementLibrary
         public int executeInsertStatement()
         {
             DBConnection expdata = new DBConnection(connectionstring);
+            expdata.sqlexecute.Parameters.AddWithValue("@salt", "2FD583C9-BF7E-4B4E-B6E6-5FC9375AD069");
             foreach (SqlParameter parameter in lstParameters)
             {
                 expdata.sqlexecute.Parameters.Add(parameter);

@@ -1983,10 +1983,8 @@ namespace Expenses_Reports
 
         public void setCriteriaParameters(cReportRequest request, IDBConnection connection)
         {
-            //if (request.report.basetable.SubAccountIDFieldID != Guid.Empty && request.SubAccountId != null)
-            {
-                connection.sqlexecute.Parameters.AddWithValue("@subaccountid", request.SubAccountId);
-            }
+            connection.sqlexecute.Parameters.AddWithValue("@subaccountid", request.SubAccountId);
+            connection.sqlexecute.Parameters.AddWithValue("@salt", "2FD583C9-BF7E-4B4E-B6E6-5FC9375AD069");
 
             for (int i = 0; i < request.report.criteria.Count; i++)
             {
@@ -2910,6 +2908,7 @@ namespace Expenses_Reports
                                     case "S":
                                     case "FS":
                                     case "LT":
+                                    case "CO":
                                         if (reader.IsDBNull(reader.GetOrdinal("value1")))
                                         {
                                             value1[0] = string.Empty;

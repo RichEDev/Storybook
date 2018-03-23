@@ -40,42 +40,48 @@
                 popupDiv.innerHTML = "";
                 return;
             },  
-            ShowMasterConfirm: function (body, topic, onConfirmFunction, onCancelFunction) {
-                $('#divMasterPopup').html("<div style='float:left;margin-top:14px;'><img title='Question' src='/static/icons/48/new/question.png' ></div><div class=\"errorModalBody\" style='width:75%;float:right;margin-top:10px;'>" + body + "</div>");
-                if ($('#btnMasterPopupConfirm').length === 0) {
-                    $('#divMasterPopup').append('<div class="formpanel formbuttons " style="position:relative;left:-19px;height:30px;z-index:0;float:left;padding-top:10px;padding-bottom:0px;"><span class="buttonContainer"><input type="button" id="btnMasterPopupConfirm" value="yes" class="buttonInner" style="padding-bottom:0;padding-top:0;"/></span><span class="buttonContainer"><input type="button" value="no"  id="btnMasterPopupDecline" class="buttonInner" style="padding-bottom:0;padding-top:0;"/></span></div>');
+            ShowMasterConfirm: function (body, topic, onConfirmFunction, onCancelFunction, buttontext) {
+                var declineButtontext = 'no', confirmButtontext = 'yes';
+                if (buttontext) {
+                    confirmButtontext = buttontext;
+                    declineButtontext = 'cancel';
                 }
+
+                $('#aspnetForm').append('<div id="divMasterConfirm"></div>');
+
+                $('#divMasterConfirm').html("<div style='float:left;margin-top:14px;'><img title='Question' src='/static/icons/48/new/question.png' ></div><div class=\"errorModalBody\" style='width:75%;float:right;margin-top:10px;'>" + body + "</div>");
+                $('#divMasterConfirm').append('<div class="formpanel formbuttons " style="position:relative;left:-19px;height:30px;z-index:0;float:left;padding-top:10px;padding-bottom:0px;"><span class="buttonContainer"><input type="button" id="btnMasterPopupConfirm" value="'+confirmButtontext+'" class="buttonInner" style="padding-bottom:0;padding-top:0;"/></span><span class="buttonContainer"><input type="button" value="'+declineButtontext+'"  id="btnMasterPopupDecline" class="buttonInner" style="padding-bottom:0;padding-top:0;"/></span></div>');
 
                 $('#btnMasterPopupConfirm').click(function() {
                     onConfirmFunction();
-                    $('#divMasterPopup').dialog('close');
+                    $('#divMasterConfirm').dialog('close');
                 });
 
-                $('#btnMasterPopupDeny').click(function() {
+                $('#btnMasterPopupDecline').click(function() {
                     onCancelFunction();
-                    $('#divMasterPopup').dialog('close');
+                    $('#divMasterConfirm').dialog('close');
                 });
 
-
-
-                $('#divMasterPopup').dialog(
+                $('#divMasterConfirm').dialog(
                     {
                         title: topic,
                         autoOpen: true,
                         resizable: false,
                         modal: true,
                         close: function() {
-                            $('#btnMasterPopupConfirm').remove();
-                            $('#btnMasterPopupDeny').remove();
-                            $('divMasterPopup').dialog('destroy');
+                            SEL.MasterPopup.HideMasterConfirm();
+                            
                         },
                         open: function() {
                             var zIndex = SEL.Common.GetHighestZIndex();
                             $('.ui-widget-overlay:last').css('zIndex', zIndex + 1);
-                            $('#divMasterPopup').parent().css('zIndex', zIndex + 2);
+                            $('#divMasterConfirm').parent().css('zIndex', zIndex + 2);
                         }
                     });
 
+            },
+            HideMasterConfirm: function() {
+                $('#divMasterConfirm').remove();
             }
         };
     }

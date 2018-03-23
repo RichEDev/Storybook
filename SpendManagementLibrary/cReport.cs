@@ -1078,18 +1078,23 @@ namespace SpendManagementLibrary
                             output.Append(FUNC_END);
                             break;
                         default:
+                            string fieldName;
                             if (criteria.JoinVia == null)
                             {
-                                output.Append(
-                                    "[" + criteria.field.GetParentTable().TableName + "].[" + criteria.field.FieldName
-                                    + "]");
+                                fieldName = "[" + criteria.field.GetParentTable().TableName + "].["
+                                                + criteria.field.FieldName + "]";
                             }
                             else
                             {
-                                output.Append(
-                                    "[" + criteria.JoinVia.TableAlias + "].[" + criteria.field.FieldName
-                                    + "] ");
+                                fieldName = "[" + criteria.JoinVia.TableAlias + "].[" + criteria.field.FieldName + "] ";
                             }
+
+                            if (criteria.field.Encrypted)
+                            {
+                                fieldName = $"CAST(DECRYPTBYPASSPHRASE(@salt, {fieldName} ) AS NVARCHAR(Max)) ";    
+                            }
+
+                            output.Append(fieldName);
                             break;
                     }
 
@@ -1380,6 +1385,11 @@ namespace SpendManagementLibrary
 
                             if (!output.ToString().Contains(sortFieldStr))
                             {
+                                if (standard.field.Encrypted)
+                                {
+                                    sortFieldStr = $"CAST(DECRYPTBYPASSPHRASE(@salt, {sortFieldStr} ) AS NVARCHAR(Max))";
+                                }
+
                                 switch (column.sort)
                                 {
                                     case ColumnSort.Ascending:
@@ -1756,11 +1766,12 @@ namespace SpendManagementLibrary
                                             }
 
                                             output.AppendFormat(
-                                                "[{0}].[{1}] AS [{2}]",
+                                                standard.field.Encrypted
+                                                    ? "CAST(DECRYPTBYPASSPHRASE(@salt, [{0}].[{1}]) AS NVARCHAR(Max)) AS [{2}]"
+                                                    : "[{0}].[{1}] AS [{2}]",
                                                 this.GetTableNameFromStandardColumn(standard),
                                                 fieldname,
                                                 standard.columnid);
-
                                             break;
                                     }
                                 }
