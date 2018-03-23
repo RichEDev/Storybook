@@ -153,7 +153,7 @@ function saveCar(commit)
 
     var userdefined = getItemsFromPanel('ValidationSummaryAeCar');
 
-    var taxExpiry = '', taxStatus = '', motExpiry = '', motStatus = '';
+    var taxExpiry = '', taxStatus = 'true', motExpiry = '', motStatus = 'true';
     if (lastLookup != null) {
         taxExpiry = lastLookup.TaxExpiry;
         taxStatus = lastLookup.IsMotValid;

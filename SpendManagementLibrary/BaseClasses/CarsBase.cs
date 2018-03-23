@@ -123,7 +123,7 @@
                         taxExpiry = reader.GetDateTime(taxExpiryOrd);
                     }
 
-                    var taxValid = !reader.IsDBNull(taxValidOrd) && reader.GetBoolean(taxValidOrd);
+                    var taxValid = reader.IsDBNull(taxValidOrd) || reader.GetBoolean(taxValidOrd);
 
                     DateTime? motExpiry = null;
                     if (!reader.IsDBNull(motExpiryOrd))
@@ -131,7 +131,7 @@
                         motExpiry = reader.GetDateTime(motExpiryOrd);
                     }
 
-                    var motValid = !reader.IsDBNull(motValidOrd) && reader.GetBoolean(motValidOrd);
+                    var motValid = reader.IsDBNull(motValidOrd) || reader.GetBoolean(motValidOrd);
 
                     cars.Add(
                         new cCar(this.nAccountID, caremployeeid, carid, make, model, registration, startdate, enddate, active,
