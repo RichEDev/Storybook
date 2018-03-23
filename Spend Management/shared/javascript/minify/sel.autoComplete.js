@@ -291,12 +291,12 @@
                             if (!$(this).val()) {
                                 $(this).autocomplete("search", "%%%");
                             }
-                        }
+                        }                                
                     });
                 });
             },
 
-            SetCostCodeAutoCompleteOptions: function (element) {
+            SetCostCodeAutoCompleteFocusOptions: function (element) {
 
                 $(element).autocomplete("option", "minLength", 1);
 
@@ -305,6 +305,16 @@
                 }
             },
 
+            SetCostCodeAutoCompleteKeyUpOptions: function (e, element) {
+
+                if (e.keyCode == 8 || e.keyCode == 46) {
+
+                    if (!$(element).val()) {
+                        $(element).autocomplete("search", "%%%");
+                    }
+                }   
+            },
+         
             TriggerFields:
             {
                 Clear: function (triggerFields) {

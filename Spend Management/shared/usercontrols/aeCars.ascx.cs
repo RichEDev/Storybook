@@ -116,7 +116,7 @@ namespace Spend_Management
             if (this.bIsAeExpenses)
             {
                 ServiceReference svcRefAutoComplete = new ServiceReference(cMisc.Path + "/shared/webServices/svcAutoComplete.asmx");
-                ScriptReference scrRefAutoComplete = new ScriptReference(cMisc.Path + "/shared/javascript/minify/sel.autoComplete.js?date=20180219");
+                ScriptReference scrRefAutoComplete = new ScriptReference(cMisc.Path + "/shared/javascript/minify/sel.autoComplete.js?date=20180323");
 
                 ScriptManagerProxy1.Services.Add(svcRefAutoComplete);
                 ScriptManagerProxy1.Scripts.Add(scrRefAutoComplete);

@@ -338,8 +338,7 @@ namespace SpendManagementLibrary
                 //Is this for an auto complete request and is the display field costcode description or cost code ?
                 if (maxRows > 0 && (displayFieldId == new Guid("AF80D035-6093-4721-8AFC-061424D2AB72") || displayFieldId == new Guid("359DFAC9-74E6-4BE5-949F-3FB224B1CBFC")))
                 {
-                    retVals = GetCostCodeAutoCompleteResults(matchText, displayFieldId, currentUser, useWildcards);
-
+                    retVals = GetCostCodeAutoCompleteResults(matchText, displayFieldId, currentUser, useWildcards, childFilterList);
                 }
                 else
                 {
@@ -466,7 +465,7 @@ namespace SpendManagementLibrary
                 return sortedResults;
             }
   
-            if (childFilterList[0].FieldToBuild != string.Empty)
+            if (childFilterList.Count > 0 && childFilterList[0].FieldToBuild != string.Empty)
             {
                 var requiredAttachmentField = fields.GetFieldByName($"att{childFilterList[0].FieldToBuild}", true);
 
@@ -476,9 +475,6 @@ namespace SpendManagementLibrary
                 }           
             }
     
-            sortedResults = sortedResults
-                .Where(val => childFilterList.Any(child => child.Key.ToString() == val.value)).ToList();
-
             return sortedResults.Count > maxRows ? sortedResults.GetRange(0, maxRows) : sortedResults;           
         }
 
@@ -1006,13 +1002,26 @@ namespace SpendManagementLibrary
         /// <param name="useWildCard">
         /// Whether to use a wildcard search. Will be false when the on blur event validates the entered costcode
         /// </param>
+        /// <param name="filterRules">A list of <see cref="AutoCompleteChildFieldValues"/> containing the filter rules to apply</param>
         /// <returns>
         /// The a list of <see cref="sAutoCompleteResult"/>.
         /// </returns>
-        private static List<sAutoCompleteResult> GetCostCodeAutoCompleteResults(string searchTerm, Guid displayFieldId, ICurrentUserBase currentUser, bool useWildCard)
+        private static List<sAutoCompleteResult> GetCostCodeAutoCompleteResults(string searchTerm, Guid displayFieldId, ICurrentUserBase currentUser, bool useWildCard, List<AutoCompleteChildFieldValues> filterRules)
         {
-            var autoCompleteResults = new List<sAutoCompleteResult>();
+            List<int> costCodeFilterRuleIds = new List<int>();
+            string inClause = string.Empty;
 
+            if (filterRules != null && filterRules.Count > 0)
+            {
+                foreach (var rule in filterRules)
+                {
+                    costCodeFilterRuleIds.Add(rule.Key);
+                }
+
+                inClause = string.Join(",", costCodeFilterRuleIds.Select(x => x.ToString()));
+            }
+
+            var autoCompleteResults = new List<sAutoCompleteResult>();
             cFields fields = new cFields();
             cField fieldToDisplay = fields.GetFieldByID(displayFieldId);     
             string field = fieldToDisplay.FieldName;
@@ -1023,6 +1032,7 @@ namespace SpendManagementLibrary
             var sqlUnion = " UNION ";
             var sqlLikeWithWildCard = " LIKE + @SearchTermWildCard";
             var sqlOrderBy = $" ORDER BY {field}";
+            var sqlAndCostCodeIdIn = " AND CostCodeId IN (" + inClause + ")";
 
             using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(currentUser.AccountID)))
             {        
@@ -1031,9 +1041,39 @@ namespace SpendManagementLibrary
                 databaseConnection.AddWithValue("@SearchTermWildCard", "%" + searchTerm + "%");
 
                 //determine which sql where clause to build up. 
-                var sql = !useWildCard ? $"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnarchived}" : $"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnarchived}{sqlUnion}{sqlSelect}{sqlLikeWithWildCard}{sqlUnarchived}{sqlOrderBy}";
+                var sb = new StringBuilder();
 
-                using (IDataReader reader = databaseConnection.GetReader(sql))
+                bool hasCostCodeFilterRuleIds = costCodeFilterRuleIds.Count > 0;
+
+                if (!useWildCard)
+                {
+                    sb.Append($"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnarchived}");
+
+                    if (hasCostCodeFilterRuleIds)
+                    {
+                        sb.Append(sqlAndCostCodeIdIn);
+                    }         
+                }
+                else
+                {
+                    sb.Append($"{sqlSelect}{sqlNoWildCardWhereClause}{sqlUnarchived}");
+
+                    if (hasCostCodeFilterRuleIds)
+                    {
+                        sb.Append(sqlAndCostCodeIdIn);
+                    }
+
+                    sb.Append($"{sqlUnion}{sqlSelect}{sqlLikeWithWildCard}{sqlUnarchived}");
+
+                    if (hasCostCodeFilterRuleIds)
+                    {
+                        sb.Append(sqlAndCostCodeIdIn);
+                    }
+
+                    sb.Append(sqlOrderBy);
+                }
+   
+                using (IDataReader reader = databaseConnection.GetReader(sb.ToString()))
                 {
                     while (reader.Read())
                     {
@@ -1052,6 +1092,5 @@ namespace SpendManagementLibrary
 
             return autoCompleteResults;
         }
-
     }
 }

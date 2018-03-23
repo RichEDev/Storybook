@@ -799,13 +799,7 @@
             var lstItems = new List<ListItem>();
 
             switch (filtertype)
-            {
-                case FilterType.Costcode:
-                    {
-                        lstItems = this.CostCodes.CreateDropDown(useDescription);
-
-                        break;
-                    }
+            {          
                 case FilterType.Department:
                     {
                         var department = new cDepartments(accountid);
