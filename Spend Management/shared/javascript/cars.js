@@ -296,16 +296,24 @@ function navigateTo(autoActivate, isCancel)
     }
 }
 
+var vehicleDocumentTimer = null;
+
 function vehicleDocuments(messageHeader, isadmin) {
     var ViewGuid = 'F1EA11DD-A18F-466D-B638-1E2EA2201F85';
     if (isadmin) {
         ViewGuid = 'EEDC1A2B-77AD-484D-B0A1-DCF5BCD78299';
     }
-    Spend_Management.svcCars.GetDocEntityAndViewId('F0247D8E-FAD3-462D-A19D-C9F793F984E8', ViewGuid, getDocEntityAndViewIdComplete)
+    if (vehicleDocumentTimer === undefined | vehicleDocumentTimer === null) {
+        Spend_Management.svcCars.GetDocEntityAndViewId('F0247D8E-FAD3-462D-A19D-C9F793F984E8',
+            ViewGuid,
+            getDocEntityAndViewIdComplete);        
+    }
+
     if (vehicleType === "" || sessionStorage.entityview == undefined) {
-        window.setTimeout(function () { vehicleDocuments(messageHeader, isadmin); }, 10); //Taking some milliseconds to load vehicleType.
+        vehicleDocumentTimer = window.setTimeout(function () { vehicleDocuments(messageHeader, isadmin); }, 10); //Taking some milliseconds to load vehicleType.
     }
     else {
+        vehicleDocumentTimer = null;
         var message = "";
         var alreadyTaxed = lastLookup != null && lastLookup.IsTaxValid;
         var alreadyMot = lastLookup != null && lastLookup.IsMotValid;
