@@ -290,7 +290,7 @@
                 string.Join(",", MatchFields.ToArray()),
                 string.Empty,
                 true,
-                Filters.ToDictionary(fieldFilter => fieldFilter.Order.ToString()));
+                Filters.ToDictionary(fieldFilter => fieldFilter.Order.ToString()), false, null, true);
         }
         
         /// <summary>

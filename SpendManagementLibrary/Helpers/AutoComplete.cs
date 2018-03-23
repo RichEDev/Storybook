@@ -324,8 +324,9 @@ namespace SpendManagementLibrary
         /// <param name="filters">Specifiy the field filters to use with the Auto Complete</param>
         /// <param name="keyIsString">True if the key field is a string</param>
         /// <param name="childFilterList">Child control filtered value</param>
+        /// <param name="fromSelectinator">Did the request come from a selectinator?</param>
         /// <returns>Serializable structure of type sAutoComplete</returns>
-        public static List<sAutoCompleteResult> GetAutoCompleteMatches(ICurrentUserBase currentUser, int maxRows, string matchTable, string displayField, string matchFields, string matchText, bool useWildcards, Dictionary<string, JSFieldFilter> filters, bool keyIsString = false, List<AutoCompleteChildFieldValues> childFilterList=null)
+        public static List<sAutoCompleteResult> GetAutoCompleteMatches(ICurrentUserBase currentUser, int maxRows, string matchTable, string displayField, string matchFields, string matchText, bool useWildcards, Dictionary<string, JSFieldFilter> filters, bool keyIsString = false, List<AutoCompleteChildFieldValues> childFilterList=null, bool fromSelectinator = false)
         {
             var retVals = new List<sAutoCompleteResult>();
             
@@ -336,7 +337,7 @@ namespace SpendManagementLibrary
             if (Guid.TryParseExact(displayField, "D", out displayFieldId))
             {
                 //Is this for an auto complete request and is the display field costcode description or cost code ?
-                if (maxRows > 0 && (displayFieldId == new Guid("AF80D035-6093-4721-8AFC-061424D2AB72") || displayFieldId == new Guid("359DFAC9-74E6-4BE5-949F-3FB224B1CBFC")))
+                if (!fromSelectinator && maxRows > 0 && (displayFieldId == new Guid("AF80D035-6093-4721-8AFC-061424D2AB72") || displayFieldId == new Guid("359DFAC9-74E6-4BE5-949F-3FB224B1CBFC")))
                 {
                     retVals = GetCostCodeAutoCompleteResults(matchText, displayFieldId, currentUser, useWildcards, childFilterList);
                 }
