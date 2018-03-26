@@ -1039,7 +1039,8 @@ namespace Spend_Management
             bool recalculateVat = (olditem.vat != expitem.vat || olditem.receipt != expitem.receipt || olditem.home != expitem.home
                                    || olditem.total != expitem.total || olditem.tip != expitem.tip || olditem.miles != expitem.miles
                                    || olditem.nopassengers != expitem.nopassengers || olditem.countryid != expitem.countryid
-                                   || olditem.currencyid != expitem.currencyid || olditem.foreignvat != expitem.foreignvat) 
+                                   || olditem.currencyid != expitem.currencyid || olditem.foreignvat != expitem.foreignvat 
+                                   || olditem.others != expitem.others) 
                                    && vatchanged == false
                                   && (subcat.calculation != CalculationType.PencePerMileReceipt || olditem.date != expitem.date);
 
