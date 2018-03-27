@@ -88,7 +88,8 @@
                     var claim = claims.getClaimById(expenseItem.claimid);
                     var subCats = new cSubcats(this.PairingKeySerialKey.PairingKey.AccountID);
                     var subCategory = subCats.GetSubcatById(expenseItem.subcatid);
-                    var user = cMisc.GetCurrentUser();
+
+                    var user = new CurrentUser(this.PairingKeySerialKey.PairingKey.AccountID, this.PairingKeySerialKey.PairingKey.EmployeeID, 0, Modules.expenses, 1, false);
 
                     // multiple receipts per expense item are now possible, until the mobile apps can be enhanced we'll just return the first receipt
                     AttachedReceipt receipt = receiptData.GetByClaimLine(expenseItem, user, subCategory, claim)
