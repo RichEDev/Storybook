@@ -312,13 +312,31 @@ namespace Spend_Management
 
             if (receipt.Length > 0)
             {
+                var receiptName = $"{curUser.AccountID}_{curUser.EmployeeID}_{mobileItemID}.png";
+                AuditMobileReceiptView(receiptName, curUser);
+
                 context.Response.Clear();
                 context.Response.AddHeader("Content-Length", receipt.Length.ToString());
                 context.Response.ContentType = "image/png"; // temporary until method of mime-header handling decided on
                 //context.Response.CacheControl = "no-cache";
-                context.Response.AddHeader("Content-Disposition", "attachment; filename=Receipt_" + curUser.AccountID.ToString() + "_" + curUser.EmployeeID.ToString() + "_" + mobileItemID.ToString() + ".png");
+                context.Response.AddHeader("Content-Disposition", "attachment; filename=Receipt_" + receiptName);
                 context.Response.OutputStream.Write(receipt, 0, receipt.Length);
                 context.Response.End();
+            }
+        }
+
+        /// <summary>
+        /// Adds an audit entry to record the recipt being viewed by a delegate.
+        /// </summary>
+        /// <param name="receiptName">The name of the receipt.</param>
+        /// <param name="currentUser">The <see cref="CurrentUser"/>.</param>
+        private void AuditMobileReceiptView(string receiptName, CurrentUser currentUser)
+        {       
+            if (currentUser.isDelegate)
+            {
+                var record = "Receipt " + receiptName;
+                var auditLog = new cAuditLog();
+                auditLog.ViewRecord(SpendManagementElement.Receipts, record, currentUser);
             }
         }
 

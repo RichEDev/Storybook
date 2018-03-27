@@ -83,9 +83,15 @@
                 {
                     var accountId = this.PairingKeySerialKey.PairingKey.AccountID;
                     var receiptData = new SpendManagementLibrary.Expedite.Receipts(accountId, this.PairingKeySerialKey.PairingKey.EmployeeID);
+                    var claims =  new cClaims(this.PairingKeySerialKey.PairingKey.AccountID);              
+                    var expenseItem = claims.getExpenseItemById(expenseid);
+                    var claim = claims.getClaimById(expenseItem.claimid);
+                    var subCats = new cSubcats(this.PairingKeySerialKey.PairingKey.AccountID);
+                    var subCategory = subCats.GetSubcatById(expenseItem.subcatid);
+                    var user = cMisc.GetCurrentUser();
 
                     // multiple receipts per expense item are now possible, until the mobile apps can be enhanced we'll just return the first receipt
-                    AttachedReceipt receipt = receiptData.GetByClaimLine(expenseid)
+                    AttachedReceipt receipt = receiptData.GetByClaimLine(expenseItem, user, subCategory, claim)
                                                              .Select(r => AttachedReceipt.FromReceipt(r, accountId))
                                                              .FirstOrDefault() ?? new AttachedReceipt();
 

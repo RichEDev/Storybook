@@ -66,7 +66,11 @@
             Host host = this.GetHost(new cAccounts());
             var urlPath = string.Format("{0}://{1}", requestUri.Scheme, host.HostnameDescription);
 
-            IList<SpendManagementLibrary.Expedite.Receipt> receipts = receiptData.GetByClaimLine(id);
+            var expenseItem = ActionContext.Claims.getExpenseItemById(id);
+            var claim = this.ActionContext.Claims.getClaimById(expenseItem.claimid);
+            var subCategory = this.ActionContext.SubCategories.GetSubcatById(expenseItem.subcatid);
+
+            IList<SpendManagementLibrary.Expedite.Receipt> receipts = receiptData.GetByClaimLine(expenseItem, this.User, subCategory, claim);
             var globalFolderPaths = new GlobalFolderPaths();
 
             foreach (SpendManagementLibrary.Expedite.Receipt receipt in receipts)

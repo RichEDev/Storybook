@@ -547,6 +547,8 @@
     <Compile Include="GeneralOptions\GeneralOptions.cs" />
     <Compile Include="GreenLightSortColumn.cs" />
     <Compile Include="GroupStages.cs" />
+    <Compile Include="Helpers\AuditLogger\AuditLogger.cs" />
+    <Compile Include="Helpers\AuditLogger\IAuditLogger.cs" />
     <Compile Include="Helpers\ConvertKilometersToMiles.cs" />
     <Compile Include="Helpers\ConvertMilesToKilometers.cs" />
     <Compile Include="Helpers\DecimalExtension.cs" />

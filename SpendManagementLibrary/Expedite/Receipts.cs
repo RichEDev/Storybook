@@ -1,4 +1,5 @@
-﻿namespace SpendManagementLibrary.Expedite
+﻿
+namespace SpendManagementLibrary.Expedite
 {
 	using System;
 	using System.Collections.Generic;
@@ -12,6 +13,7 @@
 	using SELCloud.Utilities;
 	using Enumerators.Expedite;
 	using SpendManagementLibrary.Flags;
+	using SpendManagementLibrary.Helpers.AuditLogger;
     using System.Drawing;
     using System.Drawing.Drawing2D;
     using System.Text;
@@ -260,36 +262,42 @@
 			return list;
 		}
 
-		/// <summary>
-		/// Gets all receipts for an envelope.
-		/// </summary>
-		/// <param name="envelopeId">The EnvelopeId of the envelope.</param>
-		/// <param name="fetchFromCloud">Whether to attempt to fetch from the cloud.</param>
-		/// <returns>A list of Receipts.</returns>
-		public IList<Receipt> GetByEnvelope(int envelopeId, bool fetchFromCloud = true)
-		{
-			const string sql = BaseGetReceiptSql + " AND " + ColumnNameReceiptEnvelopeId + " = " + ParamReceiptEnvelopeId;
-			var args = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>(ParamReceiptEnvelopeId, envelopeId) };
-			var list = ExtractReceiptsFromSql(sql, args);
-			if (fetchFromCloud) FetchFromCloudToTempStorageArea(list);
-			return list;
-		}
+	    /// <summary>
+	    /// Gets all receipts for an envelope.
+	    /// </summary>
+	    /// <param name="envelopeId">The EnvelopeId of the envelope.</param>
+	    /// <param name="fetchFromCloud">Whether to attempt to fetch from the cloud.</param>
+	    /// <returns>A list of Receipts.</returns>
+	    public IList<Receipt> GetByEnvelope(int envelopeId, bool fetchFromCloud = true)
+	    {
+	        const string sql = BaseGetReceiptSql + " AND " + ColumnNameReceiptEnvelopeId + " = " + ParamReceiptEnvelopeId;
+	        var args = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>(ParamReceiptEnvelopeId, envelopeId) };
+	        var list = ExtractReceiptsFromSql(sql, args);
+	        if (fetchFromCloud) FetchFromCloudToTempStorageArea(list);
+	        return list;
+	    }
 
-		/// <summary>
-		/// Gets all receipts for a claim line (savedexpense).
-		/// </summary>
-		/// <param name="savedExpenseId">The ExpenseId of the row in the savedexpenses table.</param>
-		/// <param name="fetchFromCloud">Whether to attempt to fetch from the cloud.</param>
-		/// <returns>A list of Receipts.</returns>
-		public IList<Receipt> GetByClaimLine(int savedExpenseId, bool fetchFromCloud = true)
+	    /// <summary>
+	    /// Gets all receipts for a claim line (savedexpense).
+	    /// </summary>
+	    /// <param name="expenseItem">The <see cref="cExpenseItem"/>.</param>
+	    /// <param name="currentUser">The <see cref="ICurrentUserBase"/>.</param>
+	    /// <param name="subCategory">The <see cref="cSubcat"/>.</param>
+	    /// <param name="claim">The <see cref="cClaim"/>.</param>
+	    /// <param name="fetchFromCloud">Whether to attempt to fetch from the cloud.</param>
+	    /// <returns>A list of Receipts.</returns>
+	    public IList<Receipt> GetByClaimLine(cExpenseItem expenseItem, ICurrentUserBase currentUser, cSubcat subCategory, cClaim claim, bool fetchFromCloud = true)
 		{
 			const string sql = BaseGetReceiptSql + " AND " + ColumnNameSavedExpenseId + " = " + ParamReceiptSavedExpenseId;
-			var args = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>(ParamReceiptSavedExpenseId, savedExpenseId) };
+			var args = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>(ParamReceiptSavedExpenseId, expenseItem.expenseid) };
 			var list = ExtractReceiptsFromSql(sql, args);
-			if (fetchFromCloud) FetchFromCloudToTempStorageArea(list);
+          
+		    this.AuditReceiptsViewed(list, expenseItem, currentUser, subCategory.subcat, claim, new AuditLogger());
+
+            if (fetchFromCloud) FetchFromCloudToTempStorageArea(list);
 			return list;
 		}
-
+       
         /// <summary>
         /// Creates and saves a thumbnail of the orginal receipt image. Returns the base64 string of the receipt's thumbnail image.
         /// </summary>
@@ -1023,6 +1031,29 @@
 
 			return receiptIsOrphan ? GetOrphaned().FirstOrDefault(o => o.ReceiptId == receipt.ReceiptId) : GetById(receipt.ReceiptId);
 		}
+
+        /// <summary>
+        /// Adds an entry to the audit log for the receipts that have been viewed.
+        /// </summary>
+        /// <param name="receipts">The list of <see cref="Receipt"/> to audit.</param>
+        /// <param name="expense">The <see cref="cExpenseItem"/>.</param>
+        /// <param name="currentUser">The <see cref="ICurrentUserBase"/>.</param>
+        /// <param name="subCategoryName">The sub category name the expense belongs to.</param>
+        /// <param name="claim">>The <see cref="cClaim"/>.</param></param>
+        /// <param name="auditLogger">The <see cref="IAuditLogger"/>.</param>
+        private void AuditReceiptsViewed(IList<Receipt> receipts, cExpenseItem expense, ICurrentUserBase currentUser, string subCategoryName, cClaim claim, IAuditLogger auditLogger)
+	    {
+	        if (currentUser.EmployeeID != claim.employeeid || (currentUser.isDelegate && currentUser.Delegate.EmployeeID != claim.employeeid))
+	        {	        
+	            foreach (var receipt in receipts)
+	            {
+	                string record =
+	                    $"Receipt ({receipt.ReceiptId}) attached to expense item ({expense.refnum} {subCategoryName} {expense.date.ToShortDateString()}), claim ({claim.name})";
+
+	                auditLogger.ViewRecordAuditLog(currentUser, SpendManagementElement.Receipts, record);             
+	            }
+	        }
+	    }
 
         /// <summary>
         /// Check if the Receipt file is valid or not . 

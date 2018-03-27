@@ -1,4 +1,6 @@
-﻿namespace SpendManagementLibrary.Interfaces.Expedite
+﻿using Syncfusion.DocIO.DLS.XML;
+
+namespace SpendManagementLibrary.Interfaces.Expedite
 {
     using System.Collections.Generic;
     using SpendManagementLibrary.Expedite;
@@ -54,10 +56,12 @@
         /// <summary>
         /// Gets all receipts for a claim line (savedexpense).
         /// </summary>
-        /// <param name="savedExpenseId">The ExpenseId of the row in the savedexpenses table.</param>
+        /// <param name="expenseItem">The <see cref="cExpenseItem"/>.</param>
+        /// <param name="currentUser">The <see cref="ICurrentUserBase"/>.</param>
+        /// <param name="subCategory">The <see cref="cSubcat"/>.</param>
+        /// <param name="claim">The <see cref="cClaim"/>.</param>
         /// <param name="fetchFromCloud">Whether to attempt to fetch from the cloud.</param>
-        /// <returns>A list of Receipts.</returns>
-        IList<Receipt> GetByClaimLine(int savedExpenseId, bool fetchFromCloud = true);
+        IList<Receipt> GetByClaimLine(cExpenseItem expenseItem, ICurrentUserBase currentUser, cSubcat subCategory, cClaim claim, bool fetchFromCloud = true);
 
         /// <summary>
         /// Gets all receipts for a claim.

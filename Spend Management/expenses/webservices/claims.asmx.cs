@@ -185,7 +185,7 @@
             
             // first child is always the header
             output.Header = header;
-
+  
             // now do the expenses
             
             expenseItems.ForEach(
@@ -217,7 +217,7 @@
                 var expense = new ReceiptManagementExpense(e, subcat, preventDelete, reason, symbol);
 
                 // receipts for expense
-                var receiptsForExpense = receipts.GetByClaimLine(e.expenseid).ToList();
+                var receiptsForExpense = receipts.GetByClaimLine(e, user, subcat, claim).ToList();
                         receiptsForExpense.ForEach(
                             receipt =>
                             expense.Children.Add(

@@ -92,7 +92,12 @@
         {
             _data.AccountId = User.AccountID;
             CheckClaimLineAndThrow(savedExpenseId);
-            return _data.GetByClaimLine(savedExpenseId).Select(e => new Receipt().From(e, ActionContext)).ToList();
+
+            var expenseItem = ActionContext.Claims.getExpenseItemById(savedExpenseId);
+            var claim = this.ActionContext.Claims.getClaimById(expenseItem.claimid);
+            var subCategory = this.ActionContext.SubCategories.GetSubcatById(expenseItem.subcatid);
+
+            return _data.GetByClaimLine(expenseItem, this.User, subCategory, claim).Select(e => new Receipt().From(e, ActionContext)).ToList();
         }
 
         /// <summary>

@@ -37,8 +37,13 @@ namespace expenses
         public List<AttachedReceipt> GetReceiptsForExpenseItem(int expenseId)
         {
             var user = cMisc.GetCurrentUser();
+            var claims = new cClaims(user.AccountID);
+            var expenseItem = claims.getExpenseItemById(expenseId);
+            var subcats = new cSubcats(user.AccountID);
+            var subCategory = subcats.GetSubcatById(expenseItem.subcatid);     
+            var claim = claims.getClaimById(expenseItem.claimid);
 
-            return new Receipts(user.AccountID, user.EmployeeID).GetByClaimLine(expenseId)
+            return new Receipts(user.AccountID, user.EmployeeID).GetByClaimLine(expenseItem, user, subCategory, claim )
                 .Select(r => AttachedReceipt.FromReceipt(r, user.AccountID)).ToList();
         }
 
