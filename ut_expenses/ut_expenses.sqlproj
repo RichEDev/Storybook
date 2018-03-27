@@ -7091,7 +7091,6 @@
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\ProcessFuelReceiptToMileageAllocations.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetPushNotificationDetailsOfEmployee.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\CK_Signoffs_ClaimPercentageToValidate_Range.sql" />
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\pk_SavedExpensesFuelReceiptToMileageAllocations.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_mileageExpenseId.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_FuelReceiptExpenseId.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_SavedExpensesFuelReceiptToMileageAllocations_savedexpenses_mileageexpenseid.sql" />
@@ -7110,6 +7109,10 @@
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetPercentageOfClaimItemsForValidation.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\EncryptCustomEntityAttributeData.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_CostCodes_CostCodeId_CostCode_Archived.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SaveVehicleLookupLog.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\VehicleLookupLog.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\EncryptCustomEntityAttributeData.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\SavedExpensesFuelReceiptToMileageAllocations.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ut_expenses.refactorlog">
