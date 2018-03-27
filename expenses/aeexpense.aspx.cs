@@ -2446,9 +2446,7 @@ public partial class aeexpense : System.Web.UI.Page
         int transactionid = (int)ViewState["transactionid"];
         SortedList<int, cExpenseItem> expitems = (SortedList<int, cExpenseItem>)ViewState["items"];
         bool cardAutomaticAllocation = false;
-        cClaims claims = this.ActionContext.Claims;
-        var claimid = this.getClaimId(this.ActionContext.CurrentUser.EmployeeID);
-        cClaim claim = claims.getClaimById(claimid);
+        
         ExpenseItem mobileItem = null;
         if (ViewState["mobileID"] != null && (int)ViewState["mobileID"] > 0)
         {
@@ -2484,7 +2482,7 @@ public partial class aeexpense : System.Web.UI.Page
 
                 var transactionDate = transaction.transactiondate.HasValue ? transaction.transactiondate.Value.Date.ToShortDateString() : "";
 
-                this.AuditViewExpense(claim, $"Card Transaction: {transactionDate}, {transaction.description}, {this.RedactCardNumber(transaction)}, {transaction.transactionamount:0.00}", this.ActionContext.CurrentUser);
+                this.AuditViewExpense($"Card Transaction: {transactionDate}, {transaction.description}, {this.RedactCardNumber(transaction)}, {transaction.transactionamount:0.00}", this.ActionContext.CurrentUser);
             }
             else if (mobileItem != null)
             {
@@ -2568,7 +2566,7 @@ public partial class aeexpense : System.Web.UI.Page
 
                 pnlspecific.Controls.Add(clsbuilder.generateItem("0", reqsubcat, null, null, false, date, reqemp, Request, this.ActionContext));
 
-                this.AuditViewExpense(claim, $"Mobile Journey: {mobileJourney.JourneyDate}, {reqsubcat.subcat}", this.ActionContext.CurrentUser);
+                this.AuditViewExpense($"Mobile Journey: {mobileJourney.JourneyDate}, {reqsubcat.subcat}", this.ActionContext.CurrentUser);
             }
             else if (ViewState["subcatid"] != null)
             {
@@ -2614,7 +2612,7 @@ public partial class aeexpense : System.Web.UI.Page
 
                     pnlspecific.Controls.Add(clsbuilder.generateItem("0", reqsubcat, null, expenseitem, false, action == Action.Edit && hdnDate.Value == "" ? expenseitem.date : date, reqemp, Request, this.ActionContext));
 
-                    this.AuditViewExpense(claim, $"{expenseitem.refnum}, {expenseitem.date.ToShortDateString()}, {reqsubcat.subcat}, {expenseitem.total:0.00}", this.ActionContext.CurrentUser);
+                    this.AuditViewExpense($"{expenseitem.refnum}, {expenseitem.date.ToShortDateString()}, {reqsubcat.subcat}, {expenseitem.total:0.00}", this.ActionContext.CurrentUser);
                 }
                 else if (mobileJourney != null)
                 {
@@ -2705,16 +2703,20 @@ public partial class aeexpense : System.Web.UI.Page
 
                     if (mobileItem != null)
                     {
-                        this.AuditViewExpense(claim, $"Mobile Item: {mobileItem.Date}, {reqsubcat.subcat}, {mobileItem.Total:0.00}", this.ActionContext.CurrentUser);
+                        this.AuditViewExpense($"Mobile Item: {mobileItem.Date}, {reqsubcat.subcat}, {mobileItem.Total:0.00}", this.ActionContext.CurrentUser);
                     }
                 }
             }
         }
     }
 
-    private void AuditViewExpense(cClaim claim, string value, ICurrentUser user)
+    private void AuditViewExpense(string value, ICurrentUser user)
     {
         if (this.IsPostBack) return;
+
+        cClaims claims = this.ActionContext.Claims;
+        var claimid = this.getClaimId(this.ActionContext.CurrentUser.EmployeeID);
+        cClaim claim = claims.getClaimById(claimid);
 
         if (user.EmployeeID != claim.employeeid || (user.isDelegate && user.Delegate.EmployeeID != claim.employeeid))
         {
