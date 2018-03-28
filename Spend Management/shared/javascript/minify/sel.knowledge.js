@@ -49,7 +49,7 @@
 
             OpenSalesForceUrl: function(urlSuffix) {
 
-                var url = "http://knowledge.software-europe.com/" + urlSuffix;
+                var url = "http://knowledge.selenity.com/" + urlSuffix;
 
                 if (!$("#knowledgeForm").length) {
                     var form = $("<form>").attr({
