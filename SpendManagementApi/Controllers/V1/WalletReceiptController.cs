@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.Http;
+    using System.Web.Http.Description;
 
     using SpendManagementApi.Attributes;
     using SpendManagementApi.Models.Common;
@@ -20,6 +21,7 @@
         /// <summary>Gets all of the available end points from the <see cref="Receipt">Receipt</see> part of the API.</summary>
         /// <returns>A list of available resource Links</returns>
         [HttpOptions, Route("")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public List<Link> Options()
         {
             return this.Links();
@@ -32,6 +34,7 @@
         /// <returns>The saved wallet receipt</returns>
         [HttpPost]
         [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [Route("UploadReceipt")]
         public WalletReceiptResponse Post([FromBody] WalletReceiptRequest receiptData)
         {
@@ -47,6 +50,7 @@
         /// <returns>A response code based on the success of the deletion</returns>
         [HttpDelete]
         [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [Route("{id:int}")]
         public NumericResponse Delete(int id)
         {
@@ -62,6 +66,7 @@
         /// <returns>The wallet receipt</returns>
         [HttpGet, Route("{id:int}")]
         [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public WalletReceiptResponse Get(int id)
         {
             var response = this.InitialiseResponse<WalletReceiptResponse>();
@@ -75,6 +80,7 @@
         /// <returns>A list of wallet receipts</returns>
         [HttpGet, Route("")]
         [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IList<WalletReceipt> Get()
         {
             return ((WalletReceiptRepository)this.Repository).GetAll();
