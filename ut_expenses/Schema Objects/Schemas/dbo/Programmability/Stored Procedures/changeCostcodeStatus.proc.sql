@@ -1,27 +1,53 @@
-﻿
-CREATE PROCEDURE [dbo].[changeCostcodeStatus]
-@costcodeid INT,
-@archive bit,
-@employeeID INT,
-@delegateID INT
-
+﻿CREATE PROCEDURE [dbo].[changeCostcodeStatus] @costcodeid INT
+	,@archive BIT
+	,@employeeID INT
+	,@delegateID INT
 AS
 DECLARE @count INT;
 
 IF @archive = 1
-begin
-	SET @count = (select count(*) from signoffs where [include] = 4 and includeid = @costcodeid)
+BEGIN
+	SET @count = (
+			SELECT count(includeid)
+			FROM signoffs
+			WHERE [include] = 4
+				AND includeid = @costcodeid
+			)
+
 	IF @count > 0
-		RETURN 1;
+		RETURN - 1;
+
+	SET @count = (
+			SELECT count(costcodeid)
+			FROM employee_costcodes
+			WHERE costcodeid = @costcodeid
+			)
+
+	IF @count > 0
+		RETURN - 2;
 END
 
-declare @oldarchive bit;
-declare @recordTitle nvarchar(2000);
-select @oldarchive = archived, @recordTitle = costcode from costcodes where costcodeid = @costcodeid;
+DECLARE @oldarchive BIT;
+DECLARE @recordTitle NVARCHAR(2000);
 
-update costcodes set archived = @archive where costcodeid = @costcodeid;
+SELECT @oldarchive = archived
+	,@recordTitle = costcode
+FROM costcodes
+WHERE costcodeid = @costcodeid;
 
-if @oldarchive <> @archive
-	exec addUpdateEntryToAuditLog @employeeID, @delegateID, 1, @costcodeid, '8178629c-5908-4458-89f6-d7ee7438314d', @oldarchive, @archive, @recordtitle, null;
+UPDATE costcodes
+SET archived = @archive
+WHERE costcodeid = @costcodeid;
+
+IF @oldarchive <> @archive
+	EXEC addUpdateEntryToAuditLog @employeeID
+		,@delegateID
+		,1
+		,@costcodeid
+		,'8178629c-5908-4458-89f6-d7ee7438314d'
+		,@oldarchive
+		,@archive
+		,@recordtitle
+		,NULL;
 
 RETURN 0;

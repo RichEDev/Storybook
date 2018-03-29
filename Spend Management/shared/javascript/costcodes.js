@@ -29,17 +29,12 @@ function deleteCostcodeComplete(data) {
 }
 function changeArchiveStatus(costcodeid) {
     currentRowID = costcodeid;
-    PageMethods.changeStatus(accountid, costcodeid, changeStatusComplete, commandFail)
+    PageMethods.changeStatus(accountid, costcodeid, changeStatusComplete, commandFail);
 }
 
-function changeStatusComplete(data) 
-{
-    if (data == -1) 
-    {
-        SEL.MasterPopup.ShowMasterPopup('This costcode cannot be archived as it is assigned to one or more signoff stages.', 'Message from ' + moduleNameHTML);
-    }
-    else
-     {
+function changeStatusComplete(data) {
+
+    if (data.Success) {
         var cell = SEL.Grid.getCellById('gridCostcodes', currentRowID, 'archiveStatus');
         if (cell.innerHTML.indexOf('Un-Archive') != -1) {
             cell.innerHTML = "<a href='javascript:changeArchiveStatus(" + currentRowID + ");'><img title='Archive' src='/shared/images/icons/folder_lock.png'></a>";
@@ -47,8 +42,12 @@ function changeStatusComplete(data)
         else {
             cell.innerHTML = "<a href='javascript:changeArchiveStatus(" + currentRowID + ");'><img title='Un-Archive' src='/shared/images/icons/folder_into.gif'></a>";
         }
-        
     }
+
+    else {
+        SEL.MasterPopup.ShowMasterPopup(data.Message, 'Message from ' + moduleNameHTML);
+    }
+
 }
 
 function repopulateGrid()

@@ -1,5 +1,6 @@
 ﻿namespace SpendManagementApi.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -8,6 +9,10 @@
     using SpendManagementApi.Models.Responses;
     using SpendManagementApi.Models.Types;
     using SpendManagementApi.Utilities;
+
+    using SpendManagementLibrary.Enumerators;
+    using SpendManagementLibrary.Helpers.EnumDescription;
+
     using Spend_Management;
 
     /// <summary>
@@ -132,8 +137,21 @@
         public override CostCode Archive(int id, bool archive)
         {
             var item = Get(id);
-            _data.ChangeStatus(id, archive);
+            var changeCostCodeStatusOutcome =_data.ChangeStatus(id, archive);
+
+            switch (changeCostCodeStatusOutcome)
+            {
+                case ChangeCostCodeArchiveStatus.AssignedToEmployee:
+                case ChangeCostCodeArchiveStatus.AssignedToSignOffStage:
+                    throw new ApiException(ApiResources.ApiErrorArchiveFailed, changeCostCodeStatusOutcome.GetDescription());
+                case ChangeCostCodeArchiveStatus.Success:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             item.Archived = archive;
+
             return item;
         }
 

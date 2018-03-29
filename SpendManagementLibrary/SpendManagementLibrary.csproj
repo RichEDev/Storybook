@@ -426,6 +426,7 @@
     <Compile Include="Enumerators\Expedite\CriterionIdentifiers.cs" />
     <Compile Include="Enumerators\NotifyAdminOfChangesOutcome.cs" />
     <Compile Include="Enumerators\PartSubmittalFieldType.cs" />
+    <Compile Include="Enumerators\ChangeCostCodeArchiveStatus.cs" />
     <Compile Include="Enumerators\TransactionType.cs" />
     <Compile Include="Enumerators\Expedite\ExpediteOperatorValidationProgress.cs" />
     <Compile Include="ErrorCodeArchive.cs" />
@@ -554,6 +555,7 @@
     <Compile Include="Helpers\DecimalExtension.cs" />
     <Compile Include="Helpers\ArrayValidation.cs" />
     <Compile Include="Helpers\DateValidators.cs" />
+    <Compile Include="Helpers\EnumDescription\EnumHelper.cs" />
     <Compile Include="Helpers\EnumHelpers.cs" />
     <Compile Include="Helpers\EnumValidator.cs" />
     <Compile Include="Helpers\EsrInboundBuilder.cs" />
@@ -570,6 +572,7 @@
     <Compile Include="Helpers\InboundValueTypes.cs" />
     <Compile Include="Helpers\ListItemFactory.cs" />
     <Compile Include="Helpers\NullableDateTimeHelper.cs" />
+    <Compile Include="Helpers\Response\OutcomeResponse.cs" />
     <Compile Include="Helpers\ValidationResponses.cs" />
     <Compile Include="Helpers\ValueTypes.cs" />
     <Compile Include="Holidays\Holiday.cs" />

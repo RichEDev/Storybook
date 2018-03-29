@@ -1,22 +1,16 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using System.Web.Services;
-using SpendManagementLibrary;
-using System.Text;
-
-
-
 namespace Spend_Management.shared.admin
 {
-	/// <summary>
+    using System;
+    using System.Web;
+    using System.Web.Services;
+    using System.Web.UI;
+
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Enumerators;
+    using SpendManagementLibrary.Helpers.EnumDescription;
+    using SpendManagementLibrary.Helpers.Response;
+
+    /// <summary>
 	/// Summary description for admincostcodes.
 	/// </summary>
 	public partial class admincostcodes : Page
@@ -100,12 +94,38 @@ namespace Spend_Management.shared.admin
             return clscostcodes.DeleteCostCode(costcodeid, user.EmployeeID);
         }
 
+        /// <summary>
+        /// Changes a cost code status from archived to unarchived an vice versa.
+        /// </summary>
+        /// <param name="accountId">
+        /// The accountId.
+        /// </param>
+        /// <param name="costCodeId">
+        /// The Id of the cost code to change the status of..
+        /// </param>
+        /// <returns>
+        /// A <see cref="OutcomeResponse"/> with the result of the action.
+        /// </returns>
         [WebMethod(EnableSession = true)]
-        public static int changeStatus(int accountid, int costcodeid)
+        public static OutcomeResponse changeStatus(int accountId, int costCodeId)
         {
-            cCostcodes clscostcodes = new cCostcodes(accountid);
-            cCostCode reqcostcode = clscostcodes.GetCostcodeById(costcodeid);
-            return clscostcodes.ChangeStatus(costcodeid, !reqcostcode.Archived);
+            var response = new OutcomeResponse();
+
+            cCostcodes costCodes = new cCostcodes(accountId);
+            cCostCode costCode = costCodes.GetCostcodeById(costCodeId);
+
+            var outcome = costCodes.ChangeStatus(costCodeId, !costCode.Archived);
+
+            if (outcome == ChangeCostCodeArchiveStatus.Success)
+            {
+                response.Success = true;
+                return response;
+            }
+            
+            response.Success = false;
+            response.Message = outcome.GetDescription();
+
+            return response;
         }
 
         /// <summary>
@@ -117,7 +137,7 @@ namespace Spend_Management.shared.admin
         {            
             string sPreviousURL = (SiteMap.CurrentNode == null) ? "~/home.aspx" : SiteMap.CurrentNode.ParentNode.Url;
 
-            Response.Redirect(sPreviousURL, true);                               
+            Response.Redirect(sPreviousURL, true);
         }
 	}
 }

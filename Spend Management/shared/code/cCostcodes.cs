@@ -9,7 +9,9 @@ namespace Spend_Management
     using System.Text;
     using System.Web.UI.WebControls;
     using SpendManagementLibrary;
+    using SpendManagementLibrary.Enumerators;
     using SpendManagementLibrary.Helpers;
+    using SpendManagementLibrary.Helpers.EnumDescription;
     using SpendManagementLibrary.Interfaces;
     #endregion
 
@@ -312,17 +314,15 @@ namespace Spend_Management
         /// <summary>
         ///     The change status.
         /// </summary>
-        /// <param name="costcodeId">
-        ///     The costcodeid.
+        /// <param name="costCodeId">
+        /// The Id of the cost code to change the status of.
         /// </param>
-        /// <param name="archive">
-        ///     The archive.
-        /// </param>
-        /// <param name="connection">Optional connection object</param>
+        /// <param name="archive">Whether to set the cost code archive status to true or false. </param>
+        /// <param name="connection">An instance of <see cref="IDBConnection"/>.</param>
         /// <returns>
-        ///     The <see cref="int" />.
+        /// A <see cref="ChangeCostCodeArchiveStatus"/> with the result of the action.
         /// </returns>
-        public int ChangeStatus(int costcodeId, bool archive, IDBConnection connection = null)
+        public ChangeCostCodeArchiveStatus ChangeStatus(int costCodeId, bool archive, IDBConnection connection = null)
         {
             int returnCode;
 
@@ -344,17 +344,19 @@ namespace Spend_Management
                     databaseConnection.sqlexecute.Parameters.AddWithValue("@delegateID", DBNull.Value);
                 }
 
-                databaseConnection.sqlexecute.Parameters.AddWithValue("@costcodeid", costcodeId);
+                databaseConnection.sqlexecute.Parameters.AddWithValue("@costcodeid", costCodeId);
                 databaseConnection.sqlexecute.Parameters.AddWithValue("@archive", Convert.ToByte(archive));
                 databaseConnection.sqlexecute.Parameters.Add("@returncode", SqlDbType.Int);
                 databaseConnection.sqlexecute.Parameters["@returncode"].Direction = ParameterDirection.ReturnValue;
                 databaseConnection.ExecuteProc("changeCostcodeStatus");
-                returnCode = (int) databaseConnection.sqlexecute.Parameters["@returncode"].Value;
+
+                returnCode = (int)databaseConnection.sqlexecute.Parameters["@returncode"].Value;
             }
 
-            return returnCode == 1 ? -1 : 0;
-        }
+            return (ChangeCostCodeArchiveStatus)returnCode;
 
+        }
+    
         /// <summary>
         ///     The delete cost code.
         /// </summary>

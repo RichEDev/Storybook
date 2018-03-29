@@ -10,6 +10,7 @@
     using System.Web.Services;
 
     using SpendManagementLibrary;
+    using SpendManagementLibrary.Helpers.Response;
 
     /// <summary>
     /// Summary description for svcSso
@@ -18,14 +19,8 @@
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [ToolboxItem(false)]
     [ScriptService]
-    public class svcSso : WebService
+    public partial class svcSso : WebService
     {
-        public class Response
-        {
-            public bool Success { get; set; }
-            public string Message { get; set; }
-            public string[] Controls { get; set; }
-        }
         
         /// <summary>
         /// Save the Single sign-on configuration to the database
@@ -34,7 +29,7 @@
         /// <returns>An object which contains true on success or a message on error</returns>
         [WebMethod(EnableSession = true)]
         [ScriptMethod]
-        public Response Save(SingleSignOn ssoNew)
+        public OutcomeResponse Save(SingleSignOn ssoNew)
         {
             try
             {
@@ -42,7 +37,7 @@
 
                 if (!svcSso.CurrentUserHasPermission(user))
                 {
-                    return new Response { Message = "Permission denied." };
+                    return new OutcomeResponse { Message = "Permission denied." };
                 }
 
                 var ssoOriginal = SingleSignOn.Get(user);
@@ -50,7 +45,7 @@
                 var errors = svcSso.Validate(user, ssoOriginal, ssoNew);
                 if (errors.Length > 0)
                 {
-                    return new Response
+                    return new OutcomeResponse
                     {
                         Message = String.Join("\n", errors.Select(i => i.Item1 )),
                         Controls = errors.Select(i => i.Item2).Distinct().ToArray()
@@ -64,11 +59,11 @@
 
                 ssoNew.Save(user);
 
-                return new Response { Success = true };
+                return new OutcomeResponse { Success = true };
             }
             catch (Exception ex)
             {
-                return new Response { Message = String.Format("Error: {0}, {1}", ex.GetType().Name, ex.Message) };
+                return new OutcomeResponse { Message = String.Format("Error: {0}, {1}", ex.GetType().Name, ex.Message) };
             }
         }
 

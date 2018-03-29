@@ -9,6 +9,7 @@
     using shared.webServices;
 
     using SpendManagementLibrary;
+    using SpendManagementLibrary.Helpers.Response;
 
     /// <summary>
     /// Single Sign-on admin page
@@ -77,7 +78,7 @@
             Response.Clear();
             Response.ContentType = "text/plain";
 
-            svcSso.Response response;
+            OutcomeResponse response;
             try
             {
                 byte[] cer = null;
@@ -103,7 +104,7 @@
             }
             catch (Exception ex)
             {
-                response = new svcSso.Response { Message = String.Format("Error: {0}, {1}", ex.GetType().Name, ex.Message) };
+                response = new OutcomeResponse { Message = String.Format("Error: {0}, {1}", ex.GetType().Name, ex.Message) };
             }
 
             Response.Write(new JavaScriptSerializer().Serialize(response));
