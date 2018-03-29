@@ -2,7 +2,14 @@
 AS
 SELECT
   dbo.[customentityattributes].fieldid,
-  dbo.[customentities].tableid,
+  CASE 
+    WHEN dbo.[customEntityAttributes].fieldtype = 9 AND customEntityAttributes.display_name <> 'Created On' AND 
+                      customEntityAttributes.display_name <> 'Created By' AND customEntityAttributes.display_name <> 'Modified On' AND 
+                      customEntityAttributes.display_name <> 'Modified By' AND  customEntityAttributes.display_name  <> 'Archived' THEN 
+					  dbo.[customEntityAttributes].relatedtable
+    ELSE
+  dbo.[customentities].tableid
+  END AS tableid,
   CASE dbo.[customentityattributes].display_name
     WHEN 'GreenLight Currency' THEN 'GreenLightCurrency'
     WHEN 'Created On' THEN REPLACE([customentityattributes].display_name, ' ', '')
@@ -13,7 +20,7 @@ SELECT
     ELSE 'att' + CAST(dbo.[customentityattributes].attributeid AS nvarchar(10))
   END AS field,
   CASE dbo.[customEntityAttributes].fieldtype
-    WHEN '17' THEN N'CL'
+    WHEN '17' THEN N'CL'	
     ELSE dbo.getFieldType(dbo.[customEntityAttributes].fieldtype, dbo.[customEntityAttributes].format)
   END AS fieldtype,
   dbo.[customentityattributes].display_name AS description,
@@ -21,37 +28,37 @@ SELECT
   CAST(0 AS bit) AS normalview,
   dbo.[customentityattributes].is_key_field AS idfield,
   dbo.[customentities].tableid AS viewgroupid,
-  CAST(0 AS bit) AS genlist,
-  CAST(50 AS int) AS width,
-  CAST(0 AS bit) AS cantotal,
-  CAST(0 AS bit) AS printout,
+  CAST(0 AS BIT) AS genlist,
+  CAST(50 AS INT) AS width,
+  CAST(0 AS BIT) AS cantotal,
+  CAST(0 AS BIT) AS printout,
   CASE dbo.[customentityattributes].fieldtype
-    WHEN 4 THEN CAST(1 AS bit)
-    ELSE CAST(0 AS bit)
+    WHEN 4 THEN CAST(1 AS BIT)
+    ELSE CAST(0 AS BIT)
   END AS valuelist,
-  CAST(1 AS bit) AS allowimport,
+  CAST(1 AS BIT) AS allowimport,
   dbo.[customentityattributes].mandatory,
   dbo.[customentityattributes].modifiedon AS amendedon,
   dbo.[customentityattributes].relatedtable AS lookuptable,
   dbo.[tables].keyfield AS lookupfield,
-  CAST(0 AS bit) AS useforlookup,
-  CAST(1 AS bit) AS workflowUpdate,
-  CAST(1 AS bit) AS workflowSearch,
+  CAST(0 AS BIT) AS useforlookup,
+  CAST(1 AS BIT) AS workflowUpdate,
+  CAST(1 AS BIT) AS workflowSearch,
   dbo.[customentityattributes].maxlength AS length,
-  CAST(0 AS bit) AS Expr1,
+  CAST(0 AS BIT) AS Expr1,
   NULL AS Expr2,
-  CAST(1 AS int) AS fieldFrom,
-  CAST(0 AS bit) AS allowDuplicateChecking,
+  CAST(1 AS INT) AS fieldFrom,
+  CAST(0 AS BIT) AS allowDuplicateChecking,
   NULL AS classPropertyName,
-  CAST(0 AS tinyint) AS FieldCategory,
+  CAST(0 AS TINYINT) AS FieldCategory,
   customEntityAttributes.relatedtable AS RelatedTable,
   CASE (dbo.[customentityattributes].fieldtype)
-    WHEN '22' THEN CAST(1 AS bit)
+    WHEN '22' THEN CAST(1 AS BIT)
     WHEN '9' THEN CASE dbo.[customentityattributes].relationshiptype
-        WHEN 1 THEN CAST(1 AS bit)
-        ELSE CAST(0 AS bit)
+        WHEN 1 THEN CAST(1 AS BIT)
+        ELSE CAST(0 AS BIT)
       END
-	ELSE CAST(0 AS bit)
+	ELSE CAST(0 AS BIT)
   END AS IsForeignKey,
   NULL AS associatedFieldForDuplicateChecking,
   NULL AS DuplicateCheckingSource,
@@ -70,31 +77,31 @@ SELECT
   fieldtype,
   description,
   description AS comment,
-  CAST(0 AS bit) AS normalview,
+  CAST(0 AS BIT) AS normalview,
   idfield,
   NULL AS viewgroupid,
-  CAST(0 AS bit) AS genlist,
-  CAST(50 AS int) AS width,
-  CAST(0 AS bit) AS cantotal,
-  CAST(0 AS bit) AS Expr1,
-  CAST(0 AS bit) AS Expr2,
-  CAST(0 AS bit) AS Expr3,
-  CAST(0 AS bit) AS Expr4,
+  CAST(0 AS BIT) AS genlist,
+  CAST(50 AS INT) AS width,
+  CAST(0 AS BIT) AS cantotal,
+  CAST(0 AS BIT) AS Expr1,
+  CAST(0 AS BIT) AS Expr2,
+  CAST(0 AS BIT) AS Expr3,
+  CAST(0 AS BIT) AS Expr4,
   NULL AS amendedon,
   NULL AS lookuptable,
   NULL AS lookupfield,
-  CAST(0 AS bit) AS useforlookup,
-  CAST(1 AS bit) AS workflowUpdate,
-  CAST(1 AS bit) AS workflowSearch,
+  CAST(0 AS BIT) AS useforlookup,
+  CAST(1 AS BIT) AS workflowUpdate,
+  CAST(1 AS BIT) AS workflowSearch,
   0 AS length,
-  CAST(0 AS bit) AS Expr5,
+  CAST(0 AS BIT) AS Expr5,
   NULL AS Expr6,
-  CAST(1 AS int) AS fieldFrom,
-  CAST(0 AS bit) AS allowDuplicateChecking,
+  CAST(1 AS INT) AS fieldFrom,
+  CAST(0 AS BIT) AS allowDuplicateChecking,
   NULL AS classPropertyName,
-  CAST(0 AS tinyint) AS FieldCategory,
+  CAST(0 AS TINYINT) AS FieldCategory,
   NULL AS RelatedTable,
-  CAST(0 AS bit) AS IsForeignKey,
+  CAST(0 AS BIT) AS IsForeignKey,
   NULL AS associatedFieldForDuplicateChecking,
   NULL AS DuplicateCheckingSource,
   NULL AS DuplicateCheckingCalculation,
@@ -127,8 +134,8 @@ SELECT
   length,
   relabel,
   relabel_param,
-  CAST(1 AS int) AS fieldFrom,
-  CAST(0 AS bit) AS allowDuplicateChecking,
+  CAST(1 AS INT) AS fieldFrom,
+  CAST(0 AS BIT) AS allowDuplicateChecking,
   NULL AS classPropertyName,
   FieldCategory,
   RelatedTable,
@@ -142,40 +149,40 @@ UNION ALL
 SELECT
   fieldid,
   tableid,
-  'udf' + CAST(userdefineid AS nvarchar(10)) AS field,
+  'udf' + CAST(userdefineid AS NVARCHAR(10)) AS field,
   dbo.getFieldType(fieldtype, format) AS fieldtype,
   display_name AS description,
   display_name AS comment,
-  CAST(1 AS bit) AS normalview,
-  CAST(0 AS bit) AS idfield,
+  CAST(1 AS BIT) AS normalview,
+  CAST(0 AS BIT) AS idfield,
   dbo.getUserdefinedViewGroup(tableid, fieldtype) AS viewgroupid,
-  CAST(0 AS bit) AS genlist,
-  CAST(50 AS int) AS width,
-  CAST(0 AS bit) AS cantotal,
-  CAST(0 AS bit) AS printout,
+  CAST(0 AS BIT) AS genlist,
+  CAST(50 AS INT) AS width,
+  CAST(0 AS BIT) AS cantotal,
+  CAST(0 AS BIT) AS printout,
   CASE userdefined.fieldtype
-    WHEN 4 THEN CAST(1 AS bit)
-    ELSE CAST(0 AS bit)
+    WHEN 4 THEN CAST(1 AS BIT)
+    ELSE CAST(0 AS BIT)
   END AS valuelist,
-  CAST(1 AS bit) AS allowimport,
+  CAST(1 AS BIT) AS allowimport,
   mandatory,
   ModifiedOn AS amendedon,
   NULL AS lookuptable,
   NULL AS lookupfield,
-  CAST(0 AS bit) AS useforlookup,
-  CAST(1 AS bit) AS workflowUpdate,
-  CAST(1 AS bit) AS workflowSearch,
+  CAST(0 AS BIT) AS useforlookup,
+  CAST(1 AS BIT) AS workflowUpdate,
+  CAST(1 AS BIT) AS workflowSearch,
   maxlength AS length,
-  CAST(0 AS bit) AS Expr1,
+  CAST(0 AS BIT) AS Expr1,
   NULL AS Expr2,
-  CAST(2 AS int) AS fieldFrom,
-  CAST(0 AS bit) AS allowDuplicateChecking,
+  CAST(2 AS INT) AS fieldFrom,
+  CAST(0 AS BIT) AS allowDuplicateChecking,
   NULL AS classPropertyName,
-  CAST(0 AS tinyint) AS FieldCategory,
+  CAST(0 AS TINYINT) AS FieldCategory,
   relatedTable AS RelatedTable,
   CASE fieldtype
-    WHEN 9 THEN CAST(1 AS bit)
-    ELSE CAST(0 AS bit)
+    WHEN 9 THEN CAST(1 AS BIT)
+    ELSE CAST(0 AS BIT)
   END AS IsForeignKey,
   NULL AS associatedFieldForDuplicateChecking,
   NULL AS DuplicateCheckingSource,
