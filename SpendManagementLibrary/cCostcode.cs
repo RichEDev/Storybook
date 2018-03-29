@@ -100,22 +100,6 @@ namespace SpendManagementLibrary
         }
 
         /// <summary>
-        /// Gets the combined owner key (owner element type, owner id).
-        /// </summary>
-        public string CombinedOwnerKey
-        {
-            get
-            {
-                return string.Format("{0},{1}", (int)this.OwnerElementType(), this.OwnerId());
-            }
-        }
-
-        /// <summary>
-        /// Sets the set owner description.
-        /// </summary>
-        public string OwnerDescription { private get; set; }
-
-        /// <summary>
         /// Gets a value indicating whether archived or not.
         /// </summary>
         public bool Archived { get; private set; }
@@ -210,17 +194,6 @@ namespace SpendManagementLibrary
         public int ItemPrimaryID()
         {
             return this.CostcodeId;
-        }
-
-        /// <summary>
-        /// The owner description.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public string OwnerDefinition()
-        {
-            return this.OwnerDescription;
         }
 
         /// <summary>

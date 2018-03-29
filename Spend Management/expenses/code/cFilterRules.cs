@@ -424,12 +424,12 @@
             {
                 case FilterType.Costcode:
                     {
-                        cCostCode costcode = this.CostCodes.GetCostcodeByString(item);
-                        if (costcode == null)
+                        int costcodeid = this.CostCodes.GetCostcodeIdByName(item);
+                        if (costcodeid == 0)
                         {
                             throw new Exception(String.Format("The Costcode '{0}' could not be found", item));
                         }
-                        id = costcode.CostcodeId;
+                        id = costcodeid;
                         break;
                     }
                 case FilterType.Department:
@@ -479,7 +479,7 @@
                         filValAtts.labelText = "Costcodes:";
                         filValAtts.serviceMethod = "getCostcodeList";
                         filValAtts.items = this.CostCodes.CreateDropDown(false);
-                        filValAtts.itemCount = this.CostCodes.Count;
+                        filValAtts.itemCount = this.CostCodes.GetCount();
                         break;
                     }
                 case FilterType.Department:

@@ -1042,7 +1042,12 @@ namespace Spend_Management
 
             if (exists("costcodes", "costcode", costcode))
             {
-                reqCostcode = clsCostcodes.GetCostcodeByString(costcode);
+                int id = clsCostcodes.GetCostcodeIdByName(costcode);
+
+                if (id != 0)
+                {
+                     reqCostcode = clsCostcodes.GetCostcodeById(id);
+                }
 
                 if (reqCostcode != null)
                 {
@@ -2360,13 +2365,12 @@ namespace Spend_Management
                 }
 
                 string costcode = lstEmployeeCodeAllocation["Cost Code"].ToString();
-                cCostCode cost = clsCostcodes.GetCostcodeByString(costcode) ?? clsCostcodes.GetCostcodeByDescription(costcode);
 
-                int costcodeid = 0;
+                int costcodeid = clsCostcodes.GetCostcodeIdByName(costcode);
 
-                if (cost != null)
+                if (costcodeid == 0)
                 {
-                    costcodeid = cost.CostcodeId;
+                    costcodeid = clsCostcodes.GetCostcodeIdByDescription(costcode);
                 }
 
                 string projectcode = lstEmployeeCodeAllocation["Project Code"].ToString();

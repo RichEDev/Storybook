@@ -34,7 +34,7 @@
         /// <returns></returns>
         public override IList<CostCode> GetAll()
         {
-            return _data.CacheList().Select(b => new CostCode().From(b.Value, ActionContext)).ToList();
+            return _data.Get(true).Select(b => new CostCode().From(b, ActionContext)).ToList();
         }
 
 
