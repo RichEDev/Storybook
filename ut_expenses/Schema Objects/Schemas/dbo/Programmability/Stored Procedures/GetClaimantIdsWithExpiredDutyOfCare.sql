@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[GetClaimantIdsWithExpiredDutyOfCare] 
+﻿CREATE PROCEDURE [dbo].[GetClaimantIdsWithExpiredDutyOfCare] 
 AS
 BEGIN
 
@@ -77,7 +76,10 @@ SET @sqlQuery ='
 				
 exec (@sqlQuery)  
 
-        select * from #temp group by EmployeeId
+        SELECT #temp.EmployeeId FROM #temp 
+		INNER JOIN employees ON employees.employeeid = #temp.EmployeeId
+		WHERE Employees.archived = 0
+		GROUP BY #temp.EmployeeId
 
         Drop Table #temp
 

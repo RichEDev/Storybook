@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[getClaimantIdsWithExpiredDutyOfCareToScheduleEmailToTheApprover]
+﻿CREATE PROCEDURE [dbo].[getClaimantIdsWithExpiredDutyOfCareToScheduleEmailToTheApprover]
 AS
 BEGIN
 
@@ -80,7 +79,10 @@ SET @sqlQuery ='
 			END'
 exec (@sqlQuery)
 
-        select * from #temp group by EmployeeId
+        SELECT #temp.EmployeeId FROM #temp 
+		INNER JOIN employees ON employees.employeeid = #temp.EmployeeId
+		WHERE Employees.archived = 0
+		GROUP BY #temp.EmployeeId
 
        
 Drop Table #temp
@@ -89,7 +91,7 @@ IF @approver = 'Team'
 	BEGIN
 
 	declare @teamID int = (select stringValue from accountProperties where stringKey = 'dutyOfCareTeamAsApprover')
-	select employeeid  as teamMembers from teamemps where teamid = @teamID
+	SELECT teamemps.employeeid  AS teamMembers FROM teamemps INNER JOIN employees ON EMPLOYEES.employeeid = teamemps.employeeid WHERE teamid = @teamID AND employees.archived = 0
 	END	
 
 END
