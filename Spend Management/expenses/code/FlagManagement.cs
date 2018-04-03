@@ -79,7 +79,7 @@ namespace Spend_Management.expenses.code
 
         private Dictionary<int, cGlobalCurrency> _CachedGlobalCurrencies { get; set; }
 
-        private Dictionary<int, cRoleSubcat> _Rolesubcats { get; set; }
+        private Dictionary<int, RoleSubcat> _Rolesubcats { get; set; }
 
         private Dictionary<int, List<int>> _CachedRoles { get; set; }
 
@@ -1885,7 +1885,7 @@ namespace Spend_Management.expenses.code
         private List<FlaggedItem> CheckLimits(
             LimitFlag flag,
             cExpenseItem item,
-            Dictionary<int, cRoleSubcat> emplimits,
+            Dictionary<int, RoleSubcat> emplimits,
             Employee reqemp)
         {
             decimal maximum = 0;
@@ -1908,9 +1908,9 @@ namespace Spend_Management.expenses.code
             // get limits
             if (emplimits.ContainsKey(item.subcatid))
             {
-                cRoleSubcat rolesub = emplimits[item.subcatid];
-                maximum = rolesub.maximum;
-                receiptmaximum = rolesub.receiptmaximum;
+                RoleSubcat rolesub = emplimits[item.subcatid];
+                maximum = rolesub.MaximumLimitWithoutReceipt;
+                receiptmaximum = rolesub.MaximumLimitWithReceipt;
             }
 
             SubcatBasic reqsubcat = this.GetSubcat(item.subcatid);
@@ -2020,14 +2020,14 @@ namespace Spend_Management.expenses.code
         /// </summary>
         /// <param name="rolesubcats">A list of rolesubcats retrieved from the employees account</param>
         /// <returns>All roles that this user belongs to</returns>
-        private List<int> GetEmployeeRoles(Dictionary<int, cRoleSubcat> rolesubcats)
+        private List<int> GetEmployeeRoles(Dictionary<int, RoleSubcat> rolesubcats)
         {
             List<int> roles = new List<int>();
-            foreach (cRoleSubcat rolesubcat in rolesubcats.Values)
+            foreach (RoleSubcat rolesubcat in rolesubcats.Values)
             {
-                if (!roles.Contains(rolesubcat.roleid))
+                if (!roles.Contains(rolesubcat.RoleId))
                 {
-                    roles.Add(rolesubcat.roleid);
+                    roles.Add(rolesubcat.RoleId);
                 }
             }
 
@@ -3392,7 +3392,7 @@ namespace Spend_Management.expenses.code
             return currency;
         }
 
-        private Dictionary<int, cRoleSubcat> GetRoleSubcats(Employee employee)
+        private Dictionary<int, RoleSubcat> GetRoleSubcats(Employee employee)
         {
             if (this._Rolesubcats == null)
             {

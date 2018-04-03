@@ -956,7 +956,7 @@ namespace SpendManagementLibrary
     {
         public Dictionary<int, cSubcat> lstonlinesubcats;
         public List<int> lstsubcatids;
-        public List<cRoleSubcat> lstRoleSubcats;
+        public List<RoleSubcat> lstRoleSubcats;
     }
 
     [Serializable]

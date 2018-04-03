@@ -7113,6 +7113,8 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\VehicleLookupLog.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\EncryptCustomEntityAttributeData.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\SavedExpensesFuelReceiptToMileageAllocations.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SaveItemRole.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\DeleteExpenseItemToItemRoleAssociation.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ut_expenses.refactorlog">

@@ -178,7 +178,7 @@ namespace Spend_Management
                 var clscountries = new cCountries(this._user.AccountID, this._user.CurrentSubAccountId);
                 var clscurrencies = new cCurrencies(this._user.AccountID, this._user.CurrentSubAccountId);
                 var clsgroups = new cGroups(this._user.AccountID);
-                var clsitemroles = new cItemRoles(this._user.AccountID);
+                var clsitemroles = new ItemRoles(this._user.AccountID);
 
                 switch (this._user.CurrentActiveModule)
                 {
@@ -508,8 +508,8 @@ namespace Spend_Management
 
                     foreach (EmployeeItemRole itemRole in lstItemRoles)
                     {
-                        cItemRole reqItemRole = clsitemroles.getItemRoleById(itemRole.ItemRoleId);
-                        script.Append("itemRoles.push(" + reqItemRole.itemroleid + ");\n");
+                        ItemRole reqItemRole = clsitemroles.GetItemRoleById(itemRole.ItemRoleId);
+                        script.Append("itemRoles.push(" + reqItemRole.ItemRoleId + ");\n");
                     }
                     workLocationGridData = createWorkLocationGrid(employeeid.ToString());
                     homeLocationGridData = createHomeLocationGrid(employeeid.ToString());

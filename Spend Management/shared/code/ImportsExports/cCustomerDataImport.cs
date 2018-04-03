@@ -1150,19 +1150,19 @@ namespace Spend_Management
             cElements clsElements = new cElements();
             cElement element = clsElements.GetElementByName("ItemRoles");
 
-            cItemRoles clsItemRoles = new cItemRoles(AccountID);
+            ItemRoles clsItemRoles = new ItemRoles(AccountID);
             string itemRole = lstItemRoles["Item Role Description"].ToString();
-
+            var user = cMisc.GetCurrentUser();
             if (exists("item_roles", "rolename", itemRole))
             {
-                cItemRole reqItemRole = clsItemRoles.getItemRoleByName(itemRole);
+                ItemRole reqItemRole = clsItemRoles.GetItemRoleByName(itemRole);
 
-                clsItemRoles.updateRole(reqItemRole.itemroleid, itemRole, reqItemRole.description, new List<cRoleSubcat>(), employeeid);
+                clsItemRoles.SaveRole(reqItemRole, user);
                 clsLogging.saveLogItem(logID, LogReasonType.SuccessUpdate, element, "Updated Item Role " + itemRole);
             }
             else
             {
-                clsItemRoles.addRole(itemRole, "", new List<cRoleSubcat>(), employeeid);
+                clsItemRoles.SaveRole(new ItemRole(0, itemRole, "", new Dictionary<int, RoleSubcat>(), DateTime.Now, employeeid, DateTime.Now, employeeid), user);
                 clsLogging.saveLogItem(logID, LogReasonType.SuccessAdd, element, "Added Item Role " + itemRole);
             }
 
@@ -1198,7 +1198,7 @@ namespace Spend_Management
 
             cSubcats clsSubcats = new cSubcats(AccountID);
             cCategories clsCategories = new cCategories(AccountID);
-            cItemRoles clsItemRoles = new cItemRoles(AccountID);
+            ItemRoles clsItemRoles = new ItemRoles(AccountID);
 
             string masterCat = lstSubcats["Master Category"].ToString();
             string expenseItem = lstSubcats["Expense Items"].ToString();
@@ -1219,7 +1219,7 @@ namespace Spend_Management
 
             cSubcat newSubcat;
             
-            cItemRole reqItemRole = clsItemRoles.getItemRoleByName(itemRole);
+            ItemRole reqItemRole = clsItemRoles.GetItemRoleByName(itemRole);
             cCategory reqCategory = clsCategories.getCategoryByName(masterCat);
 
             if (reqItemRole == null)
@@ -1235,7 +1235,7 @@ namespace Spend_Management
             }
 
             int categoryid = reqCategory.categoryid;
-            int itemroleid = reqItemRole.itemroleid;
+            int itemroleid = reqItemRole.ItemRoleId;
             int p11Did = this.GetIdByTableGuidFieldGuidAndValue(new Guid(ReportTable.P11DCategories),
                 new Guid(ReportFields.P11DCategoriesPDName), p11D);
 
@@ -1248,9 +1248,9 @@ namespace Spend_Management
 
             #region Role subcats
 
-            List<cRoleSubcat> rolesubs = new List<cRoleSubcat>();
+            List<RoleSubcat> rolesubs = new List<RoleSubcat>();
 
-            rolesubs.Add(new cRoleSubcat(0, itemroleid, 0, 0, 0, false));
+            rolesubs.Add(new RoleSubcat(0, itemroleid, 0, 0, 0, false));
 
             #endregion
 
@@ -1608,29 +1608,29 @@ namespace Spend_Management
 
             #region Employee Item roles
 
-            cItemRoles clsItemRoles = new cItemRoles(AccountID);
-            cItemRole reqItemRole;
+            ItemRoles clsItemRoles = new ItemRoles(AccountID);
+            ItemRole reqItemRole;
             List<EmployeeItemRole> lstItemRoles = new List<EmployeeItemRole>();
 
-            reqItemRole = clsItemRoles.getItemRoleByName(lstEmployee["Item Role 1"].ToString());
+            reqItemRole = clsItemRoles.GetItemRoleByName(lstEmployee["Item Role 1"].ToString());
 
             if (reqItemRole != null)
             {
-                lstItemRoles.Add(new EmployeeItemRole(reqItemRole.itemroleid));
+                lstItemRoles.Add(new EmployeeItemRole(reqItemRole.ItemRoleId));
             }
 
-            reqItemRole = clsItemRoles.getItemRoleByName(lstEmployee["Item Role 2"].ToString());
+            reqItemRole = clsItemRoles.GetItemRoleByName(lstEmployee["Item Role 2"].ToString());
 
             if (reqItemRole != null)
             {
-                lstItemRoles.Add(new EmployeeItemRole(reqItemRole.itemroleid));
+                lstItemRoles.Add(new EmployeeItemRole(reqItemRole.ItemRoleId));
             }
 
-            reqItemRole = clsItemRoles.getItemRoleByName(lstEmployee["Item Role 3"].ToString());
+            reqItemRole = clsItemRoles.GetItemRoleByName(lstEmployee["Item Role 3"].ToString());
 
             if (reqItemRole != null)
             {
-                lstItemRoles.Add(new EmployeeItemRole(reqItemRole.itemroleid));
+                lstItemRoles.Add(new EmployeeItemRole(reqItemRole.ItemRoleId));
             }
 
 

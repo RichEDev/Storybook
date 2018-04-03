@@ -34,9 +34,9 @@ namespace SpendManagementApi.Models.Types.Employees
         public int? AdvancesSignOffGroupId { get; set; }
 
         /// <summary>
-        /// The list of associated ItemRoles for this Employee.
-        /// <strong>Do not try to modify this user's ItemRoles by changing this list.</strong>
-        /// Instead use the <see cref="ItemRole">ItemRoles</see> resource.
+        /// The list of associated Item Roles for this Employee.
+        /// <strong>Do not try to modify this user's List by changing this list.</strong>
+        /// Instead use the <see cref="ItemRole">List</see> resource.
         /// </summary>
         public List<int> ItemRoles { get; internal set; }
 

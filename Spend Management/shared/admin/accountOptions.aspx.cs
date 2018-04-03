@@ -231,7 +231,7 @@
 
                 this.cmbdefaultrole.Items.AddRange(clsAccessRoles.CreateDropDown(defaultRole, true).ToArray());
 
-                var clsItemRoles = new cItemRoles(currentUser.AccountID);
+                var clsItemRoles = new ItemRoles(currentUser.AccountID);
 
                 int defaultItemRole = reqProperties.DefaultItemRole.HasValue ? reqProperties.DefaultItemRole.Value : 0;
 

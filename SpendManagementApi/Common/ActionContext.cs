@@ -49,7 +49,7 @@ namespace SpendManagementApi.Common
 
         private cCategories _categories;
 
-        private cItemRoles _itemRoles;
+        private ItemRoles _itemRoles;
 
         private cAccessRoles _accessRoles;
 
@@ -384,11 +384,11 @@ namespace SpendManagementApi.Common
             }
         }
 
-        public cItemRoles ItemRoles
+        public ItemRoles ItemRoles
         {
             get
             {
-                _itemRoles = _itemRoles ?? new cItemRoles(AccountId);
+                _itemRoles = _itemRoles ?? new ItemRoles(AccountId);
                 return _itemRoles;
             }
             set

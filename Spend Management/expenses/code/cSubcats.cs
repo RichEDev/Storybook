@@ -733,8 +733,8 @@ namespace Spend_Management
                 connection.sqlexecute.Parameters.Clear();
             }
 
-            var clsroles = new cItemRoles(this._accountid);
-            clsroles.deleteRolesubcatsBySubcatid(subcatId);
+            var clsroles = new ItemRoles(this._accountid);
+            clsroles.DeleteRolesubcatsBySubcatid(subcatId);
             this.InvalidateCache();
             return 0;
         }

@@ -6,7 +6,7 @@
     using Common;
 
     /// <summary>
-    /// Links <see cref="ExpenseSubCategory">ExpenseSubCategories</see> and <see cref="ItemRole">ItemRoles</see>.
+    /// Links <see cref="ExpenseSubCategory">ExpenseSubCategories</see> and <see cref="ItemRole">List</see>.
     /// </summary>
     public class SubCatItemRole : DeletableBaseExternalType, IRequiresValidation, IEquatable<SubCatItemRole>
     {
@@ -42,7 +42,7 @@
 
         public void Validate(IActionContext actionContext)
         {
-            if (actionContext.ItemRoles.getItemRoleById(this.ItemRoleId) == null)
+            if (actionContext.ItemRoles.GetItemRoleById(this.ItemRoleId) == null)
             {
                 throw new ApiException("Invalid Item Role", "Please provide a valid item role id");
             }
@@ -71,27 +71,27 @@
 
     internal static class SubCatItemRoleExtension
     {
-        internal static TResult Cast<TResult>(this cRoleSubcat roleSubcat)
+        internal static TResult Cast<TResult>(this RoleSubcat roleSubcat)
             where TResult : SubCatItemRole, new()
         {
             if (roleSubcat == null)
                 return null;
             return new TResult
                 {
-                    ItemRoleSubCatId = roleSubcat.rolesubcatid,
-                    AddToTemplate = roleSubcat.isadditem,
-                    ItemRoleId = roleSubcat.roleid,
-                    MaximumAllowedWithoutReceipt = roleSubcat.maximum,
-                    MaximumAllowedWithReceipt = roleSubcat.receiptmaximum,
+                    ItemRoleSubCatId = roleSubcat.RolesubcatId,
+                    AddToTemplate = roleSubcat.Isadditem,
+                    ItemRoleId = roleSubcat.RoleId,
+                    MaximumAllowedWithoutReceipt = roleSubcat.MaximumLimitWithoutReceipt,
+                    MaximumAllowedWithReceipt = roleSubcat.MaximumLimitWithReceipt,
                     SubCatId = roleSubcat.SubcatId
                 };
         }
 
-        internal static cRoleSubcat Cast(this SubCatItemRole subCatItemRole, IActionContext actionContext)
+        internal static RoleSubcat Cast(this SubCatItemRole subCatItemRole, IActionContext actionContext)
         {
             if (subCatItemRole == null)
                 return null;
-            return new cRoleSubcat(
+            return new RoleSubcat(
                 subCatItemRole.ItemRoleSubCatId,
                 subCatItemRole.ItemRoleId,
                 subCatItemRole.SubCatId,

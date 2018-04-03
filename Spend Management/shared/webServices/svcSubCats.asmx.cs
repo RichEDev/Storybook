@@ -166,12 +166,12 @@ namespace Spend_Management.shared.webServices
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod]
-        public cRoleSubcat getRole(int subcatid, int roleid)
+        public RoleSubcat getRole(int subcatid, int roleid)
         {
             CurrentUser user = cMisc.GetCurrentUser();
-            cItemRoles clsroles = new cItemRoles(user.AccountID);
-            cItemRole role = clsroles.getItemRoleById(roleid);
-            cRoleSubcat rolesub = role.items[subcatid];
+            ItemRoles clsroles = new ItemRoles(user.AccountID);
+            ItemRole role = clsroles.GetItemRoleById(roleid);
+            RoleSubcat rolesub = role.Items[subcatid];
             return rolesub;
 
         }
@@ -181,10 +181,10 @@ namespace Spend_Management.shared.webServices
         public bool saveRole(int subcatid, int roleid, bool addtotemplate, decimal receiptmaximum, decimal maximum)
         {
             CurrentUser user = cMisc.GetCurrentUser();
-            cItemRoles clsroles = new cItemRoles(user.AccountID);
+            ItemRoles clsroles = new ItemRoles(user.AccountID);
 
-            cRoleSubcat rolesub = new cRoleSubcat(0, roleid, subcatid, maximum, receiptmaximum, addtotemplate);
-            clsroles.saveRoleSubcat(rolesub);
+            RoleSubcat rolesub = new RoleSubcat(0, roleid, subcatid, maximum, receiptmaximum, addtotemplate);
+            clsroles.SaveRoleSubcat(rolesub);
             return true;
         }
 
@@ -193,8 +193,8 @@ namespace Spend_Management.shared.webServices
         public bool deleteRole(int subcatid, int roleid)
         {
             CurrentUser user = cMisc.GetCurrentUser();
-            cItemRoles clsroles = new cItemRoles(user.AccountID);
-            clsroles.deleteRoleSubcat(subcatid, roleid);
+            ItemRoles clsroles = new ItemRoles(user.AccountID);
+            clsroles.DeleteRoleSubcat(subcatid, roleid);
             return true;
         }
 

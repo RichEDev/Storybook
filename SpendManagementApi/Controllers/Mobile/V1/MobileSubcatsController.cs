@@ -44,7 +44,7 @@
                     cEmployees clsEmployees = new cEmployees(this.PairingKeySerialKey.PairingKey.AccountID);
                     Employee reqEmployee = clsEmployees.GetEmployeeById(this.PairingKeySerialKey.PairingKey.EmployeeID);
 
-                    cItemRoles clsItemRoles = new cItemRoles(this.PairingKeySerialKey.PairingKey.AccountID);
+                    ItemRoles clsItemRoles = new ItemRoles(this.PairingKeySerialKey.PairingKey.AccountID);
 
                     // Get all the item roles for this employee
                     List<EmployeeItemRole> lstItemRoles = reqEmployee.GetItemRoles().ItemRoles;
@@ -53,10 +53,10 @@
                     foreach (EmployeeItemRole itemRole in lstItemRoles)
                     {
                         // Get this specific item role
-                        cItemRole tmpItemRole = clsItemRoles.getItemRoleById(itemRole.ItemRoleId);
+                        ItemRole tmpItemRole = clsItemRoles.GetItemRoleById(itemRole.ItemRoleId);
 
                         // Loop through the subcats on this item role
-                        foreach (cRoleSubcat reqRoleSubcat in tmpItemRole.items.Values)
+                        foreach (RoleSubcat reqRoleSubcat in tmpItemRole.Items.Values)
                         {
                             if (!expenseItems.ContainsKey(reqRoleSubcat.SubcatId))
                             {

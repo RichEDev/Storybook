@@ -58,7 +58,7 @@ namespace Spend_Management
                 cCategories clscategories = new cCategories(user.AccountID);
                 cMisc clsmisc = new cMisc(user.AccountID);
                 cMileagecats clsmileage = new cMileagecats(user.AccountID);
-                cItemRoles clsroles = new cItemRoles(user.AccountID);
+                ItemRoles clsroles = new ItemRoles(user.AccountID);
                 ddlstItemRole.Items.AddRange(clsroles.CreateDropDown(0, false).ToArray());
                 lblfrom.Text = clsmisc.GetGeneralFieldByCode("from").description;
                 lblto.Text = clsmisc.GetGeneralFieldByCode("to").description;

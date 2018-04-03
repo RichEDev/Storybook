@@ -239,9 +239,9 @@ namespace Spend_Management
             EmployeeItemRole itemRole = itemRoles[itemRoleId];
             if (itemRole != null)
             {
-                var clsItemRoles = new cItemRoles(user.AccountID);
-                cItemRole reqItemRole = clsItemRoles.getItemRoleById(itemRoleId);
-                itemRole.ItemRoleName = reqItemRole.rolename;
+                var clsItemRoles = new ItemRoles(user.AccountID);
+                ItemRole reqItemRole = clsItemRoles.GetItemRoleById(itemRoleId);
+                itemRole.ItemRoleName = reqItemRole.Rolename;
                 return itemRole;
             }
 

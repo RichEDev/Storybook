@@ -970,14 +970,14 @@
         {
             var employee = actionContext.Employees.GetEmployeeById(user.EmployeeID);
 
-            Dictionary<int, cRoleSubcat> roleSubcats = actionContext.Employees.getResultantRoleSet(employee);
+            Dictionary<int, RoleSubcat> roleSubcats = actionContext.Employees.getResultantRoleSet(employee);
 
             int itemRoleId = 0;
-            cRoleSubcat rolesubcat;
+            RoleSubcat rolesubcat;
 
             if (roleSubcats.TryGetValue(subcatId, out rolesubcat))
             {
-                itemRoleId = rolesubcat.roleid;
+                itemRoleId = rolesubcat.RoleId;
             }
 
             FlagManagement flagManagement = new FlagManagement(user.AccountID);

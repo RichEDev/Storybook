@@ -12,9 +12,9 @@
 
     using SpendManagementLibrary.Employees;
 
-    internal class ItemRoleRepository : BaseRepository<ItemRole>, ISupportsActionContext
+    internal class ItemRoleRepository : BaseRepository<Models.Types.ItemRole>, ISupportsActionContext
     {
-        private cItemRoles _itemRoles;
+        private ItemRoles _itemRoles;
         private readonly cEmployees _employees;
 
         public ItemRoleRepository(ICurrentUser user, IActionContext actionContext = null) : base(user, actionContext, role => role.ItemRoleId, role => role.RoleName)
@@ -27,11 +27,11 @@
         /// Gets all item roles with associated sub categories
         /// </summary>
         /// <returns></returns>
-        public override IList<ItemRole> GetAll()
+        public override IList<Models.Types.ItemRole> GetAll()
         {
-            List<cItemRole> itemRoles = _itemRoles.getSortedList().Values.ToList();
+            List<SpendManagementLibrary.ItemRole> itemRoles = _itemRoles.GetSortedList().Values.ToList();
 
-            return itemRoles.Select(c=>c.Cast<ItemRole>()).ToList();
+            return itemRoles.Select(c=>c.Cast<Models.Types.ItemRole>()).ToList();
         }
 
         /// <summary>
@@ -39,10 +39,10 @@
         /// </summary>
         /// <param name="itemRoleId"></param>
         /// <returns></returns>
-        public override ItemRole Get(int itemRoleId)
+        public override Models.Types.ItemRole Get(int itemRoleId)
         {
-            cItemRole itemRole = _itemRoles.getItemRoleById(itemRoleId);
-            return itemRole.Cast<ItemRole>();
+            SpendManagementLibrary.ItemRole itemRole = _itemRoles.GetItemRoleById(itemRoleId);
+            return itemRole.Cast<Models.Types.ItemRole>();
         }
 
         /// <summary>
@@ -50,14 +50,14 @@
         /// </summary>
         /// <param name="itemRole">Item role with subcategories</param>
         /// <returns></returns>
-        public override ItemRole Add(ItemRole itemRole)
+        public override Models.Types.ItemRole Add(Models.Types.ItemRole itemRole)
         {
             base.Add(itemRole);
 
-            cItemRole cItemRole = itemRole.Cast<cItemRole>(ActionContext);
+            SpendManagementLibrary.ItemRole cItemRole = itemRole.Cast<SpendManagementLibrary.ItemRole>(ActionContext);
 
-            int itemRoleId = _itemRoles.addRole(itemRole.RoleName, itemRole.Description, 
-                cItemRole.items.Values.ToList(), User.EmployeeID);
+            int itemRoleId = _itemRoles.SaveRole(cItemRole, User); 
+                
 
             if (itemRoleId > 0)
             {
@@ -79,14 +79,14 @@
         /// </summary>
         /// <param name="itemRoleId">Id of role to delete</param>
         /// <returns></returns>
-        public override ItemRole Delete(int itemRoleId)
+        public override Models.Types.ItemRole Delete(int itemRoleId)
         {
-            ItemRole itemRole = Get(itemRoleId);
+            Models.Types.ItemRole itemRole = Get(itemRoleId);
             if (itemRole == null)
             {
                 throw new ApiException(ApiResources.ItemRoles_InvalidItemRoleId, ApiResources.ItemRoles_InvalidItemRoleIdMessage);
             }
-            _itemRoles.deleteRole(itemRoleId);
+            _itemRoles.DeleteRole(itemRoleId);
             return Get(itemRoleId);
         }
 
@@ -96,13 +96,18 @@
         /// </summary>
         /// <param name="itemRole">Item Role to update</param>
         /// <returns></returns>
-        public override ItemRole Update(ItemRole itemRole)
+        public override Models.Types.ItemRole Update(Models.Types.ItemRole itemRole)
         {
             base.Update(itemRole);
 
-            var convertedItemRole = itemRole.Cast<cItemRole>(ActionContext);
+            var convertedItemRole = itemRole.Cast<SpendManagementLibrary.ItemRole>(ActionContext);
 
-            int itemRoleId = _itemRoles.updateRole(itemRole.ItemRoleId, itemRole.RoleName, description: itemRole.Description, items: convertedItemRole.items.Values.ToList(), userid: User.EmployeeID);
+            int itemRoleId = _itemRoles.SaveRole(convertedItemRole, User);
+            foreach (RoleSubcat roleSubcat in convertedItemRole.Items.Values)
+            {
+                _itemRoles.SaveRoleSubcat(roleSubcat);
+            }
+            
             if (itemRoleId <= 0)
             {
                 return null;
@@ -154,8 +159,8 @@
                 throw new ApiException(ApiResources.ApiErrorWrongEmployeeId, ApiResources.ApiErrorWrongEmployeeIdMessage);
             }
 
-            var data = new cItemRoles(User.AccountID);
-            var itemRole = data.getItemRoleById(iid);
+            var data = new ItemRoles(User.AccountID);
+            var itemRole = data.GetItemRoleById(iid);
 
             if (itemRole == null)
             {
@@ -196,16 +201,16 @@
 
             try
             {
-                deleted.ForEach(role => ActionContext.ItemRoles.deleteRoleSubcat(role.SubCatId, itemRoleId));
+                deleted.ForEach(role => ActionContext.ItemRoles.DeleteRoleSubcat(role.SubCatId, itemRoleId));
 
                 addedUpdatedSubcats.ForEach(role =>
                     {
                         role.ItemRoleId = itemRoleId;
-                        ActionContext.ItemRoles.saveRoleSubcat(role.Cast(ActionContext));
+                        ActionContext.ItemRoles.SaveRoleSubcat(role.Cast(ActionContext));
                     });
 
                 //Reinitialising to refresh cache
-                _itemRoles = new cItemRoles(User.AccountID);
+                _itemRoles = new ItemRoles(User.AccountID);
             }
             catch (Exception)
             {

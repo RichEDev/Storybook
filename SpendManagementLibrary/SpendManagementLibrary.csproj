@@ -845,7 +845,7 @@
     <Compile Include="cGroup.cs" />
     <Compile Include="Hotels\Hotel.cs" />
     <Compile Include="cImportTemplate.cs" />
-    <Compile Include="cItemRole.cs" />
+    <Compile Include="ItemRole.cs" />
     <Compile Include="cLocale.cs" />
     <Compile Include="cLog.cs" />
     <Compile Include="cMenuItem.cs" />
@@ -943,6 +943,7 @@
     <Compile Include="Report\SelectedField.cs" />
     <Compile Include="Report\TreeGroup.cs" />
     <Compile Include="Report\TreeGroups.cs" />
+    <Compile Include="RoleSubcat.cs" />
     <Compile Include="sAutoCompleteResult.cs" />
     <Compile Include="sCEFieldDetails.cs" />
     <Compile Include="sCEFormSection.cs" />

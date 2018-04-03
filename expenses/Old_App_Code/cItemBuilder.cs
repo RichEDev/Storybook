@@ -204,7 +204,7 @@ public class cItemBuilder
 
         FlagManagement flagManagement = actionContext.FlagManagement;
         cEmployees employees = actionContext.Employees;
-        Dictionary<int, cRoleSubcat> rolesubcats = employees.getResultantRoleSet(employee);
+        Dictionary<int, RoleSubcat> rolesubcats = employees.getResultantRoleSet(employee);
         actionContext.EmployeeId = this.employeeid;
         dependsOnMileageGrid.Clear();
         var showingMileageGrid = false;
@@ -301,10 +301,10 @@ public class cItemBuilder
 
         //get the role that allows this item
         int itemRoleID = 0;
-        cRoleSubcat rolesubcat;
+        RoleSubcat rolesubcat;
         if (rolesubcats.TryGetValue(subcat.subcatid, out rolesubcat))
         {
-            itemRoleID = rolesubcat.roleid;
+            itemRoleID = rolesubcat.RoleId;
         }
 
 

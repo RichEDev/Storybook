@@ -392,7 +392,7 @@
                         new ScriptReference(
                             GlobalVariables.StaticContentLibrary + "/js/jQuery/jquery.address-1.6.min.js"));
                     this.submitClaimInfo.Attributes.Add("claimid", claimId.ToString(CultureInfo.InvariantCulture));
-                    this.submitClaimInfo.Attributes.Add("accountid", user.AccountID.ToString(CultureInfo.InvariantCulture));
+                    this.submitClaimInfo.Attributes.Add("AccountId", user.AccountID.ToString(CultureInfo.InvariantCulture));
                     this.ClientScript.RegisterStartupScript(this.GetType(), "envelopeNumbers", "$(document).ready(function(){SEL.Claims.SubmitClaim.SetupSubmitClaimPage();});", true);
                     
                 }

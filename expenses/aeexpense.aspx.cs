@@ -3381,7 +3381,7 @@ public partial class aeexpense : System.Web.UI.Page
     /// </returns>
     private string ValidateEmployeeItemRoles(cExpenseItem item, cSubcats subcats, EmployeeItemRoles employeeItemRoles)
     {
-        var itemRoles = new cItemRoles(this.ActionContext.CurrentUser.AccountID);
+        var itemRoles = new ItemRoles(this.ActionContext.CurrentUser.AccountID);
         FlaggedItem result = null;
         var foundValidItemRole = false;
         var subcat = subcats.GetSubcatBasic(item.subcatid);
@@ -3389,8 +3389,8 @@ public partial class aeexpense : System.Web.UI.Page
         var messageParts = new List<string>();
         foreach (EmployeeItemRole itemRole in employeeItemRoles.ItemRoles)
         {
-            var role = itemRoles.itemRoles[itemRole.ItemRoleId];
-            if (role.items.ContainsKey(item.subcatid))
+            var role = itemRoles.List[itemRole.ItemRoleId];
+            if (role.Items.ContainsKey(item.subcatid))
             {
                 if ((itemRole.StartDate.HasValue && itemRole.StartDate.Value > item.date) ||
                     (itemRole.EndDate.HasValue && itemRole.EndDate.Value < item.date))

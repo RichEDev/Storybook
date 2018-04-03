@@ -65,7 +65,7 @@ namespace SpendManagementApi.Interfaces
 
         cCategories Categories { get; set; }
 
-        cItemRoles ItemRoles { get; set; }
+        ItemRoles ItemRoles { get; set; }
 
         cUserdefinedFields UserDefinedFields { get; set; }
 

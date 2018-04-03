@@ -58,7 +58,7 @@ public partial class usermanagementmenu : Page
                     48,
                     "Item Roles",
                     "Add, edit or delete Item Roles. An employee’s Item Role determines the expenses items they are authorised to claim for. Build multiple Item Role types and add to an employee record when required, such as relocation expenses, to enable temporary authorisation of these items.",
-                    "admin/adminitemroles.aspx");
+                    "expenses/admin/itemroles.aspx");
             }
 
             if (usingExpenses && user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.SignOffGroups, true))

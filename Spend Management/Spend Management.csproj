@@ -168,9 +168,8 @@
     <Reference Include="Microsoft.JScript">
       <Private>True</Private>
     </Reference>
-    <Reference Include="NewRelic.Api.Agent, Version=2.24.218.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewRelic.Agent.Api.2.24.218.0\lib\NewRelic.Api.Agent.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NewRelic.Api.Agent, Version=6.7.67.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewRelic.Agent.Api.6.7.67.0\lib\NewRelic.Api.Agent.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -268,6 +267,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="expenses\admin\aeitemrole.aspx" />
+    <Content Include="expenses\admin\itemroles.aspx" />
     <Content Include="expenses\admin\adminVehicleEngineTypes.aspx" />
     <Content Include="expenses\admin\aeemailsuffix.aspx" />
     <Content Include="expenses\admin\aeflagrule.aspx" />
@@ -282,7 +283,9 @@
     <Content Include="expenses\claimsummary.aspx" />
     <Content Include="expenses\claimViewer.aspx" />
     <Content Include="expenses\admin\SignoffGroups.aspx" />
+    <Content Include="expenses\javaScript\SEL.ItemRoles.js" />
     <Content Include="expenses\javaScript\sel.SignoffGroups.js" />
+    <Content Include="expenses\webservices\ItemRoles.asmx" />
     <Content Include="expenses\webservices\SignoffGroups.asmx" />
     <Content Include="shared\admin\aenotificationtemplate.aspx" />
     <Content Include="shared\admin\aeLogonMessages.aspx" />
@@ -996,6 +999,20 @@
     <Compile Include="Expedite\ExpediteEmail.cs" />
     <Compile Include="Expedite\PaymentService.cs" />
     <Compile Include="ExpenseItemsGridHomeAddressModifier.cs" />
+    <Compile Include="expenses\admin\aeitemrole.aspx.cs">
+      <DependentUpon>aeitemrole.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="expenses\admin\aeitemrole.aspx.designer.cs">
+      <DependentUpon>aeitemrole.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="expenses\admin\itemroles.aspx.cs">
+      <DependentUpon>itemroles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="expenses\admin\itemroles.aspx.designer.cs">
+      <DependentUpon>itemroles.aspx</DependentUpon>
+    </Compile>
     <Compile Include="expenses\admin\adminVehicleEngineTypes.aspx.cs">
       <DependentUpon>adminVehicleEngineTypes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1098,6 +1115,10 @@
     <Compile Include="expenses\code\SignoffGroupValidation.cs" />
     <Compile Include="expenses\code\StringFormatHelper.cs" />
     <Compile Include="IAuditLog.cs" />
+    <Compile Include="expenses\webservices\ItemRoles.asmx.cs">
+      <DependentUpon>ItemRoles.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="expenses\webservices\SignoffGroups.asmx.cs">
       <DependentUpon>SignoffGroups.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -2851,7 +2872,7 @@
     <Compile Include="shared\code\cGlobalCountries.cs" />
     <Compile Include="shared\code\cGlobalCurrencies.cs" />
     <Compile Include="expenses\code\cGroups.cs" />
-    <Compile Include="expenses\code\cItemRoles.cs" />
+    <Compile Include="expenses\code\ItemRoles.cs" />
     <Compile Include="expenses\code\cMileagecats.cs" />
     <Compile Include="shared\code\cProjectCodes.cs" />
     <Compile Include="expenses\code\cReasons.cs" />

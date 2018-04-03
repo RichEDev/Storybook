@@ -17,14 +17,14 @@
     using SpendManagementLibrary.Employees;
 
     /// <summary>
-    /// Manages operations on <see cref="ItemRole">ItemRoles</see>.
+    /// Manages operations on <see cref="ItemRole">List</see>.
     /// </summary>
     [RoutePrefix("ItemRoles")]
     [Version(1)]
     public class ItemRolesV1Controller : BaseApiController<ItemRole>
     {
         /// <summary>
-        /// Gets all of the available end points from the <see cref="ItemRole">ItemRoles</see> part of the API.
+        /// Gets all of the available end points from the <see cref="ItemRole">List</see> part of the API.
         /// </summary>
         /// <returns>A list of available resource Links</returns>
         [HttpOptions, Route("")]
@@ -34,9 +34,9 @@
         }
 
         /// <summary>
-        /// Gets all <see cref="ItemRole">ItemRoles</see> available.
+        /// Gets all <see cref="ItemRole">List</see> available.
         /// </summary>
-        /// <returns>A GetItemRolesResponse containing all the <see cref="ItemRole">ItemRoles</see>.</returns>
+        /// <returns>A GetItemRolesResponse containing all the <see cref="ItemRole">List</see>.</returns>
         [HttpGet, Route("")]
         [AuthAudit(SpendManagementElement.ItemRoles, AccessRoleType.View)]
         public GetItemRolesResponse GetAll()
@@ -168,12 +168,12 @@
         }
 
         /// <summary>
-        /// Finds all <see cref="ItemRole">ItemRoles</see> matching specified criteria. 
+        /// Finds all <see cref="ItemRole">List</see> matching specified criteria. 
         /// Available querystring parameters : SearchOperator,ItemRoleId,RoleName, ExpenseSubCategory
         /// Use SearchOperator=0 to specify an AND query or SearchOperator=1 for an OR query
         /// </summary>
         /// <param name="criteria">Find query</param>
-        /// <returns>A GetItemRolesResponse containing <see cref="ItemRole">ItemRoles</see> matching specified criteria</returns>
+        /// <returns>A GetItemRolesResponse containing <see cref="ItemRole">List</see> matching specified criteria</returns>
         [HttpGet, Route("Find")]
         [AuthAudit(SpendManagementElement.ItemRoles, AccessRoleType.View)]
         public GetItemRolesResponse Find([FromUri]FindItemRolesRequest criteria)

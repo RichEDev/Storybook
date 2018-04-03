@@ -1513,12 +1513,12 @@ public partial class register : Page
         var breakdown = new cDepCostItem[1];
         breakdown[0] = new cDepCostItem(departmentid, costcodeid, projectcodeid, 100);
 
-        var clsItemRoles = new cItemRoles(accountId);
+        var clsItemRoles = new ItemRoles(accountId);
         var lstItemRoles = new List<EmployeeItemRole>();
         if (itemroleid != 0)
         {
-            cItemRole reqItemRole = clsItemRoles.getItemRoleById(itemroleid);
-            lstItemRoles.Add(new EmployeeItemRole(reqItemRole.itemroleid));
+            ItemRole reqItemRole = clsItemRoles.GetItemRoleById(itemroleid);
+            lstItemRoles.Add(new EmployeeItemRole(reqItemRole.ItemRoleId));
         }
 
         var subAccAccessRoles = new Dictionary<int, List<int>>();

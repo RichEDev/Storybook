@@ -1987,19 +1987,24 @@ namespace Spend_Management
 
         #region Item Roles
 
-        public Dictionary<int, cRoleSubcat> getResultantRoleSet(Employee employee)
+        /// <summary>
+        /// Retrieves all associated expense items for a given employee and merges together to give one list of allowed expense items, taking account of highest limits
+        /// </summary>
+        /// <param name="employee">The employee you would like to return the associated expense items for</param>
+        /// <returns></returns>
+        public Dictionary<int, RoleSubcat> getResultantRoleSet(Employee employee)
         {
             //cEmployee reqemp = GetEmployeeById(employeeid);
             List<EmployeeItemRole> lstItemRoles = employee.GetItemRoles().ItemRoles;
 
-            Dictionary<int, cRoleSubcat> roleset = new Dictionary<int, cRoleSubcat>();
-            cItemRoles clsroles = new cItemRoles(accountid);
+            Dictionary<int, RoleSubcat> roleset = new Dictionary<int, RoleSubcat>();
+            ItemRoles clsroles = new ItemRoles(accountid);
 
             foreach (EmployeeItemRole role in lstItemRoles)
             {
-                cItemRole reqrole = clsroles.getItemRoleById(role.ItemRoleId);
+                ItemRole reqrole = clsroles.GetItemRoleById(role.ItemRoleId);
 
-                foreach (cRoleSubcat rolesubcat in reqrole.items.Values)
+                foreach (RoleSubcat rolesubcat in reqrole.Items.Values)
                 {
                     if (roleset.ContainsKey(rolesubcat.SubcatId) == false) //doesn't exist so add it
                     {
@@ -2007,14 +2012,14 @@ namespace Spend_Management
                     }
                     else
                     {
-                        if (rolesubcat.maximum > roleset[rolesubcat.SubcatId].maximum)
+                        if (rolesubcat.MaximumLimitWithoutReceipt > roleset[rolesubcat.SubcatId].MaximumLimitWithoutReceipt)
                         {
-                            roleset[rolesubcat.SubcatId].maximum = rolesubcat.maximum;
+                            roleset[rolesubcat.SubcatId].MaximumLimitWithoutReceipt = rolesubcat.MaximumLimitWithoutReceipt;
                 }
 
-                        if (rolesubcat.receiptmaximum > roleset[rolesubcat.SubcatId].receiptmaximum)
+                        if (rolesubcat.MaximumLimitWithReceipt > roleset[rolesubcat.SubcatId].MaximumLimitWithReceipt)
                         {
-                            roleset[rolesubcat.SubcatId].receiptmaximum = rolesubcat.receiptmaximum;
+                            roleset[rolesubcat.SubcatId].MaximumLimitWithReceipt = rolesubcat.MaximumLimitWithReceipt;
             }
                     }
                 }

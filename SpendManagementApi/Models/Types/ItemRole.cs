@@ -36,7 +36,7 @@
 
         public void Validate(IActionContext actionContext)
         {
-            if (this.ItemRoleId == 0 && actionContext.ItemRoles.getItemRoleByName(this.RoleName) != null)
+            if (this.ItemRoleId == 0 && actionContext.ItemRoles.GetItemRoleByName(this.RoleName) != null)
             {
                 throw new ApiException(ApiResources.ItemRoles_InvalidRoleName, ApiResources.ItemRoles_InvalidRoleNameMessage);
             }
@@ -76,29 +76,29 @@
 
     internal static class ItemRoleConversion
     {
-        internal static TResult Cast<TResult>(this cItemRole cItemRole) where TResult : ItemRole, new()
-        {
-            if (cItemRole == null)
-                return null;
-            return new TResult
-                {
-                    CreatedById = cItemRole.createdby,
-                    CreatedOn = cItemRole.createdon,
-                    Description = cItemRole.description,
-                    ItemRoleId = cItemRole.itemroleid,
-                    ModifiedById = cItemRole.modifiedby,
-                    ModifiedOn = cItemRole.modifiedon,
-                    RoleName = cItemRole.rolename,
-                    SubCatItemRoles = cItemRole.items.Values.Select(subcat => subcat.Cast<SubCatItemRole>()).ToList()
-                };
-        }
-
-        internal static cItemRole Cast<TResult>(this ItemRole itemRole, IActionContext actionContext) 
-            where TResult : cItemRole
+        internal static TResult Cast<TResult>(this SpendManagementLibrary.ItemRole itemRole) where TResult : ItemRole, new()
         {
             if (itemRole == null)
                 return null;
-            return new cItemRole(
+            return new TResult
+                {
+                    CreatedById = itemRole.CreatedBy,
+                    CreatedOn = itemRole.CreatedOn,
+                    Description = itemRole.Description,
+                    ItemRoleId = itemRole.ItemRoleId,
+                    ModifiedById = itemRole.ModifiedBy,
+                    ModifiedOn = itemRole.ModifiedOn,
+                    RoleName = itemRole.Rolename,
+                    SubCatItemRoles = itemRole.Items.Values.Select(subcat => subcat.Cast<SubCatItemRole>()).ToList()
+                };
+        }
+
+        internal static SpendManagementLibrary.ItemRole Cast<TResult>(this ItemRole itemRole, IActionContext actionContext) 
+            where TResult : SpendManagementLibrary.ItemRole
+        {
+            if (itemRole == null)
+                return null;
+            return new SpendManagementLibrary.ItemRole(
                 itemRole.ItemRoleId, 
                 itemRole.RoleName, 
                 itemRole.Description, 

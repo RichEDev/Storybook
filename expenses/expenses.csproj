@@ -802,13 +802,6 @@
     <Compile Include="admin\adminfloats.aspx.designer.cs">
       <DependentUpon>adminfloats.aspx</DependentUpon>
     </Compile>
-    <Compile Include="admin\adminitemroles.aspx.cs">
-      <DependentUpon>adminitemroles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\adminitemroles.aspx.designer.cs">
-      <DependentUpon>adminitemroles.aspx</DependentUpon>
-    </Compile>
     <Compile Include="admin\adminp11d.aspx.cs">
       <DependentUpon>adminp11d.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -878,13 +871,6 @@
     </Compile>
     <Compile Include="admin\aefloat.aspx.designer.cs">
       <DependentUpon>aefloat.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="admin\aeitemrole.aspx.cs">
-      <DependentUpon>aeitemrole.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\aeitemrole.aspx.designer.cs">
-      <DependentUpon>aeitemrole.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\aep11d.aspx.cs">
       <DependentUpon>aep11d.aspx</DependentUpon>
@@ -1489,7 +1475,6 @@
     <Content Include="admin\admincategories.aspx" />
     <Content Include="admin\adminfaqs.aspx" />
     <Content Include="admin\adminfloats.aspx" />
-    <Content Include="admin\adminitemroles.aspx" />
     <Content Include="admin\adminp11d.aspx" />
     <Content Include="admin\adminpolicy.aspx" />
     <Content Include="admin\adminqeforms.aspx" />
@@ -1498,7 +1483,6 @@
     <Content Include="admin\aefaq.aspx" />
     <Content Include="admin\aefaqcategory.aspx" />
     <Content Include="admin\aefloat.aspx" />
-    <Content Include="admin\aeitemrole.aspx" />
     <Content Include="admin\aep11d.aspx" />
     <Content Include="admin\aeqeform.aspx" />
     <Content Include="admin\broadcastmessages.aspx" />
