@@ -298,17 +298,17 @@ namespace Spend_Management
         }
 
         /// <summary>
-        ///     The get cost code by id.
+        /// The get cost code by id.
         /// </summary>
         /// <param name="costcodeid">
-        ///     The costcodeid.
+        /// The costcodeid.
         /// </param>
         /// <returns>
-        ///     The <see cref="cCostCode" />.
+        /// The <see cref="cCostCode" />.
         /// </returns>
         public virtual cCostCode GetCostcodeById(int costcodeid)
         {
-            return this.Get(true, costcodeid)[0];
+            return costcodeid == 0 ? null : this.Get(true, costcodeid)[0];
         }
 
         /// <summary>
