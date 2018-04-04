@@ -78,6 +78,11 @@
         /// <summary>
         /// Indicates that the password reset key has failed validation
         /// </summary>
-        PasswordResetKeyInvalid = 14
+        PasswordResetKeyInvalid = 14,
+
+        /// <summary>
+        /// A valid current user has been found so the user is already logged in.
+        /// </summary>
+        AlreadyLoggedIn = 15
     }
 }

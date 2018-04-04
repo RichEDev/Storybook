@@ -252,9 +252,15 @@ namespace Spend_Management.shared.code.Authentication
             bool rememberDetails, 
             Modules module)
         {
-            LoginResult auth = this.Authenticate(companyId.Trim(), username.Trim(), password.Trim(), request, fromSso);
+            var currentUser = cMisc.GetCurrentUser();
+            if (currentUser != null)
+            {
+                this.RedirectAfterLogon(LoginResult.AlreadyLoggedIn, request, session, response, currentUser.CurrentActiveModule);
+            }
 
+            LoginResult auth = this.Authenticate(companyId.Trim(), username.Trim(), password.Trim(), request, fromSso);
             session["SubAccountID"] = this.currentSubAccount;
+
             // In case a user gets logged out due to session timeout, values of previously logged in subaccount id will be stored in a cookie
             if (request.Cookies["SubAccount"] != null)
             {
@@ -265,6 +271,7 @@ namespace Spend_Management.shared.code.Authentication
                     session["SubAccountID"] = Convert.ToInt32(_subAccountID);
                 }
             }
+
             var clsAccounts = new cAccounts();
             cAccount reqAccount = clsAccounts.GetAccountByID(this.accountId);
 
@@ -743,44 +750,12 @@ namespace Spend_Management.shared.code.Authentication
                 case LoginResult.Success:
                     session.Remove("myid");
                     session.Remove("delegatetype");
+
                     // delete subaccount cookie
                     HttpCookie cookie = new HttpCookie("SubAccount");
                     cookie.Expires = DateTime.Now.AddDays(-1);
                     response.Cookies.Add(cookie);
-
-                    string defaultHomePage = cModules.GetDefaultHomepageForModule(currentModule);
-                    if (currentModule == Modules.CorporateDiligence)
-                    {
-                        var clsSubAccounts = new cAccountSubAccounts(this.accountId);
-                        cAccountProperties subAccountProperties =
-                            clsSubAccounts.getFirstSubAccount().SubAccountProperties;
-                        if (subAccountProperties.CorporateDStartPage != string.Empty)
-                        {
-                            defaultHomePage = subAccountProperties.CorporateDStartPage;
-                        }
-                    }
-
-                    if (request.QueryString["ReturnUrl"] == null || request.QueryString["ReturnUrl"].ToLower() == "%2f"
-                        || request.QueryString["ReturnUrl"].Contains("errorpage"))
-                    {
-                        response.Redirect(defaultHomePage, true);
-                    }
-                    else
-                    {
-                        // check that return URL is a valid product url and not an external address
-                        string returnUrl = HttpUtility.UrlDecode(request.QueryString["ReturnUrl"]);
-                        if (returnUrl != null
-                            && (request.ApplicationPath != null && returnUrl.StartsWith(request.ApplicationPath)
-                                && !returnUrl.Contains("http")))
-                        {
-                            response.Redirect(returnUrl, true);
-                        }
-                        else
-                        {
-                            response.Redirect(defaultHomePage, true);
-                        }
-                    }
-
+                    this.RedirectToHomePage(request, response, currentModule);
                     break;
                 case LoginResult.ChangePassword:
                     // if the user must change password add variable to session so that he will always redirect to changepassword.aspx
@@ -792,6 +767,55 @@ namespace Spend_Management.shared.code.Authentication
                     session["OdometerReadingsOnLogon"] = true;
                     response.Redirect("~/odometerreading.aspx?odotype=1", true);
                     break;
+                case LoginResult.AlreadyLoggedIn:
+                    this.RedirectToHomePage(request, response, currentModule);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Redirect a valid user to the home page.
+        /// </summary>
+        /// <param name="request">
+        /// The current <see cref="HttpRequest"/>.
+        /// </param>
+        /// <param name="response">
+        /// The current <see cref="HttpResponse"/>.
+        /// </param>
+        /// <param name="currentModule">
+        /// The current module.
+        /// </param>
+        private void RedirectToHomePage(HttpRequest request, HttpResponse response, Modules currentModule)
+        {
+            string defaultHomePage = cModules.GetDefaultHomepageForModule(currentModule);
+            if (currentModule == Modules.CorporateDiligence)
+            {
+                var clsSubAccounts = new cAccountSubAccounts(this.accountId);
+                cAccountProperties subAccountProperties = clsSubAccounts.getFirstSubAccount().SubAccountProperties;
+                if (subAccountProperties.CorporateDStartPage != string.Empty)
+                {
+                    defaultHomePage = subAccountProperties.CorporateDStartPage;
+                }
+            }
+
+            if (request.QueryString["ReturnUrl"] == null || request.QueryString["ReturnUrl"].ToLower() == "%2f"
+                                                         || request.QueryString["ReturnUrl"].Contains("errorpage"))
+            {
+                response.Redirect(defaultHomePage, true);
+            }
+            else
+            {
+                // check that return URL is a valid product url and not an external address
+                string returnUrl = HttpUtility.UrlDecode(request.QueryString["ReturnUrl"]);
+                if (returnUrl != null && (request.ApplicationPath != null && returnUrl.StartsWith(request.ApplicationPath)
+                                                                          && !returnUrl.Contains("http")))
+                {
+                    response.Redirect(returnUrl, true);
+                }
+                else
+                {
+                    response.Redirect(defaultHomePage, true);
+                }
             }
         }
 
