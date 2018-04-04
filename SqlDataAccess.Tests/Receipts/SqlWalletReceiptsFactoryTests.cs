@@ -1,7 +1,4 @@
-﻿using BusinessLogic.Images;
-using BusinessLogic.Receipts;
-
-namespace SqlDataAccess.Tests.Receipts
+﻿namespace SqlDataAccess.Tests.Receipts
 {
     using System;
     using System.Data.SqlClient;
@@ -13,6 +10,7 @@ namespace SqlDataAccess.Tests.Receipts
     using BusinessLogic.Databases;
     using BusinessLogic.DataConnections;
     using BusinessLogic.Identity;
+    using BusinessLogic.Images;
 
     using CacheDataAccess.Caching;
 

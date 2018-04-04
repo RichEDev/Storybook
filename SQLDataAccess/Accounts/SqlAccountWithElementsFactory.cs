@@ -1,8 +1,4 @@
-﻿using System.Linq;
-using CacheDataAccess.Caching;
-using SQLDataAccess.Elements;
-
-namespace SQLDataAccess.Accounts
+﻿namespace SQLDataAccess.Accounts
 {
     using System;
     using System.Collections.Generic;
@@ -14,6 +10,10 @@ namespace SQLDataAccess.Accounts
     using BusinessLogic.Accounts;
     using BusinessLogic.Accounts.Elements;
     using BusinessLogic.DataConnections;
+
+    using CacheDataAccess.Caching;
+
+    using SQLDataAccess.Elements;
 
     public class SqlAccountWithElementsFactory : IGetBy<IAccountWithElement, int>, IGetAll<IAccountWithElement>
     {

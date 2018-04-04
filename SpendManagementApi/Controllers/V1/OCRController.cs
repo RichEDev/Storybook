@@ -53,11 +53,9 @@
         /// <returns>0 is successful</returns>
         [HttpPost, Route("{accountId:int}/{walletReceiptId:int}")]
         [InternalSelenityMethod, ApiExplorerSettings(IgnoreApi = true)]
-        public NumericResponse ResetWalletReceipt(int accountId, int walletReceiptId)
+        public void ResetWalletReceipt(int accountId, int walletReceiptId)
         {
-            var response = this.InitialiseResponse<NumericResponse>();
-            response.Item = new OCRRepository().Post(accountId, walletReceiptId);
-            return response;
+            new OCRRepository().Post(accountId, walletReceiptId);
         }
     }
 }

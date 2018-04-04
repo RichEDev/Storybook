@@ -27,22 +27,22 @@
         }
 
         /// <summary>
-        /// Gets or sets the Id for this <see cref="IAccountWithElement"/>.
+        /// Gets or sets the Id for this <see cref="AccountWithElements"/>.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the archived state for this <see cref="IAccountWithElement"/>.
+        /// Gets or sets the archived state for this <see cref="AccountWithElements"/>.
         /// </summary>
         public bool Archived { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="IDatabaseCatalogue"/> for this <see cref="IAccountWithElement"/>.
+        /// Gets the <see cref="IDatabaseCatalogue"/> for this <see cref="AccountWithElements"/>.
         /// </summary>
         public IDatabaseCatalogue DatabaseCatalogue { get; }
 
         /// <summary>
-        /// Gets or sets the <see cref="IElement"/> for this <see cref="AccountWithElements"/>.
+        /// Gets the <see cref="IList{IElement}"/> for this <see cref="AccountWithElements"/>.
         /// </summary>
         public IList<IElement> LicencedElements { get; }
     }

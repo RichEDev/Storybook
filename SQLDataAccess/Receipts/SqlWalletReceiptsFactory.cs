@@ -138,7 +138,7 @@
                 this._logger.Debug(receipt);
             }
 
-            if (receipt.FileExtension == "jpg" || receipt.FileExtension == "jpeg")
+            if (receipt.FileExtension.ToLower() == "jpg" || receipt.FileExtension.ToLower() == "jpeg")
             {
                 receipt.ReceiptData = this._imageManipulation.RemoveExifData(new MemoryStream(Convert.FromBase64String(receipt.ReceiptData)));
             }
