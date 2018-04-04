@@ -9,8 +9,12 @@ namespace SpendManagementApi.Repositories.Expedite
     using SM = Spend_Management.Expedite;
     using SpendManagementLibrary.Interfaces.Expedite;
     using Spend_Management;
-    using Spend_Management.expenses.code;
     using System;
+
+    using Expenses_Reports;
+
+    using SpendManagementLibrary;
+
     /// <summary>
     /// PaymentServiceRepository manages data access for PaymentServices.
     /// </summary>
@@ -189,7 +193,8 @@ namespace SpendManagementApi.Repositories.Expedite
         public List<PaymentService> ExtractFinancialExportFromReportService(int accountId, int financialExportId)
         {
             SM.PaymentService paymentService = new SM.PaymentService();
-            var item = paymentService.ExtractFinancialExportFromReportService(accountId, financialExportId).Select(e => new PaymentService().From(e, ActionContext)).ToList();
+            IReports reports = new cReportsSvc();
+            var item = paymentService.ExtractFinancialExportFromReportService(accountId, financialExportId, reports).Select(e => new PaymentService().From(e, ActionContext)).ToList();
             return item;
         }
     }

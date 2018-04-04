@@ -1112,6 +1112,10 @@
       <Project>{e6a4dc2a-ded9-4231-abdb-6aac318f5c4d}</Project>
       <Name>DutyOfCareAPI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\expenses_reports\Expenses_Reports.csproj">
+      <Project>{82690580-CE4D-46B6-B060-02B0D8DF8023}</Project>
+      <Name>Expenses_Reports</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Spend Management\Spend Management.csproj">
       <Project>{1cbfd8ec-f67c-4425-a10c-97bfc7501045}</Project>
       <Name>Spend Management</Name>
