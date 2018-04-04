@@ -56,6 +56,7 @@
                             }
                         ]
                     });
+                    $("#ui-id-1").text("Link Expense Item");
                 },
 
                 SetupEnterKeyBindings: function () {
