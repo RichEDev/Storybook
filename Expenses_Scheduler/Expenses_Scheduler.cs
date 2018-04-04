@@ -127,14 +127,18 @@ namespace Expenses_Scheduler
             {
                 // changed to using an encrypted password in the web/app/exe config
                 cSecureData crypt = new cSecureData();
-                SqlConnectionStringBuilder sConnectionString = new SqlConnectionStringBuilder(GlobalVariables.MetabaseConnectionString);
+                SqlConnectionStringBuilder sConnectionString =
+                    new SqlConnectionStringBuilder(GlobalVariables.MetabaseConnectionString);
                 sConnectionString.Password = crypt.Decrypt(sConnectionString.Password);
                 SqlDependency.Start(sConnectionString.ToString());
             }
 
             int port = Convert.ToInt32(ConfigurationManager.AppSettings["Port"]);
             ChannelServices.RegisterChannel(new TcpChannel(port), false);
-            WellKnownServiceTypeEntry wkste = new WellKnownServiceTypeEntry(typeof(cSchedulerSvc), "scheduler.rem", WellKnownObjectMode.SingleCall);
+            WellKnownServiceTypeEntry wkste = new WellKnownServiceTypeEntry(
+                typeof(cSchedulerSvc),
+                "scheduler.rem",
+                WellKnownObjectMode.SingleCall);
             RemotingConfiguration.ApplicationName = "ExpensesScheduler";
             RemotingConfiguration.RegisterWellKnownServiceType(wkste);
 
@@ -143,20 +147,15 @@ namespace Expenses_Scheduler
             _tmr.Elapsed += TmrElapsed;
             _tmr.Enabled = true;
 
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["emailSenderEnabled"]))
-            {
-                _tmrEmailSender.Interval = _nTimerInterval;
-                _tmrEmailSender.Elapsed += TmrEmailSenderElapsed;
-                _tmrEmailSender.Enabled = true;
-            }
-            else
-            {
-                _tmrEmailSender.Enabled = false;
-            }
+            _tmrEmailSender.Enabled = false;
 
-            _nNumberOfThreads = ConfigurationManager.AppSettings["NumberOfThreads"] != null ? Convert.ToInt32(ConfigurationManager.AppSettings["NumberOfThreads"]) : 5;
+            _nNumberOfThreads = ConfigurationManager.AppSettings["NumberOfThreads"] != null
+                                    ? Convert.ToInt32(ConfigurationManager.AppSettings["NumberOfThreads"])
+                                    : 5;
 
-            _nThreadPollInterval = ConfigurationManager.AppSettings["ThreadPollInterval"] != null ? Convert.ToInt32(ConfigurationManager.AppSettings["ThreadPollInterval"]) : 1000;
+            _nThreadPollInterval = ConfigurationManager.AppSettings["ThreadPollInterval"] != null
+                                       ? Convert.ToInt32(ConfigurationManager.AppSettings["ThreadPollInterval"])
+                                       : 1000;
 
             _tmrSchedules = new System.Threading.Timer(_timeCb, null, _nThreadPollInterval, _nThreadPollInterval);
 
@@ -377,37 +376,6 @@ namespace Expenses_Scheduler
 
                 #endregion
 
-            }
-        }
-
-        /// <summary>
-        /// Event executes each time the time period elapses
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void TmrEmailSenderElapsed(object sender, ElapsedEventArgs e)
-        {
-            //check for potential schedules
-            //cAccounts.LogEvent("tmr_Elasped - Checking Schedules");
-            cEmailLog clslog = new cEmailLog();
-
-            foreach (cAccount account in cAccounts.CachedAccounts.Values)
-            {
-                if (account.archived)
-                    continue;
-
-                try
-                {
-                    DiagLog(string.Format("Scheduler : TmrEmailSenderElapsed : Sending scheduled email notifications for {0} ({1})", account.companyid, account.accountid));
-
-                    cEmailSender emailsender = new cEmailSender(account, ref clslog);
-                    emailsender.SendSchedules();
-                    clslog.AddToLog(string.Format("Scheduler : TmrEmailSenderElapsed : Exiting FWEmailSender for {0}", account.companyname), account);
-                }
-                finally
-                {
-                    clslog.WriteLog(account);
-                }
             }
         }
 
