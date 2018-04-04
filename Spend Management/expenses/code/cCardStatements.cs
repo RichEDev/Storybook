@@ -2149,18 +2149,24 @@ namespace Spend_Management
             }
         }
 
+        /// <summary>
+        /// Gets the corporate card statement unallocated item count
+        /// </summary>
+        /// <param name="employeeid">The employeeid</param>
+        /// <param name="statementid">The corporate card statement id</param>
+        /// <returns>The unallocated item count</returns>
         public int getUnallocatedItemCount(int employeeid, int statementid)
         {
-            DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));
-
             int count;
-            string strsql = "select count(*) from card_transactions where statementid = @statementid and transactionid not in (select transactionid from savedexpenses where transactionid is not null) and card_number in (select cardnumber from employee_corporate_cards where employeeid = @employeeid)";
 
+            using (var databaseConnection = new DatabaseConnection(cAccounts.getConnectionString(this.accountid)))
+            {
+                databaseConnection.sqlexecute.Parameters.AddWithValue("@statementId", statementid);
+                databaseConnection.sqlexecute.Parameters.AddWithValue("@employeeId", employeeid);
+                count = databaseConnection.ExecuteScalar<int>("dbo.GetCorporateCardUnallocatedItemCount", CommandType.StoredProcedure);
 
-            expdata.sqlexecute.Parameters.AddWithValue("@employeeid", employeeid);
-            expdata.sqlexecute.Parameters.AddWithValue("@statementid", statementid);
-            count = expdata.getcount(strsql);
-            expdata.sqlexecute.Parameters.Clear();
+                databaseConnection.sqlexecute.Parameters.Clear();
+            }
 
             return count;
         }

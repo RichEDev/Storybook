@@ -36,7 +36,7 @@
 			    <td class="inputtd">
                     <asp:CheckBox ID="chksingleclaim" runat="server" meta:resourcekey="chksingleclaimccResource1" /></td><td><img id="imgtooltip347" onclick="SEL.Tooltip.Show('78f48d6d-72a8-45bf-b6db-448ab68fe6ba', 'ex', this);" src="../static/icons/16/new-icons/tooltip.png" alt="" class="tooltipicon"/></td>
 			</tr>
-			<tr><td class="labeltd">Do not allow cash items to be submitted if there are outstanding credit card items to be reconciled</td><td class="inputtd">
+			<tr><td class="labeltd">Do not allow claims to be submitted if there are outstanding corporate card items to be reconciled</td><td class="inputtd">
                 <asp:CheckBox ID="chkblockcash" runat="server" /></td></tr>
         </table>
     </div>

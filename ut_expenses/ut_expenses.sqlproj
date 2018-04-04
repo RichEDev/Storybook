@@ -7115,6 +7115,7 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\SavedExpensesFuelReceiptToMileageAllocations.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SaveItemRole.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\DeleteExpenseItemToItemRoleAssociation.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_cardtransactions_statementid_transactionamount_corporatecardid_transactionid_globalcurrencyid.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ut_expenses.refactorlog">
@@ -7231,6 +7232,7 @@
     <None Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_WalletReceipts_CreatedBy.sql" />
     <None Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_WalletReceipts_employees.sql" />
     <None Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_ProcessedReceipts_WalletReceiptId_DateTotalMerchant.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetCorporateCardUnallocatedItemCount.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Pre-Deployment\Script.PreDeployment.sql" />

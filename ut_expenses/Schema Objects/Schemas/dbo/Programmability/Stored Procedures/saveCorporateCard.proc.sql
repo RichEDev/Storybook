@@ -1,15 +1,12 @@
-﻿
-
-CREATE PROCEDURE [dbo].[saveCorporateCard]
-@cardproviderid int,
+﻿CREATE PROCEDURE [dbo].[saveCorporateCard]
+@cardproviderid INT,
 @claimantsettlesbill BIT,
 @allocateditem INT,
 @blockcash BIT,
 @reconciledbyadministrator BIT,
 @singleclaim BIT,
-@blockunmatched BIT,
-@date DateTime,
-@userid int,
+@date DATETIME,
+@userid INT,
 @delegateID INT,
 @fileIdentifier NVARCHAR(MAX)
 
@@ -18,51 +15,43 @@ AS
 DECLARE @count INT;
 SET @count = (SELECT COUNT(*) FROM corporate_cards WHERE cardproviderid = @cardproviderid);
 
-if (@count = 0)
-begin
-	insert into corporate_cards ([cardproviderid], claimants_settle_bill, createdby, createdon, allocateditem, blockcash, reconciled_by_admin, singleclaim, blockunmatched, FileIdentifier) values (@cardproviderid, @claimantsettlesbill, @userid, @date, @allocateditem, @blockcash, @reconciledbyadministrator, @singleclaim, @blockunmatched, @fileIdentifier)
+IF (@count = 0)
+BEGIN
+	INSERT INTO corporate_cards ([cardproviderid], claimants_settle_bill, createdby, createdon, allocateditem, blockcash, reconciled_by_admin, singleclaim, FileIdentifier) VALUES (@cardproviderid, @claimantsettlesbill, @userid, @date, @allocateditem, @blockcash, @reconciledbyadministrator, @singleclaim, @fileIdentifier)
 	
-	if @userid > 0
+	IF @userid > 0
 	BEGIN
-		exec addInsertEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, @cardproviderid, null;
+		EXEC addInsertEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, @cardproviderid, null;
 	END
-end
-else
-begin
-	declare @oldcardproviderid int;
-	declare @oldclaimantsettlesbill BIT;
-	declare @oldallocateditem INT;
-	declare @oldblockcash BIT;
-	declare @oldreconciledbyadministrator BIT;
-	declare @oldsingleclaim BIT;
-	declare @oldblockunmatched BIT;
-	select @oldcardproviderid = [cardproviderid], @oldclaimantsettlesbill = claimants_settle_bill, @oldallocateditem = allocateditem, @oldblockcash = blockcash, @oldreconciledbyadministrator = reconciled_by_admin, @oldsingleclaim = singleclaim, @oldblockunmatched = blockunmatched from corporate_cards where cardproviderid = @cardproviderid;
+END
+ELSE
+BEGIN
+	DECLARE @oldcardproviderid INT;
+	DECLARE @oldclaimantsettlesbill BIT;
+	DECLARE @oldallocateditem INT;
+	DECLARE @oldblockcash BIT;
+	DECLARE @oldreconciledbyadministrator BIT;
+	DECLARE @oldsingleclaim BIT;
+	SELECT @oldcardproviderid = [cardproviderid], @oldclaimantsettlesbill = claimants_settle_bill, @oldallocateditem = allocateditem, @oldblockcash = blockcash, @oldreconciledbyadministrator = reconciled_by_admin, @oldsingleclaim = singleclaim FROM corporate_cards WHERE cardproviderid = @cardproviderid;
 
-	update corporate_cards set [cardproviderid] = @cardproviderid, claimants_settle_bill = @claimantsettlesbill, modifiedby = @userid, modifiedon = @date, allocateditem = @allocateditem, blockcash = @blockcash, reconciled_by_admin = @reconciledbyadministrator, singleclaim = @singleclaim, blockunmatched = @blockunmatched, FileIdentifier = @fileIdentifier where cardproviderid = @cardproviderid;
+	UPDATE corporate_cards SET [cardproviderid] = @cardproviderid, claimants_settle_bill = @claimantsettlesbill, modifiedby = @userid, modifiedon = @date, allocateditem = @allocateditem, blockcash = @blockcash, reconciled_by_admin = @reconciledbyadministrator, singleclaim = @singleclaim, FileIdentifier = @fileIdentifier WHERE cardproviderid = @cardproviderid;
 	
-	if @userid > 0
+	IF @userid > 0
 	BEGIN
-		if @oldcardproviderid <> @cardproviderid
-			exec addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldcardproviderid, @cardproviderid, @cardproviderid, null;
-		if @oldclaimantsettlesbill <> @claimantsettlesbill
-			exec addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldclaimantsettlesbill, @claimantsettlesbill, @cardproviderid, null;
-		if @oldallocateditem <> @allocateditem
-			exec addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldallocateditem, @allocateditem, @cardproviderid, null;
-		if @oldblockcash <> @blockcash
-			exec addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldblockcash, @blockcash, @cardproviderid, null;
-		if @oldreconciledbyadministrator <> @reconciledbyadministrator
-			exec addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldreconciledbyadministrator, @reconciledbyadministrator, @cardproviderid, null;
-		if @oldsingleclaim <> @singleclaim
-			exec addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldsingleclaim, @singleclaim, @cardproviderid, null;
-		if @oldblockunmatched <> @blockunmatched
-			exec addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldblockunmatched, @blockunmatched, @cardproviderid, null;
+		IF @oldcardproviderid <> @cardproviderid
+			EXEC addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldcardproviderid, @cardproviderid, @cardproviderid, null;
+		IF @oldclaimantsettlesbill <> @claimantsettlesbill
+			EXEC addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldclaimantsettlesbill, @claimantsettlesbill, @cardproviderid, null;
+		IF @oldallocateditem <> @allocateditem
+			EXEC addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldallocateditem, @allocateditem, @cardproviderid, null;
+		IF @oldblockcash <> @blockcash
+			EXEC addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldblockcash, @blockcash, @cardproviderid, null;
+		IF @oldreconciledbyadministrator <> @reconciledbyadministrator
+			EXEC addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldreconciledbyadministrator, @reconciledbyadministrator, @cardproviderid, null;
+		IF @oldsingleclaim <> @singleclaim
+			EXEC addUpdateEntryToAuditLog @userid, @delegateID, 17, @cardproviderid, null, @oldsingleclaim, @singleclaim, @cardproviderid, null;
 	END
-end
+END
 
-return 0
-
-
-
-
-
+RETURN 0
  

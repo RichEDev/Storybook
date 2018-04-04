@@ -608,13 +608,14 @@
             }
 
             if (cards != null && cards.Count > 0)
-                    {
+            {
                 var clsstatements = new cCardStatements(user.AccountID);
                 ListItem[] lstStatements = clsstatements.createStatementDropDown(user.EmployeeID);
 
                 foreach (ListItem itm in lstStatements)
-                        {
+                {
                     int statementID = 0;
+
                     if (int.TryParse(itm.Value, out statementID))
                     {
                         cCardStatement statement = clsstatements.getStatementById(statementID);
@@ -625,24 +626,10 @@
                             {
                                 if (clsstatements.getUnallocatedItemCount(user.EmployeeID, statementID) > 0)
                                 {
-                                    if (cash)
-                                    {
-                                        #region Check for cash items
-
-
-                                        bool cashItem = reqclaim.HasCashItems;
-
-                                        #endregion
-
-                                        if (cashItem)
-                                        {
-                                            result.Reason = SubmitRejectionReason.CreditCardHasUreconciledItems;
-                                            return result;
-                                        }
-                                    }
+                                   result.Reason = SubmitRejectionReason.CreditCardHasUreconciledItems;
+                                   return result;
                                 }
                             }
-
                         }
                     }
                 }
@@ -654,7 +641,7 @@
             if (properties.BlockUnmachedExpenseItemsBeingSubmitted)
             {
                 SortedList<int, cExpenseItem> lstItems = clsclaims.getExpenseItemsFromDB(claimId);
-                bool unallocatedItems =
+                bool unallocatedItems = 
                     lstItems.Values.Any(
                         item => ((item.itemtype == ItemType.CreditCard && credit) || (item.itemtype == ItemType.PurchaseCard && purchase)) && item.transactionid == 0);
 

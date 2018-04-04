@@ -6904,15 +6904,8 @@ namespace Spend_Management
                     {
                         if (statements.getUnallocatedItemCount(user.EmployeeID, statementId) > 0)
                         {
-                            if (cash)
-                            {
-                                var cashItem = reqclaim.HasCashItems;
-                                if (cashItem)
-                                {
-                                    result.Reason = SubmitRejectionReason.CreditCardHasUreconciledItems;
-                                    return result;
-                                }
-                            }
+                            result.Reason = SubmitRejectionReason.CreditCardHasUreconciledItems;
+                            return result;
                         }
                     }
                     
