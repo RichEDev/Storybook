@@ -933,9 +933,14 @@
         public bool EnableDrivingLicenceReview { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether driving licnece review reminders are enabled.
+        /// Gets or sets a value indicating whether driving licence review reminders are enabled.
         /// </summary>
         public bool DrivingLicenceReviewReminder { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of days before review expiry that claimant reminder email is sent
+        /// </summary>
+        public byte DrivingLicenceReviewReminderDays { get; set; }
 
         /// <summary>
         /// Gets the if Breakdown Cover Expiry should block
@@ -1534,7 +1539,7 @@
         /// <summary>
         /// Gets or sets the driving licence review frequency.
         /// </summary>
-        public int DrivingLicenceReviewFrequency { get; set; }
+        public int DrivingLicenceReviewFrequency { get; set; }        
 
         /// <summary>
         /// Approver can be a Team or Line manager

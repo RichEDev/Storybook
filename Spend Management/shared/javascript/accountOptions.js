@@ -535,3 +535,13 @@ function hideProvidersIfChecked() {
         $('#exchangeRateProvider').hide();
     }
 }
+
+function hideDrivingLicenceReviewReminderDaysPanel(reminderCheck) {
+    if (reminderCheck != null) {
+        if (reminderCheck.checked) {
+            $(".DrivingLicenceReviewReminderDays").show();
+        } else {
+            $(".DrivingLicenceReviewReminderDays").hide();
+        }
+    }
+}

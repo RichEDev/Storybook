@@ -1507,6 +1507,11 @@ namespace SpendManagementLibrary
                 this.SaveAccountProperty(subAccountID, "DrivingLicenceReviewReminder", subAccountProperties.DrivingLicenceReviewReminder, employeeID, delegateID);
             }
 
+            if (originalSubAccountProperties.DrivingLicenceReviewReminderDays != subAccountProperties.DrivingLicenceReviewReminderDays)
+            {
+                this.SaveAccountProperty(subAccountID, "DrivingLicenceReviewReminderDays", subAccountProperties.DrivingLicenceReviewReminderDays, employeeID, delegateID);
+            }
+
             if (originalSubAccountProperties.EnableAutoUpdateOfExchangeRates != subAccountProperties.EnableAutoUpdateOfExchangeRates)
             {
                 this.SaveAccountProperty(subAccountID, "EnableAutoUpdateOfExchangeRates", subAccountProperties.EnableAutoUpdateOfExchangeRates, employeeID, delegateID);
@@ -2739,6 +2744,9 @@ namespace SpendManagementLibrary
                                 break;
                             case "DrivingLicenceReviewReminder":
                                 lstAccountProperties.DrivingLicenceReviewReminder = Convert.ToBoolean(Convert.ToByte(stringValue));
+                                break;
+                            case "DrivingLicenceReviewReminderDays":
+                                lstAccountProperties.DrivingLicenceReviewReminderDays = Convert.ToByte(stringValue);
                                 break;
                             case "EnableAutoUpdateOfExchangeRates":
                                 lstAccountProperties.EnableAutoUpdateOfExchangeRates = Convert.ToBoolean(Convert.ToByte(stringValue));

@@ -96,6 +96,7 @@
         var chkEnableAutomaticDrivingLicenceLookupID = '<%=chkDrivingLicenceLookup.ClientID %>';
         var ckkEnablePeriodicalCheckForReviews = '<%=this.chkLicenceReview.ClientID %>';
         var chkBlockDrivingLicence = '<%=this.chkblockdrivinglicence.ClientID%>';
+        var chkLicenceReviewReminderNotification = '<%=this.chkLicenceReviewReminderNotification.ClientID%>';
         
         $(document).ready(function ()
         {
@@ -105,6 +106,7 @@
             }
             hideAutomaticDrivingLicenceLookup($('#' + chkEnableAutomaticDrivingLicenceLookupID)[0]);
             hideDrivingLicenceFrequencyPanel($('#' + ckkEnablePeriodicalCheckForReviews)[0], $('#' + chkBlockDrivingLicence)[0]);
+            hideDrivingLicenceReviewReminderDaysPanel($('#' + chkLicenceReviewReminderNotification)[0]);
         });
     </script>
 
@@ -909,7 +911,7 @@
                                 <span class="inputicon">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span>
                                 <span class="inputvalidatorfield">&nbsp;</span>
 
-                                <asp:Label ID="lblLineManagerReminder" runat="server" Text="Send reminder to approver before " meta:resourcekey="lbllinemanagerremainderResource1" AssociatedControlID="cmbLineManagerReminderDays"></asp:Label>
+                                <asp:Label ID="lblLineManagerReminder" runat="server" Text="Days prior to document expiry to send a reminder " meta:resourcekey="lbllinemanagerremainderResource1" AssociatedControlID="cmbLineManagerReminderDays"></asp:Label>
                                 <span class="inputs">
                                     <asp:DropDownList ID="cmbLineManagerReminderDays" runat="server">
                                        <asp:ListItem Value="-1" meta:resourcekey="ListItemResource1">Do not send reminder</asp:ListItem>
@@ -937,7 +939,22 @@
                                 <span class="inputvalidatorfield">&nbsp;</span>
                                 </span>
                                 </div>                         
-                                  <div class="twocolumn">  <span class="DrivingLicenceReviewFrequency"> <asp:Label ID="lblReminderReviews" runat="server" Text="Send reminder to claimant 7 days prior to the review expiry date" meta:resourcekey="lblReminderReviews" AssociatedControlID="chkLicenceReviewReminderNotification"></asp:Label><span class="inputs"><asp:CheckBox ID="chkLicenceReviewReminderNotification" runat="server" meta:resourcekey="chkLicenceReviewReminderNotification" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield"><asp:Image runat="server" AlternateText="Tooltip" CssClass="tooltipicon" onclick="SEL.Tooltip.Show('2C41F70E-CE77-4202-AD41-F6FCDF2E1D51', 'sm', this);" ImageUrl="~/shared/images/icons/16/plain/tooltip.png" /></span><span class="inputvalidatorfield">&nbsp;</span></span></div>
+                                  <div class="twocolumn">  
+                                      <span class="DrivingLicenceReviewFrequency">
+                                      <asp:Label ID="lblReminderReviews" runat="server" Text="Send reminder to claimant prior to the review expiry date" meta:resourcekey="lblReminderReviews" AssociatedControlID="chkLicenceReviewReminderNotification"></asp:Label><span class="inputs"><asp:CheckBox ID="chkLicenceReviewReminderNotification" runat="server" meta:resourcekey="chkLicenceReviewReminderNotification" onclick="hideDrivingLicenceReviewReminderDaysPanel(this)" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield"><asp:Image runat="server" AlternateText="Tooltip" CssClass="tooltipicon" onclick="SEL.Tooltip.Show('2C41F70E-CE77-4202-AD41-F6FCDF2E1D51', 'sm', this);" ImageUrl="~/shared/images/icons/16/plain/tooltip.png" /></span><span class="inputvalidatorfield">&nbsp;</span>                                      
+                                      <span class="DrivingLicenceReviewReminderDays">
+                                          <asp:Label ID="lblReminderReviewsDays" runat="server" Text="Days prior to review expiry to send a reminder " meta:resourcekey="lblReminderReviewsDays" AssociatedControlID="cmbReminderReviewsDays"></asp:Label>
+                                          <span class="inputs">
+                                          <asp:DropDownList ID="cmbReminderReviewsDays" runat="server">
+                                              <asp:ListItem Value="7" meta:resourcekey="ListItemReminderReviewsDaysResource1">7 days</asp:ListItem>
+                                              <asp:ListItem Value="14" meta:resourcekey="ListItemReminderReviewsDaysResource2">14 days</asp:ListItem>
+                                              <asp:ListItem Value="28" meta:resourcekey="ListItemReminderReviewsDaysResource3">28 days</asp:ListItem>
+                                          </asp:DropDownList></span>  
+                                      <span class="inputicon">&nbsp;</span><span class="inputtooltipfield"><asp:Image runat="server" AlternateText="Tooltip" CssClass="tooltipicon" onclick="SEL.Tooltip.Show('99B38FC7-EC21-49B1-8D22-E051AE10F956', 'sm', this);" ImageUrl="~/shared/images/icons/16/plain/tooltip.png" /></span>
+                                      <span class="inputvalidatorfield">&nbsp;</span>
+                                      </span>
+                                      </span>
+                                      </div>
                               </span>
                             <div class="sectiontitle">Claim Options</div>
                             <div class="twocolumn">

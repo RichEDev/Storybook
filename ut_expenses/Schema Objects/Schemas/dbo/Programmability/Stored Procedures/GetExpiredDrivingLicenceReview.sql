@@ -1,92 +1,45 @@
-﻿CREATE PROCEDURE [dbo].[Getexpireddrivinglicencereview] 
+﻿CREATE PROCEDURE [dbo].[GetExpiredDrivingLicenceReview]
 AS 
-  BEGIN 
-      DECLARE @vehicleDocumentsTableId VARCHAR(20) = 
-              [dbo].[Getentityid] ('5137C32E-E500-4297-BFF5-69CFED26C9B6', 1) 
-      --vehicle 
-      DECLARE @attStatus VARCHAR(20) =[dbo].[Getattributeid] ( 
-                                      'C790EC93-A920-4CFC-8846-605F8B4B50B5', 1) 
-      DECLARE @attStatusValue VARCHAR(20) = 
-              [dbo].[Getattributeid] ('C790EC93-A920-4CFC-8846-605F8B4B50B5', 0) 
-      DECLARE @attReviewDate VARCHAR(20) = 
-              [dbo].[Getattributeid] ('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE', 1) 
-      DECLARE @sqlQuery NVARCHAR(max); 
-      DECLARE @reviewFrequency INT 
-      DECLARE @enableDrvingLicence INT 
-      DECLARE @checkDrivingLicence INT 
-      DECLARE @reminderFrequency INT 
+BEGIN
+Declare @vehicleDocumentsTableId varchar(20) =[dbo].[GetEntityId] ('5137C32E-E500-4297-BFF5-69CFED26C9B6',1)  --vehicle
+Declare @attStatus varchar(20) =[dbo].[GetAttributeId] ('C790EC93-A920-4CFC-8846-605F8B4B50B5',1) 
+Declare @attStatusValue varchar(20) =[dbo].[GetAttributeId] ('C790EC93-A920-4CFC-8846-605F8B4B50B5',0)   
+Declare @attReviewDate varchar(20) =[dbo].[GetAttributeId] ('80DD4B17-3DB9-49DE-B9A4-8F20B5B8B5BE',1)  
 
-      IF EXISTS(SELECT * 
-                FROM   accountproperties 
-                WHERE  stringkey = 'DrivingLicenceReviewPeriodically') 
-        SET @enableDrvingLicence = (SELECT stringvalue 
-                                    FROM   accountproperties 
-                                    WHERE 
-        stringkey = 'DrivingLicenceReviewPeriodically') 
+DECLARE @sqlQuery NVARCHAR(MAX);
 
-      IF EXISTS(SELECT * 
-                FROM   accountproperties 
-                WHERE  stringkey = 'DrivingLicenceReviewFrequency') 
-        SET @reviewFrequency = (SELECT stringvalue 
-                                FROM   accountproperties 
-                                WHERE 
-        stringkey = 'DrivingLicenceReviewFrequency' 
-                               ) 
+declare @reviewFrequency int
+declare @enableDrvingLicence int
+DECLARE @checkDrivingLicence int
+declare @reminderEnabled int
+DECLARE @reminderFrequency int
 
-      IF EXISTS(SELECT *
-                FROM   accountproperties 
-                WHERE  stringkey = 'DrivingLicenceReviewReminder') 
-        SET @reminderFrequency = (SELECT stringvalue 
-                                  FROM   accountproperties 
-                                  WHERE 
-        stringkey = 'DrivingLicenceReviewReminder') 
+IF EXISTS(SELECT stringkey FROM accountProperties where stringKey = 'DrivingLicenceReviewPeriodically')
+SET @enableDrvingLicence = (SELECT stringValue from accountProperties WHERE stringKey ='DrivingLicenceReviewPeriodically')
+IF EXISTS(SELECT stringkey FROM accountProperties where stringKey = 'DrivingLicenceReviewFrequency')
+SET @reviewFrequency = (SELECT stringValue from accountProperties WHERE stringKey ='DrivingLicenceReviewFrequency')
+IF EXISTS(SELECT stringkey FROM accountProperties where stringKey = 'DrivingLicenceReviewReminder')
+SET @reminderEnabled = (SELECT stringValue from accountProperties WHERE stringKey ='DrivingLicenceReviewReminder')
+IF EXISTS(SELECT stringkey FROM accountProperties where stringKey = 'DrivingLicenceReviewReminderDays')
+SET @reminderFrequency = 0 --Default off. If reminderEnabled, gets set to value
+IF EXISTS(SELECT stringkey FROM accountProperties where stringKey = 'blockDrivingLicence')
+SET @checkDrivingLicence = (SELECT stringValue from accountProperties WHERE stringKey ='blockDrivingLicence')
 
-      IF EXISTS(SELECT *
-                FROM   accountproperties 
-                WHERE  stringkey = 'blockDrivingLicence') 
-        SET @checkDrivingLicence = (SELECT stringvalue 
-                                    FROM   accountproperties 
-                                    WHERE  stringkey = 'blockDrivingLicence') 
+IF (@enableDrvingLicence != 0 AND @reminderEnabled != 0 AND @checkDrivingLicence !=0 AND @reminderFrequency != 0) 
+BEGIN
+SET @reminderFrequency = (SELECT stringValue from accountProperties WHERE stringKey ='DrivingLicenceReviewReminderDays')
+DECLARE @currentDate DATETIME = GETDATE();
+DECLARE @expiryDate datetime = (SELECT DATEADD(MONTH, -@reviewFrequency, @currentDate));
+DECLARE @reminderDate datetime =  (SELECT DATEADD(DAY, @reminderFrequency, @expiryDate));
 
-      IF ( @enableDrvingLicence != 0 
-           AND @reviewFrequency > 0 
-           AND @checkDrivingLicence != 0 
-           AND @reminderFrequency != 0 ) 
-        BEGIN 
-            SET @reminderFrequency = 7; 
+CREATE TABLE #LicenceDetails(EmployeeId INT, ReviewDate DATETIME)
 
-            DECLARE @currentDate DATETIME = Getdate(); 
-            DECLARE @expiryDate DATETIME = (SELECT 
-                    Dateadd(month, -@reviewFrequency, 
-                    @currentDate)); 
-            DECLARE @reminderDate DATETIME = (SELECT 
-                    Dateadd(day, @reminderFrequency, 
-                    @expiryDate)); 
+SET @sqlQuery = 'insert into #LicenceDetails SELECT DISTINCT CREATEDBY as EmployeeId, cast('+@attReviewDate+' as date) as ReviewDate FROM '+@vehicleDocumentsTableId+' Where  cast(' + @attReviewDate + '   as Date)  = ' + '''' + convert(VARCHAR, @reminderDate) + '''' + '  and
+'+@attStatus+' =(SELECT valueid FROM customEntityAttributeListItems WHERE attributeid = ' + @attStatusValue + ' AND item = ''Reviewed - OK'') order by ReviewDate desc'
+	EXEC (@sqlQuery)
+	SELECT * FROM #LicenceDetails
 
-            CREATE TABLE #licencedetails 
-              ( 
-                 employeeid INT, 
-                 reviewdate DATETIME 
-              ) 
-
-            SET @sqlQuery = 
-'insert into #LicenceDetails SELECT DISTINCT CREATEDBY as EmployeeId, cast(' 
-+ @attReviewDate 
-+ ' as date) as ReviewDate FROM ' 
-+ @vehicleDocumentsTableId + ' Where  cast(' 
-+ @attReviewDate + '   as Date)  = ' + '''' 
-+ CONVERT(VARCHAR, @reminderDate) + '''' + '  and ' 
-+ @attStatus 
-+ 
-' =(SELECT valueid FROM customEntityAttributeListItems WHERE attributeid = ' 
-                + @attStatusValue 
-                + ' AND item = ''Reviewed - OK'') order by ReviewDate desc' 
-
-EXEC (@sqlQuery) 
-
-SELECT * 
-FROM   #licencedetails 
-
-DROP TABLE #licencedetails 
-END 
-END 
+	DROP TABLE #LicenceDetails
+END
+END
+GO

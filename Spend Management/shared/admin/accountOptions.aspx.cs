@@ -579,6 +579,7 @@
                 this.chkLicenceReview.Checked = reqProperties.EnableDrivingLicenceReview;
                 this.cmbReviewFrequencyDays.SelectedValue = reqProperties.DrivingLicenceReviewFrequency.ToString(CultureInfo.InvariantCulture); 
                 this.chkLicenceReviewReminderNotification.Checked = reqProperties.DrivingLicenceReviewReminder;
+                this.cmbReminderReviewsDays.SelectedValue = reqProperties.DrivingLicenceReviewReminderDays.ToString(CultureInfo.InvariantCulture);
 
                 this.cmbClaimantReminderDays.SelectedValue = reqProperties.RemindClaimantOnDOCDocumentExpiryDays.ToString(CultureInfo.InvariantCulture);
                 if (reqProperties.DutyOfCareTeamAsApprover != null && !string.IsNullOrEmpty(reqProperties.DutyOfCareTeamAsApprover))
@@ -880,6 +881,7 @@
             reqProperties.DrivingLicenceReviewFrequency = Convert.ToInt32(this.cmbReviewFrequencyDays.SelectedValue);
             reqProperties.EnableDrivingLicenceReview = this.chkLicenceReview.Checked;
             reqProperties.DrivingLicenceReviewReminder = this.chkLicenceReviewReminderNotification.Checked;
+            reqProperties.DrivingLicenceReviewReminderDays = Convert.ToByte(this.cmbReminderReviewsDays.SelectedValue);
             var dutyOfCareAproverOnForm = this.lineManagerAsApprover.Checked
                 ? this.lblLineManagerAsApprover.Text
                 : this.lblteamAsApprover.Text;
