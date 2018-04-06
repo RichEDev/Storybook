@@ -24,7 +24,7 @@
             <asp:ServiceReference Path="~/shared/webServices/svcAccountOptions.asmx" InlineScript="false" />
         </Services>
         <Scripts>
-            <asp:ScriptReference Path="~/shared/javaScript/accountOptions.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/accountOptions.js?date=20180604" />
         </Scripts>
     </asp:ScriptManagerProxy>
 
