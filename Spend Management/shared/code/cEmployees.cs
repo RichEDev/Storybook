@@ -1218,8 +1218,8 @@ namespace Spend_Management
                         prevreader.Close();
                     }
 
-                    //Check against current password
-                    if (reqEmployee.PasswordMethod == PasswordEncryptionMethod.SaltedHash)
+                    // Check against current password
+                    if (!string.IsNullOrEmpty(reqEmployee.Password) && reqEmployee.PasswordMethod == PasswordEncryptionMethod.SaltedHash)
                     {
                         if (encryptor.Verify(oldPassword, reqEmployee.Password))
                         {

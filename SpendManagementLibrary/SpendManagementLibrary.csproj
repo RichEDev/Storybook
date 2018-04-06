@@ -451,6 +451,7 @@
     <Compile Include="Expedite\Receipts.cs" />
     <Compile Include="Expedite\ValidationResult.cs" />
     <Compile Include="ExpenseItems\AllowSelectedExpenseItemsResult.cs" />
+    <Compile Include="Extentions\StringEvaluate.cs" />
     <Compile Include="FieldCategory.cs" />
     <Compile Include="Flags\AssociatedExpense.cs" />
     <Compile Include="Flags\AssociatedExpenseItem.cs" />

@@ -33,6 +33,8 @@ namespace Expenses_Reports
     using Convert = System.Convert;
     using Infragistics.WebUI.CalcEngine;
 
+    using SpendManagementLibrary.Extentions;
+
     #endregion
 
     /// <summary>
@@ -105,10 +107,17 @@ namespace Expenses_Reports
                 int indexOfComma = newFormulaVal.IndexOf(',');
 
                 string rowExpression = newFormulaVal.Substring(0, indexOfComma);
-                object rowIndex = Eval.JScriptEvaluate(rowExpression, vsa);
+                object rowIndex = null;
                 int rowIndexInt = 1;
-
-                int.TryParse(rowIndex.ToString(), out rowIndexInt);
+                try
+                {
+                    rowIndex = Eval.JScriptEvaluate(rowExpression, vsa);
+                    int.TryParse(rowIndex.ToString(), out rowIndexInt);
+                }
+                catch (IndexOutOfRangeException e)
+                {
+                    rowIndexInt = (int)rowExpression.Calculate();
+                }
 
                 if (rowIndexInt <= 0)
                 {
@@ -126,13 +135,20 @@ namespace Expenses_Reports
                 }
 
                 string colExpression = newFormulaVal.Substring(indexOfComma + 1);
-                object colIndex = Eval.JScriptEvaluate(colExpression, vsa);
                 int columnIndexInt = 1;
-                int.TryParse(colIndex.ToString(), out columnIndexInt);
-
-                if (columnIndexInt <= 0)
+                try
                 {
-                    columnIndexInt = 1;
+                    object colIndex = Eval.JScriptEvaluate(colExpression, vsa);
+                    
+                    int.TryParse(colIndex.ToString(), out columnIndexInt);
+                    if (columnIndexInt <= 0)
+                    {
+                        columnIndexInt = 1;
+                    }
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                    columnIndexInt = (int)colExpression.Calculate();
                 }
 
                 string value;
