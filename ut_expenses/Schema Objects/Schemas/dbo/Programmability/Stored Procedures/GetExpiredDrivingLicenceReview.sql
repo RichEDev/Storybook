@@ -25,7 +25,7 @@ SET @reminderFrequency = 0 --Default off. If reminderEnabled, gets set to value
 IF EXISTS(SELECT stringkey FROM accountProperties where stringKey = 'blockDrivingLicence')
 SET @checkDrivingLicence = (SELECT stringValue from accountProperties WHERE stringKey ='blockDrivingLicence')
 
-IF (@enableDrvingLicence != 0 AND @reminderEnabled != 0 AND @checkDrivingLicence !=0 AND @reminderFrequency != 0) 
+IF (@enableDrvingLicence != 0 AND @reminderEnabled != 0 AND @checkDrivingLicence !=0) 
 BEGIN
 SET @reminderFrequency = (SELECT stringValue from accountProperties WHERE stringKey ='DrivingLicenceReviewReminderDays')
 DECLARE @currentDate DATETIME = GETDATE();
