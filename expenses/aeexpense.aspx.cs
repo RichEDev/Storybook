@@ -1620,7 +1620,7 @@ public partial class aeexpense : System.Web.UI.Page
                     }
                 }
             }
-            else if (action == Action.Add && itemtype == ItemType.Cash)
+            else if (action == Action.Add)
             {
                 if (breakdown.Count > 0 && breakdown[0].costcodeid != 0)
                 {
