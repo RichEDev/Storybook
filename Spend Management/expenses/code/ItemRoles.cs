@@ -429,7 +429,7 @@ public class ItemRoles
             databaseConnection.sqlexecute.Parameters.AddWithValue("@subcatid", rolesubcat.SubcatId);
             databaseConnection.sqlexecute.Parameters.AddWithValue("@maximum", rolesubcat.MaximumLimitWithReceipt);
             databaseConnection.sqlexecute.Parameters.AddWithValue("@receiptmaximum", rolesubcat.MaximumLimitWithoutReceipt);
-            databaseConnection.sqlexecute.Parameters.AddWithValue("@isadditem", Convert.ToByte(rolesubcat.Isadditem));
+            databaseConnection.sqlexecute.Parameters.AddWithValue("@isadditem", Convert.ToByte(rolesubcat.IsAddItem));
             databaseConnection.ExecuteProc("SaveRoleSubcat");
             databaseConnection.sqlexecute.Parameters.Clear();
             this.InvalidateCache();

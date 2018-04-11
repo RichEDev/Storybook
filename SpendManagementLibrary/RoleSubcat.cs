@@ -34,17 +34,17 @@ namespace SpendManagementLibrary
         /// <param name="maximumLimitWithReceipt">
         /// The maximum limit with receipt.
         /// </param>
-        /// <param name="isadditem">
+        /// <param name="isAddItem">
         /// Whether to include this item on the add expense general template by default
         /// </param>
-        public RoleSubcat(int rolesubcatid, int roleid, int subCatId, decimal maximumLimitWithoutReceipt, decimal maximumLimitWithReceipt, bool isadditem)
+        public RoleSubcat(int rolesubcatid, int roleid, int subCatId, decimal maximumLimitWithoutReceipt, decimal maximumLimitWithReceipt, bool isAddItem)
         {
             this.RolesubcatId = rolesubcatid;
             this.RoleId = roleid;
             this.SubcatId = subCatId;
             this.MaximumLimitWithoutReceipt = maximumLimitWithoutReceipt;
             this.MaximumLimitWithReceipt = maximumLimitWithReceipt;
-            this.Isadditem = isadditem;
+            this.IsAddItem = isAddItem;
         }
 
         #region properties
@@ -74,9 +74,9 @@ namespace SpendManagementLibrary
         public decimal MaximumLimitWithReceipt { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to include this rolesubcat on the default add expense view
+        /// Gets or sets a value indicating whether to include this rolesubcat on the default add expense view
         /// </summary>
-        public bool Isadditem { get; set; }
+        public bool IsAddItem { get; set; }
         #endregion
     }
 

@@ -79,7 +79,7 @@
             return new TResult
                 {
                     ItemRoleSubCatId = roleSubcat.RolesubcatId,
-                    AddToTemplate = roleSubcat.Isadditem,
+                    AddToTemplate = roleSubcat.IsAddItem,
                     ItemRoleId = roleSubcat.RoleId,
                     MaximumAllowedWithoutReceipt = roleSubcat.MaximumLimitWithoutReceipt,
                     MaximumAllowedWithReceipt = roleSubcat.MaximumLimitWithReceipt,
