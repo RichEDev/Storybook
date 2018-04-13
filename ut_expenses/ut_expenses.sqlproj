@@ -7116,6 +7116,8 @@
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\SaveItemRole.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\DeleteExpenseItemToItemRoleAssociation.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_cardtransactions_statementid_transactionamount_corporatecardid_transactionid_globalcurrencyid.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetBankAccounts.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetBankAccountById.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ut_expenses.refactorlog">

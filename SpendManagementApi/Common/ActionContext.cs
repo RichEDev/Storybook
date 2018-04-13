@@ -127,7 +127,15 @@ namespace SpendManagementApi.Common
 
         private Hotel _hotel;
 
-        private BankAccounts _bankAcounts;
+        /// <summary>
+        /// The _bank acounts current user.
+        /// </summary>
+        private BankAccounts _bankAcountsCurrentUser;
+
+        /// <summary>
+        /// The _bank acounts admin.
+        /// </summary>
+        private BankAccounts _bankAcountsAdmin;
 
         private Favourites _favourites;
 
@@ -860,15 +868,30 @@ namespace SpendManagementApi.Common
             }
         }
 
-        public BankAccounts BankAccounts
+        /// <summary>
+        /// Gets or sets the bank accounts current user.
+        /// </summary>
+        public BankAccounts BankAccountsCurrentUser
         {
             get
             {
-                return _bankAcounts ?? (_bankAcounts = new BankAccounts(AccountId, EmployeeId));
+                return this._bankAcountsCurrentUser ?? (this._bankAcountsCurrentUser = new BankAccounts(this.AccountId, this.EmployeeId));
             }
             set
             {
-                _bankAcounts = value;
+                this._bankAcountsCurrentUser = value;
+            }
+        }
+
+        public BankAccounts BankAccountsAdmin
+        {
+            get
+            {
+                return _bankAcountsAdmin ?? (_bankAcountsAdmin = new BankAccounts(AccountId));
+            }
+            set
+            {
+                _bankAcountsAdmin = value;
             }
         }
 

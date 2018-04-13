@@ -158,7 +158,7 @@
             var employees = actionContext.Employees;
             var esrAssignments = actionContext.EsrAssignments;
 
-           List<SpendManagementLibrary.Account.BankAccount> employeeBankAccounts = actionContext.BankAccounts.GetAccountAsListByEmployeeId(user.EmployeeID);
+           List<SpendManagementLibrary.Account.BankAccount> employeeBankAccounts = actionContext.BankAccountsCurrentUser.GetAccountAsListByEmployeeId(user.EmployeeID);
 
             var currencies = new cCurrencies(user.AccountID, user.CurrentSubAccountId);
             var globalCurrencies = new cGlobalCurrencies();

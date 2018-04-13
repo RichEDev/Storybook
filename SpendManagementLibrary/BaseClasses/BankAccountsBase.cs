@@ -30,7 +30,7 @@
         #endregion
 
         /// <summary>
-        /// default constructor
+        /// Initializes a new instance of the <see cref="BankAccountsBase"/> class.
         /// </summary>
         /// <param name="employeeId">employeeid</param>
         /// <param name="accountConnectionString">connection string</param>
@@ -38,6 +38,13 @@
         {
             EmployeeId = employeeId;
             AccountConnectionString = accountConnectionString;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BankAccountsBase"/> class.
+        /// </summary>
+        protected BankAccountsBase()
+        {
         }
 
         /// <summary>

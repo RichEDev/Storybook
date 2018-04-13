@@ -9,6 +9,8 @@
     using SpendManagementLibrary.Account;
     using SpendManagementLibrary.BaseClasses;
     using SpendManagementLibrary.Enumerators;
+    using SpendManagementLibrary.Helpers;
+    using SpendManagementLibrary.Interfaces;
 
     /// <summary>
     /// BankAccounts holds basic functionality for save and retrieve
@@ -18,10 +20,10 @@
 
         private readonly Utilities.DistributedCaching.Cache cache = new Utilities.DistributedCaching.Cache();
         protected int AccountId;
-    //private Cache WebCache = HttpRuntime.Cache;
+        //private Cache WebCache = HttpRuntime.Cache;
 
         /// <summary>
-        /// Default constructor for BankAccounts
+        /// Initializes a new instance of the <see cref="BankAccounts"/> class.
         /// </summary>
         /// <param name="accountId">account dd</param>
         /// <param name="employeeId">employee id</param>
@@ -33,7 +35,38 @@
             this.GetBankAccounts(accountId,employeeId);
         }
 
-       #region Public Methods
+        #region Public Methods
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BankAccounts"/> class.
+        /// </summary>
+        /// <param name="accountId">The accountId</param>
+        public BankAccounts(int accountId)
+        {
+            this.AccountId = accountId;
+        }
+
+        /// <summary>
+        /// Gets all the <see cref="BankAccount"/>s in the system.
+        /// </summary>
+        /// <returns>
+        /// A list of <see cref="BankAccount"/>s.
+        /// </returns>
+        public List<BankAccount> GetAll()
+        {
+            var bankAccounts = new List<BankAccount>();
+
+            using (IDBConnection connection = new DatabaseConnection(cAccounts.getConnectionString(this.AccountId)))
+            {
+                using (var reader = connection.GetReader("GetBankAccounts", CommandType.StoredProcedure))
+                {
+                    connection.sqlexecute.Parameters.Clear();
+                    bankAccounts = ProcessReader(reader);
+                }
+            }
+
+            return bankAccounts;
+        }
 
         /// <summary>
         /// Gets a bank account by its Id
@@ -47,6 +80,30 @@
                 select x).FirstOrDefault();
 
             return account;
+        }
+
+        /// <summary>
+        /// Gets a bank account by it's Id.
+        /// </summary>
+        /// <param name="id">Bank account Id.</param>
+        /// <returns>A <see cref="BankAccount"/>.</returns>
+        public BankAccount GetById(int id)
+        {
+            BankAccount bankAccount;
+
+            using (IDBConnection connection = new DatabaseConnection(cAccounts.getConnectionString(this.AccountId)))
+            {
+                connection.AddWithValue("@id", id);
+
+                using (var reader = connection.GetReader("GetBankAccountById", CommandType.StoredProcedure))
+                {
+                    connection.sqlexecute.Parameters.Clear();
+
+                    bankAccount = ProcessReader(reader).FirstOrDefault();
+                }
+            }
+
+            return bankAccount;
         }
 
         /// <summary>
@@ -96,8 +153,6 @@
                                              select x).ToList();
             return accountList;
         }
-
-
 
         /// <summary>
         /// Gets a list of bank accounts for a particular employee
@@ -217,7 +272,7 @@
             returnCode = CheckBankAccountCanArchivedOrDeleted(bankAccountId, employeeId);
             if (returnCode != -1)
             {
-                var expdata = new DBConnection(AccountConnectionString);
+                var expdata = new DBConnection(cAccounts.getConnectionString(this.AccountId));
                 expdata.sqlexecute.Parameters.AddWithValue("@bankAccountId", bankAccountId);
                 CurrentUser currentUser = cMisc.GetCurrentUser();
                 expdata.sqlexecute.Parameters.AddWithValue("@CUemployeeId", currentUser.EmployeeID);
@@ -239,7 +294,7 @@
 
                 if (returnCode == 0)
                 {
-                    ListBankAccounts.Remove(bankAccountId);
+                    ListBankAccounts?.Remove(bankAccountId);
                 }
             }
             return returnCode;
@@ -256,7 +311,7 @@
             returnCode = CheckBankAccountCanArchivedOrDeleted(bankAccountId, employeeId);
             if (returnCode != -1)
             {
-                var expdata = new DBConnection(AccountConnectionString);
+                var expdata = new DBConnection(cAccounts.getConnectionString(this.AccountId));
                 expdata.sqlexecute.Parameters.AddWithValue("@bankAccountId", bankAccountId);
                 expdata.sqlexecute.Parameters.AddWithValue("@archive", Convert.ToByte(archive));
                 CurrentUser currentUser = cMisc.GetCurrentUser();
@@ -274,6 +329,7 @@
             }
             return returnCode;
         }
+
         /// <summary>
         /// Check if BankAccount can be Archived or Deleted
         /// </summary>
@@ -291,6 +347,69 @@
                 returnCode = -1;
             }           
             return returnCode;
+        }
+
+        /// <summary>
+        /// Proccesses a <see cref="IDataReader"/> to extract the bank account data
+        /// </summary>
+        /// <param name="reader">
+        /// The <see cref="IDataReader"/>.
+        /// </param>
+        /// <returns>
+        /// A list of <see cref="BankAccount"/>
+        /// </returns>
+        private static List<BankAccount> ProcessReader(IDataReader reader)
+        {
+            var bankAccounts = new List<BankAccount>();
+
+            int bankAccountIdOrd = reader.GetOrdinal("BankAccountId");
+            int accountNameOrd = reader.GetOrdinal("AccountName");
+            int accountNumberOrd = reader.GetOrdinal("AccountNumber");
+            int accountTypeOrd = reader.GetOrdinal("AccountType");
+            int sortCodeOrd = reader.GetOrdinal("SortCode");
+            int employeeIdOrd = reader.GetOrdinal("EmployeeId");
+            int referenceOrd = reader.GetOrdinal("Reference");
+            int currencyIdOrd = reader.GetOrdinal("CurrencyId");
+            int countryIdOrd = reader.GetOrdinal("CountryId");
+            int archivedOrd = reader.GetOrdinal("archived");
+            int ibanOrd = reader.GetOrdinal("Iban");
+            int swiftCodeOrd = reader.GetOrdinal("SwiftCode");
+
+            while (reader.Read())
+            {
+                var bankAccountId = reader.GetInt32(bankAccountIdOrd);
+                var accountName = (!reader.IsDBNull(accountNameOrd)) ? reader.GetString(accountNameOrd) : string.Empty;
+                var accountNumber = (!reader.IsDBNull(accountNumberOrd)) ? reader.GetString(accountNumberOrd) : string.Empty;
+                var accountType = reader.GetInt32(accountTypeOrd);
+                var sortCode = (!reader.IsDBNull(sortCodeOrd)) ? reader.GetString(sortCodeOrd) : string.Empty;
+                var reference = (!reader.IsDBNull(referenceOrd)) ? reader.GetString(referenceOrd) : string.Empty;
+                var currencyId = reader.GetInt32(currencyIdOrd);
+                var countryId = reader.GetInt32(countryIdOrd);
+                var archived = reader.GetBoolean(archivedOrd);
+                var iban = (!reader.IsDBNull(ibanOrd)) ? reader.GetString(ibanOrd) : string.Empty;
+                var swiftCode = (!reader.IsDBNull(swiftCodeOrd)) ? reader.GetString(swiftCodeOrd) : string.Empty;
+                var employeeId = reader.GetInt32(employeeIdOrd);
+
+                var bankAccount = new BankAccount(
+                    bankAccountId,
+                    employeeId,
+                    accountName,
+                    accountNumber,
+                    accountType,
+                    sortCode,
+                    reference,
+                    currencyId,
+                    countryId,
+                    archived,
+                    iban,
+                    swiftCode);
+
+                bankAccounts.Add(bankAccount);
+            }
+
+            reader.Close();
+
+            return bankAccounts;
         }
 
         #endregion

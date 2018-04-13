@@ -574,6 +574,7 @@
         #region BankAccount
 
         public const string ApiErrorNotBankAccountOwner = "You do not have permission to perform this action, as you are not the owner of the Bank Account";
+        public const string APIErrorBankAccountDoesNotExistForId = "A Bank Account does not exist for the specified id";
 
         #endregion
 

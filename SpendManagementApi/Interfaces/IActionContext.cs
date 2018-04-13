@@ -143,9 +143,14 @@ namespace SpendManagementApi.Interfaces
         Hotel Hotel { get; set; }
 
         /// <summary>
-        /// The Bank Accounts class
+        /// The Bank Accounts class as current user
         /// </summary>
-        BankAccounts BankAccounts { get; set; }
+        BankAccounts BankAccountsCurrentUser { get; set; }
+
+        /// <summary>
+        /// The Bank Accounts class as admin
+        /// </summary>
+        BankAccounts BankAccountsAdmin { get; set; }
 
         /// <summary>
         /// Gets or sets an instance of the Favourites class.

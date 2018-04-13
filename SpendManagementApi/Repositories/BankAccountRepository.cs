@@ -1,28 +1,22 @@
-﻿using SpendManagementLibrary.Account;
-
-namespace SpendManagementApi.Repositories
+﻿namespace SpendManagementApi.Repositories
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Optimization;
 
     using SpendManagementApi.Common;
     using SpendManagementApi.Interfaces;
-    using SpendManagementApi.Models.Responses;
+    using SpendManagementApi.Models.Common;
     using SpendManagementApi.Models.Types;
+    using SpendManagementApi.Utilities;
 
     using SpendManagementLibrary;
+    using SpendManagementLibrary.Account;
 
     using Spend_Management;
     using Spend_Management.shared.code;
-
-    using SpendManagementApi.Models.Common;
-    using SpendManagementApi.Utilities;
-
-    using Currency = SpendManagementLibrary.Mobile.Currency;
-
     using Spend_Management.shared.code.Validation.BankAccount.PostCodeAnywhere;
+
+    using BankAccount = SpendManagementApi.Models.Types.BankAccount;
     using SMBankAccountValidation = Spend_Management.shared.code.Validation.BankAccount;
 
     /// <summary>
@@ -30,8 +24,10 @@ namespace SpendManagementApi.Repositories
     /// </summary>
     internal class BankAccountRepository : BaseRepository<BankAccount>, ISupportsActionContext
     {
+        /// <summary>
+        /// The _action context.
+        /// </summary>
         private readonly IActionContext _actionContext;
-        private BankAccounts _data;
 
         /// <summary>
         /// Creates a new BankAccountRepository.
@@ -41,7 +37,7 @@ namespace SpendManagementApi.Repositories
         public BankAccountRepository(ICurrentUser user, IActionContext actionContext)
             : base(user, x => x.BankAccountId, x => x.AccountName)
         {
-            this._data = actionContext.BankAccounts;
+            this._actionContext = actionContext;
         }
 
         /// <summary>
@@ -55,26 +51,43 @@ namespace SpendManagementApi.Repositories
         /// </returns>
         public override BankAccount Get(int id)
         {
-            var bankAccount = this._data.GetBankAccountById(id);
+            var bankAccount = this.ActionContext.BankAccountsAdmin.GetById(id);
             return new BankAccount().From(bankAccount, this._actionContext);
         }
 
+        /// <summary>
+        /// Gets all the <see cref="BankAccount"/> in the system.
+        /// </summary>
+        /// <returns>
+        /// A list <see cref="BankAccount"/>
+        /// </returns>
         public override IList<BankAccount> GetAll()
         {
-            throw new NotImplementedException();
+            var bankAccounts = this._actionContext.BankAccountsAdmin.GetAll();
+
+            var accounts = new List<BankAccount>();
+
+            foreach (var bankAccount in bankAccounts)
+            {
+                accounts.Add(new BankAccount().From(bankAccount, this._actionContext));
+            }
+
+            return accounts;
         }
 
         /// <summary>
         /// Saves a Bank Account
         /// </summary>
         /// <param name="bankAccount">
-        /// The <see cref="BankAccount">BankAccount</see>
+        /// The <see cref="BankAccount">BankAccount</see> to add/update.
         /// </param>
         /// <returns>
-        /// The <see cref="BankAccount">BankAccount</see>
+        /// The <see cref="BankAccount">BankAccount</see>.
         /// </returns>
         public override BankAccount Add(BankAccount bankAccount)
         {
+            this.CheckBankAccountAccessRolesPermissions(bankAccount, AccessRoleType.Add);
+
             var bankAccounts = new BankAccounts(this.User.AccountID, this.User.EmployeeID);
             var reqBankAcccount = bankAccount.To(this._actionContext);
             var bankAccountValidationResults = new SMBankAccountValidation.BankAccountValidationResults(this.User);
@@ -84,7 +97,7 @@ namespace SpendManagementApi.Repositories
 
             try
             {
-                validateResult =  validator.Validate(reqBankAcccount);
+                validateResult = validator.Validate(reqBankAcccount);
             }
             catch (Exception)
             {
@@ -94,7 +107,7 @@ namespace SpendManagementApi.Repositories
        
             if (validateResult.IsCorrect)
             {        
-                var bankAccountId = this._data.SaveBankAccount(reqBankAcccount, this.User.EmployeeID);
+                var bankAccountId = this.ActionContext.BankAccountsCurrentUser.SaveBankAccount(reqBankAcccount, this.User.EmployeeID);
 
                 if (bankAccountId == -1)
                 {
@@ -107,7 +120,7 @@ namespace SpendManagementApi.Repositories
                     bankAccountValidationResults.Save(reqBankAcccount, validateResult);
 
                     // re-instantiates to update internal list of bank accounts.
-                    this._data = new BankAccounts(User.AccountID, bankAccount.EmployeeId);
+                    this.ActionContext.BankAccountsCurrentUser = new BankAccounts(User.AccountID, bankAccount.EmployeeId);
                     return this.Get(bankAccountId);
                 }            
             }
@@ -119,14 +132,41 @@ namespace SpendManagementApi.Repositories
         }
 
         /// <summary>
+        /// Updates a <see cref="BankAccount"/>
+        /// </summary>
+        /// <param name="bankAccount">
+        /// The <see cref="BankAccount"/> to update updated.
+        /// </param>
+        /// <returns>
+        /// The <see cref="BankAccount"/> with updated values.
+        /// </returns>
+        /// <exception cref="ApiException">
+        /// Any exceptions during the processing of the <see cref="SpendManagementLibrary.Account.BankAccount"/>.
+        /// </exception>
+        public override BankAccount Update(BankAccount bankAccount)
+        {
+            if (bankAccount.BankAccountId < 1)
+            {
+                throw new ApiException(ApiResources.ApiErrorUpdateUnsuccessfulMessage, ApiResources.ApiErrorUpdateObjectWithWrongIdMessage);
+            }
+
+            if (this.Get(bankAccount.BankAccountId) == null)
+            {
+                throw new ApiException(ApiResources.ApiErrorUpdateUnsuccessfulMessage, ApiResources.APIErrorBankAccountDoesNotExistForId);
+            }
+
+            return this.Add(bankAccount);
+        }
+
+        /// <summary>
         /// Gets a list of <see cref="BankAccount"/> for the current user.
         /// </summary>
         /// <returns>
-        /// A list of  <see cref="BankAccount"/>
+        /// A list of <see cref="BankAccount"/>.
         /// </returns>
         public List<BankAccount> GetBankAccountsForCurrentUser()
         {
-            List<SpendManagementLibrary.Account.BankAccount> employeeBankAccounts = this._data.GetAccountAsListByEmployeeId(this.User.EmployeeID);
+            List<SpendManagementLibrary.Account.BankAccount> employeeBankAccounts = this.ActionContext.BankAccountsCurrentUser.GetAccountAsListByEmployeeId(this.User.EmployeeID);
             List<BankAccount> bankAccounts = new List<BankAccount>();
 
             foreach (var account in employeeBankAccounts)
@@ -140,7 +180,7 @@ namespace SpendManagementApi.Repositories
         }
 
         /// <summary>
-        /// Gets the bank account master data for adding/editing a bank account
+        /// Gets the bank account master data for adding/editing a bank account.
         /// </summary>
         /// <returns>
         /// The <see cref="BankAccountMasterData"/>.
@@ -176,35 +216,60 @@ namespace SpendManagementApi.Repositories
         }
 
         /// <summary>
-        /// Deletes a <see cref="BankAccount">BankAccount</see> by its Id
+        /// Deletes the current user's <see cref="BankAccount">BankAccount</see> by its Id.
         /// </summary>
-        /// <param name="bankAccountId">The Id of the <see cref="BankAccount">BankAccount</see> to delete</param>
-        /// <returns></returns>
+        /// <param name="bankAccountId">The Id of the <see cref="BankAccount">BankAccount</see> to delete.</param>
+        /// <returns>A string with the outcome of the action</returns>.
         public string DeleteBankAccount(int bankAccountId)
         {
             this.CheckBankAccountOwnership(bankAccountId);
-            int outcome = this._data.DeleteBankAccount(bankAccountId, this.User.EmployeeID);
+            int outcome = this.ActionContext.BankAccountsCurrentUser.DeleteBankAccount(bankAccountId, this.User.EmployeeID);
 
             return this.ProcessDeleteBankAccountOutcome(outcome);
         }
 
         /// <summary>
-        /// Changes the status of a <see cref="BankAccount">BankAccount</see> to either archived, or un-archived
+        /// Deletes the current user's <see cref="BankAccount">BankAccount</see> by its Id.
         /// </summary>
-        /// <param name="bankAccountId">The Id of the <see cref="BankAccount">BankAccount</see> to update</param>
-        /// <param name="archive">The action to perform on the <see cref="BankAccount">BankAccount</see></param>
-        /// <returns></returns>
+        /// <param name="bankAccountId">The Id of the <see cref="BankAccount">BankAccount</see> to delete.</param>
+        /// <returns>A string with the outcome of the action</returns>.
+        public string Delete(int bankAccountId)
+        {
+            int outcome = this.ActionContext.BankAccountsAdmin.DeleteBankAccount(bankAccountId, this.User.EmployeeID);
+
+            return this.ProcessDeleteBankAccountOutcome(outcome);
+        }
+
+        /// <summary>
+        /// Sets the archive status of a <see cref="BankAccount">BankAccount</see> to either archived, or un-archived for the current user's bank account.
+        /// </summary>
+        /// <param name="bankAccountId">The Id of the <see cref="BankAccount">BankAccount</see> to update.</param>
+        /// <param name="archive">The action to perform on the <see cref="BankAccount">BankAccount.</see></param>
+        /// <returns>The outcome of the action</returns>.
         public string ChangeBankAccountStatus(int bankAccountId, bool archive)
         {
             this.CheckBankAccountOwnership(bankAccountId);
-            int outcome = this._data.ChangeStatus(bankAccountId, archive, this.User.EmployeeID);
+            int outcome = this.ActionContext.BankAccountsCurrentUser.ChangeStatus(bankAccountId, archive, this.User.EmployeeID);
             return this.ProcessChangeBankAccountStatusOutcome(outcome);
         }
 
         /// <summary>
-        /// Checks the current user is the owner of the supplied <see cref="BankAccount">BankAccount</see> Id
+        /// Sets the archive status of a <see cref="BankAccount">BankAccount</see> to either archived, or un-archived as an administrator.
         /// </summary>
-        /// <param name="bankAccountId">The <see cref="BankAccount">BankAccount</see> to check</param>
+        /// <param name="id">The Id of the <see cref="BankAccount">BankAccount</see> to archive.</param>
+        /// <param name="archive">The archive action to perform on the <see cref="BankAccount">BankAccount.</see></param>
+        /// <returns>The outcome of the action.</returns>
+        public string Archive(int id, bool archive)
+        {
+            var bankAccount = this.Get(id);
+            int outcome = this.ActionContext.BankAccountsAdmin.ChangeStatus(id, archive, bankAccount.EmployeeId);
+            return this.ProcessChangeBankAccountStatusOutcome(outcome);
+        }
+
+        /// <summary>
+        /// Checks the current user is the owner of the supplied <see cref="BankAccount">BankAccount</see> Id.
+        /// </summary>
+        /// <param name="bankAccountId">The <see cref="BankAccount">BankAccount</see> to check.</param>
         private void CheckBankAccountOwnership(int bankAccountId)
         {
             var bankAccount = this.Get(bankAccountId);
@@ -217,10 +282,23 @@ namespace SpendManagementApi.Repositories
         }
 
         /// <summary>
-        /// Processes the outcome of the delete action, turning is into the appropritate message
+        /// Checks the access roles for bank accounts.
         /// </summary>
-        /// <param name="outcome"></param>
-        /// <returns></returns>
+        /// <param name="bankAccount">The <see cref="BankAccount">BankAccount</see> to check.</param>
+        /// <param name="accessRoleType">The <see cref="AccessRoleType"/> permission to check.</param>
+        private void CheckBankAccountAccessRolesPermissions(BankAccount bankAccount, AccessRoleType accessRoleType)
+        {
+            if (bankAccount == null || (!this.User.CheckAccessRole(accessRoleType, SpendManagementElement.EmployeeBankAccounts, true) && (!this.User.CheckAccessRole(accessRoleType, SpendManagementElement.BankAccounts, true) || this.User.EmployeeID != bankAccount.EmployeeId)))
+            {
+                throw new ApiException(ApiResources.ApiErrorInsufficientPermission, ApiResources.HttpStatusCodeForbidden);
+            }
+        }
+
+        /// <summary>
+        /// Processes the outcome of the delete action, turning is into the appropritate message.
+        /// </summary>
+        /// <param name="outcome">The outcome of the delete bank account result to process.</param>
+        /// <returns>The outcome of the action.</returns>
         private string ProcessDeleteBankAccountOutcome(int outcome)
         {
             switch (outcome)
@@ -239,8 +317,14 @@ namespace SpendManagementApi.Repositories
         }
 
         /// <summary>
-        /// Processes the outcome of the change status action, turning is into the appropritate message
+        /// Processes the outcome of the change status action, turning is into the appropritate message.
         /// </summary>
+        /// <param name="outcome">
+        /// The outcome of the bank account change status result to process.
+        /// </param>
+        /// <returns>
+        /// <returns>The outcome of the action.</returns>
+        /// </returns>
         private string ProcessChangeBankAccountStatusOutcome(int outcome)
         {
             switch (outcome)
@@ -256,7 +340,7 @@ namespace SpendManagementApi.Repositories
         /// Processes the result of a bank accounts validation failure, returning why validation failed. 
         /// </summary>
         /// <param name="validateResult">An instance of <see cref="SpendManagementLibrary.Account.IBankAccountValid"/></param>
-        /// <returns></returns>
+        /// <returns>The outcome of the action.</returns>
         private static string ProcessBankAccoutValidation(SpendManagementLibrary.Account.IBankAccountValid validateResult)
         {
             string outcome;

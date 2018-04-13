@@ -1239,7 +1239,7 @@ namespace SpendManagementApi.Repositories
             }
 
             List<SpendManagementLibrary.Account.BankAccount> employeeBankAccounts =
-                this.ActionContext.BankAccounts.GetActiveAccountByEmployeeId(User.EmployeeID);
+                this.ActionContext.BankAccountsCurrentUser.GetActiveAccountByEmployeeId(User.EmployeeID);
             List<Models.Types.Employees.BankAccount> bankAccounts = new List<Models.Types.Employees.BankAccount>();
 
             foreach (var employeeBankAccount in employeeBankAccounts)
