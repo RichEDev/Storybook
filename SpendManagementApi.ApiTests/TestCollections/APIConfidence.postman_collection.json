@@ -1,8 +1,7 @@
 {
 	"info": {
+		"_postman_id": "92d62b34-0010-485e-ab52-b2446c2ae515",
 		"name": "APIConfidence copy",
-		"_postman_id": "ad84eb12-b076-4edf-a967-743acb76064f",
-		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -52,8 +51,7 @@
 									"path": [
 										"Login"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -99,8 +97,7 @@
 									"path": [
 										"CallStatus"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -149,17 +146,14 @@
 									"query": [
 										{
 											"key": "employeeId",
-											"value": "{{EmployeeId}}",
-											"equals": true
+											"value": "{{EmployeeId}}"
 										},
 										{
 											"key": "companyId",
-											"value": "{{AccountId}}",
-											"equals": true
+											"value": "{{AccountId}}"
 										}
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -206,8 +200,7 @@
 										"GetSubAccountDescription",
 										"{{SubAccountId}}"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -253,8 +246,7 @@
 									"path": [
 										"PasswordPolicy"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -303,17 +295,14 @@
 									"query": [
 										{
 											"key": "email",
-											"value": "{{Email}}",
-											"equals": true
+											"value": "{{Email}}"
 										},
 										{
 											"key": "brandName",
-											"value": "Expenses",
-											"equals": true
+											"value": "Expenses"
 										}
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -359,8 +348,7 @@
 									"path": [
 										"SessionTimeoutSettings"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -406,8 +394,7 @@
 									"path": [
 										"GetExpediteGuidelines"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						}
@@ -454,8 +441,7 @@
 									"host": [
 										"{{SMAPIUrl}}Options"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -495,8 +481,7 @@
 									"host": [
 										"{{SMAPIUrl}}Account"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -536,8 +521,7 @@
 									"host": [
 										"{{SMAPIUrl}}AccessRoles"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -577,8 +561,7 @@
 									"host": [
 										"{{SMAPIUrl}}Addresses"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -618,8 +601,7 @@
 									"host": [
 										"{{SMAPIUrl}}AddressRecommendedDistances"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -659,8 +641,7 @@
 									"host": [
 										"{{SMAPIUrl}}Allowances"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -700,8 +681,7 @@
 									"host": [
 										"{{SMAPIUrl}}BankAccounts"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -741,8 +721,7 @@
 									"host": [
 										"{{SMAPIUrl}}BudgetHolders"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -782,8 +761,7 @@
 									"host": [
 										"{{SMAPIUrl}}CardProviders"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -823,8 +801,7 @@
 									"host": [
 										"{{SMAPIUrl}}ClaimableItems"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -864,8 +841,7 @@
 									"host": [
 										"{{SMAPIUrl}}ClaimReasons"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -905,8 +881,7 @@
 									"host": [
 										"{{SMAPIUrl}}Claims"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -946,8 +921,7 @@
 									"host": [
 										"{{SMAPIUrl}}CorporateCards"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -987,8 +961,7 @@
 									"host": [
 										"{{SMAPIUrl}}CostCodes"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1028,8 +1001,7 @@
 									"host": [
 										"{{SMAPIUrl}}Countries"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1069,8 +1041,7 @@
 									"host": [
 										"{{SMAPIUrl}}Currencies"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1110,8 +1081,7 @@
 									"host": [
 										"{{SMAPIUrl}}CurrencyExchangeRates"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1151,8 +1121,7 @@
 									"host": [
 										"{{SMAPIUrl}}Departments"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1192,8 +1161,7 @@
 									"host": [
 										"{{SMAPIUrl}}DutyOfCare"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1233,8 +1201,7 @@
 									"host": [
 										"{{SMAPIUrl}}EmailNotifications"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1274,8 +1241,7 @@
 									"host": [
 										"{{SMAPIUrl}}employees"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1315,8 +1281,7 @@
 									"host": [
 										"{{SMAPIUrl}}ESRAssignment"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1356,8 +1321,7 @@
 									"host": [
 										"{{SMAPIUrl}}ExpenseCategories"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1397,8 +1361,7 @@
 									"host": [
 										"{{SMAPIUrl}}ExpenseItems"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1438,8 +1401,7 @@
 									"host": [
 										"{{SMAPIUrl}}ExpenseSubCategories"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1479,8 +1441,7 @@
 									"host": [
 										"{{SMAPIUrl}}FilterRules"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1520,8 +1481,7 @@
 									"host": [
 										"{{SMAPIUrl}}FinancialYears"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1561,8 +1521,7 @@
 									"host": [
 										"{{SMAPIUrl}}FlagManagement"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1602,8 +1561,7 @@
 									"host": [
 										"{{SMAPIUrl}}FuelReceiptToVATCalculation"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1646,8 +1604,7 @@
 									"path": [
 										"Fund"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1687,8 +1644,7 @@
 									"host": [
 										"{{SMAPIUrl}}GeneralOptions"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1728,8 +1684,7 @@
 									"host": [
 										"{{SMAPIUrl}}Globals"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1769,8 +1724,7 @@
 									"host": [
 										"{{SMAPIUrl}}Holidays"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1810,8 +1764,7 @@
 									"host": [
 										"{{SMAPIUrl}}Hotels"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1851,8 +1804,7 @@
 									"host": [
 										"{{SMAPIUrl}}ItemRoles"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1892,8 +1844,7 @@
 									"host": [
 										"{{SMAPIUrl}}Journeys"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1933,8 +1884,7 @@
 									"host": [
 										"{{SMAPIUrl}}MileageCategories"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -1974,8 +1924,7 @@
 									"host": [
 										"{{SMAPIUrl}}MobileDevices"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2015,8 +1964,7 @@
 									"host": [
 										"{{SMAPIUrl}}MobileInformationMessages"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2056,8 +2004,7 @@
 									"host": [
 										"{{SMAPIUrl}}MyDetails"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2097,8 +2044,7 @@
 									"host": [
 										"{{SMAPIUrl}}NHSTrusts"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2138,8 +2084,7 @@
 									"host": [
 										"{{SMAPIUrl}}OdometerReadings"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2179,8 +2124,7 @@
 									"host": [
 										"{{SMAPIUrl}}Organisations"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2220,8 +2164,7 @@
 									"host": [
 										"{{SMAPIUrl}}P11DCategories"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2261,8 +2204,7 @@
 									"host": [
 										"{{SMAPIUrl}}ProjectCodes"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2302,8 +2244,7 @@
 									"host": [
 										"{{SMAPIUrl}}Receipt"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2343,8 +2284,7 @@
 									"host": [
 										"{{SMAPIUrl}}SignOffGroups"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2384,8 +2324,7 @@
 									"host": [
 										"{{SMAPIUrl}}Teams"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2425,8 +2364,7 @@
 									"host": [
 										"{{SMAPIUrl}}Tooltips"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2466,8 +2404,7 @@
 									"host": [
 										"{{SMAPIUrl}}UserDefinedFields"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2507,8 +2444,781 @@
 									"host": [
 										"{{SMAPIUrl}}Vehicles"
 									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "BankAccounts",
+					"description": "",
+					"item": [
+						{
+							"name": "Post BankAccount",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ef4b99bb-8ce4-4603-b823-b13309df4c1b",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"var schema ={",
+											"  \"type\": \"object\", ",
+											"  \"definitions\": {}, ",
+											"  \"$schema\": \"http://json-schema.org/draft-07/schema#\", ",
+											"  \"additionalProperties\": false, ",
+											"  \"properties\": {",
+											"    \"Item\": {",
+											"      \"type\": \"object\", ",
+											"      \"additionalProperties\": false, ",
+											"      \"properties\": {",
+											"        \"BankAccountId\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"EmployeeId\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"AccountName\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"AccountNumber\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"AccountType\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"SortCode\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"Reference\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"CurrencyId\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"CurrencyName\": {",
+											"          \"type\": \"null\"",
+											"        }, ",
+											"        \"CountryId\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"Archived\": {",
+											"          \"type\": \"boolean\"",
+											"        }, ",
+											"        \"Outcome\": {",
+											"          \"type\": \"null\"",
+											"        }, ",
+											"        \"Iban\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"SwiftCode\": {",
+											"          \"type\": \"string\"",
+											"        }",
+											"      }",
+											"    }, ",
+											"    \"ResponseInformation\": {",
+											"      \"type\": \"object\", ",
+											"      \"additionalProperties\": false, ",
+											"      \"properties\": {",
+											"        \"Errors\": {",
+											"          \"type\": \"array\", ",
+											"          \"additionalItems\": false",
+											"        }, ",
+											"        \"Status\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"LicensedCallStatus\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"Links\": {",
+											"          \"type\": \"array\", ",
+											"          \"additionalItems\": false, ",
+											"          \"items\": {",
+											"            \"type\": \"object\", ",
+											"            \"additionalProperties\": false, ",
+											"            \"properties\": {",
+											"              \"Rel\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"Href\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"Title\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"IsTemplated\": {",
+											"                \"type\": \"boolean\"",
+											"              }",
+											"            }",
+											"          }",
+											"        }",
+											"      }",
+											"    }",
+											"  }",
+											"};",
+											"",
+											"postman.setEnvironmentVariable(\"BankAccountId\", data.Item.BankAccountId);",
+											"postman.setEnvironmentVariable(\"BankAccountName\", data.Item.AccountName);",
+											"",
+											"tests[\"BankAccount - Schema\"] = tv4.validate(data, schema, false, true);",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "AuthToken",
+										"value": "{{SMAPIAuthToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"BankAccountId\": 0,\n  \"EmployeeId\": \"{{EmployeeId}}\",\n  \"AccountName\": \"{{CollectionGUID}}\",\n  \"AccountNumber\": \"26207729\",\n  \"AccountType\": 2,\n  \"SortCode\": \"56-00-29\",\n  \"Reference\": \"sample string 7\",\n  \"CurrencyId\": \"{{PoundSterlingCurrencyId}}\",\n  \"CurrencyName\": \"Pound Sterling\",\n  \"CountryId\": \"{{UnitedKingdomCountryId}}\",\n  \"Archived\": false,\n  \"Outcome\": \"sample string 12\",\n  \"Iban\": \"sample string 13\",\n  \"SwiftCode\": \"sample string 14\"\n}"
 								},
-								"description": null
+								"url": {
+									"raw": "{{SMAPIUrl}}BankAccounts",
+									"host": [
+										"{{SMAPIUrl}}BankAccounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get BankAccount by Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e8573e6d-9d1d-405d-9768-61137cc8b3be",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"var schema ={",
+											"  \"type\": \"object\", ",
+											"  \"definitions\": {}, ",
+											"  \"$schema\": \"http://json-schema.org/draft-07/schema#\", ",
+											"  \"additionalProperties\": false, ",
+											"  \"properties\": {",
+											"    \"Item\": {",
+											"      \"type\": \"object\", ",
+											"      \"additionalProperties\": false, ",
+											"      \"properties\": {",
+											"        \"BankAccountId\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"EmployeeId\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"AccountName\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"AccountNumber\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"AccountType\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"SortCode\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"Reference\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"CurrencyId\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"CurrencyName\": {",
+											"          \"type\": \"null\"",
+											"        }, ",
+											"        \"CountryId\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"Archived\": {",
+											"          \"type\": \"boolean\"",
+											"        }, ",
+											"        \"Outcome\": {",
+											"          \"type\": \"null\"",
+											"        }, ",
+											"        \"Iban\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"SwiftCode\": {",
+											"          \"type\": \"string\"",
+											"        }",
+											"      }",
+											"    }, ",
+											"    \"ResponseInformation\": {",
+											"      \"type\": \"object\", ",
+											"      \"additionalProperties\": false, ",
+											"      \"properties\": {",
+											"        \"Errors\": {",
+											"          \"type\": \"array\", ",
+											"          \"additionalItems\": false",
+											"        }, ",
+											"        \"Status\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"LicensedCallStatus\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"Links\": {",
+											"          \"type\": \"array\", ",
+											"          \"additionalItems\": false, ",
+											"          \"items\": {",
+											"            \"type\": \"object\", ",
+											"            \"additionalProperties\": false, ",
+											"            \"properties\": {",
+											"              \"Rel\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"Href\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"Title\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"IsTemplated\": {",
+											"                \"type\": \"boolean\"",
+											"              }",
+											"            }",
+											"          }",
+											"        }",
+											"      }",
+											"    }",
+											"  }",
+											"};",
+											"",
+											"tests[\"BankAccount - Schema\"] = tv4.validate(data, schema, false, true);",
+											"tests[\"BankAccount - Id Equals\"] = data.Item.BankAccountId = environment[\"BankAccountId\"];",
+											"tests[\"BankAccount - AccountName Equals\"] = data.Item.AccountName = environment[\"BankAccountName\"];"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "AuthToken",
+										"value": "{{SMAPIAuthToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"BankAccountId\": 0,\n  \"EmployeeId\": \"{{EmployeeId}}\",\n  \"AccountName\": \"{{CollectionGUID}}\",\n  \"AccountNumber\": \"26207729\",\n  \"AccountType\": 2,\n  \"SortCode\": \"56-00-29\",\n  \"Reference\": \"sample string 7\",\n  \"CurrencyId\": \"{{PoundSterlingCurrencyId}}\",\n  \"CurrencyName\": \"Pound Sterling\",\n  \"CountryId\": \"{{UnitedKingdomCountryId}}\",\n  \"Archived\": false,\n  \"Outcome\": \"sample string 12\",\n  \"Iban\": \"sample string 13\",\n  \"SwiftCode\": \"sample string 14\"\n}"
+								},
+								"url": {
+									"raw": "{{SMAPIUrl}}BankAccounts/{{BankAccountId}}",
+									"host": [
+										"{{SMAPIUrl}}BankAccounts"
+									],
+									"path": [
+										"{{BankAccountId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All BankAccounts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cfd221e4-4684-4f52-ab5d-329e6e15942c",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"var schema ={",
+											"  \"$id\": \"http://example.com/example.json\", ",
+											"  \"type\": \"object\", ",
+											"  \"definitions\": {}, ",
+											"  \"$schema\": \"http://json-schema.org/draft-07/schema#\", ",
+											"  \"additionalProperties\": false, ",
+											"  \"properties\": {",
+											"    \"List\": {",
+											"      \"type\": \"array\", ",
+											"      \"additionalItems\": false, ",
+											"      \"items\": {",
+											"        \"type\": \"object\", ",
+											"        \"additionalProperties\": false, ",
+											"        \"properties\": {",
+											"          \"BankAccountId\": {",
+											"            \"type\": \"integer\"",
+											"          }, ",
+											"          \"EmployeeId\": {",
+											"            \"type\": \"integer\"",
+											"          }, ",
+											"          \"AccountName\": {",
+											"            \"type\": \"string\"",
+											"          }, ",
+											"          \"AccountNumber\": {",
+											"            \"type\": \"string\"",
+											"          }, ",
+											"          \"AccountType\": {",
+											"            \"type\": \"integer\"",
+											"          }, ",
+											"          \"SortCode\": {",
+											"            \"type\": \"string\"",
+											"          }, ",
+											"          \"Reference\": {",
+											"            \"type\": \"string\"",
+											"          }, ",
+											"          \"CurrencyId\": {",
+											"            \"type\": \"integer\"",
+											"          }, ",
+											"          \"CurrencyName\": {",
+											"            \"type\": \"null\"",
+											"          }, ",
+											"          \"CountryId\": {",
+											"            \"type\": \"integer\"",
+											"          }, ",
+											"          \"Archived\": {",
+											"            \"type\": \"boolean\"",
+											"          }, ",
+											"          \"Outcome\": {",
+											"            \"type\": \"null\"",
+											"          }, ",
+											"          \"Iban\": {",
+											"            \"type\": \"string\"",
+											"          }, ",
+											"          \"SwiftCode\": {",
+											"            \"type\": \"string\"",
+											"          }",
+											"        }",
+											"      }",
+											"    }, ",
+											"    \"ResponseInformation\": {",
+											"      \"type\": \"object\", ",
+											"      \"additionalProperties\": false, ",
+											"      \"properties\": {",
+											"        \"Errors\": {",
+											"          \"type\": \"array\", ",
+											"          \"additionalItems\": false",
+											"        }, ",
+											"        \"Status\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"LicensedCallStatus\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"Links\": {",
+											"          \"type\": \"array\", ",
+											"          \"additionalItems\": false, ",
+											"          \"items\": {",
+											"            \"type\": \"object\", ",
+											"            \"additionalProperties\": false, ",
+											"            \"properties\": {",
+											"              \"Rel\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"Href\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"Title\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"IsTemplated\": {",
+											"                \"type\": \"boolean\"",
+											"              }",
+											"            }",
+											"          }",
+											"        }",
+											"      }",
+											"    }",
+											"  }",
+											"};",
+											"",
+											"tests[\"BankAccount - Schema\"] = tv4.validate(data, schema, false, true);"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "AuthToken",
+										"value": "{{SMAPIAuthToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"BankAccountId\": 0,\n  \"EmployeeId\": \"{{EmployeeId}}\",\n  \"AccountName\": \"{{CollectionGUID}}\",\n  \"AccountNumber\": \"26207729\",\n  \"AccountType\": 2,\n  \"SortCode\": \"56-00-29\",\n  \"Reference\": \"sample string 7\",\n  \"CurrencyId\": \"{{PoundSterlingCurrencyId}}\",\n  \"CurrencyName\": \"Pound Sterling\",\n  \"CountryId\": \"{{UnitedKingdomCountryId}}\",\n  \"Archived\": false,\n  \"Outcome\": \"sample string 12\",\n  \"Iban\": \"sample string 13\",\n  \"SwiftCode\": \"sample string 14\"\n}"
+								},
+								"url": {
+									"raw": "{{SMAPIUrl}}BankAccounts",
+									"host": [
+										"{{SMAPIUrl}}BankAccounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Archive BankAccount",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "83eec24e-5e31-4381-bf8f-a942520e4e11",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"var schema ={",
+											"  \"type\": \"object\", ",
+											"  \"definitions\": {}, ",
+											"  \"$schema\": \"http://json-schema.org/draft-07/schema#\", ",
+											"  \"additionalProperties\": false, ",
+											"  \"properties\": {",
+											"    \"Value\": {",
+											"      \"type\": \"string\"",
+											"    }, ",
+											"    \"ResponseInformation\": {",
+											"      \"type\": \"object\", ",
+											"      \"additionalProperties\": false, ",
+											"      \"properties\": {",
+											"        \"Errors\": {",
+											"          \"type\": \"array\", ",
+											"          \"additionalItems\": false",
+											"        }, ",
+											"        \"Status\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"LicensedCallStatus\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"Links\": {",
+											"          \"type\": \"array\", ",
+											"          \"additionalItems\": false, ",
+											"          \"items\": {",
+											"            \"type\": \"object\", ",
+											"            \"additionalProperties\": false, ",
+											"            \"properties\": {",
+											"              \"Rel\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"Href\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"Title\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"IsTemplated\": {",
+											"                \"type\": \"boolean\"",
+											"              }",
+											"            }",
+											"          }",
+											"        }",
+											"      }",
+											"    }",
+											"  }",
+											"};",
+											"",
+											"tests[\"BankAccount - Schema\"] = tv4.validate(data, schema, false, true);",
+											"tests[\"BankAccount - Return Value\"] = data.Value = \"Success\";"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "AuthToken",
+										"value": "{{SMAPIAuthToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{SMAPIUrl}}BankAccounts/{{BankAccountId}}/Archive/true",
+									"host": [
+										"{{SMAPIUrl}}BankAccounts"
+									],
+									"path": [
+										"{{BankAccountId}}",
+										"Archive",
+										"true"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put BankAccount",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fa9ae596-9e74-4ed6-9770-0e1d2058f8c9",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"var schema ={",
+											"  \"type\": \"object\", ",
+											"  \"definitions\": {}, ",
+											"  \"$schema\": \"http://json-schema.org/draft-07/schema#\", ",
+											"  \"additionalProperties\": false, ",
+											"  \"properties\": {",
+											"    \"Item\": {",
+											"      \"type\": \"object\", ",
+											"      \"additionalProperties\": false, ",
+											"      \"properties\": {",
+											"        \"BankAccountId\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"EmployeeId\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"AccountName\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"AccountNumber\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"AccountType\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"SortCode\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"Reference\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"CurrencyId\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"CurrencyName\": {",
+											"          \"type\": \"null\"",
+											"        }, ",
+											"        \"CountryId\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"Archived\": {",
+											"          \"type\": \"boolean\"",
+											"        }, ",
+											"        \"Outcome\": {",
+											"          \"type\": \"null\"",
+											"        }, ",
+											"        \"Iban\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"SwiftCode\": {",
+											"          \"type\": \"string\"",
+											"        }",
+											"      }",
+											"    }, ",
+											"    \"ResponseInformation\": {",
+											"      \"type\": \"object\", ",
+											"      \"additionalProperties\": false, ",
+											"      \"properties\": {",
+											"        \"Errors\": {",
+											"          \"type\": \"array\", ",
+											"          \"additionalItems\": false",
+											"        }, ",
+											"        \"Status\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"LicensedCallStatus\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"Links\": {",
+											"          \"type\": \"array\", ",
+											"          \"additionalItems\": false, ",
+											"          \"items\": {",
+											"            \"type\": \"object\", ",
+											"            \"additionalProperties\": false, ",
+											"            \"properties\": {",
+											"              \"Rel\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"Href\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"Title\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"IsTemplated\": {",
+											"                \"type\": \"boolean\"",
+											"              }",
+											"            }",
+											"          }",
+											"        }",
+											"      }",
+											"    }",
+											"  }",
+											"};",
+											"",
+											"tests[\"BankAccount - Schema\"] = tv4.validate(data, schema, false, true);",
+											"tests[\"BankAccount - Id Equals\"] = data.Item.BankAccountId = environment[\"BankAccountId\"];",
+											"tests[\"BankAccount - AccountName Equals\"] = data.Item.AccountName === environment[\"BankAccountName\"] + \" Updated\";",
+											"",
+											"postman.setEnvironmentVariable(\"BankAccountName\", data.Item.AccountName);",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "AuthToken",
+										"value": "{{SMAPIAuthToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"BankAccountId\": \"{{BankAccountId}}\",\n  \"EmployeeId\": \"{{EmployeeId}}\",\n  \"AccountName\": \"{{BankAccountName}} Updated\",\n  \"AccountNumber\": \"26207729\",\n  \"AccountType\": 2,\n  \"SortCode\": \"56-00-29\",\n  \"Reference\": \"sample string 7\",\n  \"CurrencyId\": \"{{PoundSterlingCurrencyId}}\",\n  \"CurrencyName\": \"Pound Sterling\",\n  \"CountryId\": \"{{UnitedKingdomCountryId}}\",\n  \"Archived\": false,\n  \"Outcome\": \"sample string 12\",\n  \"Iban\": \"sample string 13\",\n  \"SwiftCode\": \"sample string 14\"\n}"
+								},
+								"url": {
+									"raw": "{{SMAPIUrl}}BankAccounts",
+									"host": [
+										"{{SMAPIUrl}}BankAccounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete BankAccount",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4283edeb-bfe2-4298-8d34-9020977e41d5",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"var schema ={",
+											"  \"type\": \"object\", ",
+											"  \"definitions\": {}, ",
+											"  \"$schema\": \"http://json-schema.org/draft-07/schema#\", ",
+											"  \"additionalProperties\": false, ",
+											"  \"properties\": {",
+											"    \"Value\": {",
+											"      \"type\": \"string\"",
+											"    }, ",
+											"    \"ResponseInformation\": {",
+											"      \"type\": \"object\", ",
+											"      \"additionalProperties\": false, ",
+											"      \"properties\": {",
+											"        \"Errors\": {",
+											"          \"type\": \"array\", ",
+											"          \"additionalItems\": false",
+											"        }, ",
+											"        \"Status\": {",
+											"          \"type\": \"integer\"",
+											"        }, ",
+											"        \"LicensedCallStatus\": {",
+											"          \"type\": \"string\"",
+											"        }, ",
+											"        \"Links\": {",
+											"          \"type\": \"array\", ",
+											"          \"additionalItems\": false, ",
+											"          \"items\": {",
+											"            \"type\": \"object\", ",
+											"            \"additionalProperties\": false, ",
+											"            \"properties\": {",
+											"              \"Rel\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"Href\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"Title\": {",
+											"                \"type\": \"string\"",
+											"              }, ",
+											"              \"IsTemplated\": {",
+											"                \"type\": \"boolean\"",
+											"              }",
+											"            }",
+											"          }",
+											"        }",
+											"      }",
+											"    }",
+											"  }",
+											"};",
+											"",
+											"tests[\"BankAccount - Schema\"] = tv4.validate(data, schema, false, true);",
+											"tests[\"BankAccount - Return Value\"] = data.Value = \"Success\";"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "AuthToken",
+										"value": "{{SMAPIAuthToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{SMAPIUrl}}BankAccounts/{{BankAccountId}}",
+									"host": [
+										"{{SMAPIUrl}}BankAccounts"
+									],
+									"path": [
+										"{{BankAccountId}}"
+									]
+								}
 							},
 							"response": []
 						}
@@ -2592,8 +3302,7 @@
 									"path": [
 										""
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						}
@@ -2668,8 +3377,7 @@
 									"path": [
 										""
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2679,7 +3387,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "28f0607c-5dba-40de-a88e-3314e21ba3ce",
+										"id": "b4f5882b-60ac-4f37-969a-ce6024944370",
 										"type": "text/javascript",
 										"exec": [
 											"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -2732,8 +3440,7 @@
 									"path": [
 										"{{P11DCategoryId}}"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2802,8 +3509,7 @@
 									"path": [
 										""
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2864,8 +3570,7 @@
 									"path": [
 										""
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						},
@@ -2909,8 +3614,7 @@
 									"path": [
 										"{{P11DCategoryId}}"
 									]
-								},
-								"description": null
+								}
 							},
 							"response": []
 						}
