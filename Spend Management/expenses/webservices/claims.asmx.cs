@@ -426,10 +426,11 @@
             }
 
             // loop through any expense items that need updating and update their validation progress.
-            var items = claims.getExpenseItemsFromDB(claim.claimid);
-            
+            var items = claims.getExpenseItemsFromDB(claim.claimid).Values.ToList().Where(e => expenseIdsToUpdate.Contains(e.expenseid));
+
             if (items.Any())
             {
+                
                 var employee = user.Employee;
                 if (user.EmployeeID == claim.checkerid)
                 {
@@ -443,7 +444,7 @@
                         .stages.Values.Select(s => s.signofftype)
                         .Contains(SignoffType.SELValidation);
 
-                foreach (var item in items.Values)
+                foreach (var item in items)
                 {
                     item.DetermineValidationProgress(
                         user.Account,
