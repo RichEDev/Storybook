@@ -183,7 +183,7 @@ namespace Spend_Management.shared.webServices
             CurrentUser user = cMisc.GetCurrentUser();
             ItemRoles clsroles = new ItemRoles(user.AccountID);
 
-            RoleSubcat rolesub = new RoleSubcat(0, roleid, subcatid, maximum, receiptmaximum, addtotemplate);
+            RoleSubcat rolesub = new RoleSubcat(0, roleid, subcatid, receiptmaximum, maximum, addtotemplate);
             clsroles.SaveRoleSubcat(rolesub);
             return true;
         }
