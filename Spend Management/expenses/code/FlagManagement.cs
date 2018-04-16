@@ -1888,8 +1888,8 @@ namespace Spend_Management.expenses.code
             Dictionary<int, RoleSubcat> emplimits,
             Employee reqemp)
         {
-            decimal maximum = 0;
-            decimal receiptmaximum = 0;
+            decimal maximumLimitWithReceipt = 0;
+            decimal maximumLimitWithoutReceipt = 0;
 
             decimal exceeded = 0;
             string comment = string.Empty;
@@ -1909,8 +1909,8 @@ namespace Spend_Management.expenses.code
             if (emplimits.ContainsKey(item.subcatid))
             {
                 RoleSubcat rolesub = emplimits[item.subcatid];
-                maximum = rolesub.MaximumLimitWithoutReceipt;
-                receiptmaximum = rolesub.MaximumLimitWithReceipt;
+                maximumLimitWithReceipt = rolesub.MaximumLimitWithReceipt;
+                maximumLimitWithoutReceipt = rolesub.MaximumLimitWithoutReceipt;
             }
 
             SubcatBasic reqsubcat = this.GetSubcat(item.subcatid);
@@ -1919,28 +1919,28 @@ namespace Spend_Management.expenses.code
                 // if it is a meal increase limts * number of staff
                 if (increaseothers == false)
                 {
-                    maximum = maximum * item.staff;
-                    receiptmaximum = receiptmaximum * item.staff;
+                    maximumLimitWithReceipt = maximumLimitWithReceipt * item.staff;
+                    maximumLimitWithoutReceipt = maximumLimitWithoutReceipt * item.staff;
                 }
                 else
                 {
-                    maximum = maximum * (item.staff + item.others);
-                    receiptmaximum = receiptmaximum * (item.staff + item.others);
+                    maximumLimitWithReceipt = maximumLimitWithReceipt * (item.staff + item.others);
+                    maximumLimitWithoutReceipt = maximumLimitWithoutReceipt * (item.staff + item.others);
                 }
             }
 
             if (item.nonights != 0)
             {
                 // increase the limit by the number of nights
-                maximum = maximum * item.nonights;
-                receiptmaximum = receiptmaximum * item.nonights;
+                maximumLimitWithReceipt = maximumLimitWithReceipt * item.nonights;
+                maximumLimitWithoutReceipt = maximumLimitWithoutReceipt * item.nonights;
             }
 
             if (item.norooms != 0)
             {
                 // increase the limit by the number of rooms
-                maximum = maximum * item.norooms;
-                receiptmaximum = receiptmaximum * item.norooms;
+                maximumLimitWithReceipt = maximumLimitWithReceipt * item.norooms;
+                maximumLimitWithoutReceipt = maximumLimitWithoutReceipt * item.norooms;
             }
 
             int basecurrency;
@@ -1964,37 +1964,37 @@ namespace Spend_Management.expenses.code
             cCurrencies clscurrencies = new cCurrencies(this.AccountID, null);
             cCurrency reqcurrency = clscurrencies.getCurrencyById(basecurrency);
             string symbol;
-            if (item.normalreceipt == false && receiptmaximum > 0 && flag.FlagType == FlagType.LimitWithoutReceipt)
+            if (item.normalreceipt == false && maximumLimitWithoutReceipt > 0 && flag.FlagType == FlagType.LimitWithoutReceipt)
             {
-                if (item.total > receiptmaximum)
+                if (item.total > maximumLimitWithoutReceipt)
                 {
                     symbol = this.GetGlobalCurrency(reqcurrency.globalcurrencyid).symbol;
-                    exceeded = item.total - receiptmaximum;
+                    exceeded = item.total - maximumLimitWithoutReceipt;
 
-                    flagColour = flag.CheckTolerance(item.total, receiptmaximum);
+                    flagColour = flag.CheckTolerance(item.total, maximumLimitWithoutReceipt);
                     if (flagColour == FlagColour.None)
                     {
                         // falls in to no flag tolerance so don't flag
                         return null;
                     }
 
-                    comment = "Our policy includes a limit of " + receiptmaximum.ToString(symbol + "###,###,##0.00") + " for this item when claimed without a receipt. You have exceeded this by " + exceeded.ToString(symbol + "###,###,##0.00") + ".";
+                    comment = "Our policy includes a limit of " + maximumLimitWithoutReceipt.ToString(symbol + "###,###,##0.00") + " for this item when claimed without a receipt. You have exceeded this by " + exceeded.ToString(symbol + "###,###,##0.00") + ".";
                 }
             }
             else
             {
-                if ((item.total > maximum) && maximum > 0)
+                if ((item.total > maximumLimitWithReceipt) && maximumLimitWithReceipt > 0)
                 {
                     symbol = this.GetGlobalCurrency(reqcurrency.globalcurrencyid).symbol;
-                    exceeded = item.total - maximum;
-                    flagColour = flag.CheckTolerance(item.total, maximum);
+                    exceeded = item.total - maximumLimitWithReceipt;
+                    flagColour = flag.CheckTolerance(item.total, maximumLimitWithReceipt);
                     if (flagColour == FlagColour.None)
                     {
                         // falls in to no flag tolerance so don't flag
                         return null;
                     }
 
-                    comment = "Our policy includes a limit of " + maximum.ToString(symbol + "###,###,##0.00") + " for this item when claimed with a receipt. You have exceeded this by " + exceeded.ToString(symbol + "###,###,##0.00") + ".";
+                    comment = "Our policy includes a limit of " + maximumLimitWithReceipt.ToString(symbol + "###,###,##0.00") + " for this item when claimed with a receipt. You have exceeded this by " + exceeded.ToString(symbol + "###,###,##0.00") + ".";
                 }
             }
 
