@@ -31,12 +31,16 @@
             if (response.Data != null && response.Data.Success)
             {
                 var vehicleData = response.Data.VehicleDetails;
+                var newVehicle = false;
                 if (string.IsNullOrEmpty(vehicleData.MotExpiryDate))
                 {
                     vehicleData.MotExpiryDate = vehicleData.MotExpiryDateDvsa;
+                    newVehicle = true;
                 }
 
                 var motDueDate = !string.IsNullOrEmpty(vehicleData.MotExpiryDate) && vehicleData.MotExpiryDate.Length > 10 ? DateTime.ParseExact(vehicleData.MotExpiryDate.Substring(0, 10), "yyyy-MM-dd", null) : DateTime.MinValue;
+                var motStartDate = newVehicle ? DateTime.ParseExact(vehicleData.DateOfRegistration.Substring(0, 10), "yyyy-MM-dd", null) : motDueDate.AddYears(-1).AddDays(-1);
+
                 if (!vehicleData.Motd && motDueDate > DateTime.Today)
                 {
                     vehicleData.Motd = true;
@@ -106,6 +110,7 @@
                         TaxStatus = vehicleData.Taxed ? "Taxed" : "NotTaxed",
                         MotExpiry = motDueDate,
                         MotStatus = vehicleData.Motd ? "MOT" : "MOTINVALID",
+                        MotStart = motStartDate
                     }
                 };
 

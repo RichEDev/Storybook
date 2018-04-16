@@ -68,7 +68,8 @@
                 {
                     if (this._accountProperties.BlockTaxExpiry && vehicle.IsTaxValid && !oldTaxValidValue)
                     {
-                        var taxRepo = new TaxDocumentRepository(this._currentUser,
+                        var taxRepo = new TaxDocumentRepository(
+                            this._currentUser,
                             new cCustomEntities(this._currentUser),
                             new cFields(this._currentUser.AccountID),
                             new cTables(this._currentUser.AccountID));
@@ -77,11 +78,12 @@
 
                     if (this._accountProperties.BlockMOTExpiry && vehicle.IsMotValid && !oldMotValidValue)
                     {
-                        var taxRepo = new MotDocumentRepository(this._currentUser,
+                        var taxRepo = new MotDocumentRepository(
+                            this._currentUser,
                             new cCustomEntities(this._currentUser),
                             new cFields(this._currentUser.AccountID),
                             new cTables(this._currentUser.AccountID));
-                        taxRepo.Add(vehicle.MotExpiry.Value, vehicle.carid);
+                        taxRepo.Add(lookupResult.Vehicle.MotStart, vehicle.MotExpiry.Value, vehicle.carid);
                     }
                 }
             }

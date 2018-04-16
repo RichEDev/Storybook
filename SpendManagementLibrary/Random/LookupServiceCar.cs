@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace SpendManagementLibrary.Random
+﻿namespace SpendManagementLibrary.Random
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// A class inherited from <seealso cref="cCar"/> which also has properties for Tax and MOT expiry.
@@ -39,8 +38,15 @@ namespace SpendManagementLibrary.Random
         /// <param name="isTaxValid">The tax status "Taxed" or not</param>
         /// <param name="motExpiry">The date of the MOT</param>
         /// <param name="isMotValid">The MOT status "MOT" or not</param>
-        public LookupServiceCar(int accountid, int employeeid, int carid, string make, string model, string regno, DateTime? startdate, DateTime? enddate, bool active, List<int> mileagecats, int vehicleEngineTypeId, long odometer, bool fuelcard, int endodometer, MileageUOM defaultuom, int engineSize, DateTime? createdon, int createdby, DateTime? modifiedon, int? modifiedby, bool approved, bool exemptfromhometooffice, byte? VehicleTypeId, DateTime? taxExpiry, bool isTaxValid, DateTime? motExpiry, bool isMotValid) : base(accountid, employeeid, carid, make, model, regno, startdate, enddate, active, mileagecats, vehicleEngineTypeId, odometer, fuelcard, endodometer, defaultuom, engineSize, createdon, createdby, modifiedon, modifiedby, approved, exemptfromhometooffice, VehicleTypeId, taxExpiry, isTaxValid, motExpiry, isMotValid)
+        /// <param name="motStart">The MOT start date (if any)</param>
+        public LookupServiceCar(int accountid, int employeeid, int carid, string make, string model, string regno, DateTime? startdate, DateTime? enddate, bool active, List<int> mileagecats, int vehicleEngineTypeId, long odometer, bool fuelcard, int endodometer, MileageUOM defaultuom, int engineSize, DateTime? createdon, int createdby, DateTime? modifiedon, int? modifiedby, bool approved, bool exemptfromhometooffice, byte? VehicleTypeId, DateTime? taxExpiry, bool isTaxValid, DateTime? motExpiry, bool isMotValid, DateTime? motStart) : base(accountid, employeeid, carid, make, model, regno, startdate, enddate, active, mileagecats, vehicleEngineTypeId, odometer, fuelcard, endodometer, defaultuom, engineSize, createdon, createdby, modifiedon, modifiedby, approved, exemptfromhometooffice, VehicleTypeId, taxExpiry, isTaxValid, motExpiry, isMotValid)
         {
+            this.MotStart = motStart;
         }
+        
+        /// <summary>
+        /// Gets the mot start date.
+        /// </summary>
+        public DateTime? MotStart { get; }
     }
 }

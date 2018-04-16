@@ -164,6 +164,11 @@
         public bool IsMotValid { get;set; }
 
         /// <summary>
+        /// Gets or sets the mot start date.
+        /// </summary>
+        public string MotStart { get; set; }
+
+        /// <summary>
         /// Validates this Vehicle.
         /// </summary>
         /// <param name="actionContext">The action context.</param>

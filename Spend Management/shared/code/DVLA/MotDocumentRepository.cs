@@ -1,15 +1,14 @@
 ﻿namespace Spend_Management.shared.code.DVLA
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
+
     using DutyOfCareAPI.DutyOfCare.LicenceCheck.VehicleLookup;
+    using Spend_Management.shared.code.GreenLight;
     using SpendManagementLibrary;
     using SpendManagementLibrary.DVLA;
     using SpendManagementLibrary.Logic_Classes.Fields;
     using SpendManagementLibrary.Logic_Classes.Tables;
-    using Spend_Management.shared.code.GreenLight;
+    
 
     /// <summary>
     /// A class to manage entries in the GreenLight "Tax Document"
@@ -22,7 +21,7 @@
         private readonly ITables _tables;
 
         /// <summary>
-        /// Create a new instanse of <see cref="TaxDocumentRepository"/>
+        /// Initializes a new instance of the <see cref="MotDocumentRepository"/> class.
         /// </summary>
         /// <param name="currentUser">An instance of <see cref="ICurrentUser"/></param>
         /// <param name="customEntities">An instance of <see cref="cCustomEntities"/></param>
@@ -39,10 +38,19 @@
         /// <summary>
         /// Add an instance of a Mot document to the current database
         /// </summary>
-        /// <param name="motExpiryDate">The date the <see cref="Vehicle"/>Mot is set to expire</param>
-        /// <param name="carId">The ID of the car to add</param>
-        /// <returns>An instance of <see cref="CurrentCustomEntityRecord"/> or null</returns>
-        public CurrentCustomEntityRecord Add(DateTime motExpiryDate, int carId)
+        /// <param name="motStartDate">
+        /// The mot Start Date.
+        /// </param>
+        /// <param name="motExpiryDate">
+        /// The date the <see cref="Vehicle"/>Mot is set to expire
+        /// </param>
+        /// <param name="carId">
+        /// The ID of the car to add
+        /// </param>
+        /// <returns>
+        /// An instance of <see cref="CurrentCustomEntityRecord"/> or null
+        /// </returns>
+        public CurrentCustomEntityRecord Add(DateTime motStartDate, DateTime motExpiryDate, int carId)
         {
             CurrentCustomEntityRecord documentEntityReferenceList = new CurrentCustomEntityRecord();
             if (motExpiryDate.Year < 1900)
@@ -52,6 +60,7 @@
 
             var entity = this._customEntities.getEntityByTableId(new Guid(TaxDocumentConstants.Entity));
             var clsquery = new cUpdateQuery(this._currentUser.AccountID, cAccounts.getConnectionString(this._currentUser.AccountID), null, entity.table, this._tables as cTables, this._fields as cFields);
+            var startDate = this._fields.GetFieldByID(new Guid(TaxDocumentConstants.StartDate));
             var expiryDate = this._fields.GetFieldByID(new Guid(TaxDocumentConstants.ExpiryDate));
             var status = this._fields.GetFieldByID(new Guid(TaxDocumentConstants.Status));
             var documentType = this._fields.GetFieldByID(new Guid(TaxDocumentConstants.DocumentType));
@@ -86,10 +95,10 @@
                         break;
                     }
                 }
-
             }
 
             clsquery.addColumn(expiryDate, motExpiryDate.AddDays(-1));
+            clsquery.addColumn(startDate, motStartDate);
             clsquery.addColumn(vehicleId, carId);
             clsquery.addColumn(motRequired, 1);
             clsquery.addColumn(checkedByVehicleOwner, 0);

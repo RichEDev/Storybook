@@ -127,8 +127,8 @@ namespace Spend_Management
         /// <param name="active">
         /// The active.
         /// </param>
-        /// <param name="cartypeid">
-        /// The cartypeid.
+        /// <param name="vehicleEngineTypeId">
+        /// The vehicle Engine Type Id.
         /// </param>
         /// <param name="startodometer">
         /// The startodometer.
@@ -138,48 +138,6 @@ namespace Spend_Management
         /// </param>
         /// <param name="endodometer">
         /// The endodometer.
-        /// </param>
-        /// <param name="taxexpiry">
-        /// The taxexpiry.
-        /// </param>
-        /// <param name="taxlastchecked">
-        /// The taxlastchecked.
-        /// </param>
-        /// <param name="taxcheckedby">
-        /// The taxcheckedby.
-        /// </param>
-        /// <param name="mottestnumber">
-        /// The mottestnumber.
-        /// </param>
-        /// <param name="motlastchecked">
-        /// The motlastchecked.
-        /// </param>
-        /// <param name="motcheckedby">
-        /// The motcheckedby.
-        /// </param>
-        /// <param name="motexpiry">
-        /// The motexpiry.
-        /// </param>
-        /// <param name="insurancenumber">
-        /// The insurancenumber.
-        /// </param>
-        /// <param name="insuranceexpiry">
-        /// The insuranceexpiry.
-        /// </param>
-        /// <param name="insurancelastchecked">
-        /// The insurancelastchecked.
-        /// </param>
-        /// <param name="insurancecheckedby">
-        /// The insurancecheckedby.
-        /// </param>
-        /// <param name="serviceexpiry">
-        /// The serviceexpiry.
-        /// </param>
-        /// <param name="servicelastchecked">
-        /// The servicelastchecked.
-        /// </param>
-        /// <param name="servicecheckedby">
-        /// The servicecheckedby.
         /// </param>
         /// <param name="defaultunit">
         /// The defaultunit.
@@ -211,17 +169,28 @@ namespace Spend_Management
         /// <param name="isShallowSave">
         /// The is shallow save.
         /// </param>
-        /// <param name="vehicletypeid">The vehicle type (Car etc)</param>
-        /// <param name="taxExpiry">The date of the Tax expiry</param>
-        /// <param name="taxStatus">The tax status "Taxed" or not</param>
-        /// <param name="motExpiry">The date of the MOT</param>
-        /// <param name="motStatus">The MOT status "MOT" or not</param>
+        /// <param name="vehicletypeid">
+        /// The vehicle type (Car etc)
+        /// </param>
+        /// <param name="taxExpiry">
+        /// The date of the Tax expiry
+        /// </param>
+        /// <param name="taxStatus">
+        /// The tax status "Taxed" or not
+        /// </param>
+        /// <param name="motExpiry">
+        /// The date of the MOT
+        /// </param>
+        /// <param name="motStatus">
+        /// The MOT status "MOT" or not
+        /// </param>
+        /// <param name="motStart">The start date for the MOT</param>
         /// <returns>
         /// The <see cref="object[]"/>.
         /// </returns>
         [WebMethod(EnableSession=true)]
         [ScriptMethod]
-        public object[] saveCar(int carid, int employeeid, DateTime? startdate, DateTime? enddate, string make, string model, string registration, bool active, int vehicleEngineTypeId, Int64 startodometer, bool fuelcard, int endodometer, byte defaultunit, int enginesize, List<int> mileagecats, List<object> udfs, bool approved, bool exemptfromhometooffice, bool replacePreviousCar, int previousCarId, bool isAdmin, bool isShallowSave, byte? vehicletypeid, string taxExpiry, string taxStatus, string motExpiry, string motStatus)
+        public object[] saveCar(int carid, int employeeid, DateTime? startdate, DateTime? enddate, string make, string model, string registration, bool active, int vehicleEngineTypeId, long startodometer, bool fuelcard, int endodometer, byte defaultunit, int enginesize, List<int> mileagecats, List<object> udfs, bool approved, bool exemptfromhometooffice, bool replacePreviousCar, int previousCarId, bool isAdmin, bool isShallowSave, byte? vehicletypeid, string taxExpiry, string taxStatus, string motExpiry, string motStatus, string motStart)
         {
             CurrentUser user = cMisc.GetCurrentUser();
             cCar car;
@@ -290,6 +259,12 @@ namespace Spend_Management
                 motExpiryDate = null;
             }
 
+            DateTime? motStartDate = NullableDateTimeHelper.Parse(motStart);
+            if (motStartDate == DateTime.MinValue)
+            {
+                motStartDate = null;
+            }
+
             var taxValid = taxStatus.ToLower() == "true";
             var motValid = motStatus.ToLower() == "true";
 
@@ -314,12 +289,12 @@ namespace Spend_Management
 
             arrCarVals[0] = clsCars.SaveCar(car);
 
-            
             if (reqProperties.VehicleLookup && car.employeeid > 0 && carid == 0)
             {
                 if (reqProperties.BlockTaxExpiry && taxExpiryDate.HasValue)
                 {
-                    var taxRepo = new TaxDocumentRepository(user, 
+                    var taxRepo = new TaxDocumentRepository(
+                        user, 
                         new cCustomEntities(user),
                         new cFields(user.AccountID),
                         new cTables(user.AccountID));
@@ -330,11 +305,12 @@ namespace Spend_Management
                 {
                     if (reqProperties.BlockMOTExpiry && motExpiryDate.HasValue)
                     {
-                        var taxRepo = new MotDocumentRepository(user, 
+                        var taxRepo = new MotDocumentRepository(
+                            user, 
                             new cCustomEntities(user),
                             new cFields(user.AccountID),
                             new cTables(user.AccountID));
-                        taxRepo.Add(motExpiryDate.Value, (int)arrCarVals[0]);
+                        taxRepo.Add(motStartDate.Value, motExpiryDate.Value, (int)arrCarVals[0]);
                     }      
                 }
             }
@@ -344,8 +320,6 @@ namespace Spend_Management
             if (!isShallowSave && emailMainAdmin && !reqProperties.ActivateCarOnUserAdd)
             {
                 clsCars.NotifyAdminOfNewVehicle(employeeid, user, reqProperties, (int)arrCarVals[0]);
-
-           
             }
 
             if (!carPreviouslyActive && car.active && employeeid > 0)
@@ -379,10 +353,10 @@ namespace Spend_Management
         /// <param name="registrationNumber">The registration nunmber to lookup</param>
         /// <returns>An instance of <see cref="cCar"/> or null is the lookup fails.</returns>
         [WebMethod(EnableSession=true)]
-        public cCar LookupVehicle(string registrationNumber)
+        public LookupServiceCar LookupVehicle(string registrationNumber)
         {
             var user = cMisc.GetCurrentUser();
-            cCar result = null;
+            LookupServiceCar result = null;
             var subAccounts = new cAccountSubAccounts(user.AccountID);
             cAccountProperties reqProperties = subAccounts.getFirstSubAccount().SubAccountProperties.Clone();
             if (!reqProperties.VehicleLookup)
@@ -399,7 +373,8 @@ namespace Spend_Management
                     return null;
                 }
 
-                result = new LookupServiceCar(user.AccountID,
+                result = new LookupServiceCar(
+                    user.AccountID,
                     user.EmployeeID,
                     0,
                     lookupResult.Vehicle.Make,
@@ -409,8 +384,7 @@ namespace Spend_Management
                     null,
                     false,
                     new List<int>(),
-                    FuelTypeFactory.Convert(lookupResult.Vehicle.FuelType, user)
-                    ,
+                    FuelTypeFactory.Convert(lookupResult.Vehicle.FuelType, user),
                     0,
                     false,
                     0,
@@ -426,7 +400,8 @@ namespace Spend_Management
                     lookupResult.Vehicle.TaxExpiry,
                     lookupResult.Vehicle.TaxStatus == "Taxed",
                     lookupResult.Vehicle.MotExpiry,
-                    lookupResult.Vehicle.MotStatus == "MOT");
+                    lookupResult.Vehicle.MotStatus == "MOT",
+                    lookupResult.Vehicle.MotStart);
                 
                 return result;
             }

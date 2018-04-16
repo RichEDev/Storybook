@@ -153,16 +153,17 @@ function saveCar(commit)
 
     var userdefined = getItemsFromPanel('ValidationSummaryAeCar');
 
-    var taxExpiry = '', taxStatus = 'true', motExpiry = '', motStatus = 'true';
+    var taxExpiry = '', taxStatus = 'true', motExpiry = '', motStatus = 'true', motStart = '';
     if (lastLookup != null) {
         taxExpiry = lastLookup.TaxExpiry;
         taxStatus = lastLookup.IsMotValid;
         motExpiry = lastLookup.MotExpiry;
         motStatus = lastLookup.IsMotValid;
+        motStart = lastLookup.MotStart;
     }
 
 
-   Spend_Management.svcCars.saveCar(carid, nEmployeeid, startdate, enddate, make, model, registration, active, vehicleEngineTypeId, startodometer, fuelcard, endodometer, defaultunit, enginesize, mileagecats, userdefined, approved, exemptfromhometooffice, replacePreviousCar, previousCarId, isAdmin, isShallowSave, vehicletypeid, taxExpiry,  taxStatus,  motExpiry,  motStatus, saveCarComplete, commandFail);
+   Spend_Management.svcCars.saveCar(carid, nEmployeeid, startdate, enddate, make, model, registration, active, vehicleEngineTypeId, startodometer, fuelcard, endodometer, defaultunit, enginesize, mileagecats, userdefined, approved, exemptfromhometooffice, replacePreviousCar, previousCarId, isAdmin, isShallowSave, vehicletypeid, taxExpiry,  taxStatus,  motExpiry,  motStatus, motStart, saveCarComplete, commandFail);
 }
 
 function saveCarComplete(data) 

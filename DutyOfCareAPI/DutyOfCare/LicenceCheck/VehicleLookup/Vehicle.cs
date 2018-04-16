@@ -43,9 +43,14 @@
         public DateTime TaxExpiry { get; set; }
 
         /// <summary>
-        /// Gets or set the Tax status description
+        /// Gets or sets the Tax status description
         /// </summary>
         public string TaxStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the MOT start Date.
+        /// </summary>
+        public DateTime MotStart { get; set; }
 
         /// <summary>
         /// Gets or sets the MotExpiry Date

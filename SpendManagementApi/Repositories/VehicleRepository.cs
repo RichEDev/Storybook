@@ -390,6 +390,7 @@ namespace SpendManagementApi.Repositories
 
             // re-initialise cache with updated vehicle 
             var vehicleRepository = new VehicleRepository(this.User);
+
             // get the added / updated db item
             var result = vehicleRepository.Get(carId);
             if (subAccountProperties.VehicleLookup )
@@ -397,7 +398,8 @@ namespace SpendManagementApi.Repositories
                 DateTime taxExpiry;
                 if (subAccountProperties.BlockTaxExpiry && DateTime.TryParseExact(item.TaxExpiry, "dd/MM/yyyy",null,DateTimeStyles.None, out taxExpiry ))
                 {
-                    var taxRepo = new TaxDocumentRepository(this.User, 
+                    var taxRepo = new TaxDocumentRepository(
+                        this.User, 
                         this.ActionContext.CustomEntities,
                         this.ActionContext.Fields,
                         this.ActionContext.Tables);
@@ -405,19 +407,21 @@ namespace SpendManagementApi.Repositories
                 }
 
                 DateTime motExpiry;
+                DateTime motStart;
 
-                if (subAccountProperties.BlockMOTExpiry&& DateTime.TryParseExact(item.MotExpiry, "dd/MM/yyyy",null,DateTimeStyles.None, out motExpiry ))
+                if (subAccountProperties.BlockMOTExpiry && DateTime.TryParseExact(item.MotExpiry, "dd/MM/yyyy",null,DateTimeStyles.None, out motExpiry) && DateTime.TryParseExact(item.MotStart, "dd/MM/yyyy",null,DateTimeStyles.None, out motStart ))
                 {
-                    var motRepo = new MotDocumentRepository(this.User,
+                    var motRepo = new MotDocumentRepository(
+                        this.User,
                         this.ActionContext.CustomEntities,
                         this.ActionContext.Fields,
                         this.ActionContext.Tables);
-                    motRepo.Add(motExpiry, carId);
+                    motRepo.Add(motStart, motExpiry, carId);
                 }
             }
 
             result.Id = carId;
-            _employeeCarsData.SaveUserDefinedFieldsValues(result.Id, item.UserDefined.ToSortedList(), User, result.Registration);
+            this._employeeCarsData.SaveUserDefinedFieldsValues(result.Id, item.UserDefined.ToSortedList(), User, result.Registration);
 
             return result;
         }

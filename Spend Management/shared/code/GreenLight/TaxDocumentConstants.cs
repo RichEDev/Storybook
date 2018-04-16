@@ -59,5 +59,10 @@
         /// The guid for the created on field.
         /// </summary>
         public const string CreatedOn = "3B2372E3-3486-4C61-B412-A83436A3CCCB";
+
+        /// <summary>
+        /// The start date for the document validity.
+        /// </summary>
+        public const string StartDate = "732BD235-49B5-41D0-8420-6534EBE23ED8";
     }
 }
