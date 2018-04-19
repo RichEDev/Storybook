@@ -1,18 +1,21 @@
 ﻿namespace Spend_Management
 {
-using System;
-using System.Collections.Generic;
+    using System;
+    using System.Collections.Generic;
     using System.Globalization;
-using System.Linq;
+    using System.Linq;
     using System.Text;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
 
     using AjaxControlToolkit;
 
-    using SpendManagementHelpers;
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
 
-using SpendManagementLibrary;
+    using SpendManagementHelpers;
+    using SpendManagementLibrary;
 
     using Syncfusion.Web.UI.HTML;
 
@@ -21,6 +24,12 @@ using SpendManagementLibrary;
     /// </summary>
     public partial class CostCentreBreakdown : UserControl
     {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
         #region Fields
 
         /// <summary>
@@ -58,17 +67,17 @@ using SpendManagementLibrary;
         /// </summary>
         public bool projectCodeEnabled;
 
-        public HtmlBlockElement departmentsGrid = new HtmlBlockElement { ID = "TempDGrid" };
-        public HtmlBlockElement costCodesGrid = new HtmlBlockElement { ID = "TempCCGrid" };
-        public HtmlBlockElement projectCodesGrid = new HtmlBlockElement { ID = "TempPCGrid" };
+        public HtmlBlockElement departmentsGrid = new HtmlBlockElement {ID = "TempDGrid"};
+        public HtmlBlockElement costCodesGrid = new HtmlBlockElement {ID = "TempCCGrid"};
+        public HtmlBlockElement projectCodesGrid = new HtmlBlockElement {ID = "TempPCGrid"};
 
-        public ModalPopupExtender departmentsModal = new ModalPopupExtender { ID = "TempDModal" };
-        public ModalPopupExtender costCodesModal = new ModalPopupExtender { ID = "TempCCModal" };
-        public ModalPopupExtender projectCodesModal = new ModalPopupExtender { ID = "TempPCModal" };
+        public ModalPopupExtender departmentsModal = new ModalPopupExtender {ID = "TempDModal"};
+        public ModalPopupExtender costCodesModal = new ModalPopupExtender {ID = "TempCCModal"};
+        public ModalPopupExtender projectCodesModal = new ModalPopupExtender {ID = "TempPCModal"};
 
-        public Panel departmentsPanel = new Panel { ID = "TempDPanel" };
-        public Panel costCodesPanel = new Panel { ID = "TempCCPanel" };
-        public Panel projectCodesPanel = new Panel { ID = "TempPCPanel" };
+        public Panel departmentsPanel = new Panel {ID = "TempDPanel"};
+        public Panel costCodesPanel = new Panel {ID = "TempCCPanel"};
+        public Panel projectCodesPanel = new Panel {ID = "TempPCPanel"};
 
         public bool useDepartmentDescription;
         public bool useCostCodeDescription;
@@ -78,14 +87,6 @@ using SpendManagementLibrary;
         private Dictionary<string, string> costCodeEntries = new Dictionary<string, string>();
         private Dictionary<string, string> projectCodeEntries = new Dictionary<string, string>();
 
-        private bool bHideButtons;
-
-        private bool bNoneValues;
-
-        private bool bReadOnly;
-
-        private UserControlType? eUserControlType = UserControlType.None;
-
         private Dictionary<int, List<List<int>>> lstItems;
 
         #endregion
@@ -93,69 +94,29 @@ using SpendManagementLibrary;
         #region Public Properties
 
         /// <summary>
-        ///     For aeEmployee, allows [None] values
+        /// Gets or sets the for aeEmployee, allows [None] values
         /// </summary>
-        public bool EmptyValuesEnabled
-        {
-            get
-            {
-                return this.bNoneValues;
-        }
-            set
-            {
-                this.bNoneValues = value;
-            }
-        }
+        public bool EmptyValuesEnabled { get; set; }
 
         /// <summary>
-        ///     Show form buttons or not
+        /// Gets or sets the show form buttons or not
         /// </summary>
-        public bool HideButtons
-        {
-            get
-            {
-                return this.bHideButtons;
-        }
-            set
-            {
-                this.bHideButtons = value;
-            }
-        }
+        public bool HideButtons { get; set; }
 
         /// <summary>
-        ///     The modal extender id that is used to pop up the display if the displayType is Modal
+        /// Gets or sets the modal extender id that is used to pop up the display if the displayType is Modal
         /// </summary>
         public string ModalExtenderId { get; set; }
 
         /// <summary>
-        ///     Whether or not the cost centre panel is read only
+        /// Gets or sets whether or not the cost centre panel is read only
         /// </summary>
-        public bool ReadOnly
-        {
-            get
-            {
-                return this.bReadOnly;
-            }
-            set
-            {
-                this.bReadOnly = value;
-            }
-        }
+        public bool ReadOnly { get; set; }
 
         /// <summary>
-        ///     Sets the display type for the panel, inline or popup/modal
+        /// Gets or sets the display type for the panel, inline or popup/modal
         /// </summary>
-        public UserControlType? UserControlDisplayType
-        {
-            get
-            {
-                return this.eUserControlType;
-            }
-            set
-            {
-                this.eUserControlType = value;
-            }
-        }
+        public UserControlType? UserControlDisplayType { get; set; } = UserControlType.None;
 
         #endregion
 
@@ -186,18 +147,18 @@ using SpendManagementLibrary;
             if (this.lstItems == null)
             {
                 this.lstItems = new Dictionary<int, List<List<int>>>();
-        }
+            }
 
             if (itemId > 0 && this.lstItems.ContainsKey(itemId))
             {
                 // build the Cost Centres mini-array with values or 0 if null
                 List<int> lstCostCentres = new List<int>
-                                           {
-                                               (dep.HasValue) ? dep.Value : 0,
-                                               (cc.HasValue) ? cc.Value : 0,
-                                               (pc.HasValue) ? pc.Value : 0,
-                                               (percent > 0 && percent <= 100) ? percent : 1
-                                           };
+                {
+                    (dep.HasValue) ? dep.Value : 0,
+                    (cc.HasValue) ? cc.Value : 0,
+                    (pc.HasValue) ? pc.Value : 0,
+                    (percent > 0 && percent <= 100) ? percent : 1
+                };
 
                 this.lstItems[itemId].Add(lstCostCentres);
             }
@@ -205,14 +166,14 @@ using SpendManagementLibrary;
             {
                 // build the Cost Centres mini-array with values or 0 if null
                 List<int> lstCostCentres = new List<int>
-                                           {
-                                               (dep.HasValue) ? dep.Value : 0,
-                                               (cc.HasValue) ? cc.Value : 0,
-                                               (pc.HasValue) ? pc.Value : 0,
-                                               (percent > 0 && percent <= 100) ? percent : 1
-                                           };
+                {
+                    (dep.HasValue) ? dep.Value : 0,
+                    (cc.HasValue) ? cc.Value : 0,
+                    (pc.HasValue) ? pc.Value : 0,
+                    (percent > 0 && percent <= 100) ? percent : 1
+                };
 
-                List<List<int>> lstCostCentreRow = new List<List<int>> { lstCostCentres };
+                List<List<int>> lstCostCentreRow = new List<List<int>> {lstCostCentres};
 
                 // add it to the public array under the item's id
                 this.lstItems.Add(itemId, lstCostCentreRow);
@@ -232,25 +193,25 @@ using SpendManagementLibrary;
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
             cMisc clsMisc = new cMisc(currentUser.AccountID);
-            cGlobalProperties clsGlobalProperties = clsMisc.GetGlobalProperties(currentUser.AccountID);
-            cEmployees clsEmployees = new cEmployees(currentUser.AccountID);
 
-            if (this.eUserControlType == UserControlType.None)
+            var generalOptions = this.GeneralOptionsFactory[currentUser.CurrentSubAccountId].WithCodeAllocation();
+
+            if (this.UserControlDisplayType == UserControlType.None)
             {
                 throw new MissingFieldException("UserControlDisplayType is required to be set.");
             }
-            
+
             if (this.IsPostBack)
             {
                 return;
             }
 
             #region populate vars
-            
+
             if (this.lstItems == null)
             {
                 this.lstItems = new Dictionary<int, List<List<int>>>();
-                }
+            }
 
             this.ddlDepartmentsId = "";
             this.ddlCostCodesId = "";
@@ -259,36 +220,42 @@ using SpendManagementLibrary;
             this.departmentCodeEnabled = false;
             this.costCodeEnabled = false;
             this.projectCodeEnabled = false;
-            this.useDepartmentDescription = clsGlobalProperties.usedepartmentdesc;
-            this.useCostCodeDescription = clsGlobalProperties.usecostcodedesc;
-            this.useProjectCodeDescription = clsGlobalProperties.useprojectcodedesc;
+            this.useDepartmentDescription = generalOptions.CodeAllocation.UseDepartmentDescription;
+            this.useCostCodeDescription = generalOptions.CodeAllocation.UseCostCodeDescription;
+            this.useProjectCodeDescription = generalOptions.CodeAllocation.UseProjectCodeDesc;
 
             #endregion
 
-                if ((clsGlobalProperties.departmentson && clsGlobalProperties.usedepartmentcodes) || (clsGlobalProperties.costcodeson && clsGlobalProperties.usecostcodes) || (clsGlobalProperties.projectcodeson && clsGlobalProperties.useprojectcodes))
-                {
-                    #region create table and determine used codes and label names
+            if ((generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDepartmentCodes) ||
+                (generalOptions.CodeAllocation.CostCodesOn && generalOptions.CodeAllocation.UseCostCodes) ||
+                (generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.UseProjectCodes))
+            {
+                #region create table and determine used codes and label names
 
                 this.costCentresEnabled = true;
 
-                    #region table header
+                #region table header
 
                 StringBuilder javaScript = new StringBuilder();
-                        TableHeaderCell thDelete = new TableHeaderCell();
-                Image deleteImg = new Image { ImageUrl = "/shared/images/icons/delete2.png", AlternateText = "Delete Row" };
-                        thDelete.Controls.Add(deleteImg);
+                TableHeaderCell thDelete = new TableHeaderCell();
+                Image deleteImg = new Image
+                {
+                    ImageUrl = "/shared/images/icons/delete2.png",
+                    AlternateText = "Delete Row"
+                };
+                thDelete.Controls.Add(deleteImg);
 
                 if (this.ReadOnly)
-                        {
-                            deleteImg.Style.Add(HtmlTextWriterStyle.Display, "none");
-                        }
+                {
+                    deleteImg.Style.Add(HtmlTextWriterStyle.Display, "none");
+                }
 
                 this.trCostCentreBreakdown.Controls.Add(thDelete);
 
                 cDepCostItem[] lstCostCodes = currentUser.Employee.GetCostBreakdown().ToArray();
 
-                    if (clsGlobalProperties.departmentson && clsGlobalProperties.usedepartmentcodes)
-                    {
+                if (generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDepartmentCodes)
+                {
                     this.departmentCodeEnabled = true;
 
                     this.departmentEntries = lstCostCodes
@@ -296,37 +263,52 @@ using SpendManagementLibrary;
                         .DistinctBy(x => x.departmentid)
                         .ToDictionary(x => x.departmentid.ToString(CultureInfo.InvariantCulture), y => "");
 
-                    foreach (List<List<int>> arr in lstItems.Values)
-                        {
+                    foreach (List<List<int>> arr in this.lstItems.Values)
+                    {
                         foreach (List<int> ar in arr)
                         {
-                            if (ar[0] > 0 && !this.departmentEntries.ContainsKey(ar[0].ToString(CultureInfo.InvariantCulture)))
+                            if (ar[0] > 0 &&
+                                !this.departmentEntries.ContainsKey(ar[0].ToString(CultureInfo.InvariantCulture)))
                             {
                                 this.departmentEntries.Add(ar[0].ToString(CultureInfo.InvariantCulture), "");
-                        }
+                            }
                         }
                     }
 
                     javaScript.Append(this.PopulateControls(ref currentUser,
-                        ref costCentreDepartmentsHolder,
+                        ref this.costCentreDepartmentsHolder,
                         ref this.ddlDepartmentsId,
                         ref this.departmentsGrid,
                         ref this.departmentsModal,
                         ref this.departmentsPanel,
                         ref this.departmentEntries,
                         clsMisc.GetGeneralFieldByCode("department").description, // heading
-                        (useDepartmentDescription ? "BC95890F-47D4-4FEC-A6AF-BBEEC4470497" : "87D021DA-EAB8-40F7-8C70-CF5ADCE9486C"),
+                        (this.useDepartmentDescription
+                            ? "BC95890F-47D4-4FEC-A6AF-BBEEC4470497"
+                            : "87D021DA-EAB8-40F7-8C70-CF5ADCE9486C"),
                         "A0F31CB0-16BB-4ACE-AAEA-69A7189D9599", // tableId - departments
-                        (useDepartmentDescription ? "990FD383-14F8-4F50-A2E2-13A9D1F847B7" : "9617A83E-6621-4B73-B787-193110511C17"), // displayfieldid - description or department
-                        new List<string> { "9617A83E-6621-4B73-B787-193110511C17", "990FD383-14F8-4F50-A2E2-13A9D1F847B7" }, // searchfieldids - department, description
+                        (this.useDepartmentDescription
+                            ? "990FD383-14F8-4F50-A2E2-13A9D1F847B7"
+                            : "9617A83E-6621-4B73-B787-193110511C17"), // displayfieldid - description or department
+                        new List<string>
+                        {
+                            "9617A83E-6621-4B73-B787-193110511C17",
+                            "990FD383-14F8-4F50-A2E2-13A9D1F847B7"
+                        }, // searchfieldids - department, description
                         new SortedList<int, FieldFilter>
                         {
-                            { 0, new FieldFilter(new cFields(currentUser.AccountID).GetFieldByID(new Guid("03BB1843-A231-4BE7-B564-1B813D6A5988")), ConditionType.Equals, "0", null, 0, null) }
+                            {
+                                0,
+                                new FieldFilter(
+                                    new cFields(currentUser.AccountID).GetFieldByID(
+                                        new Guid("03BB1843-A231-4BE7-B564-1B813D6A5988")), ConditionType.Equals, "0",
+                                    null, 0, null)
+                            }
                         }));
-                    }
+                }
 
-                if (clsGlobalProperties.costcodeson)
-                    {
+                if (generalOptions.CodeAllocation.CostCodesOn)
+                {
                     this.costCodeEnabled = true;
 
                     this.costCodeEntries = lstCostCodes
@@ -334,37 +316,52 @@ using SpendManagementLibrary;
                         .DistinctBy(x => x.costcodeid)
                         .ToDictionary(x => x.costcodeid.ToString(CultureInfo.InvariantCulture), y => "");
 
-                    foreach (List<List<int>> arr in lstItems.Values)
-                        {
+                    foreach (List<List<int>> arr in this.lstItems.Values)
+                    {
                         foreach (List<int> ar in arr)
                         {
-                            if (ar[1] > 0 && !this.costCodeEntries.ContainsKey(ar[1].ToString(CultureInfo.InvariantCulture)))
+                            if (ar[1] > 0 &&
+                                !this.costCodeEntries.ContainsKey(ar[1].ToString(CultureInfo.InvariantCulture)))
                             {
                                 this.costCodeEntries.Add(ar[1].ToString(CultureInfo.InvariantCulture), "");
-                        }
+                            }
                         }
                     }
 
                     javaScript.Append(this.PopulateControls(ref currentUser,
-                        ref costCentreCostCodesHolder,
+                        ref this.costCentreCostCodesHolder,
                         ref this.ddlCostCodesId,
                         ref this.costCodesGrid,
                         ref this.costCodesModal,
                         ref this.costCodesPanel,
                         ref this.costCodeEntries,
                         clsMisc.GetGeneralFieldByCode("costcode").description, // heading
-                        (useCostCodeDescription ? "D3F54727-45FB-4D82-B400-C37BFD8E1E73" : "E1F85384-D8E7-4BDC-BA27-339B59BEDB85"),
+                        (this.useCostCodeDescription
+                            ? "D3F54727-45FB-4D82-B400-C37BFD8E1E73"
+                            : "E1F85384-D8E7-4BDC-BA27-339B59BEDB85"),
                         "02009E21-AA1D-4E0D-908A-4E9D73DDFBDF", // tableId - costcodes
-                        (useCostCodeDescription ? "AF80D035-6093-4721-8AFC-061424D2AB72" : "359DFAC9-74E6-4BE5-949F-3FB224B1CBFC"), // displayfieldid - description or costcode
-                        new List<string> { "359DFAC9-74E6-4BE5-949F-3FB224B1CBFC", "AF80D035-6093-4721-8AFC-061424D2AB72" }, // searchfieldids - costcode, description
+                        (this.useCostCodeDescription
+                            ? "AF80D035-6093-4721-8AFC-061424D2AB72"
+                            : "359DFAC9-74E6-4BE5-949F-3FB224B1CBFC"), // displayfieldid - description or costcode
+                        new List<string>
+                        {
+                            "359DFAC9-74E6-4BE5-949F-3FB224B1CBFC",
+                            "AF80D035-6093-4721-8AFC-061424D2AB72"
+                        }, // searchfieldids - costcode, description
                         new SortedList<int, FieldFilter>
                         {
-                            { 0, new FieldFilter(new cFields(currentUser.AccountID).GetFieldByID(new Guid("8178629C-5908-4458-89F6-D7EE7438314D")), ConditionType.Equals, "0", null, 0, null) }
+                            {
+                                0,
+                                new FieldFilter(
+                                    new cFields(currentUser.AccountID).GetFieldByID(
+                                        new Guid("8178629C-5908-4458-89F6-D7EE7438314D")), ConditionType.Equals, "0",
+                                    null, 0, null)
+                            }
                         }));
-                    }
+                }
 
-                if (clsGlobalProperties.projectcodeson)
-                    {
+                if (generalOptions.CodeAllocation.ProjectCodesOn)
+                {
                     this.projectCodeEnabled = true;
 
 
@@ -373,173 +370,217 @@ using SpendManagementLibrary;
                         .DistinctBy(x => x.projectcodeid)
                         .ToDictionary(x => x.projectcodeid.ToString(CultureInfo.InvariantCulture), y => "");
 
-                    foreach (List<List<int>> arr in lstItems.Values)
-                        {
+                    foreach (List<List<int>> arr in this.lstItems.Values)
+                    {
                         foreach (List<int> ar in arr)
                         {
-                            if (ar[2] > 0 && !this.projectCodeEntries.ContainsKey(ar[2].ToString(CultureInfo.InvariantCulture)))
+                            if (ar[2] > 0 &&
+                                !this.projectCodeEntries.ContainsKey(ar[2].ToString(CultureInfo.InvariantCulture)))
                             {
                                 this.projectCodeEntries.Add(ar[2].ToString(CultureInfo.InvariantCulture), "");
-                        }
+                            }
                         }
                     }
 
                     javaScript.Append(this.PopulateControls(ref currentUser,
-                        ref costCentreProjectCodesHolder,
+                        ref this.costCentreProjectCodesHolder,
                         ref this.ddlProjectCodesId,
                         ref this.projectCodesGrid,
                         ref this.projectCodesModal,
                         ref this.projectCodesPanel,
                         ref this.projectCodeEntries,
                         clsMisc.GetGeneralFieldByCode("projectcode").description, // heading
-                        (useProjectCodeDescription ? "F4FE7871-8043-4020-9150-B21BDE238F94" : "C944F362-E745-4A31-B626-FB360DE9B908"),
+                        (this.useProjectCodeDescription
+                            ? "F4FE7871-8043-4020-9150-B21BDE238F94"
+                            : "C944F362-E745-4A31-B626-FB360DE9B908"),
                         "E1EF483C-7870-42CE-BE54-ECC5C1D5FB34", // tableId - project_codes
-                        (useProjectCodeDescription ? "0AD6004F-7DFD-4655-95FE-5C86FF5E4BE4" : "6D06B15E-A157-4F56-9FF2-E488D7647219"), // displayfieldid - description or projectcode
-                        new List<string> { "6D06B15E-A157-4F56-9FF2-E488D7647219", "0AD6004F-7DFD-4655-95FE-5C86FF5E4BE4" }, // searchfieldids - projectcode, description
+                        (this.useProjectCodeDescription
+                            ? "0AD6004F-7DFD-4655-95FE-5C86FF5E4BE4"
+                            : "6D06B15E-A157-4F56-9FF2-E488D7647219"), // displayfieldid - description or projectcode
+                        new List<string>
+                        {
+                            "6D06B15E-A157-4F56-9FF2-E488D7647219",
+                            "0AD6004F-7DFD-4655-95FE-5C86FF5E4BE4"
+                        }, // searchfieldids - projectcode, description
                         new SortedList<int, FieldFilter>
                         {
-                            { 0, new FieldFilter(new cFields(currentUser.AccountID).GetFieldByID(new Guid("7B406750-ADBD-461F-9D36-97DBDBD8F451")), ConditionType.Equals, "0", null, 0, null) }
+                            {
+                                0,
+                                new FieldFilter(
+                                    new cFields(currentUser.AccountID).GetFieldByID(
+                                        new Guid("7B406750-ADBD-461F-9D36-97DBDBD8F451")), ConditionType.Equals, "0",
+                                    null, 0, null)
+                            }
                         }));
-                    }
+                }
 
-                this.trCostCentreBreakdown.Cells.Add(new TableHeaderCell { Text = "&#037;" });
+                this.trCostCentreBreakdown.Cells.Add(new TableHeaderCell {Text = "&#037;"});
 
-                    #endregion table header
+                #endregion table header
 
-                    #region table rows
+                #region table rows
 
-                    // done by js ccbAddCostCentreBreakdownRow(dep,cc,pc,perc)
+                // done by js ccbAddCostCentreBreakdownRow(dep,cc,pc,perc)
 
-                    #endregion table rows
+                #endregion table rows
 
-                    #endregion create table and determine used codes and label names
+                #endregion create table and determine used codes and label names
 
-                    #region buttons
+                #region buttons
 
-                if (this.bHideButtons == false)
+                if (this.HideButtons == false)
+                {
+                    if (this.ReadOnly == false)
                     {
-                    if (this.bReadOnly == false)
+                        Image btnSave = new Image
                         {
-                        Image btnSave = new Image { ImageUrl = "/shared/images/buttons/btn_save.png", AlternateText = "Save", ID = "btnSave" };
-                            btnSave.Attributes.Add("onclick", "ccbSave();");
+                            ImageUrl = "/shared/images/buttons/btn_save.png",
+                            AlternateText = "Save",
+                            ID = "btnSave"
+                        };
+                        btnSave.Attributes.Add("onclick", "ccbSave();");
 
-                        Image btnCancel = new Image { ImageUrl = "/shared/images/buttons/cancel_up.gif", AlternateText = "Cancel", ID = "btnCancel" };
-                            btnCancel.Attributes.Add("onclick", "ccbClose();");
+                        Image btnCancel = new Image
+                        {
+                            ImageUrl = "/shared/images/buttons/cancel_up.gif",
+                            AlternateText = "Cancel",
+                            ID = "btnCancel"
+                        };
+                        btnCancel.Attributes.Add("onclick", "ccbClose();");
 
-                        Literal litSpacer = new Literal { Text = "&nbsp;" };
+                        Literal litSpacer = new Literal {Text = "&nbsp;"};
 
                         this.pnlButtons.Controls.Add(btnSave);
                         this.pnlButtons.Controls.Add(litSpacer);
                         this.pnlButtons.Controls.Add(btnCancel);
-                        }
-                        else
-                        {
-                        Image btnClose = new Image { ImageUrl = "/shared/images/buttons/btn_close.png", AlternateText = "Close" };
-                            btnClose.Attributes.Add("onclick", "ccbClose();");
-
-                        this.pnlButtons.Controls.Add(btnClose);
-                        }
                     }
                     else
                     {
-                    this.pnlButtons.Visible = false;
+                        Image btnClose = new Image
+                        {
+                            ImageUrl = "/shared/images/buttons/btn_close.png",
+                            AlternateText = "Close"
+                        };
+                        btnClose.Attributes.Add("onclick", "ccbClose();");
+
+                        this.pnlButtons.Controls.Add(btnClose);
                     }
+                }
+                else
+                {
+                    this.pnlButtons.Visible = false;
+                }
 
-                    #endregion buttons
+                #endregion buttons
 
-                    #region get users default breakdown
+                #region get users default breakdown
 
                 StringBuilder codesJs = new StringBuilder();
                 codesJs.Append("var ccbAutoCompleteEntries = { departments: {}, costcodes: {}, projectcodes: {} };\n");
 
-                foreach (KeyValuePair<string, string> kvp in this.departmentEntries.Where(x => !string.IsNullOrWhiteSpace(x.Value)))
+                foreach (KeyValuePair<string, string> kvp in this.departmentEntries.Where(x =>
+                    !string.IsNullOrWhiteSpace(x.Value)))
                 {
-                    codesJs.Append(string.Format("ccbAutoCompleteEntries.departments[\"{0}\"] = \"{1}\";\n", kvp.Key, kvp.Value));
+                    codesJs.Append(string.Format("ccbAutoCompleteEntries.departments[\"{0}\"] = \"{1}\";\n", kvp.Key,
+                        kvp.Value));
                 }
 
-                foreach (KeyValuePair<string, string> kvp in this.costCodeEntries.Where(x => !string.IsNullOrWhiteSpace(x.Value)))
+                foreach (KeyValuePair<string, string> kvp in this.costCodeEntries.Where(x =>
+                    !string.IsNullOrWhiteSpace(x.Value)))
                 {
-                    codesJs.Append(string.Format("ccbAutoCompleteEntries.costcodes[\"{0}\"] = \"{1}\";\n", kvp.Key, kvp.Value));
+                    codesJs.Append(string.Format("ccbAutoCompleteEntries.costcodes[\"{0}\"] = \"{1}\";\n", kvp.Key,
+                        kvp.Value));
                 }
 
-                foreach (KeyValuePair<string, string> kvp in this.projectCodeEntries.Where(x => !string.IsNullOrWhiteSpace(x.Value)))
+                foreach (KeyValuePair<string, string> kvp in this.projectCodeEntries.Where(x =>
+                    !string.IsNullOrWhiteSpace(x.Value)))
                 {
-                    codesJs.Append(string.Format("ccbAutoCompleteEntries.projectcodes[\"{0}\"] = \"{1}\";\n", kvp.Key, kvp.Value));
+                    codesJs.Append(string.Format("ccbAutoCompleteEntries.projectcodes[\"{0}\"] = \"{1}\";\n", kvp.Key,
+                        kvp.Value));
                 }
 
                 codesJs.Append("var ccbEmployeeDefaults = [];\n");
 
-                    for (int i = 0; i < lstCostCodes.Length; i++)
-                    {
+                for (int i = 0; i < lstCostCodes.Length; i++)
+                {
                     cDepCostItem tempCostItem = lstCostCodes[i];
                     // new array item of array(dep,cc,pc,perc)
-                    codesJs.Append(string.Format("ccbEmployeeDefaults[{0}] = [{1},{2},{3},{4}];\n", i, tempCostItem.departmentid, tempCostItem.costcodeid, tempCostItem.projectcodeid, tempCostItem.percentused));
-                    }
+                    codesJs.Append(string.Format("ccbEmployeeDefaults[{0}] = [{1},{2},{3},{4}];\n", i,
+                        tempCostItem.departmentid, tempCostItem.costcodeid, tempCostItem.projectcodeid,
+                        tempCostItem.percentused));
+                }
 
-                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "EmployeeDefaults", codesJs.ToString(), true);
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "EmployeeDefaults", codesJs.ToString(),
+                    true);
 
-                    #endregion get users default breakdown
+                #endregion get users default breakdown
 
-                    #region transfer current item array to js
+                #region transfer current item array to js
 
                 StringBuilder arrayJs = new StringBuilder();
                 arrayJs.Append("var ccbItemArray = [];\n");
 
                 foreach (KeyValuePair<int, List<List<int>>> kvp in this.lstItems)
-                    {
-                        // new array item of array(dep,cc,pc,perc)
+                {
+                    // new array item of array(dep,cc,pc,perc)
                     arrayJs.Append("ccbItemArray[" + kvp.Key + "] = [];\n");
-                        for (int i = 0; i < kvp.Value.Count; i++)
-                        {
-                        arrayJs.Append(string.Format("ccbItemArray[{0}][{1}] = [{2},{3},{4},{5}];\n", kvp.Key, i, kvp.Value[i][0], kvp.Value[i][1], kvp.Value[i][2], kvp.Value[i][3]));
-                        }
+                    for (int i = 0; i < kvp.Value.Count; i++)
+                    {
+                        arrayJs.Append(string.Format("ccbItemArray[{0}][{1}] = [{2},{3},{4},{5}];\n", kvp.Key, i,
+                            kvp.Value[i][0], kvp.Value[i][1], kvp.Value[i][2], kvp.Value[i][3]));
                     }
+                }
 
                 this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ItemArray", arrayJs.ToString(), true);
 
-                    #endregion transfer current item array to js
+                #endregion transfer current item array to js
 
-                    #region run the inline javascript populator
+                #region run the inline javascript populator
 
-                if (this.eUserControlType == UserControlType.Inline)
-                    {
-                    this.Page.ClientScript.RegisterStartupScript(this.GetType(), "PopulateInlineCostCentres", "ccbShowCostCentreBreakdown(1);", true);
-                    }
-
-                    #endregion run the inline javascript populator
-                }
-                else
+                if (this.UserControlDisplayType == UserControlType.Inline)
                 {
-                    #region transfer empty item array to js
+                    this.Page.ClientScript.RegisterStartupScript(this.GetType(), "PopulateInlineCostCentres",
+                        "ccbShowCostCentreBreakdown(1);", true);
+                }
+
+                #endregion run the inline javascript populator
+            }
+            else
+            {
+                #region transfer empty item array to js
 
                 StringBuilder arrayJs = new StringBuilder();
                 arrayJs.Append("var ccbItemArray = [];\n");
                 this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ItemArray", arrayJs.ToString(), true);
 
-                    #endregion transfer empty item array to js
+                #endregion transfer empty item array to js
 
                 this.pnlCostCentreBreakdown.Style.Add(HtmlTextWriterStyle.Display, "none");
             }
 
-            costCentreDepartmentsHolder.DataBind();
-            costCentreCostCodesHolder.DataBind();
-            costCentreProjectCodesHolder.DataBind();
+            this.costCentreDepartmentsHolder.DataBind();
+            this.costCentreCostCodesHolder.DataBind();
+            this.costCentreProjectCodesHolder.DataBind();
         }
 
         /// <summary>
-        /// Set up the controls used for a cost centre column
+        ///     Set up the controls used for a cost centre column
         /// </summary>
         /// <param name="selectContainer">The panel reference that the select control will be added to</param>
         /// <param name="controlId">The id to use on the select control</param>
         /// <param name="headerText">The label for this column header</param>
         /// <param name="selectOptions">The list of listitems to populate the select list with</param>
         /// <returns>JavaScript for autocomplete controls and search grid</returns>
-        private StringBuilder PopulateControls(ref CurrentUser currentUser, ref Panel controlHolder, ref string controlClientId, ref HtmlBlockElement grid, ref ModalPopupExtender modal, ref Panel panel, ref Dictionary<string, string> entries, string headerText, string gridType, string tableId, string displayFieldId, List<string> searchFieldIds, SortedList<int, FieldFilter> filters = null)
+        private StringBuilder PopulateControls(ref CurrentUser currentUser, ref Panel controlHolder,
+            ref string controlClientId, ref HtmlBlockElement grid, ref ModalPopupExtender modal, ref Panel panel,
+            ref Dictionary<string, string> entries, string headerText, string gridType, string tableId,
+            string displayFieldId, List<string> searchFieldIds, SortedList<int, FieldFilter> filters = null)
         {
             if (!controlHolder.ID.EndsWith("Holder"))
-        {
-                throw new ArgumentException("The AutoComplete Combo container must have an ID that ends with \"Holder\".", "controlHolder");
-        }
+            {
+                throw new ArgumentException(
+                    "The AutoComplete Combo container must have an ID that ends with \"Holder\".", "controlHolder");
+            }
 
             string controlId = controlHolder.ID.Substring(0, controlHolder.ID.Length - 6);
 
@@ -551,33 +592,40 @@ using SpendManagementLibrary;
             controlHolder.CssClass = "autocompletecombo-container";
             controlHolder.Style.Add(HtmlTextWriterStyle.WhiteSpace, "no-wrap");
             controlHolder.Attributes.Add("data-type", gridType);
-            DropDownList select = new DropDownList { ID = controlId + "Select", CssClass = "autocompletecombo-select" };
+            DropDownList select = new DropDownList {ID = controlId + "Select", CssClass = "autocompletecombo-select"};
             select.Attributes.Add("onchange", "SEL.AutoCompleteCombo.SelectChange(this);");
-            TextBox autoComplete = new TextBox { ID = controlId, CssClass = "autocompletecombo-text" };
-            TextBox autoCompleteId = new TextBox { ID = controlId + "_ID", CssClass = "autocompletecombo-id" };
+            TextBox autoComplete = new TextBox {ID = controlId, CssClass = "autocompletecombo-text"};
+            TextBox autoCompleteId = new TextBox {ID = controlId + "_ID", CssClass = "autocompletecombo-id"};
             autoCompleteId.Style.Add(HtmlTextWriterStyle.Display, "none");
-            Image searchIcon = new Image { ID = controlId + "SearchIcon", ImageUrl = GlobalVariables.StaticContentLibrary + "/icons/16/new-icons/find.png", CssClass = "btn autocompletecombo-icon" };
+            Image searchIcon = new Image
+            {
+                ID = controlId + "SearchIcon",
+                ImageUrl = GlobalVariables.StaticContentLibrary + "/icons/16/new-icons/find.png",
+                CssClass = "btn autocompletecombo-icon"
+            };
             searchIcon.Attributes.Add("onclick", "SEL.AutoCompleteCombo.Search(this);");
 
-            Dictionary<string, JSFieldFilter> filterDictionary = filters == null ? null
-                : filters.ToDictionary( x => x.Key.ToString(CultureInfo.InvariantCulture),
-                                        x => new JSFieldFilter
-        {
-                                                 ConditionType = x.Value.Conditiontype,
-                                                 FieldID = x.Value.Field.FieldID,
-                                                 Order = x.Value.Order,
-                                                 ValueOne = x.Value.ValueOne.ToString(CultureInfo.InvariantCulture)
-                                             });
+            Dictionary<string, JSFieldFilter> filterDictionary = filters == null
+                ? null
+                : filters.ToDictionary(x => x.Key.ToString(CultureInfo.InvariantCulture),
+                    x => new JSFieldFilter
+                    {
+                        ConditionType = x.Value.Conditiontype,
+                        FieldID = x.Value.Field.FieldID,
+                        Order = x.Value.Order,
+                        ValueOne = x.Value.ValueOne.ToString(CultureInfo.InvariantCulture)
+                    });
 
-            List<sAutoCompleteResult> selectOptions = AutoComplete.GetAutoCompleteMatches(currentUser, 0, tableId, displayFieldId, string.Join(",", searchFieldIds), "", true, filterDictionary);
+            List<sAutoCompleteResult> selectOptions = AutoComplete.GetAutoCompleteMatches(currentUser, 0, tableId,
+                displayFieldId, string.Join(",", searchFieldIds), "", true, filterDictionary);
 
             if (selectOptions.Count <= 25)
             {
-                if (this.bNoneValues)
-            {
+                if (this.EmptyValuesEnabled)
+                {
                     ListItem none = new ListItem("[None]", "0");
                     select.Items.Add(none);
-            }
+                }
 
                 select.Items.AddRange(selectOptions.Select(x => new ListItem(x.label, x.value)).ToArray());
                 autoComplete.Style.Add(HtmlTextWriterStyle.Display, "none");
@@ -587,15 +635,19 @@ using SpendManagementLibrary;
             {
                 select.Style.Add(HtmlTextWriterStyle.Display, "none");
                 List<string> ints = entries.Keys.ToList();
-                Dictionary<string, string> so = selectOptions.Where(x => ints.Contains(x.value)).ToDictionary(x => x.value, y => y.label);
+                Dictionary<string, string> so = selectOptions.Where(x => ints.Contains(x.value))
+                    .ToDictionary(x => x.value, y => y.label);
 
                 foreach (KeyValuePair<string, string> kvp in so)
                 {
                     entries[kvp.Key] = kvp.Value;
-            }
+                }
 
-                autoComplete.Attributes.Add("data-jsbind", AutoComplete.createAutoCompleteBindString("##CONTROLID##", 15, new Guid(tableId), new Guid(displayFieldId), searchFieldIds.Select(x => new Guid(x)).ToList(), fieldFilters: filters));
-        }
+                autoComplete.Attributes.Add("data-jsbind",
+                    AutoComplete.createAutoCompleteBindString("##CONTROLID##", 15, new Guid(tableId),
+                        new Guid(displayFieldId), searchFieldIds.Select(x => new Guid(x)).ToList(),
+                        fieldFilters: filters));
+            }
 
             controlHolder.Controls.Add(select);
             controlHolder.Controls.Add(autoComplete);
@@ -603,26 +655,38 @@ using SpendManagementLibrary;
             controlHolder.Controls.Add(searchIcon);
 
             if (this.ReadOnly)
-        {
+            {
                 select.Enabled = false;
                 autoComplete.Enabled = false;
                 searchIcon.Style.Add(HtmlTextWriterStyle.Display, "none");
-        }
+            }
 
             // new modal, panel, link, grid
 
-            LinkButton dummySearchLinkButton = new LinkButton { ID = controlId + "SearchLink" };
+            LinkButton dummySearchLinkButton = new LinkButton {ID = controlId + "SearchLink"};
             dummySearchLinkButton.Style.Add(HtmlTextWriterStyle.Display, "none");
-            CSSButton searchCancel = new CSSButton { ID = controlId + "SearchCancel", Text = "cancel", CausesValidation = false };
-            HtmlBlockElement searchButtons = new HtmlBlockElement { ClassName = "formpanelbuttons" };
+            CSSButton searchCancel =
+                new CSSButton {ID = controlId + "SearchCancel", Text = "cancel", CausesValidation = false};
+            HtmlBlockElement searchButtons = new HtmlBlockElement {ClassName = "formpanelbuttons"};
             searchButtons.Controls.Add(searchCancel);
-            panel = new Panel { ID = controlId + "SearchPanel", CssClass = "modalpanel formpanel autocompletecombo-search" };
+            panel = new Panel
+            {
+                ID = controlId + "SearchPanel",
+                CssClass = "modalpanel formpanel autocompletecombo-search"
+            };
             panel.Style.Add(HtmlTextWriterStyle.Display, "none");
-            panel.Controls.Add(new HtmlBlockElement { ClassName = "sectiontitle", InnerText = headerText + " Search" });
-            grid = new HtmlBlockElement { ID = controlId + "SearchGrid", ClassName = "autocompletecombo-grid" };
+            panel.Controls.Add(new HtmlBlockElement {ClassName = "sectiontitle", InnerText = headerText + " Search"});
+            grid = new HtmlBlockElement {ID = controlId + "SearchGrid", ClassName = "autocompletecombo-grid"};
             panel.Controls.Add(grid);
             panel.Controls.Add(searchButtons);
-            modal = new ModalPopupExtender { ID = controlId + "SearchModal", TargetControlID = dummySearchLinkButton.ID, PopupControlID = panel.ID, BackgroundCssClass = "modalBackground", CancelControlID = searchCancel.ID };
+            modal = new ModalPopupExtender
+            {
+                ID = controlId + "SearchModal",
+                TargetControlID = dummySearchLinkButton.ID,
+                PopupControlID = panel.ID,
+                BackgroundCssClass = "modalBackground",
+                CancelControlID = searchCancel.ID
+            };
 
             this.comboModals.Controls.Add(panel);
             this.comboModals.Controls.Add(modal);
@@ -667,19 +731,19 @@ using SpendManagementLibrary;
 
         private readonly cCcbItem tempItem;
 
-        private readonly List<cCcbItem> tempItemArray = new List<cCcbItem>();
-
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        /// Empty serialisation constructor
+        ///     Empty serialisation constructor
         /// </summary>
-        public cCcbItemArray() {}
+        public cCcbItemArray()
+        {
+        }
 
         /// <summary>
-        /// Creates an object from the javascript
+        ///     Creates an object from the javascript
         /// </summary>
         /// <param name="ccbItemArrayData"></param>
         public cCcbItemArray(IList<object> ccbItemArrayData)
@@ -693,7 +757,7 @@ using SpendManagementLibrary;
             for (int i = 0; i < (ccbItemArrayData).Count(); i++)
             {
                 int itemID = i;
-                object[] ccbRows = (object[])ccbItemArrayData[i];
+                object[] ccbRows = (object[]) ccbItemArrayData[i];
 
                 if (ccbRows == null)
                 {
@@ -703,9 +767,10 @@ using SpendManagementLibrary;
                 for (int j = 0; j < ccbRows.Count(); j++)
                 {
                     cDepartment clsDepartment;
-                    if (((object[])ccbRows[j])[0] != null && Convert.ToString(((object[])ccbRows[j])[0]) != "" && Convert.ToInt32(((object[])ccbRows[j])[0]) != 0)
+                    if (((object[]) ccbRows[j])[0] != null && Convert.ToString(((object[]) ccbRows[j])[0]) != "" &&
+                        Convert.ToInt32(((object[]) ccbRows[j])[0]) != 0)
                     {
-                        int departmentID = Convert.ToInt32(((object[])ccbRows[j])[0]);
+                        int departmentID = Convert.ToInt32(((object[]) ccbRows[j])[0]);
                         clsDepartment = clsDepartments.GetDepartmentById(departmentID);
                         clsDepartment.UserdefinedFields = null;
                     }
@@ -715,22 +780,24 @@ using SpendManagementLibrary;
                     }
 
                     cCostCode clsCostCode;
-                    if (((object[])ccbRows[j])[1] != null && Convert.ToString(((object[])ccbRows[j])[1]) != "" && Convert.ToInt32(((object[])ccbRows[j])[1]) != 0)
+                    if (((object[]) ccbRows[j])[1] != null && Convert.ToString(((object[]) ccbRows[j])[1]) != "" &&
+                        Convert.ToInt32(((object[]) ccbRows[j])[1]) != 0)
                     {
-                        int costCodeID = Convert.ToInt32(((object[])ccbRows[j])[1]);
+                        int costCodeID = Convert.ToInt32(((object[]) ccbRows[j])[1]);
                         clsCostCode = clsCostCodes.GetCostcodeById(costCodeID);
                         clsCostCode.UserdefinedFields = null;
                     }
-                        
+
                     else
                     {
                         clsCostCode = null;
                     }
 
                     cProjectCode clsProjectCode;
-                    if (((object[])ccbRows[j])[2] != null && Convert.ToString(((object[])ccbRows[j])[2]) != "" && Convert.ToInt32(((object[])ccbRows[j])[2]) != 0)
+                    if (((object[]) ccbRows[j])[2] != null && Convert.ToString(((object[]) ccbRows[j])[2]) != "" &&
+                        Convert.ToInt32(((object[]) ccbRows[j])[2]) != 0)
                     {
-                        int projectCodeID = Convert.ToInt32(((object[])ccbRows[j])[2]);
+                        int projectCodeID = Convert.ToInt32(((object[]) ccbRows[j])[2]);
                         clsProjectCode = clsProjectCodes.getProjectCodeById(projectCodeID);
                     }
                     else
@@ -739,9 +806,10 @@ using SpendManagementLibrary;
                     }
 
                     int nPercentSplit;
-                    if (((object[])ccbRows[j])[3] != null && Convert.ToString(((object[])ccbRows[j])[3]) != "" && Convert.ToInt32(((object[])ccbRows[j])[3]) != 0)
+                    if (((object[]) ccbRows[j])[3] != null && Convert.ToString(((object[]) ccbRows[j])[3]) != "" &&
+                        Convert.ToInt32(((object[]) ccbRows[j])[3]) != 0)
                     {
-                        nPercentSplit = Convert.ToInt32(((object[])ccbRows[j])[3]);
+                        nPercentSplit = Convert.ToInt32(((object[]) ccbRows[j])[3]);
                     }
                     else
                     {
@@ -749,10 +817,10 @@ using SpendManagementLibrary;
                     }
 
                     this.tempItem = new cCcbItem(itemID, clsDepartment, clsCostCode, clsProjectCode, nPercentSplit);
-                    this.tempItemArray.Add(this.tempItem);
+                    this.itemArray.Add(this.tempItem);
                 }
             }
-                }
+        }
 
         #endregion
 
@@ -760,12 +828,9 @@ using SpendManagementLibrary;
 
         public List<cCcbItem> itemArray
         {
-            get
-            {
-                return this.tempItemArray;
-            }
+            get;
             //set { tempItemArray = value; }
-        }
+        } = new List<cCcbItem>();
 
         #endregion
     }
@@ -775,22 +840,12 @@ using SpendManagementLibrary;
     {
         #region Fields
 
-        private readonly cCostCode clsCc;
-
-        private readonly cDepartment clsDep;
-
-        private readonly cProjectCode clsPc;
-
-        private readonly int nItemId;
-
-        private readonly int nPerc;
-
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        /// Create javascriptable object
+        ///     Create javascriptable object
         /// </summary>
         /// <param name="id"></param>
         /// <param name="dep"></param>
@@ -799,17 +854,19 @@ using SpendManagementLibrary;
         /// <param name="perc"></param>
         public cCcbItem(int id, cDepartment dep, cCostCode cc, cProjectCode pc, int perc)
         {
-            this.nItemId = id;
-            this.clsDep = dep;
-            this.clsCc = cc;
-            this.clsPc = pc;
-            this.nPerc = perc;
+            this.relatedItemID = id;
+            this.departmentID = dep;
+            this.costCodeID = cc;
+            this.projectCodeID = pc;
+            this.percentageSplit = perc;
         }
 
         /// <summary>
-        /// Empty serialisation constructor
+        ///     Empty serialisation constructor
         /// </summary>
-        public cCcbItem() {}
+        public cCcbItem()
+        {
+        }
 
         #endregion
 
@@ -817,48 +874,33 @@ using SpendManagementLibrary;
 
         public cCostCode costCodeID
         {
-            get
-        {
-                return this.clsCc;
-            }
+            get;
             //set { clsCC = value; }
         }
 
         public cDepartment departmentID
         {
-            get
-            {
-                return this.clsDep;
-            }
+            get;
             //set { clsDep = value; }
         }
 
         public int percentageSplit
         {
-            get
-        {
-                return this.nPerc;
-            }
+            get;
             //set { nPerc = value; }
         }
 
         public cProjectCode projectCodeID
         {
-            get
-            {
-                return this.clsPc;
-            }
+            get;
             //set { clsPC = value; }
         }
 
         public int relatedItemID
         {
-            get
-        {
-                return this.nItemId;
-        }
+            get;
             //set { nItemId = value; }
-    }
+        }
 
         #endregion
     }

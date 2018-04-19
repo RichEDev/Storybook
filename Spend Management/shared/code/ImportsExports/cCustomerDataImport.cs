@@ -40,19 +40,20 @@ namespace Spend_Management
         private bool bSpreadsheetInvalid = false;
         cLogging clsLogging;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Dependency]
-        public IDataFactory<IP11DCategory, int> P11DCategoriesRepository { get; set; }
+        private readonly IDataFactory<IP11DCategory, int> _p11DCategoryFactory;
 
         /// <summary>
         /// Constructor for cCustomerDataImport
         /// </summary>
         /// <param name="AccountID">ID of the logged in account</param>
         /// <param name="employeeid">ID of the user</param>
-        public cCustomerDataImport(int AccountID, int employeeid, int logID)
+        /// <param name="p11DCategoryFactory">An instance of <see cref="IDataFactory{IP11DCategory,Int32}"/> to get a <see cref="IP11DCategory"/></param>
+        public cCustomerDataImport(int AccountID, int employeeid, int logID, IDataFactory<IP11DCategory, int> p11DCategoryFactory)
         {
+            Guard.ThrowIfNull(p11DCategoryFactory, nameof(p11DCategoryFactory));
+
+            this._p11DCategoryFactory = p11DCategoryFactory;
+
             nAccountID = AccountID;
             nEmployeeID = employeeid;
             nLogID = logID;
@@ -151,8 +152,8 @@ namespace Spend_Management
         /// <summary>
         /// Delegate used to initiate the worksheet validation and import 
         /// </summary>
+        /// <param name="currentUser">The current user</param>
         /// <param name="workbook">Workbook object</param>
-        /// <param name="importInfo">Reference to the import info class used to update the session</param>
         /// <param name="lstWorksheets">List of all worksheets and their corresponding columns and data</param>
         /// <param name="lstRequiredWorksheets">List of all worksheets required for the import</param>
         public delegate void delProcessImport(ICurrentUser currentUser, object workbook, Dictionary<string, List<Dictionary<string, object>>> lstWorksheets, Dictionary<string, string> lstRequiredWorksheets);
@@ -208,7 +209,7 @@ namespace Spend_Management
 
                 clsLogging.saveLogItem(logID, LogReasonType.None, null, cLoggingValues.filler1 + "Starting Spreadsheet Import " + DateTime.Now.ToString() + cLoggingValues.space + cLoggingValues.filler1);
 
-                insertImportData(currentUser, ref lstWorksheets);
+                insertImportData(currentUser, ref lstWorksheets, this._p11DCategoryFactory);
 
                 clsLogging.saveLogItem(logID, LogReasonType.None, null, cLoggingValues.filler1 + "Finished Spreadsheet Import " + DateTime.Now.ToString() + cLoggingValues.space + cLoggingValues.filler1);
 
@@ -642,7 +643,8 @@ namespace Spend_Management
         /// </summary>
         /// <param name="currentUser">The current user.</param>
         /// <param name="lstWorksheets">Reference to the list of all worksheets and their corresponding columns and data.</param>
-        private void insertImportData(ICurrentUser currentUser, ref Dictionary<string, List<Dictionary<string, object>>> lstWorksheets)
+        /// <param name="p11DCategoryRepository"> An instance of <see cref="IDataFactory{IP11DCategory,Int32}"/> to get a <see cref="IP11DCategory"/></param>
+        private void insertImportData(ICurrentUser currentUser, ref Dictionary<string, List<Dictionary<string, object>>> lstWorksheets, IDataFactory<IP11DCategory, int> p11DCategoryRepository)
         {
             string worksheetName = "";
 
@@ -735,7 +737,7 @@ namespace Spend_Management
                         {
                             processedrecordcount++;
                             processedRows++;
-                            saveP11DCat(obj);
+                            saveP11DCat(obj, p11DCategoryRepository);
                             updateSession(indexofSheet, worksheetName, kp.Value.Count, processedRows, ImportStatus.Importing, WorksheetStatus.Importing);
                         }
                         break;
@@ -1123,7 +1125,7 @@ namespace Spend_Management
 
         }
 
-        private void saveP11DCat(Dictionary<string, object> lstP11Dcats)
+        private void saveP11DCat(Dictionary<string, object> lstP11Dcats, IDataFactory<IP11DCategory, int> p11DCategoryRepository)
         {
             cElements clsElements = new cElements();
             cElement element = clsElements.GetElementByName("P11D");
@@ -1135,12 +1137,12 @@ namespace Spend_Management
                     new Guid(ReportFields.P11DCategoriesPDName), p11DCat);
             if (p11DCategoryId > 0)
             {
-                this.P11DCategoriesRepository.Save(new P11DCategory(p11DCategoryId, p11DCat));
+                p11DCategoryRepository.Save(new P11DCategory(p11DCategoryId, p11DCat));
                 clsLogging.saveLogItem(logID, LogReasonType.SuccessUpdate, element, "Updated P11D " + p11DCat);
             }
             else
             {
-                this.P11DCategoriesRepository.Save(new P11DCategory(0, p11DCat));
+                p11DCategoryRepository.Save(new P11DCategory(0, p11DCat));
                 clsLogging.saveLogItem(logID, LogReasonType.SuccessAdd, element, "Added P11D " + p11DCat);
             }
         }

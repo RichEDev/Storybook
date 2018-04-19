@@ -5,13 +5,19 @@ namespace Spend_Management.shared
     using System.Globalization;
     using System.Linq;
     using System.Security.Cryptography.X509Certificates;
+
     using BusinessLogic;
-    using Common.Cryptography;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using code.Authentication;
-    using SpendManagementLibrary;
+
+    using Common.Cryptography;
 
     using global::Sso;
     using global::Sso.AttribStatement;
+
+    using SpendManagementLibrary;
 
     /// <summary>
     /// The Single Sign On logon page.
@@ -30,6 +36,12 @@ namespace Spend_Management.shared
         /// </summary>
         [Dependency]
         public IEncryptor Encryptor { get; set; }
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
 
         /// <summary>
         /// Gets the plain text module name.

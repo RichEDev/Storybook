@@ -90,8 +90,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountProperties\SqlAccountPropertiesFactory.cs" />
     <Compile Include="Accounts\SqlAccountFactory.cs" />
     <Compile Include="Accounts\SqlAccountWithElementsFactory.cs" />
+    <Compile Include="Builder\GeneralOptionsBuilder.cs" />
     <Compile Include="CustomEntities\SqlCustomEntityFieldListValuesFactory.cs" />
     <Compile Include="CustomEntities\SqlCustomEntityFieldsFactory.cs" />
     <Compile Include="CustomEntities\SqlCustomEntityValueFieldFactory.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Fields\SqlFieldFactory.cs" />
     <Compile Include="Fields\SqlFieldListValueFactory.cs" />
     <Compile Include="FinancialYears\SqlFinancialYearFactory.cs" />
+    <Compile Include="GeneralOptions\SqlGeneralOptionsFactory.cs" />
     <Compile Include="MetabaseCustomerDataConnection.cs" />
     <Compile Include="Modules\SqlModulesFactoryComposite.cs" />
     <Compile Include="AccessRoles\SQLAccessRolesFactory.cs" />

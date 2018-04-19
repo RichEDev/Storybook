@@ -4,11 +4,21 @@
     using System.Text;
     using System.Web.UI.WebControls;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using SpendManagementLibrary;
     using Spend_Management.shared.code;
 
     public partial class SideBar : System.Web.UI.UserControl
     {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
         /// <summary>
         /// Gets & Sets the user Name.
         /// </summary>
@@ -74,7 +84,7 @@
             else
             {
                 userIcon.Src = GlobalVariables.StaticContentLibrary + "/images/expense/menu-icons/user2-160x160.jpg";
-                if (AccessRoleCheck.CanAccessAdminSettings(user))
+                if (AccessRoleCheck.CanAccessAdminSettings(user, this.GeneralOptionsFactory))
                 {
                     menuItems.Append(this.CreateMenuItems("/adminmenu.aspx", "Administration-icon.png", "Administrative Settings"));
                 }

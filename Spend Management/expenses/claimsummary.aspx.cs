@@ -4,6 +4,10 @@ namespace Spend_Management
     using System.Web;
     using System.Web.UI;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using SpendManagementLibrary;
 
 	/// <summary>
@@ -11,8 +15,13 @@ namespace Spend_Management
 	/// </summary>
 	public partial class claimsummary : Page
 	{
-	
-		protected void Page_Load(object sender, EventArgs e)
+	    /// <summary>
+	    /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IGeneralOptions"/>
+	    /// </summary>
+	    [Dependency]
+	    public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+        protected void Page_Load(object sender, EventArgs e)
 		{
 			Response.Expires = 60;
 			Response.ExpiresAbsolute = DateTime.Now.AddMinutes(-1);
@@ -32,11 +41,12 @@ namespace Spend_Management
 				}
                 
                 CurrentUser user = cMisc.GetCurrentUser();
-                var misc = new cMisc(user.AccountID);
-                var properties = misc.GetGlobalProperties(user.AccountID);
+
+			    var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithClaim();
+
                 var claims = new cClaims(user.AccountID);
 
-				if (properties.singleclaim == false && claimType == ClaimStage.Current) 
+				if (generalOptions.Claim.SingleClaim == false && claimType == ClaimStage.Current) 
 				{
 					litoptions.Text += "<a href=\"../aeclaim.aspx\" class=\"submenuitem\">New Claim</a>";
 				}
@@ -50,7 +60,7 @@ namespace Spend_Management
 								Response.Redirect("../aeclaim.aspx",true);
 								break;
 							case 1:
-								if (properties.singleclaim)
+								if (generalOptions.Claim.SingleClaim)
 								{
                                     claimId = claims.getDefaultClaim(ClaimStage.Current, user.EmployeeID);
                                     Response.Redirect("claimViewer.aspx?claimid=" + claimId, true);

@@ -1,20 +1,18 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using System.Collections.Generic;
-
-using SpendManagementLibrary;
-using Spend_Management;
 namespace expenses.information
 {
+    using System;
+    using System.Data;
+    using System.Web.UI;
+    using System.Collections.Generic;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
+
+    using Spend_Management;
 
 	/// <summary>
 	/// Summary description for selectmultiple.
@@ -22,8 +20,14 @@ namespace expenses.information
 	public partial class selectmultiple : Page
 	{
 		protected System.Web.UI.WebControls.ImageButton ImageButton3;
-	
-		protected void Page_Load(object sender, System.EventArgs e)
+
+	    /// <summary>
+	    /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+	    /// </summary>
+        [Dependency]
+	    public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+        protected void Page_Load(object sender, System.EventArgs e)
 		{
 			
 			Title = "Claimable Items";
@@ -35,21 +39,15 @@ namespace expenses.information
                 CurrentUser user = cMisc.GetCurrentUser();
                 ViewState["accountid"] = user.AccountID;
                 ViewState["employeeid"] = user.EmployeeID;
-                cMisc clsmisc = new cMisc(user.AccountID);
-
-                
-				
-
                 createGrid(user.Employee);
 		}
 	}
 
 		public void createGrid(Employee employee)
 		{
-			cEmployees clsemployees = new cEmployees((int)ViewState["accountid"]);
             cCategories clscategories = new cCategories((int)ViewState["accountid"]);
             cMisc clsmisc = new cMisc((int)ViewState["accountid"]);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties((int)ViewState["accountid"]);
+		    var generalOptions = this.GeneralOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithCurrency();
             int i;
             DataSet ds = new DataSet();
             DataTable tbl = new DataTable();
@@ -75,7 +73,7 @@ namespace expenses.information
                 values[4] = rolesub.Maximum;
                 values[5] = employee.GetSubCategories().Contains(rolesub.SubcatId);
                 values[6] = rolesub.SubcatId;
-                values[7] = clsproperties.basecurrency;
+                values[7] = generalOptions.Currency.BaseCurrency;
                 tbl.Rows.Add(values);
             }
 

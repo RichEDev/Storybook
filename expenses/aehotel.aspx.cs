@@ -19,10 +19,10 @@ namespace expenses
 	/// </summary>
 	public partial class aehotel : System.Web.UI.Page
 	{
-	
-		protected void Page_Load(object sender, System.EventArgs e)
+
+        protected void Page_Load(object sender, System.EventArgs e)
 		{
-			
+
 			if (IsPostBack == false)
 			{
 				int action = 0;
@@ -66,7 +66,7 @@ namespace expenses
 
                 cColours clscolours = new cColours(user.AccountID, user.CurrentSubAccountId, user.CurrentActiveModule);
 				
-				System.Text.StringBuilder output = new System.Text.StringBuilder();
+                System.Text.StringBuilder output = new System.Text.StringBuilder();
 				output.Append("<style type\"text/css\">\n");
 				if (clscolours.sectionHeadingUnderlineColour != clscolours.defaultSectionHeadingUnderlineColour)
 				{

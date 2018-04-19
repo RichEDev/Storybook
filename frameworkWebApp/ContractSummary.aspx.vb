@@ -1,14 +1,23 @@
-Imports FWBase
-Imports FWClasses
-Imports SpendManagementLibrary
-Imports Spend_Management
-Imports System.Collections.Generic
 Imports System.Web.Services
-Imports SpendManagementLibrary.Employees
-Imports System.Web.Script.Serialization
+Imports BusinessLogic
+
+Imports BusinessLogic.AccountProperties
+Imports BusinessLogic.DataConnections
+Imports BusinessLogic.Enums
+Imports BusinessLogic.GeneralOptions
+
+Imports FWBase
+
+Imports FWClasses
+
+Imports Spend_Management
+
 Imports SpendManagementLibrary.Helpers
+Imports SpendManagementLibrary.Employees
+Imports SpendManagementLibrary
 
 Namespace Framework2006
+
     Partial Class ContractSummary
         Inherits System.Web.UI.Page
         Private ConProd_Count As Integer = 0
@@ -16,6 +25,28 @@ Namespace Framework2006
             Months = 0
             Days = 1
         End Enum
+
+        ''' <summary>
+        ''' An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        ''' </summary>
+        <Dependency()>  _
+        Public Property GeneralOptionsFactory As IDataFactory(Of IGeneralOptions, Integer)
+            Get
+            End Get
+            Set
+            End Set
+        End Property
+    
+        ''' <summary>
+        ''' An instance of <see cref="IDataFactory{IAccountProperty,AccountPropertyCacheKey}"/> to get a <see cref="IAccountProperty"/>
+        ''' </summary>
+        <Dependency()>  _
+        Public Property AccountPropertiesFactory As IDataFactory(Of IAccountProperty, AccountPropertyCacheKey)
+            Get
+            End Get
+            Set
+            End Set
+        End Property
 
 #Region "Navigation panel calls"
         Protected Sub lnkCDnav_Click(ByVal sender As Object, ByVal e As System.EventArgs)
@@ -2769,10 +2800,11 @@ Namespace Framework2006
                         FWDb.FWDb("A", "contract_details", "contractId", FWDb.glIdentity, "", "", "", "", "", "", "", "", "", "")
                     End If
 
-                    Dim accProperties As New cAccountSubAccounts(curUser.AccountID)
+                    Dim contractNumSeq As integer = Me.GeneralOptionsFactory(curUser.CurrentSubAccountId).WithContracts.Contract.ContractNumSeq + 1
 
-                    params.ContractNumSeq += 1
-                    accProperties.SaveAccountProperties(params, curUser.EmployeeID, Nothing)
+                    Me.AccountPropertiesFactory.Save(New AccountProperty(AccountPropertyKeys.ContractNumSeq.GetDescription, contractNumSeq, curUser.CurrentSubAccountId))
+
+                    subaccs.InvalidateCache(curUser.CurrentSubAccountId)
                 End If
 
                 If FWDb.FWDb2Flag = True Then
@@ -7030,7 +7062,12 @@ Namespace Framework2006
 
                             Integer.TryParse(params.PONumberSequence, curSeqNum)
                             formattedNum = String.Format(poNumFormat, curSeqNum)
-                            subaccs.IncrementPONumber(curUser.CurrentSubAccountId, curUser.EmployeeID)
+
+                            Dim pONumberSequence As integer = Me.GeneralOptionsFactory(curUser.CurrentSubAccountId).WithContracts.Invoices.PONumberSequence + 1
+
+                            Me.AccountPropertiesFactory.Save(New AccountProperty(AccountPropertyKeys.PONumberSequence.GetDescription, pONumberSequence, curUser.CurrentSubAccountId))
+
+                            subaccs.InvalidateCache(curUser.CurrentSubAccountId)
 
                             db.SetFieldValue("poNumber", formattedNum, "S", False)
                         Else
@@ -7933,7 +7970,11 @@ Namespace Framework2006
                 curSeqNum = params.PONumberSequence
                 formattedNum = String.Format(poNumFormat, curSeqNum)
 
-                subaccs.IncrementPONumber(curUser.CurrentSubAccountId, curUser.EmployeeID)
+                Dim pONumberSequence As integer = Me.GeneralOptionsFactory(curUser.CurrentSubAccountId).WithContracts.Invoices.PONumberSequence + 1
+
+                Me.AccountPropertiesFactory.Save(New AccountProperty(AccountPropertyKeys.PONumberSequence.GetDescription, pONumberSequence, curUser.CurrentSubAccountId))
+
+                subaccs.InvalidateCache(curUser.CurrentSubAccountId)
 
                 FWDb.SetFieldValue("poNumber", formattedNum, "S", True)
             Else

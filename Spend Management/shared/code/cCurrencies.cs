@@ -1,20 +1,23 @@
 using System;
+using System.Data;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.UI.WebControls;
+using System.Text;
 
+using SpendManagementLibrary;
 using SpendManagementLibrary.Employees;
 using SpendManagementLibrary.Helpers;
-using expenses;
-using System.Web.Caching;
-using System.Text;
-using SpendManagementLibrary;
 using Spend_Management;
-using System.Data;
 
-	/// <summary>
+using BusinessLogic.AccountProperties;
+using BusinessLogic.DataConnections;
+using BusinessLogic.Enums;
+using BusinessLogic.GeneralOptions;
+
+/// <summary>
 	/// Summary description for currencies.
 	/// </summary>
 public class cCurrencies
@@ -26,9 +29,13 @@ public class cCurrencies
 
     private List<ListItem> _dropDownList;
 
+    private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
+
+    private readonly IDataFactory<IAccountProperty, AccountPropertyCacheKey> _accountPropertiesFactory = FunkyInjector.Container.GetInstance<IDataFactory<IAccountProperty, AccountPropertyCacheKey>>();
+
     public cCurrencies()
-	{
-	}
+    {
+    }
 	public cCurrencies(int AccountID, int? subAccountId)
 	{
 		nAccountID = AccountID;
@@ -53,6 +60,7 @@ public class cCurrencies
             }
         }
     }
+
     public int? SubAccountID
     {
         get { return nSubAccountId; }
@@ -82,14 +90,13 @@ public class cCurrencies
 		{
 			if (nCurrencytype == 0)
 			{
-				cMisc clsmisc = new cMisc(AccountID);
-				cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(AccountID);
-
-				//System.Web.HttpApplication appinfo = (System.Web.HttpApplication)System.Web.HttpContext.Current.ApplicationInstance;
-				nCurrencytype = (CurrencyType)((byte)clsproperties.currencytype);
+                var subAccountId = this.SubAccountID ?? cMisc.GetCurrentUser().CurrentSubAccountId;
 
 
-			}
+                var generalOptions = this._generalOptionsFactory[subAccountId].WithCurrency();
+
+				nCurrencytype = (CurrencyType)((byte)generalOptions.Currency.CurrencyType);
+            }
 			return nCurrencytype;
 		}
 	}
@@ -102,15 +109,11 @@ public class cCurrencies
 	public void ChangeCurrencyType(CurrencyType currencyType, int employeeId)
 	{
         CurrentUser currentUser = cMisc.GetCurrentUser();
-        var subAccounts = new cAccountSubAccounts(AccountID);
-        cAccountProperties reqAccountProperties =
-            subAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties.Clone();
-        reqAccountProperties.currencyType = currencyType;
-       
-        subAccounts.SaveAccountProperties(
-            reqAccountProperties,
-            currentUser.EmployeeID,
-            currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
+
+	    this._accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CurrencyType.GetDescription(), currencyType.ToString(), currentUser.CurrentSubAccountId));
+
+	    var accountBase = new cAccountSubAccountsBase(currentUser.AccountID);
+	    accountBase.InvalidateCache(currentUser.CurrentSubAccountId);
 
         //Remove currencies from cache to ensure they pick up the new exchange rates for the 
         //currency type when they are re-cached.
@@ -713,51 +716,7 @@ public class cCurrencies
 		get { return list; }
 	}
 
-
-
-	public SortedList getModifiedCurrencies(DateTime date)
-	{
-		SortedList lst = new SortedList();
-
-		switch (currencytype)
-		{
-			case CurrencyType.Static:
-
-				foreach (cStaticCurrency staVal in list.Values)
-				{
-					if (staVal.createdon > date)
-					{
-						lst.Add(staVal.currencyid, staVal);
-					}
-				}
-
-				break;
-			case CurrencyType.Monthly:
-
-				foreach (cMonthlyCurrency monVal in list.Values)
-				{
-					if (monVal.createdon > date)
-					{
-						lst.Add(monVal.currencyid, monVal);
-					}
-				}
-
-				break;
-			case CurrencyType.Range:
-
-				foreach (cRangeCurrency raVal in list.Values)
-				{
-					if (raVal.createdon > date)
-					{
-						lst.Add(raVal.currencyid, raVal);
-					}
-				}
-
-				break;
-		}
-
-		return lst;
-	}
+    
 
 	public string getGrid()
 	{

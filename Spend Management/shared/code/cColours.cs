@@ -1,10 +1,11 @@
-using System;
-using System.Web;
-using System.Web.Caching;
-using SpendManagementLibrary;
-
 namespace Spend_Management
 {
+    using BusinessLogic.AccountProperties;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Enums;
+    using BusinessLogic.GeneralOptions;
+    using SpendManagementLibrary;
+
     /// <summary>
     /// Summary description for cColours.
     /// </summary>
@@ -502,9 +503,13 @@ namespace Spend_Management
             }
         }
 
-        public void RestoreDefaults()
+        /// <summary>
+        /// Restore default colours
+        /// </summary>
+        /// <param name="accountPropertiesFactory">An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> for interacting with <see cref="IAccountProperty"/></param>
+        public void RestoreDefaults(IDataFactory<IAccountProperty, AccountPropertyCacheKey> accountPropertiesFactory)
         {
-            DeleteColours();
+            DeleteColours(accountPropertiesFactory);
             RefreshColours();
         }
 
@@ -523,32 +528,90 @@ namespace Spend_Management
         /// <summary>
         /// Updates the colours stored in the general options
         /// </summary>
-        /// <param name="headerBG"></param>
-        /// <param name="headerBreadcrumbTxt"></param>
-        /// <param name="pageTitleTxt"></param>
-        /// <param name="sectionHeadingUnderline"></param>
-        /// <param name="sectionHeadingTxt"></param>
-        /// <param name="fieldTxt"></param>
-        /// <param name="pageOptionsBG"></param>
-        /// <param name="pageOptionsTxt"></param>
-        /// <param name="tableHeaderBG"></param>
-        /// <param name="tableHeaderTxt"></param>
-        /// <param name="tabOptionBG"></param>
-        /// <param name="tabOptionTxt"></param>
-        /// <param name="rowBG"></param>
-        /// <param name="rowTxt"></param>
-        /// <param name="altRowBG"></param>
-        /// <param name="altRowTxt"></param>
-        /// <param name="menuOptionHoverTxt"></param>
-        /// <param name="menuOptionStdTxt"></param>
-        /// <param name="tooltipBg"></param>
-        /// <param name="tooltipText"></param>
-        /// <returns>Currently true unless it errors, until the save sub account properties method returns a value</returns>
-        public bool UpdateColours(string headerBG, string headerBreadcrumbTxt, string pageTitleTxt, string sectionHeadingUnderline, string sectionHeadingTxt, string fieldTxt, string pageOptionsBG, string pageOptionsTxt, string tableHeaderBG, string tableHeaderTxt, string tabOptionBG, string tabOptionTxt, string rowBG, string rowTxt, string altRowBG, string altRowTxt, string menuOptionHoverTxt, string menuOptionStdTxt, string tooltipBG, string tooltipText, string greenLightField, string greenLightSectionText, string greenLightSectionBackground, string greenLightSectionUnderline)
+        /// <param name="headerBG">
+        /// The header BG.
+        /// </param>
+        /// <param name="headerBreadcrumbTxt">
+        /// The header Breadcrumb Txt.
+        /// </param>
+        /// <param name="pageTitleTxt">
+        /// The page Title Txt.
+        /// </param>
+        /// <param name="sectionHeadingUnderline">
+        /// The section Heading Underline.
+        /// </param>
+        /// <param name="sectionHeadingTxt">
+        /// The section Heading Txt.
+        /// </param>
+        /// <param name="fieldTxt">
+        /// The field Txt.
+        /// </param>
+        /// <param name="pageOptionsBG">
+        /// The page Options BG.
+        /// </param>
+        /// <param name="pageOptionsTxt">
+        /// The page Options Txt.
+        /// </param>
+        /// <param name="tableHeaderBG">
+        /// The table Header BG.
+        /// </param>
+        /// <param name="tableHeaderTxt">
+        /// The table Header Txt.
+        /// </param>
+        /// <param name="tabOptionBG">
+        /// The tab Option BG.
+        /// </param>
+        /// <param name="tabOptionTxt">
+        /// The tab Option Txt.
+        /// </param>
+        /// <param name="rowBG">
+        /// The row BG.
+        /// </param>
+        /// <param name="rowTxt">
+        /// The row Txt.
+        /// </param>
+        /// <param name="altRowBG">
+        /// The alt Row BG.
+        /// </param>
+        /// <param name="altRowTxt">
+        /// The alt Row Txt.
+        /// </param>
+        /// <param name="menuOptionHoverTxt">
+        /// The menu Option Hover Txt.
+        /// </param>
+        /// <param name="menuOptionStdTxt">
+        /// The menu Option Std Txt.
+        /// </param>
+        /// <param name="tooltipBG">
+        /// The tooltip BG.
+        /// </param>
+        /// <param name="tooltipText">
+        /// The tooltip Text.
+        /// </param>
+        /// <param name="greenLightField">
+        /// The green Light Field.
+        /// </param>
+        /// <param name="greenLightSectionText">
+        /// The green Light Section Text.
+        /// </param>
+        /// <param name="greenLightSectionBackground">
+        /// The green Light Section Background.
+        /// </param>
+        /// <param name="greenLightSectionUnderline">
+        /// The green Light Section Underline.
+        /// </param>
+        /// <param name="accountPropertiesFactory">
+        /// The account Properties Factory.
+        /// </param>
+        /// <returns>
+        /// Currently true unless it errors, until the save sub account properties method returns a value
+        /// </returns>
+        public bool UpdateColours(string headerBG, string headerBreadcrumbTxt, string pageTitleTxt, string sectionHeadingUnderline, string sectionHeadingTxt, string fieldTxt, 
+            string pageOptionsBG, string pageOptionsTxt, string tableHeaderBG, string tableHeaderTxt, string tabOptionBG, string tabOptionTxt, string rowBG, string rowTxt, 
+            string altRowBG, string altRowTxt, string menuOptionHoverTxt, string menuOptionStdTxt, string tooltipBG, string tooltipText, string greenLightField, 
+            string greenLightSectionText, string greenLightSectionBackground, string greenLightSectionUnderline, IDataFactory<IAccountProperty, AccountPropertyCacheKey> accountPropertiesFactory)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
-            cAccountSubAccounts clsSubAccounts = new cAccountSubAccounts(currentUser.AccountID);
-            cAccountProperties subAccountProperties = clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties.Clone();
 
             headerBG = (!string.IsNullOrEmpty(headerBG)) ? headerBG.ToUpper().Replace("#", "") : headerBG;
             headerBreadcrumbTxt = (!string.IsNullOrEmpty(headerBreadcrumbTxt)) ? headerBreadcrumbTxt.ToUpper().Replace("#", "") : headerBreadcrumbTxt;
@@ -575,262 +638,261 @@ namespace Spend_Management
             greenLightSectionBackground = (!string.IsNullOrEmpty(greenLightSectionBackground)) ? greenLightSectionBackground.ToUpper().Replace("#", "") : greenLightSectionBackground;
             greenLightSectionUnderline = (!string.IsNullOrEmpty(greenLightSectionUnderline)) ? greenLightSectionUnderline.ToUpper().Replace("#", "") : greenLightSectionUnderline;
 
+            var headerBackgroundProperty = string.Empty;
+
             if ("#" + headerBG != sHeaderBGColour)
             {
-                subAccountProperties.ColoursHeaderBackground = headerBG;
+                headerBackgroundProperty = headerBG;
             }
-            else
-            {
-                subAccountProperties.ColoursHeaderBackground = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursHeaderBackground.GetDescription(), headerBackgroundProperty, currentUser.CurrentSubAccountId));
+
+            var headerBreadcrumbTextProperty = string.Empty;
 
             if ("#" + headerBreadcrumbTxt != sHeaderBreadcrumbTxtColour)
             {
-                subAccountProperties.ColoursHeaderBreadcrumbText = headerBreadcrumbTxt;
+                headerBreadcrumbTextProperty = headerBreadcrumbTxt;
             }
-            else
-            {
-                subAccountProperties.ColoursHeaderBreadcrumbText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursHeaderBreadcrumbText.GetDescription(), headerBreadcrumbTextProperty, currentUser.CurrentSubAccountId));
+
+            var pageTitleTxtProperty = string.Empty;
 
             if ("#" + pageTitleTxt != sPageTitleTxtColour)
             {
-                subAccountProperties.ColoursPageTitleText = pageTitleTxt;
+                pageTitleTxtProperty = pageTitleTxt;
             }
-            else
-            {
-                subAccountProperties.ColoursPageTitleText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursPageTitleText.GetDescription(), pageTitleTxtProperty, currentUser.CurrentSubAccountId));
+
+            var sectionHeadingUnderlineProperty = string.Empty;
 
             if ("#" + sectionHeadingUnderline != sSectionHeadingUnderlineColour)
             {
-                subAccountProperties.ColoursSectionHeadingUnderline = sectionHeadingUnderline;
+                sectionHeadingUnderlineProperty = sectionHeadingUnderline;
             }
-            else
-            {
-                subAccountProperties.ColoursSectionHeadingUnderline = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursSectionHeadingUnderline.GetDescription(), sectionHeadingUnderlineProperty, currentUser.CurrentSubAccountId));
+
+            var sectionHeadingTxtProperty = string.Empty;
 
             if ("#" + sectionHeadingTxt != sSectionHeadingTxtColour)
             {
-                subAccountProperties.ColoursSectionHeadingText = sectionHeadingTxt;
+                sectionHeadingTxtProperty = sectionHeadingTxt;
             }
-            else
-            {
-                subAccountProperties.ColoursSectionHeadingText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursSectionHeadingText.GetDescription(), sectionHeadingTxtProperty, currentUser.CurrentSubAccountId));
+
+            var fieldTxtColourProperty = string.Empty;
 
             if ("#" + fieldTxt != sFieldTxtColour)
             {
-                subAccountProperties.ColoursFieldText = fieldTxt;
+                fieldTxtColourProperty = fieldTxt;
             }
-            else
-            {
-                subAccountProperties.ColoursFieldText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursFieldText.GetDescription(), fieldTxtColourProperty, currentUser.CurrentSubAccountId));
+
+            var pageOptionsBGProperty = string.Empty;
 
             if ("#" + pageOptionsBG != sPageOptionsBGColour)
             {
-                subAccountProperties.ColoursPageOptionsBackground = pageOptionsBG;
+                pageOptionsBGProperty = pageOptionsBG;
             }
-            else
-            {
-                subAccountProperties.ColoursPageOptionsBackground = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursPageOptionsBackground.GetDescription(), pageOptionsBGProperty, currentUser.CurrentSubAccountId));
+
+            var pageOptionsTxtProperty = string.Empty;
 
             if ("#" + pageOptionsTxt != sPageOptionsTxtColour)
             {
-                subAccountProperties.ColoursPageOptionsText = pageOptionsTxt;
+                pageOptionsTxtProperty = pageOptionsTxt;
             }
-            else
-            {
-                subAccountProperties.ColoursPageOptionsText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursPageOptionsText.GetDescription(), pageOptionsTxtProperty, currentUser.CurrentSubAccountId));
+
+            var tableHeaderBGColourProperty = string.Empty;
 
             if ("#" + tableHeaderBG != sTableHeaderBGColour)
             {
-                subAccountProperties.ColoursTableHeaderBackground = tableHeaderBG;
+                tableHeaderBGColourProperty = tableHeaderBG;
             }
-            else
-            {
-                subAccountProperties.ColoursTableHeaderBackground = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursTableHeaderBackground.GetDescription(), tableHeaderBGColourProperty, currentUser.CurrentSubAccountId));
+
+            var tableHeaderTxtProperty = string.Empty;
 
             if ("#" + tableHeaderTxt != sTableHeaderTxtColour)
             {
-                subAccountProperties.ColoursTableHeaderText = tableHeaderTxt;
+                tableHeaderTxtProperty = tableHeaderTxt;
             }
-            else
-            {
-                subAccountProperties.ColoursTableHeaderText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursTableHeaderText.GetDescription(), tableHeaderTxtProperty, currentUser.CurrentSubAccountId));
+
+            var tabOptionBGProperty = string.Empty;
 
             if ("#" + tabOptionBG != sTabOptionBGColour)
             {
-                subAccountProperties.ColoursTabOptionBackground = tabOptionBG;
+                tabOptionBGProperty = tabOptionBG;
             }
-            else
-            {
-                subAccountProperties.ColoursTabOptionBackground = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursTabOptionBackground.GetDescription(), tabOptionBGProperty, currentUser.CurrentSubAccountId));
+
+            var tabOptionTxtProperty = string.Empty;
 
             if ("#" + tabOptionTxt != sTabOptionTxtColour)
             {
-                subAccountProperties.ColoursTabOptionText = tabOptionTxt;
+                tabOptionTxtProperty = tabOptionTxt;
             }
-            else
-            {
-                subAccountProperties.ColoursTabOptionText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursTabOptionText.GetDescription(), tabOptionTxtProperty, currentUser.CurrentSubAccountId));
+
+            var rowBGProperty = string.Empty;
 
             if ("#" + rowBG != sRowBGColour)
             {
-                subAccountProperties.ColoursRowBackground = rowBG;
+                rowBGProperty = rowBG;
             }
-            else
-            {
-                subAccountProperties.ColoursRowBackground = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursRowBackground.GetDescription(), rowBGProperty, currentUser.CurrentSubAccountId));
+
+            var rowTxtProperty = string.Empty;
 
             if ("#" + rowTxt != sRowTxtColour)
             {
-                subAccountProperties.ColoursRowText = rowTxt;
+                rowTxtProperty = rowTxt;
             }
-            else
-            {
-                subAccountProperties.ColoursRowText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursRowText.GetDescription(), rowTxtProperty, currentUser.CurrentSubAccountId));
+
+            var altRowBGProperty = string.Empty;
 
             if ("#" + altRowBG != sAlternateRowBGColour)
             {
-                subAccountProperties.ColoursAlternateRowBackground = altRowBG;
+                altRowBGProperty = altRowBG;
             }
-            else
-            {
-                subAccountProperties.ColoursAlternateRowBackground = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursAlternateRowBackground.GetDescription(), altRowBGProperty, currentUser.CurrentSubAccountId));
+
+            var altRowTxtProperty = string.Empty;
 
             if ("#" + altRowTxt != sAlternateRowTxtColour)
             {
-                subAccountProperties.ColoursAlternateRowText = altRowTxt;
+                altRowTxtProperty = altRowTxt;
             }
-            else
-            {
-                subAccountProperties.ColoursAlternateRowText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursAlternateRowText.GetDescription(), altRowTxtProperty, currentUser.CurrentSubAccountId));
+
+            var menuOptionHoverTxtProperty = string.Empty;
 
             if ("#" + menuOptionHoverTxt != sMenuOptionHoverTxtColour)
             {
-                subAccountProperties.ColoursMenuOptionHoverText = menuOptionHoverTxt;
+                menuOptionHoverTxtProperty = menuOptionHoverTxt;
             }
-            else
-            {
-                subAccountProperties.ColoursMenuOptionHoverText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursMenuOptionHoverText.GetDescription(), menuOptionHoverTxtProperty, currentUser.CurrentSubAccountId));
+
+            var menuOptionStdTxtProperty = string.Empty;
 
             if ("#" + menuOptionStdTxt != sMenuOptionStandardTxtColour)
             {
-                subAccountProperties.ColoursMenuOptionStandardText = menuOptionStdTxt;
+                menuOptionStdTxtProperty = menuOptionStdTxt;
             }
-            else
-            {
-                subAccountProperties.ColoursMenuOptionStandardText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursMenuOptionStandardText.GetDescription(), menuOptionStdTxtProperty, currentUser.CurrentSubAccountId));
+
+            var ptooltipBGProperty = string.Empty;
 
             if ("#" + tooltipBG != sTooltipBgColour)
             {
-                subAccountProperties.ColoursTooltipBackground = tooltipBG;
+                ptooltipBGProperty = tooltipBG;
             }
-            else
-            {
-                subAccountProperties.ColoursTooltipBackground = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursTooltipBackground.GetDescription(), ptooltipBGProperty, currentUser.CurrentSubAccountId));
+
+            var tooltipTextProperty = string.Empty;
 
             if ("#" + tooltipText != sTooltipTextColour)
             {
-                subAccountProperties.ColoursTooltipText = tooltipText;
+                tooltipTextProperty = tooltipText;
             }
-            else
-            {
-                subAccountProperties.ColoursTooltipText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursTooltipText.GetDescription(), tooltipTextProperty, currentUser.CurrentSubAccountId));
+
+            var greenLightFieldProperty = string.Empty;
 
             if ("#" + greenLightField != sGreenLightFieldColour)
             {
-                subAccountProperties.ColoursGreenLightField = greenLightField;
+                greenLightFieldProperty = greenLightField;
             }
-            else
-            {
-                subAccountProperties.ColoursGreenLightField = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursGreenLightField.GetDescription(), greenLightFieldProperty, currentUser.CurrentSubAccountId));
+
+            var greenLightSectionTextProperty = string.Empty;
 
             if ("#" + greenLightSectionText != sGreenLightSectionTextColour)
             {
-                subAccountProperties.ColoursGreenLightSectionText = greenLightSectionText;
+                greenLightSectionTextProperty = greenLightSectionText;
             }
-            else
-            {
-                subAccountProperties.ColoursGreenLightSectionText = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursGreenLightSectionText.GetDescription(), greenLightSectionTextProperty, currentUser.CurrentSubAccountId));
+
+            var greenLightSectionBackgroundProperty = string.Empty;
 
             if ("#" + greenLightSectionBackground != sGreenLightSectionBackgroundColour)
             {
-                subAccountProperties.ColoursGreenLightSectionBackground = greenLightSectionBackground;
+                greenLightSectionBackgroundProperty = greenLightSectionBackground;
             }
-            else
-            {
-                subAccountProperties.ColoursGreenLightSectionBackground = string.Empty;
-            }
+
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursGreenLightSectionBackground.GetDescription(), greenLightSectionBackgroundProperty, currentUser.CurrentSubAccountId));
+
+            var greenLightSectionUnderlineProperty = string.Empty;
 
             if ("#" + greenLightSectionUnderline != sGreenLightSectionUnderlineColour)
             {
-                subAccountProperties.ColoursGreenLightSectionUnderline = greenLightSectionUnderline;
-            }
-            else
-            {
-                subAccountProperties.ColoursGreenLightSectionUnderline = string.Empty;
+                greenLightSectionUnderlineProperty = greenLightSectionUnderline;
             }
 
-            clsSubAccounts.SaveAccountProperties(subAccountProperties, currentUser.EmployeeID, currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursGreenLightSectionUnderline.GetDescription(), greenLightSectionUnderlineProperty, currentUser.CurrentSubAccountId));
+
+            var accountBase = new cAccountSubAccountsBase(currentUser.AccountID);
+            accountBase.InvalidateCache(currentUser.CurrentSubAccountId);
 
             RefreshColours();
+
             return true;
         }
 
-        private void DeleteColours()
+        private void DeleteColours(IDataFactory<IAccountProperty, AccountPropertyCacheKey> accountPropertiesFactory)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
-            cAccountSubAccounts clsSubAccounts = new cAccountSubAccounts(nAccountID);
-            cAccountProperties subAccountProperties = clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties.Clone();
+            
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursAlternateRowBackground.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursAlternateRowText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursFieldText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursMenuOptionHoverText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursMenuOptionStandardText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursHeaderBackground.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursHeaderBreadcrumbText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursRowBackground.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursRowText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursPageTitleText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursSectionHeadingUnderline.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursSectionHeadingText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursPageOptionsBackground.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursPageOptionsText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursTableHeaderBackground.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursTableHeaderText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursTabOptionBackground.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursTabOptionText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursTooltipBackground.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursTooltipText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursGreenLightField.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursGreenLightSectionText.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursGreenLightSectionBackground.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
+            accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.ColoursGreenLightSectionUnderline.GetDescription(), string.Empty, currentUser.CurrentSubAccountId));
 
-            subAccountProperties.ColoursAlternateRowBackground = string.Empty;
-            subAccountProperties.ColoursAlternateRowText = string.Empty;
-            subAccountProperties.ColoursFieldText = string.Empty;
-            subAccountProperties.ColoursFieldText = string.Empty;
-            subAccountProperties.ColoursMenuOptionHoverText = string.Empty;
-            subAccountProperties.ColoursMenuOptionStandardText = string.Empty;
-            subAccountProperties.ColoursHeaderBackground = string.Empty;
-            subAccountProperties.ColoursHeaderBreadcrumbText = string.Empty;
-            subAccountProperties.ColoursRowBackground = string.Empty;
-            subAccountProperties.ColoursRowText = string.Empty;
-            subAccountProperties.ColoursPageTitleText = string.Empty;
-            subAccountProperties.ColoursSectionHeadingUnderline = string.Empty;
-            subAccountProperties.ColoursSectionHeadingText = string.Empty;
-            subAccountProperties.ColoursPageOptionsBackground = string.Empty;
-            subAccountProperties.ColoursPageOptionsText = string.Empty;
-            subAccountProperties.ColoursTableHeaderBackground = string.Empty;
-            subAccountProperties.ColoursTableHeaderText = string.Empty;
-            subAccountProperties.ColoursTabOptionBackground = string.Empty;
-            subAccountProperties.ColoursTabOptionText = string.Empty;
-            subAccountProperties.ColoursTooltipBackground = string.Empty;
-            subAccountProperties.ColoursTooltipText = string.Empty;
-            subAccountProperties.ColoursGreenLightField = string.Empty;
-            subAccountProperties.ColoursGreenLightSectionText = string.Empty;
-            subAccountProperties.ColoursGreenLightSectionBackground = string.Empty;
-            subAccountProperties.ColoursGreenLightSectionUnderline = string.Empty;
-
-
-            clsSubAccounts.SaveAccountProperties(subAccountProperties, currentUser.EmployeeID, currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
+            var subAccountsBase = new cAccountSubAccountsBase(currentUser.AccountID);
+            subAccountsBase.InvalidateCache(currentUser.CurrentSubAccountId);
 
             RefreshColours();
         }

@@ -7,7 +7,12 @@ namespace Spend_Management
     using System.Web.UI;
     using System.Web.UI.WebControls;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using shared.webServices;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.FinancialYears;
 
@@ -17,6 +22,12 @@ namespace Spend_Management
     public partial class aemileage : Page
     {
         protected ImageButton cmdhelp;
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
@@ -37,11 +48,9 @@ namespace Spend_Management
                 cCurrencies clscurrencies = new cCurrencies(user.AccountID, user.CurrentSubAccountId);
                 cmbCurrency.Items.AddRange(clscurrencies.CreateDropDown().ToArray());
 
-                cMisc clsmisc = new cMisc(user.AccountID);
+                var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithCurrency();
 
-                cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(user.AccountID);
-
-                cmbCurrency.SelectedValue = clsproperties.basecurrency.ToString();
+                cmbCurrency.SelectedValue = generalOptions.Currency.BaseCurrency.ToString();
 
                 this.PopulateFinancialYearDropDown(user);
                 this.PopulateVechicleEngineTypesDropDown(user);

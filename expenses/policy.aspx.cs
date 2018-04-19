@@ -7,44 +7,46 @@
 // The associated content page 'policy.aspx' was also modified to refer to the new class name.
 // For more information on this code pattern, please refer to http://go.microsoft.com/fwlink/?LinkId=46995 
 //===========================================================================
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-
-using expenses.Old_App_Code;
-using SpendManagementLibrary;
-using Spend_Management;
 
 namespace expenses
 {
-	/// <summary>
+    using System;
+    using System.Web.UI;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    using SpendManagementLibrary;
+
+    using Spend_Management;
+
+    /// <summary>
 	/// Summary description for policy.
 	/// </summary>
 	public partial class policy : Page
 	{
-	
-		protected void Page_Load(object sender, System.EventArgs e)
+	    /// <summary>
+	    /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IGeneralOptions"/>
+	    /// </summary>
+	    [Dependency]
+	    public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+        protected void Page_Load(object sender, System.EventArgs e)
 		{
             CurrentUser user = cMisc.GetCurrentUser();
             this.ViewState["accountid"] = user.AccountID;
             this.ViewState["employeeid"] = user.EmployeeID;
 
-            var clsmisc = new cMisc(user.AccountID);
-            var clsproperties = clsmisc.GetGlobalProperties(user.AccountID);
+		    var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithCompanyPolicy();
+
             cAccounts clsaccounts = new cAccounts();
             cAccount reqaccount = clsaccounts.GetAccountByID(user.AccountID);
 
-            switch (clsproperties.policytype)
+            switch (generalOptions.CompanyPolicy.PolicyType)
 			{
 				case 1:
-                    this.litpolicy.Text = clsproperties.CompanyPolicy;
+                    this.litpolicy.Text = generalOptions.CompanyPolicy.CompanyPolicy;
 					break;
 				case 2:
                     

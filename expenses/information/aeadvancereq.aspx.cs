@@ -1,20 +1,16 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-
-using SpendManagementLibrary;
-using Spend_Management;
-
 namespace expenses.information
 {
+    using System;
+    using System.Web.UI;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
+
+    using Spend_Management;
 
     /// <summary>
 	/// Summary description for aeadvancereq.
@@ -22,7 +18,14 @@ namespace expenses.information
 	public partial class aeadvancereq : Page
 	{
 		int floatid;
-		protected void Page_Load(object sender, EventArgs e)
+
+	    /// <summary>
+	    /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+	    /// </summary>
+        [Dependency]
+	    public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+        protected void Page_Load(object sender, EventArgs e)
 		{
 		    //Stops user accessing directly via url if no access
 		    if (!(cMisc.GetCurrentUser().Employee.AdvancesSignOffGroup != 0 && cMisc.GetCurrentUser().Account.AdvancesEnabled))
@@ -132,7 +135,7 @@ namespace expenses.information
 		{
 			var clsfloats = new cFloats((int)ViewState["accountid"]);
 		    string requiredby = "";
-			int basecurrency;
+			int basecurrency = 0;
 			
 			string name = this.txtname.Text;
 			string reason = this.txtreason.Text;
@@ -152,9 +155,12 @@ namespace expenses.information
             }
             else
             {
-                var clsmisc = new cMisc((int)ViewState["accountid"]);
-                cGlobalProperties clsproperties = clsmisc.GetGlobalProperties((int)ViewState["accountid"]);
-                basecurrency = clsproperties.basecurrency;
+                var generalOptions = this.GeneralOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithCurrency();
+
+                if (generalOptions.Currency.BaseCurrency.HasValue)
+                {
+                    basecurrency = Convert.ToInt32(generalOptions.Currency.BaseCurrency);
+                }
             }
 
             int saveFloatResponse;

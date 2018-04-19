@@ -4,6 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using Interfaces;
     using Models.Common;
     using Models.Types;
@@ -18,6 +21,7 @@
     /// </summary>
     internal class AdvancesRepository : BaseRepository<Advance>, ISupportsActionContext
     {
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory;
 
         /// <summary>
         /// The AdvancesRepository constructor
@@ -27,6 +31,7 @@
         public AdvancesRepository(ICurrentUser user, IActionContext actionContext)
             : base(user, actionContext, x => x.FloatId, x => x.Name)
         {
+            this._generalOptionsFactory = WebApiApplication.container.GetInstance<IDataFactory<IGeneralOptions, int>>();
         }
 
         /// <summary>
@@ -372,9 +377,8 @@
             }
 
             // Return Account Base Currency ID
-            var misc = new cMisc(this.User.AccountID);
-            var  globalProperties = misc.GetGlobalProperties(this.User.AccountID);
-            return globalProperties.basecurrency;
+            var generalOptions = this._generalOptionsFactory[this.User.CurrentSubAccountId].WithCurrency();
+            return (int)generalOptions.Currency.BaseCurrency;
         }
 
         /// <summary>

@@ -33,7 +33,8 @@
             container = Bootstrapper.Bootstrap();
 
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
-            
+
+            FunkyInjector.Container = container;
 
             if (GlobalVariables.GetAppSettingAsBoolean("EnableBrokers"))
             {

@@ -1,8 +1,10 @@
-﻿
-namespace SpendManagementApi.Repositories
+﻿namespace SpendManagementApi.Repositories
 {
     using System;
-    using System.Text;
+    using System.Linq;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
 
     using Models.Types;
 
@@ -20,27 +22,18 @@ namespace SpendManagementApi.Repositories
 
     using ExpenseItem = Models.Types.ExpenseItem;
 
-    using System.Linq;
 
     using Models.Responses;
     using Models.Types.Employees;
 
     using SpendManagementLibrary;
-
-    using Common.Enums;
-
     using SpendManagementLibrary.ExpenseItems;
     using SpendManagementLibrary.Enumerators.Expedite;
 
-    using SpendManagementApi.Models.Responses;
-
     using Common;
+    using Common.Enums;
 
     using SpendManagementApi.Common.Enum;
-
-    using SpendManagementHelpers.TreeControl;
-
-    using SpendManagementLibrary.Flags;
 
     using BankAccount = SpendManagementLibrary.Employees.BankAccount;
     using Claim = SpendManagementApi.Models.Types.Claim;
@@ -71,6 +64,8 @@ namespace SpendManagementApi.Repositories
 
         const string UnapprovalOfExpenseItem = "Unapproval of Expense Item";
 
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory;
+
         /// <summary>
         /// Creates a new ExpenseItemRespository.
         /// </summary>
@@ -81,6 +76,7 @@ namespace SpendManagementApi.Repositories
         {
             this._claimsData = ActionContext.Claims;
             this._expenseItemData = ActionContext.ExpenseItems;
+            this._generalOptionsFactory = WebApiApplication.container.GetInstance<IDataFactory<IGeneralOptions, int>>();
         }
 
         /// <summary>
@@ -1210,12 +1206,11 @@ namespace SpendManagementApi.Repositories
 
             var defaultCostcodeBreakdowns = employee.GetCostBreakdown().Get().Cast<List<Models.Types.Employees.CostCentreBreakdown>>();
 
-            cMisc misc = new cMisc(accountId);
-            cGlobalProperties properties = misc.GetGlobalProperties(accountId);
+            var generalOptions = this._generalOptionsFactory[this.User.CurrentSubAccountId].WithCurrency().WithCountry();
 
-            var primaryCurrencyId = employee.PrimaryCurrency == 0 ? properties.basecurrency : employee.PrimaryCurrency;
-            var primaryCountryId = employee.PrimaryCountry == 0 ? properties.homecountry : employee.PrimaryCountry;
-            int employeeGlobalPrimaryCountryId = employee.PrimaryCountry == 0 ? properties.homecountry : countries.getCountryById(primaryCountryId).GlobalCountryId;
+            var primaryCurrencyId = employee.PrimaryCurrency == 0 ? (int)generalOptions.Currency.BaseCurrency : employee.PrimaryCurrency;
+            var primaryCountryId = employee.PrimaryCountry == 0 ? generalOptions.Country.HomeCountry : employee.PrimaryCountry;
+            int employeeGlobalPrimaryCountryId = employee.PrimaryCountry == 0 ? generalOptions.Country.HomeCountry : countries.getCountryById(primaryCountryId).GlobalCountryId;
 
             IList<Models.Types.Currency> activeCurrencies = new List<Models.Types.Currency>();
 

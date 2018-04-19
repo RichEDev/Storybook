@@ -16,6 +16,12 @@ using Spend_Management;
 
 namespace Expenses_Scheduler
 {
+    using System.ComponentModel;
+
+    using ConsoleBootstrap;
+
+    using Container = SimpleInjector.Container;
+
     /// <summary>
     /// Expenses Scheduler
     /// </summary>
@@ -204,6 +210,12 @@ namespace Expenses_Scheduler
                     DiagLog(string.Format("Scheduler : TmrElapsed : AccountID {0} on hostnameID {1} is not in the valid host name list. Skipping account", account.accountid, account.GetHostnameID(GlobalVariables.DefaultModule)));
                     continue;
                 }
+
+                //Bootstrap scheduler as it use SM and SMLib
+                Container container = Bootstrapper.Bootstrap(account.accountid);
+
+                //Assign container to funky injector
+                FunkyInjector.Container = container;
 
                 #region scheduled reports
 

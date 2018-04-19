@@ -1,12 +1,11 @@
 ﻿namespace SpendManagementApi.Models.Types
 {
-    using Interfaces;
-    using GeneralOptions = SpendManagementLibrary.GeneralOptions.GeneralOption;
-
+    using BusinessLogic.AccountProperties;
+    
     /// <summary>
     /// Represents a global or account specific option in the system.
     /// </summary>
-    public class GeneralOption : BaseExternalType, IApiFrontForDbObject<SpendManagementLibrary.GeneralOptions.GeneralOption, GeneralOption>
+    public class GeneralOption : BaseExternalType
     {
         /// <summary>
         /// The sub account this general option is specific to.
@@ -33,30 +32,34 @@
         /// </summary>
         public bool IsGlobal { get; set; }
 
-
         /// <summary>
         /// Converts from the DAL type to the API type.
         /// </summary>
-        /// <param name="dbType">The DAL type.</param>
-        /// <param name="actionContext">The IActionContext</param>
+        /// <param name="accountProperty">The DAL type.</param>
         /// <returns>This, the API type.</returns>
-        public GeneralOption From(SpendManagementLibrary.GeneralOptions.GeneralOption dbType, IActionContext actionContext)
+        public GeneralOption From(IAccountProperty accountProperty)
         {
-            SubAccountId = dbType.SubaccountId;
-            Key = dbType.Key;
-            Value = dbType.Value;
-            PostKey = dbType.PostKey;
-            IsGlobal = dbType.IsGlobal;
+            SubAccountId = accountProperty.SubAccountId;
+            Key = accountProperty.Key;
+            Value = accountProperty.Value;
+            PostKey = accountProperty.PostKey;
+            IsGlobal = accountProperty.IsGlobal;
             return this;
         }
 
         /// <summary>
         /// Converts from the API type to the DAL type.
         /// </summary>
-        /// <returns>The DAL type.</returns>
-        public SpendManagementLibrary.GeneralOptions.GeneralOption To(IActionContext actionContext)
+        /// <returns>This, the DAL type.</returns>
+        public AccountProperty To()
         {
-            return new GeneralOptions(SubAccountId, Key, Value, PostKey,IsGlobal);
+            var accountProperty = new AccountProperty(this.Key, this.Value, this.SubAccountId)
+            {
+                IsGlobal = this.IsGlobal,
+                PostKey = this.PostKey
+            };
+
+            return accountProperty;
         }
     }
 }

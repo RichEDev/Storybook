@@ -1,26 +1,29 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-
-using expenses.Old_App_Code;
-using SpendManagementLibrary;
-using Spend_Management;
 
 namespace expenses.admin
 {
+    using System;
+    using System.Web.UI;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    using SpendManagementLibrary;
+
+    using Spend_Management;
+
     /// <summary>
     /// Summary description for adminpolicy.
     /// </summary>
     public partial class adminpolicy : Page
     {
         protected System.Web.UI.WebControls.ImageButton cmdhelp;
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
@@ -37,17 +40,15 @@ namespace expenses.admin
                 ViewState["accountid"] = user.AccountID;
                 ViewState["employeeid"] = user.EmployeeID;
 
-                cMisc clsmisc = new cMisc(user.AccountID);
+                var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithCompanyPolicy();
 
-                cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(user.AccountID);
-
-                switch (clsproperties.policytype)
+                switch (generalOptions.CompanyPolicy.PolicyType)
                 {
                     case 1:
                         this.optfreeformat.Checked = true;
                         this.SetUpPolicyBox(1);
 
-                        this.txtpolicy.Text = clsproperties.CompanyPolicy;
+                        this.txtpolicy.Text = generalOptions.CompanyPolicy.CompanyPolicy;
 
                         this.reqhtml.Enabled = false;
                         break;
@@ -99,12 +100,14 @@ namespace expenses.admin
         {
             int accountid = (int)ViewState["accountid"];
             cMisc clsmisc = new cMisc(accountid);
-            var clsproperties = clsmisc.GetGlobalProperties(accountid);
+
+            CurrentUser user = cMisc.GetCurrentUser();
+            var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithCompanyPolicy();
 
             clsmisc.ChangePolicyType(1);
             this.SetUpPolicyBox(1);
 
-            this.txtpolicy.Text = clsproperties.CompanyPolicy;
+            this.txtpolicy.Text = generalOptions.CompanyPolicy.CompanyPolicy;
 
             this.reqhtml.Enabled = false;
             this.reqpdf.Enabled = false;

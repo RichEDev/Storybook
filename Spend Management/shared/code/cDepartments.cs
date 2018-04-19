@@ -90,64 +90,6 @@ using SpendManagementLibrary;
 
             return drodownItems;
         }
-			
-        /// <summary>
-        /// Returns a html string representing a select / dropdown with the department information.
-        /// </summary>
-        /// <param name="departmentId">The department id.</param>
-        /// <param name="readOnly">Whether top make a readonly dropdown.</param>
-        /// <param name="blank">Whether to provide a blank entry in the dropdown.</param>
-        /// <returns></returns>
-        public string CreateStringDropDown(int departmentId, bool readOnly, bool blank)
-        {
-            var sortedlst = new SortedList<string, cDepartment>();
-            var output = new StringBuilder();
-            var misc = new cMisc(this.AccountId);
-            var properties = misc.GetGlobalProperties(this.AccountId);
-            bool useDescription = properties.usedepartmentdesc;
-
-            output.Append("<select name=\"department\" id=\"department\"");
-
-            if (readOnly)
-            {
-                output.Append(" disabled");
-            }
-
-            output.Append(">");
-
-            if (blank)
-            {
-                output.Append("<option value=\"0\"");
-                if (departmentId == 0)
-                {
-                    output.Append(" selected");
-                    }
-                output.Append("></option>");
-                    }
-
-            foreach (cDepartment reqdepartment in this._departmentList.Values.Where(department => !department.Archived))
-                    {
-                sortedlst.Add(useDescription ? reqdepartment.Description : reqdepartment.Department, reqdepartment);
-                    }
-
-            foreach (cDepartment reqdepartment in sortedlst.Values)
-                    {
-                output.Append("<option value=\"" + reqdepartment.DepartmentId + "\"");
-
-                if (reqdepartment.DepartmentId == departmentId)
-                    {
-                    output.Append(" selected");
-                    }
-
-                output.Append(">");
-                output.Append(useDescription == false ? reqdepartment.Department : reqdepartment.Description);
-                output.Append("</option>");
-                    }
-
-            output.Append("</select>");
-
-            return output.ToString();
-                    }
 
         /// <summary>
         /// Gets a department instance via the department id.
@@ -366,29 +308,6 @@ using SpendManagementLibrary;
 
             return retCode;
         }
-
-        /// <summary>
-        /// Gets the Column List of departments
-        /// </summary>
-        /// <returns>A cColumnList</returns>
-        public cColumnList GetColumnList()
-		{
-            var misc = new cMisc(this.AccountId);
-            var properties = misc.GetGlobalProperties(this.AccountId);
-            bool useDescription = properties.usedepartmentdesc;
-            var columnList = new cColumnList();
-
-            columnList.addItem(0, string.Empty);
-
-            foreach (cDepartment reqdepartment in this._departmentList.Values)
-            {
-                columnList.addItem(
-                    reqdepartment.DepartmentId,
-                    useDescription ? reqdepartment.Description : reqdepartment.Department);
-            }
-			
-            return columnList;
-		}
 
         /// <summary>
         /// Gets a department instance via the specified department description.

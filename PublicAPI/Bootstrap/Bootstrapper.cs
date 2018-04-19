@@ -12,6 +12,7 @@ namespace PublicAPI.Bootstrap
     using BusinessLogic.Images;
     using BusinessLogic.DataConnections;
     using BusinessLogic.Fields;
+    using BusinessLogic.GeneralOptions;
     using BusinessLogic.Tables;
     using BusinessLogic.UserDefinedFields;
 
@@ -28,6 +29,7 @@ namespace PublicAPI.Bootstrap
 
     using SQLDataAccess;
     using SQLDataAccess.Accounts;
+    using SQLDataAccess.Builder;
     using SQLDataAccess.ProjectCodes;
     using SQLDataAccess.Tables;
     using SQLDataAccess.UserDefinedFieldValues;
@@ -58,6 +60,8 @@ namespace PublicAPI.Bootstrap
             container.Register<IIdentityContextProvider, WebIdentityContext>();
             container.Register<IIdentityProvider, IdentityProvider>();
 
+            container.Register<IGeneralOptions, GeneralOptionsBuilder>();
+            
             // Logging
             container.Register<IExtraContext, Log4NetContextAdapter>();
             container.RegisterConditional(typeof(ILog), c => typeof(Log4NetAdapter<>).MakeGenericType(c.Consumer.ImplementationType), Lifestyle.Singleton, c => true);

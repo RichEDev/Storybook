@@ -7,6 +7,9 @@
     using System.Linq;
     using System.Web.Script.Serialization;
 
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Addresses;
     using SpendManagementLibrary.Employees;
@@ -24,12 +27,13 @@
         /// Loops through the JSON for this mobile expense item and creates valid journey steps for the mileage grid
         /// </summary>
         /// <param name="item">The <see cref="ExpenseItem"/> with steps to parse.</param>
+        /// <param name="generalOptionsFactory">An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/></param>
         /// <returns>A List of <see cref="cJourneyStep"/></returns>
-        public static List<cJourneyStep> GetAddressSuggestionsForMobileExpenseItem(ExpenseItem item)
+        public static List<cJourneyStep> GetAddressSuggestionsForMobileExpenseItem(ExpenseItem item, IDataFactory<IGeneralOptions, int> generalOptionsFactory)
         {
             MobileJourney journey = new JavaScriptSerializer().Deserialize<MobileJourney>(item.JourneySteps);
 
-            var suggestions = GetAddressSuggestionsForMobileJourney(journey);
+            var suggestions = GetAddressSuggestionsForMobileJourney(journey, generalOptionsFactory);
 
             return suggestions;
         }
@@ -40,10 +44,11 @@
         /// <param name="journey">
         /// The journey.
         /// </param>
+        /// <param name="generalOptionsFactory">An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/></param>
         /// <returns>
         /// The <see cref="MobileJourney"/> with search results.
         /// </returns>
-        public static List<cJourneyStep> GetAddressSuggestionsForMobileJourney(MobileJourney journey)
+        public static List<cJourneyStep> GetAddressSuggestionsForMobileJourney(MobileJourney journey, IDataFactory<IGeneralOptions, int> generalOptionsFactory)
         {
             List<MobileJourneyStep> journeySteps = new JavaScriptSerializer().Deserialize<List<MobileJourneyStep>>(journey.JourneyJson);
             journey.Steps = new List<MobileJourneyStep>();
@@ -107,9 +112,9 @@
                     if (primaryCountryId == 0)
                     {
                         // no primary country is set for the employee, so use account country
-                        cMisc misc = new cMisc(user.AccountID);
-                        cGlobalProperties properties = misc.GetGlobalProperties(user.AccountID);
-                        primaryCountryId = properties.homecountry;
+                        var generalOptions = generalOptionsFactory[user.CurrentSubAccountId].WithCountry();
+
+                        primaryCountryId = generalOptions.Country.HomeCountry;
                     }
                 
                     country = 

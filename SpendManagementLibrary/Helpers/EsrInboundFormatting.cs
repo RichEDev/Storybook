@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
 
-    using SpendManagementLibrary.Enumerators;
+    using BusinessLogic.GeneralOptions.ESR;
 
     /// <summary>
     /// A class to help with formatting the Esr Inbound File.

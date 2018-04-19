@@ -5,7 +5,6 @@
 
     using Common.Logging;
 
-    using Bootstrap;
     using Core;
     using ProjectCodes;
 
@@ -13,6 +12,8 @@
     using System.Collections.Generic;
 
     using CommandLine;
+
+    using ConsoleBootstrap;
 
     using SimpleInjector;
 

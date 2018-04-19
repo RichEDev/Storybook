@@ -1,9 +1,11 @@
-using System;
-using SpendManagementLibrary;
-using Spend_Management;
-
 namespace Spend_Management
 {
+    using System;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
 
     /// <summary>
@@ -11,7 +13,6 @@ namespace Spend_Management
 	/// </summary>
     public class cVat : IVat
     {
-
         private int nAccountid;
 
 
@@ -24,25 +25,18 @@ namespace Spend_Management
         cExpenseItem olditem;
         Employee reqemp;
         cMisc clsmisc;
-        cGlobalProperties clsproperties;
 
-        //public cVat(ref cExpenseItem item, int employeeid, int action,cExpenseItem itemold)
-        //{
-        //    System.Web.HttpApplication appinfo = (System.Web.HttpApplication)System.Web.HttpContext.Current.ApplicationInstance;
-        //    cEmployees clsemployees = new cEmployees();
-        //    cEmployee reqemp = clsemployees.GetEmployeeById(int.Parse(appinfo.User.Identity.Name));
-        //    nAccountid = reqemp.accountid;
-        //    nAction = action;
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
 
-        //    reqitem = item;
-        //    olditem = itemold;
-        //    nEmployeeid = employeeid;
-
-        //    basecurrency = getBaseCurrency();
-
-        //}
-
-        public cVat(int accountid, ref cExpenseItem expenseitem, Employee employee, cMisc misc, cGlobalProperties properties, cExpenseItem itemold)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="cVat"/> class.
+        /// </summary>
+        /// <param name="accountid">The account id</param>
+        /// <param name="expenseitem">An instance of <see cref="cExpenseItem"/> for the new item</param>
+        /// <param name="employee">An instance of <see cref="Employee"/></param>
+        /// <param name="misc">An instance of <see cref="cMisc"/></param>
+        /// <param name="itemold">An instance of <see cref="cExpenseItem"/> for the old item</param>
+        public cVat(int accountid, ref cExpenseItem expenseitem, Employee employee, cMisc misc, cExpenseItem itemold)
         {
             nAccountid = accountid;
             expdata = new DBConnection(cAccounts.getConnectionString(accountid));
@@ -50,7 +44,6 @@ namespace Spend_Management
             olditem = itemold;
             reqemp = employee;
             clsmisc = misc;
-            clsproperties = properties;
         }
 
         public int accountid
@@ -62,6 +55,10 @@ namespace Spend_Management
         {
             get { return clsexpenseitem; }
         }
+
+        /// <summary>
+        /// Calculate vat for an expense item
+        /// </summary>
         public void calculateVAT()
         {
             int subcatid = 0;
@@ -103,13 +100,15 @@ namespace Spend_Management
             //check vat limit
             int employeeCountry;
 
+            var generalOptions = this._generalOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithCountry();
+
             if (reqemp.PrimaryCountry != 0)
             {
                 employeeCountry = reqemp.PrimaryCountry;
             }
             else
             {
-                employeeCountry = clsproperties.homecountry;
+                employeeCountry = generalOptions.Country.HomeCountry;
             }
 
             if (reqsubcat.calculation == CalculationType.PencePerMile && expenseitem.countryid == employeeCountry)
@@ -118,7 +117,7 @@ namespace Spend_Management
             }
             else
             {
-                homeCountry = clsproperties.homecountry;
+                homeCountry = generalOptions.Country.HomeCountry;
             }
             if (homeCountry != expenseitem.countryid) //foreign country. calculate foreign vat
             {
@@ -142,24 +141,12 @@ namespace Spend_Management
                     calculateMealVAT(reqsubcat);
 
                     break;
-                //case CalculationType.PencePerMile: //mileage
-                //    if (olditem != null) //see if the mileage has changed
-                //    {
-
-                //        if (olditem.miles == expenseitem.miles && olditem.nopassengers == expenseitem.nopassengers && olditem.mileageid == expenseitem.mileageid)
-                //        {
-                //            expenseitem.updateVAT(olditem.net, olditem.vat, olditem.total);
-                //            return;
-                //        }
-                //    }
-                //    calculateMileageVAT(reqsubcat);
-                //    break;
-
             }
-
-            return;
         }
 
+        /// <summary>
+        /// Calculate foreign VAT
+        /// </summary>
         private void calculateForeignVAT()
         {
             int count = 0;
@@ -227,6 +214,11 @@ namespace Spend_Management
 
             expdata.sqlexecute.Parameters.Clear();
         }
+
+        /// <summary>
+        /// Calculate normal vat
+        /// </summary>
+        /// <param name="reqsubcat">The <see cref="cSubcat"/> used to get vat rates</param>
         private void calculateNormalVAT(cSubcat reqsubcat)
         {
             decimal net = 0;
@@ -271,6 +263,14 @@ namespace Spend_Management
 
         }
 
+        /// <summary>
+        /// Calculate vehicle journey rate vat
+        /// </summary>
+        /// <param name="reqsubcat">The <see cref="cSubcat"/> used to get vat rates</param>
+        /// <param name="vat">The vat calcualted</param>
+        /// <param name="costperunit">The pence per mile</param>
+        /// <param name="fuelcost">The fuel cost</param>
+        /// <param name="total">The total used to calculate vat</param>
         public void calculateVehicleJourneyVAT(cSubcat reqsubcat, ref decimal vat, decimal costperunit, decimal fuelcost, decimal total)
         {
             double vatrate = 0;
@@ -283,7 +283,9 @@ namespace Spend_Management
 
             cSubcatVatRate clsvatrate = reqsubcat.getVatRateByDate(expenseitem.date);
 
-            if (clsvatrate != null && expenseitem.currencyid == clsproperties.basecurrency) //is vat applicable and a UK expense
+            var generalOptions = this._generalOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithCurrency();
+
+            if (clsvatrate != null && expenseitem.currencyid == generalOptions.Currency.BaseCurrency) //is vat applicable and a UK expense
             {
                 //only calculate vat if don't need a receipt or they have a receipt
 
@@ -314,49 +316,12 @@ namespace Spend_Management
                     vat += 0;
                 }
             }
-
-            //update the users mileage
-            //if (reqmileage.calcmilestotal == true)
-            //{
-            //    int year = expenseitem.date.Year;
-
-            //    totalmiles = calculateTotalMiles(totalmiles);
-
-            //    if (expenseitem.date < new DateTime(year,04,06))
-            //    {
-            //        year--;
-            //    }
-            //    //updateTotalMiles(year,totalmiles);
-            //    //clsemployees.removeActiveEmployee(employeeid);
-            //}
-            return;
         }
 
-
-        //private void updateTotalMiles (int year, int totalmiles)
-        //{
-        //    int count;
-        //    strsql = "select count(*) from employee_mileagetotals where employeeid = @employeeid and financial_year = @year";
-        //    expdata.sqlexecute.Parameters.AddWithValue("@employeeid",reqemp.employeeid);
-        //    expdata.sqlexecute.Parameters.AddWithValue("@year", year);
-        //    expdata.sqlexecute.Parameters.AddWithValue("@totalmiles", totalmiles);
-
-        //    count = expdata.getcount(strsql);
-
-        //    if (count == 0) //insert
-        //    {
-        //        strsql = "insert into employee_mileagetotals (employeeid, financial_year, mileagetotal) " +
-        //            "values (@employeeid, @year, @totalmiles)";
-        //    }
-        //    else
-        //    {
-        //        strsql = "update employee_mileagetotals set mileagetotal = @totalmiles where employeeid = @employeeid and financial_year = @year";
-        //    }
-
-        //    expdata.ExecuteSQL(strsql);
-
-        //    expdata.sqlexecute.Parameters.Clear();
-        //}
+        /// <summary>
+        /// Calculate vat for Meal items
+        /// </summary>
+        /// <param name="reqsubcat">The <see cref="cSubcat"/> used to get vat rates</param>
         private void calculateMealVAT(cSubcat reqsubcat)
         {
             decimal net = 0;
@@ -447,35 +412,5 @@ namespace Spend_Management
                 expenseitem.updateVAT(net, 0, total);
             }
         }
-
-        private decimal calculateTotalMiles(decimal totalmiles)
-        {
-            decimal difference = 0;
-            if (olditem == null) //just add normal amount
-            {
-                totalmiles += expenseitem.miles;
-            }
-            else
-            {
-                if (olditem.miles != expenseitem.miles) //need to update
-                {
-                    if (olditem.miles < expenseitem.miles) //mileage has increased
-                    {
-                        difference = expenseitem.miles - expenseitem.miles;
-                        totalmiles += difference;
-                    }
-                    else //mileage has decreased
-                    {
-                        difference = olditem.miles - expenseitem.miles;
-                        totalmiles -= difference;
-                    }
-                }
-            }
-
-            return totalmiles;
-
-        }
-
-
     }
 }

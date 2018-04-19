@@ -3,8 +3,15 @@ namespace Spend_Management
     using System;
     using System.Text;
     using System.Web.UI;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using Common.Cryptography;
+
     using shared.code.Authentication;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
 
@@ -14,6 +21,12 @@ namespace Spend_Management
     public partial class changepassword : Page
     {
         private ICurrentUser user;
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
@@ -175,15 +188,18 @@ namespace Spend_Management
                 // returnto = 2 when you change password from mydetails
                 // returnto = 3 when you change password from forgotten details
                 // returnto = 4 when you change password from quick menu
+                
+                var generalOptions = curUser.Employee.DefaultSubAccount >= 0 ? this.GeneralOptionsFactory[curUser.Employee.DefaultSubAccount] : this.GeneralOptionsFactory[subaccs.getFirstSubAccount().SubAccountID];
+
                 switch (returnto)
                 {
                     case 1:
                     case 3:
-                        checkpwd = clsemployees.checkpassword(password, (int)this.ViewState["accountid"], employeeid,EncryptorFactory.CreateEncryptor());
+                        checkpwd = clsemployees.checkpassword(password, (int)this.ViewState["accountid"], employeeid,EncryptorFactory.CreateEncryptor(), generalOptions);
                         returncode = employee.ChangePassword(txtold.Text, txtnew.Text, false, checkpwd, clsproperties.PwdHistoryNum, curUser, EncryptorFactory.CreateEncryptor());
                         break;
                     case 2:
-                        checkpwd = clsemployees.checkpassword(password, (int)this.ViewState["accountid"], employeeid,EncryptorFactory.CreateEncryptor());
+                        checkpwd = clsemployees.checkpassword(password, (int)this.ViewState["accountid"], employeeid,EncryptorFactory.CreateEncryptor(), generalOptions);
                         returncode = employee.ChangePassword(txtold.Text, txtnew.Text, true, checkpwd, clsproperties.PwdHistoryNum, curUser, EncryptorFactory.CreateEncryptor());
                         break;
                 }

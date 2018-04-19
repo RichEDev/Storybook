@@ -1,14 +1,26 @@
 using System;
 using System.Web.UI;
+
+using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.GeneralOptions;
+
 using Spend_Management;
-using SpendManagementLibrary;
 using Spend_Management.shared.code;
+
+using SpendManagementLibrary;
 
 /// <summary>
 /// The mydetailsmenu.
 /// </summary>
 public partial class mydetailsmenu : Page
 {
+    /// <summary>
+    /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
     #region Methods
 
     /// <summary>
@@ -36,9 +48,8 @@ public partial class mydetailsmenu : Page
             this.ViewState["employeeid"] = user.EmployeeID;
 
             var usingExpenses = user.CurrentActiveModule == Modules.expenses;
-
-            var clsmisc = new cMisc((int)this.ViewState["accountid"]);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties((int)this.ViewState["accountid"]);
+            
+            var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithCar().WithMobile();
 
             var clsModules = new cModules();
             var module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
@@ -78,7 +89,7 @@ public partial class mydetailsmenu : Page
                      );
             }
             
-            if (clsproperties.AllowUsersToAddCars)
+            if (generalOptions.Car.AllowUsersToAddCars)
             {
                 this.Master.AddMenuItem(
                     "car_compact_green",
@@ -98,7 +109,7 @@ public partial class mydetailsmenu : Page
                     "shared/tasks/MyTasks.aspx");
             }
 
-            if (usingExpenses && clsproperties.UseMobileDevices)
+            if (usingExpenses && generalOptions.Mobile.UseMobileDevices)
             {
                 if (user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.MobileDevices, true))
                 {

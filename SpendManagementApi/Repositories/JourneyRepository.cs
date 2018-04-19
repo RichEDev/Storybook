@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
 
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using SpendManagementApi.Interfaces;
     using SpendManagementApi.Models.Responses;
     using SpendManagementApi.Models.Types;
@@ -22,10 +25,12 @@
     /// </summary>
     internal class JourneyRepository : BaseRepository<JourneyStep>, ISupportsActionContext
     {
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory;
+
         public JourneyRepository(ICurrentUser user, IActionContext actionContext)
             : base(user, actionContext, a => a.StepNumber, null)
         {
-       
+            this._generalOptionsFactory = WebApiApplication.container.GetInstance<IDataFactory<IGeneralOptions, int>>();
         }
 
         /// <summary>
@@ -40,7 +45,7 @@
         /// </returns>
         public ExpenseItemDefinition ReconcileMobileJourney(MobileJourney mobileJourney)
         {
-            cJourneyStep[] journeySteps = MobileJourneyParser.GetAddressSuggestionsForMobileJourney(mobileJourney).ToArray();
+            cJourneyStep[] journeySteps = MobileJourneyParser.GetAddressSuggestionsForMobileJourney(mobileJourney, this._generalOptionsFactory).ToArray();
 
             Employee employee = ActionContext.Employees.GetEmployeeById(this.User.EmployeeID);
             var subAccounts = new cAccountSubAccounts(this.User.AccountID);

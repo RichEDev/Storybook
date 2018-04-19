@@ -1,6 +1,6 @@
 ﻿namespace SpendManagementApi.Models.Responses
 {
-    using SpendManagementLibrary.Enumerators;
+    using BusinessLogic.GeneralOptions.Currencies;
 
     /// <summary>
     /// Account details with particular general option enabled.

@@ -7,27 +7,33 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+
 using AjaxControlToolkit;
-using expenses.Bootstrap;
-using SpendManagementLibrary.Helpers;
-using SpendManagementLibrary.Mobile;
+
+using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.GeneralOptions;
+
+using Common.Logging;
 
 using Spend_Management;
+using Spend_Management.expenses.code;
+using Spend_Management.shared.code.Mileage;
+using Spend_Management.shared.code.Mobile;
+using Spend_Management.shared.code;
+
 using SpendManagementLibrary;
 using SpendManagementLibrary.Addresses;
 using SpendManagementLibrary.Employees;
 using SpendManagementLibrary.Hotels;
-using Common.Logging;
-
-using Spend_Management.expenses.code;
-using Spend_Management.shared.code.Mileage;
-
-using ExpenseItem = SpendManagementLibrary.Mobile.ExpenseItem;
-using Spend_Management.shared.code.Mobile;
-using SpendManagementLibrary.Flags;
-using Spend_Management.shared.code;
 using SpendManagementLibrary.Employees.DutyOfCare;
 using SpendManagementLibrary.Enumerators;
+using SpendManagementLibrary.Flags;
+using ExpenseItem = SpendManagementLibrary.Mobile.ExpenseItem;
+using SpendManagementLibrary.Helpers;
+using SpendManagementLibrary.Mobile;
+
+using WebBootstrap;
 
 /// <summary>
 /// Summary description for cItemBuilder
@@ -62,8 +68,6 @@ public class cItemBuilder
 
     private cMisc clsmisc;
 
-    private cGlobalProperties clsproperties;
-
     private cAccountProperties accountProperties;
 
     private Page pgAddPage;
@@ -74,15 +78,21 @@ public class cItemBuilder
     private readonly cEmployeeCars clsEmployeeCars;
     private List<Control> dependsOnMileageGrid = new List<Control>();
 
+    private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory;
+
     /// <summary>
     /// Error message for invalid licence.
     /// </summary>
     private const string InvalidLicenceErrorMessage = "Mileage cannot be claimed because your driving licence status is set as banned/disqualified.";
 
-    public cItemBuilder(int accountId, int employeeId, DateTime expenseItemDate, int? subAccountId = null)
+    public cItemBuilder(int accountId, int employeeId, DateTime expenseItemDate, IDataFactory<IGeneralOptions, int> generalOptionsFactory, int? subAccountId = null)
     {
+        Guard.ThrowIfNull(generalOptionsFactory, nameof(generalOptionsFactory));
+
         nAccountid = accountId;
         nEmployeeid = employeeId;
+
+        this._generalOptionsFactory = generalOptionsFactory;
 
         var employees = new cEmployees(accountId);
         employee = employees.GetEmployeeById(employeeId);
@@ -93,20 +103,18 @@ public class cItemBuilder
         clsEmployeeCars = new cEmployeeCars(accountId, employeeid, expenseItemDate);
     }
 
-    public cItemBuilder(int accountid, int employeeid, DateTime expenseItemDate, int subaccountid, int selectedcurrency, int selectedcountry, ItemType itemtype, Page addpage)
-        : this(accountid, employeeid, expenseItemDate, subaccountid)
+    public cItemBuilder(int accountid, int employeeid, DateTime expenseItemDate, IDataFactory<IGeneralOptions, int> generalOptionsFactory, int subaccountid, int selectedcurrency, int selectedcountry, ItemType itemtype, Page addpage)
+        : this(accountid, employeeid, expenseItemDate, generalOptionsFactory, subaccountid)
     {
         pgAddPage = addpage;
         nSelectedCurrency = selectedcurrency;
         nSelectedCountry = selectedcountry;
         itItem = itemtype;
-        clsmisc = new cMisc(accountid);
-        clsproperties = clsmisc.GetGlobalProperties(accountid);
         mileageGridBuilder = new MileageGridBuilder();
     }
 
-    public cItemBuilder(int accountid, int employeeid, DateTime expenseItemDate, int subaccountid, ItemType itemtype, int transactionid, int selectedcurrency, int selectedcountry, int? mobileID, int? mobileJourneyID)
-        : this(accountid, employeeid, expenseItemDate, subaccountid)
+    public cItemBuilder(int accountid, int employeeid, DateTime expenseItemDate, IDataFactory<IGeneralOptions, int> generalOptionsFactory, int subaccountid, ItemType itemtype, int transactionid, int selectedcurrency, int selectedcountry, int? mobileID, int? mobileJourneyID)
+        : this(accountid, employeeid, expenseItemDate, generalOptionsFactory, subaccountid)
     {
         nAccountid = accountid;
         nEmployeeid = employeeid;
@@ -132,9 +140,6 @@ public class cItemBuilder
             this.mobileJourney = clsmobile.GetMobileJourney(mobileJourneyID.Value);
             this.mileageGridBuilder = new MileageGridBuilder();
         }
-
-        clsmisc = new cMisc(accountid);
-        clsproperties = clsmisc.GetGlobalProperties(accountid);
     }
 
     #region properties
@@ -201,7 +206,6 @@ public class cItemBuilder
 
     public Panel generateItem(string id, cSubcat subcat, cSubcat parentsubcat, cExpenseItem expenseitem, bool split, DateTime date, Employee employee, HttpRequest request, IActionContext actionContext)
     {
-
         FlagManagement flagManagement = actionContext.FlagManagement;
         cEmployees employees = actionContext.Employees;
         Dictionary<int, RoleSubcat> rolesubcats = employees.getResultantRoleSet(employee);
@@ -213,7 +217,6 @@ public class cItemBuilder
         cCar car = null;
         cUserdefinedFields clsuserdefined = actionContext.UserDefinedFields;
         cMisc clsmisc = actionContext.Misc;
-        cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
         Panel pnl = new Panel();
         Table tblmain = new Table();
         Table tbl = new Table();
@@ -474,7 +477,10 @@ public class cItemBuilder
         cFieldToDisplay to = clsmisc.GetGeneralFieldByCode("to");
 
         Lazy<int[]> homeAddressIds = new Lazy<int[]>(() => employee.GetHomeAddresses().HomeLocations.Select(l => l.LocationID).ToArray());
-        if (from.individual && ((subcat.mileageapp && !clsproperties.allowmultipledestinations) || !subcat.mileageapp) && subcat.fromapp == true && ((itemtype == ItemType.Cash && from.display) || (itemtype == ItemType.CreditCard && from.displaycc) || (itemtype == ItemType.PurchaseCard && from.displaypc)))
+
+        var generalOptions = this._generalOptionsFactory[this.currentUser.CurrentSubAccountId].WithMileage().WithDutyOfCare().WithCurrency();
+
+        if (from.individual && ((subcat.mileageapp && !generalOptions.Mileage.AllowMultipleDestinations) || !subcat.mileageapp) && subcat.fromapp == true && ((itemtype == ItemType.Cash && from.display) || (itemtype == ItemType.CreditCard && from.displaycc) || (itemtype == ItemType.PurchaseCard && from.displaypc)))
         {
 
             row = new TableRow();
@@ -553,7 +559,7 @@ public class cItemBuilder
             tbl.Rows.Add(row);
         }
 
-        if (to.individual && ((subcat.mileageapp && !clsproperties.allowmultipledestinations) || !subcat.mileageapp) && subcat.toapp == true && ((itemtype == ItemType.Cash && to.display) || (itemtype == ItemType.CreditCard && to.displaycc) || (itemtype == ItemType.PurchaseCard && to.displaypc)))
+        if (to.individual && ((subcat.mileageapp && !generalOptions.Mileage.AllowMultipleDestinations) || !subcat.mileageapp) && subcat.toapp == true && ((itemtype == ItemType.Cash && to.display) || (itemtype == ItemType.CreditCard && to.displaycc) || (itemtype == ItemType.PurchaseCard && to.displaypc)))
         {
             row = new TableRow();
             cell = new TableCell();
@@ -619,7 +625,7 @@ public class cItemBuilder
                 custval.ClientValidationFunction = "checkTo";
                 cell.Controls.Add(custval);
 
-                if (!clsproperties.addlocations) //ensure they have picked from the list
+                if (!generalOptions.Mileage.AddLocations) //ensure they have picked from the list
                 {
                     compval = new CompareValidator();
                     compval.ControlToValidate = "txttoid" + id;
@@ -647,7 +653,7 @@ public class cItemBuilder
 
         bool showjourneygrid = false;
         bool hideMap = false;
-        if (subcat.mileageapp == true && (clsproperties.allowmultipledestinations && subcat.fromapp && from.individual && subcat.toapp && to.individual && ((itemtype == ItemType.Cash && from.display && to.display) || (itemtype == ItemType.CreditCard && from.displaycc && to.displaycc) || (itemtype == ItemType.PurchaseCard && from.displaypc && to.displaypc))))
+        if (subcat.mileageapp == true && (generalOptions.Mileage.AllowMultipleDestinations && subcat.fromapp && from.individual && subcat.toapp && to.individual && ((itemtype == ItemType.Cash && from.display && to.display) || (itemtype == ItemType.CreditCard && from.displaycc && to.displaycc) || (itemtype == ItemType.PurchaseCard && from.displaypc && to.displaypc))))
         {
             if (showingJourneyGridBasedOnDocChecks)
 
@@ -658,7 +664,7 @@ public class cItemBuilder
                 showjourneygrid = true;
                 UpdatePanel upnljourney = new UpdatePanel();
                 upnljourney.ID = "upnljourney" + subcat.subcatid;
-                car = clsEmployeeCars.GetCarByID(clsEmployeeCars.GetDefaultCarID(clsproperties.blocktaxexpiry, clsproperties.blockmotexpiry, clsproperties.blockinsuranceexpiry, clsproperties.BlockBreakdownCoverExpiry, accountProperties.DisableCarOutsideOfStartEndDate, date));
+                car = clsEmployeeCars.GetCarByID(clsEmployeeCars.GetDefaultCarID(generalOptions.DutyOfCare.BlockTaxExpiry, generalOptions.DutyOfCare.BlockMOTExpiry, generalOptions.DutyOfCare.BlockInsuranceExpiry, generalOptions.DutyOfCare.BlockBreakdownCoverExpiry, accountProperties.DisableCarOutsideOfStartEndDate, date));
 
                 if (documentExpiryResults == null)
                 {
@@ -683,11 +689,11 @@ public class cItemBuilder
 
                 if (this.mobileJourney != null)
                 {
-                    cJourneySteps = MobileJourneyParser.GetAddressSuggestionsForMobileJourney(this.mobileJourney).ToArray();
+                    cJourneySteps = MobileJourneyParser.GetAddressSuggestionsForMobileJourney(this.mobileJourney, this._generalOptionsFactory).ToArray();
                 }
                 else if (this.mobileItem != null && !string.IsNullOrEmpty(this.mobileItem.JourneySteps))
                 {
-                    cJourneySteps = MobileJourneyParser.GetAddressSuggestionsForMobileExpenseItem(this.mobileItem).ToArray();
+                    cJourneySteps = MobileJourneyParser.GetAddressSuggestionsForMobileExpenseItem(this.mobileItem, this._generalOptionsFactory).ToArray();
                 }
                 else
                 {
@@ -771,7 +777,7 @@ public class cItemBuilder
 
             if (car == null && subcat.EnableDoC && !claimSubmitted)
             {
-                car = clsEmployeeCars.GetCarByID(clsEmployeeCars.GetDefaultCarID(clsproperties.blocktaxexpiry, clsproperties.blockmotexpiry, clsproperties.blockinsuranceexpiry, clsproperties.BlockBreakdownCoverExpiry, accountProperties.DisableCarOutsideOfStartEndDate, date));
+                car = clsEmployeeCars.GetCarByID(clsEmployeeCars.GetDefaultCarID(generalOptions.DutyOfCare.BlockTaxExpiry, generalOptions.DutyOfCare.BlockMOTExpiry, generalOptions.DutyOfCare.BlockInsuranceExpiry, generalOptions.DutyOfCare.BlockBreakdownCoverExpiry, accountProperties.DisableCarOutsideOfStartEndDate, date));
 
             }
             if (car == null)
@@ -834,7 +840,7 @@ public class cItemBuilder
             {
                 if (car != null)
                 {
-                    if (clsproperties.blockinsuranceexpiry || clsproperties.blockmotexpiry || clsproperties.blocktaxexpiry || clsproperties.blockdrivinglicence || clsproperties.BlockBreakdownCoverExpiry)
+                    if (generalOptions.DutyOfCare.BlockInsuranceExpiry || generalOptions.DutyOfCare.BlockMOTExpiry || generalOptions.DutyOfCare.BlockTaxExpiry || generalOptions.DutyOfCare.BlockDrivingLicence || generalOptions.DutyOfCare.BlockBreakdownCoverExpiry)
                     {
                         if ((CarTypes.VehicleType)car.VehicleTypeID != CarTypes.VehicleType.Bicycle)
                         {
@@ -2505,7 +2511,7 @@ public class cItemBuilder
         {
             if (expenseitem.expenseid > 0)
             {
-                if (expenseitem.basecurrency == clsproperties.basecurrency)
+                if (expenseitem.basecurrency == generalOptions.Currency.BaseCurrency)
                 {
                     row = new TableRow();
                     cell = new TableCell();
@@ -2604,7 +2610,7 @@ public class cItemBuilder
             else if (cardtransaction != null && !split)
             {
                 cCardStatements clsstatements = actionContext.CardStatements;
-                unallocatedamount = clsstatements.getUnallocatedAmount(transactionid, employeeid);
+                unallocatedamount = clsstatements.getUnallocatedAmount(transactionid, employeeid, this._generalOptionsFactory);
                 txtbox.Text = unallocatedamount.ToString("########0.00");
             }
             else if (mobileItem != null && !split)
@@ -3309,6 +3315,8 @@ public class cItemBuilder
             }
         }
 
+        var generalOptions = this._generalOptionsFactory[this.currentUser.CurrentSubAccountId].WithDutyOfCare().WithCar();
+
         if (this.clsEmployeeCars.GetActiveCars(date).Count == 0)
         {
             var activeCarDiv = new Panel() { CssClass = "error-comment" };
@@ -3329,8 +3337,8 @@ public class cItemBuilder
             var dutyOfCareDiv = new Panel { CssClass = "error-comment" };
             var dutyOfCareMessage = new Label();
 
-            if (clsproperties.blockinsuranceexpiry || clsproperties.blockmotexpiry || clsproperties.blocktaxexpiry
-                || clsproperties.blockdrivinglicence || clsproperties.BlockBreakdownCoverExpiry)
+            if (generalOptions.DutyOfCare.BlockInsuranceExpiry || generalOptions.DutyOfCare.BlockMOTExpiry || generalOptions.DutyOfCare.BlockTaxExpiry
+                || generalOptions.DutyOfCare.BlockDrivingLicence || generalOptions.DutyOfCare.BlockBreakdownCoverExpiry)
             {
                 dutyOfCareMessage.Text = this.CreateDutyOfCareExpiryMessages(
                     subcat.nSubcatid,
@@ -3346,7 +3354,7 @@ public class cItemBuilder
             }
         }
 
-        if ((subcat.mileageapp || subcat.calculation == CalculationType.ExcessMileage) && clsproperties.AllowUsersToAddCars)
+        if ((subcat.mileageapp || subcat.calculation == CalculationType.ExcessMileage) && generalOptions.Car.AllowUsersToAddCars)
         {
             var addNewVehicleOuter = new Label { CssClass = "addnewvehicleouter" };
             addNewVehicleOuter.Controls.Add(new Label { CssClass = "addnewvehicleicon" });
@@ -3360,7 +3368,7 @@ public class cItemBuilder
 
         }
 
-        if (clsproperties.ActivateCarOnUserAdd == false)
+        if (generalOptions.Car.ActivateCarOnUserAdd == false)
         {
             List<int> lstUnapprovedCars = clsEmployeeCars.GetUnapprovedCars();
             string unapprovedTemplate = "You currently have $UNAPPROVEDCOUNT vehicles awaiting approval";
@@ -3398,7 +3406,8 @@ public class cItemBuilder
         else
         {
             activeCarMessage.Text += "You currently have no active vehicles to claim mileage against, please contact your administrator";
-            if (this.clsproperties.ActivateCarOnUserAdd)
+
+            if (this._generalOptionsFactory[this.currentUser.CurrentSubAccountId].WithCar().Car.ActivateCarOnUserAdd)
             {
                 activeCarMessage.Text += " or Add a vehicle using the link below.";
             }
@@ -3635,10 +3644,13 @@ public class cItemBuilder
             int carid = 0;
             if (expenseitem == null || expenseitem.carid == 0)
             {
-                carid = clsEmployeeCars.GetDefaultCarID(clsproperties.blocktaxexpiry, clsproperties.blockmotexpiry,
-                                                        clsproperties.blockinsuranceexpiry,
-                                                        clsproperties.BlockBreakdownCoverExpiry,
-                                                        accountProperties.DisableCarOutsideOfStartEndDate, date);
+                var generalOptions = this._generalOptionsFactory[this.currentUser.CurrentSubAccountId].WithDutyOfCare();
+
+                carid = clsEmployeeCars.GetDefaultCarID(generalOptions.DutyOfCare.BlockTaxExpiry, generalOptions.DutyOfCare.BlockMOTExpiry,
+                    generalOptions.DutyOfCare.BlockInsuranceExpiry,
+                    generalOptions.DutyOfCare.BlockBreakdownCoverExpiry,
+                    accountProperties.DisableCarOutsideOfStartEndDate, date);
+
                 if (carid == 0 && !subcat.EnableDoC)
                 {
                     carid = clsEmployeeCars.GetDefaultCarID(false, false, false, false, accountProperties.DisableCarOutsideOfStartEndDate, date);
@@ -4062,9 +4074,11 @@ public class cItemBuilder
         bool docChecksEnabled = false;
         var activeCars = clsEmployeeCars.GetActiveCars(expenseDate, includePoolCars: false);
 
-        docChecksEnabled = clsproperties.blockinsuranceexpiry || clsproperties.blockmotexpiry
-                           || clsproperties.blocktaxexpiry || clsproperties.blockdrivinglicence
-                           || clsproperties.BlockBreakdownCoverExpiry;
+        var generalOptions = this._generalOptionsFactory[this.currentUser.CurrentSubAccountId].WithDutyOfCare();
+
+        docChecksEnabled = generalOptions.DutyOfCare.BlockInsuranceExpiry || generalOptions.DutyOfCare.BlockMOTExpiry
+                           || generalOptions.DutyOfCare.BlockTaxExpiry || generalOptions.DutyOfCare.BlockDrivingLicence
+                           || generalOptions.DutyOfCare.BlockBreakdownCoverExpiry;
 
         //if None of Doc checks are enabled OR Doc checks are based on Date of claim (UseDateOfExpenseForDutyOfCareChecks general option is checked)
         //Display the car drop down and mileage grid
@@ -4118,9 +4132,12 @@ public class cItemBuilder
     {
         bool outcome = false;
         bool docChecksEnabled = false;
-        docChecksEnabled = clsproperties.blockinsuranceexpiry || clsproperties.blockmotexpiry
-                           || clsproperties.blocktaxexpiry || clsproperties.blockdrivinglicence
-                           || clsproperties.BlockBreakdownCoverExpiry;
+
+        var generalOptions = this._generalOptionsFactory[this.currentUser.CurrentSubAccountId].WithDutyOfCare();
+
+        docChecksEnabled = generalOptions.DutyOfCare.BlockInsuranceExpiry || generalOptions.DutyOfCare.BlockMOTExpiry ||
+                           generalOptions.DutyOfCare.BlockTaxExpiry || generalOptions.DutyOfCare.BlockDrivingLicence ||
+                           generalOptions.DutyOfCare.BlockBreakdownCoverExpiry;
 
         var activeCarCount = this.clsEmployeeCars.GetActiveCars(expenseDate, includePoolCars: false).Count;
 

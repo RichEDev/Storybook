@@ -1,7 +1,3 @@
-using Spend_Management.expenses.code;
-using Spend_Management.expenses.code.Claims;
-using Spend_Management.shared.code;
-
 namespace Spend_Management
 {
 	using System;
@@ -17,22 +13,28 @@ namespace Spend_Management
 	using System.Web.UI.HtmlControls;
 	using System.Web.UI.WebControls;
 
-	using Microsoft.SqlServer.Server;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    using Microsoft.SqlServer.Server;
 
 	using shared.code;
 	using shared.code.ApprovalMatrix;
 
-	using SpendManagementLibrary;
-	using SpendManagementLibrary.Claims;
-	using SpendManagementLibrary.Employees;
-	using SpendManagementLibrary.Enumerators;
-	using SpendManagementLibrary.Enumerators.Expedite;
-	using SpendManagementLibrary.Expedite;
-	using SpendManagementLibrary.ExpenseItems;
-	using SpendManagementLibrary.Flags;
-	using SpendManagementLibrary.Helpers;
-	using SpendManagementLibrary.Interfaces;
-	using SpendManagementLibrary.Mileage;
+    using Spend_Management.expenses.code;
+    using Spend_Management.expenses.code.Claims;
+
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Claims;
+    using SpendManagementLibrary.Employees;
+    using SpendManagementLibrary.Enumerators;
+    using SpendManagementLibrary.Enumerators.Expedite;
+    using SpendManagementLibrary.Expedite;
+    using SpendManagementLibrary.ExpenseItems;
+    using SpendManagementLibrary.Flags;
+    using SpendManagementLibrary.Helpers;
+    using SpendManagementLibrary.Interfaces;
+    using SpendManagementLibrary.Mileage;
 	using SpendManagementLibrary.MobileDeviceNotifications;
 	using SpendManagementLibrary.UserDefinedFields;
 
@@ -51,16 +53,18 @@ namespace Spend_Management
 
 		const string ExpenseItemsTableId = "D70D9E5F-37E2-4025-9492-3BCF6AA746A8";
 
-		/// <summary>
-		/// The list of claims for approvers who are cost code owners, budget holders or belong to a team along with claimant id
-		/// </summary>
-		private List<ClaimsForApprover> claimsToInclude;
+        /// <summary>
+        /// The list of claims for approvers who are cost code owners, budget holders or belong to a team along with claimant id
+        /// </summary>
+        private List<ClaimsForApprover> claimsToInclude;
 
-		public cClaims(int accountId)
-		{
-			_accountId = accountId;
-			this.groups = new cGroups(accountId);
-		}
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
+
+        public cClaims(int accountId)
+        {
+            _accountId = accountId;
+            this.groups = new cGroups(accountId);
+        }
 
 		/// <summary>
 		/// Parameterless constructor - DO NOT USE: only to be used by cGridNew InitialseRow event
@@ -2789,33 +2793,35 @@ namespace Spend_Management
 			}
 		}
 
-		public decimal calculatePencePerMile(int employeeid, cClaim claim)
-		{
-			DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));
-			cEmployees clsemployees = new cEmployees(accountid);
-			Employee reqemp = clsemployees.GetEmployeeById(employeeid);
-			cEmployeeCars clsEmployeeCars = new cEmployeeCars(accountid, employeeid);
-			cMisc clsmisc = new cMisc(accountid);
-			cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
-			decimal fuelpurchased = 0;
-			decimal itemtotal;
-			decimal businessmiles = 0;
-			decimal totalmiles = 0;
-			decimal pencepermile;
-			//calculate fuel purchased
-			string strsql = "select sum(total) from savedexpenses inner join subcats on subcats.subcatid = savedexpenses.subcatid where claimid = @claimid and subcats.calculation = 5";
-			expdata.sqlexecute.Parameters.AddWithValue("@claimid", claim.claimid);
-			using (SqlDataReader reader = expdata.GetReader(strsql))
-			{
-				while (reader.Read())
-				{
-					if (reader.IsDBNull(0) == false)
-					{
-						fuelpurchased = reader.GetDecimal(0);
-					}
-				}
-				reader.Close();
-			}
+        public decimal calculatePencePerMile(int employeeid, cClaim claim)
+        {
+            DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));
+            cEmployees clsemployees = new cEmployees(accountid);
+            Employee reqemp = clsemployees.GetEmployeeById(employeeid);
+            cEmployeeCars clsEmployeeCars = new cEmployeeCars(accountid, employeeid);
+            cMisc clsmisc = new cMisc(accountid);
+
+            var generalOptions = this._generalOptionsFactory[reqemp.DefaultSubAccount];
+
+            decimal fuelpurchased = 0;
+            decimal itemtotal;
+            decimal businessmiles = 0;
+            decimal totalmiles = 0;
+            decimal pencepermile;
+            //calculate fuel purchased
+            string strsql = "select sum(total) from savedexpenses inner join subcats on subcats.subcatid = savedexpenses.subcatid where claimid = @claimid and subcats.calculation = 5";
+            expdata.sqlexecute.Parameters.AddWithValue("@claimid", claim.claimid);
+            using (SqlDataReader reader = expdata.GetReader(strsql))
+            {
+                while (reader.Read())
+                {
+                    if (reader.IsDBNull(0) == false)
+                    {
+                        fuelpurchased = reader.GetDecimal(0);
+                    }
+                }
+                reader.Close();
+            }
 
 			//calculate business miles
 			strsql =
@@ -2858,26 +2864,26 @@ namespace Spend_Management
 			var expenseItems = new cExpenseItems(accountid);
 			var clssubcats = new cSubcats(accountid);
 
-			foreach (cExpenseItem item in sortedExpenseItems.Values)
-			{
-				SubcatBasic subcat = clssubcats.GetSubcatBasic(item.subcatid);
-				if (subcat.CalculationType != CalculationType.PencePerMileReceipt) continue;
-				item.journeysteps = expenseItems.GetJourneySteps(item.expenseid);
-				//update the total;
-				itemtotal = Math.Round(pencepermile * item.miles, 2, MidpointRounding.AwayFromZero);
-				item.updateVAT(itemtotal, 0, itemtotal);
-				cExpenseItem vatitem = item;
-				cVat clsvat = new cVat(accountid, ref vatitem, reqemp, clsmisc, clsproperties, null);
-				clsvat.calculateVAT();
-				strsql = "update savedexpenses set net = @net, vat = @vat, total = @total, amountpayable = @total, pencepermile = @pencepermile where expenseid = @expenseid";
-				expdata.sqlexecute.Parameters.AddWithValue("@net", item.net);
-				expdata.sqlexecute.Parameters.AddWithValue("@vat", item.vat);
-				expdata.sqlexecute.Parameters.AddWithValue("@total", item.total);
-				expdata.sqlexecute.Parameters.AddWithValue("@expenseid", item.expenseid);
-				expdata.sqlexecute.Parameters.AddWithValue("@pencepermile", pencepermile);
-				expdata.ExecuteSQL(strsql);
-				expdata.sqlexecute.Parameters.Clear();
-			}
+            foreach (cExpenseItem item in sortedExpenseItems.Values)
+            {
+                SubcatBasic subcat = clssubcats.GetSubcatBasic(item.subcatid);
+                if (subcat.CalculationType != CalculationType.PencePerMileReceipt) continue;
+                item.journeysteps = expenseItems.GetJourneySteps(item.expenseid);
+                //update the total;
+                itemtotal = Math.Round(pencepermile * item.miles, 2, MidpointRounding.AwayFromZero);
+                item.updateVAT(itemtotal, 0, itemtotal);
+                cExpenseItem vatitem = item;
+                cVat clsvat = new cVat(accountid, ref vatitem, reqemp, clsmisc, null);
+                clsvat.calculateVAT();
+                strsql = "update savedexpenses set net = @net, vat = @vat, total = @total, amountpayable = @total, pencepermile = @pencepermile where expenseid = @expenseid";
+                expdata.sqlexecute.Parameters.AddWithValue("@net", item.net);
+                expdata.sqlexecute.Parameters.AddWithValue("@vat", item.vat);
+                expdata.sqlexecute.Parameters.AddWithValue("@total", item.total);
+                expdata.sqlexecute.Parameters.AddWithValue("@expenseid", item.expenseid);
+                expdata.sqlexecute.Parameters.AddWithValue("@pencepermile", pencepermile);
+                expdata.ExecuteSQL(strsql);
+                expdata.sqlexecute.Parameters.Clear();
+            }
 
 			return 0;
 		}
@@ -3104,17 +3110,16 @@ namespace Spend_Management
 		{
 			DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));
 
-			cMisc clsmisc = new cMisc(accountid);
-			cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+            var generalOptions = this._generalOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithClaim();
 
-			//System.Web.HttpApplication appinfo = (System.Web.HttpApplication)System.Web.HttpContext.Current.ApplicationInstance;
-			if (clsproperties.limitfrequency == false)
-			{
-				return true;
-			}
+            //System.Web.HttpApplication appinfo = (System.Web.HttpApplication)System.Web.HttpContext.Current.ApplicationInstance;
+            if (generalOptions.Claim.LimitFrequency == false)
+            {
+                return true;
+            }
 
-			byte frequencytype = clsproperties.frequencytype;
-			int frequencyvalue = clsproperties.frequencyvalue;
+            byte frequencytype = generalOptions.Claim.FrequencyType;
+            int frequencyvalue = generalOptions.Claim.FrequencyValue;
 
 			DateTime startdate;
 
@@ -3617,9 +3622,11 @@ namespace Spend_Management
 
 			this.UpdateApproverLastRemindedDate(claim.claimid, 0);
 
-			using (var connection = new DatabaseConnection(cAccounts.getConnectionString(this.accountid)))
-			{
-				var clsEmployeeCars = new cEmployeeCars(this.accountid, claim.employeeid);
+            var user = cMisc.GetCurrentUser();
+
+            using (var connection = new DatabaseConnection(cAccounts.getConnectionString(this.accountid)))
+            {
+                var clsEmployeeCars = new cEmployeeCars(this.accountid, claim.employeeid);
 
 				int commenter;
 				if (delegateid == null)
@@ -3674,18 +3681,17 @@ namespace Spend_Management
 
 				connection.ExecuteSQL(strsql);
 
-				var clsmisc = new cMisc(this.accountid);
-				cGlobalProperties properties = clsmisc.GetGlobalProperties(this.accountid);
+                var generalOptions = this._generalOptionsFactory[user.CurrentSubAccountId];
 
-				if (properties.enterodometeronsubmit && properties.recordodometer)
-				{
-					Employee claimemp = clsemployees.GetEmployeeById(claim.employeeid);
-					this.deleteLastOdometerReading(claimemp);
-				}
-				else
-				{
-					strsql =
-						"select count(*) from savedexpenses where claimid = @claimid and subcatid in (select subcatid from subcats where calculation = 6)";
+                if (generalOptions.Mileage.EnterOdometerOnSubmit && generalOptions.Mileage.RecordOdometer)
+                {
+                    Employee claimemp = clsemployees.GetEmployeeById(claim.employeeid);
+                    this.deleteLastOdometerReading(claimemp);
+                }
+                else
+                {
+                    strsql =
+                        "select count(*) from savedexpenses where claimid = @claimid and subcatid in (select subcatid from subcats where calculation = 6)";
 
 					int businessmilescount = connection.ExecuteScalar<int>(strsql);
 					if (businessmilescount != 0)
@@ -3733,8 +3739,6 @@ namespace Spend_Management
 					}
 				}
 			}
-
-			var user = cMisc.GetCurrentUser();
 
 			foreach (cExpenseItem delItem in lstDelItems)
 			{
@@ -5678,34 +5682,36 @@ namespace Spend_Management
 		#endregion
 
 
-		public string[] GetPartSubmit(cClaim reqclaim, byte viewfilter)
-		{
-			var accountId = cMisc.GetCurrentUser().AccountID;
-			var misc = new cMisc(accountId);
-			cGlobalProperties clsproperties = misc.GetGlobalProperties(accountId);
-			var javascript = new StringBuilder();
-			javascript.Append("<script language=\"javascript\" type=\"text/javascript\">");
-			string partsubmit = string.Empty;
+        public string[] GetPartSubmit(cClaim reqclaim, byte viewfilter)
+        {
+            var user = cMisc.GetCurrentUser();
+            var misc = new cMisc(user.AccountID);
 
-			if (clsproperties.partsubmittal)
-			{
-				javascript.Append("var partsubmittal = true;");
-				if (reqclaim.containsCashAndCredit())
-				{
-					////contains cash and credit so which do they want to submit
-					bool onlycashcredit = clsproperties.onlycashcredit;
-					partsubmit = "<div class=\"inputpanel\">";
-					partsubmit += "<div class=\"inputpaneltitle\">Which items would you like to submit?</div>";
-					partsubmit += "<table>";
-					partsubmit += "<tr><td class=\"labeltd\">Cash Items</td><td class=\"inputtd\">";
-					if (onlycashcredit)
-					{
-						partsubmit += "<input name=\"tosubmit\" id=\"tosubmitcash\" onclick=\"setHdnFieldVal(1)\" type=\"radio\" value=\"1\"";
-						if (viewfilter == 1)
-						{
-							partsubmit += " checked";
-						}
-						partsubmit += ">";
+            var generalOptions = this._generalOptionsFactory[user.CurrentSubAccountId].WithClaim();
+
+            var javascript = new StringBuilder();
+            javascript.Append("<script language=\"javascript\" type=\"text/javascript\">");
+            string partsubmit = string.Empty;
+
+            if (generalOptions.Claim.PartSubmit)
+            {
+                javascript.Append("var partsubmittal = true;");
+                if (reqclaim.containsCashAndCredit())
+                {
+                    ////contains cash and credit so which do they want to submit
+                    bool onlycashcredit = generalOptions.Claim.OnlyCashCredit;
+                    partsubmit = "<div class=\"inputpanel\">";
+                    partsubmit += "<div class=\"inputpaneltitle\">Which items would you like to submit?</div>";
+                    partsubmit += "<table>";
+                    partsubmit += "<tr><td class=\"labeltd\">Cash Items</td><td class=\"inputtd\">";
+                    if (onlycashcredit)
+                    {
+                        partsubmit += "<input name=\"tosubmit\" id=\"tosubmitcash\" onclick=\"setHdnFieldVal(1)\" type=\"radio\" value=\"1\"";
+                        if (viewfilter == 1)
+                        {
+                            partsubmit += " checked";
+                        }
+                        partsubmit += ">";
 
 					}
 					else

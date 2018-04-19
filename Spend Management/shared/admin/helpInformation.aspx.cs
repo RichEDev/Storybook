@@ -1,17 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using SpendManagementLibrary;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
     using System.Net;
+    using System;
+    using System.Web;
+    using System.Web.UI;
+
+    using BusinessLogic;
+    using BusinessLogic.AccountProperties;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Enums;
+    using BusinessLogic.GeneralOptions;
+
+    using SpendManagementLibrary;
 
     public partial class helpInformation : System.Web.UI.Page
     {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IAccountProperty, AccountPropertyCacheKey> AccountPropertiesFactory { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
@@ -53,17 +62,21 @@ namespace Spend_Management
         protected void btnSave_Click(object sender, ImageClickEventArgs e)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
-            cAccountSubAccounts clsSubAccounts = new cAccountSubAccounts(currentUser.AccountID);
-            cAccountProperties reqProperties = clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties.Clone();
 
-            reqProperties.CustomerHelpContactName = txtCustomerHelpContactName.Text;
-            reqProperties.CustomerHelpContactTelephone = txtCustomerHelpContactTelephone.Text;
-            reqProperties.CustomerHelpContactFax = txtCustomerHelpContactFax.Text;
-            reqProperties.CustomerHelpContactAddress = txtCustomerHelpContactAddress.Text;
-            reqProperties.CustomerHelpContactEmailAddress = txtCustomerHelpContactEmailAddress.Text;
-            reqProperties.CustomerHelpInformation = WebUtility.HtmlDecode(this.txtCustomerHelpInformation.Text);
+            this.AccountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CustomerHelpContactName.GetDescription(), this.txtCustomerHelpContactName.Text, currentUser.CurrentSubAccountId));
 
-            clsSubAccounts.SaveAccountProperties(reqProperties, currentUser.EmployeeID, currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
+            this.AccountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CustomerHelpContactTelephone.GetDescription(), this.txtCustomerHelpContactTelephone.Text, currentUser.CurrentSubAccountId));
+
+            this.AccountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CustomerHelpContactFax.GetDescription(), this.txtCustomerHelpContactFax.Text, currentUser.CurrentSubAccountId));
+
+            this.AccountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CustomerHelpContactAddress.GetDescription(), this.txtCustomerHelpContactAddress.Text, currentUser.CurrentSubAccountId));
+
+            this.AccountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CustomerHelpContactEmailAddress.GetDescription(), this.txtCustomerHelpContactEmailAddress.Text, currentUser.CurrentSubAccountId));
+
+            this.AccountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CustomerHelpInformation.GetDescription(), WebUtility.HtmlDecode(this.txtCustomerHelpInformation.Text), currentUser.CurrentSubAccountId));
+
+            var accountBase = new cAccountSubAccountsBase(currentUser.AccountID);
+            accountBase.InvalidateCache(currentUser.CurrentSubAccountId);
 
             this.btnCancel_Click(sender, e);
         }

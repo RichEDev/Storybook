@@ -4,13 +4,14 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Web.Services;
-    using System.ComponentModel;
     using System.Linq;
     using System.Web.Script.Services;
     using System.Web.UI.WebControls;
 
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using SpendManagementLibrary;
-    using SpendManagementLibrary.Addresses;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Hotels;
 
@@ -25,6 +26,10 @@
     [ScriptService]
     public class svcAddEditExpenses : System.Web.Services.WebService
     {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory = expenses.Global.container.GetInstance<IDataFactory<IGeneralOptions, int>>();
 
         [WebMethod(EnableSession = true), ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public object[] getExchangeRate(int accountid, int employeeid, int currencyid, DateTime date)
@@ -32,13 +37,13 @@
             CurrentUser user = cMisc.GetCurrentUser();
             cCurrencies clscurrencies = new cCurrencies(accountid, user.CurrentSubAccountId);
             double exchangerate = 0;
-            employeeid = cMisc.GetCurrentUser().Employee.EmployeeID;
-            cMisc clsmisc = new cMisc(accountid);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+            employeeid = user.Employee.EmployeeID;
+
+            var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithCurrency();
 
             cEmployees clsemployees = new cEmployees(accountid);
             Employee reqemp = clsemployees.GetEmployeeById(employeeid);
-            int basecurrency = reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : clsproperties.basecurrency;
+            int basecurrency = reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : (int)generalOptions.Currency.BaseCurrency;
 
             cCurrency currency = clscurrencies.getCurrencyById(basecurrency);
             exchangerate = currency.getExchangeRate(currencyid, date);
@@ -125,8 +130,10 @@
             int type = int.Parse(sType);
             cFilterRules clsfilterrules = new cFilterRules(accountid);
             cFilterRule rule = clsfilterrules.GetFilterRuleById(filterid);
-            cMisc clsmisc = new cMisc(accountid);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+
+            var generalOptions = this.GeneralOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId]
+                .WithCodeAllocation();
+
             Dictionary<int, cFilterRuleValue> lstRuleVals = rule.rulevals;
             object[] child;
             FilterType filtertype = (FilterType)type;
@@ -194,15 +201,15 @@
                         string item;
                         if (filtertype == FilterType.Costcode)
                         {
-                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, clsproperties.usecostcodedesc);
+                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseCostCodeDescription);
                         }
                         else if (filtertype == FilterType.Department)
                         {
-                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, clsproperties.usedepartmentdesc);
+                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription);
                         }
                         else if (filtertype == FilterType.Projectcode)
                         {
-                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, clsproperties.useprojectcodedesc);
+                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc);
                         }
                         else
                         {
@@ -218,15 +225,15 @@
 
                     if (filtertype == FilterType.Costcode)
                     {
-                        lstItems = clsfilterrules.GetItems(filtertype, clsproperties.usecostcodedesc);
+                        lstItems = clsfilterrules.GetItems(filtertype, generalOptions.CodeAllocation.UseCostCodeDescription);
                     }
                     else if (filtertype == FilterType.Department)
                     {
-                        lstItems = clsfilterrules.GetItems(filtertype, clsproperties.usedepartmentdesc);
+                        lstItems = clsfilterrules.GetItems(filtertype, generalOptions.CodeAllocation.UseDepartmentDescription);
                     }
                     else if (filtertype == FilterType.Projectcode)
                     {
-                        lstItems = clsfilterrules.GetItems(filtertype, clsproperties.useprojectcodedesc);
+                        lstItems = clsfilterrules.GetItems(filtertype, generalOptions.CodeAllocation.UseProjectCodeDesc);
                     }
                     else
                     {

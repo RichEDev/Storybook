@@ -125,6 +125,9 @@
   <ItemGroup>
     <Compile Include="Accounts\SqlAccountWithElementsFactoryTests.cs" />
     <Compile Include="Elements\SqlElementFactoryTests.cs" />
+    <Compile Include="GeneralOptions\GeneralOptionsBuilderTests.cs" />
+    <Compile Include="GeneralOptions\SqlAccountPropertyTests.cs" />
+    <Compile Include="GeneralOptions\SqlGeneralOptionsFactoryTests.cs" />
     <Compile Include="Helpers\IdentityContextStub.cs" />
     <Compile Include="P11DCategories\SqlP11DCategoryTests.cs" />
     <Compile Include="Accounts\SqlAccountFactoryTests.cs" />

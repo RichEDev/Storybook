@@ -1,14 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Script.Serialization;
 
 using AjaxControlToolkit;
 
@@ -19,29 +17,29 @@ using SpendManagementLibrary.Enumerators.Expedite;
 using SpendManagementLibrary.Helpers;
 using SpendManagementLibrary.Hotels;
 using SpendManagementLibrary.Mobile;
-
-using Spend_Management;
-using Spend_Management.expenses.code;
-
-using Action = Spend_Management.Action;
-using BankAccount = SpendManagementLibrary.Account.BankAccount;
 using ExpenseItem = SpendManagementLibrary.Mobile.ExpenseItem;
 using SpendManagementLibrary.Flags;
+using SpendManagementLibrary.Employees.DutyOfCare;
+
+using Spend_Management;
+using Action = Spend_Management.Action;
+using Spend_Management.expenses.code;
 using Spend_Management.shared.code;
-using System.Web;
-using System.Web.Script.Serialization;
+
 using BusinessLogic;
 using BusinessLogic.DataConnections;
+using BusinessLogic.GeneralOptions;
 using BusinessLogic.ProjectCodes;
+
 using Common.Logging;
 using Common.Logging.Log4Net;
-using expenses.admin;
-using expenses.Bootstrap;
 
 using Newtonsoft.Json;
 
 using SpendManagementLibrary.Employees.DutyOfCare;
 using Syncfusion.Windows.Shared;
+
+using WebBootstrap;
 
 public partial class aeexpense : System.Web.UI.Page
 {
@@ -95,7 +93,13 @@ public partial class aeexpense : System.Web.UI.Page
 
     [Dependency]
     public IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> ProjectCodesRepository { get; set; }
-    
+
+    /// <summary>
+    /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
     /// <summary>
     /// An instance of <see cref="ILog"/> for logging information.
     /// </summary>
@@ -232,7 +236,7 @@ public partial class aeexpense : System.Web.UI.Page
             }
             ViewState["returnto"] = returnto;
             cMisc clsmisc = this.ActionContext.Misc;
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(this.ActionContext.AccountId);
+            var generalOptions = this.GeneralOptionsFactory[this.ActionContext.CurrentUser.CurrentSubAccountId].WithCountry().WithCurrency();
             cClaims clsclaims = this.ActionContext.Claims;
             int claimid;
             int expenseid = 0;
@@ -247,7 +251,7 @@ public partial class aeexpense : System.Web.UI.Page
             int countryid;
             if (this.ActionContext.CurrentUser.Employee.PrimaryCountry == 0)
             {
-                countryid = clsproperties.homecountry;
+                countryid = generalOptions.Country.HomeCountry;
             }
             else
             {
@@ -260,15 +264,15 @@ public partial class aeexpense : System.Web.UI.Page
             {
                 currencyid = this.ActionContext.CurrentUser.Employee.PrimaryCurrency;
             }
-            else if (clsproperties.basecurrency != 0)
+            else if (generalOptions.Currency.BaseCurrency != 0)
             {
-                currencyid = clsproperties.basecurrency;
+                currencyid = (int)generalOptions.Currency.BaseCurrency;
             }
 
 
             cClaim reqclaim = clsclaims.getClaimById(claimid);
             this.hdnSubCatDates.Value = this.createSubcatList(reqclaim.employeeid);
-            ClientScript.RegisterClientScriptBlock(this.GetType(), "country", $"var homeCountry = {clsproperties.homecountry};\nvar homeCurrency = {clsproperties.basecurrency};\n", true);
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "country", $"var homeCountry = {generalOptions.Country.HomeCountry};\nvar homeCurrency = {generalOptions.Currency.BaseCurrency};\n", true);
             ViewState["currencyid"] = currencyid;
 
             //rebuild costcode tbl;
@@ -500,7 +504,7 @@ public partial class aeexpense : System.Web.UI.Page
         int accountid = (int)ViewState["accountid"];
         var employeeId = (int) ViewState["employeeid"];
         cMisc clsmisc = this.ActionContext.Misc;
-        cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+        var generalOptions = this.GeneralOptionsFactory[this.ActionContext.CurrentUser.CurrentSubAccountId].WithCurrency().WithClaim().WithAddEditExpense().WithCodeAllocation();
         cClaims clsclaims = this.ActionContext.Claims;
         Employee reqemp = this.ActionContext.Employees.GetEmployeeById(employeeId);
         cAccountProperties reqProperties = this.ActionContext.Properties;
@@ -580,7 +584,7 @@ public partial class aeexpense : System.Web.UI.Page
         }
 
 
-        int basecurrency = reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : clsproperties.basecurrency;
+        int basecurrency = (int) (reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : generalOptions.Currency.BaseCurrency);
         row = new TableRow();
 
         #region date
@@ -745,7 +749,7 @@ public partial class aeexpense : System.Web.UI.Page
         bool submitted = (bool)ViewState["submitted"];
 
         //turn off claim if needed
-        if (!submitted && clsproperties.singleclaim == false && clsclaims.getCount((int)ViewState["employeeid"], ClaimStage.Current) >= 1)
+        if (!submitted && generalOptions.Claim.SingleClaim == false && clsclaims.getCount((int)ViewState["employeeid"], ClaimStage.Current) >= 1)
         {
             cell = new TableCell();
             cell.CssClass = "labeltd";
@@ -1396,7 +1400,7 @@ public partial class aeexpense : System.Web.UI.Page
             }
             else if (action == Spend_Management.Action.Edit || action == Action.Copy)
             {
-                if (expenseitem.currencyid == clsproperties.basecurrency)
+                if (expenseitem.currencyid == generalOptions.Currency.BaseCurrency)
                 {
                     cell.Style["display"] = "none";
                     showExchangeRateTT = false;
@@ -1417,7 +1421,7 @@ public partial class aeexpense : System.Web.UI.Page
             }
             else if (action == Spend_Management.Action.Edit || action == Action.Copy)
             {
-                if (expenseitem.currencyid == clsproperties.basecurrency)
+                if (expenseitem.currencyid == generalOptions.Currency.BaseCurrency)
                 {
                     cell.Style["display"] = "none";
                     showExchangeRateTT = false;
@@ -1425,7 +1429,7 @@ public partial class aeexpense : System.Web.UI.Page
             }
             txtbox = new TextBox();
             txtbox.ID = "txtexchangerate";
-            if (clsproperties.exchangereadonly || (itemtype != ItemType.Cash && (int)ViewState["transactionid"] > 0))
+            if (generalOptions.AddEditExpense.ExchangeReadOnly || (itemtype != ItemType.Cash && (int)ViewState["transactionid"] > 0))
             {
                 txtbox.Enabled = false;
             }
@@ -1495,7 +1499,7 @@ public partial class aeexpense : System.Web.UI.Page
         #region Costcode breakdown
         List<cDepCostItem> breakdown = new List<cDepCostItem>();
 
-        if (clsproperties.usedepartmentongendet || clsproperties.usecostcodeongendet || clsproperties.useprojectcodeongendet)
+        if (generalOptions.CodeAllocation.UseDeptOnGenDetails || generalOptions.CodeAllocation.UseCostCodeOnGenDetails || generalOptions.CodeAllocation.UseProjectCodeOnGenDetails)
         {
             if (ViewState["costcodebreakdown"] != null)
             {
@@ -1526,7 +1530,7 @@ public partial class aeexpense : System.Web.UI.Page
 
         int cellCount = 0;
 
-        if (clsproperties.departmentson && clsproperties.usedepartmentcodes && clsproperties.usedepartmentongendet)
+        if (generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDepartmentCodes && generalOptions.CodeAllocation.UseDeptOnGenDetails)
         {
             row = new TableRow();
             cell = new TableCell();
@@ -1544,7 +1548,7 @@ public partial class aeexpense : System.Web.UI.Page
                 ddlst.Attributes.Add(filterAttribute[0], filterAttribute[1]);
             }
 
-            ddlst.Items.AddRange(this.ActionContext.Departments.CreateDropDown(clsproperties.usedepartmentdesc).ToArray());
+            ddlst.Items.AddRange(this.ActionContext.Departments.CreateDropDown(generalOptions.CodeAllocation.UseDepartmentDescription).ToArray());
 
             ddlst.Enabled = this.ActionContext.CurrentUser.CanEditDepartments;
 
@@ -1568,7 +1572,7 @@ public partial class aeexpense : System.Web.UI.Page
             cellCount++;
         }
 
-        if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet)
+        if (generalOptions.CodeAllocation.CostCodesOn && generalOptions.CodeAllocation.UseCostCodes && generalOptions.CodeAllocation.UseCostCodeOnGenDetails)
         {
             if (cellCount == 0)
             {
@@ -1691,7 +1695,7 @@ public partial class aeexpense : System.Web.UI.Page
             tbl.Rows.Add(row);
         }
 
-        if (clsproperties.projectcodeson && clsproperties.useprojectcodes && clsproperties.useprojectcodeongendet)
+        if (generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.UseProjectCodes && generalOptions.CodeAllocation.UseProjectCodeOnGenDetails)
         {
             if (cellCount == 0 || cellCount == 2)
             {
@@ -1713,7 +1717,7 @@ public partial class aeexpense : System.Web.UI.Page
                 ddlst.Attributes.Add(filterAttribute[0], filterAttribute[1]);
             }
 
-            ddlst.Items.AddRange(DropDownCreator.GetProjectCodesListItems(clsproperties.useprojectcodedesc, this.ProjectCodesRepository.Get(pc => pc.Archived == false)));
+            ddlst.Items.AddRange(DropDownCreator.GetProjectCodesListItems(generalOptions.CodeAllocation.UseProjectCodeDesc, this.ProjectCodesRepository.Get(pc => pc.Archived == false)));
 
             ddlst.Enabled = this.ActionContext.CurrentUser.CanEditProjectCodes;
 
@@ -1912,23 +1916,23 @@ public partial class aeexpense : System.Web.UI.Page
         }
 
         var misc = this.ActionContext.Misc;
-        cGlobalProperties globalProperties = misc.GetGlobalProperties((int)ViewState["accountid"]);
+        var generalOptions = this.GeneralOptionsFactory[this.ActionContext.CurrentUser.CurrentSubAccountId].WithCodeAllocation();
 
         #region create header
 
         string tmpTitle = string.Empty;
 
-        if (globalProperties.usedepartmentcodes && globalProperties.departmentson && globalProperties.usedepartmentongendet == false)
+        if (generalOptions.CodeAllocation.UseDepartmentCodes && generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDeptOnGenDetails == false)
         {
             tmpTitle += misc.GetGeneralFieldByCode("department").description + " / ";
         }
 
-        if (globalProperties.usecostcodes && globalProperties.costcodeson && globalProperties.usecostcodeongendet == false)
+        if (generalOptions.CodeAllocation.UseCostCodes && generalOptions.CodeAllocation.CostCodesOn && generalOptions.CodeAllocation.UseCostCodeOnGenDetails == false)
         {
             tmpTitle += misc.GetGeneralFieldByCode("costcode").description + " / ";
         }
 
-        if (globalProperties.useprojectcodes && globalProperties.projectcodeson && globalProperties.useprojectcodeongendet == false)
+        if (generalOptions.CodeAllocation.UseProjectCodes && generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.UseProjectCodeOnGenDetails == false)
         {
             tmpTitle += misc.GetGeneralFieldByCode("projectcode").description + " / ";
         }
@@ -1956,21 +1960,21 @@ public partial class aeexpense : System.Web.UI.Page
         var hCell = new TableHeaderCell();
         row.Cells.Add(hCell);
 
-        if (globalProperties.departmentson && globalProperties.usedepartmentcodes && globalProperties.usedepartmentongendet == false)
+        if (generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDepartmentCodes && generalOptions.CodeAllocation.UseDeptOnGenDetails == false)
         {
             hCell = new TableHeaderCell();
             hCell.Text = misc.GetGeneralFieldByCode("department").description;
             row.Cells.Add(hCell);
         }
 
-        if (globalProperties.costcodeson && globalProperties.usecostcodes && globalProperties.usecostcodeongendet == false)
+        if (generalOptions.CodeAllocation.CostCodesOn && generalOptions.CodeAllocation.UseCostCodes && generalOptions.CodeAllocation.UseCostCodeOnGenDetails == false)
         {
             hCell = new TableHeaderCell();
             hCell.Text = misc.GetGeneralFieldByCode("costcode").description;
             row.Cells.Add(hCell);
         }
 
-        if (globalProperties.projectcodeson && globalProperties.useprojectcodes && globalProperties.useprojectcodeongendet == false)
+        if (generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.UseProjectCodes && generalOptions.CodeAllocation.UseProjectCodeOnGenDetails == false)
         {
             hCell = new TableHeaderCell();
             hCell.Text = misc.GetGeneralFieldByCode("projectcode").description;
@@ -2052,7 +2056,7 @@ public partial class aeexpense : System.Web.UI.Page
     private TableRow AddCostcodeRow(int index, cDepCostItem breakdownItem)
     {
         var misc = this.ActionContext.Misc;
-        cGlobalProperties globalProperties = misc.GetGlobalProperties((int)ViewState["accountid"]);
+        var generalOptions = this.GeneralOptionsFactory[this.ActionContext.CurrentUser.CurrentSubAccountId].WithCodeAllocation();
         var departments = this.ActionContext.Departments;
         CurrentUser user = cMisc.GetCurrentUser();
         DropDownList ddlst;
@@ -2076,7 +2080,7 @@ public partial class aeexpense : System.Web.UI.Page
 
         var itemtype = (ItemType)ViewState["itemtype"];
 
-        if (globalProperties.departmentson && globalProperties.usedepartmentcodes && globalProperties.usedepartmentongendet == false)
+        if (generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDepartmentCodes && generalOptions.CodeAllocation.UseDeptOnGenDetails == false)
         {
             cell = new TableCell();
             ddlst = new DropDownList();
@@ -2089,7 +2093,7 @@ public partial class aeexpense : System.Web.UI.Page
                 ddlst.Attributes.Add(filterAttribute[0], filterAttribute[1]);
             }
 
-            ddlst.Items.AddRange(departments.CreateDropDown(globalProperties.usedepartmentdesc, true).ToArray());
+            ddlst.Items.AddRange(departments.CreateDropDown(generalOptions.CodeAllocation.UseDepartmentDescription, true).ToArray());
             ddlst.Enabled = this.ActionContext.CurrentUser.CanEditDepartments;
 
             if (ddlst.Items.FindByValue(breakdownItem.departmentid.ToString()) != null)
@@ -2113,26 +2117,26 @@ public partial class aeexpense : System.Web.UI.Page
             }
         }
 
-        if (globalProperties.costcodeson && globalProperties.usecostcodes
-            && globalProperties.usecostcodeongendet == false)
+        if (generalOptions.CodeAllocation.CostCodesOn && generalOptions.CodeAllocation.UseCostCodes &&
+            generalOptions.CodeAllocation.UseCostCodeOnGenDetails == false)
         {
             cell = new TableCell();
             var textBox = new TextBox
-                              {
-                                  ID = "txtCostCode" + index,
-                                  CssClass = this.ActionContext.Properties.UseCostCodeDescription
-                                                 ? "costcodeDescription-autocomplete"
-                                                 : "costcode-autocomplete"
-                              };
+            {
+                ID = "txtCostCode" + index,
+                CssClass = this.ActionContext.Properties.UseCostCodeDescription
+                    ? "costcodeDescription-autocomplete"
+                    : "costcode-autocomplete"
+            };
 
             textBox.Attributes.Add("data-search", "General");
             textBox.Attributes.Add("placeholder", "Search");
             textBox.Enabled = this.ActionContext.CurrentUser.CanEditCostCodes;
-            TextBox hiddenIdentifier = new TextBox { ID = "txtCostCode" + index + "_ID" };
+            TextBox hiddenIdentifier = new TextBox {ID = "txtCostCode" + index + "_ID"};
             hiddenIdentifier.Style.Add(HtmlTextWriterStyle.Display, "none");
 
             string[] filterAttribute =
-                    this.ActionContext.FilterRules.FilterDropdown(
+                this.ActionContext.FilterRules.FilterDropdown(
                     FilterType.Costcode,
                     index.ToString(),
                     hiddenIdentifier.ID);
@@ -2146,7 +2150,9 @@ public partial class aeexpense : System.Web.UI.Page
 
             if (costCode != null)
             {
-                textBox.Text = this.ActionContext.Properties.UseCostCodeDescription ? costCode.Description : costCode.Costcode;
+                textBox.Text = this.ActionContext.Properties.UseCostCodeDescription
+                    ? costCode.Description
+                    : costCode.Costcode;
                 hiddenIdentifier.Text = costCode.CostcodeId.ToString();
             }
 
@@ -2179,24 +2185,23 @@ public partial class aeexpense : System.Web.UI.Page
                 }
 
                 costCodeValidator = new CustomValidator
-                                        {
-                                            ClientValidationFunction = clientValidationFunction,
-                                            ControlToValidate = textBox.ID,
-                                            ID = "custCostCodeid" + index,
-                                            ValidationGroup = "vgAeExpenses",
-                                            ValidateEmptyText = validateEmptyText,
-                                            ErrorMessage = errorDescription,
-                                            Text = "*",
-                                            AccessKey = index.ToString()
-                                        };
+                {
+                    ClientValidationFunction = clientValidationFunction,
+                    ControlToValidate = textBox.ID,
+                    ID = "custCostCodeid" + index,
+                    ValidationGroup = "vgAeExpenses",
+                    ValidateEmptyText = validateEmptyText,
+                    ErrorMessage = errorDescription,
+                    Text = "*",
+                    AccessKey = index.ToString()
+                };
 
                 cell.Controls.Add(costCodeValidator);
                 row.Cells.Add(cell);
             }
-
         }
 
-        if (globalProperties.projectcodeson && globalProperties.useprojectcodes && globalProperties.useprojectcodeongendet == false)
+        if (generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.UseProjectCodes && generalOptions.CodeAllocation.UseProjectCodeOnGenDetails == false)
         {
             cell = new TableCell();
 
@@ -2210,7 +2215,7 @@ public partial class aeexpense : System.Web.UI.Page
                 ddlst.Attributes.Add(filterAttribute[0], filterAttribute[1]);
             }
 
-            ddlst.Items.AddRange(DropDownCreator.GetProjectCodesListItems(globalProperties.useprojectcodedesc, this.ProjectCodesRepository.Get(pc => pc.Archived == false), true));
+            ddlst.Items.AddRange(DropDownCreator.GetProjectCodesListItems(generalOptions.CodeAllocation.UseProjectCodeDesc, this.ProjectCodesRepository.Get(pc => pc.Archived == false), true));
             ddlst.Enabled = this.ActionContext.CurrentUser.CanEditProjectCodes;
 
             if (ddlst.Items.FindByValue(breakdownItem.projectcodeid.ToString()) != null)
@@ -2355,17 +2360,14 @@ public partial class aeexpense : System.Web.UI.Page
 
         DropDownList ddlst;
         List<cDepCostItem> items = new List<cDepCostItem>();
-        cMisc clsmisc = this.ActionContext.Misc;
-        cGlobalProperties clsproperties = clsmisc.GetGlobalProperties((int)ViewState["accountid"]);
+        var generalOptions = this.GeneralOptionsFactory[this.ActionContext.CurrentUser.CurrentSubAccountId].WithCodeAllocation();
         TextBox txtbox;
         cDepCostItem item;
         int breakdownCount;
 
-        bool displayPercentageGrid = false;
-        if ((clsproperties.departmentson && !clsproperties.usedepartmentongendet) || (clsproperties.costcodeson && !clsproperties.usecostcodeongendet) || (clsproperties.projectcodeson && !clsproperties.useprojectcodeongendet))
-        {
-            displayPercentageGrid = true;
-        }
+        bool displayPercentageGrid = (generalOptions.CodeAllocation.DepartmentsOn && !generalOptions.CodeAllocation.UseDeptOnGenDetails) 
+            || (generalOptions.CodeAllocation.CostCodesOn && !generalOptions.CodeAllocation.UseCostCodeOnGenDetails) 
+            || (generalOptions.CodeAllocation.ProjectCodesOn && !generalOptions.CodeAllocation.UseProjectCodeOnGenDetails);
 
         if (!displayPercentageGrid)
         {
@@ -2378,18 +2380,18 @@ public partial class aeexpense : System.Web.UI.Page
 
         for (int i = 1; i < breakdownCount; i++)
         {
-            if (clsproperties.usedepartmentcodes && clsproperties.departmentson && clsproperties.usedepartmentongendet == false)
+            if (generalOptions.CodeAllocation.UseDepartmentCodes && generalOptions.CodeAllocation.DepartmentsOn && !generalOptions.CodeAllocation.UseDeptOnGenDetails)
             {
                 ddlst = (DropDownList)tbl.FindControl("cmbdepartment" + (i - 1));
                 int.TryParse(Request[ddlst.ClientID.Replace("_", "$")], out departmentid);
                 }
-            else if (clsproperties.usedepartmentcodes && clsproperties.departmentson && clsproperties.usedepartmentongendet)
+            else if (generalOptions.CodeAllocation.UseDepartmentCodes && generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDeptOnGenDetails)
             {
                 ddlst = (DropDownList)pnlgeneral.FindControl("cmbgendepartment");
                 int.TryParse(Request[ddlst.ClientID.Replace("_", "$")], out departmentid);
                 }
 
-            if (clsproperties.usecostcodes && clsproperties.costcodeson && clsproperties.usecostcodeongendet == false)
+            if (generalOptions.CodeAllocation.UseCostCodes && generalOptions.CodeAllocation.CostCodesOn && !generalOptions.CodeAllocation.UseCostCodeOnGenDetails)
             {
                 var costCodeBreakdownTextBox = (TextBox)tbl.FindControl("txtCostCode" + (i - 1) + "_ID");
 
@@ -2398,18 +2400,18 @@ public partial class aeexpense : System.Web.UI.Page
                    int.TryParse(costCodeBreakdownTextBox.Text, out costcodeid);
                 }               
             }
-            else if (clsproperties.usecostcodes && clsproperties.costcodeson && clsproperties.usecostcodeongendet)
+            else if (generalOptions.CodeAllocation.UseCostCodes && generalOptions.CodeAllocation.CostCodesOn && generalOptions.CodeAllocation.UseCostCodeOnGenDetails)
             {
                 var costCodeTextbox = (TextBox)pnlgeneral.FindControl("txtCostCode_ID");
                 int.TryParse(costCodeTextbox.Text, out costcodeid);            
             }
 
-            if (clsproperties.useprojectcodes && clsproperties.projectcodeson && clsproperties.useprojectcodeongendet == false)
+            if (generalOptions.CodeAllocation.UseProjectCodes && generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.UseProjectCodeOnGenDetails == false)
             {
                 ddlst = (DropDownList)tbl.FindControl("cmbprojectcode" + (i - 1));
                 int.TryParse(Request[ddlst.ClientID.Replace("_", "$")], out projectcodeid);
                 }
-            else if (clsproperties.useprojectcodes && clsproperties.projectcodeson && clsproperties.useprojectcodeongendet)
+            else if (generalOptions.CodeAllocation.UseProjectCodes && generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.UseProjectCodeOnGenDetails)
             {
                 ddlst = (DropDownList)pnlgeneral.FindControl("cmbgenprojectcode");
                 int.TryParse(Request[ddlst.ClientID.Replace("_", "$")], out projectcodeid);
@@ -2523,15 +2525,15 @@ public partial class aeexpense : System.Web.UI.Page
         cItemBuilder clsbuilder;
         if (transactionid > 0 || mobileItem != null)
         {
-            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], expenseItemDate, (int)ViewState["subAccountID"], itemtype, transactionid, currencyid, countryid, (int?)ViewState["mobileID"], null);
+            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], expenseItemDate, this.GeneralOptionsFactory, (int)ViewState["subAccountID"], itemtype, transactionid, currencyid, countryid, (int?)ViewState["mobileID"], null);
         }
         else if (mobileJourney != null)
         {
-            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], expenseItemDate, (int)ViewState["subAccountID"], itemtype, transactionid, currencyid, countryid, null, mobileJourney.JourneyId);
+            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], expenseItemDate, this.GeneralOptionsFactory, (int)ViewState["subAccountID"], itemtype, transactionid, currencyid, countryid, null, mobileJourney.JourneyId);
         }
         else
         {
-            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], expenseItemDate, (int)ViewState["subAccountID"], currencyid, countryid, itemtype, this.Page);
+            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], expenseItemDate, this.GeneralOptionsFactory, (int)ViewState["subAccountID"], currencyid, countryid, itemtype, this.Page);
         }
         cGlobalCurrencies clsglobalcurrencies = this.ActionContext.GlobalCurrencies;
         var subcats = this.ActionContext.SubCategories;
@@ -2757,10 +2759,8 @@ public partial class aeexpense : System.Web.UI.Page
             claimid = clsclaims.getDefaultClaim(ClaimStage.Current, employeeid);
             if (claimid == 0)
             {
-
-                cMisc clsmisc = this.ActionContext.Misc;
-                cGlobalProperties clsproperties = clsmisc.GetGlobalProperties((int)ViewState["accountid"]);
-                if (clsproperties.singleclaim)
+                var generalOptions = this.GeneralOptionsFactory[this.ActionContext.CurrentUser.CurrentSubAccountId].WithClaim();
+                if (generalOptions.Claim.SingleClaim)
                 {
                     claimid = clsclaims.insertDefaultClaim(employeeid);
                     if (claimid == -1)//The next claim number has already been used, so find the next available.
@@ -3461,7 +3461,7 @@ public partial class aeexpense : System.Web.UI.Page
         cExpenseItem item = null;
         List<int> items = new List<int>();
         cMisc clsmisc = this.ActionContext.Misc;
-        cGlobalProperties clsproperties = clsmisc.GetGlobalProperties((int)ViewState["accountid"]);
+        var generalOptions = this.GeneralOptionsFactory[this.ActionContext.CurrentUser.CurrentSubAccountId].WithCurrency().WithCountry().WithClaim().WithAddEditExpense();
         DateTime date;
         DropDownList ddlst;
 
@@ -3483,12 +3483,12 @@ public partial class aeexpense : System.Web.UI.Page
         }
 
         #region general details
-        int basecurrency = reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : clsproperties.basecurrency;
-        int homecountry = reqemp.PrimaryCountry != 0 ? reqemp.PrimaryCountry : clsproperties.homecountry;
+        int basecurrency = (reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : (int)generalOptions.Currency.BaseCurrency);
+        int homecountry = reqemp.PrimaryCountry != 0 ? reqemp.PrimaryCountry : generalOptions.Country.HomeCountry;
         TextBox txtbox = (TextBox)pnlgeneral.FindControl("txtdate");
         DateTime.TryParseExact(txtbox.Text, new string[] { "dd/MM/yyyy", "MM/dd/yyyy" }, null, DateTimeStyles.None, out date);
         Session["date"] = date;
-        if (clsproperties.singleclaim)
+        if (generalOptions.Claim.SingleClaim)
         {
             claimid = (int)ViewState["claimid"];
         }
@@ -3599,9 +3599,9 @@ public partial class aeexpense : System.Web.UI.Page
                 Session["currencyid"] = currencyid;
                 if (currencyid != basecurrency)
                 {
-                    if (clsproperties.exchangereadonly && itemtype == ItemType.Cash)
+                    if (generalOptions.AddEditExpense.ExchangeReadOnly && itemtype == ItemType.Cash)
                     {
-                        object[] arrcur = getExchangeRate((int)ViewState["accountid"], reqemp.EmployeeID, currencyid, date);
+                        object[] arrcur = getExchangeRate((int)ViewState["accountid"], reqemp.EmployeeID, currencyid, date, generalOptions);
                         double.TryParse(arrcur[1].ToString(), out exchangerate);
                         Session["exchangerate"] = exchangerate;
                     }
@@ -3617,7 +3617,7 @@ public partial class aeexpense : System.Web.UI.Page
                             }
                             else
                             {
-                                object[] arrcur = getExchangeRate((int)ViewState["accountid"], reqemp.EmployeeID, currencyid, date);
+                                object[] arrcur = getExchangeRate((int)ViewState["accountid"], reqemp.EmployeeID, currencyid, date, generalOptions);
                                 if (arrcur != null)
                                 {
                                     double.TryParse(arrcur[1].ToString(), out result);
@@ -4208,7 +4208,7 @@ public partial class aeexpense : System.Web.UI.Page
             if (reqmileage != null)
             {
                 details.currencyid = reqmileage.currencyid;
-                details.exchangerate = getExchange(accountIdentifier, (int)ViewState["employeeid"], details.currencyid, details.date);
+                details.exchangerate = getExchange((int)ViewState["employeeid"], details.currencyid, details.date);
             }
         }
 
@@ -4746,15 +4746,15 @@ public partial class aeexpense : System.Web.UI.Page
         cItemBuilder clsbuilder;
         if (transactionid > 0)
         {
-            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], tempitems.Values[0].date, (int)ViewState["subAccountID"], itemtype, transactionid, (int)ViewState["currencyid"], (int)ViewState["countryid"], (int?)ViewState["mobileID"], (int?)ViewState["mobileJourneyID"]);
+            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], tempitems.Values[0].date, this.GeneralOptionsFactory, (int)ViewState["subAccountID"], itemtype, transactionid, (int)ViewState["currencyid"], (int)ViewState["countryid"], (int?)ViewState["mobileID"], (int?)ViewState["mobileJourneyID"]);
         }
         else if (ViewState["mobileJourneyID"] != null && (int)ViewState["mobileJourneyID"] > 0)
         {
-            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], tempitems.Values[0].date, (int)ViewState["subAccountID"], itemtype, transactionid, (int)ViewState["currencyid"], (int)ViewState["countryid"], null, (int)ViewState["mobileJourneyID"]);
+            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], tempitems.Values[0].date, this.GeneralOptionsFactory, (int)ViewState["subAccountID"], itemtype, transactionid, (int)ViewState["currencyid"], (int)ViewState["countryid"], null, (int)ViewState["mobileJourneyID"]);
         }
         else
         {
-            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], tempitems.Values[0].date, (int)ViewState["subAccountID"], (int)ViewState["currencyid"], (int)ViewState["countryid"], itemtype, this.Page);
+            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], tempitems.Values[0].date, this.GeneralOptionsFactory, (int)ViewState["subAccountID"], (int)ViewState["currencyid"], (int)ViewState["countryid"], itemtype, this.Page);
         }
 
         //get the current date of the xpense item being claimed
@@ -4784,17 +4784,16 @@ public partial class aeexpense : System.Web.UI.Page
     }
     
 
-    private double getExchange(int accountid, int employeeid, int currencyid, DateTime date)
+    private double getExchange(int employeeid, int currencyid, DateTime date)
     {
         cCurrencies clscurrencies = this.ActionContext.Currencies;
         double exchangerate = 0;
-        cMisc clsmisc = this.ActionContext.Misc;
-        cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+        var generalOptions = this.GeneralOptionsFactory[this.ActionContext.CurrentUser.CurrentSubAccountId].WithCurrency();
 
         cEmployees clsemployees = this.ActionContext.Employees;
         Employee reqemp = clsemployees.GetEmployeeById(employeeid);
 
-        int basecurrency = reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : clsproperties.basecurrency;
+        int basecurrency = (reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : (int)generalOptions.Currency.BaseCurrency);
         exchangerate = clscurrencies.getCurrencyById(basecurrency).getExchangeRate(currencyid, date);
         if (exchangerate == 0)
         {
@@ -4807,13 +4806,12 @@ public partial class aeexpense : System.Web.UI.Page
 
     private void filterDropdownsOnPageStart()
     {
-        cMisc clsmisc = this.ActionContext.Misc;
-        cGlobalProperties clsproperties = clsmisc.GetGlobalProperties((int)ViewState["accountid"]);
+        var generalOptions = this.GeneralOptionsFactory[this.ActionContext.CurrentUser.CurrentSubAccountId].WithCodeAllocation();
 
         DropDownList ddlst;
         TextBox textBox;
 
-        if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet == false)
+        if (generalOptions.CodeAllocation.CostCodesOn && generalOptions.CodeAllocation.UseCostCodes && generalOptions.CodeAllocation.UseCostCodeOnGenDetails == false)
         {
             for (int i = 0; i < (tblcostcodes.Rows.Count - 1); i++)
             {
@@ -4824,7 +4822,7 @@ public partial class aeexpense : System.Web.UI.Page
                 }
             }
         }
-        else if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet)
+        else if (generalOptions.CodeAllocation.CostCodesOn && generalOptions.CodeAllocation.UseCostCodes && generalOptions.CodeAllocation.UseCostCodeOnGenDetails)
         {
             textBox = (TextBox)pnlgeneral.FindControl("txtCostCode_ID");
             if (textBox != null && textBox.Text != "")
@@ -4833,7 +4831,7 @@ public partial class aeexpense : System.Web.UI.Page
             }
         }
 
-        if (clsproperties.departmentson && clsproperties.usedepartmentcodes && clsproperties.usedepartmentongendet == false)
+        if (generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDepartmentCodes && generalOptions.CodeAllocation.UseDeptOnGenDetails == false)
         {
             for (int i = 0; i < (tblcostcodes.Rows.Count - 1); i++)
             {
@@ -4844,7 +4842,7 @@ public partial class aeexpense : System.Web.UI.Page
                 }
             }
         }
-        else if (clsproperties.departmentson && clsproperties.usedepartmentcodes && clsproperties.usedepartmentongendet)
+        else if (generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDepartmentCodes && generalOptions.CodeAllocation.UseDeptOnGenDetails)
         {
             ddlst = (DropDownList)pnlgeneral.FindControl("cmbgendepartment");
             if (ddlst != null && ddlst.SelectedValue != "")
@@ -4852,7 +4850,7 @@ public partial class aeexpense : System.Web.UI.Page
                 populateChildDropdowns(FilterType.Department, int.Parse(ddlst.SelectedValue), "0");
             }
         }
-        if (clsproperties.projectcodeson && clsproperties.useprojectcodes && clsproperties.useprojectcodeongendet == false)
+        if (generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.UseProjectCodes && generalOptions.CodeAllocation.UseProjectCodeOnGenDetails == false)
         {
             for (int i = 0; i < (tblcostcodes.Rows.Count - 1); i++)
             {
@@ -4863,7 +4861,7 @@ public partial class aeexpense : System.Web.UI.Page
                 }
             }
         }
-        else if (clsproperties.projectcodeson && clsproperties.useprojectcodes && clsproperties.useprojectcodeongendet)
+        else if (generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.UseProjectCodes && generalOptions.CodeAllocation.UseProjectCodeOnGenDetails)
         {
             ddlst = (DropDownList)pnlgeneral.FindControl("cmbgenprojectcode");
             if (ddlst != null && ddlst.SelectedValue != "")
@@ -4893,13 +4891,6 @@ public partial class aeexpense : System.Web.UI.Page
                 {
                     populateChildDropdowns(FilterType.Reason, int.Parse(ddlst.SelectedValue), i.ToString());
                 }
-
-                //textBox = (TextBox)subpnl.FindControl(i + "_txtOrganisation_ID");
-
-                //if (textBox != null && textBox.Text != "")
-                //{
-                //    populateChildDropdowns(FilterType.Location, int.Parse(textBox.Text), i.ToString());
-                //}
             }
 
             ddlst = (DropDownList)pnlgeneral.FindControl("cmbreason");
@@ -4907,13 +4898,6 @@ public partial class aeexpense : System.Web.UI.Page
             {
                 populateChildDropdowns(FilterType.Reason, int.Parse(ddlst.SelectedValue), "");
             }
-
-            //textBox = (TextBox)pnlgeneral.FindControl("txtOrganisation_ID");
-
-            //if (textBox != null && textBox.Text != "")
-            //{
-            //    populateChildDropdowns(FilterType.Location, Convert.ToInt32(textBox.Text), i.ToString());
-            //}
         }
     }
     private void populateChildDropdowns(FilterType filtertype, int id, string ctlindex)
@@ -5257,8 +5241,7 @@ public partial class aeexpense : System.Web.UI.Page
     {
         cFilterRule rule = this.ActionContext.FilterRules.GetFilterRuleById(filterid);
         Dictionary<int, cFilterRuleValue> lstRuleVals = rule.rulevals;
-        cMisc clsmisc = this.ActionContext.Misc;
-        cGlobalProperties clsproperties = clsmisc.GetGlobalProperties((int)ViewState["accountid"]);
+        var generalOptions = this.GeneralOptionsFactory[this.ActionContext.CurrentUser.CurrentSubAccountId].WithCodeAllocation();
 
         List<ListItem> lstItems = new List<ListItem>();
 
@@ -5301,13 +5284,13 @@ public partial class aeexpense : System.Web.UI.Page
                     switch (type)
                     {
                         case FilterType.Costcode:
-                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, clsproperties.usecostcodedesc);
+                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, generalOptions.CodeAllocation.UseCostCodeDescription);
                             break;
                         case FilterType.Department:
-                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, clsproperties.usedepartmentdesc);
+                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription);
                             break;
                         case FilterType.Projectcode:
-                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, clsproperties.useprojectcodedesc);
+                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc);
                             break;
                         case FilterType.Reason:
                             item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, false);
@@ -5315,9 +5298,6 @@ public partial class aeexpense : System.Web.UI.Page
                         case FilterType.Userdefined:
                             item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, false);
                             break;
-                        //case FilterType.Location:
-                        //    item = clsfilterrules.getParentOrChildItem(type, val.childid, false, false);
-                        //    break;
                     }
 
                     lstItems.Add(new ListItem(item, val.childid.ToString()));
@@ -5333,18 +5313,18 @@ public partial class aeexpense : System.Web.UI.Page
 
     #region Web Methods
     [WebMethod(EnableSession = true)]
-    public static object[] getExchangeRate(int accountid, int employeeid, int currencyid, DateTime date)
+    public static object[] getExchangeRate(int accountid, int employeeid, int currencyid, DateTime date, IGeneralOptions generalOptions)
     {
         CurrentUser user = cMisc.GetCurrentUser();
         cCurrencies clscurrencies = new cCurrencies(accountid, user.CurrentSubAccountId);
         double exchangerate = 0;
         employeeid = cMisc.GetCurrentUser().Employee.EmployeeID;
-        cMisc clsmisc = new cMisc(accountid);
-        cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+
+        generalOptions.WithCurrency();
 
         cEmployees clsemployees = new cEmployees(accountid);
         Employee reqemp = clsemployees.GetEmployeeById(employeeid);
-        int basecurrency = reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : clsproperties.basecurrency;
+        int basecurrency = reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : (int)generalOptions.Currency.BaseCurrency;
 
         cCurrency currency = clscurrencies.getCurrencyById(basecurrency);
         exchangerate = currency.getExchangeRate(currencyid, date);
@@ -5365,41 +5345,6 @@ public partial class aeexpense : System.Web.UI.Page
         }
         return data;
     }
-
-    //[WebMethod(EnableSession = true)]
-    //public static object[] getLocationFilterChildren(int accountid, string ctlindex)
-    //{
-    //    cMisc clsmisc = new cMisc(accountid);
-    //    cFilterRules clsfilterrules = new cFilterRules(accountid);
-    //    Dictionary<int, cFilterRule> filterrules = clsfilterrules.getFilterRulesByType(FilterType.Location);
-
-    //    string sType = "";
-    //    string sFilterid = "";
-    //    string ctlName = "";
-
-    //    foreach (cFilterRule rule in filterrules.Values)
-    //    {
-    //        if (rule.rulevals.Count > 0 && rule.enabled)
-    //        {
-    //            int type = (int)rule.child;
-    //            sType += type.ToString() + ";";
-    //            sFilterid += rule.filterid.ToString() + ";";
-    //        }
-    //    }
-
-    //    cFieldToDisplay company = clsmisc.GetGeneralFieldByCode("organisation");
-    //    if (company.individual)
-    //    {
-    //        ctlName = ctlindex + "_txtOrganisation_ID";
-    //    }
-    //    else
-    //    {
-    //        ctlName = "txtOrganisation_ID";
-    //    }
-    //    object[] children = new object[] { ctlName, sType, sFilterid, ctlindex, accountid };
-
-    //    return children;
-    //}
     #endregion
 
     protected void cmdcancel_Click(object sender, EventArgs eventArgs)
@@ -5505,7 +5450,7 @@ public partial class aeexpense : System.Web.UI.Page
     /// <param name="carID"></param>
     /// <returns></returns>
     [WebMethod(EnableSession = true)]
-    public static object[] GetDistance(int fromAddressId, string fromAddressText, int toAddressId, string toAddressText, DateTime date, int carID)
+    public object[] GetDistance(int fromAddressId, string fromAddressText, int toAddressId, string toAddressText, DateTime date, int carID)
     {
         CurrentUser currentUser = cMisc.GetCurrentUser();
         object[] distance = new object[2];
@@ -5514,11 +5459,7 @@ public partial class aeexpense : System.Web.UI.Page
         Address fromAddress = null;
         cEmployeeCars clsEmployeeCars = new cEmployeeCars(currentUser.AccountID, currentUser.EmployeeID);
 
-        cMisc clsmisc = new cMisc(currentUser.AccountID);
-        cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(currentUser.AccountID);
-
-        cAccountSubAccounts clsSubAccounts = new cAccountSubAccounts(currentUser.AccountID);
-        cAccountProperties reqProperties = clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties.Clone(); // clsSubAccounts.getFirstSubAccount().SubAccountProperties.Clone();
+        var generalOptions = this.GeneralOptionsFactory[this.ActionContext.CurrentUser.CurrentSubAccountId].WithDutyOfCare().WithAddEditExpense().WithMileage();
 
         if (fromAddressText.Trim().ToLower() == "office" || fromAddressText.Trim().ToLower() == "home")
         {
@@ -5582,7 +5523,7 @@ public partial class aeexpense : System.Web.UI.Page
             else
             {
                 // the account option "Postcode Anywhere" is off
-                if (reqProperties.UseMapPoint == false)
+                if (generalOptions.Mileage.UseMapPoint == false)
                 {
                     distance[0] = 1;
                     distance[1] = 0;
@@ -5592,11 +5533,11 @@ public partial class aeexpense : System.Web.UI.Page
                     cAccount account = new cAccounts().GetAccountByID(currentUser.AccountID);
 
                     distance[0] = 1;
-                    distance[1] = AddressDistance.GetRecommendedDistance(currentUser, fromAddress, toAddress, reqProperties.MileageCalcType, account.MapsEnabled);
+                    distance[1] = AddressDistance.GetRecommendedDistance(currentUser, fromAddress, toAddress, generalOptions.Mileage.MileageCalcType, account.MapsEnabled);
 
                     if (carID == 0)
                     {
-                        carID = clsEmployeeCars.GetDefaultCarID(clsproperties.blocktaxexpiry, clsproperties.blockmotexpiry, clsproperties.blockinsuranceexpiry, clsproperties.BlockBreakdownCoverExpiry, reqProperties.DisableCarOutsideOfStartEndDate, date);
+                        carID = clsEmployeeCars.GetDefaultCarID(generalOptions.DutyOfCare.BlockTaxExpiry, generalOptions.DutyOfCare.BlockMOTExpiry, generalOptions.DutyOfCare.BlockInsuranceExpiry, generalOptions.DutyOfCare.BlockBreakdownCoverExpiry, generalOptions.AddEditExpense.DisableCarOutsideOfStartEndDate, date);
                     }
                     cCar car = clsEmployeeCars.GetCarByID(carID);
 

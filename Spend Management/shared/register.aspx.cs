@@ -9,24 +9,31 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.GeneralOptions;
+using BusinessLogic.Identity;
+
 using Common.Cryptography;
-using SpendManagementLibrary;
-using SpendManagementLibrary.Account;
-using SpendManagementLibrary.Addresses;
-using SpendManagementLibrary.BaseClasses;
-using SpendManagementLibrary.Employees;
-using SpendManagementLibrary.Employees.DutyOfCare;
-using SpendManagementLibrary.Enumerators;
-using SpendManagementLibrary.Helpers;
+
+using expenses;
 
 using Spend_Management;
 using Spend_Management.shared.code;
 using Spend_Management.shared.code.Validation.BankAccount;
 using Spend_Management.shared.code.Validation.BankAccount.PostCodeAnywhere;
+
+using SpendManagementLibrary;
+using SpendManagementLibrary.Account;
+using SpendManagementLibrary.Addresses;
+using SpendManagementLibrary.BaseClasses;
+using SpendManagementLibrary.Employees;
+using SpendManagementLibrary.Enumerators;
 using BankAccount = SpendManagementLibrary.Employees.BankAccount;
 
 #endregion
@@ -40,7 +47,7 @@ public partial class register : Page
     /// The udfs added.
     /// </summary>
     public bool UdfsAdded = false;
-    
+
     #region Public Methods and Operators
 
     /// <summary>
@@ -397,8 +404,8 @@ public partial class register : Page
     public string CreateMileage(int accountid)
     {
         var clsmileage = new cMileagecats(accountid);
-        var clsmisc = new cMisc(accountid);
-        cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+
+        var generalOptions = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>()[cMisc.GetCurrentUser().CurrentSubAccountId].WithMileage();
 
         string rowclass = "row1";
         var output = new StringBuilder();
@@ -407,7 +414,7 @@ public partial class register : Page
         output.Append("<table class=\"datatbl\">");
         output.Append(
             "<tr><th></th><th>Vehicle Journey Rate Category</th><th>Description</th><th>Pence/mile<br>before "
-            + clsproperties.mileage + "<br>miles</th><th>Pence/mile<br>after " + clsproperties.mileage
+            + generalOptions.Mileage.Mileage + "<br>miles</th><th>Pence/mile<br>after " + generalOptions.Mileage.Mileage
             + "<br>miles</th></tr>");
 
         int mileageid = 0;
@@ -637,8 +644,13 @@ public partial class register : Page
     public string CreateTimeline(int accountid)
     {
         var output = new StringBuilder();
-        var clsmisc = new cMisc(accountid);
-        cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+
+        var subaccs = new cAccountSubAccounts(accountid);
+        int subAccountId = subaccs.getFirstSubAccount().SubAccountID;
+
+        var generalOptions = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>()[subAccountId]
+            .WithSelfRegistration().WithCar();
+
         var steps = new ArrayList();
         int stepcount = 0;
 
@@ -649,14 +661,14 @@ public partial class register : Page
         step = new wizardStep(1, stepcount, "Enter a Password");
         steps.Add(step);
         stepcount++;
-        if (clsproperties.selfregempcontact)
+        if (generalOptions.SelfRegistration.AllowSelfRegEmployeeContact)
         {
             step = new wizardStep(2, stepcount, "Employee Contact Details");
             steps.Add(step);
             stepcount++;
         }
 
-        if (clsproperties.selfreghomeaddr)
+        if (generalOptions.SelfRegistration.AllowSelfRegHomeAddress)
         {
             step = new wizardStep(3, stepcount, "Employee Home Address &amp; Contact Details");
             steps.Add(step);
@@ -664,54 +676,54 @@ public partial class register : Page
             stepcount++;
         }
 
-        if (clsproperties.selfregempinfo)
+        if (generalOptions.SelfRegistration.AllowSelfRegEmployeeInfo)
         {
             step = new wizardStep(4, stepcount, "Employment Details");
             steps.Add(step);
             stepcount++;
         }
 
-        if (clsproperties.selfregrole)
+        if (generalOptions.SelfRegistration.AllowSelfRegRole)
         {
             step = new wizardStep(5, stepcount, "Role");
             steps.Add(step);
             stepcount++;
         }
 
-        if (clsproperties.selfregsignoff)
+        if (generalOptions.SelfRegistration.AllowSelfRegSignOff)
         {
             step = new wizardStep(6, stepcount, "Signoff Group");
             steps.Add(step);
             stepcount++;
         }
 
-        if (clsproperties.selfregadvancessignoff)
+        if (generalOptions.SelfRegistration.AllowSelfRegAdvancesSignOff)
         {
             step = new wizardStep(7, stepcount, "Signoff Group for Advances");
             steps.Add(step);
             stepcount++;
         }
 
-        if (clsproperties.selfregdepcostcode)
+        if (generalOptions.SelfRegistration.AllowSelfRegDepartmentCostCode)
         {
             step = new wizardStep(8, stepcount, "Coding Breakdown");
             steps.Add(step);
             stepcount++;
         }
 
-        if (clsproperties.selfregbankdetails)
+        if (generalOptions.SelfRegistration.AllowSelfRegBankDetails)
         {
             step = new wizardStep(9, stepcount, "Bank Details");
             steps.Add(step);
             stepcount++;
         }
 
-        if (clsproperties.selfregcardetails)
+        if (generalOptions.SelfRegistration.AllowSelfRegCarDetails)
         {
             step = new wizardStep(10, stepcount, "Vehicle Details");
             steps.Add(step);
             stepcount++;
-            if (clsproperties.ShowMileageCategoriesForUsers)
+            if (generalOptions.Car.ShowMileageCatsForUsers)
             {
                 step = new wizardStep(11, stepcount, "Mileage Details");
                 steps.Add(step);
@@ -719,7 +731,7 @@ public partial class register : Page
             }
         }
 
-        if (clsproperties.selfregudf)
+        if (generalOptions.SelfRegistration.AllowSelfRegUDF)
         {
             step = new wizardStep(12, stepcount, "Other Information");
             steps.Add(step);
@@ -857,7 +869,7 @@ public partial class register : Page
     /// </summary>
     [Dependency]
     public IEncryptor Encryptor { get; set; }
-
+    
     /// <summary>
     /// The page_ load.
     /// </summary>
@@ -924,6 +936,8 @@ public partial class register : Page
         int accountId;
         if (ViewState["accountid"] != null && int.TryParse(this.ViewState["accountid"].ToString(), out accountId))
         {
+            HttpContext.Current.User = new TemporaryWebPrincipal(new UserIdentity(accountId, 0));
+
             this.CreateUserDefined(accountId);
             Session["accountid"] = accountId;
             FillCurrency();
@@ -1120,8 +1134,10 @@ public partial class register : Page
         var currentUser = new CurrentUser(accountId, 0, 0, Modules.SpendManagement, subAccountId);
 
         var misc = new cMisc(accountId);
-        cGlobalProperties properties = misc.GetGlobalProperties(accountId);
         bool move = false;
+
+        var generalOptions = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>()[currentUser.CurrentSubAccountId]
+            .WithSelfRegistration().WithCountry().WithCurrency().WithCar();
 
         var stepsVisited = (ArrayList)this.ViewState["stepsVisited"];
         stepsVisited.Add(this.wizregister.ActiveStepIndex);
@@ -1135,7 +1151,7 @@ public partial class register : Page
                 this.litpolicy.Text = this.CreatePolicy();
                 break;
             case 2: // emp contact
-                if (properties.selfregempcontact == false)
+                if (generalOptions.SelfRegistration.AllowSelfRegEmployeeContact == false)
                 {
                     move = true;
                 }
@@ -1144,7 +1160,7 @@ public partial class register : Page
                 break;
             case 3: // home details
 
-                if (properties.selfreghomeaddr == false)
+                if (generalOptions.SelfRegistration.AllowSelfRegHomeAddress == false)
                 {
                     move = true;
                 }
@@ -1152,7 +1168,7 @@ public partial class register : Page
                 this.littimeline.Text = this.CreateTimeline(accountId);
                 break;
             case 4: // emp info
-                if (properties.selfregempinfo == false)
+                if (generalOptions.SelfRegistration.AllowSelfRegEmployeeInfo == false)
                 {
                     move = true;
                 }
@@ -1162,25 +1178,25 @@ public partial class register : Page
                 if (this.cmbcountry.Items.Count == 0)
                 {
                     this.cmbcountry.Items.AddRange(countries.CreateDropDown().ToArray());
-                    if (properties.homecountry != 0
-                        && this.cmbcountry.Items.Contains(countries.GetListItem(properties.homecountry)))
+                    if (generalOptions.Country.HomeCountry != 0
+                        && this.cmbcountry.Items.Contains(countries.GetListItem(generalOptions.Country.HomeCountry)))
                     {
-                        if (countries.list.ContainsKey(properties.homecountry))
+                        if (countries.list.ContainsKey(generalOptions.Country.HomeCountry))
                         {
-                            this.cmbcountry.Items.Add(countries.GetListItem(properties.homecountry));
+                            this.cmbcountry.Items.Add(countries.GetListItem(generalOptions.Country.HomeCountry));
                         }
                     }
 
-                    if (this.cmbcountry.Items.FindByValue(properties.homecountry.ToString(CultureInfo.InvariantCulture)) != null)
+                    if (this.cmbcountry.Items.FindByValue(generalOptions.Country.HomeCountry.ToString(CultureInfo.InvariantCulture)) != null)
                     {
-                        this.cmbcountry.Items.FindByValue(properties.homecountry.ToString(CultureInfo.InvariantCulture)).Selected = true;
+                        this.cmbcountry.Items.FindByValue(generalOptions.Country.HomeCountry.ToString(CultureInfo.InvariantCulture)).Selected = true;
                     }
                 }
 
                 if (this.cmbcurrency.Items.Count == 0)
                 {
                     var currencies = new cCurrencies(accountId, subAccountId);
-                    this.cmbcurrency.Items.AddRange(currencies.CreateDropDown(properties.basecurrency));
+                    this.cmbcurrency.Items.AddRange(currencies.CreateDropDown((int) generalOptions.Currency.BaseCurrency));
                 }
 
                 if (this.cmblinemanager.Items.Count == 0)
@@ -1192,7 +1208,7 @@ public partial class register : Page
 
                 break;
             case 5: // role
-                if (properties.selfregrole == false)
+                if (generalOptions.SelfRegistration.AllowSelfReg == false)
                 {
                     move = true;
                 }
@@ -1201,7 +1217,7 @@ public partial class register : Page
                 this.litroles.Text = this.CreateRoles(accountId);
                 break;
             case 6: // signoff group
-                if (properties.selfregsignoff == false)
+                if (generalOptions.SelfRegistration.AllowSelfRegSignOff == false)
                 {
                     move = true;
                 }
@@ -1210,7 +1226,7 @@ public partial class register : Page
                 this.litsignoffs.Text = this.CreateSignoffGroups(accountId, "group");
                 break;
             case 7: // advances signoff
-                if (properties.selfregadvancessignoff == false)
+                if (generalOptions.SelfRegistration.AllowSelfRegAdvancesSignOff == false)
                 {
                     move = true;
                 }
@@ -1220,7 +1236,7 @@ public partial class register : Page
                     accountId, "advancesgroup");
                 break;
             case 8: // dep / costcode breakdown
-                if (properties.selfregdepcostcode == false)
+                if (generalOptions.SelfRegistration.AllowSelfRegDepartmentCostCode == false)
                 {
                     move = true;
                 }
@@ -1241,7 +1257,7 @@ public partial class register : Page
 
                 break;
             case 9: // bank details
-                if (properties.selfregbankdetails == false)
+                if (generalOptions.SelfRegistration.AllowSelfRegBankDetails == false)
                 {
                     move = true;
                 }
@@ -1249,7 +1265,7 @@ public partial class register : Page
                 this.littimeline.Text = this.CreateTimeline(accountId);
                 break;
             case 10: // car details
-                if (properties.selfregcardetails == false)
+                if (generalOptions.SelfRegistration.AllowSelfRegCarDetails == false)
                 {
                     move = true;
                 }
@@ -1284,7 +1300,7 @@ public partial class register : Page
 
                 break;
             case 11:
-                if (this.chkusecar.Checked == false || !properties.ShowMileageCategoriesForUsers)
+                if (this.chkusecar.Checked == false || !generalOptions.Car.ShowMileageCatsForUsers)
                 {
                     move = true;
                 }
@@ -1296,7 +1312,7 @@ public partial class register : Page
 
                 break;
             case 12: // udf
-                if (properties.selfregudf == false)
+                if (generalOptions.SelfRegistration.AllowSelfRegUDF == false)
                 {
                     move = true;
                 }
@@ -1309,42 +1325,42 @@ public partial class register : Page
                 this.lblname.Text = string.Format("{0} {1} {2}", this.txttitle.Text, this.txtfirstname.Text, this.txtsurname.Text);
                 this.lblemail.Text = this.txtemail.Text;
                 this.lblusername.Text = this.txtusername.Text;
-                if (properties.selfregempcontact)
+                if (generalOptions.SelfRegistration.AllowSelfRegEmployeeContact)
                 {
                     this.litempcontact.Text = this.CreateEmployeeContactSummary();
                 }
 
-                if (properties.selfreghomeaddr)
+                if (generalOptions.SelfRegistration.AllowSelfRegHomeAddress)
                 {
                     this.lithomeaddr.Text = this.CreateHomeAddressSummary();
                 }
 
-                if (properties.selfregempinfo)
+                if (generalOptions.SelfRegistration.AllowSelfRegEmployeeInfo)
                 {
                     this.litempinfo.Text = this.CreateEmployementInfoSummary(accountId);
                 }
 
-                if (properties.selfregrole)
+                if (generalOptions.SelfRegistration.AllowSelfRegRole)
                 {
                     this.litrole.Text = this.CreateRoleSummary(accountId);
                 }
 
-                if (properties.selfregsignoff)
+                if (generalOptions.SelfRegistration.AllowSelfRegSignOff)
                 {
                     this.litsignoff.Text = this.CreateSignoffSummary(accountId);
                 }
 
-                if (properties.selfregadvancessignoff)
+                if (generalOptions.SelfRegistration.AllowSelfRegAdvancesSignOff)
                 {
                     this.litadvancessignoff.Text = this.CreateAdvancesSignoffSummary(accountId);
                 }
 
-                if (properties.selfregcardetails)
+                if (generalOptions.SelfRegistration.AllowSelfRegCarDetails)
                 {
-                    this.litcardetails.Text = this.CreateCarSummary(accountId, properties.ShowMileageCategoriesForUsers);
+                    this.litcardetails.Text = this.CreateCarSummary(accountId, generalOptions.Car.ShowMileageCatsForUsers);
                 }
 
-                if (properties.selfregudf)
+                if (generalOptions.SelfRegistration.AllowSelfRegUDF)
                 {
                     this.litudfs.Text = this.CreateUdfSummary(accountId);
                 }
@@ -1588,7 +1604,7 @@ public partial class register : Page
             reqEmp.GetItemRoles().Add(lstItemRoles, null);
         }
 
-        byte checkpwd = clsemployees.checkpassword(password, accountId, reqEmp.EmployeeID, this.Encryptor);
+        byte checkpwd = clsemployees.checkpassword(password, accountId, reqEmp.EmployeeID, this.Encryptor, FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>()[subAccountId]);
         reqEmp.ChangePassword(string.Empty, password, false, checkpwd, accountProperties.PwdHistoryNum, null, this.Encryptor);
         bool usecar = this.chkusecar.Checked;
 
@@ -1675,10 +1691,14 @@ public partial class register : Page
                     }
                 }
 
-                clsemployees = new cEmployees((int)this.ViewState["accountid"]);
+                var accountId = (int) this.ViewState["accountid"];
+
+                HttpContext.Current.User = new TemporaryWebPrincipal(new UserIdentity(accountId, 0));
+
+                clsemployees = new cEmployees(accountId);
 
                 // check if emps can self register
-                clsSubAccounts = new cAccountSubAccounts((int)this.ViewState["accountid"]);
+                clsSubAccounts = new cAccountSubAccounts(accountId);
                 cAccountProperties reqProperties = clsSubAccounts.getFirstSubAccount().SubAccountProperties.Clone();
 
                 if (reqProperties.AllowSelfReg == false)
@@ -1692,7 +1712,7 @@ public partial class register : Page
 
                 // check username does not already exist
                 if (clsemployees.alreadyExists(
-                    this.txtusername.Text.Trim().ToLower(), 0, 0, (int)this.ViewState["accountid"]))
+                    this.txtusername.Text.Trim().ToLower(), 0, 0, accountId))
                 {
                     this.lblmsggeneral.Text = "The username you have entered has already been used. Please enter a different username.";
                     this.lblmsggeneral.Visible = true;
@@ -1707,8 +1727,11 @@ public partial class register : Page
 
                 break;
             case 1: // password
-                clsemployees = new cEmployees((int)this.ViewState["accountid"]);
-                if (clsemployees.checkpassword(this.txtnew.Text, (int)this.ViewState["accountid"], 0, this.Encryptor) > 0)
+                accountId = (int) this.ViewState["accountid"];
+                clsemployees = new cEmployees(accountId);
+                clsSubAccounts = new cAccountSubAccounts(accountId);
+
+                if (clsemployees.checkpassword(this.txtnew.Text, (int)this.ViewState["accountid"], 0, this.Encryptor, FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>()[clsSubAccounts.getFirstSubAccount().SubAccountID]) > 0)
                 {
                     this.lblpassword.Text = "The password you have entered does not conform to the password policy.";
                     this.lblpassword.Visible = true;

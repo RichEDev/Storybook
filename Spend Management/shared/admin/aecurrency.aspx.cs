@@ -34,9 +34,6 @@ namespace Spend_Management
                         break;
                 }
 
-                cMisc clsmisc = new cMisc(user.AccountID);
-
-                cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(user.AccountID);
                 cGlobalCurrencies clsglobalcurrencies = new cGlobalCurrencies();
 
                 cCurrencies clsCurrencies = new cCurrencies(user.AccountID, user.CurrentSubAccountId);

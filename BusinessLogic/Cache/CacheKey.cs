@@ -36,7 +36,6 @@ namespace BusinessLogic.Cache
         public virtual string GetCacheKeyHash(string hashName)
         {
             Guard.ThrowIfNullOrWhiteSpace(this.Area, nameof(this.Area));
-            Guard.ThrowIfNull(this.Key, nameof(this.Key));
             Guard.ThrowIfNullOrWhiteSpace(hashName, nameof(hashName));
 
             return $"{this.Area}:{hashName}";

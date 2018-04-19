@@ -3,6 +3,10 @@
     using System;
     using System.Web.Services;
     using System.Web.Script.Services;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using Spend_Management;
 
     /// <summary>
@@ -14,9 +18,13 @@
     [ScriptService]
     public class svcDutyOfCare : WebService
     {
-
         private const string VehicleErrorMessage= "You currently have no active vehicles to claim mileage against, please contact your administrator or Add a vehicle using the link.";
         private const string VehicleErrorMessageWithApproval= "You currently have no active vehicles to claim mileage against, please contact your administrator or Add a vehicle using the link and wait for your administrator to approve it.";
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory = expenses.Global.container.GetInstance<IDataFactory<IGeneralOptions, int>>();
 
         /// <summary>
         /// getDocComment webmethod create DOC Validation messages for the car selected.
@@ -34,17 +42,19 @@
         [WebMethod, ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string[] GetDutyOfCareComments(string id, int accountid, int employeeid, int carid, int subcatid, DateTime date, bool claimSubmitted, bool isDelegate)
         {
-            cItemBuilder itemBuilder = new cItemBuilder(accountid, employeeid, date);
+            cItemBuilder itemBuilder = new cItemBuilder(accountid, employeeid, date, this.GeneralOptionsFactory);
             string[] data = new string[2];
             data[0] = id;
             data[1] = itemBuilder.CreateDutyOfCareExpiryMessages(subcatid, carid, claimSubmitted, date, isDelegate);
             if (!string.IsNullOrWhiteSpace(data[1])) return data;
             var user = cMisc.GetCurrentUser();
-            var clsSubAccounts = new cAccountSubAccounts(accountid);
-            var reqProperties = clsSubAccounts.getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
+
+            var generalOptions =
+                this.GeneralOptionsFactory[user.CurrentSubAccountId].WithCar();
+
             var employeeCars = new cEmployeeCars(accountid, employeeid).GetActiveCars(date);
             if (employeeCars.Count != 0) return data;
-            data[1] = reqProperties.ActivateCarOnUserAdd ? VehicleErrorMessage : VehicleErrorMessageWithApproval;
+            data[1] = generalOptions.Car.ActivateCarOnUserAdd ? VehicleErrorMessage : VehicleErrorMessageWithApproval;
             return data;
         }
     }

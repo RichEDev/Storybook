@@ -1,23 +1,18 @@
-using SpendManagementLibrary.Enumerators;
-using SpendManagementLibrary.HelpAndSupport;
-using Spend_Management.shared.code;
-
 namespace expenses
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.Linq;
     using System.Web.UI;
     using System.Web.UI.WebControls;
-    using Spend_Management.shared.code.GreenLight;
+    using Spend_Management.shared.code;
 
-    using expenses.information;
     using Spend_Management;
     using SpendManagementLibrary;
-    using SpendManagementLibrary.Helpers;
-    using SpendManagementLibrary.Holidays;
+    using SpendManagementLibrary.HelpAndSupport;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
 
     /// <summary>
     /// Home page for expenses.
@@ -28,6 +23,12 @@ namespace expenses
         /// The litoptions.
         /// </summary>
         protected Literal Litoptions;
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether is delegate.
@@ -62,8 +63,6 @@ namespace expenses
 
             var usingExpenses = user.CurrentActiveModule == Modules.expenses;
 
-            cAccountProperties accountProperties = new cAccountSubAccounts(user.AccountID).getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
-
             this.Title = string.Format("Welcome to {0}", module.BrandNamePlainText);
             this.Master.Title = string.Format("Welcome to {0}", module.BrandNameHTML);
 
@@ -71,8 +70,8 @@ namespace expenses
             {
                 this.ViewState["accountid"] = user.AccountID;
 
-                var clsmisc = new cMisc(user.AccountID);
-                cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(user.AccountID);
+                var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithDelegate().WithEmployee().WithHotel().WithMobile().WithHelpAndSupport();
+
                 var clsemployees = new cEmployees(user.AccountID);
 
                 bool delegateUser = AccessRoleCheck.IsDelegate;
@@ -174,7 +173,7 @@ namespace expenses
                         "shared/reports/rptlist.aspx" + (claimantreports.Value && !reportsAccess ? "?claimants=1" : string.Empty));
                 }
 
-                if (accountProperties.EnableInternalSupportTickets && user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.SupportTickets, true))
+                if (generalOptions.HelpAndSupport.EnableInternalSupportTickets && user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.SupportTickets, true))
                 {
                     this.Master.AddMenuItem(
                         "supprt_ticket",
@@ -184,7 +183,7 @@ namespace expenses
                         "shared/admin/adminHelpAndSupportTickets.aspx");
                 }
 
-                if (AccessRoleCheck.CanAccessAdminSettings(user))
+                if (AccessRoleCheck.CanAccessAdminSettings(user, this.GeneralOptionsFactory))
                  {
                     menuText = usingExpenses
                         ? "Manage basic information such as Expense Categories, Addresses and Reasons. Manage new employees and customise the way {0} functions."
@@ -211,7 +210,7 @@ namespace expenses
                     }
                 }
 
-                if ((usingExpenses && clsproperties.showreviews && user.Account.HotelReviewsEnabled) || (clsproperties.searchemployees && user.Account.EmployeeSearchEnabled))
+                if ((usingExpenses && generalOptions.Hotel.ShowReviews && user.Account.HotelReviewsEnabled) || (generalOptions.Employee.SearchEmployees && user.Account.EmployeeSearchEnabled))
                 {
                     menuText = usingExpenses
                         ? "Search for other claimants who use {0} or search for and view hotel reviews."
@@ -226,7 +225,7 @@ namespace expenses
                 }
 
                 if ((!delegateUser && (user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.EmployeeExpenses, false) || clsemployees.isProxy(user.Employee.EmployeeID)))
-                    || (delegateUser && (clsproperties.delemployeeaccounts || clsemployees.isProxy(user.Employee.EmployeeID))))
+                    || (delegateUser && (generalOptions.Delegate.DelEmployeeAccounts || clsemployees.isProxy(user.Employee.EmployeeID))))
                 {
                     if (this.Session["myid"] == null)
                     {
@@ -254,7 +253,7 @@ namespace expenses
 
                 if (usingExpenses)
                 {
-                    if (accountProperties.UseMobileDevices)
+                    if (generalOptions.Mobile.UseMobileDevices)
                     {
                         if (user.Account.IsNHSCustomer == true)
                         {

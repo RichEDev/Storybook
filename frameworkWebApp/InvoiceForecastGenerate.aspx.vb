@@ -1,5 +1,10 @@
+Imports BusinessLogic.AccountProperties
+Imports BusinessLogic.DataConnections
+Imports BusinessLogic.Enums
+Imports BusinessLogic.GeneralOptions
+
 Imports SpendManagementLibrary
-Imports FWClasses
+
 Imports Spend_Management
 
 Namespace Framework2006
@@ -21,6 +26,10 @@ Namespace Framework2006
         End Sub
 
 #End Region
+
+        Dim ReadOnly _generalOptionsFactory As IDataFactory(Of IGeneralOptions, Integer) = (FunkyInjector.Container.GetInstance(GetType(IDataFactory(Of IGeneralOptions,integer))))
+
+        Dim ReadOnly _accountPropertiesFactory As IDataFactory(Of IAccountProperty, AccountPropertyCacheKey) = (FunkyInjector.Container.GetInstance(GetType(IDataFactory(Of IAccountProperty,AccountPropertyCacheKey))))
 
         Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
             Dim curUser As CurrentUser = cMisc.GetCurrentUser()
@@ -374,7 +383,12 @@ Namespace Framework2006
                 If includePONum Then
                     db.SetFieldValue("poNumber", String.Format(poNumFormat, poNumSeq), "N", False)
                     poNumSeq += 1
-                    subaccs.IncrementPONumber(curUser.CurrentSubAccountId, curUser.EmployeeID)
+
+                    Dim pONumberSequence As integer = Me._generalOptionsFactory(curUser.CurrentSubAccountId).WithContracts.Invoices.PONumberSequence + 1
+
+                    Me._accountPropertiesFactory.Save(New AccountProperty(AccountPropertyKeys.PONumberSequence.GetDescription, pONumberSequence, curUser.CurrentSubAccountId))
+
+                    subaccs.InvalidateCache(curUser.CurrentSubAccountId)
                 End If
                 db.FWDb("W", "contract_forecastdetails", "", "", "", "", "", "", "", "", "", "", "", "")
 

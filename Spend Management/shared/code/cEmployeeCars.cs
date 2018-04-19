@@ -57,7 +57,6 @@ namespace Spend_Management
         private List<ListItem> sornCars;
 
         private cAccountSubAccount subAccount;
-        private cGlobalProperties clsproperties;
         private cAccountProperties accountProperties;
 
         /// <summary>

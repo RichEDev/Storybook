@@ -175,12 +175,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AccountPropertiesController.cs" />
+    <Compile Include="Controllers\GeneralOptionsController.cs" />
     <Compile Include="Controllers\HttpActionResult.cs" />
     <Compile Include="Controllers\P11DCategoriesController.cs" />
     <Compile Include="Controllers\ProjectCodesController.cs" />
     <Compile Include="Controllers\ControllerExtensions.cs" />
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="Controllers\WalletReceiptsController.cs" />
+    <Compile Include="DTO\AccountPropertiesDTO.cs" />
+    <Compile Include="DTO\GeneralOptionsDTO.cs" />
+    <Compile Include="DTO\GeneralOptionsRequestDTO.cs" />
     <Compile Include="DTO\P11DCategoryDTO.cs" />
     <Compile Include="DTO\ProjectCodeDTO.cs" />
     <Compile Include="DTO\WalletReceiptDTO.cs" />

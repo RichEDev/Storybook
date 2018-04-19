@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SpendManagementLibrary
+﻿namespace SpendManagementLibrary
 {
+    using System;
+    using System.Collections.Generic;
+
+    using BusinessLogic.GeneralOptions.Password;
+
     [Serializable]
     public class cAccountSubAccount
     {

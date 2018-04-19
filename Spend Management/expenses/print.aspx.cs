@@ -4,6 +4,10 @@ namespace Spend_Management
     using System.Collections.Generic;
     using System.Globalization;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
 
@@ -11,8 +15,14 @@ namespace Spend_Management
 	/// Summary description for print.
 	/// </summary>
 	public partial class print : System.Web.UI.Page
-	{
-		protected void Page_Load(object sender, EventArgs e)
+    {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+        protected void Page_Load(object sender, EventArgs e)
 		{			
 			if (this.IsPostBack == false)
 			{
@@ -49,14 +59,15 @@ namespace Spend_Management
                 var clscurrencies = new cCurrencies(user.AccountID, user.CurrentSubAccountId);
                 cCurrency reqcurrency = clscurrencies.getCurrencyById(reqclaim.currencyid);
                 var misc = new cMisc(user.AccountID);
-                cGlobalProperties properties = misc.GetGlobalProperties(user.AccountID);
+
+			    var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithMileage();
 
 			    string symbol = reqcurrency != null ? clsglobalcurrencies.getGlobalCurrencyById(reqcurrency.globalcurrencyid).symbol : "£";
                 var expenseItems = new cExpenseItems(user.AccountID);
-                string[] gridData = expenseItems.generateClaimGrid(user.EmployeeID, reqclaim, "gridExpenses", viewtype, Filter.None, true, false, properties.allowmultipledestinations, false, symbol);
+                string[] gridData = expenseItems.generateClaimGrid(user.EmployeeID, reqclaim, "gridExpenses", viewtype, Filter.None, true, false, generalOptions.Mileage.AllowMultipleDestinations, false, symbol);
                 this.litExpensesGrid.Text = gridData[1];
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "gridHistoryVars", cGridNew.generateJS_init("gridHistoryVars", new List<string> { gridData[0] }, user.CurrentActiveModule), true);         
-				misc.GeneratePrintOutFields(ref this.fields, claimid, properties.allowmultipledestinations);
+				misc.GeneratePrintOutFields(ref this.fields, claimid, generalOptions.Mileage.AllowMultipleDestinations);
                 int numreceipts = reqclaim.NumberOfReceipts;
 				this.lblnumreceipts.Text = numreceipts.ToString(CultureInfo.InvariantCulture);
                 

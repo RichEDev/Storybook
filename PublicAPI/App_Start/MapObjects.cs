@@ -1,10 +1,14 @@
 ﻿namespace PublicAPI
 {
     using System.Collections.Generic;
+
+    using BusinessLogic.AccountProperties;
+    using BusinessLogic.GeneralOptions;
     using BusinessLogic.ProjectCodes;
     using BusinessLogic.UserDefinedFields;
     using BusinessLogic.P11DCategories;
     using BusinessLogic.Receipts;
+
     using DTO;
 
     /// <summary>
@@ -27,6 +31,8 @@
                 cfg.CreateMap<IEnumerable<P11DCategoryDto>, IEnumerable<P11DCategory>>().ReverseMap();
                 cfg.CreateMap<P11DCategoryDto, P11DCategory>().ReverseMap();
                 cfg.CreateMap<WalletReceiptDto, WalletReceipt>().ReverseMap();
+                cfg.CreateMap<AccountPropertiesDTO, IAccountProperty>().ReverseMap();
+                cfg.CreateMap<GeneralOptionsDTO, IGeneralOptions>().ReverseMap();
             });
         }
 

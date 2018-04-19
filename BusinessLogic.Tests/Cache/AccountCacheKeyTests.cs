@@ -81,15 +81,6 @@
                 Assert.Throws<ArgumentNullException>(() => sut.GetCacheKeyHash("test"));
             }
 
-            [Fact]
-            public void NullKey_GetCacheKeyHash_ThrowsArgumentNullException()
-            {
-                IAccount account = Substitute.For<IAccount>();
-                AccountCacheKey<IAccount> sut = new AccountCacheKey<IAccount>(account) { Area = "testArea" };
-
-                Assert.Throws<ArgumentNullException>(() => sut.GetCacheKeyHash("test"));
-            }
-
             [Theory]
             [InlineData("")]
             [InlineData(null)]

@@ -1,9 +1,10 @@
-﻿using System;
-
-namespace SpendManagementLibrary.Definitions
+﻿namespace SpendManagementLibrary.Definitions
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System;
+
+    using BusinessLogic.FilePath;
 
     /// <summary>
     /// Represents the storage folders for an account.

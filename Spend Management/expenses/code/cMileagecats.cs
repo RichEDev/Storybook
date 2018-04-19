@@ -6,13 +6,15 @@ namespace Spend_Management
     using System.Collections;
     using System.Collections.Generic;
     using System.Web.UI.WebControls;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
 
     using SpendManagementLibrary;
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Employees;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-
     using SpendManagementLibrary.Addresses;
     using SpendManagementLibrary.JourneyDeductionRules;    
 
@@ -21,7 +23,6 @@ namespace Spend_Management
     /// </summary>
     public class cMileagecats
     {
-
         private Utilities.DistributedCaching.Cache Cache = new Utilities.DistributedCaching.Cache();
         int accountid = 0;
 
@@ -29,6 +30,8 @@ namespace Spend_Management
         /// A private instance of <see cref="Addresses"/>
         /// </summary>
         private Addresses _addresses;
+
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
 
         public cMileagecats(int nAccountid)
         {
@@ -2835,16 +2838,18 @@ namespace Spend_Management
             cSubcat subcat = subCats.GetSubcatById(subcatId);
             cCar car = null;
 
-            cMisc misc = new cMisc(accountId);
-            cGlobalProperties properties = misc.GetGlobalProperties(accountId);
             cAccountSubAccounts subAccounts = new cAccountSubAccounts(accountId);
-            cAccountProperties accountProperties = subAccounts.getSubAccountById(user.CurrentSubAccountId).SubAccountProperties.Clone(); // clsSubAccounts.getFirstSubAccount().SubAccountProperties.Clone();
 
             var subAccount = subAccounts.getSubAccountById(user.CurrentSubAccountId);
 
             if (carId == 0)
             {
-                car = employeeCars.GetCarByID(employeeCars.GetDefaultCarID(properties.blocktaxexpiry, properties.blockmotexpiry, properties.blockinsuranceexpiry, properties.BlockBreakdownCoverExpiry, accountProperties.DisableCarOutsideOfStartEndDate, date));
+                var generalOptions = this._generalOptionsFactory[user.CurrentSubAccountId].WithDutyOfCare().WithAddEditExpense();
+
+                car = employeeCars.GetCarByID(employeeCars.GetDefaultCarID(generalOptions.DutyOfCare.BlockTaxExpiry,
+                    generalOptions.DutyOfCare.BlockMOTExpiry, generalOptions.DutyOfCare.BlockInsuranceExpiry,
+                    generalOptions.DutyOfCare.BlockBreakdownCoverExpiry,
+                    generalOptions.AddEditExpense.DisableCarOutsideOfStartEndDate, date));
             }
             else
             {

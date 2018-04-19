@@ -188,9 +188,11 @@
     <Reference Include="SEL.FeatureFlags, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SEL.FeatureFlags.1.0.0.3\lib\net461\SEL.FeatureFlags.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector, Version=4.0.7.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleInjector.4.0.7\lib\net45\SimpleInjector.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="SimpleInjector, Version=4.0.11.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.0.11\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Wcf, Version=4.0.11.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Wcf.4.0.11\lib\net40\SimpleInjector.Integration.Wcf.dll</HintPath>
     </Reference>
     <Reference Include="SimpleInjector.Integration.Web, Version=4.0.7.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.Integration.Web.4.0.7\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
@@ -273,6 +275,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq">
@@ -282,6 +285,7 @@
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web">
       <Private>False</Private>
@@ -1022,15 +1026,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>expenses.en-US.resx</DependentUpon>
     </Compile>
-    <Compile Include="Bootstrap\ActionContext.cs" />
-    <Compile Include="Bootstrap\BootstrapFileSystemConfiguration.cs" />
-    <Compile Include="Bootstrap\BootstrapAccount.cs" />
-    <Compile Include="Bootstrap\Bootstraper.cs" />
-    <Compile Include="Bootstrap\DependencyAttributePropertySelectionBehavior.cs" />
-    <Compile Include="Bootstrap\IActionContext.cs" />
-    <Compile Include="Bootstrap\SelfRegistrationIdentityContext.cs" />
-    <Compile Include="Bootstrap\WebFeatureFlagContext.cs" />
-    <Compile Include="Bootstrap\WebIdentityContext.cs" />
     <Compile Include="EnvelopeManagement.aspx.cs">
       <DependentUpon>EnvelopeManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2218,6 +2213,10 @@
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{c417335b-7be1-45ae-8274-c0b65829c4fc}</Project>
       <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebBootstrap\WebBootstrap.csproj">
+      <Project>{8888293C-5BF0-45C8-9078-FFD94271D15F}</Project>
+      <Name>WebBootstrap</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,18 +1,12 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Collections.Generic;
-using SpendManagementLibrary;
-
 namespace Spend_Management
 {
+    using System;
+    using System.Collections;
+    using System.Web.UI.WebControls;
+    using System.Collections.Generic;
+
+    using SpendManagementLibrary;
+
     public partial class importdatawizard : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -500,8 +494,6 @@ namespace Spend_Management
         public string createTimeline(int accountid)
         {
             System.Text.StringBuilder output = new System.Text.StringBuilder();
-            cMisc clsmisc = new cMisc(accountid);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
             wizardStep step;
             ArrayList steps = new ArrayList();
             int stepcount = 0;

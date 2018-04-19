@@ -85,9 +85,6 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrap\BootstrapAccount.cs" />
-    <Compile Include="Bootstrap\Bootstrapper.cs" />
-    <Compile Include="Bootstrap\ConsoleIdentityContext.cs" />
     <Compile Include="Core\ILooper.cs" />
     <Compile Include="Core\Job.cs" />
     <Compile Include="Core\JobManager.cs" />
@@ -147,6 +144,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{85dfc378-171e-46c8-9c54-74cbe66368ac}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConsoleBootstrap\ConsoleBootstrap.csproj">
+      <Project>{97a11ed2-577c-4be6-bffa-adee411bc45f}</Project>
+      <Name>ConsoleBootstrap</Name>
     </ProjectReference>
     <ProjectReference Include="..\SQLDataAccess\SQLDataAccess.csproj">
       <Project>{d1de01ae-fe1f-4d65-b57b-08ca4e10d747}</Project>

@@ -25,11 +25,6 @@ namespace Spend_Management
             ViewState["employeeid"] = user.EmployeeID;
             ViewState["subAccountID"] = user.CurrentSubAccountId;
 
-            cMisc clsmisc = new cMisc(user.AccountID);
-
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(user.AccountID);
-            cGlobalCurrencies clsglobalcurrencies = new cGlobalCurrencies();
-
             cCurrencies clsCurrencies = new cCurrencies(user.AccountID, user.CurrentSubAccountId);
 
             string action;

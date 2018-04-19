@@ -200,6 +200,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleInjector, Version=4.0.11.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.0.11\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Chart.Wpf, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Chart.Wpf.dll</HintPath>
     </Reference>
@@ -348,7 +351,6 @@
     <Compile Include="cDateTimeAttribute.cs" />
     <Compile Include="cEmployeeCar.cs" />
     <Compile Include="cEmployeeHomeAddress.cs" />
-    <Compile Include="cGeneralOptions.cs" />
     <Compile Include="cHyperlinkAttribute.cs" />
     <Compile Include="cJourneyStep.cs" />
     <Compile Include="Claims\AllocateClaimResult.cs" />
@@ -419,7 +421,6 @@
     <Compile Include="Employees\DutyOfCare\TaxDocument.cs" />
     <Compile Include="Enumerators\ClaimToAccessStatus.cs" />
     <Compile Include="Enumerators\CorporateCardImportStatus.cs" />
-    <Compile Include="Enumerators\EsrRoundingType.cs" />
     <Compile Include="Enumerators\ExchangeRateProvider.cs" />
     <Compile Include="Enumerators\Gender.cs" />
     <Compile Include="Enumerators\ItemCheckerType.cs" />
@@ -545,6 +546,7 @@
     <Compile Include="Expedite\ExpenseValidationCriterion.cs" />
     <Compile Include="Expedite\ExpenseValidationManager.cs" />
     <Compile Include="ForeignVatRate.cs" />
+    <Compile Include="FunkyInjector.cs" />
     <Compile Include="GeneralOptions\GeneralOption.cs" />
     <Compile Include="GeneralOptions\GeneralOptions.cs" />
     <Compile Include="GreenLightSortColumn.cs" />
@@ -741,7 +743,6 @@
     <Compile Include="API\cAccessKey.cs" />
     <Compile Include="API\cAPICredential.cs" />
     <Compile Include="BaseClasses\cAccessRolesBase.cs" />
-    <Compile Include="Enumerators\EsrEnumerations.cs" />
     <Compile Include="framework\cSites.cs" />
     <Compile Include="GreenLight\MenuView.cs" />
     <Compile Include="Helpers\AutoComplete.cs" />
@@ -841,7 +842,6 @@
     <Compile Include="cGlobalClasses.cs" />
     <Compile Include="cGlobalCountry.cs" />
     <Compile Include="cGlobalCurrency.cs" />
-    <Compile Include="cGlobalProperties.cs" />
     <Compile Include="cGridSort.cs" />
     <Compile Include="cGroup.cs" />
     <Compile Include="Hotels\Hotel.cs" />

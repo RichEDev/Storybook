@@ -1,10 +1,15 @@
-using System;
-using System.Configuration;
-using System.Web.Caching;
-using SpendManagementLibrary;
-
 namespace Spend_Management
 {
+    using System;
+    using System.Configuration;
+    using System.Web.Caching;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    using SpendManagementLibrary;
+
 	/// <summary>
 	/// Summary description for cLanguages.
 	/// </summary>
@@ -14,10 +19,22 @@ namespace Spend_Management
         DBConnection expdata = new DBConnection(ConfigurationManager.ConnectionStrings["metabase"].ConnectionString);
 		System.Web.Caching.Cache Cache = (System.Web.Caching.Cache)System.Web.HttpContext.Current.Cache;
 
-		string strsql;
+	    private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory;
+
+
+        string strsql;
 		string sLanguage;
-		public cLanguages()
+
+        /// <summary>
+        /// Creates an instance of <see cref="cLanguages"/>
+        /// </summary>
+        /// <param name="generalOptionsFactory">An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/></param>
+        public cLanguages(IDataFactory<IGeneralOptions, int> generalOptionsFactory)
 		{
+            Guard.ThrowIfNull(generalOptionsFactory, nameof(generalOptionsFactory));
+
+		    this._generalOptionsFactory = generalOptionsFactory;
+
 			getLanguage();
 			InitialiseData();
 		}
@@ -35,10 +52,7 @@ namespace Spend_Management
 
             CurrentUser user = cMisc.GetCurrentUser();
 
-            cMisc clsmisc = new cMisc(user.AccountID);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(user.AccountID);
-
-            sLanguage = clsproperties.language;
+            sLanguage = this._generalOptionsFactory[user.CurrentSubAccountId].Language;
 		}
 		private void InitialiseData()
 		{
@@ -151,35 +165,5 @@ namespace Spend_Management
 			get {return sLanguage;}
 		}
 		#endregion
-	}
-
-	public class cLanguage
-	{
-		private int nPhraseid;
-		private string sPhrase;
-		private string sConversion;
-
-		public cLanguage (int phraseid, string phrase, string conversion)
-		{
-			nPhraseid = phraseid;
-			sPhrase = phrase;
-			sConversion = conversion;
-		}
-
-		#region properties
-		public int phraseid
-		{
-			get {return nPhraseid;}
-		}
-		public string phrase
-		{
-			get {return sPhrase;}
-		}
-		public string conversion
-		{
-			get {return sConversion;}
-		}
-		#endregion
-	
 	}
 }

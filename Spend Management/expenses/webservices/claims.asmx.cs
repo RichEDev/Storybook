@@ -27,6 +27,9 @@
     using System.Text;
     using System.Collections;
 
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using SpendManagementLibrary.SalesForceApi;
 
     using expenses.code;
@@ -1616,16 +1619,18 @@
             int count;
             using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(_user.AccountID)))
             {
-                var clsmisc = new cMisc(_user.AccountID);
-                var clsproperties = clsmisc.GetGlobalProperties(_user.AccountID);
 
-                if (clsproperties.limitfrequency == false)
+                var generalOptions =
+                    FunkyInjector.Container
+                        .GetInstance<IDataFactory<IGeneralOptions, int>>()[_user.CurrentSubAccountId].WithClaim();
+
+                if (!generalOptions.Claim.LimitFrequency)
                 {
                     return true;
                 }
 
-                byte frequencytype = clsproperties.frequencytype;
-                frequencyvalue = clsproperties.frequencyvalue;
+                byte frequencytype = generalOptions.Claim.FrequencyType;
+                frequencyvalue = generalOptions.Claim.FrequencyValue;
 
                 DateTime startdate;
 

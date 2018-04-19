@@ -1,22 +1,14 @@
-﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Caching;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
-
-using System.Xml;
-using System.Collections.Generic;
-using SpendManagementLibrary;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
+    using System;
+    using System.Web.Caching;
+    using System.Xml.Linq;
+    using System.Collections.Generic;
+
+    using BusinessLogic.FilePath;
+
+    using SpendManagementLibrary;
+
     public class cCardTemplates
     {
         System.Web.Caching.Cache Cache = (System.Web.Caching.Cache)System.Web.HttpRuntime.Cache;

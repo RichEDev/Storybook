@@ -1,29 +1,33 @@
 ﻿
 namespace Spend_Management.expenses.code.Claims
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Data;
-	using System.Linq;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
 
-	using SpendManagementLibrary;
-	using SpendManagementLibrary.Employees;
-	using SpendManagementLibrary.Enumerators;
-	using SpendManagementLibrary.Enumerators.Expedite;
-	using SpendManagementLibrary.Expedite;
-	using SpendManagementLibrary.Flags;
-	using SpendManagementLibrary.Helpers;
-	using SpendManagementLibrary.Interfaces;
-	using SpendManagementLibrary.Mobile;
-	using SpendManagementLibrary.Claims;
-	using Receipts = SpendManagementLibrary.Expedite.Receipts;
-	using shared.code.ApprovalMatrix;
-	using SpendManagementLibrary.MobileDeviceNotifications;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
 
-	/// <summary>
-	///     Methods for claim submission
-	/// </summary>
-	public class ClaimSubmission
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Employees;
+    using SpendManagementLibrary.Enumerators;
+    using SpendManagementLibrary.Enumerators.Expedite;
+    using SpendManagementLibrary.Expedite;
+    using SpendManagementLibrary.Flags;
+    using SpendManagementLibrary.Helpers;
+    using SpendManagementLibrary.Interfaces;
+    using SpendManagementLibrary.Mobile;
+    using SpendManagementLibrary.MobileDeviceNotifications;
+    using SpendManagementLibrary.Claims;
+    using Receipts = SpendManagementLibrary.Expedite.Receipts;
+
+    using shared.code.ApprovalMatrix;
+
+    /// <summary>
+    ///     Methods for claim submission
+    /// </summary>
+    public class ClaimSubmission
 	{
 		private readonly cClaims _claims;
 		private cAccountSubAccounts _subAccounts;
@@ -38,12 +42,14 @@ namespace Spend_Management.expenses.code.Claims
 
 		private readonly ICurrentUser _user;
 
-		internal enum GetClaimItemCheckerFor
-		{
-			All = 0,
-			TeamsOnly = 1,
-			IndividualsOnly = 2
-		}
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
+
+        internal enum GetClaimItemCheckerFor
+        {
+            All = 0,
+            TeamsOnly = 1,
+            IndividualsOnly = 2
+        }
 
 		/// <summary>
 		///     Claim submission methods
@@ -510,12 +516,11 @@ namespace Spend_Management.expenses.code.Claims
 
 				var notifications = new NotificationTemplates(this._user);
 
-				this._employees = this._employees ?? new cEmployees(this._user.AccountID);
-				Employee claimemp = this._employees.GetEmployeeById(claim.employeeid);
-				this._misc = this._misc ?? new cMisc(this._user.AccountID);
-				var clsproperties = this._misc.GetGlobalProperties(this._user.AccountID);
-				var reqgroup = this.GetGroupForClaim(claim, claimemp, clsproperties);
-				var reqstage = GetStageForClaim(claim, submitting, reqgroup);
+                this._employees = this._employees ?? new cEmployees(this._user.AccountID);
+                Employee claimemp = this._employees.GetEmployeeById(claim.employeeid);
+                this._misc = this._misc ?? new cMisc(this._user.AccountID);
+                var reqgroup = this.GetGroupForClaim(claim, claimemp);
+                var reqstage = GetStageForClaim(claim, submitting, reqgroup);
 
 				// check to see if users are allowed to approve their own claims
 				var submitClaimResult = new SubmitClaimResult();
@@ -1212,25 +1217,27 @@ namespace Spend_Management.expenses.code.Claims
 			return @group.stages.Values.FirstOrDefault(stage => stage.AllocateForPayment);
 		}
 
-		private cGroup GetGroupForClaim(cClaim claim, Employee claimemp, cGlobalProperties clsproperties)
-		{
-			this._groups = this._groups ?? new cGroups(this._user.AccountID);
-			cGroup reqgroup = this._groups.GetGroupById(claimemp.SignOffGroupID);
+        private cGroup GetGroupForClaim(cClaim claim, Employee claimemp)
+        {
+            this._groups = this._groups ?? new cGroups(this._user.AccountID);
+            cGroup reqgroup = this._groups.GetGroupById(claimemp.SignOffGroupID);
 
-			// there is a method GetGroupForClaim in cClaims.cs so any changes here might need to be reflected there
-			if (clsproperties.onlycashcredit && clsproperties.partsubmittal)
-			{
-				if (claim.claimtype == ClaimType.Credit)
-				{
-					reqgroup = this._groups.GetGroupById(claimemp.CreditCardSignOffGroup);
-				}
-				else if (claim.claimtype == ClaimType.Purchase)
-				{
-					reqgroup = this._groups.GetGroupById(claimemp.PurchaseCardSignOffGroup);
-				}
-			}
-			return reqgroup;
-		}
+            var generalOptions = this._generalOptionsFactory[this._user.CurrentSubAccountId].WithClaim();
+
+            // there is a method GetGroupForClaim in cClaims.cs so any changes here might need to be reflected there
+            if (generalOptions.Claim.OnlyCashCredit && generalOptions.Claim.PartSubmit)
+            {
+                if (claim.claimtype == ClaimType.Credit)
+                {
+                    reqgroup = this._groups.GetGroupById(claimemp.CreditCardSignOffGroup);
+                }
+                else if (claim.claimtype == ClaimType.Purchase)
+                {
+                    reqgroup = this._groups.GetGroupById(claimemp.PurchaseCardSignOffGroup);
+                }
+            }
+            return reqgroup;
+        }
 
 		public void moveItems(int oldclaimid, int newclaimid, bool cash, bool credit, bool purchase)
 		{
@@ -1268,16 +1275,15 @@ namespace Spend_Management.expenses.code.Claims
 			}
 		}
 
-		public int addClaim(int employeeid, string name, string description, SortedList<int, object> userdefined)
-		{
-			int claimid;
-			using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(_user.AccountID)))
-			{
-				_misc = _misc ?? new cMisc(_user.AccountID);
+        public int addClaim(int employeeid, string name, string description, SortedList<int, object> userdefined)
+        {
+            int claimid;
+            using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(_user.AccountID)))
+            {
+                var generalOptions = this._generalOptionsFactory[this._user.CurrentSubAccountId].WithCurrency();
 
-				var clsproperties = _misc.GetGlobalProperties(_user.AccountID);
-				DateTime createdon = DateTime.Now.ToUniversalTime();
-				int userid = 0;
+                DateTime createdon = DateTime.Now.ToUniversalTime();
+                int userid = 0;
 
 				//does the claim already exist
 				string strsql = "select count(claimid) from claims_base where employeeid = @employeeid and name = @name";
@@ -1295,7 +1301,7 @@ namespace Spend_Management.expenses.code.Claims
 				_employees = _employees ?? new cEmployees(_user.AccountID);
 				Employee reqemp = _employees.GetEmployeeById(employeeid);
 
-				int basecurrency = reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : clsproperties.basecurrency;
+                int basecurrency = (int)(reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : generalOptions.Currency.BaseCurrency);
 
 				//get the last claim no and increment
 				expdata.sqlexecute.Parameters.AddWithValue("@employeeid", employeeid);

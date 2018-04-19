@@ -1,6 +1,5 @@
 using System.Web;
 
-
 [assembly: PreApplicationStartMethod(typeof(expenses.PageInitializerModule), "Initialize")]
 namespace expenses
 {
@@ -16,7 +15,6 @@ namespace expenses
     using System.Web.Optimization;
     using System.Web.UI;
     
-    using Bootstrap;
     using SEL.FeatureFlags;
     using SimpleInjector;
 
@@ -26,6 +24,7 @@ namespace expenses
 
     using System.Collections.Generic;
 
+    using WebBootstrap;
 
     /// <summary>
     /// The global.asax class
@@ -51,9 +50,37 @@ namespace expenses
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Initialize the <see cref="IHttpHandler"/>
+        /// </summary>
+        /// <param name="handler">The <see cref="IHttpHandler"/> to initialize</param>
         public static void InitializeHandler(IHttpHandler handler)
         {
-            container.GetRegistration(handler.GetType(), true).Registration.InitializeInstance(handler);
+            if (handler is Page)
+            {
+                Global.InitializePage((Page)handler);
+            }
+        }
+
+        private static void InitializePage(Page page)
+        {
+            container.GetRegistration(page.GetType(), true).Registration
+                .InitializeInstance(page);
+
+            page.InitComplete += delegate { Global.InitializeControl(page); };
+        }
+
+        private static void InitializeControl(Control control)
+        {
+            if (control is UserControl)
+            {
+                container.GetRegistration(control.GetType(), true).Registration
+                    .InitializeInstance(control);
+            }
+            foreach (Control child in control.Controls)
+            {
+                Global.InitializeControl(child);
+            }
         }
 
         /// <summary>
@@ -68,6 +95,8 @@ namespace expenses
         protected void Application_Start(object sender, EventArgs e)
         {
             container = Bootstraper.Bootstrap();
+
+            FunkyInjector.Container = container;
             
             // Loads global variables
             new GlobalVariables(GlobalVariables.ApplicationType.Web);

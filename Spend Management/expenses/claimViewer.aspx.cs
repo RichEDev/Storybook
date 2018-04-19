@@ -6,13 +6,16 @@
     using System.Text;
     using System.Web.Script.Serialization;
     using System.Web.UI.WebControls;
+    using System.Web.UI;
+    using System.Globalization;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
 
     using SpendManagementLibrary;
     using SpendManagementLibrary.Enumerators.Expedite;
     using SpendManagementLibrary.Expedite;
-    using SpendManagementLibrary.Employees;
-    using System.Web.UI;
-    using System.Globalization;
 
     public partial class claimViewer : System.Web.UI.Page
     {
@@ -21,14 +24,22 @@
         /// </summary>
         public int DaysToWaitUntilEnvelopeCanBeDeclaredMissing = 5;
 
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             CurrentUser user = cMisc.GetCurrentUser();
+
             if (!IsPostBack)
             {
                 Master.UseDynamicCSS = true;
-                cMisc misc = new cMisc(user.AccountID);
-                cGlobalProperties properties = misc.GetGlobalProperties(user.AccountID);
+
+                var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithClaim().WithMileage().WithMobile();
+
                 cClaims claims = new cClaims(user.AccountID);
                 cExpenseItems expenseItems = new cExpenseItems(user.AccountID);
                 StringBuilder js = new StringBuilder();
@@ -61,9 +72,9 @@
                 }
 
                 if (!claims.IsUserClaimsCurrentApprover(user, claim, fromClaimSelector))
-                            {
-                                Response.Redirect("~/restricted.aspx", true);
-                            }
+                {
+                    Response.Redirect("~/restricted.aspx", true);
+                }
 
                 #region determine view type
                 UserView viewType;
@@ -88,8 +99,6 @@
                 }
 
                 #endregion
-
-                
 
                 if (claim != null)
                 {
@@ -181,7 +190,7 @@
                     cEmployeeCorporateCards cards = new cEmployeeCorporateCards(user.AccountID);
                     SortedList<int, cEmployeeCorporateCard> employeeCards = cards.GetEmployeeCorporateCards(user.EmployeeID);
                     bool enableCorporateCards = employeeCards != null && employeeCards.Count > 0;
-                    string[] gridData = expenseItems.generateClaimGrid(user.EmployeeID, claim, "gridExpenses", viewType, Filter.None, false, properties.attachreceipts, properties.allowmultipledestinations, enableCorporateCards, symbol, claimEmployeeId: viewOwnerIdForQueryString, fromClaimSelector: fromClaimSelector, claimStage: claim.ClaimStage);
+                    string[] gridData = expenseItems.generateClaimGrid(user.EmployeeID, claim, "gridExpenses", viewType, Filter.None, false, generalOptions.Claim.AttachReceipts, generalOptions.Mileage.AllowMultipleDestinations, enableCorporateCards, symbol, claimEmployeeId: viewOwnerIdForQueryString, fromClaimSelector: fromClaimSelector, claimStage: claim.ClaimStage);
                     this.litClaimGrid.Text = gridData[1];
 
                     this.Page.ClientScript.RegisterStartupScript(this.GetType(), "ClaimGridVars", cGridNew.generateJS_init("ClaimGridVars", new System.Collections.Generic.List<string>() { gridData[0] }, user.CurrentActiveModule), true);
@@ -201,7 +210,7 @@
                     #endregion
 
                     #region my mobile items
-                    if (properties.UseMobileDevices && user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.MobileDevices, true) && (viewType == UserView.Current))
+                    if (generalOptions.Mobile.UseMobileDevices && user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.MobileDevices, true) && (viewType == UserView.Current))
                     {
                         useMobileDevices = true;
                         string[] grid = claims.generateMobileItemsGrid(claim);
@@ -367,8 +376,8 @@
                 #endregion
 
                 js.Append("SEL.Claims.General.claimId = " + claimId + ";\n");
-                js.Append("SEL.Claims.General.enableReceiptAttachments = " + properties.attachreceipts.ToString().ToLower() + ";\n");
-                js.Append("SEL.Claims.General.enableJourneyDetailsLink = " + properties.allowmultipledestinations.ToString().ToLower() + ";\n");
+                js.Append("SEL.Claims.General.enableReceiptAttachments = " + generalOptions.Claim.AttachReceipts.ToString().ToLower() + ";\n");
+                js.Append("SEL.Claims.General.enableJourneyDetailsLink = " + generalOptions.Mileage.AllowMultipleDestinations.ToString().ToLower() + ";\n");
                 js.Append("SEL.Claims.General.enableCorporateCardsLink = " + useMobileDevices.ToString().ToLower() + ";\n");
                 js.Append("SEL.Claims.General.viewType = " + (byte)viewType + ";\n");
                 js.Append("SEL.Claims.ClaimViewer.configureFlagModal();\n");
@@ -383,7 +392,7 @@
                 js.AppendLine("SEL.Claims.IDs.compBusinessMileageId = '" + reqBusinessMileage.ClientID + "';");
                 js.AppendLine("SEL.Claims.IDs.reqClaimID = '" + reqclaim.ClientID + "';");
                 js.Append("SEL.Claims.General.ExpediteClient = " + user.Account.ReceiptServiceEnabled.ToString().ToLower() + ";\n");
-                js.Append("SEL.Claims.General.displayDeclaration = " + (!properties.claimantdeclaration || string.IsNullOrEmpty(properties.declarationmsg) ? "false" : "true") + ";\n");
+                js.Append("SEL.Claims.General.displayDeclaration = " + (!generalOptions.Claim.ClaimantDeclaration || string.IsNullOrEmpty(generalOptions.Claim.DeclarationMsg) ? "false" : "true") + ";\n");
                 if (user.Account.ReceiptServiceEnabled)
                 {
                     this.ScriptManagerProxy1.Scripts.Add(

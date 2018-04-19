@@ -31,7 +31,7 @@
             var accountId = int.Parse(nameSplit[0]);
             var employeeId = int.Parse(nameSplit[1]);
 
-            if (accountId > 0 && employeeId > 0)
+            if (accountId > 0 && employeeId > -1)
             {
                 return new UserIdentity(accountId, employeeId);
             }

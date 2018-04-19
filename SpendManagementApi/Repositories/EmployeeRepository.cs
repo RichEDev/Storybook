@@ -1,21 +1,24 @@
-﻿using Common.Cryptography;
-using SpendManagementApi.Models.Responses;
-using SpendManagementApi.Models.Types;
-
-namespace SpendManagementApi.Repositories
+﻿namespace SpendManagementApi.Repositories
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
+    using System.IO;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using Common;
+    using global::Common.Cryptography;
+
     using Interfaces;
     using Models.Common;
     using Utilities;
     using SpendManagementLibrary;
     using Spend_Management;
     using Models.Types.Employees;
-    using System.IO;
+
+    using SpendManagementApi.Models.Responses;
 
     internal class EmployeeRepository : ArchivingBaseRepository<Employee>, ISupportsActionContext
     {
@@ -28,7 +31,9 @@ namespace SpendManagementApi.Repositories
         private int _transactionCount = 1;
         
         internal List<string> WarningMessages { get { return _errorMessages; } }
-        
+
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory;
+
         #endregion Properties
 
 
@@ -41,6 +46,7 @@ namespace SpendManagementApi.Repositories
             _mileagecats = this.ActionContext.MileageCategories;
             _cards = this.ActionContext.EmployeeCorporateCards;
             EncryptorFactory.SetCurrent(new HashEncryptorFactory());
+            this._generalOptionsFactory = WebApiApplication.container.GetInstance<IDataFactory<IGeneralOptions, int>>();
         }
 
         #endregion Constructor
@@ -433,8 +439,8 @@ namespace SpendManagementApi.Repositories
         public string DeterminePrimaryCurrencySymbol(cMisc misc, CurrencyRepository currenciesRepository)
         {
             var employee = this.ActionContext.Employees.GetEmployeeById(this.User.EmployeeID);
-            cGlobalProperties properties = misc.GetGlobalProperties(this.User.AccountID);
-            int primaryCurrencyId = employee.PrimaryCurrency == 0 ? properties.basecurrency : employee.PrimaryCurrency;
+
+            int primaryCurrencyId = employee.PrimaryCurrency == 0 ? (int)this._generalOptionsFactory[this.User.CurrentSubAccountId].WithCurrency().Currency.BaseCurrency : employee.PrimaryCurrency;
             string primaryCurrencySymbol = currenciesRepository.DetermineCurrencySymbol(primaryCurrencyId);
 
             return primaryCurrencySymbol;

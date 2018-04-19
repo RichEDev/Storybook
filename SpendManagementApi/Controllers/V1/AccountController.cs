@@ -10,6 +10,12 @@ namespace SpendManagementApi.Controllers.V1
     using System.Web;
     using System.Web.Http;
     using System.Web.Http.Description;
+    using System.Linq;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Identity;
+
     using Common;
     using Attributes;
     using Models.Common;
@@ -18,7 +24,6 @@ namespace SpendManagementApi.Controllers.V1
     using Models.Types;
     using Utilities;
     using Models;
-    using System.Linq;
     using Repositories;
 
     using SpendManagementLibrary;
@@ -27,7 +32,6 @@ namespace SpendManagementApi.Controllers.V1
     using SpendManagementLibrary.Enumerators;
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Holidays;
-    using SpendManagementLibrary.Mobile;
     using SpendManagementLibrary.MobileAppReview;
 
     using Spend_Management;
@@ -44,6 +48,8 @@ namespace SpendManagementApi.Controllers.V1
     {
         private readonly cAccounts _accounts;
 
+        private readonly Lazy<IDataFactory<IGeneralOptions, int>> _generalOptionsFactory = new Lazy<IDataFactory<IGeneralOptions, int>>(() => WebApiApplication.container.GetInstance<IDataFactory<IGeneralOptions, int>>());
+
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -52,15 +58,6 @@ namespace SpendManagementApi.Controllers.V1
             this._accounts = new cAccounts();
             EncryptorFactory.SetCurrent(new HashEncryptorFactory());
         }
-
-        /// <summary>
-        /// Constructor for unit testing...
-        /// </summary>
-        /// <param name="accounts">A cAccounts instance, (with it's cache initialised).</param>
-        //public AccountV1Controller(cAccounts accounts)
-        //{
-        //    this._accounts = accounts;
-        //}
 
         /// <summary>
         /// Gets ALL of the available end points from the API.
@@ -101,14 +98,19 @@ namespace SpendManagementApi.Controllers.V1
 
                 throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, ApiResources.HttpStatusCodeUnauthorised));
             }
+            
+            var employees = new cEmployees(reqAccount.accountid);
+            var authenticate = employees.Authenticate(request.Username, request.Password, mobileRequest ? AccessRequestType.Mobile : AccessRequestType.Api, EncryptorFactory.CreateEncryptor());
+
+            this.RequestContext.Principal = new WebPrincipal(new UserIdentity(reqAccount.accountid, authenticate.employeeId));
 
             var subAccounts = new cAccountSubAccounts(reqAccount.accountid);
             int subaccountid = subAccounts.getFirstSubAccount().SubAccountID;
-            cAccountProperties subAccountProperties = subAccounts.getSubAccountById(subaccountid).SubAccountProperties;
+            var generalOptions = this._generalOptionsFactory.Value[subaccountid].WithAccountMessages().WithPassword().WithMobile();
 
             if (mobileRequest)
             {
-                var useMobileDevices = subAccounts.getSubAccountById(subaccountid).SubAccountProperties.UseMobileDevices;
+                var useMobileDevices = generalOptions.Mobile.UseMobileDevices;
 
                 if (!useMobileDevices)
                 {
@@ -137,12 +139,8 @@ namespace SpendManagementApi.Controllers.V1
 
                 throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.Forbidden, ApiResources.HttpStatusCodeForbiddenInvalidIP));
             }
-
-            var employees = new cEmployees(reqAccount.accountid);
-            var misc = new cMisc(reqAccount.accountid);
-            var reqGlobalProperties = misc.GetGlobalProperties(reqAccount.accountid);
+            
             EncryptorFactory.SetCurrent(new HashEncryptorFactory());
-            var authenticate = employees.Authenticate(request.Username, request.Password, mobileRequest ? AccessRequestType.Mobile : AccessRequestType.Api, EncryptorFactory.CreateEncryptor());
 
             if (authenticate.employeeId == 0)
             {
@@ -193,14 +191,14 @@ namespace SpendManagementApi.Controllers.V1
                 {
                     if (mobileRequest)
                     {
-                        return new MobileLoginResponse { LoginResponse = (int)LoginResult.EmployeeLocked, AccountCurrentlyLockedMessage = subAccountProperties.AccountCurrentlyLockedMessage };
+                        return new MobileLoginResponse { LoginResponse = (int)LoginResult.EmployeeLocked, AccountCurrentlyLockedMessage = generalOptions.AccountMessages.AccountCurrentlyLockedMessage };
                     }
 
                     throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.Forbidden, ApiResources.HttpStatusCodeForbiddenLockedPassword));
                 }
 
                 // if they're not already locked and they've not yet exceeded the retry count
-                if ((!reqEmployee.Locked && reqEmployee.LogonRetryCount < reqGlobalProperties.attempts) || reqGlobalProperties.attempts == 0)
+                if ((!reqEmployee.Locked && reqEmployee.LogonRetryCount < generalOptions.Password.PwdMaxRetries) || generalOptions.Password.PwdMaxRetries == 0)
                 {
                     if (!mobileRequest)
                     {
@@ -217,9 +215,9 @@ namespace SpendManagementApi.Controllers.V1
                     {
                         mobileLoginResponse = new MobileLoginResponse { LoginResponse = (int)LoginResult.InvalidUsernamePasswordCombo };
 
-                        if (reqGlobalProperties.attempts > 0)
+                        if (generalOptions.Password.PwdMaxRetries > 0)
                         {
-                            mobileLoginResponse.AttemptsRemaining = reqGlobalProperties.attempts - reqEmployee.LogonRetryCount;
+                            mobileLoginResponse.AttemptsRemaining = generalOptions.Password.PwdMaxRetries - reqEmployee.LogonRetryCount;
                         }
                     }
 
@@ -235,7 +233,7 @@ namespace SpendManagementApi.Controllers.V1
 
                     if (mobileRequest)
                     {
-                        return new MobileLoginResponse { LoginResponse = (int)LoginResult.LogonAttemptsExceeded, AccountLockedMessage = subAccountProperties.AccountLockedMessage };
+                        return new MobileLoginResponse { LoginResponse = (int)LoginResult.LogonAttemptsExceeded, AccountLockedMessage = generalOptions.AccountMessages.AccountLockedMessage };
                     }
 
                     throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.Forbidden, ApiResources.HttpStatusCodeForbiddenLockedPassword));
@@ -246,7 +244,7 @@ namespace SpendManagementApi.Controllers.V1
             {
                 if (mobileRequest)
                 {
-                    return new MobileLoginResponse { LoginResponse = (int)LoginResult.EmployeeLocked, AccountCurrentlyLockedMessage = subAccountProperties.AccountCurrentlyLockedMessage };
+                    return new MobileLoginResponse { LoginResponse = (int)LoginResult.EmployeeLocked, AccountCurrentlyLockedMessage = generalOptions.AccountMessages.AccountCurrentlyLockedMessage };
                 }
 
                 throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.Forbidden, ApiResources.HttpStatusCodeForbiddenLockedPassword));
@@ -297,12 +295,11 @@ namespace SpendManagementApi.Controllers.V1
             // this is intentionally done separately so we can return slightly different information to mobile users        
             if (mobileRequest)
             {
-                subAccountProperties = subAccounts.getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
                 var mobileDevices = new cMobileDevices(user.AccountID);
                 var vehicleRepository = new VehicleRepository(user);
                 var claims = new cClaims(user.AccountID);
                 var employeeCards = new cEmployeeCorporateCards(user.AccountID);
-                MobileLoginResponse response = this.GenerateMobileLoginResponse(user, reqAccount, employees, reqEmployee, details, subAccountProperties,vehicleRepository,claims, employeeCards, mobileDevices);
+                MobileLoginResponse response = this.GenerateMobileLoginResponse(user, reqAccount, employees, reqEmployee, details, generalOptions, vehicleRepository,claims, employeeCards, mobileDevices);
 
                 return response;
             }
@@ -428,7 +425,8 @@ namespace SpendManagementApi.Controllers.V1
             {
                 var subAccounts = new cAccountSubAccounts(account.accountid);
                 var reqSubAccount = subAccounts.getFirstSubAccount();
-                if (reqSubAccount.SubAccountProperties.EnableClaimApprovalReminders || reqSubAccount.SubAccountProperties.EnableCurrentClaimsReminders)
+                var generalOptions = this._generalOptionsFactory.Value[reqSubAccount.SubAccountID].WithReminders();
+                if (generalOptions.Reminders.EnableClaimApprovalReminders || generalOptions.Reminders.EnableCurrentClaimsReminders)
                 {
                     accountList.AccountList.Add(new GeneralOptionEnabledAccount(account.accountid, account.companyid));
                 }
@@ -560,11 +558,13 @@ namespace SpendManagementApi.Controllers.V1
             var employees = new cEmployees(this.CurrentUser.AccountID);
             var employee = this.CurrentUser.Employee;
             var subaccs = new cAccountSubAccounts(this.CurrentUser.AccountID);
-            var subaccountProperties = this.CurrentUser.Employee.DefaultSubAccount >= 0 ? subaccs.getSubAccountById(this.CurrentUser.Employee.DefaultSubAccount).SubAccountProperties : subaccs.getFirstSubAccount().SubAccountProperties;
+            var generalOptions = this.CurrentUser.Employee.DefaultSubAccount >= 0 ? this._generalOptionsFactory.Value[this.CurrentUser.Employee.DefaultSubAccount] : this._generalOptionsFactory.Value[subaccs.getFirstSubAccount().SubAccountID];
+
+            generalOptions.WithPassword();
 
             var oldpass = string.IsNullOrEmpty(request.OldPassword) ? string.Empty : request.OldPassword;
 
-            var passwordHasExpired = employee.CheckPasswordExpiry(subaccountProperties);
+            var passwordHasExpired = employee.CheckPasswordExpiry(generalOptions);
             var requestContainsResetKey = !string.IsNullOrEmpty(request.ResetKey);
             var requestContainsBothParts = !string.IsNullOrEmpty(request.OldPassword) && !string.IsNullOrEmpty(request.NewPassword);
             var resetKeyIsValid = false;
@@ -582,8 +582,8 @@ namespace SpendManagementApi.Controllers.V1
 
             var checkOldPassword = !requestContainsResetKey && !passwordHasExpired;
 
-            var checkpwd = employees.checkpassword(request.NewPassword, this.CurrentUser.AccountID, this.CurrentUser.EmployeeID, EncryptorFactory.CreateEncryptor()); // checks to make sure the password meets the complexity on the account
-            var returncode = employee.ChangePassword(oldpass, request.NewPassword, checkOldPassword, checkpwd, subaccountProperties.PwdHistoryNum, this.CurrentUser, EncryptorFactory.CreateEncryptor()); // 0 on success, 1 if the old password doesn't match, 2 if it doesn't conform to the account password policy.
+            var checkpwd = employees.checkpassword(request.NewPassword, this.CurrentUser.AccountID, this.CurrentUser.EmployeeID, EncryptorFactory.CreateEncryptor(), generalOptions); // checks to make sure the password meets the complexity on the account
+            var returncode = employee.ChangePassword(oldpass, request.NewPassword, checkOldPassword, checkpwd, generalOptions.Password.PwdHistoryNum, this.CurrentUser, EncryptorFactory.CreateEncryptor()); // 0 on success, 1 if the old password doesn't match, 2 if it doesn't conform to the account password policy.
 
             if (returncode == 0 && requestContainsResetKey)
             {
@@ -662,8 +662,7 @@ namespace SpendManagementApi.Controllers.V1
                 var reqAccount = this._accounts.GetAccountByID(accountId);
                 var employees = new cEmployees(reqAccount.accountid);
                 var reqEmployee = employees.GetEmployeeById(Math.Abs(employee.EmployeeID));
-                var subAccounts = new cAccountSubAccounts(currentUser.AccountID);
-                var subAccountProperties = subAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties;
+                var generalOptions = this._generalOptionsFactory.Value[currentUser.CurrentSubAccountId];
                 var mobileDevices = new cMobileDevices(currentUser.AccountID);
                 var vehicleRepository = new VehicleRepository(currentUser);
                 var claims = new cClaims(currentUser.AccountID);
@@ -672,7 +671,7 @@ namespace SpendManagementApi.Controllers.V1
                 //unlocks employee's account, so that the password policy API call completes.
                 reqEmployee.ChangeLockedStatus(false, currentUser);
 
-                MobileLoginResponse response = this.GenerateMobileLoginResponse(currentUser, reqAccount, employees, reqEmployee, details, subAccountProperties, vehicleRepository, claims, employeeCards, mobileDevices);
+                MobileLoginResponse response = this.GenerateMobileLoginResponse(currentUser, reqAccount, employees, reqEmployee, details, generalOptions, vehicleRepository, claims, employeeCards, mobileDevices);
 
                 return response;
             }
@@ -699,16 +698,15 @@ namespace SpendManagementApi.Controllers.V1
         public SessionTimeoutSettingsResponse SessionTimeoutSettings()
         {
             var subAccounts = new cAccountSubAccounts(this.CurrentUser.AccountID);
-            var subaccountid = this.CurrentUser.Employee.DefaultSubAccount >= 0
+            var subAccountId = this.CurrentUser.Employee.DefaultSubAccount >= 0
                        ? this.CurrentUser.Employee.DefaultSubAccount
                        : subAccounts.getFirstSubAccount().SubAccountID;
-            var subAccountProperties = subAccounts.getSubAccountById(subaccountid).SubAccountProperties;
-
+            var generalOptions = this._generalOptionsFactory.Value[subAccountId].WithSessionTimeout();
 
             var response = new SessionTimeoutSettingsResponse
             {
-                IdleTimeoutPeriod = subAccountProperties.IdleTimeout,
-                IdleTimeoutWarningPeriod = subAccountProperties.CountdownTimer
+                IdleTimeoutPeriod = generalOptions.SessionTimeout.IdleTimeout,
+                IdleTimeoutWarningPeriod = generalOptions.SessionTimeout.CountdownTimer
             };
 
             if (!this.IsMobileRequest())
@@ -831,7 +829,6 @@ namespace SpendManagementApi.Controllers.V1
         /// </summary>
         /// <returns> Account details</returns>
         [HttpGet, Route("GetAccountsWithExchangeRatesUpdateEnabled")]
-        [ApiExplorerSettings(IgnoreApi = true)]
         [InternalSelenityMethod]
         public GeneralOptionAccountsResponse GetAccountsWithExchangeRatesUpdateEnabled()
         {
@@ -846,10 +843,14 @@ namespace SpendManagementApi.Controllers.V1
             foreach (var account in accounts)
             {
                 var subAccounts = new cAccountSubAccounts(account.accountid);
-                var reqSubAccount = subAccounts.getFirstSubAccount();
-                if (reqSubAccount.SubAccountProperties.EnableAutoUpdateOfExchangeRates)
+
+                this.RequestContext.Principal = new WebPrincipal(new UserIdentity(account.accountid, 0));
+                var generalOptionsFactory = new Lazy<IDataFactory<IGeneralOptions, int>>(() => WebApiApplication.container.GetInstance<IDataFactory<IGeneralOptions, int>>());
+
+                var generalOptions = generalOptionsFactory.Value[subAccounts.getFirstSubAccount().SubAccountID].WithCurrency();
+                if (generalOptions.Currency.EnableAutoUpdateOfExchangeRates)
                 {
-                    accountList.AccountList.Add(new GeneralOptionEnabledAccount(account.accountid, account.companyid, reqSubAccount.SubAccountProperties.ExchangeRateProvider));
+                    accountList.AccountList.Add(new GeneralOptionEnabledAccount(account.accountid, account.companyid, generalOptions.Currency.ExchangeRateProvider));
                 }
             }
 
@@ -859,12 +860,12 @@ namespace SpendManagementApi.Controllers.V1
         /// <summary>
         /// Checks whether the account permits employees to notify the admin of changes to their details
         /// </summary>
-        /// <param name="subAccountProperties">The subaccount properties</param>
+        /// <param name="generalOptions">The general options for this subAccount</param>
         /// <returns>Whether the account allows employees to notify admin of changes to their details</returns>
-        private bool AccountAllowsForNotifyingAdminOfChanges(cAccountProperties subAccountProperties)
+        private bool AccountAllowsForNotifyingAdminOfChanges(IGeneralOptions generalOptions)
         {
-            return subAccountProperties.MainAdministrator != 0 && subAccountProperties.EmailServerAddress != string.Empty
-                   && subAccountProperties.AllowEmployeeToNotifyOfChangeOfDetails;
+            return generalOptions.Admin.MainAdministrator != 0 && generalOptions.Email.EmailServerAddress != string.Empty
+                   && generalOptions.MyDetails.AllowEmployeeToNotifyOfChangeOfDetails;
         }
 
         /// <summary>
@@ -885,8 +886,8 @@ namespace SpendManagementApi.Controllers.V1
         /// <param name="details">
         /// An instances of <see cref="ApiDetails"/> user.
         /// </param>
-        /// <param name="subAccountProperties">
-        /// An instances of <see cref="subAccountProperties"/> user.
+        /// <param name="generalOptions">
+        /// An instances of <see cref="IGeneralOptions"/>.
         /// </param>
         /// <param name="vehicleRepository">
         /// An instances of <see cref="VehicleRepository"/> user.
@@ -903,64 +904,66 @@ namespace SpendManagementApi.Controllers.V1
         /// <returns>
         /// The <see cref="MobileLoginResponse"/>.
         /// </returns>
-        private MobileLoginResponse GenerateMobileLoginResponse(ICurrentUser user, cAccount reqAccount, cEmployees employees, Employee reqEmployee, ApiDetails details, cAccountProperties subAccountProperties, VehicleRepository vehicleRepository, cClaims claims, cEmployeeCorporateCards employeeCards, cMobileDevices mobileDevices)
+        private MobileLoginResponse GenerateMobileLoginResponse(ICurrentUser user, cAccount reqAccount, cEmployees employees, Employee reqEmployee, ApiDetails details, IGeneralOptions generalOptions, VehicleRepository vehicleRepository, cClaims claims, cEmployeeCorporateCards employeeCards, cMobileDevices mobileDevices)
         {
+            generalOptions.WithCodeAllocation().WithMileage().WithCar().WithAddEditExpense().WithClaim().WithDutyOfCare().WithESR().WithAccountMessages().WithMyDetails().WithAdmin().WithEmail();
+
             bool canAccessCheckAndPay = (user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.CheckAndPay, true));        
             int numberOfClaimsAwaitingApproval = claims.getClaimsToCheckCount(user.EmployeeID, false, null);    
-            bool allowMultipleStepJourneys = subAccountProperties.AllowMultipleDestinations;
-            bool mandatoryPostcodeForAddresses = subAccountProperties.MandatoryPostcodeForAddresses;
+            bool allowMultipleStepJourneys = generalOptions.Mileage.AllowMultipleDestinations;
+            bool mandatoryPostcodeForAddresses = generalOptions.Mileage.MandatoryPostcodeForAddresses;
             bool hasActiveJourneys = mobileDevices.EmployeeActiveJourneysCount(user.EmployeeID) > 0;
             bool hasCreditCard = employeeCards.HasCreditCard(user.EmployeeID);
             bool hasPurchaseCard = employeeCards.HasPurchaseCard(user.EmployeeID);
             bool bankAccountRequiredForExpense = user.MustHaveBankAccount;
-            bool canAddManualAddres = subAccountProperties.AddLocations;
-            bool isAddressNameMandatory = subAccountProperties.ForceAddressNameEntry;
+            bool canAddManualAddres = generalOptions.Mileage.AddLocations;
+            bool isAddressNameMandatory = generalOptions.AddEditExpense.ForceAddressNameEntry;
             bool isReceiptServiceEnabled = user.Account.ReceiptServiceEnabled;
             bool isValidationServiceEnabled = user.Account.ValidationServiceEnabled;
-            bool whetherExcludeExpiredVehicles = subAccountProperties.DisableCarOutsideOfStartEndDate;
-            bool canNotifyAdminOfChanges = this.AccountAllowsForNotifyingAdminOfChanges(subAccountProperties);
-            bool canAddVehicle = subAccountProperties.AllowUsersToAddCars;
-            bool canAddVehicleJourneyRates = subAccountProperties.ShowMileageCatsForUsers;
-            bool canSpecifyStartDate = subAccountProperties.AllowEmpToSpecifyCarStartDateOnAdd;
-            bool startDateMandatoryForVehicle = subAccountProperties.EmpToSpecifyCarStartDateOnAddMandatory;
-            bool activateCarOnUserAdd = subAccountProperties.ActivateCarOnUserAdd;
-            bool showFullHomeAddressOnClaims = subAccountProperties.ShowFullHomeAddressOnClaims;
-            string homeAddressKeyword = subAccountProperties.HomeAddressKeyword;
+            bool whetherExcludeExpiredVehicles = generalOptions.AddEditExpense.DisableCarOutsideOfStartEndDate;
+            bool canNotifyAdminOfChanges = this.AccountAllowsForNotifyingAdminOfChanges(generalOptions);
+            bool canAddVehicle = generalOptions.Car.AllowUsersToAddCars;
+            bool canAddVehicleJourneyRates = generalOptions.Car.ShowMileageCatsForUsers;
+            bool canSpecifyStartDate = generalOptions.Car.AllowEmpToSpecifyCarStartDateOnAdd;
+            bool startDateMandatoryForVehicle = generalOptions.Car.EmpToSpecifyCarStartDateOnAddMandatory;
+            bool activateCarOnUserAdd = generalOptions.Car.ActivateCarOnUserAdd;
+            bool showFullHomeAddressOnClaims = generalOptions.Claim.ShowFullHomeAddressOnClaims;
+            string homeAddressKeyword = generalOptions.AddEditExpense.HomeAddressKeyword;
             int activeVehicleCount =
-                vehicleRepository.EmployeeActiveVehicleCount(subAccountProperties.DisableCarOutsideOfStartEndDate, DateTime.Now);
+                vehicleRepository.EmployeeActiveVehicleCount(generalOptions.AddEditExpense.DisableCarOutsideOfStartEndDate, DateTime.Now);
             string pcaKey = reqAccount.PostcodeAnywhereKey;
-            bool useDateOfExpenseForDutyOfCareChecks = subAccountProperties.UseDateOfExpenseForDutyOfCareChecks;
+            bool useDateOfExpenseForDutyOfCareChecks = generalOptions.DutyOfCare.UseDateOfExpenseForDutyOfCareChecks;
 
             var connection = new DatabaseConnection(cAccounts.getConnectionString(user.AccountID));
             var holidays = new Holidays(connection);
             bool showHolidays = holidays.DoesEmployeeHaveAccessToHolidays(user.EmployeeID);
-            bool esrAssignmentRequriedForExpense = subAccountProperties.CheckESRAssignmentOnEmployeeAdd;
+            bool esrAssignmentRequriedForExpense = generalOptions.ESR.CheckESRAssignmentOnEmployeeAdd;
             bool showMyAdvances = user.Employee.AdvancesSignOffGroup != 0 && user.Account.AdvancesEnabled;
             bool isMapsEnabled = user.Account.MapsEnabled;
             bool showAdvances = user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.Advances, true) && user.Account.AdvancesEnabled;
-            string accountLockedMessage = subAccountProperties.AccountLockedMessage;
-            string accountCurrentlyLockedMessage = subAccountProperties.AccountCurrentlyLockedMessage;
+            string accountLockedMessage = generalOptions.AccountMessages.AccountLockedMessage;
+            string accountCurrentlyLockedMessage = generalOptions.AccountMessages.AccountCurrentlyLockedMessage;
             bool canAskForReviews = new EmployeeAppReviewPreference().PermittedToAskEmployeeForReview(user.EmployeeID, user.AccountID);
-            bool automaticVehicleLookup = subAccountProperties.VehicleLookup;
+            bool automaticVehicleLookup = generalOptions.Car.VehicleLookup;
       
 
             IAccessRoleElementPermissions bankAccountElementPermissions = DetermineElementAccess.SetElementPermissions(new ElementAccessPermissions(), user, SpendManagementElement.BankAccounts);
 
             CostcodeBreakdownSettings costcodeBreakdownSettings = new CostcodeBreakdownSettings
             {
-                CostCodesOn = subAccountProperties.CostCodesOn,
-                UseCostCodeDescription = subAccountProperties.UseCostCodeDescription,
-                UseCostCodes = subAccountProperties.UseCostCodes,
-                UseCostCodeOnGenDetails = subAccountProperties.UseCostCodeOnGenDetails,
-                ProjectCodesOn = subAccountProperties.ProjectCodesOn,
-                UseProjectCodeDescription = subAccountProperties.UseProjectCodeDescription,
-                UseProjectCodes = subAccountProperties.UseProjectCodes,
-                UseProjectCodeOnGenDetails = subAccountProperties.UseProjectCodeOnGenDetails,
-                DepartmentsOn = subAccountProperties.DepartmentsOn,
-                UseDepartmentCodeDescription = subAccountProperties.UseDepartmentCodeDescription,
-                UseDepartmentCodes = subAccountProperties.UseDepartmentCodes,
-                UseDeptOnGenDetails = subAccountProperties.UseDeptOnGenDetails,
-                UseDefaultAllocation = subAccountProperties.AutoAssignAllocation
+                CostCodesOn = generalOptions.CodeAllocation.CostCodesOn,
+                UseCostCodeDescription = generalOptions.CodeAllocation.UseCostCodeDescription,
+                UseCostCodes = generalOptions.CodeAllocation.UseCostCodes,
+                UseCostCodeOnGenDetails = generalOptions.CodeAllocation.UseCostCodeOnGenDetails,
+                ProjectCodesOn = generalOptions.CodeAllocation.ProjectCodesOn,
+                UseProjectCodeDescription = generalOptions.CodeAllocation.UseProjectCodeDesc,
+                UseProjectCodes = generalOptions.CodeAllocation.UseProjectCodes,
+                UseProjectCodeOnGenDetails = generalOptions.CodeAllocation.UseProjectCodeOnGenDetails,
+                DepartmentsOn = generalOptions.CodeAllocation.DepartmentsOn,
+                UseDepartmentCodeDescription = generalOptions.CodeAllocation.UseDepartmentDescription,
+                UseDepartmentCodes = generalOptions.CodeAllocation.UseDepartmentCodes,
+                UseDeptOnGenDetails = generalOptions.CodeAllocation.UseDeptOnGenDetails,
+                UseDefaultAllocation = generalOptions.CodeAllocation.AutoAssignAllocation
             };
 
             var response = new MobileLoginResponse
@@ -974,11 +977,11 @@ namespace SpendManagementApi.Controllers.V1
                 AllowMultipleStepJourneys = allowMultipleStepJourneys,
                 MandatoryPostcodeForAddresses = mandatoryPostcodeForAddresses,
                 HasActiveJourneys = hasActiveJourneys,
-                HasElectronicDeclaration = subAccountProperties.ClaimantDeclaration,
-                ApproveDeclarationMessage = subAccountProperties.ApproverDeclarationMsg,
-                ClaimantDeclarationMessage = subAccountProperties.DeclarationMsg,
-                SingleClaimOnly = subAccountProperties.SingleClaim,
-                AllowReceiptsForExpenseItems = subAccountProperties.AttachReceipts,
+                HasElectronicDeclaration = generalOptions.Claim.ClaimantDeclaration,
+                ApproveDeclarationMessage = generalOptions.Claim.ApproverDeclarationMsg,
+                ClaimantDeclarationMessage = generalOptions.Claim.DeclarationMsg,
+                SingleClaimOnly = generalOptions.Claim.SingleClaim,
+                AllowReceiptsForExpenseItems = generalOptions.Claim.AttachReceipts,
                 HasCreditCard = hasCreditCard,
                 HasPurchaseCard = hasPurchaseCard,
                 BankAccountRequiredForExpense = bankAccountRequiredForExpense,
@@ -988,8 +991,8 @@ namespace SpendManagementApi.Controllers.V1
                 ReceiptServiceEnabled = isReceiptServiceEnabled,
                 ValidationServiceEnabled = isValidationServiceEnabled,
                 WhetherExcludeExpiredVehicles = whetherExcludeExpiredVehicles,
-                IsHomeToOfficeEnabled = subAccountProperties.HomeToOffice,
-                UserMayEditDetails = subAccountProperties.EditMyDetails,
+                IsHomeToOfficeEnabled = generalOptions.Mileage.HomeToOffice,
+                UserMayEditDetails = generalOptions.MyDetails.EditMyDetails,
                 CostcodeBreakdownSettings = costcodeBreakdownSettings,
                 CanNotifyAdminOfChanges = canNotifyAdminOfChanges,
                 IsNHSCustomer = user.Account.IsNHSCustomer,

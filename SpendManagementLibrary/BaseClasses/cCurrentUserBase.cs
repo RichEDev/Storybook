@@ -29,7 +29,7 @@
             {
                 if (this.nActiveSubAccountId < 0)
                 {
-                    this.nActiveSubAccountId = this.Employee.DefaultSubAccount;
+                    this.nActiveSubAccountId = Employee?.DefaultSubAccount ?? new cAccountSubAccountsBase(this.AccountID).getFirstSubAccount().SubAccountID;
                 }
 
                 return nActiveSubAccountId;

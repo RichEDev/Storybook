@@ -44,14 +44,7 @@ namespace SpendManagementLibrary
 			fws.glDocRepository = subproperties.DocumentRepository;
 			fws.glErrorSubmitEmail = "framework-internalerrors@selenity.com";
 			fws.glErrorSubmitFrom = subproperties.EmailServerFromAddress;
-			if (subproperties.KeepInvoiceForecasts)
-			{
-				fws.glKeepForecast = 1;
-			}
-			else
-			{
-				fws.glKeepForecast = 0;
-			}
+			fws.glKeepForecast = subproperties.KeepInvoiceForecasts ? 1 : 0;
 			fws.glMailFrom = subproperties.EmailServerFromAddress;
 			fws.glMailServer = subproperties.EmailServerAddress;
 			fws.glMaxRetries = subproperties.PwdMaxRetries;

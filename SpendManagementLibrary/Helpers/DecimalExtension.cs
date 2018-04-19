@@ -2,7 +2,7 @@
 {
     using System;
 
-    using SpendManagementLibrary.Enumerators;
+    using BusinessLogic.GeneralOptions.ESR;
 
     /// <summary>
     /// Esxtension methods for the decimal class.

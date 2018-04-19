@@ -180,6 +180,9 @@
     <Reference Include="SEL.FeatureFlags, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SEL.FeatureFlags.1.0.0.3\lib\net461\SEL.FeatureFlags.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleInjector, Version=4.0.11.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.0.11\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Chart.Wpf, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Chart.Wpf.dll</HintPath>
     </Reference>
@@ -238,6 +241,7 @@
       <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.XlsIO.Base.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -1106,7 +1110,6 @@
     </Compile>
     <Compile Include="expenses\code\cCardCompanies.cs" />
     <Compile Include="expenses\code\cEmailSuffixes.cs" />
-    <Compile Include="expenses\code\cGeneralOption.cs" />
     <Compile Include="expenses\code\ClaimsForApprover.cs" />
     <Compile Include="expenses\code\CorporateCardImportLogs.cs" />
     <Compile Include="expenses\code\FlagManagement.cs" />
@@ -3007,6 +3010,7 @@
       <DependentUpon>svcWorkflows.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TemporaryWebPrincipal.cs" />
     <Compile Include="Web References\tfsintegrator\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -8,13 +8,15 @@ namespace Spend_Management
     using System.Text;
     using System.Web.UI.WebControls;
 
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Enumerators;
 
     using Utilities.DistributedCaching;
-    using SpendManagementLibrary.Interfaces;
-    using SpendManagementLibrary.Helpers;
+
     using Spend_Management.expenses.code;
 
     /// <summary>
@@ -22,6 +24,8 @@ namespace Spend_Management
     /// </summary>
     public class cFloats
     {
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
+
         #region Fields
 
         private readonly Cache cache = new Cache();
@@ -1480,9 +1484,6 @@ namespace Spend_Management
 
             cCurrency reqcurrency = clscurrencies.getCurrencyById(currencyid);
 
-            cMisc clsmisc = new cMisc(this.accountid);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(this.accountid);
-
             int basecurrency;
 
             if (reqemp.PrimaryCurrency != 0)
@@ -1491,12 +1492,14 @@ namespace Spend_Management
             }
             else
             {
-                basecurrency = clsproperties.basecurrency;
+                basecurrency = (int)this._generalOptionsFactory[reqemp.DefaultSubAccount].WithCurrency().Currency.BaseCurrency;
             }
 
             reqcurrency = clscurrencies.getCurrencyById(basecurrency);
 
-            int reqAccountBaseCurrency = clsmisc.GetGlobalProperties(this.accountid).basecurrency;
+            var generalOptions = this._generalOptionsFactory[subAccountID].WithCurrency();
+
+            int reqAccountBaseCurrency = (int)generalOptions.Currency.BaseCurrency;
 
             if (reqAccountBaseCurrency == currencyid && reqemp.PrimaryCurrency == currencyid)
             {

@@ -6,7 +6,7 @@ namespace expenses
 {
     public sealed class PageInitializerModule : IHttpModule
     {
-        private readonly string[] _avoidedPages = new[]
+        private readonly string[] _avoidedPages = 
         {
             "/shared/logon.aspx"
         };

@@ -7,25 +7,29 @@
 // The associated content page 'admin\colours.aspx' was also modified to refer to the new class name.
 // For more information on this code pattern, please refer to http://go.microsoft.com/fwlink/?LinkId=46995
 //===========================================================================
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using SpendManagementLibrary;
+
 
 namespace Spend_Management
 {
+    using System;
+    using System.Web.UI;
+
+    using BusinessLogic;
+    using BusinessLogic.AccountProperties;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     /// <summary>
     /// Summary description for colours.
     /// </summary>
     public partial class colours : Page
     {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IAccountProperty,AccountPropertyCacheKey}"/> to get a <see cref="IAccountProperty"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IAccountProperty, AccountPropertyCacheKey> AccountPropertiesFactory { get; set; }
+
         /// <summary>
         /// The Header Background Colour
         /// </summary>
@@ -284,7 +288,10 @@ namespace Spend_Management
             greenlightsectionunderlinecolour = txtGreenLightSectionUnderline.Text.Replace("#", "");
 
             cColours clscolours = new cColours((int)ViewState["accountid"], curUser.CurrentSubAccountId, curUser.CurrentActiveModule);
-            clscolours.UpdateColours(headerbgcolour, headerbreadcrumbtxtcolour, pagetitletxtcolour, sectionheadingunderlinecolour, sectionheadingtxtcolour, fieldtxtcolour, pageoptionsbgcolour, pageoptionstxtcolour, tableheaderbgcolour, tableheadertxtcolour, taboptionbgcolour, taboptiontxtcolour, rowbgcolour, rowtxtcolour, altrowbgcolour, altrowtxtcolour, menuoptionhovertxtcolour, menuoptionstdtxtcolour, tooltipBgColour, tooltipTextColour, greenlightfieldcolour, greenlightsectiontextcolour, greenlightsectionbackgroundcolour, greenlightsectionunderlinecolour);
+            clscolours.UpdateColours(headerbgcolour, headerbreadcrumbtxtcolour, pagetitletxtcolour, sectionheadingunderlinecolour, sectionheadingtxtcolour, fieldtxtcolour, 
+                pageoptionsbgcolour, pageoptionstxtcolour, tableheaderbgcolour, tableheadertxtcolour, taboptionbgcolour, taboptiontxtcolour, rowbgcolour, rowtxtcolour, 
+                altrowbgcolour, altrowtxtcolour, menuoptionhovertxtcolour, menuoptionstdtxtcolour, tooltipBgColour, tooltipTextColour, greenlightfieldcolour, 
+                greenlightsectiontextcolour, greenlightsectionbackgroundcolour, greenlightsectionunderlinecolour, this.AccountPropertiesFactory);
 
             switch (curUser.CurrentActiveModule)
             {

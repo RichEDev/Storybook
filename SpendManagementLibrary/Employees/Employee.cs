@@ -24,16 +24,19 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Globalization;
+    using System.Text;
 
-    using Microsoft.SqlServer.Server;
+    using BusinessLogic.GeneralOptions;
+    using BusinessLogic.GeneralOptions.Password;
+
     using Common.Cryptography;
+
     using SpendManagementLibrary.Employees.DutyOfCare;
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Interfaces;
     using SpendManagementLibrary.Mobile;
 
     using Utilities.DistributedCaching;
-    using System.Text;
 
     /// <summary>
     /// The employee.
@@ -876,16 +879,21 @@
             return 0;
         }
 
-        public bool CheckPasswordExpiry(cAccountProperties accountProperties)
+        /// <summary>
+        /// Check the password expiry
+        /// </summary>
+        /// <param name="generalOptions">An instance of <see cref="IGeneralOptions"/></param>
+        /// <returns>Whether the password has expired</returns>
+        public bool CheckPasswordExpiry(IGeneralOptions generalOptions)
         {
-            if (!accountProperties.PwdExpires)
+            if (!generalOptions.Password.PwdExpires)
             {
                 return false;
             }
 
             DateTime lastdate = this.LastChange;
 
-            lastdate = lastdate.AddDays(accountProperties.PwdExpiryDays);
+            lastdate = lastdate.AddDays(generalOptions.Password.PwdExpiryDays);
 
             return lastdate < DateTime.Today;
         }

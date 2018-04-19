@@ -1,37 +1,42 @@
-using SpendManagementLibrary.Addresses;
-
-
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
-using System.Web.UI.WebControls;
-
-using SpendManagementLibrary;
-using SpendManagementLibrary.Enumerators;
-using SpendManagementLibrary.FinancialYears;
-using AjaxControlToolkit;
-using System.Data;
-using System.Web;
-
-
 namespace Spend_Management
-    {
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
     using System.Linq;
     using System.Net.Mail;
+    using System.Text;
     using System.Text.RegularExpressions;
+    using System.Web;
+    using System.Web.UI.WebControls;
+
+    using AjaxControlToolkit;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+    using BusinessLogic.GeneralOptions.Password;
+    using BusinessLogic.Identity;
 
     using Common.Cryptography;
+
+    using expenses.code;
+    using global::expenses;
+
     using Infragistics.WebUI.UltraWebGrid;
+
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Addresses;
+    using SpendManagementLibrary.DVLA;
     using SpendManagementLibrary.Employees;
+    using SpendManagementLibrary.Enumerators;
+    using SpendManagementLibrary.FinancialYears;
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Interfaces;
-    using Utilities.DistributedCaching;
-    using shared.code;
-    using expenses.code;
-    using SpendManagementLibrary.DVLA;
 
-        /// <summary>
+    using Utilities.DistributedCaching;
+
+    /// <summary>
     /// Summary description for employees.
     /// </summary>
     public class cEmployees
@@ -115,6 +120,8 @@ namespace Spend_Management
                 }
                 else
                 {
+                    HttpContext.Current.User = new TemporaryWebPrincipal(new UserIdentity(uniqueCheck.AccountID, uniqueCheck.EmployeeID));
+
                     employees.SendPasswordKey(uniqueCheck.EmployeeID, PasswordKeyType.ForgottenPassword, null, currentModule,fromMobile: fromMobile, requestSource: requestSource);
                 }
             }
@@ -198,17 +205,16 @@ namespace Spend_Management
 
             cAccounts clsaccounts = new cAccounts();
             cAccount account = clsaccounts.GetAccountByID(accountid);
-            cMisc clsMisc = new cMisc(this.accountid);
-            var reqGlobalProperties = clsMisc.GetGlobalProperties(this.accountid);
-            NotificationTemplates notifications = new NotificationTemplates(this.accountid, employeeID, passwordKey, reqGlobalProperties.attempts, currentModule);
 
-            cAccountSubAccounts clsSubAccounts = new cAccountSubAccounts(this.accountid);
-            cAccountProperties clsAccountProperties = (reqemp.DefaultSubAccount >= 0) ? clsSubAccounts.getSubAccountById(reqemp.DefaultSubAccount).SubAccountProperties : clsSubAccounts.getFirstSubAccount().SubAccountProperties;
+            var generalOptions =
+                FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>()[reqemp.DefaultSubAccount].WithPassword().WithEmail();
+
+            NotificationTemplates notifications = new NotificationTemplates(this.accountid, employeeID, passwordKey, generalOptions.Password.PwdMaxRetries, currentModule);
 
             string emailFrom;
-            if (string.IsNullOrEmpty(clsAccountProperties.EmailAdministrator) == false && string.IsNullOrWhiteSpace(clsAccountProperties.EmailAdministrator) == false && clsAccountProperties.SourceAddress == (byte)1) // coming from server address
+            if (string.IsNullOrEmpty(generalOptions.Email.EmailAdministrator) == false && string.IsNullOrWhiteSpace(generalOptions.Email.EmailAdministrator) == false && generalOptions.Email.SourceAddress == (byte)1) // coming from server address
             {
-                emailFrom = clsAccountProperties.EmailAdministrator;
+                emailFrom = generalOptions.Email.EmailAdministrator;
             }
             else
             {
@@ -1068,13 +1074,27 @@ namespace Spend_Management
         /// <summary>
         /// Check the password complies to the password policy
         /// </summary>
-        /// <param name="password">The password to check</param>
-        /// <param name="accountID">The ID of the <see cref="cAccount"/></param>
-        /// <param name="employeeid">The ID of the <see cref="Employee"/></param>
-        /// <param name="encryptor">An instance of <see cref="IEncryptor"/>used to hash the password</param>
-        /// <returns></returns>
-        public byte checkpassword(string password, int accountID, int employeeid, IEncryptor encryptor)
+        /// <param name="password">
+        /// The password to check
+        /// </param>
+        /// <param name="accountID">
+        /// The ID of the <see cref="cAccount"/>
+        /// </param>
+        /// <param name="employeeid">
+        /// The ID of the <see cref="Employee"/>
+        /// </param>
+        /// <param name="encryptor">
+        /// An instance of <see cref="IEncryptor"/>used to hash the password
+        /// </param>
+        /// <param name="generalOptions">
+        /// The general Options.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public byte checkpassword(string password, int accountID, int employeeid, IEncryptor encryptor, IGeneralOptions generalOptions)
         {
+            generalOptions.WithPassword();
+
             using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(accountid)))
             {
                 expdata.sqlexecute.Parameters.Clear();
@@ -1099,7 +1119,7 @@ namespace Spend_Management
             }
 
             bool isPrevious = false;
-            PasswordLength plength = clsproperties.PwdConstraint;
+            PasswordLength plength = generalOptions.Password.PwdConstraint;
             if (plength != PasswordLength.AnyLength)
             {
                 int length1 = clsproperties.PwdLength1;
@@ -3222,16 +3242,15 @@ namespace Spend_Management
 
             if (newEmployee && currentUser != null)
             {
-                cAccountSubAccounts subaccs = new cAccountSubAccounts(currentUser.AccountID);
-                    cAccountProperties properties =
-                        subaccs.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties;
+                var generalOptions = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>()[currentUser.CurrentSubAccountId].WithPassword();
+
                 Guid newPassword = Guid.NewGuid();
                     employee.ChangePassword(
                         newPassword.ToString(),
                         newPassword.ToString(),
                         false,
                         0,
-                        properties.PwdHistoryNum,
+                        generalOptions.Password.PwdHistoryNum,
                         currentUser,
                         EncryptorFactory.CreateEncryptor());
             }

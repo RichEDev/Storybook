@@ -888,6 +888,7 @@
     <Compile Include="Utilities\IPValidator.cs" />
     <Compile Include="Utilities\UdfValidator.cs" />
     <Compile Include="Utilities\VehicleFactory.cs" />
+    <Compile Include="WebPrincipal.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="--app_offline.htm" />

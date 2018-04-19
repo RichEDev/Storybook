@@ -2,7 +2,7 @@
 {
     using System;
 
-    using SpendManagementLibrary.Enumerators;
+    using BusinessLogic.GeneralOptions.ESR;
 
     /// <summary>
     /// Creatges an instance of <see cref="IEsrRounding"/> based on the gieven enum value.

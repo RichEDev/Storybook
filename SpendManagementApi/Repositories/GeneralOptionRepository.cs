@@ -1,23 +1,27 @@
 ﻿namespace SpendManagementApi.Repositories
 {  
-    using Spend_Management;
-    using Attributes;
-    using Interfaces;
-    using Models.Common;
-    using Models.Types;
-    using Utilities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
 
-    using SpendManagementLibrary;
+    using BusinessLogic.AccountProperties;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
 
-    using GeneralOptions = SpendManagementLibrary.GeneralOptions.GeneralOptions;
+    using Attributes;
+    using Interfaces;
+    using Models.Common;
+    using Models.Types;
+    using Utilities;
+
+    using Spend_Management;
+
+    using SpendManagementLibrary;
 
     internal class GeneralOptionRepository : BaseRepository<GeneralOption>, ISupportsActionContext
     {
-        private GeneralOptions _data;
+        private readonly IDataFactory<IAccountProperty, AccountPropertyCacheKey> _accountPropertiesFactory;
 
         /// <summary>
         /// Gets all of the available end points from the <see cref="GeneralOption">GeneralOptions</see> part of the API.
@@ -26,7 +30,7 @@
         public GeneralOptionRepository(ICurrentUser user, IActionContext actionContext)
             : base(user, actionContext, x => x.SubAccountId, null)
         {
-            _data = ActionContext.GeneralOptions;
+            this._accountPropertiesFactory = WebApiApplication.container.GetInstance<IDataFactory<IAccountProperty, AccountPropertyCacheKey>>();
         }
 
         /// <summary>
@@ -36,7 +40,8 @@
         [AuthAudit(SpendManagementElement.GeneralOptions, AccessRoleType.View)]
         public override IList<GeneralOption> GetAll()
         {
-            return _data.GetList(this.User.CurrentSubAccountId).Select(b => new GeneralOption().From(b, ActionContext)).ToList();
+            var returnList = this._accountPropertiesFactory.Get().Where(accountProperty => accountProperty.SubAccountId == this.User.CurrentSubAccountId).ToList();
+            return returnList.Select(accountProperty => new GeneralOption().From(accountProperty)).ToList();
         }
 
         /// <summary>
@@ -56,20 +61,20 @@
         /// <returns>All general options for the sub account.</returns>
         internal List<GeneralOption> GetAllBySubAccount(int subAccountId)
         {
-            return _data.GetList(subAccountId).Select(b => new GeneralOption().From(b, ActionContext)).Where(account => account.SubAccountId == subAccountId).ToList();
+            var returnList = this._accountPropertiesFactory.Get().Where(accountProperty => accountProperty.SubAccountId == this.User.CurrentSubAccountId).ToList();
+            return returnList.Select(accountProperty => new GeneralOption().From(accountProperty)).ToList();
         }
 
         internal GeneralOption GetByKeyAndSubAccount(string key, int subAccountId)
         {
-            _data = new GeneralOptions(User.AccountID);
-            var item = _data.GetGeneralOptionByKeyAndSubAccount(key, subAccountId);
+            var accountProperty = this._accountPropertiesFactory[new AccountPropertyCacheKey(key, subAccountId.ToString())];
 
-            if (item == null)
+            if (accountProperty == null)
             {
                 throw new ApiException(ApiResources.ApiErrorGeneralOptionDoesntExist,
                     String.Format(ApiResources.ApiErrorGeneralOptionDoesntExistMessageKeySubAccount));
             }
-            return new GeneralOption().From(item, ActionContext);
+            return new GeneralOption().From(accountProperty);
         }
 
         /// <summary>
@@ -92,9 +97,10 @@
             // validates the key to ensure it is valid.
             this.GetByKey(item.Key);
 
-            item = base.Update(item);      
-            this.UpdateGeneralOption(item.SubAccountId,item.Key,item.Value);
-            return this.GetByKey(item.Key);
+            item = base.Update(item);
+            var value = this._accountPropertiesFactory.Save(item.To());
+
+            return this.GetByKey(value.Key);
         }
 
 
@@ -107,41 +113,17 @@
         {
             // Get Sub Account ID once
             var subAccountId = generalOptions.FirstOrDefault().SubAccountId;
-            var subAccountProperties = new Dictionary<string, string>();
 
             foreach (var generalOption in generalOptions)
             {
                 this.GetByKey(generalOption.Key);
-                subAccountProperties.Add(generalOption.Key, generalOption.Value);
-            }
+                generalOption.SubAccountId = subAccountId;
 
-            var subAccounts = new cAccountSubAccounts(this.User.AccountID);
-            subAccounts.SaveProperties(subAccountId, subAccountProperties, this.User.EmployeeID, null);
-            subAccounts.InvalidateCache(subAccountId);
+                this._accountPropertiesFactory.Save(generalOption.To());
+            }
 
             // Return all updated general options
             return generalOptions;
-
-        }
-
-        /// <summary>
-        /// The updates <see cref="GeneralOption"/> in the database
-        /// </summary>
-        /// <param name="subAccountId">
-        /// The sub account.
-        /// </param>
-        /// <param name="key">
-        /// The key.
-        /// </param>
-        /// <param name="value">
-        /// The value.
-        /// </param>
-        private void UpdateGeneralOption(int subAccountId, string key , string value)
-        {
-            var subAccounts = new cAccountSubAccounts(this.User.AccountID);      
-            var subAccountProperties = new Dictionary<string, string> { { key, value } };
-            subAccounts.SaveProperties(subAccountId, subAccountProperties, this.User.EmployeeID, null);
-            subAccounts.InvalidateCache(subAccountId);
         }
 
         /// <summary>

@@ -3,23 +3,37 @@ namespace expenses
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
     using System.Web.Services;
     using System.Web.UI;
     using System.Web.UI.WebControls;
+
     using AjaxControlToolkit;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using Spend_Management;
+    using Spend_Management.shared.code;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
-    using Syncfusion.XlsIO;
     using SpendManagementLibrary.Employees.DutyOfCare;
-    using Spend_Management.shared.code;
+
+    using Syncfusion.XlsIO;
 
     public partial class qeform : Page
     {
         public int quickentryid;
         public IWorkbook workbook;
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
         public string todaysDate
         {
             get
@@ -367,7 +381,6 @@ namespace expenses
                 numrows = form.numrows;
             }
             ClientScript.RegisterHiddenField("numrows", numrows.ToString());
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties((int)ViewState["accountid"]);
             DateTime earliestdate = new DateTime();
 
             List<string> javaScriptBinds = new List<string>();
@@ -768,8 +781,7 @@ namespace expenses
             CheckBox chkbox;
             List<cExpenseItem> items = new List<cExpenseItem>();
 
-            cMisc clsmisc = new cMisc(accountId);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountId);
+            var generalOptions = this.GeneralOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithCurrency().WithCountry().WithDutyOfCare();
 
             cEmployees clsemployees = new cEmployees(accountId);
             Employee reqemp = clsemployees.GetEmployeeById((int)ViewState["employeeid"]);
@@ -978,7 +990,7 @@ namespace expenses
                                         }
                                         else //get default car
                                         {
-                                            carid = clsEmployeeCars.GetDefaultCarID(clsproperties.blocktaxexpiry, clsproperties.blockmotexpiry, clsproperties.blockinsuranceexpiry,clsproperties.BlockBreakdownCoverExpiry, false);
+                                            carid = clsEmployeeCars.GetDefaultCarID(generalOptions.DutyOfCare.BlockTaxExpiry, generalOptions.DutyOfCare.BlockMOTExpiry, generalOptions.DutyOfCare.BlockInsuranceExpiry, generalOptions.DutyOfCare.BlockBreakdownCoverExpiry, false);
                                         }
                                         ddlst = (DropDownList)tbl.FindControl("subcat" + subcatcol.subcat.subcatid + "mileage" + (i - 2));
                                         if (ddlst != null)
@@ -1023,11 +1035,11 @@ namespace expenses
                             {
                                 if (currency == 0) //get the default
                                 {
-                                    currency = clsproperties.basecurrency;
+                                    currency = (int)generalOptions.Currency.BaseCurrency;
                                 }
                                 if (country == 0)
                                 {
-                                    country = clsproperties.homecountry;
+                                    country = generalOptions.Country.HomeCountry;
                                 }
 
                                 newitem = new cExpenseItem(0, ItemType.Cash, 0, 0, otherdetails, receipt, total, 0, total, subcatcol.subcat.subcatid, date, 0, 0, 0, false, false, string.Empty, claimid, 0, 0, currency, string.Empty, 0, country, 0, 0, 0, false, reasonid, receipt, new DateTime(1900, 01, 01), new DateTime(1900, 01, 01), carid, 0, 0, 0, 0, 0, 0, 0, true, 0, "", 0, 0, "", 0, 0, 0, 0, 0, false, false, 0, new DateTime(1900, 01, 01), 0, DateTime.Now, (int)ViewState["employeeid"], mileageid, journeyuom, 0, subcatcol.subcat.HomeToLocationType);

@@ -1,31 +1,33 @@
+using System;
 
-
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-using System.Linq;
-
-    using SpendManagementLibrary;
-    using SpendManagementLibrary.Addresses;
-    using SpendManagementLibrary.Employees;
-    using SpendManagementLibrary.Enumerators;
-using SpendManagementLibrary.Enumerators.Expedite;
-    using SpendManagementLibrary.Expedite;
-    using SpendManagementLibrary.JourneyDeductionRules;
-using SpendManagementLibrary.Mileage;
+using SpendManagementLibrary;
 
 namespace Spend_Management
 {
-    using Microsoft.SqlServer.Server;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
 
+    using Microsoft.SqlServer.Server;
+    using SpendManagementLibrary.Addresses;
+    using SpendManagementLibrary.Employees;
+    using SpendManagementLibrary.Enumerators;
+    using SpendManagementLibrary.Enumerators.Expedite;
+    using SpendManagementLibrary.Expedite;
+    using SpendManagementLibrary.JourneyDeductionRules;
+    using SpendManagementLibrary.Mileage;
     using SpendManagementLibrary.Flags;
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Interfaces;
+    using SpendManagementLibrary.UserDefinedFields;
 
     using Common.Logging;
+
     using expenses.code;
     using expenses.code.Claims;
-    using SpendManagementLibrary.UserDefinedFields;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
 
     /// <summary>
     /// Summary description for items.
@@ -42,7 +44,8 @@ namespace Spend_Management
 
         string strsql;
         cMisc clsmisc;
-        cGlobalProperties clsproperties;
+        
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
 
         cFields fields;
 
@@ -68,9 +71,7 @@ namespace Spend_Management
         public cExpenseItems(int accountid)
         {
             nAccountid = accountid;
-            //expdata = new DBConnection(cAccounts.getConnectionString(accountid));
             clsmisc = new cMisc(accountid);
-            clsproperties = clsmisc.GetGlobalProperties(accountid);
 
             fields = new cFields(accountid);
             this._addresses = new Addresses(accountid);
@@ -91,7 +92,7 @@ namespace Spend_Management
             cAccountSubAccounts clsSubAccounts = new cAccountSubAccounts(accountid);
             cAccountSubAccount subAccount = clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId);
             cAccountProperties accountProperties = subAccount.SubAccountProperties.Clone(); // clsSubAccounts.getFirstSubAccount().SubAccountProperties.Clone();
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+
             bool amountpayableCalculated = false;
             decimal total = 0;
             decimal amountpay = 0;
@@ -143,11 +144,13 @@ namespace Spend_Management
 
 
 
-            cVat clsvat = new cVat(accountid, ref expitem, reqemp, clsmisc, clsproperties, null);
+            cVat clsvat = new cVat(accountid, ref expitem, reqemp, clsmisc, null);
 
             cMileageCat reqmileage = clsmileagecats.GetMileageCatById(expitem.mileageid);
 
             cEmployeeCars clsEmployeeCars = new cEmployeeCars(accountid, reqemp.EmployeeID);
+
+            var generalOptions = this._generalOptionsFactory[currentUser.CurrentSubAccountId].WithDutyOfCare().WithCurrency();
 
             if (reqmileage != null)
             {
@@ -164,7 +167,7 @@ namespace Spend_Management
 
                     if (carid == 0)
                     {
-                        carid = clsEmployeeCars.GetDefaultCarID(clsproperties.blocktaxexpiry, clsproperties.blockmotexpiry, clsproperties.blockinsuranceexpiry, clsproperties.BlockBreakdownCoverExpiry, accountProperties.DisableCarOutsideOfStartEndDate, expitem.date);
+                        carid = clsEmployeeCars.GetDefaultCarID(generalOptions.DutyOfCare.BlockTaxExpiry, generalOptions.DutyOfCare.BlockMOTExpiry, generalOptions.DutyOfCare.BlockInsuranceExpiry, generalOptions.DutyOfCare.BlockBreakdownCoverExpiry, accountProperties.DisableCarOutsideOfStartEndDate, expitem.date);
                     }
 
                     cCar car = clsEmployeeCars.GetValidCarWithinExpenseDate(expitem.carid, expitem.date);
@@ -253,7 +256,7 @@ namespace Spend_Management
                     int subAccountID = subaccs.getFirstSubAccount().SubAccountID;
 
                     cCurrencies clscurrencies = new cCurrencies(accountid, subAccountID);
-                    int basecurrency = reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : clsproperties.basecurrency;
+                    int basecurrency = reqemp.PrimaryCurrency != 0 ? reqemp.PrimaryCurrency : (int)generalOptions.Currency.BaseCurrency;
 
                     if (expitem.currencyid != basecurrency)
                     {
@@ -264,9 +267,9 @@ namespace Spend_Management
                         originalTotal = expitem.grandtotal;
                     }
 
-                    if (clsproperties.basecurrency == expitem.currencyid || clsproperties.basecurrency == expitem.basecurrency)
+                    if (generalOptions.Currency.BaseCurrency == expitem.currencyid || generalOptions.Currency.BaseCurrency == expitem.basecurrency)
                     {
-                        originalGlobalTotal = expitem.currencyid != clsproperties.basecurrency ? expitem.convertedgrandtotal : expitem.grandtotal;
+                        originalGlobalTotal = expitem.currencyid != generalOptions.Currency.BaseCurrency ? expitem.convertedgrandtotal : expitem.grandtotal;
                     }
                     else
                     {
@@ -279,7 +282,7 @@ namespace Spend_Management
                         }
                         else if (basecurrency == expitem.currencyid)
                         {
-                            exchangeRate = clscurrencies.getExchangeRate(clsproperties.basecurrency, expitem.currencyid, expitem.date);
+                            exchangeRate = clscurrencies.getExchangeRate((int)generalOptions.Currency.BaseCurrency, expitem.currencyid, expitem.date);
                         }
                         else
                         {
@@ -344,7 +347,7 @@ namespace Spend_Management
             if (expitem.allowanceid != 0)
             {
                 cAllowances clsallowances = new cAllowances(accountid);
-                clsallowances.calculateDailyAllowance(reqemp.EmployeeID, ref expitem);
+                clsallowances.calculateDailyAllowance(reqemp.EmployeeID, ref expitem, this._generalOptionsFactory);
             }
 
             clsvat.calculateVAT();
@@ -955,7 +958,7 @@ namespace Spend_Management
             if (expitem.allowanceid != 0)
             {
                 cAllowances clsallowances = new cAllowances(accountid);
-                clsallowances.calculateDailyAllowance(reqemp.EmployeeID, ref expitem);
+                clsallowances.calculateDailyAllowance(reqemp.EmployeeID, ref expitem, this._generalOptionsFactory);
             }
 
             if (subcat.calculation == CalculationType.ExcessMileage && expitem.journeysteps.ContainsKey(0))
@@ -966,11 +969,13 @@ namespace Spend_Management
 
             cMileagecats clsmileagecats = new cMileagecats(accountid);
 
-            cVat clsvat = new cVat(accountid, ref expitem, reqemp, clsmisc, clsproperties, olditem);
+            cVat clsvat = new cVat(accountid, ref expitem, reqemp, clsmisc, olditem);
 
             cMileageCat reqmileage = clsmileagecats.GetMileageCatById(expitem.mileageid);
 
             cEmployeeCars clsEmployeeCars = new cEmployeeCars(accountid, employeeid);
+
+            var generalOptions = this._generalOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithCurrency().WithDutyOfCare().WithMileage();
 
             if (reqmileage != null)
             {
@@ -980,13 +985,14 @@ namespace Spend_Management
 
                     if (carid == 0)
                     {
-                        carid = clsEmployeeCars.GetDefaultCarID(clsProperties.BlockTaxExpiry, clsProperties.BlockMOTExpiry, clsProperties.BlockInsuranceExpiry, clsproperties.BlockBreakdownCoverExpiry, clsProperties.DisableCarOutsideOfStartEndDate, expitem.date);
+                        carid = clsEmployeeCars.GetDefaultCarID(clsProperties.BlockTaxExpiry, clsProperties.BlockMOTExpiry, clsProperties.BlockInsuranceExpiry, generalOptions.DutyOfCare.BlockBreakdownCoverExpiry, clsProperties.DisableCarOutsideOfStartEndDate, expitem.date);
                     }
 
                     cFieldToDisplay from = clsmisc.GetGeneralFieldByCode("from");
                     cFieldToDisplay to = clsmisc.GetGeneralFieldByCode("to");
                     var itemtype = expitem.itemtype;
-                    if (subcat.mileageapp == true && (clsproperties.allowmultipledestinations && subcat.fromapp && from.individual && subcat.toapp && to.individual && ((itemtype == ItemType.Cash && from.display && to.display) || (itemtype == ItemType.CreditCard && from.displaycc && to.displaycc) || (itemtype == ItemType.PurchaseCard && from.displaypc && to.displaypc))))
+
+                    if (subcat.mileageapp == true && (generalOptions.Mileage.AllowMultipleDestinations && subcat.fromapp && from.individual && subcat.toapp && to.individual && ((itemtype == ItemType.Cash && from.display && to.display) || (itemtype == ItemType.CreditCard && from.displaycc && to.displaycc) || (itemtype == ItemType.PurchaseCard && from.displaypc && to.displaypc))))
                     {
                         //Make sure there is a valid car before allowing to claim mileage
                         cCar car = clsEmployeeCars.GetValidCarWithinExpenseDate(expitem.carid, expitem.date);
@@ -1092,7 +1098,7 @@ namespace Spend_Management
                     }
                     else
                     {
-                        basecurrency = clsproperties.basecurrency;
+                        basecurrency = (int)generalOptions.Currency.BaseCurrency;
                     }
 
                     if (expitem.currencyid != basecurrency)
@@ -1104,9 +1110,9 @@ namespace Spend_Management
                         originalTotal = expitem.grandtotal;
                     }
 
-                    if (clsproperties.basecurrency == expitem.currencyid || clsproperties.basecurrency == expitem.basecurrency)
+                    if (generalOptions.Currency.BaseCurrency == expitem.currencyid || generalOptions.Currency.BaseCurrency == expitem.basecurrency)
                     {
-                        if (expitem.currencyid != clsproperties.basecurrency)
+                        if (expitem.currencyid != generalOptions.Currency.BaseCurrency)
                         {
                             originalGlobalTotal = Math.Round(expitem.grandtotal * (1 / (decimal)expitem.exchangerate), 2, MidpointRounding.AwayFromZero);
                         }
@@ -1125,7 +1131,7 @@ namespace Spend_Management
                         }
                         else
                         {
-                            exchangeRate = clscurrencies.getExchangeRate(clsproperties.basecurrency, expitem.currencyid, expitem.date);
+                            exchangeRate = clscurrencies.getExchangeRate((int)generalOptions.Currency.BaseCurrency, expitem.currencyid, expitem.date);
                         }
 
                         if (exchangeRate > 0)
@@ -3275,13 +3281,10 @@ namespace Spend_Management
             }
 
         }
+
         private void convertTotals(ref cExpenseItem expenseitem, Employee reqemp)
         {
-
-
             int basecurrency;
-
-
 
             if (reqemp.PrimaryCurrency != 0)
             {
@@ -3289,7 +3292,7 @@ namespace Spend_Management
             }
             else
             {
-                basecurrency = clsproperties.basecurrency;
+                basecurrency = (int)this._generalOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithCurrency().Currency.BaseCurrency;
             }
 
             if (expenseitem.currencyid == basecurrency)
@@ -3349,7 +3352,7 @@ namespace Spend_Management
             double globalexchangerate;
             decimal globaltotal;
 
-            basecurrency = clsproperties.basecurrency;
+            basecurrency = (int)this._generalOptionsFactory[subAccountID].WithCurrency().Currency.BaseCurrency;
 
             if (expenseitem.currencyid == basecurrency || expenseitem.basecurrency == basecurrency)
             {
@@ -4239,8 +4242,6 @@ namespace Spend_Management
 
         private void calculateAmountPayable(ref cExpenseItem item, cExpenseItem olditem, cSubcat subcat)
         {
-            cMisc clsmisc = new cMisc(accountid);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
             decimal amountpayable;
             bool ccusersettles = false;
 
@@ -4533,9 +4534,9 @@ public struct sExpenseItemDetails
     public bool purchasecard;
     public bool creditcard;
     public int transactionid;
-    public SortedList<int, object> userdefined;
+    public System.Collections.Generic.SortedList<int, object> userdefined;
     public int mileageid;
-    public SortedList<int, cJourneyStep> journeysteps;
+    public System.Collections.Generic.SortedList<int, cJourneyStep> journeysteps;
     public int currencyid;
     public MileageUOM unit;
     public double exchangerate;

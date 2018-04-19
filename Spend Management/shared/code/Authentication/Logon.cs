@@ -1,5 +1,4 @@
-﻿
-namespace Spend_Management.shared.code.Authentication
+﻿namespace Spend_Management.shared.code.Authentication
 {
     using System;
     using System.Data;
@@ -9,7 +8,15 @@ namespace Spend_Management.shared.code.Authentication
     using System.Web.Security;
     using System.Web.SessionState;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Identity;
+
     using Common.Cryptography;
+
+    using global::expenses;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Enumerators;
@@ -258,6 +265,8 @@ namespace Spend_Management.shared.code.Authentication
                 this.RedirectAfterLogon(LoginResult.AlreadyLoggedIn, request, session, response, currentUser.CurrentActiveModule);
             }
 
+            HttpContext.Current.User = new TemporaryWebPrincipal(new UserIdentity(this.accountId, 0));
+
             LoginResult auth = this.Authenticate(companyId.Trim(), username.Trim(), password.Trim(), request, fromSso);
             session["SubAccountID"] = this.currentSubAccount;
 
@@ -289,13 +298,8 @@ namespace Spend_Management.shared.code.Authentication
             }
 
             InvalidateCurrentCookie(request, response);
-            var subaccounts = new cAccountSubAccounts(reqAccount.accountid);
-            cAccountSubAccount subaccount = this.currentSubAccount > 0 ? subaccounts.getSubAccountById(this.currentSubAccount) : subaccounts.getFirstSubAccount();
-            
-            var prop = subaccount.SubAccountProperties;
-            var clsMisc = new cMisc(this.accountId);
-            cGlobalProperties reqGlobalProperties = clsMisc.GetGlobalProperties(this.accountId);
-            return this.GetFailedToLogonMessage(username, module, auth, reqAccount, reqGlobalProperties, prop);
+
+            return this.GetFailedToLogonMessage(username, module, auth, reqAccount);
         }
 
         #endregion
@@ -443,9 +447,6 @@ namespace Spend_Management.shared.code.Authentication
                 return LoginResult.InvalidUsernamePasswordCombo;
             }
 
-            var misc = new cMisc(this.accountId);
-            cGlobalProperties reqGlobalProperties = misc.GetGlobalProperties(this.accountId);
-
             Employee reqEmployee = clsEmployees.GetEmployeeById(Math.Abs(authenticate));
 
             if (reqEmployee.DefaultSubAccount == -1)
@@ -460,6 +461,8 @@ namespace Spend_Management.shared.code.Authentication
                 this.currentSubAccount = reqEmployee.DefaultSubAccount;
             }
 
+            var generalOptions = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>()[reqEmployee.DefaultSubAccount].WithPassword().WithMileage();
+
             if (authenticate < 0)
             {
                 // negative employee ID means logon attempt failure or employee is not yet active or employee is archived.
@@ -473,7 +476,7 @@ namespace Spend_Management.shared.code.Authentication
                     return LoginResult.EmployeeArchived;
                 }
 
-                return reqEmployee.LogonRetryCount >= reqGlobalProperties.attempts
+                return reqEmployee.LogonRetryCount >= generalOptions.Password.PwdMaxRetries
                            ? LoginResult.LogonAttemptsExceeded
                            : LoginResult.InvalidUsernamePasswordCombo;
                 
@@ -506,7 +509,7 @@ namespace Spend_Management.shared.code.Authentication
 
             var employeeCars = new cEmployeeCars(this.accountId, this.employeeId);
 
-            if (CheckOdometerReadingsRequired(employeeCars, reqGlobalProperties.recordodometer, reqGlobalProperties.enterodometeronsubmit, reqGlobalProperties.odometerday))
+            if (CheckOdometerReadingsRequired(employeeCars, generalOptions.Mileage.RecordOdometer, generalOptions.Mileage.EnterOdometerOnSubmit, generalOptions.Mileage.OdometerDay))
             {
                 return LoginResult.EnterOdometerValues;
             } 
@@ -655,8 +658,10 @@ namespace Spend_Management.shared.code.Authentication
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        private string GetFailedToLogonMessage(string username, Modules module, LoginResult authorisationResult, cAccount account, cGlobalProperties globalProperties, cAccountProperties prop)
+        private string GetFailedToLogonMessage(string username, Modules module, LoginResult authorisationResult, cAccount account)
         {
+            var generalOptions = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>()[this.currentSubAccount].WithPassword().WithAccountMessages();
+
             string message = "The details you have entered are incorrect.";
             this.forgottenDetailsVisible = true;
             switch (authorisationResult)
@@ -673,11 +678,11 @@ namespace Spend_Management.shared.code.Authentication
                     {
                         var clsemployees = new cEmployees(account.accountid);
 
-                        if (authorisationResult == LoginResult.LogonAttemptsExceeded && globalProperties.attempts != 0)
+                        if (authorisationResult == LoginResult.LogonAttemptsExceeded && generalOptions.Password.PwdMaxRetries != 0)
                         {
                             clsemployees.lockEmployee(username, account.accountid, module);
                             
-                            message = string.IsNullOrEmpty(prop.AccountLockedMessage) ? "Too many attempts, your account has been locked.  Check your email for details." : prop.AccountLockedMessage;
+                            message = string.IsNullOrEmpty(generalOptions.AccountMessages.AccountLockedMessage) ? "Too many attempts, your account has been locked.  Check your email for details." : generalOptions.AccountMessages.AccountLockedMessage;
                             this.forgottenDetailsVisible = false;
                         }
                         else
@@ -696,19 +701,19 @@ namespace Spend_Management.shared.code.Authentication
                                     this.forgottenDetailsVisible = true;
                                     break;
                                 case LoginResult.EmployeeLocked:
-                                    message = string.IsNullOrEmpty(prop.AccountCurrentlyLockedMessage) ? "Your account is currently locked, check your email for details." : prop.AccountCurrentlyLockedMessage;
+                                    message = string.IsNullOrEmpty(generalOptions.AccountMessages.AccountCurrentlyLockedMessage) ? "Your account is currently locked, check your email for details." : generalOptions.AccountMessages.AccountCurrentlyLockedMessage;
                                     break;
                             }
                         }
 
                         if (authorisationResult != LoginResult.InactiveAccount)
                         {
-                            if (((globalProperties.attempts - clsemployees.GetEmployeeRetryCount(this.employeeId)) > 0)
+                            if (((generalOptions.Password.PwdMaxRetries - clsemployees.GetEmployeeRetryCount(this.employeeId)) > 0)
                                 && authorisationResult == LoginResult.InvalidUsernamePasswordCombo)
                             {
                                 message += string.Format(
-                                    "  {0} attempts left.", 
-                                    globalProperties.attempts - clsemployees.GetEmployeeRetryCount(this.employeeId));
+                                    "  {0} attempts left.",
+                                    generalOptions.Password.PwdMaxRetries - clsemployees.GetEmployeeRetryCount(this.employeeId));
                                 this.forgottenDetailsVisible = true;
                             }
                         }

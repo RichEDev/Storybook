@@ -125,6 +125,9 @@
     <OutputPath>$(TeamBuildOutDir)\_PublishedServices\$(MSBuildProjectName)</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SimpleInjector, Version=4.0.11.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.0.11\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Chart.Wpf, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.14.4460.0.15\lib\net40\Syncfusion.Chart.Wpf.dll</HintPath>
       <Private>True</Private>
@@ -249,6 +252,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleBootstrap\ConsoleBootstrap.csproj">
+      <Project>{97a11ed2-577c-4be6-bffa-adee411bc45f}</Project>
+      <Name>ConsoleBootstrap</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Spend Management\Spend Management.csproj">
       <Project>{1CBFD8EC-F67C-4425-A10C-97BFC7501045}</Project>
       <Name>Spend Management</Name>

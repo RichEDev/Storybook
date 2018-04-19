@@ -3,9 +3,13 @@
     using System;
     using System.Collections.Generic;
 
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using SpendManagementApi.Common;
     using SpendManagementApi.Interfaces;
     using SpendManagementApi.Models.Common;
+    using SpendManagementApi.Models.Responses;
     using SpendManagementApi.Models.Types;
     using SpendManagementApi.Utilities;
 
@@ -29,6 +33,8 @@
         /// </summary>
         private readonly IActionContext _actionContext;
 
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory;
+
         /// <summary>
         /// Creates a new BankAccountRepository.
         /// </summary>
@@ -38,6 +44,7 @@
             : base(user, x => x.BankAccountId, x => x.AccountName)
         {
             this._actionContext = actionContext;
+            this._generalOptionsFactory = WebApiApplication.container.GetInstance<IDataFactory<IGeneralOptions, int>>();
         }
 
         /// <summary>
@@ -187,11 +194,10 @@
         /// </returns>
         public BankAccountMasterData GetBankAccountMasterData()
         {
-
             var employee = this.ActionContext.Employees.GetEmployeeById(this.User.EmployeeID);
 
-            var misc = new cMisc(this.User.AccountID);
-            cGlobalProperties properties = misc.GetGlobalProperties(this.User.AccountID);
+            var generalOptions =
+                this._generalOptionsFactory[this.User.CurrentSubAccountId].WithCurrency().WithCountry();
 
             var masterData = new BankAccountMasterData
             {
@@ -204,11 +210,11 @@
                         .GetActiveCurrencies(),
                 PrimaryCurrencyId =
                     employee.PrimaryCurrency == 0
-                        ? properties.basecurrency
+                        ? (int)generalOptions.Currency.BaseCurrency
                         : employee.PrimaryCurrency,
                 PrimaryCountryId =
                     employee.PrimaryCountry == 0
-                        ? properties.homecountry
+                        ? generalOptions.Country.HomeCountry
                         : employee.PrimaryCountry
             };
 

@@ -1,17 +1,17 @@
 ﻿namespace Spend_Management
 {
-    using BusinessLogic.DataConnections;
-    using BusinessLogic.ProjectCodes;
-
-    using CacheDataAccess.ProjectCodes;
-
-    using SQLDataAccess.ProjectCodes;
-
     using System;
     using System.Data;
     using System.Linq;
     using System.Web.UI.WebControls;
     using System.Collections.Generic;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.ProjectCodes;
+    using BusinessLogic.GeneralOptions;
+
+    using CacheDataAccess.ProjectCodes;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Helpers;
 
@@ -22,6 +22,8 @@
         private Dictionary<int, cFilterRule> listFilterRules;
         private readonly int AccountId;
         private readonly cCostcodes CostCodes;
+
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
 
         /// <summary>
         /// Not for general use - Required by cGridNew when it tries to initialise an instance of this class
@@ -517,8 +519,9 @@
         {
             Infragistics.WebUI.UltraWebNavigator.Nodes nodes = new Infragistics.WebUI.UltraWebNavigator.Nodes();
             Infragistics.WebUI.UltraWebNavigator.Node node;
-            cMisc clsmisc = new cMisc(accountid);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+
+            var generalOptions = this._generalOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithCodeAllocation();
+
             bool parExists;
             string item = "";
 
@@ -527,13 +530,13 @@
                 switch (rule.parent)
                 {
                     case FilterType.Costcode:
-                        item = GetParentOrChildItem(rule.parent, val.parentid, true, clsproperties.usecostcodedesc);
+                        item = GetParentOrChildItem(rule.parent, val.parentid, true, generalOptions.CodeAllocation.UseCostCodeDescription);
                         break;
                     case FilterType.Department:
-                        item = GetParentOrChildItem(rule.parent, val.parentid, true, clsproperties.usedepartmentdesc);
+                        item = GetParentOrChildItem(rule.parent, val.parentid, true, generalOptions.CodeAllocation.UseDepartmentDescription);
                         break;
                     case FilterType.Projectcode:
-                        item = GetParentOrChildItem(rule.parent, val.parentid, true, clsproperties.useprojectcodedesc);
+                        item = GetParentOrChildItem(rule.parent, val.parentid, true, generalOptions.CodeAllocation.UseProjectCodeDesc);
                         break;
                     case FilterType.Reason:
                         item = GetParentOrChildItem(rule.parent, val.parentid, true, false);
@@ -580,13 +583,13 @@
                         switch (rule.child)
                         {
                             case FilterType.Costcode:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, clsproperties.usecostcodedesc);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseCostCodeDescription);
                                 break;
                             case FilterType.Department:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, clsproperties.usedepartmentdesc);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription);
                                 break;
                             case FilterType.Projectcode:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, clsproperties.useprojectcodedesc);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc);
                                 break;
                             case FilterType.Reason:
                                 item = GetParentOrChildItem(rule.child, fval.childid, false, false);
@@ -724,18 +727,21 @@
         public string getChildTargetControl(FilterType filtertype)
         {
             cMisc clsmisc = new cMisc(accountid);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+
+            var generalOptions = this._generalOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId]
+                .WithCodeAllocation();
+
             string controlname = "";
 
             switch (filtertype)
             {
                 case FilterType.Costcode:
                     {
-                        if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet == false)
+                        if (generalOptions.CodeAllocation.CostCodesOn && generalOptions.CodeAllocation.UseCostCodes && !generalOptions.CodeAllocation.UseCostCodeOnGenDetails)
                         {
                             controlname = "txtCostCode;breakdown";
                         }
-                        else if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet)
+                        else if (generalOptions.CodeAllocation.CostCodesOn && generalOptions.CodeAllocation.UseCostCodes && generalOptions.CodeAllocation.UseCostCodeOnGenDetails)
                         {
                             controlname = "txtCostCode;general";
                         }
@@ -743,11 +749,11 @@
                     }
                 case FilterType.Department:
                     {
-                        if (clsproperties.departmentson && clsproperties.usedepartmentcodes && clsproperties.usedepartmentongendet == false)
+                        if (generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDepartmentCodes && !generalOptions.CodeAllocation.UseDeptOnGenDetails)
                         {
                             controlname = "cmbdepartment;breakdown";
                         }
-                        else if (clsproperties.departmentson && clsproperties.usedepartmentcodes && clsproperties.usedepartmentongendet)
+                        else if (generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDepartmentCodes && generalOptions.CodeAllocation.UseDeptOnGenDetails)
                         {
                             controlname = "cmbgendepartment;general";
                         }
@@ -755,11 +761,11 @@
                     }
                 case FilterType.Projectcode:
                     {
-                        if (clsproperties.projectcodeson && clsproperties.useprojectcodes && clsproperties.useprojectcodeongendet == false)
+                        if (generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.UseProjectCodes && !generalOptions.CodeAllocation.UseProjectCodeOnGenDetails)
                         {
                             controlname = "cmbprojectcode;breakdown";
                         }
-                        else if (clsproperties.projectcodeson && clsproperties.useprojectcodes && clsproperties.useprojectcodeongendet)
+                        else if (generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.UseProjectCodes && generalOptions.CodeAllocation.UseProjectCodeOnGenDetails)
                         {
                             controlname = "cmbgenprojectcode;general";
                         }
@@ -926,7 +932,10 @@
         public FilterArea getArea(FilterType filtertype, bool isParent, int paruserdefineid, int childuserdefineid)
         {        
             cMisc clsmisc = new cMisc(accountid);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+
+            var generalOptions = this._generalOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId]
+                .WithCodeAllocation();
+
             cUserdefinedFields clsudf = new cUserdefinedFields(accountid);
             FilterArea area = FilterArea.General;
 
@@ -934,11 +943,11 @@
             {
                 case FilterType.Costcode:
                     {
-                        if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet == false)
+                        if (generalOptions.CodeAllocation.CostCodesOn && generalOptions.CodeAllocation.UseCostCodes && !generalOptions.CodeAllocation.UseCostCodeOnGenDetails)
                         {
                             area = FilterArea.Breakdown;
                         }
-                        else if (clsproperties.costcodeson && clsproperties.usecostcodes && clsproperties.usecostcodeongendet)
+                        else if (generalOptions.CodeAllocation.CostCodesOn && generalOptions.CodeAllocation.UseCostCodes && generalOptions.CodeAllocation.UseCostCodeOnGenDetails)
                         {
                             area = FilterArea.General;
                         }
@@ -946,11 +955,11 @@
                     }
                 case FilterType.Department:
                     {
-                        if (clsproperties.departmentson && clsproperties.usedepartmentcodes && clsproperties.usedepartmentongendet == false)
+                        if (generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDepartmentCodes && !generalOptions.CodeAllocation.UseDeptOnGenDetails)
                         {
                             area = FilterArea.Breakdown;
                         }
-                        else if (clsproperties.departmentson && clsproperties.usedepartmentcodes && clsproperties.usedepartmentongendet)
+                        else if (generalOptions.CodeAllocation.DepartmentsOn && generalOptions.CodeAllocation.UseDepartmentCodes && generalOptions.CodeAllocation.UseDeptOnGenDetails)
                         {
                             area = FilterArea.General;
                         }
@@ -958,11 +967,11 @@
                     }
                 case FilterType.Projectcode:
                     {
-                        if (clsproperties.projectcodeson && clsproperties.useprojectcodes && clsproperties.useprojectcodeongendet == false)
+                        if (generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.ProjectCodesOn && !generalOptions.CodeAllocation.UseProjectCodeOnGenDetails)
                         {
                             area = FilterArea.Breakdown;
                         }
-                        else if (clsproperties.projectcodeson && clsproperties.useprojectcodes && clsproperties.useprojectcodeongendet)
+                        else if (generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.ProjectCodesOn && generalOptions.CodeAllocation.UseProjectCodeOnGenDetails)
                         {
                             area = FilterArea.General;
                         }

@@ -1,28 +1,31 @@
-﻿using System;
-using System.Data;
-using System.Web.UI.WebControls;
-using System.Collections.Generic;
-
-using System.Data.SqlClient;
-using SpendManagementLibrary;
-using System.Text;
-using BusinessLogic;
-using BusinessLogic.Cache;
-using Common.Logging;
-using SpendManagementLibrary.Employees;
-using SpendManagementLibrary.Enumerators;
-using SpendManagementLibrary.Helpers;
-using SpendManagementLibrary.Interfaces;
-using SpendManagementLibrary.Random;
-using Spend_Management.expenses.code;
-using Convert = System.Convert;
-using NullReferenceException = System.NullReferenceException;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
+    using System;
+    using System.Data;
+    using System.Web.UI.WebControls;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    using System.Text;
     using System.Linq;
 
-    using SpendManagementLibrary.Cards;
+    using BusinessLogic;
+    using BusinessLogic.Cache;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    using Common.Logging;
+
+    using SpendManagementLibrary;
+        using SpendManagementLibrary.Cards;
+    using SpendManagementLibrary.Employees;
+    using SpendManagementLibrary.Enumerators;
+    using SpendManagementLibrary.Helpers;
+    using SpendManagementLibrary.Interfaces;
+    using SpendManagementLibrary.Random;
+    using Spend_Management.expenses.code;
+
+    using Convert = System.Convert;
+    using NullReferenceException = System.NullReferenceException;
 
     public class cCardStatements
     {
@@ -2055,7 +2058,14 @@ namespace Spend_Management
             }
         }
 
-        public decimal getUnallocatedAmount(int transactionid, int employeeid)
+        /// <summary>
+        /// Gets the unallocated amount
+        /// </summary>
+        /// <param name="transactionid">The transaction id</param>
+        /// <param name="employeeid">The employee id</param>
+        /// <param name="generalOptionsFactory">An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/></param>
+        /// <returns>The unallocated amount</returns>
+        public decimal getUnallocatedAmount(int transactionid, int employeeid, IDataFactory<IGeneralOptions, int> generalOptionsFactory)
         {
             DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));
             cCardTransaction transaction = getTransactionById(transactionid);
@@ -2068,19 +2078,19 @@ namespace Spend_Management
             decimal allocatedamount = 0;
             bool overseasitem = false;
             decimal unallocatedamount;
-            cMisc clsmisc = new cMisc(accountid);
 
             cCurrencies clscurrencies = new cCurrencies(accountid, subAccountID);
 
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
+            var generalOptions = generalOptionsFactory[subAccountID].WithCurrency();
+
             int basecurrency;
-            if (emp.PrimaryCurrency != clsproperties.basecurrency)
+            if (emp.PrimaryCurrency != generalOptions.Currency.BaseCurrency)
             {
                 basecurrency = emp.PrimaryCurrency;
             }
             else
             {
-                basecurrency = clsproperties.basecurrency;
+                basecurrency = (int)generalOptions.Currency.BaseCurrency;
             }
 
 

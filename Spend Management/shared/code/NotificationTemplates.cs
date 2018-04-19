@@ -1,37 +1,37 @@
-﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Web.UI.WebControls;
-using System.Collections.Generic;
-using SpendManagementLibrary;
-
-using System.Data.SqlClient;
-using System.IO;
-using System.Net.Mail;
-using SpendManagementLibrary.DVLA;
-using SpendManagementLibrary.Employees;
-using Convert = System.Convert;
-
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
+    using System;
+    using System.Data;
+    using System.Configuration;
+    using System.Linq;
+    using System.Text;
+    using System.Web.UI.WebControls;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Net;
     using System.Text.RegularExpressions;
+    using System.Data.SqlClient;
+    using System.IO;
+    using System.Net.Mail;
+    using Convert = System.Convert;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
 
     using SpendManagementLibrary.Addresses;
     using SpendManagementLibrary.Definitions.JoinVia;
     using SpendManagementLibrary.Employees.DutyOfCare;
     using SpendManagementLibrary.Interfaces;
     using SpendManagementLibrary.Helpers;
+    using SpendManagementLibrary.DVLA;
+    using SpendManagementLibrary.Employees;
+    using SpendManagementLibrary.Claims;
+    using SpendManagementLibrary;
 
     using Spend_Management.shared.code.Helpers;
-    using SpendManagementLibrary.Claims;
-    using shared.code;
-
     using Spend_Management.shared.code.DVLA;
+
+    using shared.code;
 
     /// <summary>
     /// Class for the creation of email templates
@@ -83,6 +83,8 @@ namespace Spend_Management
         /// Claim Summary for [Pending Claim Details Of An Approver] tag
         /// </summary>
         private ApproverClaimsSummary _claimsSummary;
+
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
 
         /// <summary>
         /// Gets the templates Ids for the email templates where mobile notifications are permitted.
@@ -2370,7 +2372,6 @@ namespace Spend_Management
             cCountries clscountries = new cCountries(accountid, subAccountID);
             cCurrencies clscurrencies = new cCurrencies(accountid, subAccountID);
             cAllowances clsallowances = new cAllowances(accountid);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
 
             var claims = new cClaims(this.accountid);
             var filterItem = claims.getExpenseItemById(filterExpenseId[0]);
@@ -2569,7 +2570,9 @@ namespace Spend_Management
                     }
                     output.Append("):</td><td>");
 
-                    if (reqitem.currencyid == clsproperties.basecurrency)
+                    var generalOptions = this._generalOptionsFactory[subAccountID].WithCurrency();
+
+                    if (reqitem.currencyid == generalOptions.Currency.BaseCurrency)
                     {
                         output.Append(reqitem.total.ToString("######0.00"));
                     }

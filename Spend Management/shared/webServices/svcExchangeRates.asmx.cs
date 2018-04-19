@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
-using System.Xml.Linq;
-using System.Web.Script.Services;
-using SpendManagementLibrary;
-using SpendManagementLibrary.Employees;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
+    using System;
+    using System.ComponentModel;
+    using System.Web.Services;
+    using System.Web.Script.Services;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Employees;
+
     /// <summary>
     /// Summary description for svcExchangeRates
     /// </summary>
@@ -23,15 +21,6 @@ namespace Spend_Management
     [System.Web.Script.Services.ScriptService]
     public class svcExchangeRates : System.Web.Services.WebService
     {
-
-        [WebMethod(EnableSession = true)]
-        public string HelloWorld()
-        {
-            return "Hello World";
-        }
-
-
-
         [WebMethod(EnableSession=true)]
         [ScriptMethod]
         public static object[] GetExchangeRate(int currencyID, DateTime date)
@@ -39,8 +28,6 @@ namespace Spend_Management
             CurrentUser currentUser = cMisc.GetCurrentUser();
             cCurrencies clsCurrencies = new cCurrencies(currentUser.AccountID, currentUser.CurrentSubAccountId);
             cEmployees clsEmployees = new cEmployees(currentUser.AccountID);
-            cMisc clsmisc = new cMisc(currentUser.AccountID);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(currentUser.AccountID);
             Employee reqemp = clsEmployees.GetEmployeeById(currentUser.EmployeeID);
 
             double exchangerate = 0;
@@ -52,7 +39,7 @@ namespace Spend_Management
             }
             else
             {
-                basecurrency = clsproperties.basecurrency;
+                basecurrency = (int)FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>()[currentUser.CurrentSubAccountId].WithCurrency().Currency.BaseCurrency;
             }
 
             exchangerate = clsCurrencies.getCurrencyById(basecurrency).getExchangeRate(currencyID, date);

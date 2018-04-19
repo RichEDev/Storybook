@@ -18,8 +18,8 @@ namespace expenses
 	/// </summary>
 	public partial class hotelsearch : System.Web.UI.Page
 	{
-	
-		protected void Page_Load(object sender, System.EventArgs e)
+
+        protected void Page_Load(object sender, System.EventArgs e)
 		{
 			if (IsPostBack == false)
 			{

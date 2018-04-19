@@ -1,28 +1,29 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-
-using SpendManagementLibrary;
-using Spend_Management;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace expenses
 {
-	/// <summary>
-	/// Summary description for odometerreading.
-	/// </summary>
-	public partial class odometerreading : Page
-	{
-	
-		protected void Page_Load(object sender, System.EventArgs e)
+    using System;
+    using System.Web.UI;
+    using System.Linq;
+
+    using SpendManagementLibrary;
+
+    using Spend_Management;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    /// <summary>
+    /// Summary description for odometerreading.
+    /// </summary>
+    public partial class odometerreading : Page
+    {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+        protected void Page_Load(object sender, System.EventArgs e)
 		{
 			Title = "Monthly Odometer Readings";
             Master.title = Title;
@@ -40,8 +41,8 @@ namespace expenses
 
                 cEmployeeCars clsEmployeeCars = new cEmployeeCars(user.AccountID, user.EmployeeID);
 
-                cMisc clsmisc = new cMisc(user.AccountID);
-                cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(user.AccountID);
+			    var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithMileage();
+
                 if (odotype == 2)
                 {
                     int claimid;
@@ -66,7 +67,7 @@ namespace expenses
                 }
                 else
                 {
-                    lblday.Text = "Please enter your odometer reading as of the " + clsproperties.odometerday + CreateOrdinal(clsproperties.odometerday) + " of the month.";
+                    lblday.Text = "Please enter your odometer reading as of the " + generalOptions.Mileage.OdometerDay + CreateOrdinal(generalOptions.Mileage.OdometerDay) + " of the month.";
                 }
 				
 				

@@ -4,19 +4,24 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+
+using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.GeneralOptions;
+
 using Infragistics.WebUI.CalcEngine;
 using Infragistics.WebUI.UltraWebGrid;
+
 using SpendManagementLibrary.Definitions.JoinVia;
 using SpendManagementLibrary.Helpers;
-using Spend_Management;
 using SpendManagementLibrary;
 using SpendManagementLibrary.Logic_Classes.Fields;
 
+using Spend_Management;
 using Spend_Management.shared.webServices;
 
 public partial class reports_reportviewer : System.Web.UI.Page
@@ -27,6 +32,12 @@ public partial class reports_reportviewer : System.Web.UI.Page
     int nTotalColumnId;
     decimal dCurGrandTotal;
     private CustomEntityImageData _customEntityImageData;
+
+    /// <summary>
+    /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
 
     /// <summary>
     /// Gets an instance of <see cref="CustomEntityImageData"/>
@@ -112,14 +123,16 @@ public partial class reports_reportviewer : System.Web.UI.Page
                             {
                                 cExportOptions drilloptions = clsreports.getExportOptions(user.AccountID, user.EmployeeID, drillrequest.report.reportid);
                                 cMisc clsmisc = new cMisc(user.AccountID);
-                                cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(user.AccountID);
+
+                                var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithReport();
+
                                 if(drilloptions.drilldownreport != Guid.Empty)
                                 {
                                     drilldownreportid = drilloptions.drilldownreport;
                                 }
-                                else if(clsproperties.drilldownreportid != Guid.Empty)
+                                else if(generalOptions.Report.DrilldownReport != Guid.Empty)
                                 {
-                                    drilldownreportid = clsproperties.drilldownreportid;
+                                    drilldownreportid = (Guid) generalOptions.Report.DrilldownReport;
                                 }
                             }
 
@@ -1017,8 +1030,9 @@ public partial class reports_reportviewer : System.Web.UI.Page
         cReportRequest clsrequest = (cReportRequest)Session["request" + ViewState["requestnum"]];
         cReport rpt = clsrequest.report;
         reqReport = rpt;
-        cMisc clsmisc = new cMisc((int)ViewState["accountid"]);
-        cGlobalProperties clsproperties = clsmisc.GetGlobalProperties((int)ViewState["accountid"]);
+
+        var generalOptions = this.GeneralOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithCurrency();
+
         cAccountSubAccounts clsSubAccounts = new cAccountSubAccounts((int)ViewState["accountid"]);
         cAccountProperties accountProperties = clsSubAccounts.getSubAccountById((int)ViewState["subaccountid"]).SubAccountProperties;
 
@@ -1030,7 +1044,7 @@ public partial class reports_reportviewer : System.Web.UI.Page
             
             var relabeler = new FieldRelabler(accountProperties);
             cGlobalCurrencies clsglobalcurrencies = new cGlobalCurrencies();
-            cCurrency currency = clscurrencies.getCurrencyById(clsproperties.basecurrency);
+            cCurrency currency = clscurrencies.getCurrencyById((int) generalOptions.Currency.BaseCurrency);
             string symbol = "";
             if (currency != null)
             {

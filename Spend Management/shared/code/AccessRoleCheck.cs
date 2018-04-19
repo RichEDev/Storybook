@@ -1,10 +1,12 @@
 ﻿namespace Spend_Management.shared.code
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
-    using System.Web.UI;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using SpendManagementLibrary;
 
     /// <summary>
@@ -34,14 +36,16 @@
         /// <summary>
         /// Check whether the user can access administrative settings.
         /// </summary>
+        /// <param name="generalOptionFactory">An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/></param>
         /// <returns>
         /// The System.Boolean.
         /// </returns>
-        public static bool CanAccessAdminSettings(CurrentUser user)
+        public static bool CanAccessAdminSettings(CurrentUser user, IDataFactory<IGeneralOptions, int> generalOptionFactory)
         {
             var customEntitiesByUser = new cCustomEntities(user);
-            var userMiscellaneousInstance = new cMisc(user.AccountID);
-            cGlobalProperties accountGlobalProperties = userMiscellaneousInstance.GetGlobalProperties(user.AccountID);
+
+            var generalOptions = generalOptionFactory[user.CurrentSubAccountId].WithDelegate();
+
             bool showAdminForCustomEntities = false;
             bool isDelegateUser = IsDelegate;
 
@@ -68,7 +72,7 @@
             }
 
             if (showAdminForCustomEntities || CheckIfUserCanAccessAdmin(user) ||
-                ((isDelegateUser && accountGlobalProperties.delauditlog &&
+                ((isDelegateUser && generalOptions.Delegate.DelAuditLog &&
                   user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.AuditLog, true)) ||
                  (!isDelegateUser && user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.AuditLog, false))))
             {
@@ -99,9 +103,6 @@
         /// <summary>
         /// Check if the user can access base info.
         /// </summary>
-        /// <param name="currentUser">
-        /// The cu.
-        /// </param>
         /// <returns>
         /// The System.Boolean. TRUE if it is accessible else FALSE
         /// </returns>

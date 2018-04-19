@@ -4,6 +4,10 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using Interfaces;
     using Models.Common;
     using Models.Types;
@@ -20,6 +24,8 @@
         private readonly cGlobalCurrencies _cGlobalCurrencies;
         private readonly cMisc _cMisc;
 
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory;
+
         public CurrencyRepository(ICurrentUser user, IActionContext actionContext = null)
             : base(user, actionContext, curr => curr.CurrencyId, null)
         {
@@ -27,6 +33,7 @@
             _currencyData = this.ActionContext.Currencies;
             _cGlobalCurrencies = this.ActionContext.GlobalCurrencies;
             _cMisc = new cMisc(User.AccountID);
+            this._generalOptionsFactory = WebApiApplication.container.GetInstance<IDataFactory<IGeneralOptions, int>>();
         }
 
         //Returns the list of countries associated to a GlobalCountry entry as well as the unassociated global countries
@@ -254,8 +261,8 @@
             }
 
             //Updating currency type if provided and different from existing value
-            cGlobalProperties clsproperties = _cMisc.GetGlobalProperties(User.AccountID);
-            SpendManagementLibrary.CurrencyType currencyType = (SpendManagementLibrary.CurrencyType)clsproperties.currencytype;
+            var generalOptions = this._generalOptionsFactory[this.User.CurrentSubAccountId].WithCurrency();
+            SpendManagementLibrary.CurrencyType currencyType = (SpendManagementLibrary.CurrencyType)generalOptions.Currency.CurrencyType;
             if (currency.CurrencyType.HasValue && currency.CurrencyType.Value.Cast<CurrencyType>() != currencyType)
             {
                 _currencyData.ChangeCurrencyType(currency.CurrencyType.Value.Cast<CurrencyType>(), User.EmployeeID);
@@ -340,8 +347,8 @@
                 return;
             }
 
-            cGlobalProperties clsproperties = _cMisc.GetGlobalProperties(User.AccountID);
-            SpendManagementLibrary.CurrencyType currencyType = (SpendManagementLibrary.CurrencyType)clsproperties.currencytype;
+            var generalOptions = this._generalOptionsFactory[this.User.CurrentSubAccountId].WithCurrency();
+            SpendManagementLibrary.CurrencyType currencyType = (SpendManagementLibrary.CurrencyType)generalOptions.Currency.CurrencyType;
             currency.CurrencyType = currencyType.Cast<CurrencyType>();
         }
     }

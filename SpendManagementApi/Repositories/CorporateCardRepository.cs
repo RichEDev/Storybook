@@ -1,4 +1,7 @@
-﻿namespace SpendManagementApi.Repositories
+﻿using BusinessLogic.DataConnections;
+using BusinessLogic.GeneralOptions;
+
+namespace SpendManagementApi.Repositories
 {
     using System;
     using System.Collections.Generic;
@@ -34,6 +37,8 @@
         /// </summary>
         private cCardStatements _cardStatements;
 
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory;
+
         /// <summary>
         /// Creates a new CorporateCardRepository with the passed in user.
         /// </summary>
@@ -45,6 +50,7 @@
             this._data = this.ActionContext.EmployeeCorporateCards;
             this._employees = this.ActionContext.Employees;
             this._cardStatements = this.ActionContext.CardStatements;
+            this._generalOptionsFactory = WebApiApplication.container.GetInstance<IDataFactory<IGeneralOptions, int>>();
         }
 
         /// <summary>
@@ -320,7 +326,7 @@
             {
                 var creditCardTransaction = new CreditCardTransaction().ToApiType(transaction, this.ActionContext);
                 creditCardTransaction.PrimaryCurrencySymbol = primaryCurrencySymbol;
-                creditCardTransaction.RemainingAmountToBeReconciled = this._cardStatements.getUnallocatedAmount(transaction.TranactionId, this.User.EmployeeID);
+                creditCardTransaction.RemainingAmountToBeReconciled = this._cardStatements.getUnallocatedAmount(transaction.TranactionId, this.User.EmployeeID, this._generalOptionsFactory);
                 creditCardTransactions.Add(creditCardTransaction);
             }
 

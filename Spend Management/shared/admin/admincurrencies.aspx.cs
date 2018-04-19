@@ -1,25 +1,26 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using SpendManagementLibrary;
-using Spend_Management;
-using System.Web.Services;
-using System.Text;
-
 namespace Spend_Management
 {
+    using System;
+    using System.Web;
+    using System.Web.UI;
+    using System.Web.Services;
+
+    using SpendManagementLibrary;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
 	/// <summary>
 	/// Summary description for admincurrencies.
 	/// </summary>
 	public partial class admincurrencies : Page
 	{
+	    /// <summary>
+	    /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+	    /// </summary>
+        [Dependency]
+	    public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
 
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
@@ -53,7 +54,6 @@ namespace Spend_Management
                 ViewState["employeeid"] = user.EmployeeID;
 
                 cMisc clsMisc = new cMisc(user.AccountID);
-                cGlobalProperties clsproperties = clsMisc.GetGlobalProperties(user.AccountID);
 
                 var clsSubAccounts = new cAccountSubAccounts(user.AccountID);
                 cAccountProperties reqProperties = clsSubAccounts.getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
@@ -65,7 +65,7 @@ namespace Spend_Management
                     this.exchangeRateComment.Style.Add("display", "block");
                 }
 
-                CurrencyType currencyType = (CurrencyType)byte.Parse(clsproperties.currencytype.ToString());
+                CurrencyType currencyType = (CurrencyType)byte.Parse(this.GeneralOptionsFactory[user.CurrentSubAccountId].WithCurrency().Currency.CurrencyType.ToString());
 
                 ViewState["currencyType"] = currencyType;
 

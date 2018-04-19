@@ -1,5 +1,4 @@
-﻿
-namespace SpendManagementLibrary.Expedite
+﻿namespace SpendManagementLibrary.Expedite
 {
 	using System;
 	using System.Collections.Generic;
@@ -18,7 +17,10 @@ namespace SpendManagementLibrary.Expedite
     using System.Drawing.Drawing2D;
     using System.Text;
     using System.Web;
-	/// <summary>
+
+	using BusinessLogic.FilePath;
+
+    /// <summary>
 	/// Manages all receipt processing in expenses.
 	/// </summary>
 	public class Receipts : IManageReceipts

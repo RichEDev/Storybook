@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using SpendManagementLibrary.Enumerators;
+    using BusinessLogic.GeneralOptions.ESR;
 
     /// <summary>
     /// Helpers to generate ESR Inbound files.

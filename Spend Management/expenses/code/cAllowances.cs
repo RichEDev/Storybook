@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using SpendManagementLibrary;
 using System.Web.UI.WebControls;
+using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.GeneralOptions;
 using SpendManagementLibrary.Employees;
 using Utilities.DistributedCaching;
 
@@ -22,7 +25,7 @@ namespace Spend_Management
 
 	    readonly int accountid;
 
-		public cAllowances(int nAccountid)
+        public cAllowances(int nAccountid)
 		{
 			accountid = nAccountid;
             
@@ -318,8 +321,14 @@ namespace Spend_Management
             }
             return items;
         }
-		
-        public void calculateDailyAllowance(int employeeid, ref cExpenseItem reqitem)
+
+        /// <summary>
+        /// Calculate daily allowance
+        /// </summary>
+        /// <param name="employeeid">The employee id</param>
+        /// <param name="reqitem">The item</param>
+        /// <param name="generalOptionsFactory">An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/></param>
+        public void calculateDailyAllowance(int employeeid, ref cExpenseItem reqitem, IDataFactory<IGeneralOptions, int> generalOptionsFactory)
         {
             //calculate num hours
 
@@ -347,11 +356,6 @@ namespace Spend_Management
             int i = 0;
             decimal total = 0;
 
-            cMisc clsmisc = new cMisc(accountid);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(accountid);
-
-
-
             int basecurrency;
 
             if (reqemp.PrimaryCurrency != 0)
@@ -360,7 +364,8 @@ namespace Spend_Management
             }
             else
             {
-                basecurrency = clsproperties.basecurrency;
+                var generalOptions = generalOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithCurrency();
+                basecurrency = (int)generalOptions.Currency.BaseCurrency;
             }
 
             startdate = reqitem.allowancestartdate;

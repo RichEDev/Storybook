@@ -1,22 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using SpendManagementLibrary;
-using Syncfusion.XlsIO;
-using System.IO;
-using BusinessLogic;
-using BusinessLogic.DataConnections;
-using BusinessLogic.ProjectCodes;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Web;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.P11DCategories;
+    using BusinessLogic.ProjectCodes;
+
+    using SpendManagementLibrary;
+
+    using Syncfusion.XlsIO;
+
     public partial class implementationImport : System.Web.UI.Page
     {
         [Dependency]
         public IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> ProjectCodesRepository { get; set; }
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IP11DCategory,Int32}"/> to get a <see cref="IP11DCategory"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IP11DCategory, int> P11DCategoryRepository { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -59,7 +68,7 @@ namespace Spend_Management
                 int logID = clsLogging.saveLog(0, LogType.SpreadsheetImport, 0, 0, 0, 0, 0);
                 ViewState["logID"] = logID;
 
-                cCustomerDataImport clsDataImport = new cCustomerDataImport((int)ViewState["accountid"], (int)ViewState["employeeid"], logID);
+                cCustomerDataImport clsDataImport = new cCustomerDataImport((int)ViewState["accountid"], (int)ViewState["employeeid"], logID, this.P11DCategoryRepository);
 
                 ImportProcessData procData = clsDataImport.ReadExcelTemplate(file);
 
@@ -126,7 +135,7 @@ namespace Spend_Management
 
         protected void cmdok_Click(object sender, ImageClickEventArgs e)
         {
-            cCustomerDataImport clsDataImport = new cCustomerDataImport((int)ViewState["accountid"], (int)ViewState["employeeid"], (int)ViewState["logID"]);
+            cCustomerDataImport clsDataImport = new cCustomerDataImport((int)ViewState["accountid"], (int)ViewState["employeeid"], (int)ViewState["logID"], this.P11DCategoryRepository);
 
             ImportProcessData procData = new ImportProcessData();
 

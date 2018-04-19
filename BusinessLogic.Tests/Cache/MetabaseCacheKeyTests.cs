@@ -69,14 +69,6 @@
                 Assert.Throws<ArgumentNullException>(() => sut.GetCacheKeyHash("test"));
             }
 
-            [Fact]
-            public void NullKey_GetCacheKeyHash_ThrowsArgumentNullException()
-            {
-                MetabaseCacheKey<IProjectCode> sut = new MetabaseCacheKey<IProjectCode> { Area = "testArea" };
-
-                Assert.Throws<ArgumentNullException>(() => sut.GetCacheKeyHash("test"));
-            }
-
             [Theory]
             [InlineData("")]
             [InlineData(null)]

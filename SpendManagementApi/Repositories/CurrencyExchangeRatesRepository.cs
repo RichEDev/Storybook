@@ -3,6 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using Interfaces;
     using Models.Common;
     using Models.Types;
@@ -21,15 +25,18 @@
         private readonly cMonthlyCurrencies _monthlyCurrencies;
 
         private readonly cRangeCurrencies _rangeCurrencies;
-        
+
+        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory;
+
         public CurrencyExchangeRatesRepository(ICurrentUser user, IActionContext actionContext = null)
             : base(user, actionContext, curr => curr.CurrencyId, null)
         {
             _currencyData = this.ActionContext.Currencies;
             _monthlyCurrencies = this.ActionContext.MonthlyCurrencies;
             _rangeCurrencies = this.ActionContext.RangeCurrencies;
+            this._generalOptionsFactory = WebApiApplication.container.GetInstance<IDataFactory<IGeneralOptions, int>>();
 
-       }
+        }
 
         private void PopulateStaticExchangeRates(CurrencyExchangeRates currencyExchangeRates)
         {
@@ -86,9 +93,7 @@
 
         private CurrencyType GetCurrentCurrencyType()
         {
-            cMisc misc = new cMisc(User.AccountID);
-            cGlobalProperties clsproperties = misc.GetGlobalProperties(User.AccountID);
-            CurrencyType dbCurrencyType = (CurrencyType)clsproperties.currencytype;
+            CurrencyType dbCurrencyType = (CurrencyType)this._generalOptionsFactory[this.User.CurrentSubAccountId].WithCurrency().Currency.CurrencyType;
             return dbCurrencyType;
         }
 

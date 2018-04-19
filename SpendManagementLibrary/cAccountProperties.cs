@@ -1,10 +1,13 @@
 ﻿namespace SpendManagementLibrary
 {
     using System;
+
+    using BusinessLogic.GeneralOptions.AddEditExpense;
+    using BusinessLogic.GeneralOptions.ESR;
+    using BusinessLogic.GeneralOptions.Password;
+
     using Enumerators;
     using SpendManagementLibrary.Interfaces;
-    using SpendManagementLibrary.Helpers;
-    using System.Data;
 
     /// <summary>
     /// Account properties class
@@ -834,7 +837,7 @@
 
 
         public bool CostCodesOn { get; set; }
-
+            
         public bool DepartmentsOn { get; set; }
 
         public bool ProjectCodesOn { get; set; }

@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Services;
-using System.Web.Script.Services;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
+    using System.Web.Services;
+    using System.Web.Script.Services;
+
+    using BusinessLogic.AccountProperties;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    using SpendManagementLibrary;
+
     /// <summary>
     /// Summary description for svcColours
     /// </summary>
@@ -17,6 +19,7 @@ namespace Spend_Management
     [System.Web.Script.Services.ScriptService]
     public class svcColours : System.Web.Services.WebService
     {
+        private readonly IDataFactory<IAccountProperty, AccountPropertyCacheKey> _accountPropertiesFactory = FunkyInjector.Container.GetInstance<IDataFactory<IAccountProperty, AccountPropertyCacheKey>>();
 
         /// <summary>
         /// Restores the default colours
@@ -27,7 +30,7 @@ namespace Spend_Management
         {
             CurrentUser curUser = cMisc.GetCurrentUser();
             cColours clscolours = new cColours(curUser.AccountID, curUser.CurrentSubAccountId, curUser.CurrentActiveModule);
-            clscolours.RestoreDefaults();
+            clscolours.RestoreDefaults(this._accountPropertiesFactory);
         }
     }
 }

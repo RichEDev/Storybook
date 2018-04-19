@@ -1,5 +1,3 @@
-using SpendManagementLibrary.Employees;
-
 namespace Spend_Management
 {
     #region Using Directives
@@ -7,7 +5,6 @@ namespace Spend_Management
     using System;
     using System.Collections.Generic;
     using System.Configuration;
-    using System.Data;
     using System.Data.SqlClient;
     using System.Globalization;
     using System.IO;
@@ -16,6 +13,12 @@ namespace Spend_Management
     using System.Web.Caching;
     using System.Web.UI.WebControls;
 
+    using BusinessLogic.AccountProperties;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Enums;
+    using BusinessLogic.GeneralOptions;
+
+    using SpendManagementLibrary.Employees;
     using SpendManagementLibrary;
 
     #endregion
@@ -46,6 +49,8 @@ namespace Spend_Management
         /// The cache object for General Fields
         /// </summary>
         private readonly Utilities.DistributedCaching.Cache _generalFieldsCache = new Utilities.DistributedCaching.Cache();
+
+        private readonly IDataFactory<IAccountProperty, AccountPropertyCacheKey> _accountPropertiesFactory = FunkyInjector.Container.GetInstance<IDataFactory<IAccountProperty, AccountPropertyCacheKey>>();
 
         #endregion
 
@@ -384,24 +389,6 @@ namespace Spend_Management
         }
 
         /// <summary>
-        /// The invalidate global properties.
-        /// </summary>
-        /// <param name="accId">
-        /// The accountid.
-        /// </param>
-        public void InvalidateGlobalProperties(int accId)
-        {
-            try
-            {
-                var cache = HttpContext.Current.Cache;
-                cache.Remove("globalproperties" + accId);
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
         /// The add role defaults to template.
         /// </summary>
         /// <param name="employeeid">
@@ -445,29 +432,6 @@ namespace Spend_Management
         }
 
         /// <summary>
-        /// The add subcat to template.
-        /// </summary>
-        /// <param name="employeeid">
-        /// The employeeid.
-        /// </param>
-        /// <param name="subcatid">
-        /// The subcatid.
-        /// </param>
-        public void AddSubcatToTemplate(int employeeid, int subcatid)
-        {
-            var expdata = new DBConnection(cAccounts.getConnectionString(this.accountid));
-            var clsemployees = new cEmployees(this.accountid);
-            Employee reqemp = clsemployees.GetEmployeeById(employeeid);
-
-            if (reqemp.HasCustomisedAddItems == false)
-            {
-                this.AddRoleDefaultsToTemplate(employeeid);
-            }
-
-            reqemp.GetSubCategories().Add(subcatid);
-        }
-
-        /// <summary>
         /// The change policy type.
         /// </summary>
         /// <param name="policytype">
@@ -476,38 +440,11 @@ namespace Spend_Management
         public void ChangePolicyType(byte policytype)
         {
             CurrentUser currentUser = GetCurrentUser();
-            var clsSubAccounts = new cAccountSubAccounts(this.accountid);
-            cAccountProperties reqAccountProperties =
-                clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties.Clone();
-            clsSubAccounts.getFirstSubAccount().SubAccountProperties.Clone();
-            reqAccountProperties.PolicyType = policytype;
-            clsSubAccounts.SaveAccountProperties(
-                reqAccountProperties,
-                currentUser.EmployeeID,
-                currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
-        }
 
-        /// <summary>
-        /// The check available licences.
-        /// </summary>
-        /// <param name="accId">
-        /// The accountid.
-        /// </param>
-        /// <returns>
-        /// The <see cref="bool"/>.
-        /// </returns>
-        public bool CheckAvailableLicences(int accId)
-        {
-            var expdata = new DBConnection(cAccounts.getConnectionString(accId));
-            var clsaccounts = new cAccounts();
-            cAccount reqaccount = clsaccounts.GetAccountByID(accId);
+            this._accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.PolicyType.GetDescription(), policytype.ToString(), currentUser.CurrentSubAccountId));
 
-            this.strsql = "select count(*) from employees where archived = 0 and username not like 'admin%'";
-            int usedcount = expdata.getcount(this.strsql);
-
-            expdata.sqlexecute.Parameters.Clear();
-
-            return usedcount < reqaccount.numusers;
+            var accountBase = new cAccountSubAccountsBase(currentUser.AccountID);
+            accountBase.InvalidateCache(currentUser.CurrentSubAccountId);
         }
 
         /// <summary>
@@ -674,55 +611,6 @@ namespace Spend_Management
         }
 
         /// <summary>
-        /// The get fields grid.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="DataTable"/>.
-        /// </returns>
-        public DataTable GetFieldsGrid()
-        {
-            var clsfields = new cFields(this.accountid);
-            var tbl = new DataTable();
-            tbl.Columns.Add("description", typeof(string));
-            tbl.Columns.Add("fieldid", typeof(int));
-            tbl.Columns.Add("adddesc", typeof(string));
-            tbl.Columns.Add("display", typeof(bool));
-            tbl.Columns.Add("mandatory", typeof(bool));
-            tbl.Columns.Add("displaycc", typeof(bool));
-            tbl.Columns.Add("mandatorycc", typeof(bool));
-            tbl.Columns.Add("displaypc", typeof(bool));
-            tbl.Columns.Add("mandatorypc", typeof(bool));
-            tbl.Columns.Add("individual", typeof(bool));
-
-            var expdata = new DBConnection(cAccounts.getConnectionString(this.accountid));
-
-            this.strsql =
-                "select addscreen.fieldid, addscreen.description as adddesc, addscreen.display, addscreen.mandatory, addscreen.displaycc, addscreen.mandatorycc, addscreen.displaypc, addscreen.mandatorypc, addscreen.individual from addscreen";
-            using (SqlDataReader reader = expdata.GetReader(this.strsql))
-            {
-                while (reader.Read())
-                {
-                    Guid fieldid = reader.GetGuid(reader.GetOrdinal("fieldid"));
-                    cField field = clsfields.GetFieldByID(fieldid);
-                    bool display = reader.GetBoolean(reader.GetOrdinal("display"));
-                    bool mandatory = reader.GetBoolean(reader.GetOrdinal("mandatory"));
-                    bool displaycc = reader.GetBoolean(reader.GetOrdinal("displaycc"));
-                    bool mandatorycc = reader.GetBoolean(reader.GetOrdinal("mandatorycc"));
-                    bool displaypc = reader.GetBoolean(reader.GetOrdinal("displaypc"));
-                    bool mandatorypc = reader.GetBoolean(reader.GetOrdinal("mandatorypc"));
-                    bool individual = reader.GetBoolean(reader.GetOrdinal("individual"));
-                    string adddesc = reader.IsDBNull(reader.GetOrdinal("adddesc")) ? string.Empty : reader.GetString(reader.GetOrdinal("adddesc"));
-
-                    tbl.Rows.Add(new object[] { field.Description, fieldid, adddesc, display, mandatory, displaycc, mandatorycc, displaypc, mandatorypc, individual });
-                }
-
-                reader.Close();
-            }
-            expdata.sqlexecute.Parameters.Clear();
-            return tbl;
-        }
-
-        /// <summary>
         /// The get general field by code.
         /// </summary>
         /// <param name="code">
@@ -734,82 +622,6 @@ namespace Spend_Management
         public cFieldToDisplay GetGeneralFieldByCode(string code)
         {
             return this.GetAddScreenFields()[code];
-        }
-
-        /// <summary>
-        /// The get global properties.
-        /// </summary>
-        /// <param name="accId">
-        /// The accountid.
-        /// </param>
-        /// <returns>cache
-        /// The <see cref="cGlobalProperties"/>.
-        /// </returns>
-        public cGlobalProperties GetGlobalProperties(int accId)
-        {
-            var cache = HttpRuntime.Cache;
-
-            var properties = (cGlobalProperties)cache["globalproperties" + accId];
-            if (properties == null)
-            {
-                var subaccounts = new cAccountSubAccounts(accId);
-
-                properties = this.CloneProperties(subaccounts.getFirstSubAccount().SubAccountProperties);
-
-                // create a cache dependency on the new subaccount properties table
-                var depDb = new DBConnection(cAccounts.getConnectionString(accId));
-                const string SQL = "SELECT subAccountID, stringKey, stringValue FROM dbo.accountProperties";
-                if (GlobalVariables.GetAppSettingAsBoolean("EnableBrokers"))
-                {
-                    SqlCacheDependency propertiesDep = depDb.CreateSQLCacheDependency(SQL, null);
-
-                    cache.Insert(
-                        "globalproperties" + accId,
-                        properties,
-                        propertiesDep,
-                        Cache.NoAbsoluteExpiration,
-                        TimeSpan.FromMinutes((int)Caching.CacheTimeSpans.Permanent),
-                        CacheItemPriority.Default,
-                        null);
-                    depDb.ExecuteSQL(SQL);
-
-                }
-
-            }
-
-            return properties;
-        }
-
-        /// <summary>
-        /// The get modified addscreen items.
-        /// </summary>
-        /// <param name="date">
-        /// The date.
-        /// </param>
-        /// <returns>
-        /// The <see cref="sOnlineAddscreenItemsInfo"/>.
-        /// </returns>
-        public sOnlineAddscreenItemsInfo GetModifiedAddscreenItems(DateTime date)
-        {
-            var addscreeninfo = new sOnlineAddscreenItemsInfo();
-            SortedList<string, cFieldToDisplay> fields = this.GetGeneralFieldsToDisplay();
-            var lstAddScreenFields = new Dictionary<Guid, cFieldToDisplay>();
-            var lstaddscreenids = new List<Guid>();
-
-            foreach (cFieldToDisplay field in fields.Values)
-            {
-                if (field.modifiedon > date)
-                {
-                    lstAddScreenFields.Add(field.fieldid, field);
-                }
-
-                lstaddscreenids.Add(field.fieldid);
-            }
-
-            addscreeninfo.lstonlineaddscreenitems = lstAddScreenFields;
-            addscreeninfo.lstaddscreenids = lstaddscreenids;
-
-            return addscreeninfo;
         }
 
         /// <summary>
@@ -861,164 +673,6 @@ namespace Spend_Management
             }
 
             return StripTagsCharArray(result);
-        }
-
-        /// <summary>
-        /// The update add expenses.
-        /// </summary>
-        /// <param name="costcodes">
-        /// The costcodes.
-        /// </param>
-        /// <param name="departments">
-        /// The departments.
-        /// </param>
-        /// <param name="singleclaim">
-        /// The singleclaim.
-        /// </param>
-        /// <param name="usecostcodedesc">
-        /// The usecostcodedesc.
-        /// </param>
-        /// <param name="usedepartmentdesc">
-        /// The usedepartmentdesc.
-        /// </param>
-        /// <param name="attachreceipts">
-        /// The attachreceipts.
-        /// </param>
-        /// <param name="exchangereadonly">
-        /// The exchangereadonly.
-        /// </param>
-        /// <param name="useprojectcodes">
-        /// The useprojectcodes.
-        /// </param>
-        /// <param name="useprojectcodedesc">
-        /// The useprojectcodedesc.
-        /// </param>
-        /// <param name="addlocations">
-        /// The addlocations.
-        /// </param>
-        /// <param name="costcodeson">
-        /// The costcodeson.
-        /// </param>
-        /// <param name="departmentson">
-        /// The departmentson.
-        /// </param>
-        /// <param name="projectcodeson">
-        /// The projectcodeson.
-        /// </param>
-        /// <param name="autoassignallocation">
-        /// The autoassignallocation.
-        /// </param>
-        /// <param name="blocklicenceexpiry">
-        /// The blocklicenceexpiry.
-        /// </param>
-        /// <param name="blocktaxexpiry">
-        /// The blocktaxexpiry.
-        /// </param>
-        /// <param name="blockmotexpiry">
-        /// The blockmotexpiry.
-        /// </param>
-        /// <param name="blockinsuranceexpiry">
-        /// The blockinsuranceexpiry.
-        /// </param>
-        /// <param name="blockBreakdownCoverExpiry">
-        /// The blockinsuranceexpiry.
-        /// </param>
-        /// <param name="addcompanies">
-        /// The addcompanies.
-        /// </param>
-        /// <param name="allowmultipledestinations">
-        /// The allowmultipledestinations.
-        /// </param>
-        /// <param name="usemappoint">
-        /// The usemappoint.
-        /// </param>
-        /// <param name="usecostcodeongendet">
-        /// The usecostcodeongendet.
-        /// </param>
-        /// <param name="usedepartmentongendet">
-        /// The usedepartmentongendet.
-        /// </param>
-        /// <param name="useprojectcodeongendet">
-        /// The useprojectcodeongendet.
-        /// </param>
-        /// <param name="hometooffice">
-        /// The hometooffice.
-        /// </param>
-        /// <param name="allowMilageForUsersAdd">
-        /// The allow milage for users add.
-        /// </param>
-        /// <param name="activateCarsOnAdd">
-        /// The activate cars on add.
-        /// </param>
-        /// <param name="allowUsersToAddCars">
-        /// The allow users to add cars.
-        /// </param>
-        public void UpdateAddExpenses(
-            bool costcodes,
-            bool departments,
-            bool singleclaim,
-            bool usecostcodedesc,
-            bool usedepartmentdesc,
-            bool attachreceipts,
-            bool exchangereadonly,
-            bool useprojectcodes,
-            bool useprojectcodedesc,
-            bool addlocations,
-            bool costcodeson,
-            bool departmentson,
-            bool projectcodeson,
-            bool autoassignallocation,
-            bool blockdrivinglicence,
-            bool blocktaxexpiry,
-            bool blockmotexpiry,
-            bool blockinsuranceexpiry,
-            bool blockBreakdownCoverExpiry,
-            bool addcompanies,
-            bool allowmultipledestinations,
-            bool usemappoint,
-            bool usecostcodeongendet,
-            bool usedepartmentongendet,
-            bool useprojectcodeongendet,
-            bool hometooffice,
-            bool allowMilageForUsersAdd,
-            bool activateCarsOnAdd,
-            bool allowUsersToAddCars)
-        {
-            CurrentUser currentUser = GetCurrentUser();
-            var clsSubAccounts = new cAccountSubAccounts(this.accountid);
-            cAccountProperties reqAccountProperties = clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties;
-            reqAccountProperties.AllowUsersToAddCars = allowUsersToAddCars;
-            reqAccountProperties.ShowMileageCatsForUsers = allowMilageForUsersAdd;
-            reqAccountProperties.ActivateCarOnUserAdd = activateCarsOnAdd;
-            reqAccountProperties.UseCostCodes = costcodes;
-            reqAccountProperties.UseDepartmentCodes = departments;
-            reqAccountProperties.SingleClaim = singleclaim;
-            reqAccountProperties.UseCostCodeDescription = usecostcodedesc;
-            reqAccountProperties.UseDepartmentCodeDescription = usedepartmentdesc;
-            reqAccountProperties.AttachReceipts = attachreceipts;
-            reqAccountProperties.ExchangeReadOnly = exchangereadonly;
-            reqAccountProperties.UseProjectCodes = useprojectcodes;
-            reqAccountProperties.UseProjectCodeDescription = useprojectcodedesc;
-            reqAccountProperties.AddLocations = addlocations;
-            reqAccountProperties.CostCodesOn = costcodeson;
-            reqAccountProperties.DepartmentsOn = departmentson;
-            reqAccountProperties.ProjectCodesOn = projectcodeson;
-            reqAccountProperties.AutoAssignAllocation = autoassignallocation;
-            reqAccountProperties.BlockDrivingLicence = blockdrivinglicence;
-            reqAccountProperties.BlockTaxExpiry = blocktaxexpiry;
-            reqAccountProperties.BlockMOTExpiry = blockmotexpiry;
-            reqAccountProperties.BlockInsuranceExpiry = blockinsuranceexpiry;
-            reqAccountProperties.BlockBreakdownCoverExpiry = blockBreakdownCoverExpiry;
-            reqAccountProperties.AllowMultipleDestinations = allowmultipledestinations;
-            reqAccountProperties.UseMapPoint = usemappoint;
-            reqAccountProperties.UseCostCodeOnGenDetails = usecostcodeongendet;
-            reqAccountProperties.UseDeptOnGenDetails = usedepartmentongendet;
-            reqAccountProperties.UseProjectCodeOnGenDetails = useprojectcodeongendet;
-            reqAccountProperties.HomeToOffice = hometooffice;
-            clsSubAccounts.SaveAccountProperties(
-                reqAccountProperties,
-                currentUser.EmployeeID,
-                currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
         }
 
         /// <summary>
@@ -1178,386 +832,6 @@ namespace Spend_Management
         }
 
         /// <summary>
-        /// The update general options.
-        /// </summary>
-        /// <param name="searchemployees">
-        /// The searchemployees.
-        /// </param>
-        /// <param name="preapproval">
-        /// The preapproval.
-        /// </param>
-        /// <param name="showreviews">
-        /// The showreviews.
-        /// </param>
-        /// <param name="recordodometer">
-        /// The recordodometer.
-        /// </param>
-        /// <param name="odometerday">
-        /// The odometerday.
-        /// </param>
-        /// <param name="partsubmittal">
-        /// The partsubmittal.
-        /// </param>
-        /// <param name="onlycashcredit">
-        /// The onlycashcredit.
-        /// </param>
-        /// <param name="editmydetails">
-        /// The editmydetails.
-        /// </param>
-        /// <param name="enterodometeronsubmit">
-        /// The enterodometeronsubmit.
-        /// </param>
-        /// <param name="allowselfreg">
-        /// The allowselfreg.
-        /// </param>
-        /// <param name="selfregempcontact">
-        /// The selfregempcontact.
-        /// </param>
-        /// <param name="selfreghomeaddr">
-        /// The selfreghomeaddr.
-        /// </param>
-        /// <param name="selfregempinfo">
-        /// The selfregempinfo.
-        /// </param>
-        /// <param name="selfregrole">
-        /// The selfregrole.
-        /// </param>
-        /// <param name="selfregsignoff">
-        /// The selfregsignoff.
-        /// </param>
-        /// <param name="selfregadvancessignoff">
-        /// The selfregadvancessignoff.
-        /// </param>
-        /// <param name="selfregdepcostcode">
-        /// The selfregdepcostcode.
-        /// </param>
-        /// <param name="selfregbankdetails">
-        /// The selfregbankdetails.
-        /// </param>
-        /// <param name="selfregcardetails">
-        /// The selfregcardetails.
-        /// </param>
-        /// <param name="selfregudf">
-        /// The selfregudf.
-        /// </param>
-        /// <param name="defaultrole">
-        /// The defaultrole.
-        /// </param>
-        /// <param name="drilldownreport">
-        /// The drilldownreport.
-        /// </param>
-        /// <param name="delsetup">
-        /// The delsetup.
-        /// </param>
-        /// <param name="delemployeeadmin">
-        /// The delemployeeadmin.
-        /// </param>
-        /// <param name="delemployeeaccounts">
-        /// The delemployeeaccounts.
-        /// </param>
-        /// <param name="delreports">
-        /// The delreports.
-        /// </param>
-        /// <param name="delreportsclaimants">
-        /// The delreportsclaimants.
-        /// </param>
-        /// <param name="delcheckandpay">
-        /// The delcheckandpay.
-        /// </param>
-        /// <param name="delqedesign">
-        /// The delqedesign.
-        /// </param>
-        /// <param name="delcreditcard">
-        /// The delcreditcard.
-        /// </param>
-        /// <param name="delpurchasecards">
-        /// The delpurchasecards.
-        /// </param>
-        /// <param name="delapprovals">
-        /// The delapprovals.
-        /// </param>
-        /// <param name="delexports">
-        /// The delexports.
-        /// </param>
-        /// <param name="delauditlog">
-        /// The delauditlog.
-        /// </param>
-        /// <param name="sendreviewrequest">
-        /// The sendreviewrequest.
-        /// </param>
-        /// <param name="claimantdeclaration">
-        /// The claimantdeclaration.
-        /// </param>
-        /// <param name="declarationmsg">
-        /// The declarationmsg.
-        /// </param>
-        /// <param name="approverdeclarationmsg">
-        /// The approverdeclarationmsg.
-        /// </param>
-        public void UpdateGeneralOptions(
-            bool searchemployees,
-            bool preapproval,
-            bool showreviews,
-            bool recordodometer,
-            byte odometerday,
-            bool partsubmittal,
-            bool onlycashcredit,
-            bool editmydetails,
-            bool enterodometeronsubmit,
-            bool allowselfreg,
-            bool selfregempcontact,
-            bool selfreghomeaddr,
-            bool selfregempinfo,
-            bool selfregrole,
-            bool selfregsignoff,
-            bool selfregadvancessignoff,
-            bool selfregdepcostcode,
-            bool selfregbankdetails,
-            bool selfregcardetails,
-            bool selfregudf,
-            int defaultrole,
-            Guid drilldownreport,
-            bool delsetup,
-            bool delemployeeadmin,
-            bool delemployeeaccounts,
-            bool delreports,
-            bool delreportsclaimants,
-            bool delcheckandpay,
-            bool delqedesign,
-            bool delcreditcard,
-            bool delpurchasecards,
-            bool delapprovals,
-            bool delexports,
-            bool delauditlog,
-            bool sendreviewrequest,
-            bool claimantdeclaration,
-            string declarationmsg,
-            string approverdeclarationmsg)
-        {
-            CurrentUser currentUser = GetCurrentUser();
-            var clsSubAccounts = new cAccountSubAccounts(this.accountid);
-            cAccountProperties reqAccountProperties = clsSubAccounts.getFirstSubAccount().SubAccountProperties;
-
-            reqAccountProperties.SearchEmployees = searchemployees;
-            reqAccountProperties.ShowReviews = showreviews;
-            reqAccountProperties.RecordOdometer = recordodometer;
-            reqAccountProperties.OdometerDay = odometerday;
-            reqAccountProperties.PartSubmit = partsubmittal;
-            reqAccountProperties.OnlyCashCredit = onlycashcredit;
-            reqAccountProperties.EditMyDetails = editmydetails;
-            reqAccountProperties.EnterOdometerOnSubmit = enterodometeronsubmit;
-            reqAccountProperties.AllowSelfReg = allowselfreg;
-            reqAccountProperties.AllowSelfRegEmployeeContact = selfregempcontact;
-            reqAccountProperties.AllowSelfRegHomeAddress = selfreghomeaddr;
-            reqAccountProperties.AllowSelfRegEmployeeInfo = selfregempinfo;
-            reqAccountProperties.AllowSelfRegRole = selfregrole;
-            reqAccountProperties.AllowSelfRegSignOff = selfregsignoff;
-            reqAccountProperties.AllowSelfRegAdvancesSignOff = selfregadvancessignoff;
-            reqAccountProperties.AllowSelfRegDepartmentCostCode = selfregdepcostcode;
-            reqAccountProperties.AllowSelfRegBankDetails = selfregbankdetails;
-            reqAccountProperties.AllowSelfRegCarDetails = selfregcardetails;
-            reqAccountProperties.AllowSelfRegUDF = selfregudf;
-            reqAccountProperties.DelSetup = delsetup;
-            reqAccountProperties.DelEmployeeAdmin = delemployeeadmin;
-            reqAccountProperties.DelEmployeeAccounts = delemployeeaccounts;
-            reqAccountProperties.DelReports = delreports;
-            reqAccountProperties.DelReportsClaimants = delreportsclaimants;
-            reqAccountProperties.DelCheckAndPay = delcheckandpay;
-            reqAccountProperties.DelQEDesign = delqedesign;
-            reqAccountProperties.DelCorporateCards = delcreditcard;
-            reqAccountProperties.DelApprovals = delapprovals;
-            reqAccountProperties.DelExports = delexports;
-            reqAccountProperties.DelAuditLog = delauditlog;
-            reqAccountProperties.SendReviewRequests = sendreviewrequest;
-            reqAccountProperties.ClaimantDeclaration = claimantdeclaration;
-            reqAccountProperties.DeclarationMsg = declarationmsg;
-            reqAccountProperties.ApproverDeclarationMsg = approverdeclarationmsg;
-
-            if (defaultrole == 0)
-            {
-                reqAccountProperties.DefaultRole = null;
-            }
-            else
-            {
-                reqAccountProperties.DefaultRole = defaultrole;
-            }
-
-            if (drilldownreport == Guid.Empty)
-            {
-                reqAccountProperties.DrilldownReport = null;
-            }
-            else
-            {
-                reqAccountProperties.DrilldownReport = drilldownreport;
-            }
-
-            clsSubAccounts.SaveAccountProperties(
-                reqAccountProperties,
-                currentUser.EmployeeID,
-                currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
-        }
-
-        /// <summary>
-        /// The update general options.
-        /// </summary>
-        /// <param name="productFieldType">
-        /// The product field type.
-        /// </param>
-        /// <param name="supplierFieldType">
-        /// The supplier field type.
-        /// </param>
-        /// <param name="purchaseOrderNumberName">
-        /// The purchase order number name.
-        /// </param>
-        /// <param name="supplierName">
-        /// The supplier name.
-        /// </param>
-        /// <param name="dateApprovedName">
-        /// The date approved name.
-        /// </param>
-        /// <param name="totalName">
-        /// The total name.
-        /// </param>
-        /// <param name="orderRecurrenceName">
-        /// The order recurrence name.
-        /// </param>
-        /// <param name="orderEndDateName">
-        /// The order end date name.
-        /// </param>
-        /// <param name="commentsName">
-        /// The comments name.
-        /// </param>
-        /// <param name="productName">
-        /// The product name.
-        /// </param>
-        /// <param name="countryName">
-        /// The country name.
-        /// </param>
-        /// <param name="currencyName">
-        /// The currency name.
-        /// </param>
-        /// <param name="exchangeRateName">
-        /// The exchange rate name.
-        /// </param>
-        /// <param name="allowRecurring">
-        /// The allow recurring.
-        /// </param>
-        public void UpdateGeneralOptions(
-            FieldType productFieldType,
-            FieldType supplierFieldType,
-            string purchaseOrderNumberName,
-            string supplierName,
-            string dateApprovedName,
-            string totalName,
-            string orderRecurrenceName,
-            string orderEndDateName,
-            string commentsName,
-            string productName,
-            string countryName,
-            string currencyName,
-            string exchangeRateName,
-            bool allowRecurring)
-        {
-            CurrentUser currentUser = GetCurrentUser();
-            var clsSubAccounts = new cAccountSubAccounts(this.accountid);
-            cAccountProperties reqAccountProperties =
-                clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties;
-
-            // clsSubAccounts.getFirstSubAccount().SubAccountProperties;
-            reqAccountProperties.AllowRecurring = allowRecurring;
-            reqAccountProperties.ExchangeRateName = exchangeRateName;
-            reqAccountProperties.CurrencyName = currencyName;
-            reqAccountProperties.CountryName = countryName;
-            reqAccountProperties.CommentsName = commentsName;
-            reqAccountProperties.ProductName = productName;
-            reqAccountProperties.OrderEndDateName = orderEndDateName;
-            reqAccountProperties.OrderRecurrenceName = orderRecurrenceName;
-            reqAccountProperties.TotalName = totalName;
-            reqAccountProperties.DateApprovedName = dateApprovedName;
-            reqAccountProperties.SupplierPrimaryTitle = supplierName;
-            reqAccountProperties.PONumberName = purchaseOrderNumberName;
-            reqAccountProperties.SupplierFieldType = supplierFieldType;
-            reqAccountProperties.ProductFieldType = productFieldType;
-
-            clsSubAccounts.SaveAccountProperties(
-                reqAccountProperties,
-                currentUser.EmployeeID,
-                currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
-        }
-
-        /// <summary>
-        /// The update main administrator.
-        /// </summary>
-        /// <param name="adminid">
-        /// The adminid.
-        /// </param>
-        public void UpdateMainAdministrator(int adminid)
-        {
-            CurrentUser currentUser = GetCurrentUser();
-            var clsSubAccounts = new cAccountSubAccounts(this.accountid);
-            cAccountProperties reqAccountProperties =
-                clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties;
-
-            reqAccountProperties.MainAdministrator = adminid;
-
-            clsSubAccounts.SaveAccountProperties(
-                reqAccountProperties,
-                currentUser.EmployeeID,
-                currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
-        }
-
-
-
-        /// <summary>
-        /// The update password options.
-        /// </summary>
-        /// <param name="attempts">
-        /// The attempts.
-        /// </param>
-        /// <param name="expiry">
-        /// The expiry.
-        /// </param>
-        /// <param name="plength">
-        /// The plength.
-        /// </param>
-        /// <param name="length1">
-        /// The length 1.
-        /// </param>
-        /// <param name="length2">
-        /// The length 2.
-        /// </param>
-        /// <param name="previous">
-        /// The previous.
-        /// </param>
-        /// <param name="pupper">
-        /// The pupper.
-        /// </param>
-        /// <param name="pnumbers">
-        /// The pnumbers.
-        /// </param>
-        public void UpdatePasswordOptions(
-            int attempts, int expiry, int plength, int length1, int length2, int previous, bool pupper, bool pnumbers)
-        {
-            CurrentUser currentUser = GetCurrentUser();
-            var clsSubAccounts = new cAccountSubAccounts(this.accountid);
-            cAccountProperties reqAccountProperties =
-                clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties;
-
-            reqAccountProperties.PwdMaxRetries = Convert.ToByte(attempts);
-            reqAccountProperties.PwdExpiryDays = expiry;
-            reqAccountProperties.PwdLength1 = length1;
-            reqAccountProperties.PwdLength2 = length2;
-            reqAccountProperties.PwdConstraint = (PasswordLength)plength;
-            reqAccountProperties.PwdMustContainUpperCase = pupper;
-            reqAccountProperties.PwdMustContainNumbers = pnumbers;
-            reqAccountProperties.PwdHistoryNum = previous;
-            clsSubAccounts.SaveAccountProperties(
-                reqAccountProperties,
-                currentUser.EmployeeID,
-                currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
-        }
-
-        /// <summary>
         /// The update policy.
         /// </summary>
         /// <param name="policy">
@@ -1569,24 +843,13 @@ namespace Spend_Management
         public void UpdatePolicy(string policy, byte policytype)
         {
             CurrentUser currentUser = GetCurrentUser();
-            var clsSubAccounts = new cAccountSubAccounts(this.accountid);
 
-            cAccountProperties reqAccountProperties =
-                clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties.Clone();
-            reqAccountProperties.PolicyType = policytype;
-            reqAccountProperties.CompanyPolicy = policy;
-            clsSubAccounts.SaveAccountProperties(
-                reqAccountProperties,
-                currentUser.EmployeeID,
-                currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
-        }
+            this._accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.PolicyType.GetDescription(), policytype.ToString(), currentUser.CurrentSubAccountId));
 
-        /// <summary>
-        /// The update preferences.
-        /// </summary>
-        public void UpdatePreferences()
-        {
-            // InvalidateGlobalProperties(accountid);
+            this._accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CompanyPolicy.GetDescription(), policy, currentUser.CurrentSubAccountId));
+
+            var accountBase = new cAccountSubAccountsBase(currentUser.AccountID);
+            accountBase.InvalidateCache(currentUser.CurrentSubAccountId);
         }
 
         /// <summary>
@@ -1617,44 +880,6 @@ namespace Spend_Management
             }
 
             expdata.sqlexecute.Parameters.Clear();
-        }
-
-        /// <summary>
-        /// The update regional options.
-        /// </summary>
-        /// <param name="homecountry">
-        /// The homecountry.
-        /// </param>
-        /// <param name="language">
-        /// The language.
-        /// </param>
-        /// <param name="basecurrency">
-        /// The basecurrency.
-        /// </param>
-        public void UpdateRegionalOptions(int homecountry, string language, int basecurrency)
-        {
-            CurrentUser currentUser = GetCurrentUser();
-            var clsSubAccounts = new cAccountSubAccounts(this.accountid);
-            cAccountProperties reqAccountProperties =
-                clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties;
-
-            reqAccountProperties.HomeCountry = homecountry;
-
-            if (basecurrency == 0)
-            {
-                reqAccountProperties.BaseCurrency = null;
-            }
-            else
-            {
-                reqAccountProperties.BaseCurrency = basecurrency;
-            }
-
-            reqAccountProperties.Language = string.IsNullOrEmpty(language) ? string.Empty : language;
-
-            clsSubAccounts.SaveAccountProperties(
-                reqAccountProperties,
-                currentUser.EmployeeID,
-                currentUser.isDelegate ? currentUser.Delegate.EmployeeID : (int?)null);
         }
 
         #endregion
@@ -1732,179 +957,6 @@ namespace Spend_Management
             }
 
             return new string(array, 0, arrayIndex);
-        }
-
-        /// <summary>
-        /// The clone properties.
-        /// </summary>
-        /// <param name="ap">
-        /// The ap.
-        /// </param>
-        /// <returns>
-        /// The <see cref="cGlobalProperties"/>.
-        /// </returns>
-        private cGlobalProperties CloneProperties(cAccountProperties ap)
-        {
-            Guid drilldownReport = Guid.Empty;
-            if (ap.DrilldownReport.HasValue)
-            {
-                drilldownReport = ap.DrilldownReport.Value;
-            }
-
-            int defaultRoleId = 0;
-            if (ap.DefaultRole.HasValue)
-            {
-                defaultRoleId = ap.DefaultRole.Value;
-            }
-
-            int baseCurrency = 0;
-            if (ap.BaseCurrency.HasValue)
-            {
-                baseCurrency = ap.BaseCurrency.Value;
-            }
-
-            var initialDate = new DateTime(1900, 01, 01);
-
-            if (ap.InitialDate.HasValue)
-            {
-                initialDate = ap.InitialDate.Value;
-            }
-
-            int limitMonths = 0;
-            if (ap.LimitMonths.HasValue)
-            {
-                limitMonths = ap.LimitMonths.Value;
-            }
-
-            var p = new cGlobalProperties(
-                ap.Mileage,
-                ap.EmailServerAddress,
-                (byte)ap.currencyType,
-                ap.DBVersion,
-                ap.CompanyPolicy,
-                ap.NumRows,
-                ap.PwdMaxRetries,
-                ap.PwdExpiryDays,
-                ap.PwdConstraint,
-                ap.PwdLength1,
-                ap.PwdLength2,
-                ap.PwdMustContainUpperCase,
-                ap.PwdMustContainNumbers,
-                ap.PwdHistoryNum,
-                ap.ThresholdType,
-                ap.HomeCountry,
-                ap.PolicyType,
-                ap.CurImportId,
-                ap.UseCostCodes,
-                ap.UseDepartmentCodes,
-                this.accountid,
-                ap.CCAdmin,
-                ap.SingleClaim,
-                ap.UseCostCodeDescription,
-                ap.UseDepartmentCodeDescription,
-                ap.AttachReceipts,
-                ap.MainAdministrator,
-                ap.SearchEmployees,
-                ap.PreApproval,
-                ap.ShowReviews,
-                ap.MileagePrev,
-                ap.MinClaimAmount,
-                ap.MaxClaimAmount,
-                ap.ExchangeReadOnly,
-                ap.UseProjectCodes,
-                ap.UseProjectCodeDescription,
-                ap.RecordOdometer,
-                ap.OdometerDay,
-                ap.AddLocations,
-                ap.CostCodesOn,
-                ap.DepartmentsOn,
-                ap.ProjectCodesOn,
-                ap.PartSubmit,
-                ap.OnlyCashCredit,
-                ap.Language,
-                string.Empty,
-                string.Empty,
-                ap.LimitFrequency,
-                ap.FrequencyType,
-                ap.FrequencyValue,
-                ap.OverrideHome,
-                ap.SourceAddress,
-                ap.EditMyDetails,
-                ap.AutoAssignAllocation,
-                ap.EnterOdometerOnSubmit,
-                ap.FlagMessage,
-                baseCurrency,
-                ap.AllowSelfReg,
-                ap.AllowSelfRegEmployeeContact,
-                ap.AllowSelfRegHomeAddress,
-                ap.AllowSelfRegEmployeeInfo,
-                ap.AllowSelfRegRole,
-                ap.AllowSelfRegSignOff,
-                ap.AllowSelfRegAdvancesSignOff,
-                ap.AllowSelfRegDepartmentCostCode,
-                ap.AllowSelfRegBankDetails,
-                ap.AllowSelfRegCarDetails,
-                ap.AllowSelfRegUDF,
-                defaultRoleId,
-                ap.SingleClaimCC,
-                ap.SingleClaimPC,
-                drilldownReport,
-                ap.BlockDrivingLicence,
-                ap.BlockTaxExpiry,
-                ap.BlockMOTExpiry,
-                ap.BlockInsuranceExpiry,
-                ap.BlockBreakdownCoverExpiry,
-                ap.DelSetup,
-                ap.DelEmployeeAdmin,
-                ap.DelEmployeeAccounts,
-                ap.DelReports,
-                ap.DelReportsClaimants,
-                ap.DelCheckAndPay,
-                ap.DelQEDesign,
-                ap.DelCorporateCards,
-                ap.DelApprovals,
-                ap.DelExports,
-                ap.DelAuditLog,
-                ap.SendReviewRequests,
-                ap.ClaimantDeclaration,
-                ap.DeclarationMsg,
-                ap.ApproverDeclarationMsg,
-                ap.BlockCashCC,
-                ap.BlockCashPC,
-                ap.AllowMultipleDestinations,
-                ap.UseMapPoint,
-                ap.UseCostCodeOnGenDetails,
-                ap.UseDeptOnGenDetails,
-                ap.UseProjectCodeOnGenDetails,
-                ap.HomeToOffice,
-                ap.CalcHomeToLocation,
-                ap.ShowMileageCatsForUsers,
-                ap.ActivateCarOnUserAdd,
-                ap.AutoCalcHomeToLocation,
-                ap.AllowUsersToAddCars,
-                ap.ProductFieldType,
-                ap.SupplierFieldType,
-                ap.PONumberName,
-                ap.SupplierPrimaryTitle,
-                ap.DateApprovedName,
-                ap.TotalName,
-                ap.OrderRecurrenceName,
-                ap.OrderEndDateName,
-                ap.CommentsName,
-                ap.ProductName,
-                ap.CountryName,
-                ap.CurrencyName,
-                ap.ExchangeRateName,
-                ap.AllowRecurring,
-                ap.AutoArchiveType,
-                ap.AutoActivateType,
-                ap.ArchiveGracePeriod,
-                ap.AllowEmployeeInOwnSignoffGroup,
-                ap.UseMobileDevices,
-                ap.AllowViewFundDetails
-                );
-
-            return p;
         }
 
         /// <summary>

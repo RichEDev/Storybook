@@ -1,8 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SpendManagementLibrary.Enumerators;
+
+using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.GeneralOptions;
+
 using Spend_Management;
+
 using SpendManagementLibrary;
 
 /// <summary>
@@ -10,6 +15,12 @@ using SpendManagementLibrary;
 /// </summary>
 public partial class adminmenu : System.Web.UI.Page
 {
+    /// <summary>
+    /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
     /// <summary>
     /// The page_ load.
     /// </summary>
@@ -32,27 +43,26 @@ public partial class adminmenu : System.Web.UI.Page
             var clsModules = new cModules();
             cModule module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
 
-            var clsmisc = new cMisc(user.AccountID);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(user.AccountID);
+            var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithDelegate();
             var clsentities = new cCustomEntities(user);
             bool delegateUser = this.isDelegate;
 
             bool setupMenuAccess = true;
             bool userManagementMenuAccess = true;
             bool systemOptionsMenuAccess = true;
-            bool designMenuAccess = !(delegateUser && !clsproperties.delqedesign);
+            bool designMenuAccess = !(delegateUser && !generalOptions.Delegate.DelQEDesign);
 
-            if (delegateUser && !clsproperties.delsetup)
+            if (delegateUser && !generalOptions.Delegate.DelSetup)
             {
                 setupMenuAccess = false;
             }
 
-            if (delegateUser && !clsproperties.delemployeeadmin)
+            if (delegateUser && !generalOptions.Delegate.DelEmployeeAdmin)
             {
                 userManagementMenuAccess = false;
             }
 
-            if (delegateUser && !clsproperties.delauditlog)
+            if (delegateUser && !generalOptions.Delegate.DelAuditLog)
             {
                 systemOptionsMenuAccess = false;
             }

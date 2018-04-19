@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace Spend_Management
 {
     using System;
@@ -9,6 +7,10 @@ namespace Spend_Management
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using Spend_Management.expenses.code.Claims;
 
     /// <summary>
@@ -16,6 +18,12 @@ namespace Spend_Management
     /// </summary>
     public partial class checkexpenselist : Page
     {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
         protected void Page_Load(object sender, System.EventArgs e)
         {
             Title = "Expense Claim Details";
@@ -37,9 +45,10 @@ namespace Spend_Management
                 StringBuilder js = new StringBuilder();
 
                 cEmployees clsemployees = new cEmployees(user.AccountID);
-                cMisc clsmisc = new cMisc(user.AccountID);
-                cGlobalProperties properties = clsmisc.GetGlobalProperties(user.AccountID);
+
                 user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.CheckAndPay, true, true);
+
+                var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithClaim().WithMileage();
 
                 cClaims claims = new cClaims(user.AccountID);
 
@@ -79,7 +88,7 @@ namespace Spend_Management
                     }
                 }
 
-                this.litdeclaration.Text = properties.approverdeclarationmsg;
+                this.litdeclaration.Text = generalOptions.Claim.ApproverDeclarationMsg;
                 if (claim.submitted == false)
                 {
                     Response.Redirect("checkpaylist.aspx", true);
@@ -138,15 +147,15 @@ namespace Spend_Management
                 cEmployeeCorporateCards cards = new cEmployeeCorporateCards(user.AccountID);
                 SortedList<int, cEmployeeCorporateCard> employeeCards = cards.GetEmployeeCorporateCards(claim.employeeid);
                 bool enableCorporateCards = employeeCards != null && employeeCards.Count > 0;
-                string[] gridData = expenseItems.generateClaimGrid(user.EmployeeID, claim, "gridExpenses", UserView.CheckAndPay, Filter.None, false, properties.attachreceipts, properties.allowmultipledestinations, enableCorporateCards, symbol, ItemState.Unapproved);
+                string[] gridData = expenseItems.generateClaimGrid(user.EmployeeID, claim, "gridExpenses", UserView.CheckAndPay, Filter.None, false, generalOptions.Claim.AttachReceipts, generalOptions.Mileage.AllowMultipleDestinations, enableCorporateCards, symbol, ItemState.Unapproved);
                 litExpensesGrid.Text = gridData[1];
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "ClaimGridVars", cGridNew.generateJS_init("ClaimGridVars", new System.Collections.Generic.List<string>() { gridData[0] }, user.CurrentActiveModule), true);
 
-                gridData = expenseItems.generateClaimGrid(user.EmployeeID, claim, "gridReturned", UserView.CheckAndPay, Filter.None, false, properties.attachreceipts, properties.allowmultipledestinations, enableCorporateCards, symbol, ItemState.Returned);
+                gridData = expenseItems.generateClaimGrid(user.EmployeeID, claim, "gridReturned", UserView.CheckAndPay, Filter.None, false, generalOptions.Claim.AttachReceipts, generalOptions.Mileage.AllowMultipleDestinations, enableCorporateCards, symbol, ItemState.Returned);
                 litReturnedGrid.Text = gridData[1];
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "ReturnedGridVars", cGridNew.generateJS_init("ReturnedGridVars", new System.Collections.Generic.List<string>() { gridData[0] }, user.CurrentActiveModule), true);
 
-                gridData = expenseItems.generateClaimGrid(user.EmployeeID, claim, "gridApproved", UserView.CheckAndPay, Filter.None, false, properties.attachreceipts, properties.allowmultipledestinations, enableCorporateCards, symbol, ItemState.Approved);
+                gridData = expenseItems.generateClaimGrid(user.EmployeeID, claim, "gridApproved", UserView.CheckAndPay, Filter.None, false, generalOptions.Claim.AttachReceipts, generalOptions.Mileage.AllowMultipleDestinations, enableCorporateCards, symbol, ItemState.Approved);
                 litApprovedGrid.Text = gridData[1];
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "ApprovedGridVars", cGridNew.generateJS_init("ApprovedGridVars", new System.Collections.Generic.List<string>() { gridData[0] }, user.CurrentActiveModule), true);
                 #endregion
@@ -194,8 +203,8 @@ namespace Spend_Management
 
                 js.Append("$(document).ready(function() {\n");
                 js.Append("SEL.Claims.General.claimId = " + claimId + ";\n");
-                js.Append("SEL.Claims.General.enableReceiptAttachments = " + properties.attachreceipts.ToString().ToLower() + ";\n");
-                js.Append("SEL.Claims.General.enableJourneyDetailsLink = " + properties.allowmultipledestinations.ToString().ToLower() + ";\n");
+                js.Append("SEL.Claims.General.enableReceiptAttachments = " + generalOptions.Claim.AttachReceipts.ToString().ToLower() + ";\n");
+                js.Append("SEL.Claims.General.enableJourneyDetailsLink = " + generalOptions.Mileage.AllowMultipleDestinations.ToString().ToLower() + ";\n");
                 js.Append("SEL.Claims.General.viewType = " + (byte)UserView.CheckAndPay + ";\n");
                 js.Append("SEL.Claims.IDs.modReturnId = '" + modReturn.ClientID + "';\n");
                 js.Append("SEL.Claims.IDs.txtReturnReasonId = '" + txtReturnReason.ClientID + "';\n");

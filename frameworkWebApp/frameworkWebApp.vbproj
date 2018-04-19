@@ -214,6 +214,12 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SimpleInjector, Version=4.0.11.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.0.11\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web, Version=4.0.7.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.4.0.7\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Chart.Wpf, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.14.4460.0.549\lib\net46\Syncfusion.Chart.Wpf.dll</HintPath>
       <Private>True</Private>
@@ -1232,6 +1238,9 @@
       <DependentUpon>FWTasksPopupSummary.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Global.asax.vb">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Home.aspx.designer.vb">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
@@ -1289,6 +1298,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="PageInitializerModule.vb" />
     <Compile Include="ProductDetails.aspx.designer.vb">
       <DependentUpon>ProductDetails.aspx</DependentUpon>
     </Compile>
@@ -1523,6 +1533,18 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
+      <Project>{69860ce5-949c-47f0-8fda-65c0a74171c8}</Project>
+      <Name>BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CacheDataAccess\CacheDataAccess.csproj">
+      <Project>{14f70e37-b7c3-4c0c-94b7-cf8788e14abb}</Project>
+      <Name>CacheDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{85dfc378-171e-46c8-9c54-74cbe66368ac}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FWClasses\FWClasses.csproj">
       <Project>{88E92370-7FEF-4289-878E-FC449E5C6D38}</Project>
       <Name>FWClasses</Name>
@@ -1542,6 +1564,14 @@
     <ProjectReference Include="..\SpendManagementLibrary\SpendManagementLibrary.csproj">
       <Project>{9BDAA543-AC54-47A1-8BDD-C7BF34F2F005}</Project>
       <Name>SpendManagementLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLDataAccess\SQLDataAccess.csproj">
+      <Project>{d1de01ae-fe1f-4d65-b57b-08ca4e10d747}</Project>
+      <Name>SQLDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebBootstrap\WebBootstrap.csproj">
+      <Project>{8888293C-5BF0-45C8-9078-FFD94271D15F}</Project>
+      <Name>WebBootstrap</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

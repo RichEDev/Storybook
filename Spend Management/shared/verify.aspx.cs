@@ -11,6 +11,10 @@ namespace Spend_Management
     using System.Web;
     using System.Web.UI;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Enumerators;
@@ -22,6 +26,12 @@ namespace Spend_Management
     /// </summary>
     public partial class verify : Page
     {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
         #region Public Methods and Operators
 
         /// <summary>
@@ -74,7 +84,6 @@ namespace Spend_Management
         /// </returns>
         public string CreateCarSummary(int accountId, Employee employee, cModule module)
         {
-            var clsProperties = new cMisc(accountId).GetGlobalProperties(accountId);
             var clsEmpCars = new cEmployeeCars(accountId, employee.EmployeeID);
 
             var output = new StringBuilder();
@@ -83,13 +92,16 @@ namespace Spend_Management
             output.Append("<table>");
             if (clsEmpCars.GetCarArray(false).Length != 0)
             {
+                var generalOptions = this.GeneralOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithDutyOfCare();
+
                 cCar car = clsEmpCars.GetCarByID(
                     clsEmpCars.GetDefaultCarID(
-                        clsProperties.blocktaxexpiry, 
-                        clsProperties.blockmotexpiry, 
-                        clsProperties.blockinsuranceexpiry,
-                        clsProperties.BlockBreakdownCoverExpiry,
+                        generalOptions.DutyOfCare.BlockTaxExpiry, 
+                        generalOptions.DutyOfCare.BlockMOTExpiry, 
+                        generalOptions.DutyOfCare.BlockInsuranceExpiry,
+                        generalOptions.DutyOfCare.BlockBreakdownCoverExpiry,
                         false,null));
+
                 if (car == null && clsEmpCars.Cars.Count > 0)
                 {
                     car = clsEmpCars.Cars.FirstOrDefault();

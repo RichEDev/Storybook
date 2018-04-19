@@ -1,20 +1,17 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-
-using SpendManagementLibrary;
-using Spend_Management;
-
 namespace expenses
 {
+    using System;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
+
+    using Spend_Management;
 
     /// <summary>
 	/// Summary description for aefloat.
@@ -23,9 +20,15 @@ namespace expenses
 	{
 		protected System.Web.UI.WebControls.RadioButton optall;
 		protected System.Web.UI.WebControls.RadioButton optselected;
-	
-		
-		string action;
+
+	    /// <summary>
+	    /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
+	    /// </summary>
+        [Dependency]
+	    public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+
+        string action;
 		int floatid = 0;
 		
 		protected System.Web.UI.WebControls.ImageButton cmdhelp;
@@ -143,7 +146,7 @@ namespace expenses
 		{
 		    int employeeid = 0;
 
-		    int basecurrency;
+		    int basecurrency = 0;
 
             DropDownList ddlFloatEmp = (DropDownList)placeEmp.FindControl("cmbfloatemployee");
 
@@ -176,9 +179,15 @@ namespace expenses
             }
             else
             {
-                cMisc clsmisc = new cMisc((int)ViewState["accountid"]);
-                cGlobalProperties clsproperties = clsmisc.GetGlobalProperties((int)ViewState["accountid"]);
-                basecurrency = clsproperties.basecurrency;
+                var accountId = (int) ViewState["accountid"];
+                var subaccounts = new cAccountSubAccounts(accountId);
+
+                var generalOptions = this.GeneralOptionsFactory[subaccounts.getFirstSubAccount().SubAccountID].WithCurrency();
+
+                if (generalOptions.Currency.BaseCurrency.HasValue)
+                {
+                    basecurrency = Convert.ToInt32(generalOptions.Currency.BaseCurrency);
+                }
             }
 			
             clsfloats.requestFloat(employeeid,name,reason,amount,currencyid,"", basecurrency);

@@ -51,10 +51,6 @@ namespace Spend_Management.shared.admin
                 ViewState["employeeid"] = user.EmployeeID;
                 ViewState["subAccountID"] = user.CurrentSubAccountId;
 
-                cMisc clsmisc = new cMisc(user.AccountID);
-
-                cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(user.AccountID);
-
                 cCountries clsCountries = new cCountries(user.AccountID, user.CurrentSubAccountId);
 
                 cGlobalCountries clsglobalcountries = new cGlobalCountries();

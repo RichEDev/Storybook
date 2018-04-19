@@ -546,7 +546,6 @@ namespace expenses.admin
         private void populateChildDropdown()
         {
             cMisc clsmisc = new cMisc((int)ViewState["accountid"]);
-            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties((int)ViewState["accountid"]);
             cUserdefinedFields clsudf = new cUserdefinedFields((int)ViewState["accountid"]);
             this.SetFilterRules((int)ViewState["accountid"]);
             FilterType parent;
