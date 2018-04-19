@@ -461,6 +461,8 @@
                 this.currentSubAccount = reqEmployee.DefaultSubAccount;
             }
 
+            HttpContext.Current.User = new TemporaryWebPrincipal(new UserIdentity(reqEmployee.AccountID, reqEmployee.EmployeeID));
+
             var generalOptions = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>()[reqEmployee.DefaultSubAccount].WithPassword().WithMileage();
 
             if (authenticate < 0)
