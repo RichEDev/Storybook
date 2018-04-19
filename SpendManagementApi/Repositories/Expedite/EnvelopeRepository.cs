@@ -11,14 +11,26 @@
     using SpendManagementLibrary.Interfaces.Expedite;
     using Spend_Management;
     using SpendManagementLibrary;
+    using SpendManagementLibrary.Expedite;
+
     using Spend_Management.expenses.code;
+
+    using Envelope = SpendManagementApi.Models.Types.Expedite.Envelope;
 
     /// <summary>
     /// EnvelopeRepository manages data access for Envelopes.
     /// </summary>
     internal class EnvelopeRepository : BaseRepository<Envelope>, ISupportsActionContext
     {
+        /// <summary>
+        /// An instance of <see cref="IManageEnvelopes"/>.
+        /// </summary>
         private readonly IManageEnvelopes _data;
+
+        /// <summary>
+        /// An instance of <see cref="IActionContext"/>.
+        /// </summary>
+        private readonly IActionContext _actionContext = null;
 
         /// <summary>
         /// Creates a new EnvelopeRepository with the passed in user.
@@ -29,6 +41,15 @@
             : base(user, actionContext, x => x.Id, x => x.EnvelopeNumber)
         {
             _data = ActionContext.Envelopes;
+            _actionContext = ActionContext;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnvelopeRepository"/> class.
+        /// </summary>
+        public EnvelopeRepository()
+        {
+            _data = new Envelopes();          
         }
 
         /// <summary>
@@ -37,7 +58,7 @@
         /// <returns>A list of envelopes.</returns>
         public override IList<Envelope> GetAll()
         {
-            return _data.GetAllEnvelopes().Select(e => new Envelope().From(e, ActionContext)).ToList();
+            return _data.GetAllEnvelopes().Select(e => new Envelope().From(e, _actionContext)).ToList();
         }
 
         /// <summary>
@@ -46,7 +67,7 @@
         /// <returns>A list of envelopes.</returns>
         public IList<Envelope> GetByAccount(int accountId)
         {
-            return _data.GetEnvelopesByAccount(accountId).Select(e => new Envelope().From(e, ActionContext)).ToList();
+            return _data.GetEnvelopesByAccount(accountId).Select(e => new Envelope().From(e, _actionContext)).ToList();
         }
 
         /// <summary>
@@ -55,7 +76,8 @@
         /// <returns>A list of envelopes.</returns>
         public IList<Envelope> GetByBatchCode(string batchCode)
         {
-            return _data.GetEnvelopesByBatch(batchCode).Select(e => new Envelope().From(e, ActionContext)).ToList();
+     
+            return _data.GetEnvelopesByBatch(batchCode).Select(e => new Envelope().From(e, _actionContext)).ToList();
         }
 
         /// <summary>
@@ -65,7 +87,7 @@
         /// <returns>The envelope with the matching Id.</returns>
         public override Envelope Get(int id)
         {
-            return new Envelope().From(_data.GetEnvelopeById(id), ActionContext);
+            return new Envelope().From(_data.GetEnvelopeById(id), _actionContext);
         }
 
         /// <summary>
@@ -78,7 +100,7 @@
         {
             return
                 _data.GetEnvelopesByEnvelopeNumber(envelopeNumber)
-                    .Select(e => new Envelope().From(e, ActionContext))
+                    .Select(e => new Envelope().From(e, _actionContext))
                     .ToList();
         }
 
@@ -91,7 +113,7 @@
         {
             return
                 _data.GetEnvelopesByClaimReferenceNumber(claimReferenceNumber)
-                    .Select(e => new Envelope().From(e, ActionContext))
+                    .Select(e => new Envelope().From(e, _actionContext))
                     .ToList();
         }
 
@@ -111,7 +133,7 @@
             {
                 item.EnvelopeType = 1;
             }
-            return new Envelope().From(_data.AddEnvelope(item.To(ActionContext), User), ActionContext);
+            return new Envelope().From(_data.AddEnvelope(item.To(_actionContext), User), _actionContext);
         }
 
         /// <summary>
@@ -121,7 +143,7 @@
         /// <returns>A list of the newly created envelopes.</returns>
         public IList<Envelope> AddBatch(int envelopeType)
         {
-            return _data.AddEnvelopeBatch(envelopeType, User).Select(e => new Envelope().From(e, ActionContext)).ToList();
+            return _data.AddEnvelopeBatch(envelopeType).Select(e => new Envelope().From(e, _actionContext)).ToList();
         }
 
         /// <summary>
@@ -142,7 +164,7 @@
                     i.EnvelopeType = 1;
                 }
             });
-            return _data.AddEnvelopeBatch(items.Select(e => e.To(ActionContext)).ToList(), User).Select(e => new Envelope().From(e, ActionContext)).ToList();
+            return _data.AddEnvelopeBatch(items.Select(e => e.To(_actionContext)).ToList(), User).Select(e => new Envelope().From(e, _actionContext)).ToList();
         }
 
         /// <summary>
@@ -152,7 +174,7 @@
         /// <returns>The edited envelope.</returns>
         public override Envelope Update(Envelope item)
         {
-            return new Envelope().From(_data.EditEnvelope(item.To(ActionContext), User), ActionContext);
+            return new Envelope().From(_data.EditEnvelope(item.To(_actionContext), User), _actionContext);
         }
 
         /// <summary>
@@ -162,7 +184,7 @@
         /// <returns>The edited envelopes.</returns>
         public IList<Envelope> UpdateBatch(IList<Envelope> items)
         {
-            return _data.EditEnvelopeBatch(items.Select(i => i.To(ActionContext)).ToList(), User).Select(e => new Envelope().From(e, ActionContext)).ToList();
+            return _data.EditEnvelopeBatch(items.Select(i => i.To(_actionContext)).ToList()).Select(e => new Envelope().From(e, _actionContext)).ToList();
         }
 
         /// <summary>
@@ -173,7 +195,7 @@
         /// <returns>The newly modified envelope.</returns>
         public Envelope IssueToAccount(int envelopeId, int accountId)
         {
-            return new Envelope().From(_data.IssueToAccount(envelopeId, accountId, User), ActionContext);
+            return new Envelope().From(_data.IssueToAccount(envelopeId, accountId, User), _actionContext);
         }
 
         /// <summary>
@@ -184,7 +206,7 @@
         /// <returns>The newly modified envelopes.</returns>
         public IList<Envelope> IssueToAccount(string batchCode, int accountId)
         {
-            return _data.IssueBatchToAccount(batchCode, accountId, User).Select(e => new Envelope().From(e, ActionContext)).ToList();
+            return _data.IssueBatchToAccount(batchCode, accountId).Select(e => new Envelope().From(e, _actionContext)).ToList();
         }
 
         /// <summary>
@@ -196,7 +218,7 @@
             var envelope = TryGetEnvelopeAndThrow(envelopeId);
             envelope.AccountId = User.AccountID;
             envelope.Status = EnvelopeStatus.PendingAdminReassignment;
-            var result = new Envelope().From(_data.EditEnvelope(envelope.To(ActionContext), User), ActionContext);
+            var result = new Envelope().From(_data.EditEnvelope(envelope.To(_actionContext), User), _actionContext);
 
             // drop the administrator an email.
             var properties = ActionContext.SubAccounts.getFirstSubAccount().SubAccountProperties;
@@ -219,7 +241,7 @@
             envelope.ClaimId = claimId;
             var claim = TryGetClaimAndThrow(envelope);
 
-            return new Envelope().From(_data.AttachToClaim(envelopeId, claim, User), ActionContext);
+            return new Envelope().From(_data.AttachToClaim(envelopeId, claim, User), _actionContext);
         }
 
         /// <summary>
@@ -235,15 +257,15 @@
             var claim = TryGetClaimAndThrow(envelope);
 
             // mark received.
-            envelope = envelope.From(_data.MarkReceived(id, User), ActionContext);
+            envelope = envelope.From(_data.MarkReceived(id, User), _actionContext);
 
             // update claim history.
             var history = string.Format("Envelope: {0} received for scan & attach.", envelope.EnvelopeNumber);
-            ActionContext.Claims.UpdateClaimHistory(claim, history, User.EmployeeID);
+            _actionContext.Claims.UpdateClaimHistory(claim, history, User.EmployeeID);
 
             // if the signoff group settings say so, send a notification.
-            var employee = ActionContext.Employees.GetEmployeeById(claim.employeeid);
-            var signoffGroup = ActionContext.SignoffGroups.GetGroupById(employee.SignOffGroupID);
+            var employee = _actionContext.Employees.GetEmployeeById(claim.employeeid);
+            var signoffGroup = _actionContext.SignoffGroups.GetGroupById(employee.SignOffGroupID);
             if (signoffGroup.NotifyClaimantWhenEnvelopeReceived == true)
             {
                 var notifications = ActionContext.Notifications;
@@ -262,18 +284,18 @@
         public Envelope MarkComplete(int id)
         {
             var envelope = TryGetEnvelopeAndThrow(id);
-            ActionContext.AccountId = envelope.AccountId ?? User.AccountID;
+            _actionContext.AccountId = envelope.AccountId ?? User.AccountID;
             var claim = TryGetClaimAndThrow(envelope);
 
             // check that the claim is in a SELScanAttach stage.
-            var claims = ActionContext.Claims;
-            var claimEmployee = ActionContext.Employees.GetEmployeeById(claim.employeeid);
+            var claims = _actionContext.Claims;
+            var claimEmployee = _actionContext.Employees.GetEmployeeById(claim.employeeid);
             var claimStages = claims.GetSignoffStagesAsTypes(claim, null, claimEmployee);
 
             if (claims.HasClaimPreviouslyPassedSelStage(claim, SignoffType.SELScanAttach, claimStages))
             {
                 // mark complete and overwrite properties.
-                envelope = envelope.From(_data.MarkComplete(id, User), ActionContext);
+                envelope = envelope.From(_data.MarkComplete(id, User), _actionContext);
 
                 // update claim history.
                 var history = string.Format("Envelope scanned and attached: {0}.", envelope.EnvelopeNumber);
@@ -282,7 +304,7 @@
             else
             {
                 // mark complete and overwrite properties.
-                envelope = envelope.From(_data.MarkComplete(id, User), ActionContext);
+                envelope = envelope.From(_data.MarkComplete(id, User), _actionContext);
 
                 // find the number of completed envelopes.
                 int total, completed;
@@ -299,7 +321,7 @@
                 else
                 {
                     // before advancing the claim, we need to check whether we need to prompt the user to declare matching is complete.
-                    var allExpensesHaveReceipts = ActionContext.Receipts.CheckIfAllValidatableClaimLinesHaveReceiptsAttached(claim.claimid);
+                    var allExpensesHaveReceipts = _actionContext.Receipts.CheckIfAllValidatableClaimLinesHaveReceiptsAttached(claim.claimid);
                     var canAdvance = !claimStages.Contains(SignoffType.SELValidation) || allExpensesHaveReceipts;
 
                     // update claim history.
@@ -311,7 +333,7 @@
                     // only advance the claim if we can
                     if (canAdvance)
                     {
-                        ActionContext.ClaimSubmission.SendClaimToNextStage(claim, false, User.EmployeeID, claim.employeeid, User.isDelegate ? User.Delegate.EmployeeID : (int?) null);
+                        _actionContext.ClaimSubmission.SendClaimToNextStage(claim, false, User.EmployeeID, claim.employeeid, User.isDelegate ? User.Delegate.EmployeeID : (int?) null);
                     }
                     else
                     {
@@ -335,7 +357,7 @@
         public Envelope UpdateEnvelopeStatus(int envelopeId, EnvelopeStatus status)
         {
             var envelope = TryGetEnvelopeAndThrow(envelopeId);
-            return envelope.From(_data.UpdateEnvelopeStatus(envelopeId, (SpendManagementLibrary.Enumerators.Expedite.EnvelopeStatus)status, User), ActionContext);
+            return envelope.From(_data.UpdateEnvelopeStatus(envelopeId, (SpendManagementLibrary.Enumerators.Expedite.EnvelopeStatus)status, User), _actionContext);
         }
 
         /// <summary>
@@ -347,7 +369,7 @@
         public Envelope UpdateEnvelopePhysicalState(int envelopeId, List<int> states)
         {
             var envelope = TryGetEnvelopeAndThrow(envelopeId);
-            return envelope.From(_data.UpdateEnvelopesPhysicalStates(envelopeId, states), ActionContext);
+            return envelope.From(_data.UpdateEnvelopesPhysicalStates(envelopeId, states), _actionContext);
         }
 
         /// <summary>
@@ -375,7 +397,7 @@
         /// </summary>
         public void NotifyClaimantsOfUnsentEnvelopes()
         {
-            var accounts = ActionContext.Accounts.GetAccountsWithReceiptServiceEnabled();
+            var accounts = _actionContext.Accounts.GetAccountsWithReceiptServiceEnabled();
             var defaultDaysToWait = int.Parse(GlobalVariables.GetAppSetting("DefaultDaysToWaitBeforeEnvelopeIsMissing"));
 
             accounts.ForEach(account =>
@@ -389,23 +411,23 @@
                 {
                     if (envelope.AccountId.HasValue)
                     {
-                        ActionContext.AccountId = envelope.AccountId.Value;
+                        _actionContext.AccountId = envelope.AccountId.Value;
                         // ReSharper disable once PossibleInvalidOperationException
-                        var claim = ActionContext.Claims.getClaimById(envelope.ClaimId.Value);
+                        var claim = _actionContext.Claims.getClaimById(envelope.ClaimId.Value);
 
                         if (claim != null)
                         {
-                            var employee = ActionContext.Employees.GetEmployeeById(claim.employeeid);
+                            var employee = _actionContext.Employees.GetEmployeeById(claim.employeeid);
 
                             // update claim history.
                             var history =
                                 string.Format(
                                     "Envelope: {0} not received for scan & attach within the given timeframe ({1} days).",
                                     envelope.EnvelopeNumber, days);
-                            ActionContext.Claims.UpdateClaimHistory(claim, history, User.EmployeeID);
+                            _actionContext.Claims.UpdateClaimHistory(claim, history, User.EmployeeID);
 
                             // if the signoff group settings say so, send a notification.
-                            var signoffGroup = ActionContext.SignoffGroups.GetGroupById(employee.SignOffGroupID);
+                            var signoffGroup = _actionContext.SignoffGroups.GetGroupById(employee.SignOffGroupID);
                             if (signoffGroup.NotifyClaimantWhenEnvelopeNotReceived == true)
                             {
                                 var notifications = ActionContext.Notifications;
@@ -451,7 +473,7 @@
                 throw new InvalidDataException(ApiResources.ApiErrorEnvelopeDoesntHaveClaim);
             }
 
-            var claims = ActionContext.Claims;
+            var claims = _actionContext.Claims;
             var claim = claims.getClaimById(envelope.ClaimId.Value);
 
             if (claim == null)

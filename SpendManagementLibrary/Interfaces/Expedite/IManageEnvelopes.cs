@@ -78,9 +78,8 @@
         /// Creates a batch of envelopes in the system and returns the newly create envelopes.
         /// </summary>    
         /// <param name="type">The type of the envelope, which should be a valid EnvelopeType.</param>
-        /// <param name="user">The current user.</param>
         /// <returns>A list of the newly created envelopes.</returns>
-        IList<Envelope> AddEnvelopeBatch(int type, ICurrentUserBase user);
+        IList<Envelope> AddEnvelopeBatch(int type);
 
         /// <summary>
         /// Attempts to create the supplied batch of envelopes in the system and returns them once created.
@@ -103,9 +102,8 @@
         /// Edits a batch of envelopes. Ensure the EnvelopeId is set correctly in each.
         /// </summary>
         /// <param name="envelopes">The envelopes to edit.</param>
-        /// <param name="user">The current user.</param>
         /// <returns>The edited envelopes.</returns>
-        IList<Envelope> EditEnvelopeBatch(IList<Envelope> envelopes, ICurrentUserBase user);
+        IList<Envelope> EditEnvelopeBatch(IList<Envelope> envelopes);
 
         /// <summary>
         /// Utility method for issuing a single envelope to an account.
@@ -122,9 +120,8 @@
         /// </summary>
         /// <param name="batchCode">The central part of the EnvelopeNumber (the batch) to assign.</param>
         /// <param name="accountId">The AccountId of the account to issue the envelopes to.</param>
-        /// <param name="user">The current user.</param>
         /// <returns>The newly modified envelopes.</returns>
-        IList<Envelope> IssueBatchToAccount(string batchCode, int accountId, ICurrentUserBase user);
+        IList<Envelope> IssueBatchToAccount(string batchCode, int accountId);
 
         /// <summary>
         /// Utility method for attaching a single envelope to a claim, with the option to only validate that it can be attached.

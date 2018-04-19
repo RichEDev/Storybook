@@ -65,8 +65,17 @@
         /// </summary>
         protected override void Init()
         {
-            var actionContext = new ActionContext(CurrentUser);
-            Repository = RepositoryFactory.GetRepository<T>(new object[] { CurrentUser, actionContext });
+
+            if (this.CurrentUser is null)
+            {
+                //create repo without current user/action context
+                this.Repository = RepositoryFactory.GetRepository<T>();
+            }
+            else
+            {
+                var actionContext = new ActionContext(this.CurrentUser);
+                this.Repository = RepositoryFactory.GetRepository<T>(new object[] { this.CurrentUser, actionContext });
+            }
         }
 
         /// <summary>
@@ -209,6 +218,14 @@
             CallStatus = callStatus;
             CurrentUser = currentUser;
             MobileRequest = mobileRequest;
+            Init();
+        }
+
+        /// <summary>
+        /// Initialises a instance of <see cref="BaseApiController"/>
+        /// </summary>
+        internal virtual void Initialise()
+        {
             Init();
         }
 

@@ -162,7 +162,7 @@
                 OverpaymentCharge = OverpaymentCharge,
                 PhysicalState = PhysicalState.Select(x => new SpendManagementLibrary.Expedite.EnvelopePhysicalState { EnvelopePhysicalStateId = x }).ToList(),
                 PhysicalStateProofUrl = PhysicalStateProofUrl,
-                LastModifiedBy = actionContext.EmployeeId,
+                LastModifiedBy = 0,
                 DeclaredLostInPost = DeclaredLostInPost
             };
 

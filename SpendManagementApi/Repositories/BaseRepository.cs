@@ -147,6 +147,13 @@
             SetDependencies(actionContext);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseRepository{T}"/> class.
+        /// </summary>
+        protected BaseRepository()
+        {       
+        }
+
         internal void SetDependencies(IActionContext actionContext)
         {
             if (actionContext == null)

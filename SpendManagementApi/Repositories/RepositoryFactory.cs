@@ -30,8 +30,27 @@ namespace SpendManagementApi.Repositories
                 args = new object[1] { args[0] };
             }
 
+            // creates an instance of the repository with arguements
             return (IRepository<T>)Activator.CreateInstance(list.First(), args);
         }
 
+        /// <summary>
+        /// Gets the appropriate repository for the type passed in.
+        /// </summary>
+        /// <typeparam name="T">The underlying type of the repository to instantiate.</typeparam>
+        /// <returns>The Repository.</returns>
+        public static IRepository<T> GetRepository<T>()
+            where T : BaseExternalType
+        {
+            List<Type> list = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(c => c.GetInterfaces().Contains(typeof(IRepository<T>)))
+                .ToList();
+        
+            // creates an instance of the repository without any arguements
+            var instance = (IRepository<T>)Activator.CreateInstance(list.First());
+
+            return instance;
+        }
     }
 }

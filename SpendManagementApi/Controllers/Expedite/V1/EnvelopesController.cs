@@ -62,11 +62,11 @@
         /// Gets all <see cref="Envelope">Envelopes</see> for the specified account.
         /// </summary>
         [HttpGet, Route("ByBatchCode/{batchCode}")]
-        [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
+        [NoAuthorisationRequired]
         public GetEnvelopesResponse GetByBatchCode(string batchCode)
         {
             var response = this.InitialiseResponse<GetEnvelopesResponse>();
-            response.List = ((EnvelopeRepository)this.Repository).GetByBatchCode(batchCode).ToList();
+            response.List = ((EnvelopeRepository)this.Repository).GetByBatchCode(batchCode).ToList();          
             return response;
         }
 
@@ -129,7 +129,7 @@
         /// <param name="envelopeType">The index of a valid <see cref="EnvelopeType">EnvelopeType</see>, which will be used for all the envelopes.</param>
         /// <returns>The list of newly added <see cref="Envelope">Envelope</see>s.</returns>
         [Route("Batch/OfType/{envelopeType:int}")]
-        [AuthAudit(SpendManagementElement.None, AccessRoleType.Add)]
+        [NoAuthorisationRequired]
         public GetEnvelopesResponse PostBatch(int envelopeType)
         {
             var response = this.InitialiseResponse<GetEnvelopesResponse>();
@@ -171,7 +171,7 @@
         /// <param name="request">The list of <see cref="Envelope">Envelope</see>s to edit.</param>
         /// <returns>The list of edited <see cref="Envelope">Envelope</see>s.</returns>
         [Route("Batch")]
-        [AuthAudit(SpendManagementElement.None, AccessRoleType.Edit)]
+        [NoAuthorisationRequired]
         public GetEnvelopesResponse PutBatch(IList<Envelope> request)
         {
             var response = this.InitialiseResponse<GetEnvelopesResponse>();
@@ -213,7 +213,7 @@
         /// <param name="accountId">The AccountId of the client to issue the batch to.</param>
         /// <returns>The newly issued Envelope.</returns>
         [HttpPatch, Route("{batchCode}/IssueBatchToAccount/{accountId:int}")]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.Edit)]
+        [NoAuthorisationRequired]
         public GetEnvelopesResponse IssueBatchToAccount(string batchCode, int accountId)
         {
             var response = this.InitialiseResponse<GetEnvelopesResponse>();
@@ -300,7 +300,7 @@
         /// Updates the physical state of a single <see cref="Envelope">Envelope</see>.
         /// </summary>
         /// <param name="id">The id of the <see cref="Envelope">Envelope</see> to update the status for.</param>
-        /// <param name="states">The list of <see cref="EnvelopePhysicalState">PhysicalEnvelopeState</see> to assign to the <see cref="Envelope">Envelope</see></param>
+        /// <param name="states">The list of <see cref="Models.Types.Expedite.EnvelopePhysicalState">PhysicalEnvelopeState</see> to assign to the <see cref="Envelope">Envelope</see></param>
         /// <returns>The updated Envelope.</returns>
         [HttpPatch, Route("{id:int}/UpdatePhysicalState")]
         [AuthAudit(SpendManagementElement.Api, AccessRoleType.Edit)]

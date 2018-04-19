@@ -16,7 +16,15 @@ namespace SpendManagementApi.Repositories.Expedite
     /// </summary>
     internal class EnvelopeTypeRepository : BaseRepository<EnvelopeType>, ISupportsActionContext
     {
+        /// <summary>
+        /// An instance of <see cref="IManageEnvelopes"/>.
+        /// </summary>
         private readonly IManageEnvelopes _data;
+
+        /// <summary>
+        /// An instance of <see cref="IActionContext"/>
+        /// </summary>
+        private readonly IActionContext _actionContext = null;
 
         /// <summary>
         /// Creates a new EnvelopeTypeRepository with the passed in user.
@@ -40,12 +48,20 @@ namespace SpendManagementApi.Repositories.Expedite
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="EnvelopeTypeRepository"/> class.
+        /// </summary>
+        public EnvelopeTypeRepository()
+        {     
+            _data = new Envelopes();
+        }
+
+        /// <summary>
         /// Gets all the EnvelopeTypes within the system.
         /// </summary>
         /// <returns>A list of EnvelopeTypes.</returns>
         public override IList<EnvelopeType> GetAll()
         {
-            return _data.GetAllEnvelopeTypes().Select(e => new EnvelopeType().From(e, ActionContext)).ToList();
+            return _data.GetAllEnvelopeTypes().Select(e => new EnvelopeType().From(e, this._actionContext)).ToList();
         }
 
         /// <summary>

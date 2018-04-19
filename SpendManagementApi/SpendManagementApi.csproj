@@ -891,6 +891,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="--app_offline.htm" />
+    <Compile Include="Attributes\NoAuthorisationRequiredAttribute.cs" />
     <Content Include="Content\themes\base\bootstrap-theme.css" />
     <Content Include="Content\themes\base\minified\bootstrap-theme.min.css" />
     <Content Include="Content\themes\base\bootstrap.css" />

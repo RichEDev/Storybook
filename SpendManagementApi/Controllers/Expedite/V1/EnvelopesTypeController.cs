@@ -34,7 +34,7 @@
         /// Gets all <see cref="Envelope">EnvelopeType</see> in the system.
         /// </summary>
         [HttpGet, Route("")]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.View)]
+        [NoAuthorisationRequired]
         public GetEnvelopeTypeResponse GetAll()
         {
             return this.GetAll<GetEnvelopeTypeResponse>();

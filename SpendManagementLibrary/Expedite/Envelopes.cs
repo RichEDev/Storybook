@@ -256,9 +256,8 @@
         /// Creates a batch of envelopes in the system and returns the newly create envelopes.
         /// </summary>
         /// <param name="type">The type of the envelope, which should be a valid EnvelopeType.</param>
-        /// <param name="user">The current user.</param>
         /// <returns>A list of the newly created envelopes.</returns>
-        public IList<Envelope> AddEnvelopeBatch(int type, ICurrentUserBase user)
+        public IList<Envelope> AddEnvelopeBatch(int type)
         {
             var envelopeNumberBatch = new EnvelopeNumberBatch(BatchSize);
             List<string> envelopeNumbers = envelopeNumberBatch.GenerateEnvelopeNumbers();
@@ -266,7 +265,7 @@
             TryGetEnvelopeTypeAndThrow(type);
 
             // create output list
-            var list = new List<Envelope>();
+            var list = new List<Envelope>(); 
 
             // populate the envelopes
             for (var i = 0; i < BatchSize; i++)
@@ -287,7 +286,7 @@
                     OverpaymentCharge = null,
                     PhysicalState = new List<EnvelopePhysicalState>(),
                     PhysicalStateProofUrl = null,
-                    LastModifiedBy = user.EmployeeID
+                    LastModifiedBy = 0
                 };
 
                 // add to the list
@@ -359,9 +358,8 @@
         /// Edits a batch of envelopes. Ensure the EnvelopeId is set correctly in each.
         /// </summary>
         /// <param name="envelopes">The envelopes to edit.</param>
-        /// <param name="user">The current user.</param>
         /// <returns>The edited envelopes.</returns>
-        public IList<Envelope> EditEnvelopeBatch(IList<Envelope> envelopes, ICurrentUserBase user)
+        public IList<Envelope> EditEnvelopeBatch(IList<Envelope> envelopes)
         {
             // handle errors
             ValidateEnvelopeTypes(envelopes, false);
@@ -416,9 +414,8 @@
         /// </summary>
         /// <param name="batchCode">The central part of the EnvelopeNumber (the batch) to assign.</param>
         /// <param name="accountId">The AccountId of the account to issue the envelopes to.</param>
-        /// <param name="user">The current user.</param>
         /// <returns>The newly modified envelopes.</returns>
-        public IList<Envelope> IssueBatchToAccount(string batchCode, int accountId, ICurrentUserBase user)
+        public IList<Envelope> IssueBatchToAccount(string batchCode, int accountId)
         {
             // check account
             ValidateAccount(accountId);
