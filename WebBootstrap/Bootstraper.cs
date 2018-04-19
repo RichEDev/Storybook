@@ -74,9 +74,9 @@
             // Creation of the currently logged in account
             container.Register<IAccount>(() => BootstrapAccount.CreateNew(container), Lifestyle.Scoped);
 
-            container.RegisterConditional<IIdentityContextProvider, LogonIdentityContext>(Lifestyle.Transient, context => HttpContext.Current.Request.Path.ToLower().Contains("logon.aspx") || HttpContext.Current.Request.Path.ToLower().Contains("Sso.aspx") || HttpContext.Current.Request.Path.ToLower().Contains("svcLogon.asmx") || HttpContext.Current.Request.Path.ToLower().Contains("register.aspx"));
-            container.RegisterConditional<IIdentityContextProvider, WebIdentityContext>(Lifestyle.Transient, c => !c.Handled);
-            container.Register<IIdentityProvider, IdentityProvider>(Lifestyle.Transient);
+            container.RegisterConditional<IIdentityContextProvider, LogonIdentityContext>(Lifestyle.Scoped, context => HttpContext.Current.Request.Path.ToLower().Contains("logon.aspx") || HttpContext.Current.Request.Path.ToLower().Contains("Sso.aspx") || HttpContext.Current.Request.Path.ToLower().Contains("svcLogon.asmx") || HttpContext.Current.Request.Path.ToLower().Contains("register.aspx"));
+            container.RegisterConditional<IIdentityContextProvider, WebIdentityContext>(Lifestyle.Scoped, c => !c.Handled);
+            container.Register<IIdentityProvider, IdentityProvider>(Lifestyle.Scoped);
 
             // Logging
             container.Register<IExtraContext, Log4NetContextAdapter>();
