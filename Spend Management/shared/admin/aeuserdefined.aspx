@@ -140,7 +140,7 @@
                 </div>
         </div>
         <div id="divEncryptOptions" class="twocolumn">
-            <asp:Label ID="lblEncrypt" runat="server" Text="Encrypt" AssociatedControlID="chkEncrypt" class="encrypt"></asp:Label><span class="inputs encrypt"><asp:CheckBox ID="chkEncrypt" runat="server" class="encrypt"/></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield encrypt"><asp:Image ID="imgEncrypt" runat="server" ImageUrl="~/shared/images/icons/16/plain/tooltip.png" AlternateText="" CssClass="tooltipicon" onmouseover="SEL.Tooltip.Show('31C5675E-CC91-4E9F-8B83-49BF680A6E41', 'sm', this);" /></span>
+            <asp:Label ID="lblEncrypt" runat="server" Text="Encrypt data" AssociatedControlID="chkEncrypt" class="encrypt"></asp:Label><span class="inputs encrypt"><asp:CheckBox ID="chkEncrypt" runat="server" class="encrypt"/></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield encrypt"><asp:Image ID="imgEncrypt" runat="server" ImageUrl="~/shared/images/icons/16/plain/tooltip.png" AlternateText="" CssClass="tooltipicon" onmouseover="SEL.Tooltip.Show('53C87DF2-9536-45B8-8B0B-74C1D9018AA9', 'sm', this);" /></span>
         </div>
         <div class="formbuttons">
             <a onclick="javascript:saveUserDefined();"><asp:Image ID="cmdok" runat="server" ImageUrl="~/shared/images/buttons/btn_save.png" AlternateText="Save"
