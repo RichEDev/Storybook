@@ -1133,6 +1133,8 @@ public partial class register : Page
         int subAccountId = subaccs.getFirstSubAccount().SubAccountID;
         var currentUser = new CurrentUser(accountId, 0, 0, Modules.SpendManagement, subAccountId);
 
+        HttpContext.Current.User = new TemporaryWebPrincipal(new UserIdentity(accountId, 0));
+
         var misc = new cMisc(accountId);
         bool move = false;
 
