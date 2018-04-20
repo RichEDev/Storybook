@@ -110,7 +110,7 @@ public class cCurrencies
 	{
         CurrentUser currentUser = cMisc.GetCurrentUser();
 
-	    this._accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CurrencyType.GetDescription(), currencyType.ToString(), currentUser.CurrentSubAccountId));
+	    this._accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CurrencyType.GetDescription(), Convert.ToString((int)currencyType), currentUser.CurrentSubAccountId));
 
 	    var accountBase = new cAccountSubAccountsBase(currentUser.AccountID);
 	    accountBase.InvalidateCache(currentUser.CurrentSubAccountId);

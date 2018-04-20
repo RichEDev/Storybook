@@ -2040,7 +2040,7 @@
 
                     accountBase.PopulateExchangeRateRanges((CurrencyType) generalOptions.Currency.CurrencyType, enableAutoUpdateOfExchangeRatesActivatedDate);
 
-                    this.AccountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CurrencyType.GetDescription(), CurrencyType.Range.ToString(), currentUser.CurrentSubAccountId));
+                    this.AccountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CurrencyType.GetDescription(), Convert.ToString((int)CurrencyType.Range), currentUser.CurrentSubAccountId));
                 }
             }
             

@@ -257,7 +257,8 @@
         [Description("currencyType")]
         CurrencyType,
 
-        [Description("baseCurrency")] BaseCurrency,
+        [Description("baseCurrency")]
+        BaseCurrency,
 
         [Description("EnableAutoUpdateOfExchangeRates")]
         EnableAutoUpdateOfExchangeRates,

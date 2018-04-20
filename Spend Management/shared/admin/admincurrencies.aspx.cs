@@ -5,13 +5,15 @@ namespace Spend_Management
     using System.Web.UI;
     using System.Web.Services;
 
-    using SpendManagementLibrary;
-
     using BusinessLogic;
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
 
-	/// <summary>
+    using SpendManagementLibrary;
+
+    using CurrencyType = BusinessLogic.GeneralOptions.Currencies.CurrencyType;
+
+    /// <summary>
 	/// Summary description for admincurrencies.
 	/// </summary>
 	public partial class admincurrencies : Page
@@ -53,11 +55,9 @@ namespace Spend_Management
                 ViewState["accountid"] = user.AccountID;
                 ViewState["employeeid"] = user.EmployeeID;
 
-                cMisc clsMisc = new cMisc(user.AccountID);
+                var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithCurrency();
 
-                var clsSubAccounts = new cAccountSubAccounts(user.AccountID);
-                cAccountProperties reqProperties = clsSubAccounts.getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
-                if (reqProperties.EnableAutoUpdateOfExchangeRates)
+                if (generalOptions.Currency.EnableAutoUpdateOfExchangeRates)
                 {
                     this.rButStatic.Enabled = false;
                     this.rButMonth.Enabled = false;
@@ -65,12 +65,9 @@ namespace Spend_Management
                     this.exchangeRateComment.Style.Add("display", "block");
                 }
 
-                CurrencyType currencyType = (CurrencyType)byte.Parse(this.GeneralOptionsFactory[user.CurrentSubAccountId].WithCurrency().Currency.CurrencyType.ToString());
+                ViewState["currencyType"] = generalOptions.Currency.CurrencyType;
 
-                ViewState["currencyType"] = currencyType;
-
-
-                switch (currencyType)
+                switch (generalOptions.Currency.CurrencyType)
                 {
                     case CurrencyType.Static:
                         rButStatic.Checked = true;
@@ -92,7 +89,7 @@ namespace Spend_Management
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "CurrenciesGridVars", cGridNew.generateJS_init("CurrenciesGridVars", new System.Collections.Generic.List<string>() { gridData[0] }, user.CurrentActiveModule), true);
 
                 System.Text.StringBuilder sb = new System.Text.StringBuilder();
-                sb.Append("var currencyType = " + (byte)currencyType + ";\n");
+                sb.Append("var currencyType = " + (byte)generalOptions.Currency.CurrencyType + ";\n");
                 
                 switch (user.CurrentActiveModule)
                 {
@@ -227,7 +224,7 @@ namespace Spend_Management
             {
                 CurrentUser user = cMisc.GetCurrentUser();
                 cCurrencies clsCurrencies = new cCurrencies(user.AccountID, user.CurrentSubAccountId);
-                clsCurrencies.ChangeCurrencyType(currencyType, user.EmployeeID);
+                clsCurrencies.ChangeCurrencyType((SpendManagementLibrary.CurrencyType)currencyType, user.EmployeeID);
             }
         }
 
