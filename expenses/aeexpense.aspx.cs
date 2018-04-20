@@ -4958,6 +4958,11 @@ public partial class aeexpense : System.Web.UI.Page
         List<ListItem> items = new List<ListItem>();
         for (int i = 0; i < filterids.Count; i++)
         {
+            if (types[i] == FilterType.Costcode)
+            {
+                continue;
+            }
+
             string area = "";
             string ctlid = "";
 
