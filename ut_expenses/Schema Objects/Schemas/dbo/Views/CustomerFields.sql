@@ -205,7 +205,7 @@ SELECT
   NULL AS associatedFieldForDuplicateChecking,
   NULL AS DuplicateCheckingSource,
   NULL AS DuplicateCheckingCalculation,
-  CAST(0 AS BIT) AS [Encrypted]
+  [Encrypted]
 FROM dbo.userdefined
 
 GO

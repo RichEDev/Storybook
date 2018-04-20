@@ -274,12 +274,18 @@ namespace Spend_Management
 
                             break;
                     }
+
+                    this.chkEncrypt.Checked = reqfield.Encrypted;
+                    if (reqfield.Encrypted)
+                    {
+                        this.chkEncrypt.Enabled = false;
+                    }
+
                     Master.title = "Userdefined Field: " + reqfield.label;
 
                     StringBuilder sbJS = new StringBuilder();
                     sbJS.Append("function pcEditUDF()\n{\n");
                     sbJS.Append("\tshowFurtherAttributeOptions();\n");
-                    //sbJS.Append("\tFilterRelatedTables();\n");
                     sbJS.Append("}\n");
                     sbJS.Append("if (window.addEventListener) // W3C standard\n");
                     sbJS.Append("{\n");
@@ -309,8 +315,13 @@ namespace Spend_Management
                     Master.title = "Userdefined Field: New";
                 }
 
-                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "vars", "curUserdefinedID = " + userdefineid.ToString() + ";", true);
-                
+                var userdefinedEncrypted = this.chkEncrypt.Checked ? "true" : "false";
+                this.Page.ClientScript.RegisterClientScriptBlock(
+                    this.GetType(),
+                    "vars",
+                    $"curUserdefinedID = {userdefineid}; curUserdefinedEncrypted = {userdefinedEncrypted};",
+                    true);
+
                 // currently only Framework uses relationshiptextbox udfs so if it's something else, hide that from the type dropdowns
                 // currently only Framework uses DynamicHyperlink udfs so if it's something else, hide that from the type dropdowns
                 switch (user.CurrentActiveModule)

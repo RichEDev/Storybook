@@ -51,13 +51,15 @@
         var udfmtomaxrowsID = '<%=txtmaxrows.ClientID %>';
         var cmpMaxRowsID = '<%=cmpmaxrows.ClientID %>';
         var chkallowclaimantpopulationID = '<%=chkallowclaimantpopulation.ClientID %>';
+        var encrypt = '<%=this.chkEncrypt.ClientID%>';
+
     </script>
     <asp:ScriptManagerProxy ID="smp" runat="server">
     <Services>
     <asp:ServiceReference Path="~/shared/webServices/svcUserdefined.asmx" />
     </Services>
         <Scripts>
-            <asp:ScriptReference Path="~/shared/javaScript/userdefined.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/userdefined.js?date=20180417" />
         </Scripts>
     </asp:ScriptManagerProxy>
 
@@ -136,6 +138,9 @@
                 <div class="twocolumn">
                 <asp:Label runat="server" ID="lblmaxrows" AssociatedControlID="txtmaxrows">Max No. Suggestions</asp:Label><span class="inputs"><asp:TextBox runat="server" ID="txtmaxrows" CssClass="fillspan"></asp:TextBox></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span><span class="inputvalidatorfield"><asp:CompareValidator runat="server" ID="cmpmaxrows" ControlToValidate="txtmaxrows" Operator="DataTypeCheck" Type="Integer" Text="*" ErrorMessage="Max No. Suggestions field must be numeric" Display="Dynamic" Enabled="false" ValidationGroup="vgAttribute"></asp:CompareValidator></span>
                 </div>
+        </div>
+        <div id="divEncryptOptions" class="twocolumn">
+            <asp:Label ID="lblEncrypt" runat="server" Text="Encrypt" AssociatedControlID="chkEncrypt" class="encrypt"></asp:Label><span class="inputs encrypt"><asp:CheckBox ID="chkEncrypt" runat="server" class="encrypt"/></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield encrypt"><asp:Image ID="imgEncrypt" runat="server" ImageUrl="~/shared/images/icons/16/plain/tooltip.png" AlternateText="" CssClass="tooltipicon" onmouseover="SEL.Tooltip.Show('31C5675E-CC91-4E9F-8B83-49BF680A6E41', 'sm', this);" /></span>
         </div>
         <div class="formbuttons">
             <a onclick="javascript:saveUserDefined();"><asp:Image ID="cmdok" runat="server" ImageUrl="~/shared/images/buttons/btn_save.png" AlternateText="Save"

@@ -9,7 +9,7 @@
     /// <summary>
     /// A class to encrypt existing data in a custom_XX table for a specific attribute.
     /// </summary>
-    public class CustomEntityAttributeEncryptor
+    public class AttributeEncryptor
     {
         /// <summary>
         /// The current user.
@@ -17,12 +17,12 @@
         private readonly ICurrentUser _currentUser;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CustomEntityAttributeEncryptor"/> class.
+        /// Initializes a new instance of the <see cref="AttributeEncryptor"/> class.
         /// </summary>
         /// <param name="currentUser">
         /// The current user.
         /// </param>
-        public CustomEntityAttributeEncryptor(ICurrentUser currentUser)
+        public AttributeEncryptor(ICurrentUser currentUser)
         {
             this._currentUser = currentUser;
         }

@@ -23,8 +23,57 @@ namespace SpendManagementLibrary
         private readonly bool _allowSearch;
         private readonly bool _allowEMployeeToPopulate;
 
-        public cUserDefinedField(int userdefineid, cTable table, int order, List<int> subcats, DateTime createdon, int createdby, DateTime? modifiedon, int? modifiedby, cAttribute attribute, cUserdefinedFieldGrouping grouping, bool archived, bool specific, bool allowsearch, bool allowemployeetopopulate)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="cUserDefinedField"/> class.
+        /// </summary>
+        /// <param name="userdefineid">
+        /// The userdefineid.
+        /// </param>
+        /// <param name="table">
+        /// The table.
+        /// </param>
+        /// <param name="order">
+        /// The order.
+        /// </param>
+        /// <param name="subcats">
+        /// The subcats.
+        /// </param>
+        /// <param name="createdon">
+        /// The createdon.
+        /// </param>
+        /// <param name="createdby">
+        /// The createdby.
+        /// </param>
+        /// <param name="modifiedon">
+        /// The modifiedon.
+        /// </param>
+        /// <param name="modifiedby">
+        /// The modifiedby.
+        /// </param>
+        /// <param name="attribute">
+        /// The attribute.
+        /// </param>
+        /// <param name="grouping">
+        /// The grouping.
+        /// </param>
+        /// <param name="archived">
+        /// The archived.
+        /// </param>
+        /// <param name="specific">
+        /// The specific.
+        /// </param>
+        /// <param name="allowsearch">
+        /// The allowsearch.
+        /// </param>
+        /// <param name="allowemployeetopopulate">
+        /// The allowemployeetopopulate.
+        /// </param>
+        /// <param name="encrypted">
+        /// The encrypted.
+        /// </param>
+        public cUserDefinedField(int userdefineid, cTable table, int order, List<int> subcats, DateTime createdon, int createdby, DateTime? modifiedon, int? modifiedby, cAttribute attribute, cUserdefinedFieldGrouping grouping, bool archived, bool specific, bool allowsearch, bool allowemployeetopopulate, bool encrypted)
         {
+            this.Encrypted = encrypted;
             _userDefinedId = userdefineid;
             _table = table;
             _attribute = attribute;
@@ -46,51 +95,6 @@ namespace SpendManagementLibrary
             _allowEMployeeToPopulate = allowemployeetopopulate;
         }
 
-        public SortedList<int, cListAttributeElement> items
-        {
-            get
-            {
-                if (_attribute.GetType() == typeof(cListAttribute))
-                {
-                    var lstatt = (cListAttribute)_attribute;
-                    return lstatt.items;
-                }
-
-                return null;
-            }
-        }
-
-        public List<int> selectedSubcats
-        {
-            get { return _subcatIds; }
-        }
-
-
-        public List<System.Web.UI.WebControls.ListItem> CreateDropDown()
-        {
-            var items = new List<System.Web.UI.WebControls.ListItem>();
-            var listatt = (cListAttribute)_attribute;
-            items.Add(new System.Web.UI.WebControls.ListItem("", "0"));
-            
-            foreach (KeyValuePair<int,cListAttributeElement> curItem in listatt.items)
-            {
-                cListAttributeElement s = curItem.Value;
-                
-                items.Add(new System.Web.UI.WebControls.ListItem(s.elementText, s.elementValue.ToString(CultureInfo.InvariantCulture)));
-            }
-
-            return items;
-        }
-
-        public DataSet getUserDefinedList()
-        {
-            return new DataSet();
-        }
-        public cListItem getListItemByID(int itemid)
-        {
-            return null;
-        }
-   
         #region properties
         
         public int userdefineid
@@ -178,103 +182,31 @@ namespace SpendManagementLibrary
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the field is encrypted in the database.
+        /// </summary>
+        public bool Encrypted { get; }
+
+        public SortedList<int, cListAttributeElement> items
+        {
+            get
+            {
+                if (this._attribute.GetType() == typeof(cListAttribute))
+                {
+                    var lstatt = (cListAttribute)this._attribute;
+                    return lstatt.items;
+                }
+
+                return null;
+            }
+        }
+
+        public List<int> selectedSubcats
+        {
+            get { return this._subcatIds; }
+        }
+
         #endregion
 
          }
-
-    
-
-    public enum AppliesTo
-    {
-        CONTRACT_DETAILS = 1,
-        CONTRACT_PRODUCTS = 2,
-        PRODUCT_DETAILS = 3,
-        VENDOR_DETAILS = 4,
-        CONTRACT_GROUPING = 5,
-        RECHARGE_GROUPING = 6,
-        CONPROD_GROUPING = 7,
-        STAFF_DETAILS = 8,
-        INVOICE_DETAILS = 9,
-        INVOICE_FORECASTS = 10,
-        VENDOR_CONTACTS = 11,
-        VENDOR_GROUPING = 12,
-        Employee,
-        ExpenseItem,
-        Claim,
-        ItemCategory,
-        Car,
-        Company,
-        Costcode,
-        Department,
-        Projectcode
-    }
-
-    [Serializable()]
-    public class cListItem
-    {
-        private readonly int _itemId;
-        private readonly int _userDefinedId;
-        private readonly string _item;
-        private readonly string _comment;
-        private readonly DateTime _createdOn;
-        private readonly int _createdBy;
-        private readonly DateTime _modifiedOn;
-        private readonly int _modifiedBy;
-
-        public cListItem(int userdefineid, int itemid, string item, string comment, DateTime createdon, int createdby, DateTime modifiedon, int modifiedby)
-        {
-            _itemId = itemid;
-            _userDefinedId = userdefineid;
-            _item = item;
-            _comment = comment;
-            _createdOn = createdon;
-            _createdBy = createdby;
-            _modifiedOn = modifiedon;
-            _modifiedBy = modifiedby;
-        }
-
-        #region properties
-        public int itemid
-        {
-            get { return _itemId; }
-        }
-        public int userdefineid
-        {
-            get { return _userDefinedId; }
-        }
-        public string item
-        {
-            get { return _item; }
-        }
-        public string comment
-        {
-            get { return _comment; }
-        }
-        public DateTime createdon
-        {
-            get { return _createdOn; }
-        }
-        public int createdby
-        {
-            get { return _createdBy; }
-        }
-        public DateTime modifiedon
-        {
-            get { return _modifiedOn; }
-        }
-        public int modifiedby
-        {
-            get { return _modifiedBy; }
-        }
-        #endregion
-    }
-
-    [Serializable()]
-    public struct sOnlineUserdefinedInfo
-    {
-        public Dictionary<int, cUserDefinedField> lstUserdefined;
-        public List<int> lstUserdefinedids;
-        public Dictionary<int, cListItem> lstListitems;
-        public List<int> lstListitemids;
-    }
 }

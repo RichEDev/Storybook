@@ -112,5 +112,10 @@
         /// Gets or sets the order.
         /// </summary>
         public int Order { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the field is encrypted.
+        /// </summary>
+        public bool Encrypted { get; set; }
     }
 }

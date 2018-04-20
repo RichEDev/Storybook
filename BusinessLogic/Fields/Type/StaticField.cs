@@ -47,7 +47,7 @@
         public string Comment { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Guid"/> of the <see cref="ITable"/> that thisw <see cref="IField"/> belongs to.
+        /// Gets or sets the <see cref="Guid"/> of the <see cref="ITable"/> that this <see cref="IField"/> belongs to.
         /// </summary>
         public Guid TableId { get; set; }
 
@@ -75,5 +75,10 @@
         /// Gets or sets the length of the <see cref="IField"/>
         /// </summary>
         public int Length { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the data for this field is stored encrypted.
+        /// </summary>
+        public bool Encrypted { get; set; }
     }
 }

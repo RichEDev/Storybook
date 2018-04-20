@@ -86,17 +86,17 @@ namespace Spend_Management
             
 
             
-            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.CONTRACT_DETAILS, "Contract");
-            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.CONTRACT_GROUPING, "Contract");
-            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.CONPROD_GROUPING, "Contract Product");
-            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.CONTRACT_PRODUCTS, "Contract Product");
-            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.PRODUCT_DETAILS, "Product");
-            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.STAFF_DETAILS, "Employee");
+            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.ContractDetails, "Contract");
+            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.ContractGrouping, "Contract");
+            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.ConprodGrouping, "Contract Product");
+            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.ContractProducts, "Contract Product");
+            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.ProductDetails, "Product");
+            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.StaffDetails, "Employee");
             ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.Employee, "Employee");
-            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.VENDOR_DETAILS, properties.SupplierPrimaryTitle);
-            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.RECHARGE_GROUPING, "Recharge");
-            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.INVOICE_DETAILS, "Invoice Details");
-            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.INVOICE_FORECASTS, "Invoice Forecast");
+            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.VendorDetails, properties.SupplierPrimaryTitle);
+            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.RechargeGrouping, "Recharge");
+            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.InvoiceDetails, "Invoice Details");
+            ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.InvoiceForecasts, "Invoice Forecast");
             ((cFieldColumn)tasksGrid.getColumnByName("regardingArea")).addValueListItem((int)AppliesTo.Car, "Car");
 
 

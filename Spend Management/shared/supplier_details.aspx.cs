@@ -277,7 +277,7 @@ namespace Spend_Management
         /// <param name="e"></param>
         protected void lnkAddTask_Click(object sender, EventArgs e)
         {
-            string varURL = "tid=0&rid=" + SupplierId.ToString() + "&rtid=" + ((int)AppliesTo.VENDOR_DETAILS).ToString() + "&ret=" + (cMisc.Path + "/shared/supplier_details.aspx?t=0&sid=" + SupplierId.ToString()).Base64Encode();
+            string varURL = "tid=0&rid=" + SupplierId.ToString() + "&rtid=" + ((int)AppliesTo.VendorDetails).ToString() + "&ret=" + (cMisc.Path + "/shared/supplier_details.aspx?t=0&sid=" + SupplierId.ToString()).Base64Encode();
             Response.Redirect(cMisc.Path + "/shared/tasks/ViewTask.aspx?" + varURL, true);
         }
 
@@ -288,7 +288,7 @@ namespace Spend_Management
         /// <param name="e"></param>
         protected void lnkTaskSummary_Click(object sender, EventArgs e)
         {
-            Response.Redirect(cMisc.Path + "/shared/tasks/TaskSummary.aspx?paa=" + ((int)AppliesTo.VENDOR_DETAILS).ToString() + "&pid=" + SupplierId.ToString() + "&ret=" + (Request.Url.PathAndQuery).Base64Encode(), true);
+            Response.Redirect(cMisc.Path + "/shared/tasks/TaskSummary.aspx?paa=" + ((int)AppliesTo.VendorDetails).ToString() + "&pid=" + SupplierId.ToString() + "&ret=" + (Request.Url.PathAndQuery).Base64Encode(), true);
         }
 
         /// <summary>

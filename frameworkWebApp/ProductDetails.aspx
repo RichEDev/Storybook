@@ -12,7 +12,7 @@
     </style> <asp:ScriptManagerProxy ID="ScriptManagerProxy2" runat="server">
         <Scripts>
             <asp:ScriptReference Path="~/callback.js" />
-            <asp:ScriptReference Path="~/javascript/userdefined.js" />             
+            <asp:ScriptReference Path="~/javascript/userdefined.js?date=20180417" />             
         </Scripts>
     </asp:ScriptManagerProxy>
     <script language="javascript" type="text/javascript">

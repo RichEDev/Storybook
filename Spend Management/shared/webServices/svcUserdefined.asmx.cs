@@ -43,14 +43,92 @@ namespace Spend_Management
             return items;
         }
 
+        /// <summary>
+        /// The save user defined field.
+        /// </summary>
+        /// <param name="id">
+        /// The user defined field ID.
+        /// </param>
+        /// <param name="udf_name">
+        /// The user defined field name.
+        /// </param>
+        /// <param name="description">
+        /// The user defined field description.
+        /// </param>
+        /// <param name="tooltip">
+        /// The user defined field tooltip.
+        /// </param>
+        /// <param name="fieldtype">
+        /// The user defined field type.
+        /// </param>
+        /// <param name="udfGroupId">
+        /// The user defined field group ID.
+        /// </param>
+        /// <param name="order">
+        /// The user defined field order.
+        /// </param>
+        /// <param name="format">
+        /// The user defined field format.
+        /// </param>
+        /// <param name="itemSpecific">
+        /// Is the data item specific?.
+        /// </param>
+        /// <param name="allowSearch">
+        /// Allow searching on this field.
+        /// </param>
+        /// <param name="appliesToTableID">
+        /// The ID of a table that this field applies to.
+        /// </param>
+        /// <param name="hyperlinkText">
+        /// The hyperlink text.
+        /// </param>
+        /// <param name="hyperlinkPath">
+        /// The hyperlink path.
+        /// </param>
+        /// <param name="relatedTableID">
+        /// The ID of a related table (for relationship fields).
+        /// </param>
+        /// <param name="mandatory">
+        /// Is this field mandatory.
+        /// </param>
+        /// <param name="acDisplayField">
+        /// The auto complete display field.
+        /// </param>
+        /// <param name="acMatchFields">
+        /// The auto complete match fields.
+        /// </param>
+        /// <param name="maxLength">
+        /// The max length of a field.
+        /// </param>
+        /// <param name="precision">
+        /// The precision (for decimal fields).
+        /// </param>
+        /// <param name="listitems">
+        /// The list items (for list item types).
+        /// </param>
+        /// <param name="defaultVal">
+        /// The default value.
+        /// </param>
+        /// <param name="maxRows">
+        /// The max rows returned for a relationshop type.
+        /// </param>
+        /// <param name="allowEmployeeToPopulate">
+        /// Allow the employee to populate the data.
+        /// </param>
+        /// <param name="encrypted">
+        /// Is the data encrypted in the database.
+        /// </param>
+        /// <returns>
+        /// The <see cref="int"/> ID of the updated or nre record.
+        /// </returns>
         [WebMethod(EnableSession = true)]
-        public int saveUserDefinedField(int id, string udf_name, string description, string tooltip, byte fieldtype, int udfGroupId, int order, byte format, bool itemSpecific, bool allowSearch, string appliesToTableID, string hyperlinkText, string hyperlinkPath, string relatedTableID, bool mandatory, string acDisplayField, string[] acMatchFields, int maxLength, int precision, string[] listitems, string defaultVal, int maxRows, bool allowEmployeeToPopulate)
+        public int saveUserDefinedField(int id, string udf_name, string description, string tooltip, byte fieldtype, int udfGroupId, int order, byte format, bool itemSpecific, bool allowSearch, string appliesToTableID, string hyperlinkText, string hyperlinkPath, string relatedTableID, bool mandatory, string acDisplayField, string[] acMatchFields, int maxLength, int precision, string[] listitems, string defaultVal, int maxRows, bool allowEmployeeToPopulate, bool encrypted)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
             cUserdefinedFields userdefinedFields = new cUserdefinedFields(currentUser.AccountID);
             cTables tables = new cTables(currentUser.AccountID);
             cUserdefinedFieldGroupings groupings = new cUserdefinedFieldGroupings(currentUser.AccountID);
-            return userdefinedFields.SaveUserDefinedField(id, udf_name, description, tooltip, fieldtype, udfGroupId, order, format, itemSpecific, allowSearch, appliesToTableID, hyperlinkText, hyperlinkPath, relatedTableID, mandatory, acDisplayField, acMatchFields, maxLength, precision, listitems, defaultVal, maxRows, allowEmployeeToPopulate, currentUser, tables, groupings);
+            return userdefinedFields.SaveUserDefinedField(id, udf_name, description, tooltip, fieldtype, udfGroupId, order, format, itemSpecific, allowSearch, appliesToTableID, hyperlinkText, hyperlinkPath, relatedTableID, mandatory, acDisplayField, acMatchFields, maxLength, precision, listitems, defaultVal, maxRows, allowEmployeeToPopulate, currentUser, tables, groupings, encrypted);
         }
 
     

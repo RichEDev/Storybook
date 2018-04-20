@@ -1202,7 +1202,7 @@
     <Compile Include="shared\code\AvailableModules.cs" />
     <Compile Include="shared\code\BankAccounts.cs" />
     <Compile Include="shared\code\ChangeApproverPermissionBase.cs" />
-    <Compile Include="shared\code\CustomEntityAttributeEncryptor.cs" />
+    <Compile Include="shared\code\AttributeEncryptor.cs" />
     <Compile Include="shared\code\CustomEntityFormDetails.cs" />
     <Compile Include="shared\code\DrivingLicence.cs" />
     <Compile Include="shared\code\DrivingLicenceReview.cs" />

@@ -17,6 +17,8 @@
     using QueryBuilder.Comparisons;
     using QueryBuilder.Operators.Comparison;
 
+    using SQLDataAccess.Helpers;
+
     /// <summary>
     /// The sql user defined field values factory.
     /// </summary>
@@ -59,6 +61,7 @@
         public override void Save(int id, UserDefinedFieldValueCollection userDefinedFieldValues, ModuleElements moduleElement)
         {
             ITable table = null;
+            var encryptedColumn = false;
             string primaryKeyColumnName = string.Empty;
 
             // TODO -- find a way to ditch this if statement
@@ -76,7 +79,8 @@
 
             SqlName baseTable = new SqlName(table.Name);
             UpdateQueryBuilder updateQuery = new UpdateQueryBuilder {Table = baseTable};
-            
+            InsertQueryBuilder insertQuery = new InsertQueryBuilder(baseTable);
+
             var userDefinedFields = this._userDefinedFieldRepository[table];
 
             if (userDefinedFields.Count > 0)
@@ -94,7 +98,18 @@
                         if (userdefinedAttribute.IsHyperLink == false)
                         {
                             object value = userDefinedFieldValues[fieldId];
-                            updateQuery.ColumnValues.Add(new ColumnValue<object>(new Column(userDefinedField.Name), new SqlValue<object>(value)));
+                            if (userDefinedField.Encrypted)
+                            {
+                                updateQuery.ColumnValues.Add(new EncryptedColumnValue(new ColumnValue<object>(new Column(userDefinedField.Name), new SqlValue<object>(value))));
+                                insertQuery.ColumnValues.Add(new EncryptedColumnValue(new ColumnValue<object>(new Column(userDefinedField.Name), new SqlValue<object>(value))));
+                                encryptedColumn = true;
+                            }
+                            else
+                            {
+                                updateQuery.ColumnValues.Add(new ColumnValue<object>(new Column(userDefinedField.Name), new SqlValue<object>(value)));    
+                                insertQuery.ColumnValues.Add(new ColumnValue<object>(new Column(userDefinedField.Name), new SqlValue<object>(value)));    
+                            }
+                            
                         }
                     }
                 }
@@ -102,28 +117,32 @@
                 if (updateQuery.ColumnValues.Count > 0)
                 {
                     string sql = updateQuery.Sql();
+
                     this._customerDataConnection.Parameters.Add(updateQuery.Parameters);
+                    if (encryptedColumn)
+                    {
+                        this._customerDataConnection.Parameters.Add(new SqlParameter("@salt", SqlDbType.NVarChar));
+                        this._customerDataConnection.Parameters["@salt"].Value = "2FD583C9-BF7E-4B4E-B6E6-5FC9375AD069";
+                    }
 
                     // Update existing rows matching the primary key
                     bool hasUpdated = this._customerDataConnection.ExecuteNonQuery(sql) > 0;
 
                     if (hasUpdated == false)
                     {
-                        InsertQueryBuilder insertQuery = new InsertQueryBuilder(baseTable);
-
                         insertQuery.ColumnValues.Add(new ColumnValue<int>(new Column(primaryKeyColumnName), new SqlValue<int>(id)));
-
-                        foreach (IColumnValue columnValue in updateQuery.ColumnValues)
-                        {
-                            insertQuery.ColumnValues.Add(new ColumnValue<object>(new Column(columnValue.ColumnName),
-                                new SqlValue<object>(this._customerDataConnection.Parameters[columnValue.Value].Value)));
-                        }
 
                         // Clear all parameters from the update query
                         this._customerDataConnection.Parameters.Clear();
 
                         sql = insertQuery.Sql();
                         this._customerDataConnection.Parameters.Add(insertQuery.Parameters);
+                        if (encryptedColumn)
+                        {
+                            this._customerDataConnection.Parameters.Add(new SqlParameter("@salt", SqlDbType.NVarChar));
+                            this._customerDataConnection.Parameters["@salt"].Value = "2FD583C9-BF7E-4B4E-B6E6-5FC9375AD069";
+                        }
+
                         this._customerDataConnection.ExecuteNonQuery(sql);
                     }
                 }

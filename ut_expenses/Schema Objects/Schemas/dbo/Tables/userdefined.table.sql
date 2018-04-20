@@ -27,6 +27,7 @@
     [displayField]            UNIQUEIDENTIFIER NULL,
     [maxRows]                 INT              NULL,
     [allowEmployeeToPopulate] BIT              CONSTRAINT [DF_userdefined_allowEmployeeToPopulate] DEFAULT ((0)) NOT NULL,
+	[Encrypted]				  BIT			   NOT NULL DEFAULT ((0))
     CONSTRAINT [PK_userdefined] PRIMARY KEY NONCLUSTERED ([userdefineid] ASC),
     CONSTRAINT [FK_userdefined_userdefinedGroupings] FOREIGN KEY ([groupID]) REFERENCES [dbo].[userdefinedGroupings] ([userdefinedGroupID]) ON DELETE SET NULL
 );

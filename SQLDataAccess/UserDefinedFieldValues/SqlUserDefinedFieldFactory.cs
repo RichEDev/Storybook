@@ -35,7 +35,7 @@
         ///     The base sql query.
         /// </summary>
         private readonly string baseSql =
-            "SELECT  fieldid, tableid, 'udf' + CAST(userdefineid AS NVARCHAR(10)) AS field, dbo.getFieldType(fieldtype, format) AS fieldtype, display_name AS description, display_name AS comment, CAST(1 AS BIT) AS normalview, CAST(0 AS BIT) AS idfield, dbo.getUserdefinedViewGroup(tableid, fieldtype) AS viewgroupid, CAST(0 AS BIT) AS genlist, CAST(50 AS INT) AS width, CAST(0 AS BIT) AS cantotal, CAST(0 AS BIT) AS printout, CASE userdefined.fieldtype WHEN 4 THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END AS valuelist, CAST(1 AS BIT) AS allowimport, mandatory, ModifiedOn AS amendedon, NULL AS lookuptable, NULL AS lookupfield, CAST(0 AS BIT) AS useforlookup, CAST(1 AS BIT) AS workflowUpdate, CAST(1 AS BIT) AS workflowSearch, maxlength AS length, CAST(0 AS BIT) AS Expr1, NULL AS Expr2, CAST(2 AS INT) AS fieldFrom, CAST(0 AS BIT) AS allowDuplicateChecking, NULL AS classPropertyName, CAST(0 AS tinyint) AS FieldCategory, relatedTable AS RelatedTable, CASE fieldtype WHEN 9 THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END AS IsForeignKey, null as associatedFieldForDuplicateChecking, null as DuplicateCheckingSource, null as DuplicateCheckingCalculation, userdefineid, attribute_name, description, tooltip, [Order],[Format],defaultvalue, precision, hyperlinkPath, hyperlinkText, displayField, maxRows FROM dbo.userdefined";
+            "SELECT  fieldid, tableid, 'udf' + CAST(userdefineid AS NVARCHAR(10)) AS field, dbo.getFieldType(fieldtype, format) AS fieldtype, display_name AS description, display_name AS comment, CAST(1 AS BIT) AS normalview, CAST(0 AS BIT) AS idfield, dbo.getUserdefinedViewGroup(tableid, fieldtype) AS viewgroupid, CAST(0 AS BIT) AS genlist, CAST(50 AS INT) AS width, CAST(0 AS BIT) AS cantotal, CAST(0 AS BIT) AS printout, CASE userdefined.fieldtype WHEN 4 THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END AS valuelist, CAST(1 AS BIT) AS allowimport, mandatory, ModifiedOn AS amendedon, NULL AS lookuptable, NULL AS lookupfield, CAST(0 AS BIT) AS useforlookup, CAST(1 AS BIT) AS workflowUpdate, CAST(1 AS BIT) AS workflowSearch, maxlength AS length, CAST(0 AS BIT) AS Expr1, NULL AS Expr2, CAST(2 AS INT) AS fieldFrom, CAST(0 AS BIT) AS allowDuplicateChecking, NULL AS classPropertyName, CAST(0 AS tinyint) AS FieldCategory, relatedTable AS RelatedTable, CASE fieldtype WHEN 9 THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END AS IsForeignKey, null as associatedFieldForDuplicateChecking, null as DuplicateCheckingSource, null as DuplicateCheckingCalculation, userdefineid, attribute_name, description, tooltip, [Order],[Format],defaultvalue, precision, hyperlinkPath, hyperlinkText, displayField, maxRows, encrypted FROM dbo.userdefined";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlUserDefinedFieldFactory"/> class.
@@ -200,6 +200,7 @@
                 var hyperLinkTextOrd = reader.GetOrdinal("hyperlinktext");
                 var displayFieldOrd = reader.GetOrdinal("displayfield");
                 var maxRowsOrd = reader.GetOrdinal("maxrows");
+                var encryptedOrd = reader.GetOrdinal("encrypted");
 
                 while (reader.Read())
                 {
@@ -240,6 +241,7 @@
                     var hyperLinkText = reader.IsDBNull(hyperLinkTextOrd) ? string.Empty : reader.GetString(hyperLinkTextOrd);
                     var displayField = reader.IsDBNull(displayFieldOrd) ? (Guid?)null : reader.GetGuid(displayFieldOrd);
                     var maxRows = reader.IsDBNull(maxRowsOrd) ? 0 : reader.GetInt32(maxRowsOrd);
+                    var encrypted = reader.GetBoolean(encryptedOrd);
 
                     var fieldAttributes = new FieldAttributes();
 
@@ -298,7 +300,7 @@
                         fieldAttributes.Add(new MandatoryAttribute());
                     }
 
-                    Field field = new Field(fieldId, fieldName, description, comment, tableId, classPropertyName, fieldAttributes, viewGroupId, width, length);
+                    Field field = new Field(fieldId, fieldName, description, comment, tableId, classPropertyName, fieldAttributes, viewGroupId, width, length, encrypted);
 
                     switch (fieldType)
                     {

@@ -323,10 +323,12 @@
     <Compile Include="API\cMobileAPIType.cs" />
     <Compile Include="API\cMobileAPIVersion.cs" />
     <Compile Include="API\ApiLicensingThreshold.cs" />
+    <Compile Include="AppliesTo.cs" />
     <Compile Include="ApprovalMatrix.cs" />
     <Compile Include="ApprovalMatrixLevel.cs" />
     <Compile Include="AttributeFormat.cs" />
     <Compile Include="BaseClasses\BankAccountsBase.cs" />
+    <Compile Include="BaseClasses\GroupingOutputType.cs" />
     <Compile Include="Cards\CorporateCardImportLog.cs" />
     <Compile Include="CardStatement.cs" />
     <Compile Include="Cards\CorporateCards.cs" />
@@ -365,6 +367,7 @@
     <Compile Include="Claims\SubmitRejectionReason.cs" />
     <Compile Include="cListAttribute.cs" />
     <Compile Include="cListAttributeElement.cs" />
+    <Compile Include="cListItem.cs" />
     <Compile Include="cManyToOneRelationship.cs" />
     <Compile Include="cNumberAttribute.cs" />
     <Compile Include="ColFunction.cs" />
@@ -958,6 +961,7 @@
     <Compile Include="Enumerators\SpendManagementElement.cs" />
     <Compile Include="API\UserNamePasswordValidator.cs" />
     <Compile Include="Enumerators\StageInclusionType.cs" />
+    <Compile Include="sOnlineUserdefinedInfo.cs" />
     <Compile Include="sSummary.cs" />
     <Compile Include="sSummaryColumn.cs" />
     <Compile Include="SubcatBasic.cs" />

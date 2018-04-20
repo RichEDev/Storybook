@@ -1,23 +1,21 @@
-﻿using System.Diagnostics;
-using System.Net;
-using System.Threading;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
     using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data.SqlClient;
     using System.Linq;
+    using System.Net;
     using System.Text;
     using System.Web;
-    using System.Web.Caching;
     using System.Web.Script.Serialization;
     using System.Web.UI.WebControls;
 
     using AjaxControlToolkit;
 
     using SpendManagementLibrary;
+
+    using Spend_Management.shared.code;
 
     public class cUserdefinedFields : cUserDefinedFieldsBase
     {
@@ -26,35 +24,35 @@ namespace Spend_Management
         public cUserdefinedFields(int accountID)
             : base(accountID)
         {
-            nAccountID = accountID;
+            this.AccountID = accountID;
 
-            sMetabaseConnectionString = ConfigurationManager.ConnectionStrings["metabase"].ConnectionString;
+            this.MetabaseConnectionString = ConfigurationManager.ConnectionStrings["metabase"].ConnectionString;
 
-            if (nAccountID > 0)
+            if (this.AccountID > 0)
             {
                 long lastUpdatedAllServers = GetLastUpdatedFromCache(accountID);
                 long lastReadFromDatabaseThisServer = 0;
-                lastReadFromDatabaseTicks.TryGetValue(nAccountID, out lastReadFromDatabaseThisServer);
+                lastReadFromDatabaseTicks.TryGetValue(this.AccountID, out lastReadFromDatabaseThisServer);
                 bool forceRefreshFromDatabase = lastUpdatedAllServers > lastReadFromDatabaseThisServer;
                 if (forceRefreshFromDatabase)
                 {
                     SortedList<int, cUserDefinedField> oldValue;
-                    allUserDefinedFields.TryRemove(accountID, out oldValue);
+                    AllUserDefinedFields.TryRemove(accountID, out oldValue);
                 }
             }
-            this.clsFields = new cFields(nAccountID);
+            this.clsFields = new cFields(this.AccountID);
 
             InitialiseData();
         }
 
         private void InitialiseData()
         {
-            lstUserDefinedFields = allUserDefinedFields.GetOrAdd(nAccountID, CacheList);
+            this.UserdefinedFields = AllUserDefinedFields.GetOrAdd(this.AccountID, CacheList);
         }
 
         private SortedList<int, cUserDefinedField> CacheList(int accountId)
         {
-            if (accountId != nAccountID) throw new ArgumentException("Incorrect account ID", "accountId");
+            if (accountId != this.AccountID) throw new ArgumentException("Incorrect account ID", "accountId");
             cUserdefinedFieldGroupings clsGroupings = new cUserdefinedFieldGroupings(accountId);
             cTables clsTables = new cTables(accountId);
             return GetCollection(clsTables, clsGroupings);
@@ -62,7 +60,7 @@ namespace Spend_Management
 
         private void ResetCache(DateTime lastUpdated)
         {
-            SaveLastUpdatedToCache(nAccountID, lastUpdated);
+            SaveLastUpdatedToCache(this.AccountID, lastUpdated);
             InitialiseData();
         }
 
@@ -185,7 +183,7 @@ namespace Spend_Management
             SortedList<int, cUserDefinedField> sortedUFields = new SortedList<int, cUserDefinedField>();
             List<cUserDefinedField> duplicates = new List<cUserDefinedField>();
 
-            foreach (cUserDefinedField field in lstUserDefinedFields.Values)
+            foreach (cUserDefinedField field in this.UserdefinedFields.Values)
             {
                 /*
                  *  THIS IS JUST DEBUG INFO
@@ -906,7 +904,7 @@ namespace Spend_Management
             }
 
             string id;
-            foreach (cUserDefinedField field in lstUserDefinedFields.Values)
+            foreach (cUserDefinedField field in this.UserdefinedFields.Values)
             {
                 
                 id = "";
@@ -2598,7 +2596,7 @@ namespace Spend_Management
                     break;
             }
 
-            List<sFieldBasics> fields = (from x in lstUserDefinedFields.Values
+            List<sFieldBasics> fields = (from x in this.UserdefinedFields.Values
                                          orderby x.description
                                          where x.fieldtype == udfFieldType && x.table.TableID == tableId
                                          select new sFieldBasics(x.attribute.fieldid, x.attribute.displayname, cFields.ConvertDataTypeToFieldType(dataType), x.attribute.attributename)).ToList();
@@ -2606,7 +2604,7 @@ namespace Spend_Management
             // need to get any relationship fields where a match field matches the type
 
             fields.AddRange(
-                (from x in lstUserDefinedFields.Values
+                (from x in this.UserdefinedFields.Values
                  where
                      x.table.TableID == tableId && x.fieldtype == FieldType.Relationship
                      && (from y in ((cManyToOneRelationship)x.attribute).AutoCompleteMatchFieldIDList where clsFields.GetFieldByID(y).FieldType == cFields.ConvertDataTypeToFieldType(dataType) select y).Any()
@@ -2720,6 +2718,7 @@ namespace Spend_Management
         /// <param name="groupings">
         /// AN instance of <see cref="cUserdefinedFieldGroupings"/>
         /// </param>
+        /// <param name="encrypted">True if this user defined field is encrypted.</param>
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
@@ -2749,8 +2748,8 @@ namespace Spend_Management
          bool allowEmployeeToPopulate,
          ICurrentUser currentUser,
          cTables tables,
-         cUserdefinedFieldGroupings groupings
-          )
+         cUserdefinedFieldGroupings groupings,
+         bool encrypted)
         {               
             cUserdefinedFieldGrouping group = null;
  
@@ -2776,6 +2775,7 @@ namespace Spend_Management
             AttributeFormat aFormat;
             tableid = new Guid(appliesToTableID);
             bool allowsearch = false;
+            var encrypt = false;
 
             switch (currentUser.CurrentActiveModule)
             {
@@ -2797,6 +2797,16 @@ namespace Spend_Management
             if (id > 0)
             {
                 cUserDefinedField oldfield = this.GetUserDefinedById(id);
+                if (encrypted && !oldfield.Encrypted)
+                {
+                    encrypt = true;
+                }
+
+                if (oldfield.Encrypted && !encrypted)
+                {
+                    encrypted = true;
+                }
+
                 createdon = oldfield.createdon;
                 createdby = oldfield.createdby;
                 modifiedby = currentUser.EmployeeID;
@@ -3090,7 +3100,10 @@ namespace Spend_Management
                         lgMatchFields = new List<Guid>();
                         foreach (string x in acMatchFields)
                         {
-                            if (Guid.TryParse(x, out tmp)) lgMatchFields.Add(tmp);
+                            if (Guid.TryParse(x, out tmp))
+                            {
+                                lgMatchFields.Add(tmp);
+                            }
                         }
                     }
 
@@ -3138,17 +3151,23 @@ namespace Spend_Management
                 archived,
                 itemSpecific,
                 allowsearch,
-                allowEmployeeToPopulate);
+                allowEmployeeToPopulate,
+                encrypted);
 
             if (this.AlreadyExists(userdefined) == false)
             {
                 int newUDF_ID = this.SaveUserDefinedField(userdefined);
+                if (encrypt)
+                {
+                    var encryptor = new AttributeEncryptor(currentUser);
+                    attribute.attributeid = newUDF_ID;
+                    encryptor.Encrypt(attribute, tbl.UserDefinedTableID);
+                }
+
                 return newUDF_ID;
             }
-            else
-            {
-                return -1;
-            }
+
+            return -1;
         }
 
     }

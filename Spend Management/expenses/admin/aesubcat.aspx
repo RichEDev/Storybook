@@ -54,7 +54,7 @@
     <asp:ScriptManagerProxy ID="ScriptMan" runat="server">
         <Scripts>
             <asp:ScriptReference Path="~/expenses/javaScript/subcats.js?date=20180125" />
-            <asp:ScriptReference Path="~/shared/javaScript/userdefined.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/userdefined.js?date=20180417" />
             <asp:ScriptReference Path="~/shared/javaScript/sel.ajax.js" />
         </Scripts>
     </asp:ScriptManagerProxy>

@@ -237,6 +237,17 @@
         internal bool AllowEmployeeToPopulate { get; set; }
 
         /// <summary>
+        /// Gets a value indicating whether the field is encrypted in the database.
+        /// </summary>
+        internal bool Encrypted 
+        { 
+            get
+            {
+                return this.Attribute != null && this.Attribute.Encrypted;
+            }
+        }
+
+        /// <summary>
         /// Overrides Equals
         /// </summary>
         /// <param name="other"></param>
@@ -299,7 +310,8 @@
                 userDefinedField.Archived,
                 userDefinedField.Specific,
                 userDefinedField.AllowSearch,
-                userDefinedField.AllowEmployeeToPopulate);
+                userDefinedField.AllowEmployeeToPopulate,
+                userDefinedField.Encrypted);
         }
     }
 }

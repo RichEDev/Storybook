@@ -11,9 +11,14 @@
     using BusinessLogic.Accounts.Elements;
     using BusinessLogic.Cache;
     using BusinessLogic.DataConnections;
+    using BusinessLogic.Fields.Type.Base;
     using BusinessLogic.ProjectCodes;
+    using BusinessLogic.Tables;
     using BusinessLogic.UserDefinedFields;
+
     using Common.Logging;
+
+    using global::QueryBuilder.Common;
 
     /// <summary>
     /// The sql project codes with user defined values factory.
@@ -31,6 +36,16 @@
         private readonly ILog _logger;
 
         /// <summary>
+        /// A private instance if <see cref="UserDefinedFieldRepository"/>.
+        /// </summary>
+        private readonly UserDefinedFieldRepository _userDefinedFieldRepository;
+
+        /// <summary>
+        /// A private instance if <see cref="TableRepository"/>.
+        /// </summary>
+        private readonly TableRepository _tableFactory;
+
+        /// <summary>
         /// Backing instance of project codes factory.
         /// </summary>
         private readonly SqlProjectCodesFactory _projectCodesFactory;
@@ -43,15 +58,34 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlProjectCodesWithUserDefinedValuesFactory"/> class.
         /// </summary>
-        /// <param name="projectCodesFactory">An instance of <see cref="SqlProjectCodesFactory"/> to decorate with user defined fields</param>
-        /// <param name="userDefinedFieldValueRepository">An instance of <see cref="UserDefinedFieldValueRepository" /></param>
-        /// <param name="customerDataConnection">An instance of <see cref="CustomerDatabaseConnection"/> to use when retrieving userdefined field data.</param>
-        /// <param name="logger">An instance of <see cref="ILog"/> to use when logging information.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="projectCodesFactory"/> is <see langword="null" />.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="userDefinedFieldValueRepository"/> is <see langword="null" />.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="customerDataConnection"/> is <see langword="null" />.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="logger"/> is <see langword="null" />.</exception>
-        public SqlProjectCodesWithUserDefinedValuesFactory(SqlProjectCodesFactory projectCodesFactory, UserDefinedFieldValueRepository userDefinedFieldValueRepository, ICustomerDataConnection<SqlParameter> customerDataConnection, ILog logger)
+        /// <param name="projectCodesFactory">
+        /// An instance of <see cref="SqlProjectCodesFactory"/> to decorate with user defined fields
+        /// </param>
+        /// <param name="userDefinedFieldValueRepository">
+        /// An instance of <see cref="UserDefinedFieldValueRepository"/>
+        /// </param>
+        /// <param name="customerDataConnection">
+        /// An instance of <see cref="CustomerDatabaseConnection"/> to use when retrieving userdefined field data.
+        /// </param>
+        /// <param name="logger">
+        /// An instance of <see cref="ILog"/> to use when logging information.
+        /// </param>
+        /// <param name="userDefinedFieldRepository">
+        /// An instance of <see cref="UserDefinedFieldRepository"/>.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="projectCodesFactory"/> is <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="userDefinedFieldValueRepository"/> is <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="customerDataConnection"/> is <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="logger"/> is <see langword="null"/>.
+        /// </exception>
+        public SqlProjectCodesWithUserDefinedValuesFactory(SqlProjectCodesFactory projectCodesFactory, UserDefinedFieldValueRepository userDefinedFieldValueRepository, ICustomerDataConnection<SqlParameter> customerDataConnection, ILog logger, UserDefinedFieldRepository userDefinedFieldRepository, TableRepository tableFactory )
         {
             Guard.ThrowIfNull(projectCodesFactory, nameof(projectCodesFactory));
             Guard.ThrowIfNull(userDefinedFieldValueRepository, nameof(userDefinedFieldValueRepository));
@@ -62,6 +96,8 @@
             this._userDefinedFieldValueRepository = userDefinedFieldValueRepository;
             this._customerDataConnection = customerDataConnection;
             this._logger = logger;
+            this._userDefinedFieldRepository = userDefinedFieldRepository;
+            this._tableFactory = tableFactory;
         }
 
         /// <summary>
@@ -198,7 +234,28 @@
 
 
             // TODO Make the udf values cachable so we can retrieve those and populate the ProjectCodeWithUserDefinedFields from cache/memory if available
-            string sql = @"SELECT userdefinedProjectcodes.* FROM userdefinedProjectcodes";
+            var userDefinedprojectCodeTable = this._tableFactory["userdefinedProjectcodes"];
+
+            var fields = this._userDefinedFieldRepository[userDefinedprojectCodeTable];
+
+            var queryBuilder = new QueryBuilder.Builders.SelectQueryBuilder();
+            queryBuilder.From.Add(new SqlName("userdefinedProjectcodes"));
+            queryBuilder.Columns.Add(new Column("projectCodeid"));
+
+            foreach (IField field in fields)
+            {
+                if (field.Encrypted)
+                {
+                    queryBuilder.Columns.Add(new ExpressionColumn(new Expression($"CAST(DECRYPTBYPASSPHRASE(@salt, {field.Name} ) AS NVARCHAR(Max))"), field.Name));
+                }
+                else
+                {
+                    queryBuilder.Columns.Add(new Column(field.Name));
+                }
+            }
+            
+            string sql = queryBuilder.Sql();
+            this._customerDataConnection.Parameters.Add(new SqlParameter("@salt", SqlDbType.NVarChar) { Value = "2FD583C9-BF7E-4B4E-B6E6-5FC9375AD069" });
 
             if (projectCodes.Count == 1)
             {

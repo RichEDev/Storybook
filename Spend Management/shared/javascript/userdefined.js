@@ -1,4 +1,5 @@
 ﻿var curUserdefinedID;
+var curUserdefinedEncrypted;
 var currentRowID;
 
 function deleteUserdefined(userdefineid) {
@@ -389,12 +390,14 @@ function showFurtherAttributeOptions() {
     document.getElementById('divDecimalOptions').style.display = 'none';
     document.getElementById('divHyperlinkOptions').style.display = 'none';
     document.getElementById('divRelationshipTextBoxOptions').style.display = 'none';
+    $('#divEncryptOptions').hide();
     var cmbtype = document.getElementById(cmbattributetype);
     var type = cmbtype.options[cmbtype.selectedIndex].value;
 
     switch (type) {
         case '1':
             document.getElementById('divTextOptions').style.display = '';
+            $('#divEncryptOptions').show();
             ValidatorEnable(document.getElementById(reqHyperlinkText), false);
             ValidatorEnable(document.getElementById(reqHyperlinkPath), false);
             ValidatorEnable(document.getElementById(revHyperlinkPath), false);
@@ -505,6 +508,7 @@ function showFurtherAttributeOptions() {
             break;
         case '10':
             document.getElementById('divLargeTextOptions').style.display = '';
+            $('#divEncryptOptions').show();
             ValidatorEnable(document.getElementById(reqHyperlinkText), false);
             ValidatorEnable(document.getElementById(reqHyperlinkPath), false);
             ValidatorEnable(document.getElementById(revHyperlinkPath), false);
@@ -1129,7 +1133,41 @@ function saveUserDefined() {
             break;
     }
     
-    Spend_Management.svcUserdefined.saveUserDefinedField(curUserdefinedID, udfName, udfDesc, udfTooltip, new Number(udfType), udfGroup, udfOrder, udfFormat, udfItemSpecific, udfAllowSearch, appliesTo, udfHypLink, udfHypPath, udfRelatedTableID, udfMandatory, udfDisplayField, udfMatchFields, udfMaxLength, udfPrecision, udfListItems, udfDefault, udfMaxRows, udfAllowClaimantPopulation, saveUDFComplete, WebServiceError);
+    var encrypted = $g(encrypt).checked;
+    var saveFunction = function() {
+        Spend_Management.svcUserdefined.saveUserDefinedField(curUserdefinedID,
+            udfName,
+            udfDesc,
+            udfTooltip,
+            new Number(udfType),
+            udfGroup,
+            udfOrder,
+            udfFormat,
+            udfItemSpecific,
+            udfAllowSearch,
+            appliesTo,
+            udfHypLink,
+            udfHypPath,
+            udfRelatedTableID,
+            udfMandatory,
+            udfDisplayField,
+            udfMatchFields,
+            udfMaxLength,
+            udfPrecision,
+            udfListItems,
+            udfDefault,
+            udfMaxRows,
+            udfAllowClaimantPopulation,
+            encrypted,
+            saveUDFComplete,
+            WebServiceError);
+    };
+
+    if (curUserdefinedID > 0 && !curUserdefinedEncrypted && encrypted) {
+        SEL.MasterPopup.ShowMasterConfirm("The 'Encrypt' option is irreversible. Once activated, all data stored for this attribute will be encrypted. Are you sure you want to continue?", 'Message from ' + moduleNameHTML, saveFunction, function () { }, 'encrypt');
+    } else {
+        saveFunction();
+    }
 }
 
 function saveUDFComplete(data)

@@ -85,7 +85,7 @@ namespace Spend_Management
                         int.TryParse(Request.QueryString["rid"], out tmpInt);
                         int.TryParse(Request.QueryString["rtid"], out tmpInt2);
 
-                        if (tmpInt > 0 && returnURL.Value.Contains("sid=" + tmpInt.ToString()) && (AppliesTo)tmpInt2 == AppliesTo.VENDOR_DETAILS)
+                        if (tmpInt > 0 && returnURL.Value.Contains("sid=" + tmpInt.ToString()) && (AppliesTo)tmpInt2 == AppliesTo.VendorDetails)
                         {
                             ViewState["directReturnToURL"] = "~/shared/supplier_details.aspx?sid=" + tmpInt.ToString();
                         }
@@ -263,7 +263,7 @@ namespace Spend_Management
             bool hideAttachments = false;
 
             int regardingId = 0;
-            AppliesTo regardingArea = AppliesTo.CONTRACT_DETAILS;
+            AppliesTo regardingArea = AppliesTo.ContractDetails;
 
             if (hiddenEditId.Value != "0")
             {
@@ -299,19 +299,19 @@ namespace Spend_Management
 
 			switch (regardingArea)
 			{
-                case AppliesTo.CONTRACT_DETAILS:
-                case AppliesTo.CONTRACT_GROUPING:
+                case AppliesTo.ContractDetails:
+                case AppliesTo.ContractGrouping:
 					sql = "select [contractDescription] from contract_details where [contractId] = @regardingId";
 
 					txtRegarding.Text = db.getStringValue(sql);
 					break;
-                case AppliesTo.PRODUCT_DETAILS:
+                case AppliesTo.ProductDetails:
 					sql = "select [productName] from productDetails where [productId] = @regardingId";
 					
 					txtRegarding.Text = db.getStringValue(sql);
 					break;
                 case AppliesTo.Employee:
-                case AppliesTo.STAFF_DETAILS:
+                case AppliesTo.StaffDetails:
 					Employee employee = emps.GetEmployeeById(regardingId);
 					if (employee != null)
 					{
@@ -323,7 +323,7 @@ namespace Spend_Management
 					}
                     hideAttachments = true;
 					break;
-                case AppliesTo.VENDOR_DETAILS:
+                case AppliesTo.VendorDetails:
 					cSuppliers suppliers = new cSuppliers(curUser.AccountID, curUser.CurrentSubAccountId);
 					cSupplier supplier = suppliers.getSupplierById(regardingId);
 
@@ -336,8 +336,8 @@ namespace Spend_Management
 						txtRegarding.Text = "Unknown";
 					}
 					break;
-                case AppliesTo.CONTRACT_PRODUCTS:
-                case AppliesTo.CONPROD_GROUPING:
+                case AppliesTo.ContractProducts:
+                case AppliesTo.ConprodGrouping:
 					sql = "select [productId] from contract_productdetails where [contractProductId] = @regardingId";
 					int prodId = db.getIntSum(sql);
  
@@ -352,12 +352,12 @@ namespace Spend_Management
 						txtRegarding.Text = "Unknown";
 					}
 					break;
-                case AppliesTo.INVOICE_DETAILS:
+                case AppliesTo.InvoiceDetails:
 					sql = "select [invoiceNumber] from invoices where [invoiceID] = @regardingId";
 
 					txtRegarding.Text = "INV: " + db.getStringValue(sql);
 					break;
-                case AppliesTo.INVOICE_FORECASTS:
+                case AppliesTo.InvoiceForecasts:
 					sql = "select Convert(nvarchar(25), [forecastAmount]) from contract_forecastdetails where [contractForecastId] = @regardingId";
 					
 					txtRegarding.Text = "Forecast Amount: " + db.getStringValue(sql);

@@ -5,7 +5,13 @@
 AS
 	
 	DECLARE @tablename AS NVARCHAR(MAX) = (SELECT tablename FROM tables WHERE tableid = @tableId);
-	DECLARE @fieldname AS NVARCHAR(MAX) = 'att' + CAST(@attributeId AS NVARCHAR(50));
+	DECLARE @fieldname AS NVARCHAR(MAX) = 'udf' + CAST(@attributeId AS NVARCHAR(50));
+
+	IF NOT EXISTS(SELECT * FROM CustomerFields WHERE tableid = @tableId AND field = @fieldname)
+	BEGIN
+		SET @fieldname  = 'att' + CAST(@attributeId AS NVARCHAR(50));
+	END
+
 	DECLARE @sql AS NVARCHAR(MAX);
 
 	SET @sql = 'ALTER TABLE ' + @tablename + ' ADD ' + @fieldname + '_encrypted VARBINARY(max); '
@@ -24,3 +30,4 @@ AS
 	EXEC sp_rename @tableAndField, @fieldname, 'COLUMN';  
 
 RETURN 0
+

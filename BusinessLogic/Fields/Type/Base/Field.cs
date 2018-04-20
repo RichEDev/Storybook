@@ -43,7 +43,10 @@
         /// <param name="length">
         /// The length of this <see cref="Field"/>.
         /// </param>
-        public Field(Guid id, string name, string description, string commment, Guid tableId, string classPropertyName, FieldAttributes fieldAttributes, Guid viewGroupId, int width, int length)
+        /// <param name="encrypted">
+        /// True if the data for this field is encrypted.
+        /// </param>
+        public Field(Guid id, string name, string description, string commment, Guid tableId, string classPropertyName, FieldAttributes fieldAttributes, Guid viewGroupId, int width, int length, bool encrypted)
         {
             this.Id = id;
             this.Name = name;
@@ -55,6 +58,7 @@
             this.ViewGroupId = viewGroupId;
             this.Width = width;
             this.Length = length;
+            this.Encrypted = encrypted;
         }
 
         /// <summary>
@@ -64,7 +68,7 @@
         /// Creates an instance of <see cref="Field"/> from another <see cref="Field"/> instance.
         /// </param>
         public Field(Field field)
-            : this(field.Id, field.Name, field.Description, field.Comment, field.TableId, field.ClassPropertyName, field.FieldAttributes, field.ViewGroupId, field.Width, field.Length)
+            : this(field.Id, field.Name, field.Description, field.Comment, field.TableId, field.ClassPropertyName, field.FieldAttributes, field.ViewGroupId, field.Width, field.Length, field.Encrypted)
         {
         }
         
@@ -117,5 +121,10 @@
         /// Gets or sets the length of the <see cref="IField"/>
         /// </summary>
         public int Length { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the data for this field is stored encrypted.
+        /// </summary>
+        public bool Encrypted { get; set; }
     }
 }

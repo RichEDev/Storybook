@@ -187,7 +187,8 @@
                         viewGroupId,
                         width,
                         length,
-                        valueList);
+                        valueList, 
+                        false);
 
                     if (field != null)
                     {

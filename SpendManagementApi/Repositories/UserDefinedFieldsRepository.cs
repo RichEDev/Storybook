@@ -91,7 +91,7 @@
                 throw new ApiException(ApiResources.ApiErrorSaveUnsuccessful, ApiResources.UdfLabelAlreadyExists);
             }
 
-            //re-insitalise object to update cache.
+            // re-insitalise object to update cache.
             var userDefinedFields = new cUserdefinedFields(User.AccountID);
 
             return userDefinedFields.GetUserDefinedById(udfId).Cast<UserDefinedField>(this.ActionContext);
@@ -137,9 +137,10 @@
                   item.Default,
                   item.MaxLength.Value,
                   item.AllowEmployeeToPopulate,
-                  User,
+                  this.User,
                   tables,
-                  groupings);
+                  groupings,
+                  item.Encrypted);
 
             return assignmentId;
         }

@@ -43,7 +43,7 @@
         </Services>
         <Scripts>
             <asp:ScriptReference Path="~/shared/javaScript/suppliers.js" />
-            <asp:ScriptReference Path="~/shared/javaScript/userdefined.js" />
+            <asp:ScriptReference Path="~/shared/javaScript/userdefined.js?date=20180417" />
             <asp:ScriptReference Name="tooltips" />
         </Scripts>
     </asp:ScriptManagerProxy>

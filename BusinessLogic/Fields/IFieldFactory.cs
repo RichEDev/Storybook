@@ -26,8 +26,11 @@
         /// <param name="width">The width of the field</param>
         /// <param name="length">The length of the field</param>
         /// <param name="valueList">True if this Field is a Value List.</param>
+        /// <param name="encrypted">
+        /// True if the field data is stored encrypted..
+        /// </param>
         /// <returns>A new instance of <see cref="IField"/></returns>
-        T New<T>(string fieldType, Guid id, string name, string description, string comment, Guid tableId, string classPropertyName, FieldAttributes fieldAttributes, Guid viewGroupId, int width, int length, bool valueList) where T : Field;
+        T New<T>(string fieldType, Guid id, string name, string description, string comment, Guid tableId, string classPropertyName, FieldAttributes fieldAttributes, Guid viewGroupId, int width, int length, bool valueList, bool encrypted) where T : Field;
 
         /// <summary>
         /// Create a new <see cref="Field"/>
@@ -51,8 +54,11 @@
         /// <param name="viewGroupId">The <see cref="Guid"/> used for the </param>
         /// <param name="width">The width of the field</param>
         /// <param name="length">The length of the field</param>
+        /// <param name="encrypted">
+        /// True if the field data is stored encrypted..
+        /// </param>
         /// <returns>A new instance of <see cref="Field"/></returns>
-        T New<T>(Guid id, string name, string description, string comment, Guid tableId, string classPropertyName, FieldAttributes fieldAttributes, Guid viewGroupId, int width, int length) where T : Field, new();
+        T New<T>(Guid id, string name, string description, string comment, Guid tableId, string classPropertyName, FieldAttributes fieldAttributes, Guid viewGroupId, int width, int length, bool encrypted) where T : Field, new();
 
         /// <summary>
         /// Return a new <see cref="FieldAttributes" />object based on the parameters given.

@@ -27,24 +27,55 @@
         /// <summary>
         /// Create a new <see cref="IField"/> based on the parameters supplied.
         /// </summary>
-        /// <typeparam name="T">The type of <see cref="IField"/> to return</typeparam>
-        /// <param name="fieldType">The field type string.</param>
-        /// <param name="id">The <see cref="Guid"/> of this Field</param>
-        /// <param name="name">The name of the Field</param>
-        /// <param name="description">The description of this Field</param>
-        /// <param name="comment">The comment of the Field.</param>
-        /// <param name="tableId">The <see cref="Guid"/> of the table this field is a part of.</param>
-        /// <param name="classPropertyName">The class property name for this field</param>
-        /// <param name="fieldAttributes">The <see cref="FieldAttributes"/> for this field.</param>
-        /// <param name="viewGroupId">The <see cref="Guid"/> used for the </param>
-        /// <param name="width">The width of the field</param>
-        /// <param name="length">The length of the field</param>
-        /// <param name="valueList">True if this Field is a Value List.</param>
-        /// <returns>A new instance of <see cref="IField"/></returns>
-        public T New<T>(string fieldType, Guid id, string name, string description, string comment, Guid tableId, string classPropertyName, FieldAttributes fieldAttributes, Guid viewGroupId, int width, int length, bool valueList) where T : Field
+        /// <typeparam name="T">
+        /// The type of <see cref="IField"/> to return
+        /// </typeparam>
+        /// <param name="fieldType">
+        /// The field type string.
+        /// </param>
+        /// <param name="id">
+        /// The <see cref="Guid"/> of this Field
+        /// </param>
+        /// <param name="name">
+        /// The name of the Field
+        /// </param>
+        /// <param name="description">
+        /// The description of this Field
+        /// </param>
+        /// <param name="comment">
+        /// The comment of the Field.
+        /// </param>
+        /// <param name="tableId">
+        /// The <see cref="Guid"/> of the table this field is a part of.
+        /// </param>
+        /// <param name="classPropertyName">
+        /// The class property name for this field
+        /// </param>
+        /// <param name="fieldAttributes">
+        /// The <see cref="FieldAttributes"/> for this field.
+        /// </param>
+        /// <param name="viewGroupId">
+        /// The <see cref="Guid"/> used for the 
+        /// </param>
+        /// <param name="width">
+        /// The width of the field
+        /// </param>
+        /// <param name="length">
+        /// The length of the field
+        /// </param>
+        /// <param name="valueList">
+        /// True if this Field is a Value List.
+        /// </param>
+        /// <param name="encrypted">
+        /// True if this field data is stored encrypted.
+        /// </param>
+        /// <returns>
+        /// A new instance of <see cref="IField"/>
+        /// </returns>
+        public T New<T>(string fieldType, Guid id, string name, string description, string comment, Guid tableId, string classPropertyName, FieldAttributes fieldAttributes, Guid viewGroupId, int width, int length, bool valueList, bool encrypted) where T : Field
         {
             Field decorateField = default(T);
-            Field field = new Field(id, name, description, comment, tableId, classPropertyName, fieldAttributes, viewGroupId, width, length);
+            Field field = new Field(id, name, description, comment, tableId, classPropertyName, fieldAttributes, viewGroupId, width, length, encrypted);
 
             switch (fieldType)
             {
@@ -120,19 +151,46 @@
         /// <summary>
         /// Create a new <see cref="IField"/> based on the parameters supplied.
         /// </summary>
-        /// <typeparam name="T">The type of <see cref="IField"/> to return</typeparam>
-        /// <param name="id">The <see cref="Guid"/> of this Field</param>
-        /// <param name="name">The name of the Field</param>
-        /// <param name="description">The description of this Field</param>
-        /// <param name="comment">The comment of the Field.</param>
-        /// <param name="tableId">The <see cref="Guid"/> of the table this field is a part of.</param>
-        /// <param name="classPropertyName">The class property name for this field</param>
-        /// <param name="fieldAttributes">The <see cref="FieldAttributes"/> for this field.</param>
-        /// <param name="viewGroupId">The <see cref="Guid"/> used for the </param>
-        /// <param name="width">The width of the field</param>
-        /// <param name="length">The length of the field</param>
-        /// <returns>A new instance of <see cref="IField"/></returns>
-        public T New<T>(Guid id, string name, string description, string comment, Guid tableId, string classPropertyName, FieldAttributes fieldAttributes, Guid viewGroupId, int width, int length) where T : Field, new()
+        /// <typeparam name="T">
+        /// The type of <see cref="IField"/> to return
+        /// </typeparam>
+        /// <param name="id">
+        /// The <see cref="Guid"/> of this Field
+        /// </param>
+        /// <param name="name">
+        /// The name of the Field
+        /// </param>
+        /// <param name="description">
+        /// The description of this Field
+        /// </param>
+        /// <param name="comment">
+        /// The comment of the Field.
+        /// </param>
+        /// <param name="tableId">
+        /// The <see cref="Guid"/> of the table this field is a part of.
+        /// </param>
+        /// <param name="classPropertyName">
+        /// The class property name for this field
+        /// </param>
+        /// <param name="fieldAttributes">
+        /// The <see cref="FieldAttributes"/> for this field.
+        /// </param>
+        /// <param name="viewGroupId">
+        /// The <see cref="Guid"/> used for the 
+        /// </param>
+        /// <param name="width">
+        /// The width of the field
+        /// </param>
+        /// <param name="length">
+        /// The length of the field
+        /// </param>
+        /// <param name="encrypted">
+        /// True if the field data is stored encrypted..
+        /// </param>
+        /// <returns>
+        /// A new instance of <see cref="IField"/>
+        /// </returns>
+        public T New<T>(Guid id, string name, string description, string comment, Guid tableId, string classPropertyName, FieldAttributes fieldAttributes, Guid viewGroupId, int width, int length, bool encrypted) where T : Field, new()
         {
             var result = new T
             {
@@ -144,7 +202,8 @@
                 FieldAttributes = fieldAttributes,
                 ViewGroupId = viewGroupId,
                 Width = width,
-                Length = length
+                Length = length,
+                Encrypted = encrypted
             };
             return result;
         }

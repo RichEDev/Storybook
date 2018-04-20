@@ -1,130 +1,176 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Caching;
-using System.Text;
-using System.Threading;
-using System.Web;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using System.Data;
-using Infragistics.WebUI.UltraWebGrid;
-using Microsoft.SqlServer.Server;
-using SpendManagementLibrary.Helpers;
-using SpendManagementLibrary.Interfaces;
-using SpendManagementLibrary.SalesForceApi;
-using SpendManagementLibrary.UserDefinedFields;
-using Spend_Management;
-
-namespace SpendManagementLibrary
+﻿namespace SpendManagementLibrary
 {
-    public enum GroupingOutputType
-    {
-        All = 0,
-        UnGroupedOnly,
-        GroupedOnly
-    }
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.Linq;
+    using System.Text;
+    using System.Web;
 
+    using Microsoft.SqlServer.Server;
+
+    using SpendManagementLibrary.Helpers;
+    using SpendManagementLibrary.Interfaces;
+    using SpendManagementLibrary.UserDefinedFields;
+
+    /// <summary>
+    /// The user defined fields base handling class.  This reads from the database returning a list of <seealso cref="cUserDefinedField"/>.
+    /// </summary>
     public abstract class cUserDefinedFieldsBase
     {
-        protected string sValidationGroup;
-        protected static ConcurrentDictionary<int, SortedList<int, cUserDefinedField>> allUserDefinedFields = new ConcurrentDictionary<int, SortedList<int, cUserDefinedField>>();
-        protected SortedList<int, cUserDefinedField> lstUserDefinedFields;
-        protected string sConnectionString;
-        protected string sMetabaseConnectionString;
-        protected int nAccountID;
-        protected cUserDefinedFieldsBase clsUserDefinedFields;
+        /// <summary>
+        /// An instance of <see cref="ConcurrentDictionary{TKey,TValue}"/> containing a, <seealso cref="int"/> (the User defined field ID)
+        /// </summary>
+        protected static ConcurrentDictionary<int, SortedList<int, cUserDefinedField>> AllUserDefinedFields = new ConcurrentDictionary<int, SortedList<int, cUserDefinedField>>();
 
+        /// <summary>
+        /// The connection string.
+        /// </summary>
+        private readonly string _connectionString;
 
+        /// <summary>
+        /// Gets or sets the metabase connection string.
+        /// </summary>
+        public string MetabaseConnectionString { get; set; }
+
+        /// <summary>
+        /// An instance of <see cref="cUserDefinedFieldsBase"/>.
+        /// </summary>
+        private cUserDefinedFieldsBase _clsUserDefinedFields;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="cUserDefinedFieldsBase"/> class.
+        /// </summary>
+        /// <param name="accountId">
+        /// The current account id.
+        /// </param>
         protected cUserDefinedFieldsBase(int accountId)
         {
-            sConnectionString = cAccounts.getConnectionString(accountId);
+            this._connectionString = cAccounts.getConnectionString(accountId);
         }
 
         #region properties
 
         /// <summary>
-        /// Account ID used in class
+        /// Gets or sets the Account ID used in class
         /// </summary>
-        public int AccountID
-        {
-            get { return nAccountID; }
-        }
+        public int AccountID { get; protected set; }
 
         /// <summary>
-        /// The validation group currently in use
+        /// Gets or sets the validation group currently in use
         /// </summary>
-        public string CurrentValidationGroup
-        {
-            get { return sValidationGroup; }
-            set { sValidationGroup = value; }
-        }
+        public string CurrentValidationGroup { get; set; }
 
         /// <summary>
-        /// Returns a complete list of all userdefined fields for this account
+        /// Gets or sets a complete list of all userdefined fields for this account
         /// </summary>
-        public SortedList<int, cUserDefinedField> UserdefinedFields
-        {
-            get { return lstUserDefinedFields; }
-        }
+        public SortedList<int, cUserDefinedField> UserdefinedFields { get; protected set; }
 
         #endregion
 
+        /// <summary>
+        /// Get the collection of <see cref="cUserDefinedField"/> for the current Account.
+        /// </summary>
+        /// <param name="clsTables">
+        /// An instance of <see cref="cTables"/>.
+        /// </param>
+        /// <param name="clsGroupings">
+        /// An instance of <see cref="cUserDefinedFieldGroupingsBase"/>
+        /// </param>
+        /// <returns>
+        /// A <see cref="SortedList{TKey,TValue}"/> of <seealso cref="int"/> which is the Userdefined Field ID and an instance of <seealso cref="cUserDefinedField"/>.
+        /// </returns>
+        /// <exception cref="Exception">Invalid SQL exception.
+        /// </exception>
         protected SortedList<int, cUserDefinedField> GetCollection(cTables clsTables, cUserDefinedFieldGroupingsBase clsGroupings)
         {
             SortedList<int, cUserDefinedField> list;
             DateTime lastUpdated;
-            using (var sqlConnection = new SqlConnection(DatabaseConnection.GetConnectionStringWithDecryptedPassword(sConnectionString)))
+            using (var sqlConnection = new SqlConnection(DatabaseConnection.GetConnectionStringWithDecryptedPassword(this._connectionString)))
             {
                 sqlConnection.Open();
                 using (var transaction = sqlConnection.BeginTransaction())
                 {
-                    SortedList<int, SortedList<int, cListAttributeElement>> lstitems = GetAttributeListItems(transaction);
+                    SortedList<int, SortedList<int, cListAttributeElement>> lstitems = this.GetAttributeListItems(transaction);
                     int maxorder = 1;
                     list = new SortedList<int, cUserDefinedField>();
 
                     SortedList<int, List<int>> lstSubcats = GetSubcats(transaction);
-                    Dictionary<int, List<Guid>> lstMatchFields = GetMatchFields(transaction);
+                    Dictionary<int, List<Guid>> lstMatchFields = this.GetMatchFields(transaction);
 
-                    Guid relatedtableid = Guid.Empty;
-                    Guid relationshipTextBoxRelatedtableID = Guid.Empty;
                     cTable relationshipTextBoxRelatedtable = null;
                     int maxRows = 15;
 
-                    string sSQL = "SELECT GETDATE() SELECT userdefineid, attribute_name, display_name, fieldtype, tableid, specific, mandatory, description, [order], CreatedOn, CreatedBy, ModifiedOn, ModifiedBy, tooltip, maxlength, format, defaultvalue, fieldid, groupID, archived, [precision], allowSearch, hyperlinkText, hyperlinkPath, relatedTable, displayField, maxRows, allowEmployeeToPopulate FROM dbo.userdefined ORDER BY tableid, [order]";
-                    const string recordsetError = "The SQL should return the date before the user defined fields.";
+                    const string Sql = "SELECT GETDATE() SELECT userdefineid, attribute_name, display_name, fieldtype, tableid, specific, mandatory, description, [order], CreatedOn, CreatedBy, ModifiedOn, ModifiedBy, tooltip, maxlength, format, defaultvalue, fieldid, groupID, archived, [precision], allowSearch, hyperlinkText, hyperlinkPath, relatedTable, displayField, maxRows, allowEmployeeToPopulate, encrypted FROM dbo.userdefined ORDER BY tableid, [order]";
+                    const string RecordsetError = "The SQL should return the date before the user defined fields.";
 
-                    using (var getUdfsCommand = new SqlCommand(sSQL, sqlConnection, transaction))
+                    using (var getUdfsCommand = new SqlCommand(Sql, sqlConnection, transaction))
                     using (var reader = getUdfsCommand.ExecuteReader())
                     {
-                        if (!reader.Read()) throw new Exception(recordsetError);
+                        if (!reader.Read())
+                        {
+                            throw new Exception(RecordsetError);
+                        }
+
                         lastUpdated = reader.GetDateTime(0);
-                        if (!reader.NextResult()) throw new Exception(recordsetError);
+                        if (!reader.NextResult())
+                        {
+                            throw new Exception(RecordsetError);
+                        }
+
+                        var tableIdOrd = reader.GetOrdinal("tableid");
+                        var userdefineIdOrd = reader.GetOrdinal("userdefineid");
+                        var attributeNameOrd = reader.GetOrdinal("attribute_name");
+                        var displayNameOrd = reader.GetOrdinal("display_name");
+                        var descriptionOrd = reader.GetOrdinal("description");
+                        var fieldTypeOrd = reader.GetOrdinal("fieldtype");
+                        var fieldIdOrd = reader.GetOrdinal("fieldid");
+                        var specificOrd = reader.GetOrdinal("specific");
+                        var mandatoryOrd = reader.GetOrdinal("mandatory");
+                        var createdOnOrd = reader.GetOrdinal("createdon");
+                        var createdByOrd = reader.GetOrdinal("createdby");
+                        var modifiedOnOrd = reader.GetOrdinal("modifiedon");
+                        var modifiedByOrd = reader.GetOrdinal("modifiedby");
+                        var tooltipOrd = reader.GetOrdinal("tooltip");
+                        var archivedOrd = reader.GetOrdinal("archived");
+                        var encryptedOrd = reader.GetOrdinal("encrypted");
+                        var groupIdOrd = reader.GetOrdinal("groupID");
+                        var maxLengthOrd = reader.GetOrdinal("maxlength");
+                        var formatOrd = reader.GetOrdinal("format");
+                        var precisionOrd = reader.GetOrdinal("precision");
+                        var defaultValueOrd = reader.GetOrdinal("defaultvalue");
+                        var relatedTableOrd = reader.GetOrdinal("relatedtable");
+                        var displayFieldOrd = reader.GetOrdinal("displayField");
+                        var maxRowsOrd = reader.GetOrdinal("maxRows");
+                        var hyperLinkTextOrd = reader.GetOrdinal("hyperlinkText");
+                        var hyperLinkPathOrd = reader.GetOrdinal("hyperlinkPath");
+                        var allowSearchOrd = reader.GetOrdinal("allowsearch");
+                        var allowEmployeeToPopulateOrd = reader.GetOrdinal("allowEmployeeToPopulate");
 
                         while (reader.Read())
                         {
                             cAttribute attribute = null;
-                            cTable table = clsTables.GetTableByID(reader.GetGuid(reader.GetOrdinal("tableid")));
-                            int userdefineid = reader.GetInt32(reader.GetOrdinal("userdefineid"));
-                            string attributename = reader.GetString(reader.GetOrdinal("attribute_name"));
-                            string displayname = reader.GetString(reader.GetOrdinal("display_name"));
-                            string description = reader.IsDBNull(reader.GetOrdinal("description")) == false ? reader.GetString(reader.GetOrdinal("description")) : "";
-                            FieldType fieldtype = (FieldType)reader.GetByte(reader.GetOrdinal("fieldtype"));
-                            Guid fieldid = reader.GetGuid(reader.GetOrdinal("fieldid"));
-                            bool specific = reader.GetBoolean(reader.GetOrdinal("specific"));
-                            bool mandatory = reader.GetBoolean(reader.GetOrdinal("mandatory"));
+                            cTable table = clsTables.GetTableByID(reader.GetGuid(tableIdOrd));
+                            int userdefineid = reader.GetInt32(userdefineIdOrd);
+                            string attributename = reader.GetString(attributeNameOrd);
+                            string displayname = reader.GetString(displayNameOrd);
+                            string description = reader.IsDBNull(descriptionOrd) == false ? reader.GetString(descriptionOrd) : string.Empty;
+                            FieldType fieldtype = (FieldType)reader.GetByte(fieldTypeOrd);
+                            Guid fieldid = reader.GetGuid(fieldIdOrd);
+                            bool specific = reader.GetBoolean(specificOrd);
+                            bool mandatory = reader.GetBoolean(mandatoryOrd);
                             int order = maxorder;
-                            DateTime createdon = reader.IsDBNull(reader.GetOrdinal("createdon")) == true ? new DateTime(1900, 01, 01) : reader.GetDateTime(reader.GetOrdinal("createdon"));
-                            int createdby = reader.IsDBNull(reader.GetOrdinal("createdby")) == true ? 0 : reader.GetInt32(reader.GetOrdinal("createdby"));
-                            DateTime modifiedon = reader.IsDBNull(reader.GetOrdinal("modifiedon")) == true ? new DateTime(1900, 01, 01) : reader.GetDateTime(reader.GetOrdinal("modifiedon"));
-                            int modifiedby = reader.IsDBNull(reader.GetOrdinal("modifiedby")) == true ? 0 : reader.GetInt32(reader.GetOrdinal("modifiedby"));
-                            string tooltip = reader.IsDBNull(reader.GetOrdinal("tooltip")) == true ? "" : reader.GetString(reader.GetOrdinal("tooltip")).Replace("'", "\\'").Replace("\\\\'", "\\'").Replace("\"", "&quot;");
-                            bool archived = reader.GetBoolean(reader.GetOrdinal("archived"));
-                            cUserdefinedFieldGrouping grouping = reader.IsDBNull(reader.GetOrdinal("groupID")) == true ? null : clsGroupings.GetGroupingByID(reader.GetInt32(reader.GetOrdinal("groupID")));
+                            DateTime createdon = reader.IsDBNull(createdOnOrd) == true ? new DateTime(1900, 01, 01) : reader.GetDateTime(createdOnOrd);
+                            int createdby = reader.IsDBNull(createdByOrd) == true ? 0 : reader.GetInt32(createdByOrd);
+                            DateTime modifiedon = reader.IsDBNull(modifiedOnOrd) == true ? new DateTime(1900, 01, 01) : reader.GetDateTime(modifiedOnOrd);
+                            int modifiedby = reader.IsDBNull(modifiedByOrd) == true ? 0 : reader.GetInt32(modifiedByOrd);
+                            string tooltip = reader.IsDBNull(tooltipOrd) == true ? string.Empty : reader.GetString(tooltipOrd).Replace("'", "\\'").Replace("\\\\'", "\\'").Replace("\"", "&quot;");
+                            bool archived = reader.GetBoolean(archivedOrd);
+                            var encrypted = reader.GetBoolean(encryptedOrd);
+                            cUserdefinedFieldGrouping grouping = reader.IsDBNull(groupIdOrd) == true ? null : clsGroupings.GetGroupingByID(reader.GetInt32(groupIdOrd));
 
                             AttributeFormat format;
                             switch (fieldtype)
@@ -132,45 +178,49 @@ namespace SpendManagementLibrary
                                 case FieldType.Text:
                                 case FieldType.LargeText:
                                     int? maxlength;
-                                    if (reader.IsDBNull(reader.GetOrdinal("maxlength")))
+                                    if (reader.IsDBNull(maxLengthOrd))
                                     {
                                         maxlength = null;
                                     }
                                     else
                                     {
-                                        maxlength = reader.GetInt32(reader.GetOrdinal("maxlength"));
+                                        maxlength = reader.GetInt32(maxLengthOrd);
                                     }
-                                    format = (AttributeFormat)reader.GetByte(reader.GetOrdinal("format"));
-                                    attribute = new cTextAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, maxlength, format, fieldid, false, false, false, false, false, false, false, false, false);
+
+                                    format = (AttributeFormat)reader.GetByte(formatOrd);
+                                    attribute = new cTextAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, maxlength, format, fieldid, false, false, false, false, false, false, false, false, encrypted);
                                     break;
                                 case FieldType.Integer:
                                     attribute = new cNumberAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, 0, fieldid, false, false, false, false, false, false, false, false);
                                     break;
                                 case FieldType.Number:
-                                    byte precision = reader.IsDBNull(reader.GetOrdinal("precision")) ? (byte)0 : reader.GetByte(reader.GetOrdinal("precision"));
+                                    byte precision = reader.IsDBNull(precisionOrd) ? (byte)0 : reader.GetByte(precisionOrd);
                                     attribute = new cNumberAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, precision, fieldid, false, false, false, false, false, false, false, false);
                                     break;
                                 case FieldType.Currency:
                                     attribute = new cNumberAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, 2, fieldid, false, false, false, false, false, false, false, false);
                                     break;
                                 case FieldType.DateTime:
-                                    format = (AttributeFormat)reader.GetByte(reader.GetOrdinal("format"));
+                                    format = (AttributeFormat)reader.GetByte(formatOrd);
                                     attribute = new cDateTimeAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, format, fieldid, false, false, false, false, false, false, false);
                                     break;
                                 case FieldType.TickBox:
-                                    string defaultvalue = reader.IsDBNull(reader.GetOrdinal("defaultvalue")) == true ? "" : reader.GetString(reader.GetOrdinal("defaultvalue"));
+                                    string defaultvalue = reader.IsDBNull(defaultValueOrd) == true ? string.Empty : reader.GetString(defaultValueOrd);
                                     attribute = new cTickboxAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, defaultvalue, fieldid, false, false, false, false, false, false, false);
                                     break;
                                 case FieldType.Relationship:
-                                    relatedtableid = reader.GetGuid(reader.GetOrdinal("relatedtable"));
+                                    var relatedtableid = reader.GetGuid(relatedTableOrd);
                                     cTable relatedtable = clsTables.GetTableByID(relatedtableid);
                                     Guid displayField = Guid.Empty;
-                                    if (!reader.IsDBNull(reader.GetOrdinal("displayField")))
+                                    if (!reader.IsDBNull(displayFieldOrd))
                                     {
-                                        displayField = reader.GetGuid(reader.GetOrdinal("displayField"));
+                                        displayField = reader.GetGuid(displayFieldOrd);
                                     }
-                                    if (!reader.IsDBNull(reader.GetOrdinal("maxRows")))
-                                        maxRows = reader.GetInt32(reader.GetOrdinal("maxRows"));
+
+                                    if (!reader.IsDBNull(maxRowsOrd))
+                                    {
+                                        maxRows = reader.GetInt32(maxRowsOrd);
+                                    }
 
                                     List<Guid> matchFields = null;
                                     if (lstMatchFields.ContainsKey(userdefineid))
@@ -187,65 +237,69 @@ namespace SpendManagementLibrary
                                     {
                                         items = new SortedList<int, cListAttributeElement>();
                                     }
+
                                     format = AttributeFormat.ListStandard; // list wide / standard format not implemented in udfs yet
                                     attribute = new cListAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, items, fieldid, false, false, format, false, false, false, false, false);
                                     break;
                                 case FieldType.DynamicHyperlink:
                                 case FieldType.Hyperlink:
                                     string hyperlinkText;
-                                    if (reader.IsDBNull(reader.GetOrdinal("hyperlinkText")) == true)
-                                    {
-                                        hyperlinkText = "";
-                                    }
-                                    else
-                                    {
-                                        hyperlinkText = reader.GetString(reader.GetOrdinal("hyperlinkText"));
-                                    }
-
+                                    hyperlinkText = reader.IsDBNull(hyperLinkTextOrd) == true ? string.Empty : reader.GetString(hyperLinkTextOrd);
                                     string hyperlinkPath;
-                                    hyperlinkPath = reader.IsDBNull(reader.GetOrdinal("hyperlinkPath")) == true ? "" : reader.GetString(reader.GetOrdinal("hyperlinkPath"));
+                                    hyperlinkPath = reader.IsDBNull(hyperLinkPathOrd) == true ? string.Empty : reader.GetString(hyperLinkPathOrd);
                                     attribute = new cHyperlinkAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, fieldid, false, false, hyperlinkText, hyperlinkPath, false, false, false, false, false);
                                     break;
                                 case FieldType.RelationshipTextbox:
-                                    if (reader.IsDBNull(reader.GetOrdinal("relatedTable")) == true)
+                                    if (reader.IsDBNull(relatedTableOrd) == false)
                                     {
-                                        relationshipTextBoxRelatedtableID = Guid.Empty;
+                                        Guid relationshipTextBoxRelatedtableId = reader.GetGuid(relatedTableOrd);
+                                        relationshipTextBoxRelatedtable = clsTables.GetTableByID(relationshipTextBoxRelatedtableId);
                                     }
-                                    else
-                                    {
-                                        relationshipTextBoxRelatedtableID = reader.GetGuid(reader.GetOrdinal("relatedTable"));
-                                        relationshipTextBoxRelatedtable = clsTables.GetTableByID(relationshipTextBoxRelatedtableID);
-                                    }
+
                                     attribute = new cRelationshipTextBoxAttribute(userdefineid, attributename, displayname, description, tooltip, mandatory, fieldtype, createdon, createdby, modifiedon, modifiedby, relationshipTextBoxRelatedtable, fieldid, false, false, false, false, false, false);
                                     break;
-
                             }
+
                             List<int> subcats;
                             lstSubcats.TryGetValue(userdefineid, out subcats);
                             if (subcats == null)
                             {
                                 subcats = new List<int>();
                             }
-                            bool allowSearch = reader.GetBoolean(reader.GetOrdinal("allowsearch"));
-                            bool allowEmployeeToPopulate = reader.GetBoolean(reader.GetOrdinal("allowEmployeeToPopulate"));
+                            bool allowSearch = reader.GetBoolean(allowSearchOrd);
+                            bool allowEmployeeToPopulate = reader.GetBoolean(allowEmployeeToPopulateOrd);
 
-                            cUserDefinedField requserdef = new cUserDefinedField(userdefineid, table, order, subcats, createdon, createdby, modifiedon, modifiedby, attribute, grouping, archived, specific, allowSearch, allowEmployeeToPopulate);
+                            cUserDefinedField requserdef = new cUserDefinedField(userdefineid, table, order, subcats, createdon, createdby, modifiedon, modifiedby, attribute, grouping, archived, specific, allowSearch, allowEmployeeToPopulate, encrypted);
 
-                            if (AlreadyExists(requserdef) == false)
+                            if (this.AlreadyExists(requserdef) == false)
                             {
                                 list.Add(userdefineid, requserdef);
                             }
+
                             maxorder++;
                         }
                     }
+
                     transaction.Commit();
                 }
             }
-            lastReadFromDatabaseTicks.AddOrUpdate(nAccountID, addValueFactory: accId => lastUpdated.Ticks,
-                                                              updateValueFactory: (accId, old) => lastUpdated.Ticks);
+
+            lastReadFromDatabaseTicks.AddOrUpdate(
+                this.AccountID,
+                addValueFactory: accId => lastUpdated.Ticks,
+                updateValueFactory: (accId, old) => lastUpdated.Ticks);
             return list;
         }
 
+        /// <summary>
+        /// Get a List of Field ID's that are used for match fields in a type-ahead control..
+        /// </summary>
+        /// <param name="transaction">
+        /// the current <see cref="SqlTransaction"/>.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Dictionary{TKey,TValue}"/> of <seealso cref="int"/> (the user defined field ID) and <seealso cref="Guid"/> (the field id).
+        /// </returns>
         private Dictionary<int, List<Guid>> GetMatchFields(SqlTransaction transaction)
         {
             Dictionary<int, List<Guid>> retVals = new Dictionary<int, List<Guid>>();
@@ -253,8 +307,8 @@ namespace SpendManagementLibrary
             int udfID;
             Guid fieldID;
 
-            const string sql = "select userdefineid, fieldId from userdefinedMatchFields";
-            using (var getMatchFieldsCommand = new SqlCommand(sql, transaction.Connection, transaction))
+            const string Sql = "select userdefineid, fieldId from userdefinedMatchFields";
+            using (var getMatchFieldsCommand = new SqlCommand(Sql, transaction.Connection, transaction))
             using (SqlDataReader reader = getMatchFieldsCommand.ExecuteReader())
             {
                 while (reader.Read())
@@ -263,45 +317,31 @@ namespace SpendManagementLibrary
                     fieldID = reader.GetGuid(1);
 
                     if (!retVals.ContainsKey(udfID))
+                    {
                         retVals.Add(udfID, new List<Guid>());
+                    }
 
                     tmp = retVals[udfID];
 
                     if (!tmp.Contains(fieldID))
+                    {
                         tmp.Add(fieldID);
+                    }
 
                     retVals[udfID] = tmp;
                 }
+
                 reader.Close();
             }
 
             return retVals;
         }
 
-
-
-        /// <summary>
-        /// Returns a list of tables that the current account has userdefined fields assigned to.
-        /// </summary>
-        /// <returns></returns>
-        public List<cTable> GetDistinctUserdefindListForAccount()
-        {
-            List<cTable> lstTables = new List<cTable>();
-            foreach (cUserDefinedField udf in this.lstUserDefinedFields.Values)
-            {
-                if (lstTables.Contains(udf.table) == false)
-                {
-                    lstTables.Add(udf.table);
-                }
-            }
-            return lstTables;
-        }
-
         /// <summary>
         /// Gets the list items for all fields of type "List"
         /// </summary>
         /// <param name="transaction"></param>
-        /// <returns></returns>
+        /// <returns>a <see cref="SortedList{TKey,TValue}"/></returns>
         protected SortedList<int, SortedList<int, cListAttributeElement>> GetAttributeListItems(SqlTransaction transaction)
         {
             const string Strsql = "select valueid, userdefineid, item, [order], archived from userdefined_list_items";
@@ -430,11 +470,11 @@ namespace SpendManagementLibrary
         /// <returns></returns>
         public bool AlreadyExists(cUserDefinedField field)
         {
-            if (lstUserDefinedFields == null || lstUserDefinedFields.Count == 0)
+            if (this.UserdefinedFields == null || this.UserdefinedFields.Count == 0)
             {
                 return false;
             }
-            foreach (cUserDefinedField tmpField in lstUserDefinedFields.Values)
+            foreach (cUserDefinedField tmpField in this.UserdefinedFields.Values)
             {
                 if (tmpField.label == field.label && tmpField.table.TableID == field.table.TableID && tmpField.userdefineid != field.userdefineid)
                 {
@@ -453,7 +493,7 @@ namespace SpendManagementLibrary
         /// <returns></returns>
         protected int SaveUserDefinedFieldToDB(cCurrentUserBase currentUser, cUserDefinedField field, out DateTime lastModified)
         {
-            using (var sqlConnection = new SqlConnection(DatabaseConnection.GetConnectionStringWithDecryptedPassword(sConnectionString)))
+            using (var sqlConnection = new SqlConnection(DatabaseConnection.GetConnectionStringWithDecryptedPassword(this._connectionString)))
             {
                 sqlConnection.Open();
                 using (var sqlTransaction = sqlConnection.BeginTransaction())
@@ -494,6 +534,7 @@ namespace SpendManagementLibrary
                     sqlCommand.Parameters.AddWithValue("@relatedTable", DBNull.Value);
                     sqlCommand.Parameters.AddWithValue("@acDisplayField", DBNull.Value);
                     sqlCommand.Parameters.AddWithValue("@maxRows", DBNull.Value);
+                    sqlCommand.Parameters.AddWithValue("@encrypted", field.Encrypted);
 
                     switch (field.attribute.fieldtype)
                     {
@@ -512,7 +553,7 @@ namespace SpendManagementLibrary
                             break;
                         case FieldType.TickBox:
                             cTickboxAttribute tickboxatt = (cTickboxAttribute)field.attribute;
-                            if (tickboxatt.defaultvalue != "")
+                            if (tickboxatt.defaultvalue != string.Empty)
                             {
                                 sqlCommand.Parameters["@defaultvalue"].Value = tickboxatt.defaultvalue;
                             }
@@ -702,7 +743,7 @@ namespace SpendManagementLibrary
 
         public cUserDefinedField GetUserdefinedFieldByFieldID(Guid id)
         {
-            foreach (cUserDefinedField field in lstUserDefinedFields.Values)
+            foreach (cUserDefinedField field in this.UserdefinedFields.Values)
             {
                 if (field.attribute.fieldid == id)
                 {
@@ -714,7 +755,7 @@ namespace SpendManagementLibrary
         public List<cUserDefinedField> GetFieldsByTable(cTable table)
         {
             List<cUserDefinedField> fields = new List<cUserDefinedField>();
-            foreach (cUserDefinedField field in lstUserDefinedFields.Values)
+            foreach (cUserDefinedField field in this.UserdefinedFields.Values)
             {
                 if (field.table != null && field.table.TableID == table.TableID)
                 {
@@ -727,7 +768,7 @@ namespace SpendManagementLibrary
         public SortedList<int, cUserDefinedField> GetFieldsByTableAndGrouping(cTable table, cUserdefinedFieldGrouping grouping, bool excludeAdminFields = false)
         {
             SortedList<int, cUserDefinedField> fields = new SortedList<int, cUserDefinedField>();
-            foreach (cUserDefinedField field in lstUserDefinedFields.Values)
+            foreach (cUserDefinedField field in this.UserdefinedFields.Values)
             {
                 if (field.table.TableID == table.TableID && field.Grouping == grouping)
                 {
@@ -742,7 +783,7 @@ namespace SpendManagementLibrary
         public List<cUserDefinedField> GetFieldsByTableAndType(cTable table, FieldType type)
         {
             List<cUserDefinedField> fields = new List<cUserDefinedField>();
-            foreach (cUserDefinedField field in lstUserDefinedFields.Values)
+            foreach (cUserDefinedField field in this.UserdefinedFields.Values)
             {
                 if (field.table.TableID == table.TableID && field.fieldtype == type)
                 {
@@ -755,7 +796,7 @@ namespace SpendManagementLibrary
         public List<cUserDefinedField> GetSpecificUserDefinedFields()
         {
             List<cUserDefinedField> fields = new List<cUserDefinedField>();
-            foreach (cUserDefinedField field in lstUserDefinedFields.Values)
+            foreach (cUserDefinedField field in this.UserdefinedFields.Values)
             {
                 if (field.Specific)
                 {
@@ -768,7 +809,7 @@ namespace SpendManagementLibrary
         public cUserDefinedField GetUserDefinedById(int userdefineid)
         {
             cUserDefinedField field = null;
-            lstUserDefinedFields.TryGetValue(userdefineid, out field);
+            this.UserdefinedFields.TryGetValue(userdefineid, out field);
             return field;
         }
 
@@ -776,7 +817,7 @@ namespace SpendManagementLibrary
         {
             try
             {
-                using (var data = new SqlConnection(DatabaseConnection.GetConnectionStringWithDecryptedPassword(sConnectionString)))
+                using (var data = new SqlConnection(DatabaseConnection.GetConnectionStringWithDecryptedPassword(this._connectionString)))
                 {
                     data.Open();
                     using (var transaction = data.BeginTransaction())
@@ -816,7 +857,7 @@ namespace SpendManagementLibrary
         public SortedList<int, object> GetRecord(cTable tbl, int id, cTables clsTables, cFields clsFields)
         {
             SortedList<int, object> record = new SortedList<int, object>();
-            cQueryBuilder clsquery = new cQueryBuilder(AccountID, sConnectionString, sMetabaseConnectionString, tbl, clsTables, clsFields);
+            cQueryBuilder clsquery = new cQueryBuilder(AccountID, this._connectionString, this.MetabaseConnectionString, tbl, clsTables, clsFields);
 
             List<cUserDefinedField> fields = GetFieldsByTable(tbl);
             if (fields.Count == 0)
@@ -843,7 +884,7 @@ namespace SpendManagementLibrary
                     {
                         if (reader.GetName(i).Contains("_text") == false)
                         {
-                            string tmp = reader.GetName(i).Replace("udf", "");
+                            string tmp = reader.GetName(i).Replace("udf", string.Empty);
                             record.Add(Convert.ToInt32(tmp), reader.GetValue(i));
                         }
                     }
@@ -857,7 +898,7 @@ namespace SpendManagementLibrary
         public SortedList<int, SortedList<int, object>> GetRecords(cTable tbl, List<int> ids, cTables clsTables, cFields clsFields)
         {
             SortedList<int, SortedList<int, object>> records = new SortedList<int, SortedList<int, object>>();
-            cQueryBuilder clsquery = new cQueryBuilder(AccountID, sConnectionString, sMetabaseConnectionString, tbl, clsTables, clsFields);
+            cQueryBuilder clsquery = new cQueryBuilder(AccountID, this._connectionString, this.MetabaseConnectionString, tbl, clsTables, clsFields);
 
             List<cUserDefinedField> fields = GetFieldsByTable(tbl);
             if (fields.Count == 0)
@@ -904,7 +945,7 @@ namespace SpendManagementLibrary
         {
             SortedList<int, SortedList<int, object>> records = new SortedList<int, SortedList<int, object>>();
             SortedList<int, object> record;
-            cQueryBuilder clsquery = new cQueryBuilder(AccountID, sConnectionString, sMetabaseConnectionString, tbl, clsTables, clsFields);
+            cQueryBuilder clsquery = new cQueryBuilder(AccountID, this._connectionString, this.MetabaseConnectionString, tbl, clsTables, clsFields);
 
             List<cUserDefinedField> fields = GetFieldsByTable(tbl);
             if (fields.Count == 0)
@@ -943,7 +984,7 @@ namespace SpendManagementLibrary
         {
             SortedList<int, SortedList<int, object>> records = new SortedList<int, SortedList<int, object>>();
             SortedList<int, object> record;
-            cQueryBuilder clsquery = new cQueryBuilder(AccountID, sConnectionString, sMetabaseConnectionString, tbl, clsTables, clsFields);
+            cQueryBuilder clsquery = new cQueryBuilder(AccountID, this._connectionString, this.MetabaseConnectionString, tbl, clsTables, clsFields);
 
             List<cUserDefinedField> fields = GetFieldsByTable(tbl);
             if (fields.Count == 0)
@@ -960,7 +1001,7 @@ namespace SpendManagementLibrary
             }
             clsquery.addFilter(filterField, ConditionType.Equals, new object[] { filterValue }, null, ConditionJoiner.None, null); // null as genlist/udf? !!!!!!!
 
-            DBConnection expdata = new DBConnection(sConnectionString);
+            DBConnection expdata = new DBConnection(this._connectionString);
             using (SqlDataReader reader = clsquery.getReader())
             {
                 while (reader.Read())
@@ -989,11 +1030,11 @@ namespace SpendManagementLibrary
 
             List<cUserDefinedField> udfFields = GetFieldsByTable(table);
             //does the record already exist
-            var builder = new cQueryBuilder(AccountID, sConnectionString, sMetabaseConnectionString, table, tables, fields);
+            var builder = new cQueryBuilder(AccountID, this._connectionString, this.MetabaseConnectionString, table, tables, fields);
             builder.addColumn(table.GetPrimaryKey(), SelectType.Count);
             builder.addFilter(table.GetPrimaryKey(), ConditionType.Equals, new object[] { id }, null, ConditionJoiner.None, null);  // null as on bt? !!!!!!!!
 
-            var updateQuery = new cUpdateQuery(AccountID, sConnectionString, sMetabaseConnectionString, table, tables, fields);
+            var updateQuery = new cUpdateQuery(AccountID, this._connectionString, this.MetabaseConnectionString, table, tables, fields);
             var udfValues = new SortedList<int, object>();
 
             foreach (cUserDefinedField udf in udfFields)
@@ -1033,7 +1074,7 @@ namespace SpendManagementLibrary
                                 break;
                             case FieldType.RelationshipTextbox:
                                 var relatedText = (cRelationshipTextBoxAttribute)udf.attribute;
-                                var relatedQuery = new cQueryBuilder(AccountID, sConnectionString, sMetabaseConnectionString, relatedText.relatedtable, tables, fields);
+                                var relatedQuery = new cQueryBuilder(AccountID, this._connectionString, this.MetabaseConnectionString, relatedText.relatedtable, tables, fields);
                                 relatedQuery.addColumn(relatedText.relatedtable.GetPrimaryKey());
                                 relatedQuery.addFilter(relatedText.relatedtable.GetKeyField(), ConditionType.Equals, new[] { value }, null, ConditionJoiner.None, null); // null as genlist? !!!!!!
                                 if (relatedText.relatedtable.GetSubAccountIDField() != null)
@@ -1407,7 +1448,7 @@ namespace SpendManagementLibrary
         {
             foreach (var udfRecord in udfRecordsForAudit)
             {
-                using (IDBConnection expdata = new DatabaseConnection(sConnectionString))
+                using (IDBConnection expdata = new DatabaseConnection(this._connectionString))
                 {
                     expdata.sqlexecute.Parameters.AddWithValue("@employeeid", currentUser.EmployeeID);
                     if (currentUser.isDelegate)
@@ -1434,7 +1475,7 @@ namespace SpendManagementLibrary
         public int GetNextOrder()
         {
             int order = 0;
-            foreach (cUserDefinedField field in lstUserDefinedFields.Values)
+            foreach (cUserDefinedField field in this.UserdefinedFields.Values)
             {
                 if (field.order > order)
                 {
@@ -1454,7 +1495,7 @@ namespace SpendManagementLibrary
             Dictionary<int, cListItem> lstListitems = new Dictionary<int, cListItem>();
             List<int> lstListitemids = new List<int>();
 
-            foreach (cUserDefinedField val in lstUserDefinedFields.Values)
+            foreach (cUserDefinedField val in this.UserdefinedFields.Values)
             {
                 if (val.createdon > date || val.modifiedon > date)
                 {
@@ -1503,7 +1544,7 @@ namespace SpendManagementLibrary
         {
             SortedList<int, cUserDefinedField> retFields = new SortedList<int, cUserDefinedField>();
 
-            foreach (KeyValuePair<int, cUserDefinedField> uf in lstUserDefinedFields)
+            foreach (KeyValuePair<int, cUserDefinedField> uf in this.UserdefinedFields)
             {
                 cUserDefinedField curUF = (cUserDefinedField)uf.Value;
 
@@ -1547,7 +1588,7 @@ namespace SpendManagementLibrary
                 lstFieldOrderData.Add(row);
             }
 
-            DBConnection smData = new DBConnection(sConnectionString);
+            DBConnection smData = new DBConnection(this._connectionString);
 
             smData.sqlexecute.Parameters.Add("@fieldOrder", System.Data.SqlDbType.Structured);
             smData.sqlexecute.Parameters["@fieldOrder"].Direction = System.Data.ParameterDirection.Input;

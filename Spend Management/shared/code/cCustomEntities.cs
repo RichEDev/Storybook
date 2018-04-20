@@ -2443,6 +2443,10 @@ namespace Spend_Management
                 fieldid = attribute.fieldid;
                 currentBuiltIn = attribute.BuiltIn;
                 currentEncrypted = attribute.Encrypted;
+                if (currentEncrypted && !encrypted)
+                {
+                    encrypted = true;
+                }
             }
 
             // only allow the attribute to be set as built-in/system if the user is "adminonly"
@@ -2584,7 +2588,7 @@ namespace Spend_Management
                     attribute.attributeid = attributeid;
                 }
 
-                var encryptor = new CustomEntityAttributeEncryptor(user);
+                var encryptor = new AttributeEncryptor(user);
                 encryptor.Encrypt(attribute, entity.table.TableID);
             }
 

@@ -55,5 +55,10 @@
         /// Gets or sets the length of the <see cref="IField"/>
         /// </summary>
         int Length { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the data for this field is stored encrypted.
+        /// </summary>
+        bool Encrypted { get; set; }
     }
 }

@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="contentmain">
     <asp:ScriptManagerProxy ID="smp" runat="server">
         <Scripts>
-            <asp:ScriptReference Path="~/shared/javascript/userdefined.js" />
+            <asp:ScriptReference Path="~/shared/javascript/userdefined.js?date=20180417" />
         </Scripts>
     </asp:ScriptManagerProxy>
 

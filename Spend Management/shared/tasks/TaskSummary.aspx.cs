@@ -133,16 +133,16 @@ namespace Spend_Management
 
             switch (parentAppArea)
             {
-                case AppliesTo.CONTRACT_DETAILS:
-                case AppliesTo.CONTRACT_GROUPING:
+                case AppliesTo.ContractDetails:
+                case AppliesTo.ContractGrouping:
                     txtAppArea.Text = "Contract Details";
                     sql = "select [contractDescription] from contract_details where [contractId] = @parentId";
 
                     txtRegarding.Text = db.getStringValue(sql);
 
                     break;
-                case AppliesTo.CONPROD_GROUPING:
-                case AppliesTo.CONTRACT_PRODUCTS:
+                case AppliesTo.ConprodGrouping:
+                case AppliesTo.ContractProducts:
                     txtAppArea.Text = "Contract Product Details";
                     cProducts prods = new cProducts(curUser.AccountID, curUser.CurrentSubAccountId);
                     sql = "select [productid] from contract_productdetails where [contractProductId] = @parentId";
@@ -157,7 +157,7 @@ namespace Spend_Management
                         txtRegarding.Text = "Unknown";
                     }
                     break;
-                case AppliesTo.VENDOR_DETAILS:
+                case AppliesTo.VendorDetails:
                     txtAppArea.Text = properties.SupplierPrimaryTitle;
 
                     cSuppliers suppliers;
@@ -179,7 +179,7 @@ namespace Spend_Management
                         txtRegarding.Text = "Unknown";
                     }
                     break;
-                case AppliesTo.PRODUCT_DETAILS:
+                case AppliesTo.ProductDetails:
                     txtAppArea.Text = "Product Details";
 
                     cProducts clsProducts = new cProducts(curUser.AccountID, curUser.CurrentSubAccountId);

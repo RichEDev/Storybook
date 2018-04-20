@@ -114,6 +114,7 @@
     <Compile Include="ProjectCodes\SqlProjectCodesFactory.cs" />
     <Compile Include="ProjectCodes\SqlProjectCodesWithUserDefinedValuesFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helpers\EncryptedColumnValue.cs" />
     <Compile Include="Receipts\SqlWalletReceiptsFactory.cs" />
     <Compile Include="SqlDataConnection.cs" />
     <Compile Include="SqlDataParameters.cs" />

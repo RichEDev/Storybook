@@ -16,7 +16,7 @@
     </style>
     <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
     <Scripts>
-        <asp:ScriptReference Path="~/shared/javascript/userdefined.js" />
+        <asp:ScriptReference Path="~/shared/javascript/userdefined.js?date=20180417" />
         <asp:ScriptReference Path="~/shared/javascript/validate.js" />
     </Scripts>
     </asp:ScriptManagerProxy>

@@ -24,7 +24,8 @@
 @maxRows INT,
 @allowEmployeeToPopulate bit,
 @CUemployeeID INT,
-@CUdelegateID INT
+@CUdelegateID INT,
+@Encrypted    BIT
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -38,7 +39,7 @@ BEGIN
 					IF @count > 0
 						RETURN -1;
 
-						INSERT INTO [userdefined] (attribute_name, display_name, fieldtype, mandatory, [description], [order], createdon, createdby, tooltip, maxlength, format, defaultvalue, tableid, groupID, specific, [precision], hyperlinkText, hyperlinkPath, allowSearch, relatedTable, displayField, maxRows, allowEmployeeToPopulate) VALUES (@attributename, @displayname, @fieldtype, @mandatory, @description, @order, @date, @userid, @tooltip, @maxlength, @format, @defaultvalue, @tableid, @groupID, @specificItem, @precision, @hyperlinkText, @hyperlinkPath, @allowSearch, @relatedTable, @acDisplayField, @maxRows, @allowEmployeeToPopulate);
+						INSERT INTO [userdefined] (attribute_name, display_name, fieldtype, mandatory, [description], [order], createdon, createdby, tooltip, maxlength, format, defaultvalue, tableid, groupID, specific, [precision], hyperlinkText, hyperlinkPath, allowSearch, relatedTable, displayField, maxRows, allowEmployeeToPopulate, [Encrypted]) VALUES (@attributename, @displayname, @fieldtype, @mandatory, @description, @order, @date, @userid, @tooltip, @maxlength, @format, @defaultvalue, @tableid, @groupID, @specificItem, @precision, @hyperlinkText, @hyperlinkPath, @allowSearch, @relatedTable, @acDisplayField, @maxRows, @allowEmployeeToPopulate, @Encrypted);
 						SET @userdefineid = SCOPE_IDENTITY();
 						DECLARE @sql NVARCHAR(4000);
 						DECLARE @tablename NVARCHAR(500);
@@ -124,7 +125,7 @@ BEGIN
 
 			select @oldattributename = attribute_name, @olddisplayname = display_name, @olddescription = [description], @oldtooltip = tooltip, @oldmandatory = mandatory, @oldmaxlength = maxlength, @oldformat = format, @oldprecision = [precision], @oldorder = [order], @oldspecificItem = specific, @oldhyperlinkText = hyperlinkText, @oldhyperlinkPath = hyperlinkPath, @oldallowsearch = allowSearch, @oldRelatedTable = relatedTable, @oldDisplayField = displayField, @oldMaxRows = maxRows, @oldallowEmployeeToPopulate = allowEmployeeToPopulate  from [userdefined] WHERE userdefineid=@userdefineid;
 
-			UPDATE [userdefined] SET attribute_name=@attributename, display_name=@displayname, mandatory=@mandatory, [description]=@description, [order]=@order, modifiedOn=getutcdate(), modifiedBy=@userid, tooltip=@tooltip, maxlength=@maxlength, format=@format, specific=@specificItem, defaultvalue = @defaultvalue, [precision] = @precision, hyperlinkText = @hyperlinkText, hyperlinkPath = @hyperlinkPath, allowSearch = @allowSearch, relatedTable = @relatedTable, groupID = @groupID, displayField = @acDisplayField, maxRows = @maxRows, allowEmployeeToPopulate = @allowEmployeeToPopulate WHERE userdefineid=@userdefineid;
+			UPDATE [userdefined] SET attribute_name=@attributename, display_name=@displayname, mandatory=@mandatory, [description]=@description, [order]=@order, modifiedOn=getutcdate(), modifiedBy=@userid, tooltip=@tooltip, maxlength=@maxlength, format=@format, specific=@specificItem, defaultvalue = @defaultvalue, [precision] = @precision, hyperlinkText = @hyperlinkText, hyperlinkPath = @hyperlinkPath, allowSearch = @allowSearch, relatedTable = @relatedTable, groupID = @groupID, displayField = @acDisplayField, maxRows = @maxRows, allowEmployeeToPopulate = @allowEmployeeToPopulate, [Encrypted] = @Encrypted WHERE userdefineid=@userdefineid;
 
 			if @oldattributename <> @attributename
 				exec addUpdateEntryToAuditLog @CUemployeeID, @CUdelegateID, 50, @userdefineid, 'ae62f2ab-0e4f-4902-864d-3cd4cf05ebca', @oldattributename, @attributename, @attributename, null;
