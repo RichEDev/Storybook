@@ -116,7 +116,7 @@
 
             if (string.IsNullOrEmpty(entity.Value))
             {
-                this._customerDataConnection.Parameters.Add(new SqlParameter("@stringValue", DBNull.Value) { Value = null });
+                this._customerDataConnection.Parameters.Add(new SqlParameter("@stringValue", DBNull.Value) { Value = DBNull.Value });
             }
             else
             {
