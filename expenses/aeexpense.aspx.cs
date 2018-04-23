@@ -2720,12 +2720,9 @@ public partial class aeexpense : System.Web.UI.Page
         cClaims claims = this.ActionContext.Claims;
         var claimid = this.getClaimId(this.ActionContext.CurrentUser.EmployeeID);
         cClaim claim = claims.getClaimById(claimid);
+        var items = new cExpenseItems();
 
-        if (user.EmployeeID != claim.employeeid || (user.isDelegate && user.Delegate.EmployeeID != claim.employeeid))
-        {
-            cAuditLog auditLog = new cAuditLog();
-            auditLog.ViewRecord(SpendManagementElement.Expenses, value, user);
-        }
+        items.AuditExpenseItemsViewed(value, claim.employeeid, user);
     }
 
     private string RedactCardNumber(cCardTransaction transaction)

@@ -11,9 +11,6 @@
         /// <param name="stringToRedact">
         /// The string to redact.
         /// </param>
-        /// <returns>
-        /// The redacted card number.
-        /// </returns>
         /// <remarks>The string needs to be more than 4 characters</remarks>
         public static string Redact(this string stringToRedact)
         {

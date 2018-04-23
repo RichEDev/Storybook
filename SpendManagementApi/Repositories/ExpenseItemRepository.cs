@@ -35,8 +35,6 @@
 
     using SpendManagementApi.Common.Enum;
 
-    using SpendManagementLibrary.Helpers.AuditLogger;
-
     using BankAccount = SpendManagementLibrary.Employees.BankAccount;
     using Claim = SpendManagementApi.Models.Types.Claim;
     using CostCentreBreakdown = SpendManagementApi.Models.Types.Employees.CostCentreBreakdown;
@@ -134,7 +132,7 @@
 
             List<JourneyStep> stepList = this.ProcessSteps(expenseId, journeySteps, item.carid, homeAndOfficeAddresses);
 
-            this.AuditExpenseItemsViewed(this.User, item, this.ActionContext.Claims.GetClaimOwnerByClaimId(item.claimid), this.ActionContext.SubCategories.GetSubcatById(item.subcatid).subcat, new AuditLogger());
+            this._expenseItemData.AuditExpenseItemsViewed($"{item.refnum}, {item.date}, {this.ActionContext.SubCategories.GetSubcatById(item.subcatid).subcat}, {item.total:0.00}", this.ActionContext.Claims.GetClaimOwnerByClaimId(item.claimid), this.User);
 
             return stepList.Count > 0 ? stepList : null;
         }
@@ -1840,24 +1838,6 @@
                 }
             }
             return breakdown;
-        }
-
-        /// <summary>
-        /// Adds an entry to the audit log for the claims that have been viewed.
-        /// </summary>
-        /// <param name="currentUser">The current user.</param>
-        /// <param name="expenseItem">The expense to be audited.</param>
-        /// <param name="claimOwnerId">The Id of the employee the expense belongs to.</param>
-        /// <param name="subcategoryName">The name of the expense subcategory/param>
-        /// <param name="auditLogger">The <see cref="IAuditLogger"/>.</param>
-        private void AuditExpenseItemsViewed(ICurrentUserBase currentUser, cExpenseItem expenseItem, int claimOwnerId, string subcategoryName, IAuditLogger auditLogger)
-        {
-            if (currentUser.EmployeeID != claimOwnerId || (currentUser.isDelegate && currentUser.Delegate.EmployeeID != claimOwnerId))
-            {
-                string record = $"{expenseItem.refnum}, {expenseItem.date}, {subcategoryName}, {expenseItem.total}";
-
-                auditLogger.ViewRecordAuditLog(currentUser, SpendManagementElement.Expenses, record);
-            }
         }
     }
 }

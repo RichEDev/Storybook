@@ -89,7 +89,8 @@ namespace Spend_Management.shared.webServices
         {
             var address = GetForClaimOwner(addressIdentifier, labelId, null);
             CurrentUser currentUser = cMisc.GetCurrentUser();
-            this.AuditViewAddress(address, currentUser);
+            var addresses = new Addresses(currentUser.AccountID);
+            addresses.AuditViewAddress(address.Line1, address.City, address.Postcode, currentUser);
             return address;
         }
 
@@ -989,17 +990,6 @@ namespace Spend_Management.shared.webServices
             /// Determines if claimant is allowed to choose from multiple work addresses
             /// </summary>
             public bool AllowMultipleWorkAddresses;
-        }
-
-        /// <summary>
-        /// Audits an address
-        /// </summary>
-        /// <param name="address">The address to audit</param>
-        /// <param name="user">The current user</param>
-        private void AuditViewAddress(Address address, CurrentUser user)
-        {
-            cAuditLog auditLog = new cAuditLog();
-            auditLog.ViewRecord(SpendManagementElement.Addresses, $"{address.Line1}, {address.City}, {address.Postcode}", user);
         }
     }
 }

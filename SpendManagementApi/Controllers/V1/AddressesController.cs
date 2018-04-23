@@ -53,7 +53,9 @@
         [AuthAudit(SpendManagementElement.Addresses, AccessRoleType.View)]
         public AddressResponse Get([FromUri] int id)
         {
-            return this.Get<AddressResponse>(id);
+            var response = this.InitialiseResponse<AddressResponse>();
+            response.Item = ((AddressRepository)this.Repository).GetAndAudit(id);
+            return response;
         }
 
         /// <summary>

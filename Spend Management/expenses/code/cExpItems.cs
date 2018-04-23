@@ -820,6 +820,21 @@ namespace Spend_Management
             }
         }
 
+        /// <summary>
+        /// Audits the viewing of an expense item
+        /// </summary>
+        /// <param name="value">The record to add in the audit log</param>
+        /// <param name="claimOwnerId">The id of the claim owner</param>
+        /// <param name="user">The <see cref="ICurrentUser"/></param>
+        public void AuditExpenseItemsViewed(string value, int claimOwnerId, ICurrentUser user)
+        {
+            if (user.EmployeeID != claimOwnerId || (user.isDelegate && user.Delegate.EmployeeID != claimOwnerId))
+            {
+                cAuditLog auditLog = new cAuditLog();
+                auditLog.ViewRecord(SpendManagementElement.Expenses, value, user);
+            }
+        }
+
         private void linkSplitItem(cExpenseItem item)
         {
             DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));

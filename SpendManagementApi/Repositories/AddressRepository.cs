@@ -58,7 +58,14 @@
         /// <returns>A List of Addresses.</returns>
         public override IList<Models.Types.Address> GetAll()
         {
-            return _addresses.All().Select(x => new Models.Types.Address().From(x, ActionContext)).ToList();
+            var addresses = _addresses.All().Select(x => new Models.Types.Address().From(x, ActionContext)).ToList();
+
+            foreach (var address in addresses)
+            {
+                this._addresses.AuditViewAddress(address.Line1, address.City, address.Postcode, this.User);
+            }
+
+            return addresses;
         }
 
         /// <summary>
@@ -69,6 +76,23 @@
         public override Models.Types.Address Get(int id)
         {
             return new Models.Types.Address().From(_addresses.GetAddressById(id), ActionContext);
+        }
+
+        /// <summary>
+        /// Get item with id and write in the audit log
+        /// </summary>
+        /// <param name="id">The Id of the address</param>
+        /// <returns>The <see cref="Models.Types.Address"/> address</returns>
+        public Models.Types.Address GetAndAudit(int id)
+        {
+            var address = this.Get(id);
+
+            if (address != null)
+            {
+                this._addresses.AuditViewAddress(address.Line1, address.City, address.Postcode, this.User);
+            }
+
+            return address;
         }
 
         /// <summary>
@@ -96,7 +120,7 @@
         }
 
         /// <summary>
-        /// Searches the Postcode Anywhere and SEL Addresses table for matchiing Addresses.
+        /// Searches the Postcode Anywhere and SEL Addresses table for matching Addresses.
         /// This does not work like the normal repository pattern we have, 
         /// since the search is implemented in the DB.
         /// </summary>
@@ -163,6 +187,11 @@
             var apiSearchResults = this._addresses.ApiSearch(criteria, countryId, accountProperties.DisplayEsrAddressesInSearchResults);
 
             SELResults.AddRange(apiSearchResults.Select(result => new Models.Types.Address().From(result, this.ActionContext)));
+
+            foreach (var address in SELResults)
+            {
+                this._addresses.AuditViewAddress(address.Line1, address.City, address.Postcode, this.User);
+            }
 
             if (!User.isDelegate)
             {
@@ -267,6 +296,7 @@
             else
             {
                 address = Address.Get(User.AccountID, addressId);
+                this._addresses.AuditViewAddress(address.Line1, address.City, address.Postcode, this.User);
             }
 
             //Todo:call UpdateLabelLastUsed method when address label implemented
@@ -365,7 +395,8 @@
         /// <returns></returns>
         public Models.Types.Address SetAccountWideFavourite(int id, bool toFavour)
         {
-            var item = Get(id);
+            var item = this.GetAndAudit(id);
+
             if (item == null)
             {
                 throw new ApiException(ApiResources.ApiErrorRecordDoesntExist, ApiResources.ApiErrorAddressNotFound);
@@ -392,7 +423,8 @@
                 throw new ApiException(ApiResources.ApiErrorRecordDoesntExist, ApiResources.ApiErrorAddressLabelNotFound);
             }
 
-            var item = Get(label.AddressID);
+            var item = this.GetAndAudit(label.AddressID);
+
             if (item == null)
             {
                 throw new ApiException(ApiResources.ApiErrorRecordDoesntExist, ApiResources.ApiErrorAddressNotFound);
@@ -442,7 +474,8 @@
         /// <returns>The Address with the label set.</returns>
         public Models.Types.Address AddAccountWideLabel(int id, string label, bool primary)
         {
-            var address = Get(id);
+            var address = this.GetAndAudit(id);
+
             if (address == null)
             {
                 throw new ApiException(ApiResources.ApiErrorRecordDoesntExist, ApiResources.ApiErrorAddressNotFound);
@@ -479,12 +512,14 @@
         public Models.Types.Address EditAccountWideLabel(int id, string label, bool primary)
         {
             var item = AddressLabel.Get(User, id);
+
             if (item == null)
             {
                 throw new ApiException(ApiResources.ApiErrorRecordDoesntExist, ApiResources.ApiErrorAddressLabelNotFound);
             }
 
-            var address = Get(item.AddressID);
+            var address = this.GetAndAudit(item.AddressID);
+
             if (item == null)
             {
                 throw new ApiException(ApiResources.ApiErrorRecordDoesntExist, ApiResources.ApiErrorAddressNotFound);
@@ -532,7 +567,7 @@
                 throw new ApiException(ApiResources.ApiErrorDeleteUnsuccessful, ApiResources.ApiErrorDeleteUnsuccessfulMessage);
             }
 
-            return Get(addressId);
+            return this.GetAndAudit(addressId);
         }
 
         /// <summary>
@@ -575,7 +610,7 @@
         /// <returns>The cleansed address.</returns>
         public Models.Types.Address CleanseAddress(int id)
         {
-            var item = Get(id);
+            var item = this.GetAndAudit(id);
             if (item == null)
             {
                 throw new ApiException(ApiResources.ApiErrorDeleteUnsuccessful, ApiResources.ApiErrorAddressLabelNotFound);
@@ -1076,7 +1111,7 @@
 
             foreach (var favourite in employeeFavourties.Concat(accountWideFavourties))
             {
-                var address = this.Get(favourite.AddressId);
+                var address = this.GetAndAudit(favourite.AddressId);
                 address.IsAccountWideFavourite = favourite.FavouriteId <= 0;
                 address.FavouriteId = favourite.FavouriteId;
 
@@ -1101,12 +1136,14 @@
             foreach (AddressLabel employeeLabel in employeeLabels)
             {
                 var label = new Models.Types.AddressLabel().ToApiType(employeeLabel, this.ActionContext);
+                this._addresses.AuditViewAddress(label.FriendlyName, this.User);
                 addresseLabels.Add(label);
             }
 
             foreach (AddressLabel accountLabel in accountLabels)
             {
                 var label = new Models.Types.AddressLabel().ToApiType(accountLabel, this.ActionContext);
+                this._addresses.AuditViewAddress(label.FriendlyName, this.User);
                 label.PrimaryAccountWideLabel = 1;
                 addresseLabels.Add(label);
             }
@@ -1132,7 +1169,7 @@
                 address.Label = employeeLabel.Text;
                 address.LabelId = employeeLabel.AddressLabelID;
                 address.PrimaryAccountWideLabel = null;
-
+                this._addresses.AuditViewAddress(address.Line1, address.City, address.Postcode, this.User);
                 addresses.Add(address);
             }
 
@@ -1142,8 +1179,8 @@
                 address.Label = accountLabel.Text;
                 address.LabelId = accountLabel.AddressLabelID;
                 address.PrimaryAccountWideLabel = address.PrimaryAccountWideLabel;
-
-               addresses.Add(address);
+                this._addresses.AuditViewAddress(address.Line1, address.City, address.Postcode, this.User);
+                addresses.Add(address);
             }
 
             return addresses;
@@ -1230,7 +1267,9 @@
             cExpenseItem item = expenseItemRepository.GetExpenseItem(expenseId);
        
             //Checks claim ownership before proceeding
-            new ClaimRepository(this.User, this.ActionContext).Get(item.claimid);
+            var claim = new ClaimRepository(this.User, this.ActionContext).Get(item.claimid);
+
+            this.ActionContext.ExpenseItems.AuditExpenseItemsViewed($"{item.refnum}, {item.date}, {this.ActionContext.SubCategories.GetSubcatById(item.subcatid).subcat}, {item.total:0.00}", claim.EmployeeId, this.User);
 
             List<string> waypoints = cExpenseItem.GetWaypointsByExpenseId(this.User.AccountID, expenseId);
             cAccountSubAccount subAccount = new cAccountSubAccounts(this.User.AccountID).getSubAccountById(this.User.CurrentSubAccountId);      

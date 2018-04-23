@@ -8,6 +8,8 @@
     using Helpers;
     using Interfaces;
 
+    using SpendManagementLibrary.Helpers.AuditLogger;
+
     public class Addresses
     {
         #region Constants
@@ -138,6 +140,30 @@
 
                 return matchedAddresses;
             }
+        }
+
+        /// <summary>
+        /// Audits the viewing of an address
+        /// </summary>
+        /// <param name="addressLine1">The first line of the address to audit</param>
+        /// <param name="city">The city of the address to audit</param>
+        /// <param name="postcode">The postcode of the address to audit</param>
+        /// <param name="user">The current user</param>
+        public void AuditViewAddress(string addressLine1, string city, string postcode, ICurrentUserBase user)
+        {
+            AuditLogger auditLog = new AuditLogger();
+            auditLog.ViewRecordAuditLog(user, SpendManagementElement.Addresses, $"{addressLine1}, {city}, {postcode}");
+        }
+
+        /// <summary>
+        /// Audits the viewing of an address
+        /// </summary>
+        /// <param name="addressFriendlyName">The friendly name of the address to audit</param>
+        /// <param name="user">The current user</param>
+        public void AuditViewAddress(string addressFriendlyName, ICurrentUserBase user)
+        {
+            AuditLogger auditLog = new AuditLogger();
+            auditLog.ViewRecordAuditLog(user, SpendManagementElement.Addresses, $"{addressFriendlyName}");
         }
 
         private static List<Address> ReadAndBuildAddresses(IDataReader reader, List<Address> matchedAddresses)
