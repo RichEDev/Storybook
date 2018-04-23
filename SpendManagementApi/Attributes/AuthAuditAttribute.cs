@@ -1,6 +1,4 @@
-﻿using SpendManagementLibrary.Enumerators;
-
-namespace SpendManagementApi.Attributes
+﻿namespace SpendManagementApi.Attributes
 {
     using System;
     using System.Configuration;
@@ -13,14 +11,19 @@ namespace SpendManagementApi.Attributes
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
 
+    using BusinessLogic.Identity;
+
     using Common;
     using Controllers;
     using Interfaces;
     using Models.Common;
     using Models.Types;
-    using Spend_Management;
-    using SpendManagementLibrary;
     using Utilities;
+
+    using Spend_Management;
+
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Enumerators;
 
     /// <summary>
     /// Authorises and Authenticates an ActionMethod, using the request headers,
@@ -162,6 +165,8 @@ namespace SpendManagementApi.Attributes
                 throw new HttpResponseException(actionContext.Request.CreateErrorResponse(
                     HttpStatusCode.Unauthorized, ApiResources.HttpStatusCodeUnauthorised));
             }
+
+            HttpContext.Current.User = new WebPrincipal(new UserIdentity(reqAccount.accountid, result.User.EmployeeID));
 
             // set the cMisc CurrentUser
             _cMisc = new cMisc(reqAccount.accountid);

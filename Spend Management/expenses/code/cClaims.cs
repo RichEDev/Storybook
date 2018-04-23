@@ -3681,7 +3681,7 @@ namespace Spend_Management
 
 				connection.ExecuteSQL(strsql);
 
-                var generalOptions = this._generalOptionsFactory[user.CurrentSubAccountId];
+                var generalOptions = this._generalOptionsFactory[user.CurrentSubAccountId].WithMileage();
 
                 if (generalOptions.Mileage.EnterOdometerOnSubmit && generalOptions.Mileage.RecordOdometer)
                 {
