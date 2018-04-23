@@ -38,6 +38,7 @@ using Newtonsoft.Json;
 
 using SpendManagementLibrary.Employees.DutyOfCare;
 using Syncfusion.Windows.Shared;
+using SpendManagementLibrary.Extentions;
 
 using WebBootstrap;
 
@@ -2729,18 +2730,12 @@ public partial class aeexpense : System.Web.UI.Page
 
     private string RedactCardNumber(cCardTransaction transaction)
     {
-        var cardNumber = string.Empty; 
+        var cardNumber = string.Empty;
 
-        if (this.IsPostBack) return cardNumber;
-
-        if (transaction.cardnumber.StartsWith("XXXX")) return transaction.cardnumber;
-
-        for (var i = 0; i < transaction.cardnumber.Length - 4; i++)
+        if (!this.IsPostBack)
         {
-            cardNumber += "X";
+            cardNumber = transaction.cardnumber.Redact();
         }
-
-        cardNumber += transaction.cardnumber.Substring(transaction.cardnumber.Length - 4);
 
         return cardNumber;
     }

@@ -15,6 +15,7 @@
 
     using SpendManagementLibrary;
     using SpendManagementLibrary.Account;
+    using SpendManagementLibrary.Helpers.AuditLogger;
 
     using Spend_Management;
     using Spend_Management.shared.code;
@@ -59,6 +60,7 @@
         public override BankAccount Get(int id)
         {
             var bankAccount = this.ActionContext.BankAccountsAdmin.GetById(id);
+            this.AuditBankAccountsViewed(this.User, bankAccount, new AuditLogger());
             return new BankAccount().From(bankAccount, this._actionContext);
         }
 
@@ -76,6 +78,7 @@
 
             foreach (var bankAccount in bankAccounts)
             {
+                this.AuditBankAccountsViewed(this.User, bankAccount, new AuditLogger());
                 accounts.Add(new BankAccount().From(bankAccount, this._actionContext));
             }
 
@@ -369,6 +372,22 @@
             }
        
             return outcome;
+        }
+
+        /// <summary>
+        /// Adds an entry to the audit log for the claims that have been viewed.
+        /// </summary>
+        /// <param name="currentUser">The current user.</param>
+        /// <param name="bankAccount">The bank account to be audited.</param>
+        /// <param name="auditLogger">The <see cref="IAuditLogger"/>.</param>
+        private void AuditBankAccountsViewed(ICurrentUserBase currentUser, SpendManagementLibrary.Account.BankAccount bankAccount, IAuditLogger auditLogger)
+        {
+            if (currentUser.EmployeeID != bankAccount.EmployeeId || (currentUser.isDelegate && currentUser.Delegate.EmployeeID != bankAccount.EmployeeId))
+            {
+                string record = $"{bankAccount.AccountName} ({ this._actionContext.Employees.GetEmployeeById(bankAccount.EmployeeId).Username})";
+
+                auditLogger.ViewRecordAuditLog(currentUser, SpendManagementElement.BankAccounts, record);
+            }
         }
     }
 }

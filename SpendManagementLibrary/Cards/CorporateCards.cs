@@ -9,7 +9,9 @@
     using System.Linq;
     using System.Web.UI.WebControls;
 
+    using SpendManagementLibrary.Extentions;
     using SpendManagementLibrary.Helpers;
+    using SpendManagementLibrary.Helpers.AuditLogger;
     using SpendManagementLibrary.Interfaces;
 
     using Utilities.DistributedCaching;
@@ -302,6 +304,33 @@
             }
 
             this.ResetCache();
+        }
+
+
+        /// <summary>
+        /// The audit corporate card view.
+        /// </summary>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        /// <param name="corporateCardNumber">
+        /// The corporate card number.
+        /// </param>
+        /// <param name="cardOwner">
+        /// The card owner username.
+        /// </param>
+        /// <param name="cardOwnerId">
+        /// The card owner Id.
+        /// </param>
+        /// <param name="auditLogger">
+        /// The audit logger.
+        /// </param>
+        public void AuditCorporateCardView(ICurrentUserBase user, string corporateCardNumber, string cardOwner, int cardOwnerId, IAuditLogger auditLogger)
+        {
+            if (user.EmployeeID != cardOwnerId || (user.isDelegate && user.Delegate.EmployeeID != cardOwnerId))
+            {
+                auditLogger.ViewRecordAuditLog(user, SpendManagementElement.CorporateCards, $"{corporateCardNumber.Redact()} ({cardOwner})");
+            }
         }
 
         #endregion

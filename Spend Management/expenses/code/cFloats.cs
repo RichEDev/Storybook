@@ -1239,10 +1239,19 @@ namespace Spend_Management
         /// Audits the view of advances
         /// </summary>
         /// <param name="value">The value that will be added in the audit log</param>
-        /// <param name="user">The <see cref="CurrentUser"/></param>
-        public void AuditViewAdvances(string value, CurrentUser user)
+        /// <param name="user">The <see cref="ICurrentUser"/>current user</param>
+        /// <param name="logDelegate">If only auditing when logged in as a delegate</param>
+        public void AuditViewAdvances(string value, ICurrentUser user, bool logDelegate = false)
         {
-            if (user.isDelegate && user.Delegate.EmployeeID != user.EmployeeID)
+            if (logDelegate)
+            {
+                if (user.isDelegate && user.Delegate.EmployeeID != user.EmployeeID)
+                {
+                    var auditLog = new cAuditLog();
+                    auditLog.ViewRecord(SpendManagementElement.Advances, value, user);
+                }
+            }
+            else
             {
                 var auditLog = new cAuditLog();
                 auditLog.ViewRecord(SpendManagementElement.Advances, value, user);

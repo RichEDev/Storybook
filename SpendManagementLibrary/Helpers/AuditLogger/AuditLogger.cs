@@ -5,7 +5,7 @@ namespace SpendManagementLibrary.Helpers.AuditLogger
     /// <summary>
     /// The audit logger class
     /// </summary>
-    internal class AuditLogger : IAuditLogger
+    public class AuditLogger : IAuditLogger
     {
         /// <summary>
         /// Records a view action in the audit log.

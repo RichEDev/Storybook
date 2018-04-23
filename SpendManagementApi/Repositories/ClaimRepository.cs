@@ -5,6 +5,8 @@
     using System.Linq;
 
     using System.Collections;
+    using System.Net.Http;
+
     using Models.Common;
     using Models.Responses;
     using Models.Types;
@@ -12,6 +14,7 @@
     using Utilities;
 
     using SpendManagementLibrary;
+    using SpendManagementLibrary.Helpers;
     using Spend_Management;
     using Interfaces;
     using Spend_Management.expenses.code.Claims;
@@ -32,7 +35,6 @@
     using SpendManagementLibrary.Claims;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Enumerators;
-    using SpendManagementLibrary.Helpers;
 
     using Spend_Management.expenses.code;
 
@@ -94,17 +96,35 @@
         }
 
         /// <summary>
-        /// Gets an Expense Category by it's id.
+        /// Gets a Claim by it's id.
         /// </summary>
         /// <param name="id">The Id</param>
-        /// <returns>An Expense Category.</returns>
+        /// <returns>A Claim.</returns>
         public override Claim Get(int id)
         {
             var claim = this._actionContext.Claims.getClaimById(id);
-
+           
             this.CheckClaimAndOwnership(claim, true);
 
             return new Claim().From(claim, this._actionContext);
+        }
+
+        /// <summary>
+        /// Gets a Claim by it's id and audits the view in the audit log.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Claim"/>.
+        /// </returns>
+        public Claim GetAndAudit(int id)
+        {
+            var claim = this.Get(id);
+
+            this._actionContext.Claims.AuditViewClaim(SpendManagementElement.Claims, claim.Name, claim.EmployeeId, this.User);
+
+            return claim;
         }
 
         /// <summary>
@@ -115,6 +135,7 @@
         public ClaimBasic GetClaimBasic(int id)
         {
             var claim = this._actionContext.Claims.GetClaimBasicById(id, this.ActionContext.AccountId, this.User.EmployeeID);
+            this._actionContext.Claims.AuditViewClaim(SpendManagementElement.Claims, claim.ClaimName, claim.EmployeeId, this.User);
             var claimBasic = new ClaimBasic().From(claim, this.ActionContext);
             var currencyRepository = new CurrencyRepository(this.User, this._actionContext);
             claimBasic.CurrencyLabel = currencyRepository.GetGlobalCurrencyFromCurrencyId(claimBasic.BaseCurrency).Label;
@@ -130,6 +151,9 @@
         public Claim GetByReferenceNumber(string referenceNumber)
         {
             var claim = this._actionContext.Claims.GetClaimByReferenceNumber(referenceNumber);
+
+            this._actionContext.Claims.AuditViewClaim(SpendManagementElement.Claims, claim.name, claim.employeeid, this.User);
+            
 
             this.CheckClaimAndOwnership(claim, true);
 
@@ -442,6 +466,8 @@
 
             var claim = this._actionContext.Claims.getClaimById(claimId);
 
+            this._actionContext.Claims.AuditViewClaim(SpendManagementElement.Claims, claim.name, claim.employeeid, this.User);
+
             if (claim == null)
             {
                 throw new ApiException(string.Format(ApiResources.ApiErrorClaimNotFound, "Claim"), string.Format(ApiResources.ApiErrorCreateClaimMessage, "Claim"));
@@ -504,6 +530,8 @@
             try
             {
                 var claim = this._actionContext.Claims.getClaimById(claimId);
+
+                this._actionContext.Claims.AuditViewClaim(SpendManagementElement.Claims, claim.name, claim.employeeid, this.User);
 
                 if (claim == null)
                 {
@@ -799,6 +827,8 @@
 
             foreach (ClaimBasic claimBasic in claims.Select(claim => new ClaimBasic().From(claim, this._actionContext)))
             {
+                this._actionContext.Claims.AuditViewClaim(SpendManagementElement.CheckAndPay, claimBasic.ClaimName, claimBasic.EmployeeId, this.User);
+
                 if (currencyId != claimBasic.BaseCurrency)
                 {
                     currencyLabel = currencyRepository.GetGlobalCurrencyFromCurrencyId(claimBasic.BaseCurrency).Label;
@@ -901,11 +931,13 @@
                 {
                     cClaim claim = this._actionContext.Claims.getClaimById(claimId);
 
-                    if (claim == null)
-                    {
-                        throw new ApiException(string.Format(ApiResources.ApiErrorClaimNotFound, "Claim"), string.Format(ApiResources.ApiErrorCreateClaimMessage, "Claim"));
-                    }
-           
+                if (claim == null)
+                {
+                    throw new ApiException(string.Format(ApiResources.ApiErrorClaimNotFound, "Claim"), string.Format(ApiResources.ApiErrorCreateClaimMessage, "Claim"));
+                }
+
+                this._actionContext.Claims.AuditViewClaim(SpendManagementElement.CheckAndPay, claim.name, claim.employeeid, this.User);
+
                 if (this._actionContext.Claims.AllowClaimProgression(claimId) == 1)
                     {                 
           
@@ -1454,6 +1486,7 @@
         internal Models.Types.ClaimDefinitionResponse GetClaimDefinition(int id)
         {
             var claim = this._actionContext.Claims.getClaimById(id);
+            this._actionContext.Claims.AuditViewClaim(SpendManagementElement.Claims, claim.name, claim.employeeid, this.User);
             this.CheckClaimAndOwnership(claim, true);
             var claimDefinition = this._actionContext.Claims.GetClaimDefinition(id);
             claimDefinition.ClaimDefinitionOutcome = claimDefinition.ClaimId > 0 ? ClaimDefinitionOutcome.Success : ClaimDefinitionOutcome.Fail;
@@ -1482,7 +1515,7 @@
         internal Models.Types.ClaimDefinitionResponse GetDefaultClaimDefinition()
         {
             var claimDefinition = new SpendManagementLibrary.ClaimDefinition();
-  
+
             if (SingleClaimCheck())
             {
                  claimDefinition.ClaimDefinitionOutcome = ClaimDefinitionOutcome.SingleClaimOnly;             
@@ -1535,7 +1568,5 @@
 
             return false;
         }
-
-      
     }
 }

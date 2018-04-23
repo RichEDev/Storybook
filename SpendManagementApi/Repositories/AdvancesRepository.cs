@@ -13,6 +13,7 @@
     using Utilities;
 
     using SpendManagementLibrary;
+    using SpendManagementLibrary.Helpers.AuditLogger;
 
     using Spend_Management;
 
@@ -179,6 +180,8 @@
 
                 availableAdvance.DisplayName = $"{availableAdvance.Name} ({this.ActionContext.GlobalCurrencies.getGlobalCurrencyById(currency.globalcurrencyid).label})";
                 availableAdances.Add(availableAdvance);
+
+                this.ActionContext.Advances.AuditViewAdvances( $"{advance.name} ({ this.ActionContext.Employees.GetEmployeeById(advance.employeeid).Username})",this.User, false);
             }
 
             return availableAdances.OrderBy(x => x.Name).ToList();
@@ -399,6 +402,5 @@
                 default: return string.Empty;
             }
         }
-
     }
 }

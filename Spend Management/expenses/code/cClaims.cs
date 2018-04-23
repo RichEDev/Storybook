@@ -6992,6 +6992,34 @@ namespace Spend_Management
         }
 
         /// <summary>
+        /// Audits the view of a claim
+        /// </summary>
+        /// <param name="SpendManagementElement">The <see cref="SpendManagementElement"/></param>
+        /// <param name="claimName">The claim name to audit</param>
+        /// <param name="claimOwnerId">The Id of the claim owner</param>
+        /// <param name="user">The <see cref="ICurrentUser"/></param>
+        public void AuditViewClaim(SpendManagementElement element, string claimName, int claimOwnerId, ICurrentUser user)
+        {
+            if (user.EmployeeID != claimOwnerId || (user.isDelegate && user.Delegate.EmployeeID != claimOwnerId))
+            {
+                var auditLog = new cAuditLog();
+                var employees = new cEmployees(user.AccountID);
+                auditLog.ViewRecord(element, $"{claimName} ({employees.GetEmployeeById(claimOwnerId).Username})", user);
+            }
+        }
+
+        /// <summary>
+        /// Gets the claim owner employee id
+        /// </summary>
+        /// <param name="claimId">The id of the claim so we can identify the owner</param>
+        /// <returns>The claim owner employee id</returns>
+        public int GetClaimOwnerByClaimId(int claimId)
+        {
+            var claim = this.getClaimById(claimId);
+            return claim.employeeid;
+        }
+
+        /// <summary>
         /// Gets all the employees cars with a fuel cards
         /// </summary>
         /// <param name="employeeCars"><see cref="cEmployeeCars"/></param>
@@ -6999,21 +7027,6 @@ namespace Spend_Management
         private List<cCar> GetEmployeesActiveCarsWithAFuelCard(cEmployeeCars employeeCars)
         {
             return employeeCars.GetActiveCars().Where(e => e.fuelcard == true).ToList();
-        }
-
-        /// <summary>
-        /// Audits the view of a claim
-        /// </summary>
-        /// <param name="claim">The claim to audit</param>
-        /// <param name="user">The <see cref="CurrentUser"/></param>
-        public void AuditViewClaim(SpendManagementElement element, cClaim claim, CurrentUser user)
-        {
-            if (user.EmployeeID != claim.employeeid || (user.isDelegate && user.Delegate.EmployeeID != claim.employeeid))
-            {
-                var auditLog = new cAuditLog();
-                var employees = new cEmployees(user.AccountID);
-                auditLog.ViewRecord(element, $"{claim.name} ({employees.GetEmployeeById(claim.employeeid).Username})", user);
-            }
         }
     }
 }

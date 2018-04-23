@@ -16,10 +16,12 @@
     using Common.Logging;
 
     using SpendManagementLibrary;
-        using SpendManagementLibrary.Cards;
+    using SpendManagementLibrary.Cards;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Enumerators;
+    using SpendManagementLibrary.Extentions;
     using SpendManagementLibrary.Helpers;
+    using SpendManagementLibrary.Helpers.AuditLogger;
     using SpendManagementLibrary.Interfaces;
     using SpendManagementLibrary.Random;
     using Spend_Management.expenses.code;
@@ -1865,6 +1867,23 @@
                 reader.Close();
             }
             return transaction;
+        }
+
+        /// <summary>
+        /// The audit corporate card view.
+        /// </summary>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        /// <param name="transaction">
+        /// The transaction to audit.
+        /// </param>
+        /// <param name="auditLogger">
+        /// The audit logger.
+        /// </param>
+        public void AuditTransactionView(ICurrentUserBase user, cCardTransaction transaction, IAuditLogger auditLogger)
+        {
+            auditLogger.ViewRecordAuditLog(user, SpendManagementElement.CorporateCards, $"{transaction.transactiondate}, {transaction.description}, {transaction.cardnumber.Redact()}, {transaction.transactionamount:0.00}");
         }
 
         private Dictionary<string, object> getMoreDetails(int statementid, int transactionid)

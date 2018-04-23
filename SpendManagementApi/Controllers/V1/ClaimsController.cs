@@ -48,7 +48,9 @@
         [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
         public ClaimResponse Get([FromUri] int id)
         {
-            return this.Get<ClaimResponse>(id);
+            var response = this.InitialiseResponse<ClaimResponse>();
+            response.Item = ((ClaimRepository)this.Repository).GetAndAudit(id);
+            return response;
         }
 
         /// <summary>
@@ -98,8 +100,8 @@
         /// Gets a single <see cref="Models.Types.ClaimDefinitionResponse">ClaimDefinitionResponse</see> with the determined claim name and UDF information.
         /// </summary>
         /// <returns>A <see cref="Models.Responses.ClaimDefinitionResponse">ClaimDefinitionResponse</see>, containing the claim name and user defined field information.</returns>
-        [HttpGet, Route("GetDefaultClaimDefinition")] [AuthAudit(SpendManagementElement.None, AccessRoleType.View)] public
-            Models.Responses.ClaimDefinitionResponse GetDefaultClaimDefinition()
+        [HttpGet, Route("GetDefaultClaimDefinition")] [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
+        public Models.Responses.ClaimDefinitionResponse GetDefaultClaimDefinition()
         {
             var response = this.InitialiseResponse<Models.Responses.ClaimDefinitionResponse>();
             response.Item = ((ClaimRepository)this.Repository).GetDefaultClaimDefinition();
@@ -210,7 +212,7 @@
         }
 
         /// <summary>
-        /// Gets the list of unsubmitted claims that belong to the employee.
+        /// Gets the list of unsubmitted claims that belong to the current user.
         /// </summary>
         /// <returns>A list of <see cref="ClaimBasic">ClaimBasic</see>containing the unsubmitted claims that belong to the employee</returns>
         [HttpGet]
@@ -224,7 +226,7 @@
         }
 
         /// <summary>
-        /// Gets the list of submitted claims that belong to the employee.
+        /// Gets the list of submitted claims that belong to the current user.
         /// </summary>
         /// <returns>A list of <see cref="ClaimBasic">ClaimBasic</see>containing the submitted claims that belong to the employee</returns>
         [HttpGet]
@@ -238,7 +240,7 @@
         }
 
         /// <summary>
-        /// Gets the list of previous claims that belong to the employee.
+        /// Gets the list of previous claims that belong to the current user.
         /// </summary>
         /// <returns>A list of <see cref="ClaimBasic">ClaimBasic</see>containing the previous claims that belong to the employee</returns>
         [HttpGet]

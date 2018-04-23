@@ -11,6 +11,7 @@ namespace SpendManagementApi.Repositories
     using Models.Types.Employees;
     using SpendManagementApi.Models.Types;
     using SpendManagementLibrary;
+    using SpendManagementLibrary.Helpers.AuditLogger;
 
     using Spend_Management;
     using Utilities;
@@ -59,7 +60,14 @@ namespace SpendManagementApi.Repositories
         /// <returns>All corporate cards</returns>
         public override IList<CorporateCard> GetAll()
         {
-            return this._data.GetFlatList().Select(x => x.Cast<CorporateCard>()).ToList();
+            var corporateCardList = this._data.GetFlatList().Select(x => x.Cast<CorporateCard>()).ToList();
+
+            foreach (var corporateCard in corporateCardList)
+            {
+                this.ActionContext.CorporateCards.AuditCorporateCardView(this.User, corporateCard.CardNumber, this.ActionContext.Employees.GetEmployeeById(corporateCard.EmployeeId).Username, corporateCard.EmployeeId, new AuditLogger());
+            }
+
+            return corporateCardList;
         }
 
         /// <summary>
@@ -70,6 +78,22 @@ namespace SpendManagementApi.Repositories
         public override CorporateCard Get(int id)
         {
             return this._data.GetCorporateCardByID(id).Cast<CorporateCard>();
+        }
+
+        /// <summary>
+        /// Gets a single CorporateCard by it's id and writes in the audit log
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="CorporateCard"/>.
+        /// </returns>
+        public CorporateCard GetAndAudit(int id)
+        {
+            var corporateCard = this.Get(id);
+            this.ActionContext.CorporateCards.AuditCorporateCardView(this.User, corporateCard.CardNumber, this.ActionContext.Employees.GetEmployeeById(corporateCard.EmployeeId).Username, corporateCard.EmployeeId, new AuditLogger());
+            return corporateCard;
         }
 
         /// <summary>
@@ -84,7 +108,15 @@ namespace SpendManagementApi.Repositories
             {
                 throw new ApiException(ApiResources.ApiErrorWrongEmployeeId, ApiResources.ApiErrorWrongEmployeeIdMessage);
             }
-            return this._data.GetEmployeeCorporateCards(id).Select(x => x.Value.Cast<CorporateCard>()).ToList();
+
+            var corporateCards = this._data.GetEmployeeCorporateCards(id).Select(x => x.Value.Cast<CorporateCard>()).ToList();
+
+            foreach (var corporateCard in corporateCards)
+            {
+                this.ActionContext.CorporateCards.AuditCorporateCardView(this.User, corporateCard.CardNumber, employee.Username, id, new AuditLogger());
+            }
+
+            return corporateCards;
         }
 
         /// <summary>Adds a CorporateCard to the Employee with the supplied Id.</summary>
@@ -210,7 +242,8 @@ namespace SpendManagementApi.Repositories
             //Checks claim ownership before proceeding, will throw exception if currenct user is not in the claim hierarchy
             new ClaimRepository(this.User, this.ActionContext).Get(item.claimid);
 
-            cCardTransaction transaction = ActionContext.CardStatements.getTransactionById(transactionId);
+            cCardTransaction transaction = ActionContext.CardStatements.getTransactionById(transactionId); 
+            this.ActionContext.CardStatements.AuditTransactionView(this.User, transaction, new AuditLogger());
             cCardStatement statement = ActionContext.CardStatements.getStatementById(transaction.statementid);
             cCardTemplate templateData = ActionContext.CardTemplates.getTemplate(statement.Corporatecard.cardprovider.cardprovider);
 

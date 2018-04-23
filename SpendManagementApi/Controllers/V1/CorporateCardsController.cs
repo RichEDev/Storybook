@@ -53,7 +53,9 @@ namespace SpendManagementApi.Controllers.V1
         [AuthAudit(SpendManagementElement.Employees, AccessRoleType.View)]
         public CorporateCardResponse Get([FromUri] int id)
         {
-            return this.Get<CorporateCardResponse>(id);
+            var response = this.InitialiseResponse<CorporateCardResponse>();
+            response.Item = ((CorporateCardRepository)this.Repository).GetAndAudit(id);
+            return response;
         }
 
         /// <summary>
