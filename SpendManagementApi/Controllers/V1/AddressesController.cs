@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.Http;
+    using System.Web.Http.Description;
 
     using SpendManagementApi.Attributes;
     using SpendManagementApi.Common;
@@ -37,7 +38,7 @@
         /// <summary>
         /// Gets all <see cref="Address">Addresss</see> in the system.
         /// </summary>
-        [HttpGet, Route("")]
+        [HttpGet, Route(""), ApiExplorerSettings(IgnoreApi = true)]
         [AuthAudit(SpendManagementElement.Addresses, AccessRoleType.View)]
         public GetAddressesResponse GetAll()
         {
@@ -422,7 +423,7 @@
         /// <returns>
         /// The <see cref="GetAddressesResponse">GetAddressesResponse</see>
         /// </returns>     
-        [HttpGet, Route("GetAccountWideAndEmployeeFavourites")]
+        [HttpGet, Route("GetAccountWideAndEmployeeFavourites"), ApiExplorerSettings(IgnoreApi = true)]
         [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
         public GetAddressesResponse GetAccountWideAndEmployeeFavourites()
         {
@@ -437,7 +438,7 @@
         /// <returns>
         /// The <see cref="AddressLabelResponse">AddressLabelResponse</see>
         /// </returns>     
-        [HttpGet, Route("GetAccountWideAndEmployeeAddressLabels")]
+        [HttpGet, Route("GetAccountWideAndEmployeeAddressLabels"), ApiExplorerSettings(IgnoreApi = true)]
         [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
         public AddressLabelResponse GetAccountWideAndEmployeeAddressLabels()
         {
@@ -452,7 +453,7 @@
         /// <returns>
         /// The <see cref="GetAddressesResponse">GetAddressesResponse</see>
         /// </returns>     
-        [HttpGet, Route("GetAccountWideAndEmployeeLabels")]
+        [HttpGet, Route("GetAccountWideAndEmployeeLabels"), ApiExplorerSettings(IgnoreApi = true)]
         [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
         public GetAddressesResponse GetAccountWideAndEmployeeLabels()
         {
