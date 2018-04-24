@@ -551,8 +551,6 @@
     <Compile Include="Expedite\ExpenseValidationManager.cs" />
     <Compile Include="ForeignVatRate.cs" />
     <Compile Include="FunkyInjector.cs" />
-    <Compile Include="GeneralOptions\GeneralOption.cs" />
-    <Compile Include="GeneralOptions\GeneralOptions.cs" />
     <Compile Include="GreenLightSortColumn.cs" />
     <Compile Include="GroupStages.cs" />
     <Compile Include="Helpers\AuditLogger\AuditLogger.cs" />

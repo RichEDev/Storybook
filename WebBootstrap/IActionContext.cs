@@ -4,7 +4,6 @@
     using Spend_Management;
     using Spend_Management.expenses.code;
     using Spend_Management.shared.code;
-    using GeneralOptions = SpendManagementLibrary.GeneralOptions.GeneralOptions;
 
     using BusinessLogic.Identity;
     /// <summary>
@@ -146,11 +145,6 @@
         /// Gets or sets the Current Employee ID
         /// </summary>
         int EmployeeId { get; set; }
-
-        /// <summary>
-        /// Gets an instance of <see cref="GeneralOptions"/>
-        /// </summary>
-        GeneralOptions GeneralOptions { get;  }
 
  
         /// <summary>

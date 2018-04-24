@@ -1336,9 +1336,6 @@
             if (tmpList != null)
             {
                 _cache.Delete(this._accountId, string.Empty, this._cacheKey);
-
-                var generalOptions = new GeneralOptions.GeneralOptions(this._accountId);
-                generalOptions.InvalidateCache(subAccountId);
             }
         }
 

@@ -1,20 +1,19 @@
-using SpendManagementLibrary.Hotels;
-using Spend_Management.expenses.code.Claims;
-
 namespace SpendManagementApi.Interfaces
 {
-    using Spend_Management;
-    using Spend_Management.expenses.code;
     using SpendManagementLibrary;
     using SpendManagementLibrary.Addresses;
     using SpendManagementLibrary.Cards;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Employees.DutyOfCare;
     using SpendManagementLibrary.Holidays;
+    using SpendManagementLibrary.Hotels;
     using SpendManagementLibrary.Interfaces;
     using SpendManagementLibrary.Interfaces.Expedite;
     using SpendManagementLibrary.MobileAppReview;
 
+    using Spend_Management;
+    using Spend_Management.expenses.code;
+    using Spend_Management.expenses.code.Claims;
     using Spend_Management.shared.code;
 
     public interface IActionContext
@@ -122,8 +121,6 @@ namespace SpendManagementApi.Interfaces
         int AccountId { get; set; }
 
         int EmployeeId { get; set; }
-
-        SpendManagementLibrary.GeneralOptions.GeneralOptions GeneralOptions { get; set; }
        
         IManageFunds Fund { get; set; }
 

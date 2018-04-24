@@ -1,9 +1,7 @@
 namespace SpendManagementApi.Common
 {
     using Interfaces;
-    using Spend_Management;
-    using Spend_Management.expenses.code;
-    using Spend_Management.expenses.code.Claims;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Addresses;
     using SpendManagementLibrary.Cards;
@@ -12,11 +10,13 @@ namespace SpendManagementApi.Common
     using SpendManagementLibrary.Expedite;
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Holidays;
-    using SpendManagementLibrary.Interfaces.Expedite;
-    using GeneralOptions = SpendManagementLibrary.GeneralOptions.GeneralOptions;
     using SpendManagementLibrary.Hotels;
+    using SpendManagementLibrary.Interfaces.Expedite;
     using SpendManagementLibrary.MobileAppReview;
 
+    using Spend_Management;
+    using Spend_Management.expenses.code;
+    using Spend_Management.expenses.code.Claims;
     using Spend_Management.shared.code;
 
     internal class ActionContext : IActionContext
@@ -116,8 +116,6 @@ namespace SpendManagementApi.Common
         private cFilterRules _filterrules;
 
         private FlagManagement _flagManagement;
-
-        private GeneralOptions _generalOptions;
 
         private IManageFunds _funds;
 
@@ -798,21 +796,6 @@ namespace SpendManagementApi.Common
             set
             {
                 this._flagManagement = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the general options.
-        /// </summary>
-        public GeneralOptions GeneralOptions
-        {
-            get
-            {
-                return _generalOptions ?? (_generalOptions = new GeneralOptions(AccountId));
-            }
-            set
-            {
-                _generalOptions = value;
             }
         }
 

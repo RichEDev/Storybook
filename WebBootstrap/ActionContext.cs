@@ -6,8 +6,6 @@
     using Spend_Management.expenses.code;
     using Spend_Management.shared.code;
 
-    using GeneralOptions = SpendManagementLibrary.GeneralOptions.GeneralOptions;
-
     /// <summary>
     /// A class to manage the creation of dependencies
     /// </summary>
@@ -112,11 +110,6 @@
         /// A private instance of <see cref="FlagManagement"/>
         /// </summary>
         private FlagManagement _flagManagement;
-
-        /// <summary>
-        /// A private instance of <see cref="GeneralOptions"/>
-        /// </summary>
-        private GeneralOptions _generalOptions;
 
         /// <summary>
         /// A private instance of <see cref="cGlobalCurrencies"/>
@@ -345,11 +338,6 @@
         /// Gets an instance of <see cref="IActionContext.FlagManagement"/>
         /// </summary>
         public FlagManagement FlagManagement => this._flagManagement ?? (this._flagManagement = new FlagManagement(this.AccountId));
-
-        /// <summary>
-        /// Gets an instance of <see cref="IActionContext.GeneralOptions"/>
-        /// </summary>
-        public GeneralOptions GeneralOptions => this._generalOptions ?? (this._generalOptions = new GeneralOptions(this.AccountId));
 
 
         /// <summary>
