@@ -1269,7 +1269,7 @@
             //Checks claim ownership before proceeding
             var claim = new ClaimRepository(this.User, this.ActionContext).Get(item.claimid);
 
-            this.ActionContext.ExpenseItems.AuditExpenseItemsViewed($"{item.refnum}, {item.date}, {this.ActionContext.SubCategories.GetSubcatById(item.subcatid).subcat}, {item.total:0.00}", claim.EmployeeId, this.User);
+            this.ActionContext.ExpenseItems.AuditExpenseItemsViewed($"{item.refnum}, {item.date.ToShortDateString()}, {this.ActionContext.SubCategories.GetSubcatById(item.subcatid).subcat}, {item.total:0.00}", claim.EmployeeId, this.User);
 
             List<string> waypoints = cExpenseItem.GetWaypointsByExpenseId(this.User.AccountID, expenseId);
             cAccountSubAccount subAccount = new cAccountSubAccounts(this.User.AccountID).getSubAccountById(this.User.CurrentSubAccountId);      

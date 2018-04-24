@@ -132,7 +132,7 @@
 
             List<JourneyStep> stepList = this.ProcessSteps(expenseId, journeySteps, item.carid, homeAndOfficeAddresses);
 
-            this._expenseItemData.AuditExpenseItemsViewed($"{item.refnum}, {item.date}, {this.ActionContext.SubCategories.GetSubcatById(item.subcatid).subcat}, {item.total:0.00}", this.ActionContext.Claims.GetClaimOwnerByClaimId(item.claimid), this.User);
+            this._expenseItemData.AuditExpenseItemsViewed($"{item.refnum}, {item.date.ToShortDateString()}, {this.ActionContext.SubCategories.GetSubcatById(item.subcatid).subcat}, {item.total:0.00}", this.ActionContext.Claims.GetClaimOwnerByClaimId(item.claimid), this.User);
 
             return stepList.Count > 0 ? stepList : null;
         }
