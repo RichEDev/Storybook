@@ -2820,6 +2820,7 @@
                 createdon = DateTime.Now;
                 createdby = currentUser.EmployeeID;
                 fieldid = Guid.Empty;
+                encrypt = encrypted;
             }
 
             if (order == 0)
