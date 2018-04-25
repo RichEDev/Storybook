@@ -141,12 +141,7 @@ namespace SpendManagementLibrary
             return lstModules;
         }
 
-        #region properties
-
-        /// <summary>
-        /// The API calls left per minute and hour, the remaining free calls left today, and the total licensed (paid) calls for this account.
-        /// </summary>
-        public ApiLicenseStatus ApiLicenseStatus { get; set; }
+        #region properties 
 
         /// <summary>
         /// The get hostname id.

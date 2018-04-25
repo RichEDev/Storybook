@@ -599,6 +599,7 @@
     <Compile Include="JourneyDeductionRules\JuniorDoctorRotation.cs" />
     <Compile Include="jsGreenLightViewSortColumn.cs" />
     <Compile Include="jsSummaryColumnData.cs" />
+    <Compile Include="Logic Classes\ApiLicenseStatusManager.cs" />
     <Compile Include="Logic Classes\AutoUpdateExchangeRateModifier.cs" />
     <Compile Include="Logic Classes\DateRangeExchangeRateModifier.cs" />
     <Compile Include="Logic Classes\ExchangeRateModifier.cs" />

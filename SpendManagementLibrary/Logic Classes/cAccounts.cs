@@ -13,6 +13,8 @@
     using API;
     using Enumerators;
 
+    using SpendManagementLibrary.Logic_Classes;
+
     /// <summary>
     /// Manages the data access for an Account.
     /// </summary>
@@ -279,12 +281,6 @@
 
                 #endregion Update, Add or Remove cached list entries
 
-                #region Api Call Limiting
-                cEventlog.LogEntry("Get Api Licencing.");
-                GetApiLicensing(lstAccounts);
-
-                #endregion Api Call Limiting
-
                 cEventlog.LogEntry("Completed caching registeredusers.");
             }
 
@@ -494,57 +490,13 @@
         }
 
         /// <summary>
-        /// Resets the daily free call limits for each account. Calls CacheList.
+        /// Resets the daily free call limits for each account.
         /// </summary>
         public void ResetDailyFreeCallLimits()
         {
-            // use SP to reset
-            using (var db = new DatabaseConnection(GlobalVariables.MetabaseConnectionString))
-            {
-                db.ExecuteProc("ResetDailyFreeCalls");
-            }
-
-            // grab cached accounts and update them.
-            var accountList = new SortedList<int, cAccount>();
-            foreach (var cachedAccount in CachedAccounts)
-            {
-                accountList.Add(cachedAccount.Key, cachedAccount.Value);
-            }
-
-            // get the new values.
-            GetApiLicensing(accountList);
-        }
-
-        private void GetApiLicensing(SortedList<int, cAccount> lstAccounts)
-        {
-            using (var db = new DatabaseConnection(GlobalVariables.MetabaseConnectionString))
-            {
-                using (var reader = db.GetReader("GetApiLicensing", CommandType.StoredProcedure))
-                {
-                    while (reader.Read())
-                    {
-                        var calls = new ApiLicenseStatus
-                        {
-                            AccountId = reader.GetInt32(reader.GetOrdinal("AccountId")),
-                            TotalLicensedCalls = reader.GetInt32(reader.GetOrdinal("TotalCalls")),
-                            FreeCallsToday = reader.GetInt32(reader.GetOrdinal("FreeToday")),
-                            HourLimit = reader.GetInt32(reader.GetOrdinal("HourLimit")),
-                            HourRemainingCalls = reader.GetInt32(reader.GetOrdinal("HourRemaining")),
-                            HourLastResetDate = reader.GetDateTime(reader.GetOrdinal("HourLast")).ToUniversalTime(),
-                            MinuteLimit = reader.GetInt32(reader.GetOrdinal("MinuteLimit")),
-                            MinuteRemainingCalls = reader.GetInt32(reader.GetOrdinal("MinuteRemaining")),
-                            MinuteLastResetDate = reader.GetDateTime(reader.GetOrdinal("MinuteLast")).ToUniversalTime(),
-                        };
-
-                        // add call status to account.
-                        var account = lstAccounts.First(x => x.Key == calls.AccountId).Value;
-                        account.ApiLicenseStatus = calls;
-                    }
-
-                    reader.Close();
-                }
-            }
-        }
+            var apiLicenseStatus = new ApiLicenseStatusManager();
+            apiLicenseStatus.ResetDailyFreeCallLimits();
+        }       
 
         /// <summary>
         /// Gets all the accounts which have their <see cref="cAccount.PaymentServiceEnabled"/> property set to True.

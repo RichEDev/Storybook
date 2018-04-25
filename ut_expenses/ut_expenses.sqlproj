@@ -7118,6 +7118,7 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_cardtransactions_statementid_transactionamount_corporatecardid_transactionid_globalcurrencyid.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetBankAccounts.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetBankAccountById.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\ApiLicensing.table.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ut_expenses.refactorlog">
@@ -7235,6 +7236,11 @@
     <None Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_WalletReceipts_employees.sql" />
     <None Include="Schema Objects\Schemas\dbo\Tables\Indexes\idx_ProcessedReceipts_WalletReceiptId_DateTotalMerchant.sql" />
     <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetCorporateCardUnallocatedItemCount.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetApiLicensing.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\UpdateApiAccountLicenses.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_ApiLicensing.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_ApiLicensing_registeredusers.sql" />
+    <None Include="Schema Objects\Schemas\dbo\Tables\Indexes\IX_ApiLicensing_AccountId.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Pre-Deployment\Script.PreDeployment.sql" />

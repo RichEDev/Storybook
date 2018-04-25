@@ -10,6 +10,7 @@
     using SpendManagementLibrary.API;
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Interfaces;
+    using SpendManagementLibrary.Logic_Classes;
 
     /// <summary>
     /// A helper DAL class to enable the <see cref="AuthAuditAttribute"/> to log method calls and results to the database, as well as 
@@ -31,11 +32,11 @@
         {
             #region init
 
-            var account = cAccounts.CachedAccounts.FirstOrDefault(x => x.Key == accountId).Value;
+            var apiLicenceStatus = new ApiLicenseStatusManager();
             var result = new ApiAuditLogCallResult
             {
                 Allowed = true,
-                ApiLicenseStatus = account.ApiLicenseStatus
+                ApiLicenseStatus = apiLicenceStatus.Get(accountId)
             };
 
             #endregion init
@@ -133,12 +134,12 @@
                 {
                     if (ConfigurationManager.AppSettings["BackgroundUpdateCallStatusInDatabase"] == "1")
                     {
-                        var task = new Task(() => UpdateDatabase(result.ApiLicenseStatus, connection));
+                        var task = new Task(() => apiLicenceStatus.Update(result.ApiLicenseStatus));
                         task.Start();
                     }
                     else
                     {
-                        UpdateDatabase(result.ApiLicenseStatus, connection);
+                        apiLicenceStatus.Update(result.ApiLicenseStatus);
                     }
                 }
             }
@@ -187,38 +188,7 @@
                 expdata.AddWithValue("@result", result);
                 expdata.ExecuteProc("AddSuccessfulApiCallToAuditLog");
             }
-        }
-
-        private void UpdateDatabase(ApiLicenseStatus status, IDBConnection connection)
-        {
-            // create the connection if not passed in externally
-            var externalDbConnection = connection == null;
-            var db = connection ?? new DatabaseConnection(GlobalVariables.MetabaseConnectionString);
-
-            // clean up first if external
-            if (!externalDbConnection)
-            {
-                db.sqlexecute.Parameters.Clear();
-            }
-
-            db.AddWithValue("@accountId", status.AccountId);
-            db.AddWithValue("@totalCalls", status.TotalLicensedCalls);
-            db.AddWithValue("@freeToday", status.FreeCallsToday);
-            db.AddWithValue("@hourLimit", status.HourLimit);
-            db.AddWithValue("@hourRemaining", status.HourRemainingCalls);
-            db.AddWithValue("@hourLast", status.HourLastResetDate);
-            db.AddWithValue("@minuteLimit", status.MinuteLimit);
-            db.AddWithValue("@minuteRemaining", status.MinuteRemainingCalls);
-            db.AddWithValue("@minuteLast", status.MinuteLastResetDate);
-            db.ExecuteProc("UpdateApiAccountLicenses");
-
-            // clean up
-            db.sqlexecute.Parameters.Clear();
-            if (!externalDbConnection)
-            {
-                db.Dispose();
-            }
-        }
+        }        
     }
 
 
