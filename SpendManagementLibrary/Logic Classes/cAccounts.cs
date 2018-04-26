@@ -329,6 +329,11 @@
         public void DecrementAddressLookupsRemaining(int accountId)
         {
             cAccount account;
+            if (CachedAccounts == null || CachedAccounts.IsEmpty)
+            {
+                this.CacheList();
+            }
+
             if (CachedAccounts.TryGetValue(accountId, out account) == false || account.AddressLookupChargeable == false)
             {
                 return;
@@ -349,6 +354,11 @@
         public void DecrementAddressDistanceLookupsRemaining(int accountId)
         {
             cAccount account;
+            if (CachedAccounts == null || CachedAccounts.IsEmpty)
+            {
+                this.CacheList();
+            }
+
             if (CachedAccounts.TryGetValue(accountId, out account) == false || account.AddressLookupChargeable == false)
             {
                 return;
@@ -364,11 +374,21 @@
 
         public cAccount GetAccountByCompanyID(string companyID)
         {
+            if (CachedAccounts == null || CachedAccounts.IsEmpty)
+            {
+                this.CacheList();
+            }
+
             return CachedAccounts.Values.FirstOrDefault(tmpAccount => tmpAccount.companyid.ToUpperInvariant() == companyID.ToUpperInvariant());
         }
 
         public virtual cAccount GetAccountByID(int accountID)
         {
+            if (CachedAccounts == null || CachedAccounts.IsEmpty)
+            {
+                this.CacheList();
+            }
+
             cAccount reqAccount;
             CachedAccounts.TryGetValue(accountID, out reqAccount);
             return reqAccount;
