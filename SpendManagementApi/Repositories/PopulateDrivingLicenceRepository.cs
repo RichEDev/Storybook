@@ -2,6 +2,9 @@
 namespace SpendManagementApi.Repositories
 {
     using System.Linq;
+    using System.Web;
+
+    using BusinessLogic.Identity;
 
     using Models.Requests;
     using Models.Responses;
@@ -48,6 +51,8 @@ namespace SpendManagementApi.Repositories
         /// <returns>Employee details</returns>
         public DvlaConsentEmployeesResponse GetEmployeeToPopulateDrivingLicence(int accountId)
         {
+            this.SetIdentity(accountId);
+
             var employee = new cEmployees(accountId);
             var employeeDetails = employee.GetEmployeesToPopulateDrivingLicence(accountId);
             var employeeDrivingLicenceList = new EmployeesToPopulateDrivingLicence().Data(employeeDetails, null);
@@ -91,6 +96,8 @@ namespace SpendManagementApi.Repositories
         /// </returns>
         public DrivingLicenceResponse PopulateDrivingLicenceInformation(int accountId, Spend_Management.shared.code.DVLA.EmployeesToPopulateDrivingLicence employeeDetails)
         {
+            this.SetIdentity(accountId);
+
             var drivingLicenceDetails = new AutoPopulatedDrivingLicence().PopulateDrivingLicences(employeeDetails, accountId, false);
             var responseList = new DrivingLicenceDetails().Data(drivingLicenceDetails);
             return responseList;
@@ -160,5 +167,15 @@ namespace SpendManagementApi.Repositories
             var drivingLicenceResponse = new DvlaDrivingLicenceResponse { IsDrivingLicenceAdded = documentList.Count > 0, CurrentRecord = documentList };
             return drivingLicenceResponse;
         }
+
+        /// <summary>
+        /// Set the identity of the User in HttpContext for dependency injection
+        /// </summary>
+        /// <param name="accountId">The account id of the user</param>
+        /// <param name="employeeId">The employee id of the user</param>
+        private void SetIdentity(int accountId, int employeeId = 0)
+        {
+            HttpContext.Current.User = new WebPrincipal(new UserIdentity(accountId, employeeId));
+        } 
     }
 }

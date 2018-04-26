@@ -13,6 +13,12 @@
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Interfaces;
     using System.Configuration;
+    using System.Web;
+
+    using BusinessLogic.Identity;
+
+    using global::expenses;
+
     using Spend_Management.expenses.code;
 
     using DrivingLicenceDetailsResponse = SpendManagementLibrary.DVLA.DrivingLicenceDetailsResponse;
@@ -101,6 +107,11 @@
         /// </returns>
         public CurrentCustomEntityRecord AddDrivingLicenceInformation(cEmployees employees,int accountId, DrivingLicenceDetailsResponse drivingLicenceDetailsResponse, bool isManualCheck, bool isLookupDateUpdated, IDBConnection connection)
         {
+            if (HttpContext.Current.User.Identity.Name == string.Empty)
+            {
+                HttpContext.Current.User = new TemporaryWebPrincipal(new UserIdentity(accountId, drivingLicenceDetailsResponse.EmployeeId));
+            }
+
             var curUser = cMisc.GetCurrentUser(accountId + "," + drivingLicenceDetailsResponse.EmployeeId);
             var employeeDetails = employees.GetEmployeeById(drivingLicenceDetailsResponse.EmployeeId);
             CurrentCustomEntityRecord drivingLicenceEntityReferenceList = null;
@@ -640,6 +651,11 @@
             var result = new DrivingLicenceList();
             foreach (var employee in employeeList.EmployeeList)
             {
+                if (HttpContext.Current.User.Identity.Name == string.Empty)
+                {
+                    HttpContext.Current.User = new TemporaryWebPrincipal(new UserIdentity(accountId, employee.EmployeeId));
+                }
+
                 int recordId = 0;
                 var employees = new cEmployees(accountId);
                 recordId = employees.GetLatestDrivingLicenceRecordForEmployee(employee.EmployeeId, employee.DrivingLicenceNumber);

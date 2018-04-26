@@ -100,6 +100,8 @@
             item = base.Update(item);
             var value = this._accountPropertiesFactory.Save(item.To());
 
+            this.ActionContext.SubAccounts.InvalidateCache(item.SubAccountId);
+
             return this.GetByKey(value.Key);
         }
 
@@ -121,6 +123,8 @@
 
                 this._accountPropertiesFactory.Save(generalOption.To());
             }
+
+            this.ActionContext.SubAccounts.InvalidateCache(generalOptions.FirstOrDefault().SubAccountId);
 
             // Return all updated general options
             return generalOptions;

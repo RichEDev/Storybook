@@ -423,6 +423,8 @@ namespace SpendManagementApi.Controllers.V1
 
             foreach (var account in accounts)
             {
+                HttpContext.Current.User = new WebPrincipal(new UserIdentity(account.accountid, 0));
+
                 var subAccounts = new cAccountSubAccounts(account.accountid);
                 var reqSubAccount = subAccounts.getFirstSubAccount();
                 var generalOptions = this._generalOptionsFactory.Value[reqSubAccount.SubAccountID].WithReminders();

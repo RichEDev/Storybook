@@ -1,6 +1,7 @@
 ﻿namespace PublicAPI.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Http;
 
     using BusinessLogic.DataConnections;
