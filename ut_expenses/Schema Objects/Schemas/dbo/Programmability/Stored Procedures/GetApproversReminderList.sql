@@ -23,6 +23,7 @@ FROM EMPLOYEES
 LEFT JOIN claims_base ON claims_base.checkerid = employees.employeeid
 LEFT JOIN savedexpenses ON savedexpenses.itemcheckerid = employees.employeeid
 LEFT JOIN claims_base AS itemcheckerClaims ON itemcheckerClaims.claimid = savedexpenses.claimid
+LEFT JOIN checkandpay ON checkandpay.claimid = itemcheckerClaims.claimid
 WHERE ISNULL(ApproverLastRemindedDate, '1900-01-01') <= @ndaysago
 	AND (
 			(
@@ -38,6 +39,7 @@ WHERE ISNULL(ApproverLastRemindedDate, '1900-01-01') <= @ndaysago
 				itemcheckerClaims.STATUS <> 4
 				AND itemcheckerClaims.submitted = 1
 				AND itemcheckerClaims.paid = 0
+				AND (tempallow = 0 OR (tempallow = 1 AND (ItemsApproved = ClaimItemsCount AND CheckerItemsApproved = 1)))
 			)
 		)
 
@@ -46,10 +48,11 @@ SELECT employeeId FROM @employeeIdList
 UPDATE employees SET ApproverLastRemindedDate = GETDATE() WHERE employeeid IN (SELECT employeeId FROM @employeeIdList)
 
 INSERT INTO claimhistory (claimid, stage, comment, datestamp, employeeid, createdon, refnum) 
-	SELECT DISTINCT cb.claimid, stage, employees.firstname + ' ' + employees.surname + ' has been sent an email reminder to check this claim', GETDATE(), cb.employeeid, cb.createdon, null from claims_base cb
+	SELECT DISTINCT cb.claimid, cb.stage, employees.firstname + ' ' + employees.surname + ' has been sent an email reminder to check this claim', GETDATE(), cb.employeeid, cb.createdon, null from claims_base cb
 		INNER JOIN savedexpenses se ON cb.claimId = se.claimId
 		INNER JOIN  @employeeIdList CHECKERS ON SE.itemCheckerId = CHECKERS.employeeId OR cb.checkerid = CHECKERS.employeeId
 		INNER JOIN employees ON CHECKERS.employeeId = employees.employeeid
-		WHERE CB.paid = 0 AND CB.submitted = 1 AND CB.status <> 4 AND se.tempallow = 0
+		INNER JOIN checkandpay ON checkandpay.claimid = cb.claimid
+		WHERE CB.paid = 0 AND CB.submitted = 1 AND CB.status <> 4 AND (tempallow = 0 OR (se.tempallow = 1 AND (ItemsApproved = ClaimItemsCount AND CheckerItemsApproved = 1)) OR (se.tempallow = 1 AND (ItemsApproved = ClaimItemsCount AND CheckerItemsApproved = 0)))
 
 END
