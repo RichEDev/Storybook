@@ -124,11 +124,22 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Accounts\SqlAccountWithElementsFactoryTests.cs" />
+    <Compile Include="Bootstrap\Fields.cs" />
+    <Compile Include="Bootstrap\System.cs" />
+    <Compile Include="Bootstrap\ISystem.cs" />
+    <Compile Include="Bootstrap\IFields.cs" />
+    <Compile Include="Bootstrap\IProjectCodes.cs" />
+    <Compile Include="Bootstrap\ITables.cs" />
+    <Compile Include="Bootstrap\ProjectCodes.cs" />
+    <Compile Include="Bootstrap\Tables.cs" />
+    <Compile Include="Bootstrap\BootstrapBuilder.cs" />
     <Compile Include="Elements\SqlElementFactoryTests.cs" />
     <Compile Include="GeneralOptions\GeneralOptionsBuilderTests.cs" />
     <Compile Include="GeneralOptions\SqlAccountPropertyTests.cs" />
     <Compile Include="GeneralOptions\SqlGeneralOptionsFactoryTests.cs" />
     <Compile Include="Helpers\IdentityContextStub.cs" />
+    <Compile Include="ImportExport\ImportFilefactoryTests.cs" />
+    <Compile Include="ImportExport\ImportProjectCodesTests.cs" />
     <Compile Include="P11DCategories\SqlP11DCategoryTests.cs" />
     <Compile Include="Accounts\SqlAccountFactoryTests.cs" />
     <Compile Include="Helpers\DataReaderHelper.cs" />

@@ -8,6 +8,6 @@
         /// <summary>
         /// Get the <see cref="UserDefinedFieldValueCollection"/> for the given class.
         /// </summary>
-        UserDefinedFieldValueCollection UserDefinedFieldValues { get; }
+        UserDefinedFieldValueCollection UserDefinedFieldValues { get; set; }
     }
 }

@@ -106,6 +106,8 @@
     <Compile Include="Fields\SqlFieldFactory.cs" />
     <Compile Include="Fields\SqlFieldListValueFactory.cs" />
     <Compile Include="FinancialYears\SqlFinancialYearFactory.cs" />
+    <Compile Include="ImportExport\ImportFileFactory.cs" />
+    <Compile Include="ImportExport\ImportProjectCodes.cs" />
     <Compile Include="GeneralOptions\SqlGeneralOptionsFactory.cs" />
     <Compile Include="MetabaseCustomerDataConnection.cs" />
     <Compile Include="Modules\SqlModulesFactoryComposite.cs" />

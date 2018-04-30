@@ -123,11 +123,10 @@
         /// </returns>
         private ITable Get(Guid id)
         {
-            string strSQL = "SELECT tableid, jointype, tablename, allowreporton, allowimport, allowworkflow, allowentityrelationship, hasuserdefinedfields, description, primarykey, keyfield, userdefined_table, amendedon, elementid, subaccountidfield, tableFrom, relabel_param WHERE tableid = @tableId";
-
+            var sql = $"{this._baseSql} WHERE tableId = @tableId";
             this._metabaseDataConnection.Parameters.Add(new SqlParameter("@tableId", SqlDbType.UniqueIdentifier) { Value = id });
 
-            ITable result = this.GetTablesFromDb(strSQL).FirstOrDefault();
+            ITable result = this.GetTablesFromDb(sql).FirstOrDefault();
 
             return result;
         }

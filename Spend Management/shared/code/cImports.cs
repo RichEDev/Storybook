@@ -18,7 +18,11 @@ namespace Spend_Management
 {
     using System.Text;
 
+    using BusinessLogic.ImportExport;
+
     using SpendManagementLibrary.Helpers;
+
+    using SQLDataAccess.ImportExport;
 
     using Utilities.DistributedCaching;
 
@@ -465,8 +469,25 @@ namespace Spend_Management
             return tbl;
         }
 
-        public virtual List<string> importData()
+        /// <summary>
+        /// Import data from an external source
+        /// </summary>
+        /// <param name="importFileFactory">An instance of <see cref="ImportFileFactory"/></param>
+        /// <returns>A <see cref="List{T}"/>of status for each line or a single entry if the import fails.</returns>
+        public virtual List<string> importData(ImportFileFactory importFileFactory)
         {
+            var newStyleImport = importFileFactory.New(this.tableid);
+            if (newStyleImport != null)
+            {
+                var matchingFields = new List<ImportField>();
+                foreach (cImportField importField in this.lstMatchingGrid)
+                {
+                    matchingFields.Add(new ImportField(importField.destinationcolumn, importField.lookupcolumn, importField.defaultvalue));
+                }
+
+                return newStyleImport.Import(this.lstDefaultValues, matchingFields, this.oFileContents);
+            }
+
             var currentUser = cMisc.GetCurrentUser();
             List<string> status;
             using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(accountid)))

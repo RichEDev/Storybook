@@ -52,6 +52,8 @@
 
     using System.Web;
 
+    using SQLDataAccess.ImportExport;
+
     /// <summary>
     /// Bootstrapper class for SimpleInjector and Expenses
     /// </summary>
@@ -146,6 +148,7 @@
             container.Register<IFeatureFlagConfiguration>(() => BootstrapFileSystemConfiguration.CreateNew(container), Lifestyle.Scoped);
             container.Register<IFeatureFlagsContextProvider, WebFeatureFlagContext>();
             container.Register<IFeatureFlagManager, FeatureFlagManager>();
+            container.Register<ImportFileFactory, ImportFileFactory>();
 
 
             RegisterWebPages(container);

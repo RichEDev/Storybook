@@ -232,7 +232,7 @@
                     var userDefinedFieldId = reader.GetInt32(userdefinedFieldIdOrd);
                     var label = reader.GetString(labelOrd);
                     var userDefinedDescription = reader.GetString(userDefinedDescriptionOrd);
-                    var tooltip = reader.GetString(tooltipOrd);
+                    var tooltip = reader.IsDBNull(tooltipOrd) ? string.Empty : reader.GetString(tooltipOrd);
                     var order = reader.GetInt32(orderOrd);
                     var format = reader.IsDBNull(formatOrd) ? 0 : reader.GetByte(formatOrd);
                     var defaultValue = reader.GetValue(defaultValueOrd);

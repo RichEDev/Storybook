@@ -127,6 +127,7 @@
     <Compile Include="DataConnections\DataParametersTests.cs" />
     <Compile Include="GeneralOptions\AddEditExpenseOptionsTests.cs" />
     <Compile Include="Images\ImageTests.cs" />
+    <Compile Include="ImportExport\ImportFieldTests.cs" />
     <Compile Include="P11DCategories\P11DCategoryTests.cs" />
     <Compile Include="ProjectCodes\ProjectCodeTests.cs" />
     <Compile Include="ProjectCodes\ProjectCodeWithUserDefinedFieldsTests.cs" />

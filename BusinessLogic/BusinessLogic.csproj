@@ -122,6 +122,7 @@
     <Compile Include="Cache\ICacheKey.cs" />
     <Compile Include="Cache\IMetabaseCacheKey.cs" />
     <Compile Include="Cache\MetabaseCacheKey.cs" />
+    <Compile Include="Constants\Tables.cs" />
     <Compile Include="Databases\DatabaseCatalogue.cs" />
     <Compile Include="Databases\DatabaseServer.cs" />
     <Compile Include="Accounts\Elements\ModuleElements.cs" />
@@ -273,6 +274,8 @@
     <Compile Include="Images\IImageManipulation.cs" />
     <Compile Include="Images\JpgImageConversion.cs" />
     <Compile Include="Images\JpgImageManipulation.cs" />
+    <Compile Include="ImportExport\IImportFile.cs" />
+    <Compile Include="ImportExport\ImportField.cs" />
     <Compile Include="Receipts\WalletReceiptStatus.cs" />
     <Compile Include="SELCloud\CloudWalletReceipt.cs" />
     <Compile Include="SELCloud\ICloudReceipt.cs" />

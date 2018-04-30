@@ -5,10 +5,18 @@ namespace Spend_Management
     using System.Web.UI.WebControls;
     using System.Collections.Generic;
 
-    using SpendManagementLibrary;
+    using SpendManagementLibrary;using BusinessLogic;
+
+    using SQLDataAccess.ImportExport;
 
     public partial class importdatawizard : System.Web.UI.Page
     {
+        /// <summary>
+        /// Gets or sets the <see cref="ImportFileFactory"/> instance.
+        /// </summary>
+        [Dependency]
+        public ImportFileFactory ImportFileFactory { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Title = "Import Data Wizard";
@@ -262,7 +270,7 @@ namespace Spend_Management
                     if (validated.Count == 0)
                     {
                         status.Add("Importing data, please wait . . .");
-                        validated = import.importData();
+                        validated = import.importData(this.ImportFileFactory);
                         foreach (string i in validated)
                         {
                             status.Add(i);
@@ -290,7 +298,6 @@ namespace Spend_Management
             Guid destinationcolumn;
             Guid lookupcolumn;
             string[] arrid;
-            
             
             List<cImportField> grid = new List<cImportField>();
             foreach (Infragistics.WebUI.UltraWebGrid.UltraGridRow row in gridmatching.Rows)
@@ -327,11 +334,11 @@ namespace Spend_Management
             }
             return grid;
         }
+
         private SortedList<Guid,string> getDefaultValues()
         {
             string defaultvalue;
             Guid destinationcolumn;
-            
             
             SortedList<Guid,string> grid = new SortedList<Guid,string>();
             foreach (Infragistics.WebUI.UltraWebGrid.UltraGridRow row in griddefaults.Rows)
@@ -349,6 +356,7 @@ namespace Spend_Management
             }
             return grid;
         }
+
         protected void gridmatching_InitializeLayout(object sender, Infragistics.WebUI.UltraWebGrid.LayoutEventArgs e)
         {
 
