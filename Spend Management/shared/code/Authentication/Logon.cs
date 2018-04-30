@@ -265,7 +265,18 @@
                 this.RedirectAfterLogon(LoginResult.AlreadyLoggedIn, request, session, response, currentUser.CurrentActiveModule);
             }
 
-            HttpContext.Current.User = new TemporaryWebPrincipal(new UserIdentity(this.accountId, 0));
+            var accounts = new cAccounts();
+            cAccount account = accounts.GetAccountByCompanyID(companyId);
+
+            if (account == null || account.archived)
+            {
+                this.forgottenDetailsVisible = true;
+                return "The details you have entered are incorrect.";
+            }
+
+            this.accountId = account.accountid;
+
+            HttpContext.Current.User = new TemporaryWebPrincipal(new UserIdentity(account.accountid, 0));
 
             LoginResult auth = this.Authenticate(companyId.Trim(), username.Trim(), password.Trim(), request, fromSso);
             session["SubAccountID"] = this.currentSubAccount;
@@ -281,25 +292,16 @@
                 }
             }
 
-            var clsAccounts = new cAccounts();
-            cAccount reqAccount = clsAccounts.GetAccountByID(this.accountId);
-
-            if (reqAccount == null || reqAccount.archived)
-            {
-                this.forgottenDetailsVisible = true;
-                return "The details you have entered are incorrect.";
-            }
-
             if (auth == LoginResult.Success || auth == LoginResult.ChangePassword
                 || auth == LoginResult.EnterOdometerValues)
             {
                 return this.SuccessfulLogin(
-                    username, companyId, password, auth, request, session, response, reqAccount, rememberDetails, module, fromSso);
+                    username, companyId, password, auth, request, session, response, account, rememberDetails, module, fromSso);
             }
 
             InvalidateCurrentCookie(request, response);
 
-            return this.GetFailedToLogonMessage(username, module, auth, reqAccount);
+            return this.GetFailedToLogonMessage(username, module, auth, account);
         }
 
         #endregion
@@ -413,18 +415,6 @@
         {   
             var clsAccounts = new cAccounts();
             cAccount reqAccount = clsAccounts.GetAccountByCompanyID(companyName);
-
-            if (reqAccount == null)
-            {
-                return LoginResult.IncorrectCompanyName;
-            }
-
-            this.accountId = reqAccount.accountid;
-
-            if (reqAccount.archived)
-            {
-                return LoginResult.AccountArchived;
-            }
 
             if (dnsSafeHost != "localhost")
             {
