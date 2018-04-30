@@ -27,15 +27,16 @@
         /// Creates a pass-through <see cref="IDatabase"/> to enable Redis access.
         /// </summary>
         /// <param name="connectionString">The connection string to the Redis server.</param>
+        /// <param name="dbNumber">The database number for the redis database to use on the Redis server</param>
         /// <returns>A pass through instance of <see cref="IDatabase"/> to enable interaction with Redis</returns>
         /// <exception cref="MemberAccessException">The <see cref="T:System.Lazy`1" /> instance is initialized to use the default constructor of the type that is being lazily initialized, and permissions to access the constructor are missing. </exception>
         /// <exception cref="MissingMemberException">The <see cref="T:System.Lazy`1" /> instance is initialized to use the default constructor of the type that is being lazily initialized, and that type does not have a public, parameterless constructor. </exception>
         /// <exception cref="InvalidOperationException">The initialization function tries to access <see cref="P:System.Lazy`1.Value" /> on this instance. </exception>
-        public static IDatabase Connection(string connectionString)
+        public static IDatabase Connection(string connectionString, int dbNumber)
         {
             ConnectionString = connectionString;
 
-            return Database ?? (Database = LazyConnection.Value.GetDatabase());
+            return Database ?? (Database = LazyConnection.Value.GetDatabase(dbNumber));
         }
     }
 }

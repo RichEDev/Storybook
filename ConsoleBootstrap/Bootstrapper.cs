@@ -5,6 +5,7 @@
     using BusinessLogic.DataConnections;
     using BusinessLogic.Fields;
     using BusinessLogic.Identity;
+    using BusinessLogic.Images;
     using BusinessLogic.Tables;
     using BusinessLogic.UserDefinedFields;
 
@@ -80,9 +81,18 @@
             container.RegisterCollection(typeof(TableRepository), typeof(SqlTableFactory).Assembly, typeof(TableRepository).Assembly);
             container.Register<IFieldFactory, FieldFactory>(Lifestyle.Transient);
 
+            container.Register(typeof(IImageConversion), typeof(JpgImageConversion));
+            container.Register(typeof(IImageManipulation), typeof(JpgImageManipulation));
+
             // This registration should register all implementations of IDataFactory<,> within the SqlDataAccess project. 
             container.Register(typeof(IDataFactory<,>), new[] { typeof(SqlAccountFactory).Assembly });
             container.Register(typeof(IDataFactoryCustom<,>), new[] { typeof(SqlProjectCodesWithUserDefinedValuesFactory).Assembly });
+
+            // Verify verifies that all required dependencies are registered
+            // ONLY RUN IN DEBUG MODE
+            #if DEBUG
+            // container.Verify();
+            #endif
 
             return container;
         }

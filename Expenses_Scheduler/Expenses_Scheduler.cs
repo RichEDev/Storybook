@@ -278,7 +278,7 @@ namespace Expenses_Scheduler
                                     ListInUse = true;
                                     try
                                     {
-                                        lstScheduleRequests.Add(new cScheduleRequest(account.accountid, scheduleid, rpt.employeeid));
+                                        lstScheduleRequests.Add(new cScheduleRequest(account.accountid, scheduleid, rpt.employeeid, FunkyInjector.Container));
                                     }
                                     catch (Exception ex)
                                     {
@@ -514,6 +514,9 @@ namespace Expenses_Scheduler
         public static void StartScheduleThread(object data)
         {
             cScheduleRequest request = (cScheduleRequest)data;
+
+            FunkyInjector.Container = request.Container;
+
             try
             {
                 cScheduledReports clsscheduled = new cScheduledReports(request.AccountID);
@@ -644,11 +647,14 @@ namespace Expenses_Scheduler
         private cReportRequest _clsReportRequest;
         private byte[] _oReportData;
 
-        public cScheduleRequest(int accountid, int scheduleid, int employeeid)
+        public Container Container { get; set; }
+
+        public cScheduleRequest(int accountid, int scheduleid, int employeeid, Container container)
         {
             _nAccountID = accountid;
             _nScheduleID = scheduleid;
             _nEmployeeID = employeeid;
+            this.Container = container;
             _eStatus = ReportRequestStatus.Queued;
         }
 

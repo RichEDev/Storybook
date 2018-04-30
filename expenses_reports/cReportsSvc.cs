@@ -14,6 +14,8 @@ namespace Expenses_Reports
     using System.Runtime.Remoting.Messaging;
     using System.Threading;
 
+    using ConsoleBootstrap;
+
     using Infragistics.WebUI.UltraWebCalcManager;
     using Infragistics.WebUI.UltraWebGrid;
 
@@ -248,6 +250,9 @@ namespace Expenses_Reports
 
         public static object processReport(cReportRequest request)
         {
+            //Bootstrap container and add to Funky Injector
+            FunkyInjector.Container = Bootstrapper.Bootstrap(request.accountid);
+
             var clsreports = new cReports(request.accountid);
             cAccountSubAccounts clsSubAccounts = new cAccountSubAccounts(request.accountid);
             var subAccount = clsSubAccounts.getSubAccountById(request.SubAccountId);

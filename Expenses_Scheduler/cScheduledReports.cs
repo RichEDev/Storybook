@@ -18,6 +18,8 @@ namespace Expenses_Scheduler
 {
     using System.Diagnostics;
 
+    using ConsoleBootstrap;
+
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Helpers;
 
@@ -385,7 +387,9 @@ namespace Expenses_Scheduler
             }
             catch (Exception ex)
             {
-                cScheduleRequest tmpRequest = new cScheduleRequest(report.accountid, report.scheduleid, report.employeeid);
+                var container = Bootstrapper.Bootstrap(report.accountid);
+
+                cScheduleRequest tmpRequest = new cScheduleRequest(report.accountid, report.scheduleid, report.employeeid, container);
                 SendError(tmpRequest, errMsg: ex.Message, errStackDump: ex.StackTrace, msgBody: "An error occurred attempting to add a scheduled report");
                 scheduleid = 0;
             }
@@ -490,7 +494,9 @@ namespace Expenses_Scheduler
             }
             catch (Exception ex)
             {
-                cScheduleRequest tmpRequest = new cScheduleRequest(report.accountid, report.scheduleid , report.employeeid);
+                var container = Bootstrapper.Bootstrap(report.accountid);
+
+                cScheduleRequest tmpRequest = new cScheduleRequest(report.accountid, report.scheduleid , report.employeeid, container);
                 SendError(tmpRequest, errMsg: ex.Message, errStackDump: ex.StackTrace, msgBody: "An error occurred attempting to update a scheduled report");
             }
             // List variable is nullified due to dependency onChange() event call
@@ -514,7 +520,9 @@ namespace Expenses_Scheduler
             }
             catch (Exception ex)
             {
-                cScheduleRequest tmpRequest = new cScheduleRequest(Accountid, scheduleid, 0);
+                var container = Bootstrapper.Bootstrap(this.Accountid);
+
+                cScheduleRequest tmpRequest = new cScheduleRequest(Accountid, scheduleid, 0, container);
 
                 SendError(tmpRequest, errMsg: ex.Message, errStackDump: ex.StackTrace, msgBody: "A problem occurred attempting to delete a schedule");
             }

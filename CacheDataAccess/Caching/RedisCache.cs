@@ -50,7 +50,7 @@
             Guard.ThrowIfNull(configurationManager, nameof(configurationManager));
             Guard.ThrowIfNull(serializer, nameof(serializer));
 
-            this._database = RedisClientWrapper.Connection(configurationManager.ConnectionStrings["redis"].ConnectionString);
+            this._database = RedisClientWrapper.Connection(configurationManager.ConnectionStrings["redis"].ConnectionString, Convert.ToInt32(configurationManager.AppSettings["redisDatabaseNumber"]));
             this._log = logger;
             this._serializer = serializer;
         }
