@@ -138,7 +138,7 @@ namespace DutyOfCareServices.ApiCalls.CorporateCards
                 if (result.Status == TaskStatus.RanToCompletion && result.Result.StatusCode == HttpStatusCode.BadRequest)
                 {
                     Log.Error($"{LogMessage} {result.Result.StatusDescription}");
-                    this._logger.MakeEventLogEntry(LogMessage + " Error :", endPoint, result.Result.StatusDescription, true);
+                    this._logger.MakeEventLogEntry(LogMessage + " Error :", endPoint, result.Result.StatusDescription, HttpStatusCode.BadRequest);
                     Console.WriteLine(LogMessage + result.Result.StatusDescription);
                     return null;
                 }
@@ -146,14 +146,14 @@ namespace DutyOfCareServices.ApiCalls.CorporateCards
             }
             catch (WebException webException)
             {
-                this._logger.MakeEventLogEntry(LogMessage + " Error :", endPoint, webException.Message, true);
+                this._logger.MakeEventLogEntry(LogMessage + " Error :", endPoint, webException.Message, HttpStatusCode.InternalServerError);
                 Log.Error($"Error on request to API", webException);
                 Console.WriteLine(LogMessage + webException.Message);
             }
             catch (Exception ex)
             {
                 Log.Error($"Error on request to API", ex);
-                this._logger.MakeEventLogEntry(LogMessage + " Error :", endPoint, ex.Message, true);
+                this._logger.MakeEventLogEntry(LogMessage + " Error :", endPoint, ex.Message, HttpStatusCode.InternalServerError);
                 Console.WriteLine(LogMessage + ex.Message);
             }
 

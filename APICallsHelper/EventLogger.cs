@@ -20,18 +20,31 @@
         /// <param name="actionName">The operation name</param>
         /// <param name="action">The url which was called</param>
         /// <param name="message">Message that needs to be logged</param>
-        /// <param name="isError">was there any error while execution</param>
+        public void MakeEventLogEntry(string actionName, string action, string message)
+        {
+            var entry =
+                $"{actionName}. URL: {"http://" + ConfigurationManager.AppSettings["domain"]}/{action}. Message : {message} . ";
+            EventLog.WriteEntry(ProjectName, entry);
+        }
+
+        /// <summary>
+        /// Log an entry of the status in windows event log.
+        /// </summary>
+        /// <param name="actionName">The operation name</param>
+        /// <param name="action">The url which was called</param>
+        /// <param name="message">Message that needs to be logged</param>
         /// <param name="statusCode">Instance of type <see cref="HttpStatusCode"/> which is the result of api request.</param>
-        public void MakeEventLogEntry(string actionName, string action, string message, bool isError = false, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
+        public void MakeEventLogEntry(string actionName, string action, string message, HttpStatusCode statusCode)
         {
             var entry =
                 $"{actionName}. URL: {"http://" + ConfigurationManager.AppSettings["domain"]}/{action}. Message : {message} . Status code: ({statusCode})";
-            if (isError)
+            if (statusCode == HttpStatusCode.OK)
             {
-                EventLog.WriteEntry(ProjectName, entry, EventLogEntryType.Error);
+                EventLog.WriteEntry(ProjectName, entry);
                 return;
             }
-            EventLog.WriteEntry(ProjectName, entry);
+
+            EventLog.WriteEntry(ProjectName, entry, EventLogEntryType.Error);
         }
     }
 }

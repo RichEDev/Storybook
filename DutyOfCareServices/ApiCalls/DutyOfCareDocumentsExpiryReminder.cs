@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Net;
 
     using APICallsHelper;
 
@@ -121,7 +122,7 @@
             }
             catch (Exception ex)
             {
-                this._logger.MakeEventLogEntry(LogMessage + " Error :", procedueName, ex.Message, true);
+                this._logger.MakeEventLogEntry(LogMessage + " Error :", procedueName, ex.Message, HttpStatusCode.InternalServerError);
             }
         }
 

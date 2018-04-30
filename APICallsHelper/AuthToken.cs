@@ -83,7 +83,7 @@
 
                 var response = (HttpWebResponse)request.GetResponse();
 
-                this.Logger.MakeEventLogEntry("Get AuthToken", ApiUrl, "Call succesfully made by - " + this.UserName, statusCode: response.StatusCode);
+                this.Logger.MakeEventLogEntry("Get AuthToken", ApiUrl, "Call succesfully made by - " + this.UserName, response.StatusCode);
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
@@ -93,7 +93,7 @@
             }
             catch (Exception ex)
             {
-                this.Logger.MakeEventLogEntry("Error : Get AuthToken", "/Account/Login", ex.Message, true);
+                this.Logger.MakeEventLogEntry("Error : Get AuthToken", "/Account/Login", ex.Message, HttpStatusCode.InternalServerError);
             }
             return null;
         }

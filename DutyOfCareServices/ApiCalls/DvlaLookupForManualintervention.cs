@@ -1,6 +1,8 @@
 ﻿namespace DutyOfCareServices.ApiCalls
 {
     using System;
+    using System.Net;
+
     using APICallsHelper;
     using ApiClientHelper;
 
@@ -79,7 +81,7 @@
                 if (employeeDetails.EmployeeList.Count == 0)
                 {
                     Console.WriteLine("No employees to populate driving licence");
-                    logger.MakeEventLogEntry(LogMessage + "Failed to load employees details", ApiEndPointToGetEmployeeWithDvlaConstraint, "for account: " + account.AccountId);
+                    logger.MakeEventLogEntry(LogMessage + "No employees to populate driving licence", ApiEndPointToGetEmployeeWithDvlaConstraint, "for account: " + account.AccountId);
                     continue;
                 }
 
