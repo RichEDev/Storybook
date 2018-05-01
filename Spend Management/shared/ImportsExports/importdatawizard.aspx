@@ -299,7 +299,7 @@
              var src = $('#activeStepCheck').attr('src').split('/');
              var file = src[src.length - 1];
              if (file == "timeline_event2_sel.gif") {
-                 if (!$('#importedData').hasScrollBar() && ((('#importedData').innerWidth() - $('#importedData > table').innerWidth()) < 150)) {
+                 if (!$('#importedData').hasScrollBar() && (($('#importedData').innerWidth() - $('#importedData > table').innerWidth()) < 150)) {
                      $('body').css('display', 'inline-block');
                  }
              }
