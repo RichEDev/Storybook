@@ -12,11 +12,11 @@
     <script language="javascript" type="text/javascript">
 				
 					
-				function deleteFilterRule(accountid, filterid)
+				function deleteFilterRule(filterid)
 				{
 					if (confirm('Are you sure you wish to delete the selected filter rule?'))
 					{
-						PageMethods.deleteFilterRule(accountid, filterid);
+						PageMethods.deleteFilterRule(filterid);
                         SEL.Grid.deleteGridRow('gridFilterRules', filterid);
 					}
 				}

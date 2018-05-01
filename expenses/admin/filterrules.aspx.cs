@@ -92,10 +92,11 @@ namespace expenses.admin
         }
 
         [WebMethod(EnableSession = true)]
-        public static void deleteFilterRule(int accountid, int filterid)
+        public static void deleteFilterRule(int filterid)
         {
-            var costCodes = new cCostcodes(accountid);
-            var filterRules = new cFilterRules(accountid, costCodes);
+            var user = cMisc.GetCurrentUser();
+            var costCodes = new cCostcodes(user.AccountID);
+            var filterRules = new cFilterRules(user.AccountID, costCodes);
             filterRules.DeleteFilterRule(filterid);
         }
 

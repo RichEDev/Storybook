@@ -157,7 +157,7 @@
             clsgrid.getColumnByName("paruserdefineid").hidden = true;
             clsgrid.KeyField = "filterid";
             clsgrid.enabledeleting = true;
-            clsgrid.deletelink = "javascript:deleteFilterRule(" + accountid + ",{holidayid});";
+            clsgrid.deletelink = "javascript:deleteFilterRule({filterid});";
             clsgrid.enableupdating = true;
             clsgrid.editlink = "aefilterrule.aspx?action=2&filterid={filterid}";
             var filterTypeField = clsfields.GetFieldByID(Guid.Parse("3A0D5614-C591-4F8E-B50C-376610053708")); // parent
