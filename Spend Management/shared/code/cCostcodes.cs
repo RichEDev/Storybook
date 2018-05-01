@@ -421,10 +421,7 @@ namespace Spend_Management
 
                 databaseConnection.AddWithValue("@Description", description, 4000);
 
-                using (IDataReader reader = databaseConnection.GetReader(sql))
-                {
-                    returnVal = reader.GetInt32(0);
-                }
+                returnVal = databaseConnection.ExecuteScalar<int>(sql);
             }
 
             return returnVal;
@@ -449,10 +446,7 @@ namespace Spend_Management
 
                 databaseConnection.AddWithValue("@CostCode", costcode, 50);
 
-                using (IDataReader reader = databaseConnection.GetReader(sql))
-                {
-                    returnVal = reader.GetInt32(0);
-                }
+                returnVal = databaseConnection.ExecuteScalar<int>(sql);
             }
 
             return returnVal;
