@@ -89,7 +89,7 @@
         /// <param name="envelopeNumber">The EnvelopeNumber of the <see cref="Envelope">Envelope</see>.</param>
         /// <returns>A GetEnvelopesResponse, containing any <see cref="Envelope">Envelope</see>s found.</returns>
         [HttpGet, Route("ByEnvelopeNumber/{envelopeNumber}")]
-        [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
+        [NoAuthorisationRequired]
         public GetEnvelopesResponse GetByEnvelopeNumber([FromUri] string envelopeNumber)
         {
             var response = this.InitialiseResponse<GetEnvelopesResponse>();
@@ -158,7 +158,7 @@
         /// <param name="request">The Envelope to modify.</param>
         /// <returns>The updated Envelope.</returns>
         [Route("{id:int}")]
-        [AuthAudit(SpendManagementElement.None, AccessRoleType.Edit)]
+        [NoAuthorisationRequired]
         public EnvelopeResponse Put([FromUri] int id, [FromBody] Envelope request)
         {
             request.Id = id;
@@ -256,7 +256,7 @@
         /// <param name="id">The id of the <see cref="Envelope">Envelope</see> to update.</param>
         /// <returns>The updated Envelope.</returns>
         [HttpPatch, Route("{id:int}/MarkReceived")]
-        [AuthAudit(SpendManagementElement.None, AccessRoleType.Edit)]
+        [NoAuthorisationRequired]
         public EnvelopeResponse MarkReceived(int id)
         {
             var response = this.InitialiseResponse<EnvelopeResponse>();

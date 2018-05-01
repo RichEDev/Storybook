@@ -34,7 +34,7 @@
         /// Gets all <see cref="EnvelopePhysicalState">EnvelopePhysicalStates</see> in the system.
         /// </summary>
         [HttpGet, Route("")]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.View)]
+        [NoAuthorisationRequired]
         public GetEnvelopePhysicalStatesResponse GetAll()
         {
             return this.GetAll<GetEnvelopePhysicalStatesResponse>();

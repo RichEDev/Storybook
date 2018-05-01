@@ -105,11 +105,11 @@
     <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.5.0.1\lib\net451\RabbitMQ.Client.dll</HintPath>
     </Reference>
-    <Reference Include="SEL.MessageBrokers, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SEL.MessageBrokers.1.0.0.2\lib\net461\SEL.MessageBrokers.dll</HintPath>
-    </Reference>
     <Reference Include="SEL.FeatureFlags, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SEL.FeatureFlags.1.0.0.3\lib\net461\SEL.FeatureFlags.dll</HintPath>
+    </Reference>
+    <Reference Include="SEL.MessageBrokers, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SEL.MessageBrokers.1.0.0.2\lib\net461\SEL.MessageBrokers.dll</HintPath>
     </Reference>
     <Reference Include="SimpleInjector, Version=4.0.11.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.4.0.11\lib\net45\SimpleInjector.dll</HintPath>

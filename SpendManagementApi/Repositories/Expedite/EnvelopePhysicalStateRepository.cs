@@ -4,17 +4,29 @@
     using System.Linq;
     using Interfaces;
     using Models.Common;
-    using Models.Types.Expedite;
+
+    using SpendManagementLibrary.Expedite;
+
     using Utilities;
     using SpendManagementLibrary.Interfaces.Expedite;
     using Spend_Management;
+
+    using EnvelopePhysicalState = SpendManagementApi.Models.Types.Expedite.EnvelopePhysicalState;
 
     /// <summary>
     /// EnvelopeRepository manages data access for Envelopes.
     /// </summary>
     internal class EnvelopePhysicalStateRepository : BaseRepository<EnvelopePhysicalState>, ISupportsActionContext
     {
+        /// <summary>
+        /// An instance of <see cref="IManageEnvelopes"/>
+        /// </summary>
         private readonly IManageEnvelopes _data;
+
+        /// <summary>
+        /// An instance of <see cref="IActionContext"/>
+        /// </summary>
+        private readonly IActionContext _actionContext = null;
 
         /// <summary>
         /// Creates a new EnvelopeRepository with the passed in user.
@@ -27,13 +39,18 @@
             _data = ActionContext.Envelopes;
         }
 
+        public EnvelopePhysicalStateRepository()
+        {
+            this._data = new Envelopes();
+        }
+
         /// <summary>
         /// Gets all the EnvelopePhysicalStates within the system.
         /// </summary>
         /// <returns>A list of envelopes.</returns>
         public override IList<EnvelopePhysicalState> GetAll()
         {
-            return _data.GetAllEnvelopePhysicalStates().Select(e => new EnvelopePhysicalState().From(e, ActionContext)).ToList();
+            return _data.GetAllEnvelopePhysicalStates().Select(e => new EnvelopePhysicalState().From(e, this._actionContext)).ToList();
         }
         
         /// <summary>

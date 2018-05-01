@@ -7,6 +7,9 @@
     using Interfaces;
     using Models.Common;
     using Models.Types.Expedite;
+
+    using SpendManagementApi.Common;
+
     using Utilities;
     using SpendManagementLibrary.Interfaces.Expedite;
     using Spend_Management;
@@ -30,7 +33,7 @@
         /// <summary>
         /// An instance of <see cref="IActionContext"/>.
         /// </summary>
-        private readonly IActionContext _actionContext = null;
+        private IActionContext _actionContext;
 
         /// <summary>
         /// Creates a new EnvelopeRepository with the passed in user.
@@ -174,7 +177,8 @@
         /// <returns>The edited envelope.</returns>
         public override Envelope Update(Envelope item)
         {
-            return new Envelope().From(_data.EditEnvelope(item.To(_actionContext), User), _actionContext);
+            var user = this.User ?? new CurrentUser(item.AccountId.Value, 0, 0, Modules.expenses, 1);
+            return new Envelope().From(_data.EditEnvelope(item.To(_actionContext), user), _actionContext);
         }
 
         /// <summary>
@@ -253,19 +257,27 @@
         {
             var envelope = TryGetEnvelopeAndThrow(id);
 
+            var user = this.User ?? new CurrentUser(envelope.AccountId.Value, 0, 0, Modules.expenses, 1);
+
+            if (this._actionContext is null)
+            {           
+                this._actionContext = new ActionContext(user);
+            }
+          
             // make sure to throw in light of a missing claim.
             var claim = TryGetClaimAndThrow(envelope);
 
             // mark received.
-            envelope = envelope.From(_data.MarkReceived(id, User), _actionContext);
+            envelope = envelope.From(_data.MarkReceived(id, user), _actionContext);
 
             // update claim history.
-            var history = string.Format("Envelope: {0} received for scan & attach.", envelope.EnvelopeNumber);
-            _actionContext.Claims.UpdateClaimHistory(claim, history, User.EmployeeID);
+            var history = string.Format("Envelope: {0} received for scan & attach.", envelope.EnvelopeNumber);         
+            this._actionContext.Claims.UpdateClaimHistory(claim, history);
 
             // if the signoff group settings say so, send a notification.
-            var employee = _actionContext.Employees.GetEmployeeById(claim.employeeid);
-            var signoffGroup = _actionContext.SignoffGroups.GetGroupById(employee.SignOffGroupID);
+            var employee = this._actionContext.Employees.GetEmployeeById(claim.employeeid);
+            var signoffGroup = this._actionContext.SignoffGroups.GetGroupById(employee.SignOffGroupID);
+
             if (signoffGroup.NotifyClaimantWhenEnvelopeReceived == true)
             {
                 var notifications = ActionContext.Notifications;
@@ -275,7 +287,7 @@
 
             return envelope;
         }
-
+        
         /// <summary>
         /// Marks a single <see cref="Envelope">Envelope</see> as completed scanning and attach by SEL.
         /// </summary>
@@ -472,9 +484,8 @@
             {
                 throw new InvalidDataException(ApiResources.ApiErrorEnvelopeDoesntHaveClaim);
             }
-
-            var claims = _actionContext.Claims;
-            var claim = claims.getClaimById(envelope.ClaimId.Value);
+           
+            var claim = this._actionContext.Claims.getClaimById(envelope.ClaimId.Value);
 
             if (claim == null)
             {
