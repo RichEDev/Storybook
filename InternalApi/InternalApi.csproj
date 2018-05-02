@@ -192,8 +192,11 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
-  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
-    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  <Target Name="PublishWebsites" AfterTargets="Package">
+    <ItemGroup Label="ItemsForDeploymment">
+      <Folders Include="$(_PackageTempDir)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Folders)" DestinationFiles="@(Folders->'$(TeamBuildOutDir)\_PublishedWebsites\$(MSBuildProjectName)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
   </Target>
   <ProjectExtensions>
     <VisualStudio>
