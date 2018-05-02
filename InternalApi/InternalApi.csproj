@@ -261,6 +261,15 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Target Name="MvcBuildViews" AfterTargets="Build" Condition="'$(MvcBuildViews)'=='true'">
+    <ItemGroup Label="ItemsForDeploymment">
+      <!--<Folders Include="$(_PackageTempDir)\**\*.*"/>-->
+    </ItemGroup>
+    <Message Text="$(WebProjectOutputDir)" />
+    <Message Text="$(_PackageTempDir)" />
+    <Message Text="@(Fold)" />
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" Updateable="true" Clean="true" TargetPath="$(_PackageTempDir)" />
+  </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
