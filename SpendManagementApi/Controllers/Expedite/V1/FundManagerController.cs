@@ -22,11 +22,11 @@ namespace SpendManagementApi.Controllers.Expedite.V1
     using System.Web.Http.Description;
 
     /// <summary>
-    /// Contains Expedite Clinet's Fund specific actions.
+    /// Contains Expedite Client's Fund specific actions.
     /// </summary>
     [RoutePrefix("Expedite/Fund")]
     [Version(1)]
-    [InternalSelenityMethod, ApiExplorerSettings(/*IgnoreApi = true*/)]
+    [InternalSelenityMethod, ApiExplorerSettings(IgnoreApi = true)]
     public class FundManagerV1Controller : BaseApiController<FundManager>
     {
         /// <summary>
@@ -39,15 +39,16 @@ namespace SpendManagementApi.Controllers.Expedite.V1
         {
             return this.Links("Options");
         }
-        
+
         #region Fund Methods
+
         /// <summary>
         /// Gets the data for a fund and returns the fund with its data property populated.
         /// </summary>
         /// <param name="id">The Id of expedite client.</param>
         /// <returns>Available Fund for the expedite client</returns>
         [HttpGet, Route("~/Expedite/Fund/{id:int}")]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.View)]
+        [NoAuthorisationRequired]
         public FundManagerResponse Get([FromUri] int id)
         {
             return this.Get<FundManagerResponse>(id);
@@ -59,7 +60,7 @@ namespace SpendManagementApi.Controllers.Expedite.V1
         /// <param name="id">The Id of expedite client.</param>
         /// <returns>Fund limit for the expedite client</returns>
         [HttpGet, Route("~/Expedite/FundLimit/{id:int}")]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.View)]
+        [NoAuthorisationRequired]
         public FundManagerResponse GetFundLimit([FromUri] int id)
         {
             var response = this.InitialiseResponse<FundManagerResponse>();
@@ -73,7 +74,7 @@ namespace SpendManagementApi.Controllers.Expedite.V1
         /// <param name="fundInfo">Fund information</param>
         /// <returns>New fund limit</returns>
         [HttpPost, Route("~/Expedite/UpdateFundLimit")]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.View)]
+        [NoAuthorisationRequired]
         public FundManagerResponse UpdateFundLimit([FromBody] FundManager fundInfo)
         {
             var response = this.InitialiseResponse<FundManagerResponse>();
@@ -87,7 +88,7 @@ namespace SpendManagementApi.Controllers.Expedite.V1
         /// <param name="request">The Fund transaction to add.</param>
         /// <returns>The newly added Transaction.</returns>
         [Route("~/Expedite/Fund")]
-        [AuthAudit(SpendManagementElement.None, AccessRoleType.Add)]
+        [NoAuthorisationRequired]
         public FundManagerResponse Post([FromBody] FundManager request)
         {
                 

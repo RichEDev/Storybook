@@ -1,6 +1,4 @@
-﻿
-
-namespace SpendManagementApi.Repositories.Expedite
+﻿namespace SpendManagementApi.Repositories.Expedite
 {
     using System;
     using System.Collections.Generic;
@@ -13,6 +11,7 @@ namespace SpendManagementApi.Repositories.Expedite
     using Utilities;
     using Spend_Management;
     using SpendManagementLibrary;
+    using SpendManagementLibrary.Expedite;
     using SpendManagementLibrary.Interfaces.Expedite;
 
     /// <summary>
@@ -20,19 +19,29 @@ namespace SpendManagementApi.Repositories.Expedite
     /// </summary> 
     internal class FundRepository : BaseRepository<FundManager>, ISupportsActionContext
     {
-
         private readonly IManageFunds _data;
-     
+
         /// <summary>
-        /// Creates a new ReceiptRepository with the passed in user.
+        /// An instance of <see cref="IActionContext"/>
+        /// </summary>
+        private readonly IActionContext _actionContext = null;
+
+        /// <summary>
+        /// Creates a new FundRepository with the passed in user.
         /// </summary>
         /// <param name="user">The current user.</param>
         /// <param name="actionContext">An implementation of ISupportsActionContext</param>
         public FundRepository(ICurrentUser user, IActionContext actionContext)
             : base(user, actionContext, x => x.Id, x => x.Id.ToString(CultureInfo.InvariantCulture))
         {
-            _data = ActionContext.Fund;
+            this._data = this.ActionContext.Fund;
         }
+
+        /// <summary>
+        /// Creates a new FundRepository
+        /// </summary>
+        /// <remarks>Used together with the NoAuthorisationRequired attribute</remarks>
+        public FundRepository(){}
 
         /// <summary>
         /// Get all of T
@@ -44,26 +53,28 @@ namespace SpendManagementApi.Repositories.Expedite
         }
        
         /// <summary>
-        /// Gets an Expense Category by it's id.
+        /// Gets a fund by the account id.
         /// </summary>
-        /// <param name="id">The Id</param>
-        /// <returns>An Expense Category.</returns>
+        /// <param name="id">The expedite client account Id</param>
+        /// <returns>A fund.</returns>
         public override FundManager Get(int id)
         {
-            var item = _data.GetFundAvailable(id);
-            return new FundManager().From(item, ActionContext);
+            var funds = new Funds(id);
+            var item = funds.GetFundAvailable(id);
+            return new FundManager().From(item, this._actionContext);
          
         }
 
         /// <summary>
-        /// Gets an customer fund limit by it's id.
+        /// Gets a customer fund limit by it's id.
         /// </summary>
         /// <param name="id">The Id</param>
         /// <returns>Customer fund limit.</returns>
         public FundManager GetFund(int id)
         {
-            var item = _data.GetFundLimit(id);
-            return new FundManager().From(item, ActionContext);
+            var funds = new Funds(id);
+            var item = funds.GetFundLimit(id);
+            return new FundManager().From(item, this._actionContext);
 
         }
 
@@ -71,11 +82,13 @@ namespace SpendManagementApi.Repositories.Expedite
         /// Update fund limit of customer by it's id.
         /// </summary>
         /// <param name="id">The Id</param>
+        /// <param name="amount">The fund limit amount</param>
         /// <returns>Customer fund limit.</returns>
-        public FundManager UpdateFundLimit(int id,decimal amount)
+        public FundManager UpdateFundLimit(int id, decimal amount)
         {
-            var item = _data.UpdateFundLimit(id,amount);
-            return new FundManager().From(item, ActionContext);
+            var funds = new Funds(id);
+            var item = funds.UpdateFundLimit(id, amount);
+            return new FundManager().From(item, this._actionContext);
 
         }
 
@@ -86,8 +99,9 @@ namespace SpendManagementApi.Repositories.Expedite
         /// <returns>The newly added transaction.</returns>
         public override FundManager Add(FundManager item)
         {
-            return new FundManager().From(_data.AddFundTransaction(item.To(ActionContext)), ActionContext);
-        }       
+            var funds = new Funds(item.AccountId);
+            return new FundManager().From(funds.AddFundTransaction(item.To(this._actionContext)), this._actionContext);
+        }
 
     }
        
