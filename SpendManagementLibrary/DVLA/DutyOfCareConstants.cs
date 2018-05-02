@@ -8,6 +8,7 @@
     public class DutyOfCareConstants
     {
         private readonly Dictionary<string, DvlaServiceResponseCodes> _errorMap = new Dictionary<string, DvlaServiceResponseCodes>() {
+            {"-1",new DvlaServiceResponseCodes("Other error","other Error")},
             {"300",new DvlaServiceResponseCodes("Validation Error (See Details)","Validation Error")},
             {"301",new DvlaServiceResponseCodes("Invalid driver or issue number","Invalid driver or issue number")},
             {"302",new DvlaServiceResponseCodes("Driver with provided ID does not exist","Driver with provided ID does not exist")},

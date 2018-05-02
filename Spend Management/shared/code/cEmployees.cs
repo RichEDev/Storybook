@@ -890,13 +890,19 @@ namespace Spend_Management
             return ds;
         }
 
-        public int getEmployeeidByEmailAddress(int accountID, string email, IDBConnection connection = null)
+        /// <summary>
+        /// Get an employee using the email address
+        /// </summary>
+        /// <param name="accountID">The current account ID</param>
+        /// <param name="email">The email to use to search</param>
+        /// <returns>The Id of the employee with the given <paramref name="email"/> or zero if not found.</returns>
+        public int getEmployeeidByEmailAddress(int accountID, string email)
         {
             int employeeid;
-            using (var expdata = connection ?? new DatabaseConnection(cAccounts.getConnectionString(accountid)))
+            using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(accountid)))
             {
                 expdata.sqlexecute.Parameters.Clear();
-            if (email.Trim() == string.Empty)
+            if (string.IsNullOrEmpty(email) || email.Trim() == string.Empty)
             {
                 return 0;
             }
