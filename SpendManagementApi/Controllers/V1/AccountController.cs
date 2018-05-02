@@ -4,6 +4,7 @@ namespace SpendManagementApi.Controllers.V1
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.IO;
     using System.Net;
     using System.Net.Http;
@@ -11,6 +12,7 @@ namespace SpendManagementApi.Controllers.V1
     using System.Web.Http;
     using System.Web.Http.Description;
     using System.Linq;
+    using System.Net.Http.Headers;
 
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
@@ -25,6 +27,10 @@ namespace SpendManagementApi.Controllers.V1
     using Utilities;
     using Models;
     using Repositories;
+
+    using RestSharp;
+
+    using SpendManagementApi.ApiCallHelper;
 
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
@@ -413,28 +419,13 @@ namespace SpendManagementApi.Controllers.V1
         [ApiExplorerSettings(IgnoreApi = true)]
         public GeneralOptionAccountsResponse GetAccountsWithClaimRemindersEnabled()
         {
-            var accountList = new GeneralOptionAccountsResponse();
-            var accounts = new cAccounts().GetAllAccounts().Where(a => !a.archived).ToList();
+            var request = new RestRequest("Account/GetAccountsWithClaimRemindersEnabled", Method.GET);
 
-            if (accounts == null || accounts.Count == 0)
-            {
-                return accountList;
-            }
+            var response = InternalApiCallHelper.BaseRequest<List<GeneralOptionEnabledAccount>>(request);
 
-            foreach (var account in accounts)
-            {
-                HttpContext.Current.User = new WebPrincipal(new UserIdentity(account.accountid, 0));
+            var generalOptionsAccountsResponse = new GeneralOptionAccountsResponse { AccountList = response.Data };
 
-                var subAccounts = new cAccountSubAccounts(account.accountid);
-                var reqSubAccount = subAccounts.getFirstSubAccount();
-                var generalOptions = this._generalOptionsFactory.Value[reqSubAccount.SubAccountID].WithReminders();
-                if (generalOptions.Reminders.EnableClaimApprovalReminders || generalOptions.Reminders.EnableCurrentClaimsReminders)
-                {
-                    accountList.AccountList.Add(new GeneralOptionEnabledAccount(account.accountid, account.companyid));
-                }
-            }
-
-            return accountList;
+            return generalOptionsAccountsResponse;
         }
 
         /// <summary>
@@ -834,29 +825,13 @@ namespace SpendManagementApi.Controllers.V1
         [InternalSelenityMethod]
         public GeneralOptionAccountsResponse GetAccountsWithExchangeRatesUpdateEnabled()
         {
-            var accountList = new GeneralOptionAccountsResponse();
-            var accounts = new cAccounts().GetAllAccounts().Where(a => !a.archived).ToList();
+            var request = new RestRequest("Account/GetAccountsWithExchangeRatesUpdateEnabled", Method.GET);
 
-            if (accounts == null || accounts.Count == 0)
-            {
-                return accountList;
-            }
+            var response = InternalApiCallHelper.BaseRequest<List<GeneralOptionEnabledAccount>>(request);
 
-            foreach (var account in accounts)
-            {
-                var subAccounts = new cAccountSubAccounts(account.accountid);
+            var generalOptionsAccountsResponse = new GeneralOptionAccountsResponse { AccountList = response.Data };
 
-                this.RequestContext.Principal = new WebPrincipal(new UserIdentity(account.accountid, 0));
-                var generalOptionsFactory = new Lazy<IDataFactory<IGeneralOptions, int>>(() => WebApiApplication.container.GetInstance<IDataFactory<IGeneralOptions, int>>());
-
-                var generalOptions = generalOptionsFactory.Value[subAccounts.getFirstSubAccount().SubAccountID].WithCurrency();
-                if (generalOptions.Currency.EnableAutoUpdateOfExchangeRates)
-                {
-                    accountList.AccountList.Add(new GeneralOptionEnabledAccount(account.accountid, account.companyid, generalOptions.Currency.ExchangeRateProvider));
-                }
-            }
-
-            return accountList;
+            return generalOptionsAccountsResponse;
         }
 
         /// <summary>

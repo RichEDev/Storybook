@@ -49,5 +49,13 @@
             this.CompanyId = companyId;
             this.ExchangeRateProvider = provider;
         }
+
+        /// <summary>
+        /// Empty constructor for RestSharp pattern matching
+        /// </summary>
+        public GeneralOptionEnabledAccount()
+        {
+            
+        }
     }
 }
