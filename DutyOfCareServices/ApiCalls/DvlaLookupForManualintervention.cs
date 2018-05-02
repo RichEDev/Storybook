@@ -67,7 +67,7 @@
 
             if (accountList.Result.Data.AccountList.Count == 0)
             {
-                logger.MakeEventLogEntry(LogMessage + "Failed to load accounts", ApiEndPointGetAccount, "No accounts with dvla autopopulate general option enabled");
+                logger.MakeEventLogEntry(LogMessage + "Accounts", ApiEndPointGetAccount, "No accounts with dvla autopopulate general option enabled");
                 return;
             }
 
@@ -90,7 +90,7 @@
                 var drivingLicenceDetails = this._apiClient.PopulateDrivingLicences(ApiEndPointToPopulateDrivingLicence + "/" + account.AccountId, employeeDetails);
                 if (drivingLicenceDetails != null && drivingLicenceDetails.DrivingLicenceDetails.Count == 0)
                 {
-                    Console.WriteLine("Failed to load employees driving licence details");
+                    Console.WriteLine("No employees driving licence details found");
                     logger.MakeEventLogEntry(LogMessage + "Failed to load employees driving licence details", "from dvla portal", "for account: " + account.AccountId);
                     continue;
                 }

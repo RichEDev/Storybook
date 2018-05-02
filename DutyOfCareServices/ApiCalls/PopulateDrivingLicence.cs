@@ -66,7 +66,7 @@
             if (accountList != null && accountList.Result.Data.AccountList.Count == 0)
             {
                 Console.WriteLine("No accounts with dvla autopopulate general option enabled");
-                logger.MakeEventLogEntry(LogMessage + "Failed to load accounts", ApiEndPointGetAccount, "No accounts with dvla autopopulate general option enabled");
+                logger.MakeEventLogEntry(LogMessage + "Accounts", ApiEndPointGetAccount, "No accounts with dvla autopopulate general option enabled");
                 return;
             }
 
@@ -88,7 +88,7 @@
                 {
                     Console.WriteLine("No employees to populate driving licence");
                     logger.MakeEventLogEntry(
-                        "Failed to load employees details",
+                        "No employees to populate driving licence",
                         ApiEndPointToGetEmployeeWithDvlaConstraint,
                         "for account: " + account.AccountId);
                     continue;

@@ -116,7 +116,7 @@
                     }
                     else
                     {
-                        this._logger.MakeEventLogEntry(LogMessage, procedueName, "Failed to send mails for account: " + account.AccountId);
+                        this._logger.MakeEventLogEntry(LogMessage, procedueName, "No emails sent for account: " + account.AccountId);
                     }
                 }
             }
@@ -141,7 +141,7 @@
             if (accountList != null && accountList.Result.Data.AccountList.Count == 0)
             {
                 Console.WriteLine("No accounts with Duty of care documents expiry reminder check general option enabled");
-                this._logger.MakeEventLogEntry("Failed to load accounts", generalOptionsApi, "No accounts with Duty of care documents expiry reminder check general option enabled");
+                this._logger.MakeEventLogEntry("Accounts", generalOptionsApi, "No accounts with Duty of care documents expiry reminder check general option enabled");
                 return;
             }
 

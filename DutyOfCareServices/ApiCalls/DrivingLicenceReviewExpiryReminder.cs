@@ -47,7 +47,7 @@
             if (accountList != null && accountList.Result.Data.AccountList.Count == 0)
             {
                 Console.WriteLine("No accounts with Driving licence review check general option enabled");
-                logger.MakeEventLogEntry("Failed to load accounts", ApiEndPointGetAccount, "No accounts with Driving licence review check general option enabled");
+                logger.MakeEventLogEntry("Accounts", ApiEndPointGetAccount, "No accounts with Driving licence review check general option enabled");
                 return;
             }
 
@@ -71,7 +71,7 @@
                 else
                 {
                     logger.MakeEventLogEntry(
-                        "Failed to send mails ",
+                        "No emails to send ",
                         ApiEndPointForEmailReminders,
                         "for account: " + account.AccountId);
                 }

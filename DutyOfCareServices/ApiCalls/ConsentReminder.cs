@@ -76,7 +76,7 @@
                 }
                 else
                 {
-                    logger.MakeEventLogEntry(LogMessage, ApiEndPointForConsentExpiry, "Failed to send mails for account: " + account.AccountId);
+                    logger.MakeEventLogEntry(LogMessage, ApiEndPointForConsentExpiry, "No emails to send for account: " + account.AccountId);
                 }
             }
         }

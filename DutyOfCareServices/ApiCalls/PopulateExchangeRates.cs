@@ -74,7 +74,7 @@
             if (accountList != null && (accountList.Result.Data == null || accountList.Result.Data.AccountList.Count == 0))
             {
                 Console.WriteLine("No accounts with auto update of exchange rates enabled");
-                logger.MakeEventLogEntry(LogMessage + "Failed to load accounts", ApiEndPointGetAccountsWithAutoUpdateExchangeRateEnabled, "No accounts with dvla autopopulate general option enabled");
+                logger.MakeEventLogEntry(LogMessage + "Accounts", ApiEndPointGetAccountsWithAutoUpdateExchangeRateEnabled, "No accounts with dvla autopopulate general option enabled");
                 return;
             }
 
@@ -99,7 +99,7 @@
                 if (activeCurrencies == null || activeCurrencies.List.Count == 0)
                 {
                     Console.WriteLine("No exchange rates to populate for account as there are no active currencies");
-                    logger.MakeEventLogEntry("Failed to load active currencies ", ApiEndPointToGetAListOfActiveCurrencies, " for account: " + account.AccountId);
+                    logger.MakeEventLogEntry("No exchange rates to populate for account as there are no active currencies ", ApiEndPointToGetAListOfActiveCurrencies, " for account: " + account.AccountId);
                     continue;
                 }
 

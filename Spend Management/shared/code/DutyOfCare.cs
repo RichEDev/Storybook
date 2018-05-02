@@ -70,9 +70,6 @@
                 var claimantIds = DutyOfCareEmailReminder.GetClaimantIdsForExpiredDOCForLineManager(accountId);
                 if (claimantIds == null || claimantIds.Count == 0)
                 {
-                    cEventlog.LogEntry(
-                        "Error while retrieving claimant ID's whose duty of care document has expired", true,
-                        EventLogEntryType.Error);
                     return false;
                 }
 
@@ -93,7 +90,8 @@
             catch (Exception ex)
             {
                 cEventlog.LogEntry(
-                    ex.Message, true,
+                    ex.Message, 
+                    true,
                     EventLogEntryType.Error);
                 return false;
             }
@@ -119,22 +117,21 @@
 
                 if (claimantsEmailDetails == null || claimantsEmailDetails.Count == 0)
                 {
-                    cEventlog.LogEntry(
-                        "Error while retrieving claimant details whose duty of care document has expired", true,
-                        EventLogEntryType.Error);
                     return false;
                 }
 
+                cAccountSubAccounts subAccounts = new cAccountSubAccounts(accountId);
+                cAccountSubAccount reqSubAccount = subAccounts.getFirstSubAccount();
+                if (reqSubAccount.SubAccountProperties.RemindApproverOnDOCDocumentExpiryDays != -1)
+                {
+                    int reminderDays = reqSubAccount.SubAccountProperties.RemindApproverOnDOCDocumentExpiryDays;
+                    filterDate = DateTime.Today.AddDays(reminderDays);
+                }
+
+                var notifications = new NotificationTemplates(accountId, 0, string.Empty, 0, Modules.expenses);
+
                 foreach (var claimant in claimantsEmailDetails)
                 {
-                    cAccountSubAccounts subAccounts = new cAccountSubAccounts(claimant.AccountId);
-                    cAccountSubAccount reqSubAccount = subAccounts.getFirstSubAccount();
-                    if (reqSubAccount.SubAccountProperties.RemindApproverOnDOCDocumentExpiryDays != -1)
-                    {
-                        int reminderDays = reqSubAccount.SubAccountProperties.RemindApproverOnDOCDocumentExpiryDays;
-                        filterDate = DateTime.Today.AddDays(reminderDays);
-                    }
-                    var notifications = new NotificationTemplates(claimant.AccountId, claimant.ClaimantId, string.Empty, 0, Modules.expenses);
                     notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenADutyOfCareDocumentIsDueToExpire), claimant.ClaimantId, new[] { claimant.ClaimantId }, filterfieldval: filterDate, filterFieldGuid: new Guid("9F6E275F-516E-4A71-A94C-0D3D26A77D38"));
                 }
             }
