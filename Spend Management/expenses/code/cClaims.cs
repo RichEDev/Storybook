@@ -58,7 +58,7 @@ namespace Spend_Management
         /// </summary>
         private List<ClaimsForApprover> claimsToInclude;
 
-        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
+        private readonly Lazy<IDataFactory<IGeneralOptions, int>> _generalOptionsFactory = new Lazy<IDataFactory<IGeneralOptions, int>>(() => FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>());
 
         public cClaims(int accountId)
         {

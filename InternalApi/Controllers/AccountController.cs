@@ -73,7 +73,7 @@
                 var subAccounts = new cAccountSubAccounts(account.accountid);
 
                 var generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
-
+                    
                 var generalOptions = generalOptionsFactory[subAccounts.getFirstSubAccount().SubAccountID].WithCurrency();
                 if (generalOptions.Currency.EnableAutoUpdateOfExchangeRates)
                 {
