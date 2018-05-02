@@ -2801,7 +2801,7 @@ namespace Spend_Management
             cEmployeeCars clsEmployeeCars = new cEmployeeCars(accountid, employeeid);
             cMisc clsmisc = new cMisc(accountid);
 
-            var generalOptions = this._generalOptionsFactory[reqemp.DefaultSubAccount];
+            var generalOptions = this._generalOptionsFactory.Value[reqemp.DefaultSubAccount];
 
             decimal fuelpurchased = 0;
             decimal itemtotal;
@@ -3110,7 +3110,7 @@ namespace Spend_Management
 		{
 			DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));
 
-            var generalOptions = this._generalOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithClaim();
+            var generalOptions = this._generalOptionsFactory.Value[cMisc.GetCurrentUser().CurrentSubAccountId].WithClaim();
 
             //System.Web.HttpApplication appinfo = (System.Web.HttpApplication)System.Web.HttpContext.Current.ApplicationInstance;
             if (generalOptions.Claim.LimitFrequency == false)
@@ -3681,7 +3681,7 @@ namespace Spend_Management
 
 				connection.ExecuteSQL(strsql);
 
-                var generalOptions = this._generalOptionsFactory[user.CurrentSubAccountId].WithMileage();
+                var generalOptions = this._generalOptionsFactory.Value[user.CurrentSubAccountId].WithMileage();
 
                 if (generalOptions.Mileage.EnterOdometerOnSubmit && generalOptions.Mileage.RecordOdometer)
                 {
@@ -5687,7 +5687,7 @@ namespace Spend_Management
             var user = cMisc.GetCurrentUser();
             var misc = new cMisc(user.AccountID);
 
-            var generalOptions = this._generalOptionsFactory[user.CurrentSubAccountId].WithClaim();
+            var generalOptions = this._generalOptionsFactory.Value[user.CurrentSubAccountId].WithClaim();
 
             var javascript = new StringBuilder();
             javascript.Append("<script language=\"javascript\" type=\"text/javascript\">");
