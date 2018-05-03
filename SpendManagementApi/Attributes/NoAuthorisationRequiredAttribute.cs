@@ -14,7 +14,7 @@
     /// The no authorisation required attribute. Used for endpoints that don't require an authenitication token.
     /// Can only be using in conjunction with those endpoints that also implement the <see cref="InternalSelenityMethodAttribute"/> as well.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method| AttributeTargets.Class)]
     public class NoAuthorisationRequiredAttribute : ActionFilterAttribute
     {
         /// <summary>

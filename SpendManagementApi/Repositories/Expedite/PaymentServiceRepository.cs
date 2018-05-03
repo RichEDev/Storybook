@@ -18,10 +18,18 @@ namespace SpendManagementApi.Repositories.Expedite
     /// <summary>
     /// PaymentServiceRepository manages data access for PaymentServices.
     /// </summary>
-
     internal class PaymentServiceRepository : BaseRepository<PaymentService>, ISupportsActionContext
     {
+        /// <summary>
+        /// An instance of <see cref="IManagePayment"/>.
+        /// </summary>
         private readonly IManagePayment _data;
+
+        /// <summary>
+        /// An instance of <see cref="IActionContext"/>.
+        /// </summary>
+        private readonly IActionContext _actionContext = null;
+
         /// <summary>
         /// Creates a new PaymentServiceRepository with the passed in user.
         /// </summary>
@@ -30,7 +38,16 @@ namespace SpendManagementApi.Repositories.Expedite
         public PaymentServiceRepository(ICurrentUser user, IActionContext actionContext)
             : base(user, actionContext, x => x.AccountId, x => x.AccountId.ToString(CultureInfo.InvariantCulture))
         {
-            _data = ActionContext.Payment;
+            this._data = ActionContext.Payment;
+            this._actionContext = ActionContext;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PaymentServiceRepository"/> class.
+        /// </summary>
+        public PaymentServiceRepository()
+        {
+            this._data = new SpendManagementLibrary.Expedite.PaymentService();
         }
 
         /// <summary>
@@ -59,7 +76,7 @@ namespace SpendManagementApi.Repositories.Expedite
         public List<PaymentService> GetFinanceExportForDownload(int accountId)
         {
             int expeditePaymentStatus = 0;
-            var item = _data.GetFinanceExportForExpedite(accountId, expeditePaymentStatus).Select(e => new PaymentService().From(e, ActionContext)).ToList();
+            var item = this._data.GetFinanceExportForExpedite(accountId, expeditePaymentStatus).Select(e => new PaymentService().From(e, this._actionContext)).ToList();
             return item;
         }
 
@@ -71,7 +88,7 @@ namespace SpendManagementApi.Repositories.Expedite
         public List<PaymentService> GetFinanceExportsForMarkAsExecuted(int accountId)
         {
             int expeditePaymentStatus = 1;
-            var item = _data.GetFinanceExportForExpedite(accountId, expeditePaymentStatus).Select(e => new PaymentService().From(e, ActionContext)).ToList();
+            var item = this._data.GetFinanceExportForExpedite(accountId, expeditePaymentStatus).Select(e => new PaymentService().From(e, this._actionContext)).ToList();
             return item;
         }
 
@@ -89,13 +106,13 @@ namespace SpendManagementApi.Repositories.Expedite
             List<int> distinctclaimIds = new List<int>();
             foreach (PaymentService paymentServiceAccount in items)
             {
-                isProcessed = _data.UpdateFinanceExportProcessDownloadStatus(paymentServiceAccount.FinancialExport.Select(i => i.To(ActionContext)).ToList(), paymentServiceAccount.AccountId);
+                isProcessed = this._data.UpdateFinanceExportProcessDownloadStatus(paymentServiceAccount.FinancialExport.Select(i => i.To(this._actionContext)).ToList(), paymentServiceAccount.AccountId);
                 bool idIsPresent = false;
                 if (isProcessed == 1)
                 {
                     foreach (FinancialExport financialExport in paymentServiceAccount.FinancialExport)
                     {
-                        claimIds = _data.GetClaimByFinancialExportIds(financialExport.Id, paymentServiceAccount.AccountId);
+                        claimIds = this._data.GetClaimByFinancialExportIds(financialExport.Id, paymentServiceAccount.AccountId);
                     }
 
                     if (accountIds.IndexOf(paymentServiceAccount.AccountId) == -1)
@@ -150,31 +167,41 @@ namespace SpendManagementApi.Repositories.Expedite
         {
             int isProcessed = 0;
             List<int> claimIds = new List<int>();
-            PaymentService payment = new PaymentService();
+
             foreach (PaymentService paymentServiceAccount in items)
             {
                 foreach (FinancialExport financialExport in paymentServiceAccount.FinancialExport)
                 {
-                    claimIds = _data.GetClaimByFinancialExportIds(financialExport.Id, paymentServiceAccount.AccountId);
+                    claimIds = this._data.GetClaimByFinancialExportIds(financialExport.Id, paymentServiceAccount.AccountId);
                 }
                 isProcessed =
-                    _data.UpdateFinanceExportProcessExecutedStatus(
-                        paymentServiceAccount.FinancialExport.Select(i => i.To(ActionContext)).ToList(),
+                    this._data.UpdateFinanceExportProcessExecutedStatus(
+                        paymentServiceAccount.FinancialExport.Select(i => i.To(this._actionContext)).ToList(),
                         paymentServiceAccount.AccountId, paymentServiceAccount.FundAmount);
+
                 if (isProcessed == 1)
                 {
+                    var employees = new cEmployees(paymentServiceAccount.AccountId);
+                    var adminExpediteEmployeeId = employees.getEmployeeidByUsername(paymentServiceAccount.AccountId, "adminexpedite");
+                    var claims = new cClaims(paymentServiceAccount.AccountId);
+                    var notifications = new NotificationTemplates(paymentServiceAccount.AccountId, adminExpediteEmployeeId, string.Empty, 0, Modules.expenses);
+
                     foreach (int id in claimIds)
                     {
-                        var claim = ActionContext.Claims.getClaimById(id);
+                        var claim = claims.getClaimById(id);
+
                         if (claim != null)
                         {
-                            var employee = ActionContext.Employees.GetEmployeeById(claim.employeeid);
+                            var employee = employees.GetEmployeeById(claim.employeeid);
+
                             // update claim history.
                             var history = string.Format("Claim {0} has reimbursed.", claim.claimno);
-                            ActionContext.Claims.UpdateClaimHistory(claim, history);
-                            var notifications = ActionContext.Notifications;
-                            //Send notification to each claimant                                
-                            notifications.SendMessage(new Guid("67E99E3E-E431-4C9C-A131-5D647D64FF05"), User.EmployeeID,
+                            claims.UpdateClaimHistory(claim, history);
+
+                            //Send an email to each claimant                                
+                            notifications.SendMessage(
+                                new Guid("67E99E3E-E431-4C9C-A131-5D647D64FF05"),
+                                adminExpediteEmployeeId,
                                 new[] { employee.EmployeeID });
                         }
                     }
@@ -194,7 +221,7 @@ namespace SpendManagementApi.Repositories.Expedite
         {
             SM.PaymentService paymentService = new SM.PaymentService();
             IReports reports = new cReportsSvc();
-            var item = paymentService.ExtractFinancialExportFromReportService(accountId, financialExportId, reports).Select(e => new PaymentService().From(e, ActionContext)).ToList();
+            var item = paymentService.ExtractFinancialExportFromReportService(accountId, financialExportId, reports).Select(e => new PaymentService().From(e, this._actionContext)).ToList();
             return item;
         }
     }

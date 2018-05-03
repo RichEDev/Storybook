@@ -45,23 +45,25 @@ namespace Spend_Management.Expedite
             ReportProcessStatusChecker = new System.Timers.Timer();
             if (reports != null)
             {
-                ExportType exporttype;
-                CurrentUser user = cMisc.GetCurrentUser();
+                ExportType exportType;        
                 Guid reportId = Guid.Empty;
                 int exporthistoryid = 0;
                 bool claimants = false;
-                cReportRequest clsrequest;
                 cExportOptions exportOptions = null;
                 FinancialApplication application;
                 cFinancialExport export = null;
+                var employees = new cEmployees(accountId);
+                var adminExpediteEmployeeId = employees.getEmployeeidByUsername(accountId, "adminexpedite");
+           
                 financialexportid = financialExportId;
+
                 if (financialexportid > 0)
                 {
                     var clsexports = new Spend_Management.cFinancialExports(accountId);
                     export = clsexports.getExportById(financialexportid);
                     reportId = export.reportid;
-                    exportOptions = reports.getExportOptions(user.AccountID, user.EmployeeID, reportId, true);
-                    exporttype = (ExportType)export.exporttype;
+                    exportOptions = reports.getExportOptions(accountId, adminExpediteEmployeeId, reportId, true);
+                    exportType = (ExportType)export.exporttype;
                     exportOptions.isfinancialexport = true;
                     exportOptions.financialexport = export;
                     exportOptions.application = export.application;
@@ -82,7 +84,7 @@ namespace Spend_Management.Expedite
                 cReport rpt = null;
                 if (export != null)
                 {
-                    rpt = reports.getReportById(user.AccountID, export.reportid);
+                    rpt = reports.getReportById(accountId, export.reportid);
                     finExport.ReportName = rpt.reportname;
                 }
                 if (rpt != null)
@@ -90,29 +92,31 @@ namespace Spend_Management.Expedite
                     rpt.exportoptions = exportOptions;
                     if (!rpt.SubAccountID.HasValue)
                     {
-                        rpt.SubAccountID = user.CurrentSubAccountId;
+                        rpt.SubAccountID = 1;
                     }
                 }
-                clsrequest = new cReportRequest(
+
+                var accessRoleLevel = AccessRoleLevel.AllData;
+
+                var reportRequest = new cReportRequest(
                     accountId,
-                    user.CurrentSubAccountId,
+                    1,
                     this.requestnum,
                     (cReport)rpt,
                     (ExportType)export.exporttype,
                     exportOptions,
                     claimants,
-                    user.EmployeeID,
-                    user.HighestAccessLevel);
+                    adminExpediteEmployeeId, accessRoleLevel);
 
                 if (exportOptions != null && exportOptions.footerreport != null)
                 {
                     exportOptions.footerreport.isFooter = true;
                     exportOptions.footerreport.exportoptions = reports.getExportOptions(
-                        user.AccountID, user.EmployeeID, exportOptions.footerreport.reportid);
+                      accountId, adminExpediteEmployeeId, exportOptions.footerreport.reportid);
                     exportOptions.footerreport.criteria.Clear();
-                    for (int i = 0; i < clsrequest.report.criteria.Count; i++)
+                    for (int i = 0; i < reportRequest.report.criteria.Count; i++)
                     {
-                        exportOptions.footerreport.criteria.Add(clsrequest.report.criteria[i]);
+                        exportOptions.footerreport.criteria.Add(reportRequest.report.criteria[i]);
                     }
                     if (financialexportid > 0)
                     {
@@ -124,80 +128,63 @@ namespace Spend_Management.Expedite
                 }
                 if (exportOptions == null)
                 {
-                    exportOptions = clsrequest.report.exportoptions;
+                    exportOptions = reportRequest.report.exportoptions;
                 }
-                clsrequest.report.exportoptions = exportOptions;
-                cReportRequest exportrequest = null;
+                reportRequest.report.exportoptions = exportOptions;
+
+                cReportRequest exportRequest = null;
+
                 switch (application)
                 {
                     case FinancialApplication.CustomReport:
-                        exportrequest = new cReportRequest(
+                      
+                        exportRequest = new cReportRequest(
                             accountId,
-                            clsrequest.SubAccountId,
-                            clsrequest.requestnum,
-                            clsrequest.report,
+                            reportRequest.SubAccountId,
+                            reportRequest.requestnum,
+                            reportRequest.report,
                             (ExportType)export.exporttype,
                             exportOptions,
                             claimants,
-                            user.EmployeeID,
-                            ReportRunFrom.PrimaryServer,
-                            user.HighestAccessLevel);
+                            adminExpediteEmployeeId,
+                            ReportRunFrom.PrimaryServer, accessRoleLevel
+                            );
                         break;
                     case FinancialApplication.ESR:
-                        exportrequest = new cReportRequest(
+                        exportRequest = new cReportRequest(
                             accountId,
-                            clsrequest.SubAccountId,
-                            clsrequest.requestnum,
-                            clsrequest.report,
+                            reportRequest.SubAccountId,
+                            reportRequest.requestnum,
+                            reportRequest.report,
                             ExportType.CSV,
                             exportOptions,
                             false,
-                            user.EmployeeID,
+                            adminExpediteEmployeeId,
                             ReportRunFrom.PrimaryServer,
-                            user.HighestAccessLevel);
+                            accessRoleLevel);
                         break;
                 }
                 if (financialexportid > 0)
                 {
-                    exportrequest.reportRunFrom = ReportRunFrom.PrimaryServer;
+                    exportRequest.reportRunFrom = ReportRunFrom.PrimaryServer;
                 }
-
-                if (exportrequest.AccessLevel == AccessRoleLevel.SelectedRoles &&
-                    cReport.canFilterByRole(exportrequest.report.basetable.TableID))
-                {
-                    // get the roles that can be reported on. If > 1 role with SelectedRoles, then need to merge
-                    cAccessRoles roles = new cAccessRoles(user.AccountID, cAccounts.getConnectionString(user.AccountID));
-                    List<int> reportRoles = new List<int>();
-                    List<int> lstAccessRoles = user.Employee.GetAccessRoles().GetBy(user.CurrentSubAccountId);
-
-                    foreach (int emp_arId in lstAccessRoles)
-                    {
-                        cAccessRole empRole = roles.GetAccessRoleByID(emp_arId);
-                        foreach (int arId in empRole.AccessRoleLinks)
-                        {
-                            if (!reportRoles.Contains(arId))
-                            {
-                                reportRoles.Add(arId);
-                            }
-                        }
-                    }
-                    exportrequest.AccessLevelRoles = reportRoles.ToArray();
-                }
+      
                 amountBeforeExport = paymentService.GetAmountExportedByFinancialExport(accountId, financialExportId);
                 ReportProcessStatusChecker.Interval = 500;
                 ReportProcessStatusChecker.AutoReset = false;
-                ReportProcessStatusChecker.Elapsed += (sender, e) => ReportProcessStatusMonitor(sender, e, exportrequest, reports);
-                bool status = reports.createReport(exportrequest);
+                ReportProcessStatusChecker.Elapsed += (sender, e) => ReportProcessStatusMonitor(sender, e, exportRequest, reports);
+                bool status = reports.createReport(exportRequest);
                 if (status)
                 {
                     ReportProcessStatusChecker.Start();
                 }
                 else
                 {
-                    RemoveRequestFromQueue(exportrequest, reports);
+                    RemoveRequestFromQueue(exportRequest, reports);
                 }
                 reportProcessComplete.WaitOne();
             }
+
             return listPayment;
         }
 

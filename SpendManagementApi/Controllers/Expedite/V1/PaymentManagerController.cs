@@ -1,6 +1,5 @@
 ﻿namespace SpendManagementApi.Controllers.Expedite.V1
 {
-
     using SpendManagementApi.Attributes;
     using SpendManagementApi.Interfaces;
     using SpendManagementApi.Models.Common;
@@ -12,12 +11,13 @@
     using System.Web.Http;
     using System.Web.Http.Description;
     using SM = Spend_Management.Expedite;
+   
     /// <summary>
     /// Contains Expedite clients Payment process actions
     /// </summary>
     [RoutePrefix("Expedite/Payment")]
     [Version(1)]
-    [InternalSelenityMethod, ApiExplorerSettings(IgnoreApi = true)]
+    [InternalSelenityMethod, NoAuthorisationRequired, ApiExplorerSettings(IgnoreApi = true)]
     public class PaymentManagerV1Controller : BaseApiController<PaymentService>
     {
         /// <summary>
@@ -38,8 +38,7 @@
         /// </summary>
         /// <param name="id">The Id of expedite client.</param>
         /// <returns>Gets the finance export for the expedite client</returns>
-        [HttpGet, Route("~/Expedite/Payment/GetFinanceExportForDownload/{id:int}")]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.View)]
+        [HttpGet, Route("~/Expedite/Payment/GetFinanceExportForDownload/{id:int}")]      
         public PaymentServiceResponse GetFinanceExportForDownload(int id)
         {
             var response = this.InitialiseResponse<PaymentServiceResponse>();
@@ -52,8 +51,7 @@
         /// </summary>
         /// <param name="id">The Id of expedite client.</param>
         /// <returns>Gets the finance export for the expedite client</returns>
-        [HttpGet, Route("~/Expedite/Payment/GetFinanceExportForMarkAsExecuted/{id:int}")]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.View)]
+        [HttpGet, Route("~/Expedite/Payment/GetFinanceExportForMarkAsExecuted/{id:int}")]       
         public PaymentServiceResponse GetFinanceExportForMarkAsExecuted(int id)
         {
             var response = this.InitialiseResponse<PaymentServiceResponse>();
@@ -66,8 +64,7 @@
         /// </summary>
         /// <param name="request">List of records to updated</param>
         /// <returns>Respose contain updated status</returns>
-        [Route("~/Expedite/Payment/Download")]
-        [AuthAudit(SpendManagementElement.None, AccessRoleType.Edit)]
+        [Route("~/Expedite/Payment/Download")]       
         public PaymentProcessStatusResponse MarkAsDownload(List<PaymentService> request)
         {
             var response = this.InitialiseResponse<PaymentProcessStatusResponse>();
@@ -81,7 +78,6 @@
         /// <param name="request">List of records to updated</param>
         /// <returns>Respose contain updated status</returns>
         [Route("~/Expedite/Payment/Executed")]
-        [AuthAudit(SpendManagementElement.None, AccessRoleType.Edit)]
         public PaymentProcessStatusResponse MarkAsExecuted(List<PaymentService> request)
         {
             var response = this.InitialiseResponse<PaymentProcessStatusResponse>();
@@ -95,7 +91,6 @@
         /// <param name="fundInfo">FundManager object which has accountId and FundTopUp properties set</param>
         /// <returns>Returns a response object which has the status flag and error message</returns>
         [Route("~/Expedite/Payment/SendMailForTopUp")]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.View)]       
         public EmailSenderResponse SendMailForTopUp([FromBody] FundManager fundInfo)
         {
             var response = this.InitialiseResponse<EmailSenderResponse>();
@@ -126,7 +121,6 @@
         /// <param name="financialExportId">The financialExportId of export</param>
         /// <returns>Returns a response object with payment details for the financial export</returns>
         [HttpGet, Route("~/Expedite/Payment/ExtractFinancialExportFromReportService/{id:int}/{financialExportId:int}")]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.View)]
         public PaymentServiceResponse ExtractFinancialExportFromReportService(int id, int financialExportId)
         {
             var response = this.InitialiseResponse<PaymentServiceResponse>();
