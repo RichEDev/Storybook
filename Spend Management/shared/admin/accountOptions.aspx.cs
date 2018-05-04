@@ -127,7 +127,7 @@
             this.corporateCardsSpan.Visible = usingExpenses;
             this.spanGeneralOptionsExpenses.Visible = usingExpenses;
             this.dvlaLicenceElementSection.Visible = currentUser.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect);
-            this.spanVehicleLookups.Visible =
+            this.VehicleLookupEnabled.Visible =
                 currentUser.Account.HasLicensedElement(SpendManagementElement.VehicleLookup);
             this.SetNumberOfRememberedApproversDropDown();
 
@@ -596,7 +596,7 @@
                     this.ddlAutoRevokeOfConsentLookupFrequency.SelectedValue = generalOptions.DutyOfCare.FrequencyOfConsentRemindersLookup;
                 }
 
-                this.chkVehicleLookup.Checked = generalOptions.Car.VehicleLookup;
+                this.chkVehicleDocumentLookup.Checked = generalOptions.Car.PopulateDocumentsFromVehicleLookup;
 
                 //load the team list in the approver section
                 this.teamListForApprover.Items.AddRange(new cTeams(currentUser.AccountID).CreateDropDown(0));
@@ -2044,9 +2044,9 @@
                 }
             }
             
-            if (generalOptions.Car.VehicleLookup != this.chkVehicleLookup.Checked)
+            if (generalOptions.Car.PopulateDocumentsFromVehicleLookup != this.chkVehicleDocumentLookup.Checked)
             {
-                this.AccountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.VehicleLookup.GetDescription(), (currentUser.Account.HasLicensedElement(SpendManagementElement.VehicleLookup) && this.chkVehicleLookup.Checked).ToString(), currentUser.CurrentSubAccountId));
+                this.AccountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.VehicleLookup.GetDescription(), (currentUser.Account.HasLicensedElement(SpendManagementElement.VehicleLookup) && this.chkVehicleDocumentLookup.Checked).ToString(), currentUser.CurrentSubAccountId));
             }
 
             if (generalOptions.Claim.BlockUnmatchedExpenseItemsBeingSubmitted != this.chkBlockUnmatchedExpenseItemsBeingSubmitted.Checked)

@@ -97,7 +97,12 @@
         var ckkEnablePeriodicalCheckForReviews = '<%=this.chkLicenceReview.ClientID %>';
         var chkBlockDrivingLicence = '<%=this.chkblockdrivinglicence.ClientID%>';
         var chkLicenceReviewReminderNotification = '<%=this.chkLicenceReviewReminderNotification.ClientID%>';
-        
+
+        var chkblockmotexpiry = '<%=this.chkblockmotexpiry.ClientID%>';
+        var chkblocktaxexpiry = '<%=this.chkblocktaxexpiry.ClientID%>';
+        var chkVehicleDocumentLookup = '<%=this.chkVehicleDocumentLookup.ClientID%>';
+        var spanVehicleDocumentLookups = '<%=this.spanVehicleDocumentLookups.ClientID%>';
+
         $(document).ready(function ()
         {
             if ($('#' + chkEnableCurrentClaimsReminderID)[0] !== undefined) {
@@ -107,6 +112,8 @@
             hideAutomaticDrivingLicenceLookup($('#' + chkEnableAutomaticDrivingLicenceLookupID)[0]);
             hideDrivingLicenceFrequencyPanel($('#' + ckkEnablePeriodicalCheckForReviews)[0], $('#' + chkBlockDrivingLicence)[0]);
             hideDrivingLicenceReviewReminderDaysPanel($('#' + chkLicenceReviewReminderNotification)[0]);
+            hideAutomaticVehicleDocumentLookup($('#' + chkVehicleDocumentLookup)[0]);
+
         });
     </script>
 
@@ -889,14 +896,15 @@
                              <div class="sectiontitle">Documents Required</div>
                             <div class="twocolumn">
                                <asp:Label ID="lbldrivinglicence" runat="server" Text="Driving licence" meta:resourcekey="lbldrivinglicenceResource1" AssociatedControlID="chkblockdrivinglicence"></asp:Label><span class="inputs"><asp:CheckBox ID="chkblockdrivinglicence" onclick="hideDrivingLicenceFrequencyPanel(null, this)" runat="server" meta:resourcekey="chkblockdrivinglicenceResource1" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span><span class="inputvalidatorfield">&nbsp;</span>
-                                <asp:Label ID="lbltaxexpiry" runat="server" Text="Tax" meta:resourcekey="lbltaxexpiryResource1" AssociatedControlID="chkblocktaxexpiry"></asp:Label><span class="inputs"><asp:CheckBox ID="chkblocktaxexpiry" runat="server" meta:resourcekey="chkblocktaxexpiryResource1" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span><span class="inputvalidatorfield">&nbsp;</span>
+                                <asp:Label ID="lbltaxexpiry" runat="server" Text="Tax" meta:resourcekey="lbltaxexpiryResource1" AssociatedControlID="chkblocktaxexpiry"></asp:Label><span class="inputs"><asp:CheckBox ID="chkblocktaxexpiry" runat="server" meta:resourcekey="chkblocktaxexpiryResource1" onclick="hideAutomaticVehicleDocumentLookup(this)"/></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span><span class="inputvalidatorfield">&nbsp;</span>
                             </div>
                             <div class="twocolumn">
-                                <asp:Label ID="lblmotexpiry" runat="server" Text="MOT" meta:resourcekey="lblmotexpiryResource1" AssociatedControlID="chkblockmotexpiry"></asp:Label><span class="inputs"><asp:CheckBox ID="chkblockmotexpiry" runat="server" meta:resourcekey="chkblockmotexpiryResource1" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span><span class="inputvalidatorfield">&nbsp;</span>
+                                <asp:Label ID="lblmotexpiry" runat="server" Text="MOT" meta:resourcekey="lblmotexpiryResource1" AssociatedControlID="chkblockmotexpiry"></asp:Label><span class="inputs"><asp:CheckBox ID="chkblockmotexpiry" runat="server" meta:resourcekey="chkblockmotexpiryResource1" onclick="hideAutomaticVehicleDocumentLookup(this)"/></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span><span class="inputvalidatorfield">&nbsp;</span>
                                  <asp:Label ID="lblinsurancexpiry" runat="server" Text="Insurance" meta:resourcekey="lblinsurancexpiryResource1" AssociatedControlID="chkblockinsuranceexpiry"></asp:Label><span class="inputs"><asp:CheckBox ID="chkblockinsuranceexpiry" runat="server" meta:resourcekey="chkblockinsuranceexpiryResource1" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span><span class="inputvalidatorfield">&nbsp;</span>
                             </div>
                             <div class="twocolumn">
                                 <asp:Label ID="lblBreakdownCoverExpiry" runat="server" Text="Breakdown cover" meta:resourcekey="lblbreakdowncoverResource1" AssociatedControlID="chkblockbreakdowncoverexpiry"></asp:Label><span class="inputs"><asp:CheckBox ID="chkBlockBreakdownCoverExpiry" runat="server" meta:resourcekey="chkblockbreakdowncoverexpiryResource1" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span><span class="inputvalidatorfield">&nbsp;</span>
+                                <span runat="server" ID="VehicleLookupEnabled"><span runat="server" ID="spanVehicleDocumentLookups" ><asp:Label ID="lblVehicleDocumentLookup" AssociatedControlID="chkVehicleDocumentLookup" Text="Allow automatic document lookup" runat="server"></asp:Label><span class="inputs"><asp:CheckBox ID="chkVehicleDocumentLookup" runat="server"/></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield"><img id="imgtooltip337" onclick="SEL.Tooltip.Show('D91BC012-825A-4357-BF8D-FE1FB9D5A4EF', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon"/></span><span class="inputvalidatorfield">&nbsp;</span></span></span>
                             </div>
                               <div class="sectiontitle">Email Reminders for Document Expiry</div>
                             <div class="twocolumn">
@@ -1035,18 +1043,18 @@
                             </div>
                             <div class="sectiontitle">Distance Lookups &amp; Vehicles</div>
                             <div class="twocolumn">
-                                <asp:Label ID="lblMultipleDestinations" AssociatedControlID="chkAllowMultipleDestinations" Text="Allow multiple destinations" runat="server"></asp:Label><span class="inputs"><asp:CheckBox ID="chkAllowMultipleDestinations" runat="server" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield"><img id="imgtooltip337" onclick="SEL.Tooltip.Show('3b68f5e3-323d-4407-a5d7-e5a3027b78aa', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon" /></span><span class="inputvalidatorfield">&nbsp;</span>
-                                <span runat="server" ID="spanVehicleLookups" ><asp:Label ID="lblVehicleLookup" AssociatedControlID="chkVehicleLookup" Text="Allow vehicle lookups" runat="server"></asp:Label><span class="inputs"><asp:CheckBox ID="chkVehicleLookup" runat="server"/></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield"><img id="imgtooltip337" onclick="SEL.Tooltip.Show('D91BC012-825A-4357-BF8D-FE1FB9D5A4EF', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon"/></span><span class="inputvalidatorfield">&nbsp;</span></span>
-                            </div>
-                            <div class="twocolumn">
-                                <asp:Label ID="lblUseMapPoint" runat="server" AssociatedControlID="chkUseMapPoint" Text="Postcode anywhere"></asp:Label><span class="inputs"><asp:CheckBox ID="chkUseMapPoint" runat="server" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield"><img id="imgtooltip338" onclick="SEL.Tooltip.Show('1bb457a2-c47f-4193-902e-1743f948634b', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon" /></span></span><span class="inputvalidatorfield">&nbsp;</span><asp:Label ID="lblMileageCalculationType" runat="server" Text="Postcode anywhere calculation type" AssociatedControlID="cmbmileagecalculationtype"></asp:Label><span class="inputs"><asp:DropDownList ID="cmbmileagecalculationtype" runat="server">
+                                <asp:Label ID="lblUseMapPoint" runat="server" AssociatedControlID="chkUseMapPoint" Text="Postcode anywhere"></asp:Label><span class="inputs"><asp:CheckBox ID="chkUseMapPoint" runat="server" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield"><img id="imgtooltip338" onclick="SEL.Tooltip.Show('1bb457a2-c47f-4193-902e-1743f948634b', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon" /></span>
+                                <span class="inputvalidatorfield">&nbsp;</span><asp:Label ID="lblMileageCalculationType" runat="server" Text="Postcode anywhere calculation type" AssociatedControlID="cmbmileagecalculationtype"></asp:Label><span class="inputs"><asp:DropDownList ID="cmbmileagecalculationtype" runat="server">
                                     <asp:ListItem Value="1" Text="Shortest"></asp:ListItem>
                                     <asp:ListItem Value="2" Text="Quickest"></asp:ListItem>
                                 </asp:DropDownList></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield">&nbsp;</span><span class="inputvalidatorfield">&nbsp;</span>
                             </div>
-                            <div class="twocolumn">
+                            <div class="twocolumn">                                                                
                                 <asp:Label ID="lblAllowMilage" runat="server" Text="Allow employees to select vehicle journey rate categories" AssociatedControlID="chkAllowMilage"></asp:Label><span class="inputs"><asp:CheckBox ID="chkAllowMilage" runat="server" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield"></span><span class="inputvalidatorfield">&nbsp;</span>
-                                <asp:Label ID="lblDisableCarsStartEndDate" runat="server" Text="Vehicles are not active if the date is outside of the start and end date" AssociatedControlID="chkDisableCarOutsideOfStartEndDate"></asp:Label><span class="inputs"><asp:CheckBox ID="chkDisableCarOutsideOfStartEndDate" runat="server" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield"><img id="img1" onclick="SEL.Tooltip.Show('ECD53568-D64E-4021-9D32-922020C5282A', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon" /></span><span class="inputvalidatorfield">&nbsp;</span>
+                                <asp:Label ID="lblDisableCarsStartEndDate" runat="server" Text="Vehicles are not active if the date is outside of the start and end date" AssociatedControlID="chkDisableCarOutsideOfStartEndDate"></asp:Label><span class="inputs"><asp:CheckBox ID="chkDisableCarOutsideOfStartEndDate" runat="server" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield"><img id="img1" onclick="SEL.Tooltip.Show('ECD53568-D64E-4021-9D32-922020C5282A', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon" /></span><span class="inputvalidatorfield">&nbsp;</span>                                                                
+                            </div>
+                            <div class="twocolumn">
+                                <asp:Label ID="lblMultipleDestinations" AssociatedControlID="chkAllowMultipleDestinations" Text="Allow multiple destinations" runat="server"></asp:Label><span class="inputs"><asp:CheckBox ID="chkAllowMultipleDestinations" runat="server" /></span><span class="inputicon">&nbsp;</span><span class="inputtooltipfield"><img id="imgtooltip337" onclick="SEL.Tooltip.Show('3b68f5e3-323d-4407-a5d7-e5a3027b78aa', 'sm', this);" src="/shared/images/icons/16/plain/tooltip.png" alt="" class="tooltipicon" /></span><span class="inputvalidatorfield">&nbsp;</span>                                                                                                
                             </div>
                             <asp:HiddenField ID="hdnAllowMileage" runat="server" />
                         </div>

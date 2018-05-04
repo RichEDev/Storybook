@@ -57,7 +57,7 @@
 
                     var documents = documentsInformation.GetCarExpiryInformation(accountId, car.carid, expenseItemDate);
 
-                    if (accountProperties.VehicleLookup)
+                    if (accountProperties.PopulateDocumentsFromVehicleLookup)
                     {
                         var updatedCar = this.UpdateTaxAndMotExpiryOnVehicle(documents, expenseItemDate, car); //if expired update car
                         if ((car.IsMotValid && !updatedCar.IsMotValid) || (car.IsTaxValid && !updatedCar.IsTaxValid))

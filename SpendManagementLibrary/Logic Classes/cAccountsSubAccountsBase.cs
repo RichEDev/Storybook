@@ -1252,8 +1252,8 @@
                             case "BlockUnmachedExpenseItemsBeingSubmitted":
                                 lstAccountProperties.BlockUnmachedExpenseItemsBeingSubmitted = Convert.ToBoolean(Convert.ToInt32(stringValue));
                                 break;
-                            case "VehicleLookup":
-                                lstAccountProperties.VehicleLookup = Convert.ToBoolean(Convert.ToInt32(stringValue));
+                            case "PopulateDocumentsFromVehicleLookup":
+                                lstAccountProperties.PopulateDocumentsFromVehicleLookup = Convert.ToBoolean(Convert.ToInt32(stringValue));
                                 break;
 
                         }

@@ -39,6 +39,8 @@ namespace Spend_Management
         bool bShowStartDateOnly = false;
         bool bShowDutyOfCare = false;
 
+        private ICurrentUser _currentUser;
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -109,8 +111,8 @@ namespace Spend_Management
                 bShowDutyOfCare = (bool)ViewState["bShowDutyOfCare"];
             }
 
-		    this.currentModule = HostManager.GetModule(this.Request.Url.Host);				
-
+		    this.currentModule = HostManager.GetModule(this.Request.Url.Host);
+            this._currentUser = cMisc.GetCurrentUser();
             #endregion
 
             if (this.bIsAeExpenses)
@@ -152,7 +154,7 @@ namespace Spend_Management
                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "variables", "var approved = true;", true);
                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Admin", "var isAdmin = true;", true);
 
-                if (cMisc.GetCurrentUser().Account.IsNHSCustomer)
+                if (this._currentUser.Account.IsNHSCustomer)
                 {
                     this.tabEsr.Visible = true;
                 }
@@ -180,7 +182,8 @@ namespace Spend_Management
 
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "IsPoolCar", "var isPoolCar = " + (bIsPoolCar ? "true" : "false") + ";", true);
 
-            this.divLookupContainer.Visible = reqProperties.VehicleLookup;
+            this.divLookupContainer.Visible =
+                this._currentUser.Account.HasLicensedElement(SpendManagementElement.VehicleLookup);
 
             if ((this.currentModule == Modules.Greenlight || this.currentModule == Modules.GreenlightWorkforce) || (reqProperties.ShowMileageCatsForUsers == false && this.bAdministrator == false))
             {

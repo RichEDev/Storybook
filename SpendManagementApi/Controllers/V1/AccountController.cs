@@ -921,7 +921,7 @@ namespace SpendManagementApi.Controllers.V1
             string accountLockedMessage = generalOptions.AccountMessages.AccountLockedMessage;
             string accountCurrentlyLockedMessage = generalOptions.AccountMessages.AccountCurrentlyLockedMessage;
             bool canAskForReviews = new EmployeeAppReviewPreference().PermittedToAskEmployeeForReview(user.EmployeeID, user.AccountID);
-            bool automaticVehicleLookup = generalOptions.Car.VehicleLookup;
+            bool automaticVehicleDocumentLookup = generalOptions.Car.PopulateDocumentsFromVehicleLookup;
       
 
             IAccessRoleElementPermissions bankAccountElementPermissions = DetermineElementAccess.SetElementPermissions(new ElementAccessPermissions(), user, SpendManagementElement.BankAccounts);
@@ -992,7 +992,7 @@ namespace SpendManagementApi.Controllers.V1
                 AccountCurrentlyLockedMessage = accountCurrentlyLockedMessage,
                 CanAskForReviews = canAskForReviews, 
                 EmployeeId = user.EmployeeID,
-                VehicleLookup = automaticVehicleLookup
+                VehicleLookup = automaticVehicleDocumentLookup
 
             };
 

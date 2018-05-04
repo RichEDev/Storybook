@@ -3874,6 +3874,42 @@ namespace Spend_Management {
         protected global::System.Web.UI.WebControls.CheckBox chkBlockBreakdownCoverExpiry;
         
         /// <summary>
+        /// VehicleLookupEnabled control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl VehicleLookupEnabled;
+        
+        /// <summary>
+        /// spanVehicleDocumentLookups control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanVehicleDocumentLookups;
+        
+        /// <summary>
+        /// lblVehicleDocumentLookup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVehicleDocumentLookup;
+        
+        /// <summary>
+        /// chkVehicleDocumentLookup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkVehicleDocumentLookup;
+        
+        /// <summary>
         /// lblClaimantReminder control.
         /// </summary>
         /// <remarks>
@@ -4135,51 +4171,6 @@ namespace Spend_Management {
         protected global::System.Web.UI.WebControls.CheckBox chkMultipleWorkAddress;
         
         /// <summary>
-        /// lblMultipleDestinations control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMultipleDestinations;
-        
-        /// <summary>
-        /// chkAllowMultipleDestinations control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAllowMultipleDestinations;
-        
-        /// <summary>
-        /// spanVehicleLookups control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanVehicleLookups;
-        
-        /// <summary>
-        /// lblVehicleLookup control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblVehicleLookup;
-        
-        /// <summary>
-        /// chkVehicleLookup control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkVehicleLookup;
-        
-        /// <summary>
         /// lblUseMapPoint control.
         /// </summary>
         /// <remarks>
@@ -4250,6 +4241,24 @@ namespace Spend_Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkDisableCarOutsideOfStartEndDate;
+        
+        /// <summary>
+        /// lblMultipleDestinations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMultipleDestinations;
+        
+        /// <summary>
+        /// chkAllowMultipleDestinations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkAllowMultipleDestinations;
         
         /// <summary>
         /// hdnAllowMileage control.

@@ -64,7 +64,7 @@
 
                 this._clsEmployeeCars.SaveCar(vehicle);
 
-                if (this._accountProperties.VehicleLookup)
+                if (this._accountProperties.PopulateDocumentsFromVehicleLookup)
                 {
                     if (this._accountProperties.BlockTaxExpiry && vehicle.IsTaxValid && !oldTaxValidValue)
                     {

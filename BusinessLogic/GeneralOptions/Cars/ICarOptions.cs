@@ -38,7 +38,7 @@
         /// <summary>
         /// Gets or sets a value indicating whether vehicle lookup is enabled.
         /// </summary>
-        bool VehicleLookup { get; set; }
+        bool PopulateDocumentsFromVehicleLookup { get; set; }
 
         /// <summary>
         /// Gets or sets the driving licence review reminder days

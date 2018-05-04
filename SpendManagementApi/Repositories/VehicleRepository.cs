@@ -393,7 +393,7 @@ namespace SpendManagementApi.Repositories
 
             // get the added / updated db item
             var result = vehicleRepository.Get(carId);
-            if (subAccountProperties.VehicleLookup )
+            if (subAccountProperties.PopulateDocumentsFromVehicleLookup )
             {
                 DateTime taxExpiry;
                 if (subAccountProperties.BlockTaxExpiry && DateTime.TryParseExact(item.TaxExpiry, "dd/MM/yyyy",null,DateTimeStyles.None, out taxExpiry ))
@@ -635,10 +635,10 @@ namespace SpendManagementApi.Repositories
         /// <returns>An instance of <see cref="Vehicle"/> or null</returns>
         public Vehicle LookupVehicle(string registrationNumber)
         {
-            if (!this.ActionContext.SubAccounts.getFirstSubAccount().SubAccountProperties.VehicleLookup)
+            if (!cMisc.GetCurrentUser().Account.HasLicensedElement(SpendManagementElement.VehicleLookup))
             {
-                return new Vehicle{Registration = registrationNumber, Make = string.Empty, Model = string.Empty, FuelType = 0, VehicleTypeId = 0};
-            }
+                return new Vehicle { Registration = registrationNumber, Make = string.Empty, Model = string.Empty, FuelType = 0, VehicleTypeId = 0 };
+            }               
 
             var dvlaApi = BootstrapDvla.CreateNew();
             var lookupResult = dvlaApi.Lookup(registrationNumber, BootstrapDvla.CreateLogger(cMisc.GetCurrentUser()));

@@ -289,7 +289,7 @@ namespace Spend_Management
 
             arrCarVals[0] = clsCars.SaveCar(car);
 
-            if (reqProperties.VehicleLookup && car.employeeid > 0 && carid == 0)
+            if (reqProperties.PopulateDocumentsFromVehicleLookup && car.employeeid > 0 && carid == 0)
             {
                 if (reqProperties.BlockTaxExpiry && taxExpiryDate.HasValue)
                 {
@@ -359,7 +359,7 @@ namespace Spend_Management
             LookupServiceCar result = null;
             var subAccounts = new cAccountSubAccounts(user.AccountID);
             cAccountProperties reqProperties = subAccounts.getFirstSubAccount().SubAccountProperties.Clone();
-            if (!reqProperties.VehicleLookup)
+            if (!user.Account.HasLicensedElement(SpendManagementElement.VehicleLookup))
             {
                 return null;
             }

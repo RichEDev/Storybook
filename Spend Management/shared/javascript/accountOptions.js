@@ -545,3 +545,14 @@ function hideDrivingLicenceReviewReminderDaysPanel(reminderCheck) {
         }
     }
 }
+
+function hideAutomaticVehicleDocumentLookup(blockCheck) {
+    if (blockCheck != null) {
+        if ($("#" + chkblocktaxexpiry + ":checked").length > 0 || $("#" + chkblockmotexpiry + ":checked").length > 0) {
+            $("#" + spanVehicleDocumentLookups).show();
+        } else {
+            $("#" + spanVehicleDocumentLookups).hide();
+            $("#" + chkVehicleDocumentLookup).prop('checked', false);
+        }
+    }
+}
