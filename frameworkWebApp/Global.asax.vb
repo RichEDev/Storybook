@@ -18,6 +18,21 @@ Partial Public Class [Global]
     
     Private Shared Sub InitializePage(ByVal page As Page)
         container.GetRegistration(page.GetType, true).Registration.InitializeInstance(page)
+
+        AddHandler page.InitComplete, New EventHandler(Sub(sender As Object, e As EventArgs)
+            Dim control As Control = page
+            InitializeControl(control)
+        End Sub)
+    End Sub
+
+    Public Shared Sub InitializeControl(ByVal control As Control)
+        If (TypeOf control Is UserControl) Then
+            container.GetRegistration(control.GetType, true).Registration.InitializeInstance(control)
+        End If
+        
+        For Each child As Control In control.Controls
+            InitializeControl(child)
+        Next
     End Sub
 
     Sub Application_Start(ByVal sender As Object, ByVal e As EventArgs)
