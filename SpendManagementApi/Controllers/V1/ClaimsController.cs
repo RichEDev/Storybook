@@ -13,6 +13,11 @@
     using Models.Types;
     using Models.Types.ClaimSubmission;
     using Repositories;
+
+    using RestSharp;
+
+    using SpendManagementApi.ApiCallHelper;
+
     using ApiResources = Utilities.ApiResources;
     using SpendManagementApi.Common;
     
@@ -605,16 +610,10 @@
         [InternalSelenityMethod]
         public ClaimReminderResponse NotifyApproversOfPendingClaims()
         {
-            var response = this.InitialiseResponse<ClaimReminderResponse>();
-            try
-            {
-                response.IsSendingSuccessful = new cClaims().NotifyClaimApproverOfPendingClaims();
-            }
-            catch (Exception ex)
-            {
-                response.ErrorMessage =
-                    $"Error details:{ex.Message}{Environment.NewLine} Stack Trace:{ex.StackTrace}";
-            }
+            var request = new RestRequest("ClaimReminders/NotifyApproversOfPendingClaims", Method.GET);
+
+            var response = InternalApiCallHelper.BaseRequest<ClaimReminderResponse>(request).Data;
+
             return response;
         }
 
@@ -629,16 +628,10 @@
         [InternalSelenityMethod]
         public ClaimReminderResponse NotifyApproversOfPendingClaims([FromUri] int accountId)
         {
-            var response = this.InitialiseResponse<ClaimReminderResponse>();
-            try
-            {
-                response.IsSendingSuccessful = new cClaims().NotifyClaimApproverOfPendingClaims(accountId);
-            }
-            catch (Exception ex)
-            {
-                response.ErrorMessage =
-                    $"Error details:{ex.Message}{Environment.NewLine} Stack Trace:{ex.StackTrace}";
-            }
+            var request = new RestRequest($"ClaimReminders/NotifyApproversOfPendingClaims/{accountId}", Method.GET);
+
+            var response = InternalApiCallHelper.BaseRequest<ClaimReminderResponse>(request).Data;
+
             return response;
         }
 
@@ -653,17 +646,11 @@
         [InternalSelenityMethod]
         public CurrentClaimReminderResponse NotifyClaimantsOfCurrentClaims()
         {
+            var request = new RestRequest("ClaimReminders/NotifyClaimantsOfCurrentClaims", Method.GET);
 
-            var response = this.InitialiseResponse<CurrentClaimReminderResponse>();
-            try
-            {
-                response.IsSendingSuccessful = new cClaims().NotifyClaimantsOfCurrentClaims();
-            }
-            catch (Exception ex)
-            {
-                response.ErrorMessage = ex.Message + "Error details" + ex.InnerException;
-            }
-            return  response;
+            var response = InternalApiCallHelper.BaseRequest<CurrentClaimReminderResponse>(request).Data;
+
+            return response;
         }
 
         /// <summary>
@@ -677,20 +664,12 @@
         [InternalSelenityMethod]
         public CurrentClaimReminderResponse NotifyClaimantsOfCurrentClaims([FromUri] int accountId)
         {
+            var request = new RestRequest($"ClaimReminders/NotifyClaimantsOfCurrentClaims/{accountId}", Method.GET);
 
-            var response = this.InitialiseResponse<CurrentClaimReminderResponse>();
-            try
-            {
-                response.IsSendingSuccessful = new cClaims().NotifyClaimantsOfCurrentClaims(accountId);
-            }
-            catch (Exception ex)
-            {
-                response.ErrorMessage = ex.Message + "Error details" + ex.InnerException;
-            }
+            var response = InternalApiCallHelper.BaseRequest<CurrentClaimReminderResponse>(request).Data;
+
             return response;
         }
-
-
 
         /// <summary>
         /// Saves envelope information against a claim

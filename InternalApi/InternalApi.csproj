@@ -148,11 +148,13 @@
     <Compile Include="Bootstrap\WebFeatureFlagContext.cs" />
     <Compile Include="Bootstrap\WebIdentityContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClaimRemindersController.cs" />
     <Compile Include="Controllers\ControllerExtensions.cs" />
     <Compile Include="Controllers\HttpActionResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClaimReminderResponse.cs" />
     <Compile Include="Models\GeneralOptionEnabledAccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebPrincipal.cs" />

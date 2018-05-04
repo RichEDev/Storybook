@@ -1,20 +1,24 @@
 namespace Spend_Management
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Data;
-	using System.Data.SqlClient;
-	using System.Diagnostics;
-	using System.Globalization;
-	using System.IO;
-	using System.Linq;
-	using System.Text;
-	using System.Web.UI.HtmlControls;
-	using System.Web.UI.WebControls;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Web;
+    using System.Web.UI.HtmlControls;
+    using System.Web.UI.WebControls;
 
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Identity;
+
+    using global::expenses;
 
     using Microsoft.SqlServer.Server;
 
@@ -6525,7 +6529,9 @@ namespace Spend_Management
 				approverEmailDetails = approverEmailDetails.OrderBy(o => o.AccountId).ToList();
 				foreach (var approver in approverEmailDetails)
 				{
-					if (approverAccountId == 0 || approverAccountId != approver.AccountId)
+				    HttpContext.Current.User = new TemporaryWebPrincipal(new UserIdentity(approver.AccountId, approver.EmployeeId));
+
+                    if (approverAccountId == 0 || approverAccountId != approver.AccountId)
 					{
 						emails = new NotificationTemplates(approver.AccountId, approver.EmployeeId, string.Empty, 0, Modules.expenses);
 						var clsSubAccounts = new cAccountSubAccounts(approver.AccountId);
@@ -6574,7 +6580,9 @@ namespace Spend_Management
 				claimantEmailDetails = claimantEmailDetails.OrderBy(o => o.AccountId).ToList();
 				foreach (var claimant in claimantEmailDetails)
 				{
-					if (claimantAccountId == 0 || claimantAccountId != claimant.AccountId)
+				    HttpContext.Current.User = new TemporaryWebPrincipal(new UserIdentity(claimant.AccountId, claimant.EmployeeId));
+
+                    if (claimantAccountId == 0 || claimantAccountId != claimant.AccountId)
 					{
 						notifications = new NotificationTemplates(claimant.AccountId, claimant.EmployeeId, string.Empty, 0, Modules.expenses);
 						var clsSubAccounts = new cAccountSubAccounts(claimant.AccountId);
