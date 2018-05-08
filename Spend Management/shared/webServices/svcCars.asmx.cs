@@ -358,14 +358,14 @@ namespace Spend_Management
             var user = cMisc.GetCurrentUser();
             LookupServiceCar result = null;
             var subAccounts = new cAccountSubAccounts(user.AccountID);
-            cAccountProperties reqProperties = subAccounts.getFirstSubAccount().SubAccountProperties.Clone();
+            cAccountProperties properties = subAccounts.getFirstSubAccount().SubAccountProperties.Clone();
             if (!user.Account.HasLicensedElement(SpendManagementElement.VehicleLookup))
             {
                 return null;
             }
 
             var dvlaApi = BootstrapDvla.CreateNew();
-            var lookupResult = dvlaApi.Lookup(registrationNumber, BootstrapDvla.CreateLogger(user));
+            var lookupResult = dvlaApi.Lookup(registrationNumber, BootstrapDvla.CreateLogger(user), properties.PopulateDocumentsFromVehicleLookup);
             if (lookupResult.Code == "200")
             {
                 if (lookupResult.Code != "200")

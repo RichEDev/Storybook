@@ -10,7 +10,8 @@
         /// </summary>
         /// <param name="registrationNumber">The registration of the vehicle to look up</param>
         /// <param name="lookupLogger">An instance of <see cref="ILookupLogger"/></param>
+        /// <param name="populateDocumentsFromVehicleLookup">Whether vehicle document statuses are invalid after lookup</param>
         /// <returns>An instance of <see cref="IVehicleLookupResult"/></returns>
-        IVehicleLookupResult Lookup(string registrationNumber, ILookupLogger lookupLogger);
+        IVehicleLookupResult Lookup(string registrationNumber, ILookupLogger lookupLogger, bool populateDocumentsFromVehicleLookup);
     }
 }

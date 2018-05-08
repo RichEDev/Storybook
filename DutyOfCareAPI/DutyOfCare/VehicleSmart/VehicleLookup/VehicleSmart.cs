@@ -16,8 +16,12 @@
         /// </summary>
         /// <param name="registrationNumber">The registration number of the vehicle to look up</param>
         /// <param name="lookupLogger">An instance of <see cref="ILookupLogger"/></param>
+        /// <param name="populateDocumentsFromVehicleLookup"></param>
         /// <returns>An instance of <see cref="IVehicleLookupResult"/></returns>
-        public IVehicleLookupResult Lookup(string registrationNumber, ILookupLogger lookupLogger)
+        public IVehicleLookupResult Lookup(
+            string registrationNumber,
+            ILookupLogger lookupLogger,
+            bool populateDocumentsFromVehicleLookup)
         {
             var url = ConfigurationManager.AppSettings["VehicleSmartUrl"];
             var apiKey = ConfigurationManager.AppSettings["VehicleSmartApiKey"];
@@ -107,9 +111,9 @@
                         EngineCapacity = (int)vehicleData.CylinderCapacity,
                         VehicleType = carType,
                         TaxExpiry = taxDueDate,
-                        TaxStatus = vehicleData.Taxed ? "Taxed" : "NotTaxed",
+                        TaxStatus = populateDocumentsFromVehicleLookup ? (vehicleData.Taxed ? "Taxed" : "NotTaxed") : string.Empty,
                         MotExpiry = motDueDate,
-                        MotStatus = vehicleData.Motd ? "MOT" : "MOTINVALID",
+                        MotStatus = populateDocumentsFromVehicleLookup ? (vehicleData.Motd ? "MOT" : "MOTINVALID") : string.Empty,
                         MotStart = motStartDate
                     }
                 };

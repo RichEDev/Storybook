@@ -81,8 +81,8 @@
         [Description("allowEmployeeToSpecifyCarStartDateOnAddMandatory")]
         EmpToSpecifyCarStartDateOnAddMandatory,
 
-        [Description("VehicleLookup")]
-        VehicleLookup,
+        [Description("PopulateDocumentsFromVehicleLookup")]
+        PopulateDocumentsFromVehicleLookup,
 
         [Description("singleClaim")]
         SingleClaim,

@@ -360,7 +360,7 @@
                     case AccountPropertyKeys.EmpToSpecifyCarStartDateOnAddMandatory:
                         this.Car.EmpToSpecifyCarStartDateOnAddMandatory = Convert.ToBoolean(Convert.ToByte(accountProperty.Value));
                         break;
-                    case AccountPropertyKeys.VehicleLookup:
+                    case AccountPropertyKeys.PopulateDocumentsFromVehicleLookup:
                         this.Car.PopulateDocumentsFromVehicleLookup = Convert.ToBoolean(Convert.ToInt32(accountProperty.Value));
                         break;
                     case AccountPropertyKeys.DrivingLicenceReviewReminderDays:

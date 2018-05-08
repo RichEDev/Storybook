@@ -2046,7 +2046,7 @@
             
             if (generalOptions.Car.PopulateDocumentsFromVehicleLookup != this.chkVehicleDocumentLookup.Checked)
             {
-                this.AccountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.VehicleLookup.GetDescription(), (currentUser.Account.HasLicensedElement(SpendManagementElement.VehicleLookup) && this.chkVehicleDocumentLookup.Checked).ToString(), currentUser.CurrentSubAccountId));
+                this.AccountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.PopulateDocumentsFromVehicleLookup.GetDescription(), this.chkVehicleDocumentLookup.Checked.ToString(), currentUser.CurrentSubAccountId));
             }
 
             if (generalOptions.Claim.BlockUnmatchedExpenseItemsBeingSubmitted != this.chkBlockUnmatchedExpenseItemsBeingSubmitted.Checked)

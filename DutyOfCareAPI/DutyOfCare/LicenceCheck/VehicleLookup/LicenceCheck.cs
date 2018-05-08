@@ -32,8 +32,12 @@
         /// </summary>
         /// <param name="registrationNumber">The registration number of the vehicle to look up</param>
         /// <param name="lookupLogger">An instance of <see cref="ILookupLogger"/></param>
+        /// <param name="populateDocumentsFromVehicleLookup">Whether vehicle document statuses are invalid after lookup</param>
         /// <returns>An instance of <see cref="IVehicleLookupResult"/></returns>
-        public IVehicleLookupResult Lookup(string registrationNumber, ILookupLogger lookupLogger)
+        public IVehicleLookupResult Lookup(
+            string registrationNumber,
+            ILookupLogger lookupLogger,
+            bool populateDocumentsFromVehicleLookup)
         {
             var service = new VDLServiceClient();
             var response = service.GetAdvancedVehicleData(this._networkCredential.UserName, this._networkCredential.Password, registrationNumber);
@@ -67,9 +71,9 @@
                         EngineCapacity = engineCapacity,
                         VehicleType = string.IsNullOrEmpty(response.VehicleData.VehicleType) ? response.VehicleData.BodyStyle : response.VehicleData.VehicleType,
                         TaxExpiry = response.VehicleData.TaxExpiry,
-                        TaxStatus = response.VehicleData.TaxStatus,
+                        TaxStatus = populateDocumentsFromVehicleLookup ? response.VehicleData.TaxStatus : string.Empty,
                         MotExpiry = motDueDate,
-                        MotStatus = response.VehicleData.MotStatus,
+                        MotStatus = populateDocumentsFromVehicleLookup ? response.VehicleData.MotStatus : string.Empty,
                     }
                 };
 

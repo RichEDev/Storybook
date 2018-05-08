@@ -36,7 +36,7 @@
         /// <returns>An updated instance of <see cref="cCar"/></returns>
         public cCar ValidateCar(cCar vehicle)
         {
-            var lookupResult = this._dutyOfCareApi.Lookup(vehicle.registration, BootstrapDvla.CreateLogger(this._currentUser));
+            var lookupResult = this._dutyOfCareApi.Lookup(vehicle.registration, BootstrapDvla.CreateLogger(this._currentUser), this._accountProperties.PopulateDocumentsFromVehicleLookup);
             if (lookupResult.Code == "200")
             {
                 if (lookupResult.Code != "200")

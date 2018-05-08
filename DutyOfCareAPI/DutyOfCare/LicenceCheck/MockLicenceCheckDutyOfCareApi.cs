@@ -371,12 +371,20 @@
         /// <summary>
         /// Lookup a vehicle based on the registration number
         /// </summary>
-        /// <param name="registrationNumber"></param>
-        /// <param name="lookupLogger">An instance of <see cref="ILookupLogger"/></param>
-        /// <returns>An instance of <see cref="IVehicleLookupResult"/></returns>
-        public IVehicleLookupResult Lookup(string registrationNumber, ILookupLogger lookupLogger)
+        /// <param name="registrationNumber">
+        /// </param>
+        /// <param name="lookupLogger">
+        /// An instance of <see cref="ILookupLogger"/>
+        /// </param>
+        /// <param name="invalidateVehicleDocuments">
+        /// Whether vehicle document statuses are invalid after lookup
+        /// </param>
+        /// <returns>
+        /// An instance of <see cref="IVehicleLookupResult"/>
+        /// </returns>
+        public IVehicleLookupResult Lookup(string registrationNumber, ILookupLogger lookupLogger, bool invalidateVehicleDocuments)
         {
-            return this.VehicleLookup.Lookup(registrationNumber, lookupLogger);
+            return this.VehicleLookup.Lookup(registrationNumber, lookupLogger, invalidateVehicleDocuments);
         }
 
         /// <summary>
