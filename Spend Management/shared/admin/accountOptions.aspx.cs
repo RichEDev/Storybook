@@ -2097,6 +2097,22 @@
                     employees.Cache.Delete(currentUser.AccountID, Employee.CacheArea, employeeId.ToString());
                 }
             }
+
+            // Check if the Automatic document lookup is enabled for the account
+            if (this.chkVehicleDocumentLookup.Checked && !generalOptions.Car.PopulateDocumentsFromVehicleLookup)
+            {
+                var employees = new cEmployees(currentUser.AccountID);
+                var employeeList = employees.GetAllEmployeeIDsAndUsernamesList();
+                using (var connection = new DatabaseConnection(cAccounts.getConnectionString(currentUser.AccountID)))
+                {
+                    connection.ExecuteSQL("UPDATE cars set TaxValid = 1, MotValid = 1");
+                }
+
+                foreach (var employeeId in employeeList.Keys)
+                {
+                    employees.Cache.Delete(currentUser.AccountID, cEmployeeCars.CacheKey, employeeId.ToString());
+                }
+            }
             
             // if mobile devices and attach receipts enabled, ensure PNG attachment types are enabled
             if (this.chkattach.Checked && this.chkEnableMobileDevices.Checked)

@@ -59,7 +59,7 @@
             <asp:ServiceReference Path="~/shared/webServices/svcCars.asmx" />
         </Services>
         <Scripts>
-            <asp:ScriptReference Path="~/shared/javaScript/cars.js?date=20180206" />
+            <asp:ScriptReference Path="~/shared/javaScript/cars.js?date=20180805" />
             <asp:ScriptReference Path="~/shared/javaScript/userdefined.js?date=20180417" />
             <asp:ScriptReference Path="~/shared/javaScript/employees.js" />
             <asp:ScriptReference Name="tooltips" />
