@@ -635,13 +635,18 @@ namespace SpendManagementApi.Repositories
         /// <returns>An instance of <see cref="Vehicle"/> or null</returns>
         public Vehicle LookupVehicle(string registrationNumber)
         {
+            cAccountSubAccounts subAccounts = new cAccountSubAccounts(this.User.AccountID);
+            cAccountProperties properties = this.User != null
+                                                ? subAccounts.getSubAccountById(this.User.CurrentSubAccountId).SubAccountProperties
+                                                : subAccounts.getFirstSubAccount().SubAccountProperties;
+
             if (!cMisc.GetCurrentUser().Account.HasLicensedElement(SpendManagementElement.VehicleLookup))
             {
                 return new Vehicle { Registration = registrationNumber, Make = string.Empty, Model = string.Empty, FuelType = 0, VehicleTypeId = 0 };
             }               
 
             var dvlaApi = BootstrapDvla.CreateNew();
-            var lookupResult = dvlaApi.Lookup(registrationNumber, BootstrapDvla.CreateLogger(cMisc.GetCurrentUser()));
+            var lookupResult = dvlaApi.Lookup(registrationNumber, BootstrapDvla.CreateLogger(cMisc.GetCurrentUser()), properties.PopulateDocumentsFromVehicleLookup);
             if (lookupResult.Code == "200")
             {
                 return VehicleFactory.New(lookupResult);    
