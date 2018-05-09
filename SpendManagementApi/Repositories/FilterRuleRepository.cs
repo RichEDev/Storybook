@@ -13,6 +13,8 @@ namespace SpendManagementApi.Repositories
     using Common.Enums;
     using Models.Common;
 
+    using Spend_Management.shared.code.Helpers;
+
     /// <summary>
     /// FilterRuleRepository manages data access for FilterRules.
     /// </summary>
@@ -114,7 +116,10 @@ namespace SpendManagementApi.Repositories
         /// <returns>The <see cref="FilterRuleItem"></see> FilterRuleItem</returns>
         public FilterRuleItem GetFilterRuleItemForParentOrChild(FilterType filterType, int id, bool isParent, bool useDescription)
         {
-            string item = _cFilterRules.GetParentOrChildItem((SpendManagementLibrary.FilterType)filterType, id, isParent, useDescription);
+            var filter = (SpendManagementLibrary.FilterType)filterType;
+            var breakdown = new CostCodeBreakDownInitializer().GetBreakdownInstance(filter, User.AccountID);
+            string item = _cFilterRules.GetParentOrChildItem(filter, id, isParent, useDescription, breakdown);
+
             return item.Cast<FilterRuleItem>();
         }
 
