@@ -527,7 +527,7 @@
             bool parExists;
             string item = "";
 
-            var breakdown = new CostCodeBreakDownInitializer().GetBreakdownInstance(rule.parent, accountid);
+            var breakdown = new CostCodeBreakDownFactory().Initialize(rule.parent, accountid);
 
             foreach (cFilterRuleValue val in rule.rulevals.Values)
             {
@@ -579,6 +579,8 @@
 
             foreach (Infragistics.WebUI.UltraWebNavigator.Node nde in nodes)
             {
+                var childBreakdown = new CostCodeBreakDownFactory().Initialize(rule.child, this.accountid); 
+
                 foreach (cFilterRuleValue fval in rule.rulevals.Values)
                 {
                     cFilterRuleValue temp = (cFilterRuleValue)nde.Tag;
@@ -587,19 +589,19 @@
                         switch (rule.child)
                         {
                             case FilterType.Costcode:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseCostCodeDescription, breakdown);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseCostCodeDescription, childBreakdown);
                                 break;
                             case FilterType.Department:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription, breakdown);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription, childBreakdown);
                                 break;
                             case FilterType.Projectcode:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc, breakdown);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc, childBreakdown);
                                 break;
                             case FilterType.Reason:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, false, breakdown);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, false, childBreakdown);
                                 break;
                             case FilterType.Userdefined:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, false, breakdown);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, false, childBreakdown);
                                 break;
                         }
                         node = new Infragistics.WebUI.UltraWebNavigator.Node();

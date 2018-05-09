@@ -196,7 +196,7 @@
                 string[] ctl = temp.Split(';');
                 List<ListItem> lstItems = new List<ListItem>();
 
-                var breakdown = new CostCodeBreakDownInitializer().GetBreakdownInstance(filtertype, accountid);
+                var breakdown = new CostCodeBreakDownFactory().Initialize(filtertype, accountid);
 
                 foreach (cFilterRuleValue val in lstRuleVals.Values)
                 {

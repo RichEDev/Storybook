@@ -4,9 +4,9 @@
     using SpendManagementLibrary;
 
     /// <summary>
-    /// The cost code break down initializer.
+    /// The cost code break down factory.
     /// </summary>
-    public class CostCodeBreakDownInitializer
+    public class CostCodeBreakDownFactory
     {
         /// <summary>
         /// Gets a instance of a cost code breakdown element class.
@@ -22,7 +22,7 @@
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// </exception>
-        public object GetBreakdownInstance(FilterType filterType, int accountId)
+        public object Initialize(FilterType filterType, int accountId)
         {
             switch (filterType)
             {             

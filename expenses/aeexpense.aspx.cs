@@ -5256,7 +5256,7 @@ public partial class aeexpense : System.Web.UI.Page
         var accountId = (int)this.ViewState["accountid"];
      
         List<ListItem> lstItems = new List<ListItem>();
-        var breakdown = new CostCodeBreakDownInitializer().GetBreakdownInstance(type, accountId);
+        var breakdown = new CostCodeBreakDownFactory().Initialize(type, accountId);
 
         if (type == FilterType.Userdefined)
         {

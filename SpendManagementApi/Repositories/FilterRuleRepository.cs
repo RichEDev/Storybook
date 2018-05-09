@@ -117,7 +117,7 @@ namespace SpendManagementApi.Repositories
         public FilterRuleItem GetFilterRuleItemForParentOrChild(FilterType filterType, int id, bool isParent, bool useDescription)
         {
             var filter = (SpendManagementLibrary.FilterType)filterType;
-            var breakdown = new CostCodeBreakDownInitializer().GetBreakdownInstance(filter, User.AccountID);
+            var breakdown = new CostCodeBreakDownFactory().Initialize(filter, User.AccountID);
             string item = _cFilterRules.GetParentOrChildItem(filter, id, isParent, useDescription, breakdown);
 
             return item.Cast<FilterRuleItem>();
