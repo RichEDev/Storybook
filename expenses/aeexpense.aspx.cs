@@ -4894,7 +4894,7 @@ public partial class aeexpense : System.Web.UI.Page
             }
         }
     }
-    private void populateChildDropdowns(FilterType filtertype, int id, string ctlindex)
+    private void populateChildDropdowns(FilterType filtertype, int parentId, string ctlindex)
     {
         List<FilterType> types = new List<FilterType>();
         List<int> filterids = new List<int>();
@@ -4951,11 +4951,7 @@ public partial class aeexpense : System.Web.UI.Page
 
         List<ListItem> items = new List<ListItem>();
         for (int i = 0; i < filterids.Count; i++)
-        {
-            if (types[i] == FilterType.Costcode)
-            {
-                continue;
-            }
+        {          
 
             string area = "";
             string ctlid = "";
@@ -5014,9 +5010,13 @@ public partial class aeexpense : System.Web.UI.Page
                     showCostCodeDescription = true;
                 }
             }
-
-            items = popDropdown(filterids[i], types[i], id);
-
+            else
+            {
+                // Getting the drop down list filtered items for cost codes is not required as it's a type ahead
+                // and filter rules are applied using the RegisterStartupScript below.
+                items = popDropdown(filterids[i], types[i], parentId);
+            }
+       
             switch (area)
             {
                 case "general":
@@ -5128,16 +5128,27 @@ public partial class aeexpense : System.Web.UI.Page
             foreach (var txtbox in txtBoxChildren)
             {
                 if (!string.IsNullOrEmpty(ctlindex))
-                {              
+                {
+                    cFilterRule filterRule = this.ActionContext.FilterRules.GetFilterRuleById(filterids[i]);         
+                    var costCodeIdFilters = new List<int>();
+
+                    foreach (cFilterRuleValue value in filterRule.rulevals.Values)
+                    {
+                        if (value.parentid == parentId)
+                        {
+                            costCodeIdFilters.Add(value.childid);
+                        }
+                    }
+
                     var autoCompleteFilterRuleValues = new List<AutoCompleteChildFieldValues>();
 
-                    foreach (var item in items)
+                    foreach (var costCodeIdFilter in costCodeIdFilters)
                     {
                         var autoCompleteValue =
                             new AutoCompleteChildFieldValues
                                 {
                                     FieldToBuild = string.Empty,
-                                    Key = Convert.ToInt32(item.Value),
+                                    Key = costCodeIdFilter,
                                     Value = string.Empty,
                                     FormattedText = string.Empty
                                 };
