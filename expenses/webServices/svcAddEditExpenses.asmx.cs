@@ -16,6 +16,7 @@
     using SpendManagementLibrary.Hotels;
 
     using Spend_Management;
+    using Spend_Management.shared.code.Helpers;
 
     /// <summary>
     /// This webservice is for the Add Edit Expenses page and contains a collection of function that are called by AJAX
@@ -137,7 +138,7 @@
             Dictionary<int, cFilterRuleValue> lstRuleVals = rule.rulevals;
             object[] child;
             FilterType filtertype = (FilterType)type;
-
+         
             if (filtertype == FilterType.Userdefined)
             {
                 #region userdefined
@@ -194,6 +195,9 @@
                 string temp = clsfilterrules.getChildTargetControl(filtertype);
                 string[] ctl = temp.Split(';');
                 List<ListItem> lstItems = new List<ListItem>();
+
+                var breakdown = new CostCodeBreakDownInitializer().GetBreakdownInstance(filtertype, accountid);
+
                 foreach (cFilterRuleValue val in lstRuleVals.Values)
                 {
                     if (val.parentid == parid)
@@ -201,19 +205,19 @@
                         string item;
                         if (filtertype == FilterType.Costcode)
                         {
-                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseCostCodeDescription);
+                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseCostCodeDescription, breakdown);
                         }
                         else if (filtertype == FilterType.Department)
                         {
-                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription);
+                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription, breakdown);
                         }
                         else if (filtertype == FilterType.Projectcode)
                         {
-                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc);
+                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc, breakdown);
                         }
                         else
                         {
-                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, false);
+                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, false, breakdown);
                         }
 
                         lstItems.Add(new ListItem(item, val.childid.ToString()));

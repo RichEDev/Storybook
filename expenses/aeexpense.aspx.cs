@@ -42,6 +42,8 @@ using SpendManagementLibrary.Extentions;
 
 using WebBootstrap;
 
+using Spend_Management.shared.code.Helpers;
+
 public partial class aeexpense : System.Web.UI.Page
 {
     /// <summary>
@@ -5239,8 +5241,11 @@ public partial class aeexpense : System.Web.UI.Page
         cFilterRule rule = this.ActionContext.FilterRules.GetFilterRuleById(filterid);
         Dictionary<int, cFilterRuleValue> lstRuleVals = rule.rulevals;
         var generalOptions = this.GeneralOptionsFactory[this.ActionContext.CurrentUser.CurrentSubAccountId].WithCodeAllocation();
-
+   
+        var accountId = (int)this.ViewState["accountid"];
+     
         List<ListItem> lstItems = new List<ListItem>();
+        var breakdown = new CostCodeBreakDownInitializer().GetBreakdownInstance(type, accountId);
 
         if (type == FilterType.Userdefined)
         {
@@ -5281,19 +5286,19 @@ public partial class aeexpense : System.Web.UI.Page
                     switch (type)
                     {
                         case FilterType.Costcode:
-                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, generalOptions.CodeAllocation.UseCostCodeDescription);
+                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, generalOptions.CodeAllocation.UseCostCodeDescription, breakdown);
                             break;
                         case FilterType.Department:
-                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription);
+                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription, breakdown);
                             break;
                         case FilterType.Projectcode:
-                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc);
+                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc, breakdown);
                             break;
                         case FilterType.Reason:
-                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, false);
+                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, false, breakdown);
                             break;
                         case FilterType.Userdefined:
-                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, false);
+                            item = this.ActionContext.FilterRules.GetParentOrChildItem(type, val.childid, false, false, breakdown);
                             break;
                     }
 

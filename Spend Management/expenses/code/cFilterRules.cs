@@ -15,6 +15,8 @@
     using SpendManagementLibrary;
     using SpendManagementLibrary.Helpers;
 
+    using Spend_Management.shared.code.Helpers;
+
     public class cFilterRules
     {
         private readonly Utilities.DistributedCaching.Cache Cache = new Utilities.DistributedCaching.Cache();
@@ -525,24 +527,26 @@
             bool parExists;
             string item = "";
 
+            var breakdown = new CostCodeBreakDownInitializer().GetBreakdownInstance(rule.parent, accountid);
+
             foreach (cFilterRuleValue val in rule.rulevals.Values)
             {
                 switch (rule.parent)
                 {
                     case FilterType.Costcode:
-                        item = GetParentOrChildItem(rule.parent, val.parentid, true, generalOptions.CodeAllocation.UseCostCodeDescription);
+                        item = GetParentOrChildItem(rule.parent, val.parentid, true, generalOptions.CodeAllocation.UseCostCodeDescription, breakdown);
                         break;
                     case FilterType.Department:
-                        item = GetParentOrChildItem(rule.parent, val.parentid, true, generalOptions.CodeAllocation.UseDepartmentDescription);
+                        item = GetParentOrChildItem(rule.parent, val.parentid, true, generalOptions.CodeAllocation.UseDepartmentDescription, breakdown);
                         break;
                     case FilterType.Projectcode:
-                        item = GetParentOrChildItem(rule.parent, val.parentid, true, generalOptions.CodeAllocation.UseProjectCodeDesc);
+                        item = GetParentOrChildItem(rule.parent, val.parentid, true, generalOptions.CodeAllocation.UseProjectCodeDesc, breakdown);
                         break;
                     case FilterType.Reason:
-                        item = GetParentOrChildItem(rule.parent, val.parentid, true, false);
+                        item = GetParentOrChildItem(rule.parent, val.parentid, true, false, breakdown);
                         break;
                     case FilterType.Userdefined:
-                        item = GetParentOrChildItem(rule.parent, val.parentid, true, false);
+                        item = GetParentOrChildItem(rule.parent, val.parentid, true, false, breakdown);
                         break;
                     //case FilterType.Location:
                     //    item = getParentOrChildItem(rule.parent, val.parentid, true, false);
@@ -583,19 +587,19 @@
                         switch (rule.child)
                         {
                             case FilterType.Costcode:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseCostCodeDescription);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseCostCodeDescription, breakdown);
                                 break;
                             case FilterType.Department:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription, breakdown);
                                 break;
                             case FilterType.Projectcode:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc, breakdown);
                                 break;
                             case FilterType.Reason:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, false);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, false, breakdown);
                                 break;
                             case FilterType.Userdefined:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, false);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, false, breakdown);
                                 break;
                         }
                         node = new Infragistics.WebUI.UltraWebNavigator.Node();
@@ -611,24 +615,37 @@
 
             return nodes;
         }
-
+      
         /// <summary>
         /// Gets the item detail for the inputted criteria
         /// </summary>
-        /// <param name="filterType">The filter type</param>
-        /// <param name="id">The Id of the we element are insterested in</param>
-        /// <param name="parent">Is it a parent</param>
-        /// <param name="showDesc">Show the description</param>
-        /// <returns></returns>
-        public string GetParentOrChildItem(FilterType filterType, int id, bool parent, bool showDesc)
+        /// <param name="filterType">
+        /// The filter type
+        /// </param>
+        /// <param name="id">
+        /// The Id of the we element are insterested in
+        /// </param>
+        /// <param name="parent">
+        /// Is it a parent
+        /// </param>
+        /// <param name="showDesc">
+        /// Show the description
+        /// </param>
+        /// <param name="breakdown">
+        /// The breakdown element to get the data for.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public string GetParentOrChildItem(FilterType filterType, int id, bool parent, bool showDesc, object breakdown)
         {
             string item = string.Empty;
-
+         
             switch (filterType)
             {
                 case FilterType.Costcode:
                     {
-                        cCostCode costcode = CostCodes.GetCostcodeById(id);
+                        var costcodes = (cCostcodes)breakdown;
+                        cCostCode costcode = costcodes.GetCostcodeById(id);
 
                         if (parent)
                         {
@@ -644,8 +661,8 @@
                     }
                 case FilterType.Department:
                     {
-                        var departments = new cDepartments(accountid);
-                        var department = departments.GetDepartmentById(id);
+                        var departments = (cDepartments)breakdown;
+                        cDepartment department = departments.GetDepartmentById(id);
 
                         if (parent)
                         {
@@ -660,33 +677,32 @@
                         break;
                     }
                 case FilterType.Projectcode:
-                    {
-                        var projects = new cProjectCodes(accountid);
-                        var project = projects.getProjectCodeById(id);
-                        
+                    {                          
+                        var projectCodes = (cProjectCodes)breakdown;
+                        cProjectCode projectCode = projectCodes.getProjectCodeById(id);
+
                         if (parent)
                         {
                             item = showDesc
-                                ? string.Format("{0},{1}", project.description, project.projectcodeid)
-                                : string.Format("{0},{1}", project.projectcode, project.projectcodeid);
+                                ? string.Format("{0},{1}", projectCode.description, projectCode.projectcodeid)
+                                : string.Format("{0},{1}", projectCode.projectcode, projectCode.projectcodeid);
                         }
                         else
                         {
-                            item = showDesc ? project.description : project.projectcode;
+                            item = showDesc ? projectCode.description : projectCode.projectcode;
                         }
                         break;
                     }
                 case FilterType.Reason:
                     {
-                        var reasons = new cReasons(accountid);
-                        var reason = reasons.getReasonById(id);
-
-                        item = parent ? string.Format("{0},{1}", reason.reason, reason.reasonid) : reason.reason;
+                        var reasons = (cReasons)breakdown;
+                        cReason reason = reasons.getReasonById(id);
+                               item = parent ? string.Format("{0},{1}", reason.reason, reason.reasonid) : reason.reason;
                         break;
                     }
                 case FilterType.Userdefined:
                     {
-                        var userdefinedFields = new cUserdefinedFields(accountid);
+                        var userdefinedFields = (cUserdefinedFields)breakdown;
 
                         foreach (cFilterRule rule in listFilterRules.Values)
                         {
