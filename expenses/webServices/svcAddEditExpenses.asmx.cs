@@ -203,21 +203,21 @@
                     if (val.parentid == parid)
                     {
                         string item;
-                        if (filtertype == FilterType.Costcode)
+                        switch (filtertype)
                         {
-                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseCostCodeDescription, breakdown);
-                        }
-                        else if (filtertype == FilterType.Department)
-                        {
-                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription, breakdown);
-                        }
-                        else if (filtertype == FilterType.Projectcode)
-                        {
-                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc, breakdown);
-                        }
-                        else
-                        {
-                            item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, false, breakdown);
+                            case FilterType.Costcode:
+                                // No need to get the cost code item details as these are populated in the cost code type ahead functionality.
+                                item = string.Empty;
+                                break;
+                            case FilterType.Department:
+                                item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseDepartmentDescription, breakdown);
+                                break;
+                            case FilterType.Projectcode:
+                                item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc, breakdown);
+                                break;
+                            default:
+                                item = clsfilterrules.GetParentOrChildItem(filtertype, val.childid, false, false, breakdown);
+                                break;
                         }
 
                         lstItems.Add(new ListItem(item, val.childid.ToString()));
