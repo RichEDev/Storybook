@@ -18,5 +18,12 @@
         /// <param name="tableID">The <see cref="Guid"/>ID to retrieve</param>
         /// <returns>An instance of <see cref="cTable"/>or null if not found.</returns>
         cTable GetTableByID(Guid tableID);
+
+        /// <summary>
+        /// Get a list of reportable <see cref="cTable"/> objects.
+        /// </summary>
+        /// <param name="activeModule">The current active <see cref="Modules"/></param>
+        /// <returns>A <see cref="List{T}"/> of <seealso cref="cTables"/>that have the report on attribute set to true.</returns>
+        List<cTable> GetReportableTables(Modules activeModule);
     }
 }

@@ -755,7 +755,7 @@
             var tables = new SubAccountTables(new cTables(reqCurrentUser.AccountID), new TableRelabler(accountProperties));
             CreateLabel(pnl, "lblProductArea", "ddlProductArea", "Product Area");
             CreateLiteral(pnl, "<span class=\"inputs\">");
-            CreateDropDown(pnl, "ddlProductArea", listItemFactory.CreateList(tables.GetItemsForReportDropDown(reqCurrentUser.CurrentActiveModule)));
+            CreateDropDown(pnl, "ddlProductArea", listItemFactory.CreateList(tables.GetReportableTables(reqCurrentUser.CurrentActiveModule)));
             CreateLiteral(pnl, "</span><span class=\"inputicon\">&nbsp;</span><span class=\"inputtooltipfield\"></span><span class=\"inputvalidatorfield\">&nbsp;</span>");
             img = new Image();
             img.ImageUrl = "~/shared/images/icons/16/plain/tooltip.png";

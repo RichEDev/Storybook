@@ -324,6 +324,27 @@ namespace SpendManagementLibrary
         }
 
         /// <summary>
+        /// Get a list of reportable <see cref="cTable"/> objects.
+        /// </summary>
+        /// <param name="activeModule">The current active <see cref="Modules"/></param>
+        /// <returns>A <see cref="List{T}"/> of <seealso cref="cTables"/>that have the report on attribute set to true.</returns>
+        public List<cTable> GetReportableTables(Modules activeModule)
+        {
+            var clsElements = new cElements();
+            var allowedTables = new AllowedTables();
+            List<int> lstLicencedElementIDs = clsElements.GetLicencedModuleIDs(this.nAccountID, activeModule);
+
+            var lstCustomItems = this.lstCachedCustomerTables.Values.Where(x1 => x1.AllowReportOn && x1.ElementID.HasValue && x1.TableSource == cTable.TableSourceType.CustomEntites && !string.IsNullOrEmpty(x1.Description));
+
+            var lstItems = this.lstCachedMetabaseTables.Values.Where(x1 => x1.AllowReportOn && 
+                                (x1.ElementID.HasValue && lstLicencedElementIDs.Contains(x1.ElementID.Value) || x1.ElementID == null )
+                                && !string.IsNullOrEmpty(x1.Description)).ToList();
+
+            lstItems.AddRange(lstCustomItems);
+            return lstItems.OrderBy(x => x.Description).ToList();
+        }
+
+        /// <summary>
         /// Creates a drop down list of tables allowed to be reported on for the current active module
         /// </summary>
         /// <param name="activeModule">
