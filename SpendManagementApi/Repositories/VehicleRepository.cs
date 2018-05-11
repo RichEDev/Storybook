@@ -98,22 +98,24 @@ namespace SpendManagementApi.Repositories
             IList<MileageCategory> mileageCategories = mileageRepository.GetAll();
             IList<MileageCategory> validMileageCategories = new List<MileageCategory>();
 
-            var financialYearId = SpendManagementLibrary.FinancialYears.FinancialYear.GetPrimary(this.User).FinancialYearID;
+            var yearId = mileageCategories.FirstOrDefault(cat => cat.FinancialYearId.HasValue);
+            
+            var financialYearId = yearId != null && yearId.FinancialYearId.HasValue ? yearId.FinancialYearId.Value : SpendManagementLibrary.FinancialYears.FinancialYear.GetPrimary(this.User).FinancialYearID;
 
             foreach (MileageCategory category in mileageCategories)
             {
-                if (category.CatValid && category.FinancialYearId == financialYearId)
+                if (category.CatValid && category.FinancialYearId.HasValue && category.FinancialYearId.Value == financialYearId)
                 {
                     validMileageCategories.Add(category);
                 }
             }
 
-            var vehicleUDFs = this._employeeCarsData.GetVehicleDefinitionUDFs(User.AccountID);
+            var vehicleUdFs = this._employeeCarsData.GetVehicleDefinitionUDFs(User.AccountID);
             var userDefinedFields = new List<UserDefinedFieldType>();
 
-            if (vehicleUDFs != null)
+            if (vehicleUdFs != null)
             {
-                foreach (SpendManagementLibrary.UserDefinedFields.UserDefinedFieldValue userDefinedField in vehicleUDFs)
+                foreach (SpendManagementLibrary.UserDefinedFields.UserDefinedFieldValue userDefinedField in vehicleUdFs)
                 {
                     var userDefinedFiledValue = (cUserDefinedField)userDefinedField.Value;
 
@@ -125,7 +127,7 @@ namespace SpendManagementApi.Repositories
                 }
             }
 
-            List<FinancialYear> financialYears = FinancialYears.Years(this.User).Select(year => year.Cast<SpendManagementApi.Models.Types.FinancialYear>()).ToList();
+            List<FinancialYear> financialYears = FinancialYears.Years(this.User).Select(year => year.Cast<SpendManagementApi.Models.Types.FinancialYear>()).Where(y => y.FinancialYearID == financialYearId).ToList();
 
             var vehicleDefinition = new VehicleDefinition
                                         {
