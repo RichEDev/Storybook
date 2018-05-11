@@ -792,13 +792,6 @@
     <Compile Include="admin\admincategories.aspx.designer.cs">
       <DependentUpon>admincategories.aspx</DependentUpon>
     </Compile>
-    <Compile Include="admin\adminfaqs.aspx.cs">
-      <DependentUpon>adminfaqs.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\adminfaqs.aspx.designer.cs">
-      <DependentUpon>adminfaqs.aspx</DependentUpon>
-    </Compile>
     <Compile Include="admin\adminfloats.aspx.cs">
       <DependentUpon>adminfloats.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -847,20 +840,6 @@
     </Compile>
     <Compile Include="admin\aecorporatecard.aspx.designer.cs">
       <DependentUpon>aecorporatecard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="admin\aefaq.aspx.cs">
-      <DependentUpon>aefaq.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\aefaq.aspx.designer.cs">
-      <DependentUpon>aefaq.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="admin\aefaqcategory.aspx.cs">
-      <DependentUpon>aefaqcategory.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\aefaqcategory.aspx.designer.cs">
-      <DependentUpon>aefaqcategory.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\aefilterrule.aspx.cs">
       <DependentUpon>aefilterrule.aspx</DependentUpon>
@@ -1107,13 +1086,6 @@
     <Compile Include="information\employeeproxy.aspx.designer.cs">
       <DependentUpon>employeeproxy.aspx</DependentUpon>
     </Compile>
-    <Compile Include="information\faqs.aspx.cs">
-      <DependentUpon>faqs.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="information\faqs.aspx.designer.cs">
-      <DependentUpon>faqs.aspx</DependentUpon>
-    </Compile>
     <Compile Include="information\holidays.aspx.cs">
       <DependentUpon>holidays.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1175,7 +1147,6 @@
     </Compile>
     <Compile Include="Old_App_Code\cViewGroups.cs" />
     <Compile Include="Old_App_Code\admin\cProviders.cs" />
-    <Compile Include="Old_App_Code\admin\cFaqs.cs" />
     <Compile Include="Old_App_Code\admin\cQeForms.cs" />
     <Compile Include="Old_App_Code\cItemBuilder.cs" />
     <Compile Include="adminmenu.aspx.cs">
@@ -1468,15 +1439,12 @@
     <None Include="Old_App_Code\DBConnection.cs.exclude" />
     <Content Include="adminmenu.aspx" />
     <Content Include="admin\admincategories.aspx" />
-    <Content Include="admin\adminfaqs.aspx" />
     <Content Include="admin\adminfloats.aspx" />
     <Content Include="admin\adminp11d.aspx" />
     <Content Include="admin\adminpolicy.aspx" />
     <Content Include="admin\adminqeforms.aspx" />
     <Content Include="admin\aebroadcastmessage.aspx" />
     <Content Include="admin\aecategory.aspx" />
-    <Content Include="admin\aefaq.aspx" />
-    <Content Include="admin\aefaqcategory.aspx" />
     <Content Include="admin\aefloat.aspx" />
     <Content Include="admin\aep11d.aspx" />
     <Content Include="admin\aeqeform.aspx" />
@@ -1524,7 +1492,6 @@
     <Content Include="information\direntry.aspx" />
     <Content Include="information\disputeadvance.aspx" />
     <Content Include="information\employeeproxy.aspx" />
-    <Content Include="information\faqs.aspx" />
     <Content Include="information\holidays.aspx" />
     <Content Include="information\myadvances.aspx" />
     <Content Include="information\reviewdetails.aspx" />
@@ -1602,9 +1569,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="admin\App_LocalResources\adminemployees.aspx.resx">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="admin\App_LocalResources\adminfaqs.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="admin\App_LocalResources\adminfloats.aspx.resx">
@@ -2000,9 +1964,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="information\App_LocalResources\employeeproxy.aspx.resx">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="information\App_LocalResources\faqs.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="information\App_LocalResources\holidays.aspx.resx">
