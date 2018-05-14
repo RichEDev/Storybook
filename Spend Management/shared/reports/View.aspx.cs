@@ -8,6 +8,10 @@ namespace Spend_Management.shared.reports
     using System.Configuration;
     using System.Linq;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using SpendManagementHelpers.TreeControl;
 
     using SpendManagementLibrary;
@@ -17,6 +21,13 @@ namespace Spend_Management.shared.reports
 
     public partial class View : System.Web.UI.Page
     {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IGeneralOptions"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+
         public int requestnumber;
         public string reportName;
 
@@ -99,14 +110,14 @@ namespace Spend_Management.shared.reports
                                 user.EmployeeID,
                                 drillrequest.report.reportid);
                             cMisc clsmisc = new cMisc(user.AccountID);
-                            cGlobalProperties clsproperties = clsmisc.GetGlobalProperties(user.AccountID);
+                            var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithReport();
                             if (drilloptions.drilldownreport != Guid.Empty)
                             {
                                 drilldownreportid = drilloptions.drilldownreport;
                             }
-                            else if (clsproperties.drilldownreportid != Guid.Empty)
+                            else if (generalOptions.Report.DrilldownReport != Guid.Empty)
                             {
-                                drilldownreportid = clsproperties.drilldownreportid;
+                                drilldownreportid = generalOptions.Report.DrilldownReport.Value;
                             }
                         }
 
