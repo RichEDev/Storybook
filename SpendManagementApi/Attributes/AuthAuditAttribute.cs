@@ -321,7 +321,7 @@
 
                     CallsToDecrement = mobileRequest ? 0 : ((IInterceptTransactionDecrement)controller).TransactionCount;
 
-                    var callStatus = LicenseAndAudit.DetermineAccessAndDecrement(authParts.AccountId, !IPValidator.IsSelenity(actionExecutedContext.Request), CallsToDecrement);
+                    var callStatus = LicenseAndAudit.DetermineAccessAndDecrement(authParts.AccountId, !IPValidator.IsSelenity(actionExecutedContext.Request), CallsToDecrement, mobileRequest: mobileRequest);
                     if (!callStatus.Allowed)
                     {
                         throw new HttpResponseException(actionExecutedContext.ActionContext.Request.CreateErrorResponse(
