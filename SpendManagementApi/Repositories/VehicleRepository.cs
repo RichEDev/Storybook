@@ -97,14 +97,24 @@ namespace SpendManagementApi.Repositories
             var mileageRepository = new MileageCategoryRepository(User, ActionContext);
             IList<MileageCategory> mileageCategories = mileageRepository.GetAll();
             IList<MileageCategory> validMileageCategories = new List<MileageCategory>();
-
-            var yearId = mileageCategories.FirstOrDefault(cat => cat.FinancialYearId.HasValue);
+            var employeeCars = this._employeeCarsData.Cars;
             
-            var financialYearId = yearId != null && yearId.FinancialYearId.HasValue ? yearId.FinancialYearId.Value : 0;
+            var financialYearId = 0;
+            var firstCarCategories = employeeCars != null && employeeCars.Count > 0
+                                        ? employeeCars[0].mileagecats
+                                        : new List<int>();
+            if (firstCarCategories.Count > 0)
+            {
+                var category = mileageCategories.FirstOrDefault(c => c.MileageCategoryId == firstCarCategories[0]);
+                if (category != null && category.FinancialYearId.HasValue)
+                {
+                    financialYearId = category.FinancialYearId.Value;
+                }
+            }
 
             foreach (MileageCategory category in mileageCategories)
             {
-                if (category.CatValid && category.FinancialYearId.HasValue && category.FinancialYearId.Value == financialYearId)
+                if ((category.CatValid && category.FinancialYearId.HasValue && category.FinancialYearId.Value == financialYearId) || financialYearId == 0)
                 {
                     validMileageCategories.Add(category);
                 }
