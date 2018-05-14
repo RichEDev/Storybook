@@ -100,7 +100,7 @@ namespace SpendManagementApi.Repositories
 
             var yearId = mileageCategories.FirstOrDefault(cat => cat.FinancialYearId.HasValue);
             
-            var financialYearId = yearId != null && yearId.FinancialYearId.HasValue ? yearId.FinancialYearId.Value : SpendManagementLibrary.FinancialYears.FinancialYear.GetPrimary(this.User).FinancialYearID;
+            var financialYearId = yearId != null && yearId.FinancialYearId.HasValue ? yearId.FinancialYearId.Value : 0;
 
             foreach (MileageCategory category in mileageCategories)
             {
@@ -127,7 +127,7 @@ namespace SpendManagementApi.Repositories
                 }
             }
 
-            List<FinancialYear> financialYears = FinancialYears.Years(this.User).Select(year => year.Cast<SpendManagementApi.Models.Types.FinancialYear>()).Where(y => y.FinancialYearID == financialYearId).ToList();
+            List<FinancialYear> financialYears = FinancialYears.Years(this.User).Select(year => year.Cast<SpendManagementApi.Models.Types.FinancialYear>()).Where(y => y.FinancialYearID == financialYearId || financialYearId == 0).ToList();
 
             var vehicleDefinition = new VehicleDefinition
                                         {
