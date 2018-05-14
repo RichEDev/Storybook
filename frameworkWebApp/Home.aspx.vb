@@ -1,6 +1,7 @@
 Imports System.Collections
 Imports System.Collections.Generic
 Imports FWClasses
+Imports SEL.FeatureFlags
 Imports SpendManagementLibrary
 Imports SpendManagementLibrary.HelpAndSupport
 Imports SpendManagementLibrary.Helpers
@@ -12,10 +13,18 @@ Namespace Framework2006
         Inherits System.Web.UI.Page
 
         Private myTheme As String
+        Private NewStyleReports As Boolean
+
+        Public Property FeatureFlagManager As IFeatureFlagManager
 
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
             If Me.IsPostBack = False Then
                 Dim db As New cFWDBConnection
+                If FeatureFlagManager Is Nothing Then
+                    NewStyleReports = True
+                Else
+                    NewStyleReports = FeatureFlagManager.IsEnabled("Syncfusion report viewer")
+                End If
 
                 Dim curUser As CurrentUser = cMisc.GetCurrentUser()
                 Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, New cAccountSubAccounts(curUser.Account.accountid).getSubAccountsCollection, curUser.CurrentSubAccountId)
@@ -332,7 +341,12 @@ Namespace Framework2006
                     hypLastReport.Attributes.Add("onmouseout", "window.status='Done';")
 
                     hypLastReport.Attributes.Add("onmouseover", "window.status='Run Report """ & tmprepname.Replace("'", "`") & """';return true;")
-                    hypLastReport.NavigateUrl = "javascript:window.location.href=document.location;window.open('" & cMisc.Path & "/shared/reports/reportviewer.aspx?reportid=" & db.GetFieldValue(db.glDBWorkB, "lastReportId", 0, 0).ToString & "','reportviewer','locationbar=no,menubar=no,scrollbars=yes,status=1,resizable=1');"
+                    If NewStyleReports Then
+                        hypLastReport.NavigateUrl = "javascript:window.location.href=document.location;window.open('" & cMisc.Path & "/shared/reports/view.aspx?reportid=" & db.GetFieldValue(db.glDBWorkB, "lastReportId", 0, 0).ToString & "','_blank');"
+                    Else
+                        hypLastReport.NavigateUrl = "javascript:window.location.href=document.location;window.open('" & cMisc.Path & "/shared/reports/reportviewer.aspx?reportid=" & db.GetFieldValue(db.glDBWorkB, "lastReportId", 0, 0).ToString & "','reportviewer','locationbar=no,menubar=no,scrollbars=yes,status=1,resizable=1');"
+                    End If
+
                 End If
 
                 If IsDBNull(db.GetFieldValue(db.glDBWorkB, "ContractDescription", 0, 0)) Then

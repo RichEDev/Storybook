@@ -1327,6 +1327,48 @@
         }
 
         /// <summary>
+        /// Update the drilldown report foe a given report ID.
+        /// </summary>
+        /// <param name="reportId">
+        /// The reportid.
+        /// </param>
+        /// <param name="drilldown">
+        /// The drilldown report ID.
+        /// </param>
+        [WebMethod(EnableSession = true)]
+        public void UpdateDrilldownReport(Guid reportId, Guid drilldown)
+        {
+            CurrentUser currentUser = cMisc.GetCurrentUser();
+            IReports clsreports = (IReports)Activator.GetObject(typeof(IReports), ConfigurationManager.AppSettings["ReportsServicePath"] + "/reports.rem");
+            clsreports.updateDrillDownReport(currentUser.AccountID, currentUser.EmployeeID, reportId, drilldown);
+        }
+
+        /// <summary>
+        /// Save a copy of an already existing report..
+        /// </summary>
+        /// <param name="reportId">
+        /// The ID of the <see cref="cReport"/> to copy.
+        /// </param>
+        /// <param name="reportName">
+        /// The name of the new report.
+        /// </param>
+        /// <param name="folderId">
+        /// The ID of the folder to save the report into..
+        /// </param>
+        /// <returns>
+        /// The <see cref="Guid"/> of the new report
+        /// Guid.Empty if the same has failed.
+        /// </returns>
+        [WebMethod(EnableSession = true)]
+        public Guid SaveAs(Guid reportId, string reportName, Guid? folderId)
+        {
+            CurrentUser currentUser = cMisc.GetCurrentUser();
+            cReports clsReports = new cReports(currentUser.AccountID, currentUser.CurrentSubAccountId);
+            return clsReports.SaveReportAs(reportId, currentUser.EmployeeID, reportName, folderId, currentUser);
+        }
+        
+
+        /// <summary>
         /// Get the Image path for Charts.
         /// </summary>
         /// <param name="user">The current user</param>

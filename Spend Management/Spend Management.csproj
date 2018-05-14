@@ -624,6 +624,7 @@
     <Content Include="shared\css\jquery-selui-address.css" />
     <Content Include="shared\javaScript\minify\jquery-selui-address.js" />
     <Content Include="shared\javaScript\minify\sel.data.js" />
+    <Content Include="shared\javaScript\sel.reportviewer.js" />
     <Content Include="shared\javaScript\sel.systemHealth.js" />
     <Content Include="shared\javaScript\minify\sel.receipts.js" />
     <Content Include="shared\javaScript\sel.claims.js">
@@ -661,6 +662,7 @@
     <Content Include="shared\images\maintenance.jpg" />
     <Content Include="shared\javaScript\tooltipsgrid.js" />
     <Content Include="shared\noBankAccount.aspx" />
+    <Content Include="shared\reports\View.aspx" />
     <Content Include="shared\usercontrols\bankAccounts.ascx" />
     <Content Include="shared\usercontrols\BottomScripts.ascx" />
     <Content Include="shared\usercontrols\Footer.ascx" />
@@ -1451,6 +1453,13 @@
     </Compile>
     <Compile Include="shared\reports\aeReport.aspx.designer.cs">
       <DependentUpon>aeReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="shared\reports\View.aspx.cs">
+      <DependentUpon>View.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="shared\reports\View.aspx.designer.cs">
+      <DependentUpon>View.aspx</DependentUpon>
     </Compile>
     <Compile Include="shared\reports\ViewClaimDetails.cs" />
     <Compile Include="shared\Sso.aspx.cs">

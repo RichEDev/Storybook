@@ -3,21 +3,35 @@ using System.Web;
 using System.Web.UI;
 namespace Spend_Management
 {
-	/// <summary>
+    using BusinessLogic;
+
+    using SEL.FeatureFlags;
+
+    /// <summary>
 	/// Summary description for rptlist.
 	/// </summary>
 	public partial class rptlist : Page
 	{
-	
+	    /// <summary>
+	    /// Gets or sets an instance of <see cref="IFeatureFlagManager"/>.
+	    /// </summary>
+	    [Dependency]
+        public IFeatureFlagManager FeatureFlagManager { get; set; }
+
+	    /// <summary>
+	    /// Gets or sets a value indicating whether to use the new style report viewer "View.aspx".
+	    /// </summary>
+	    public bool NewStyle { get; set; }
+
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
+		    this.NewStyle = this.FeatureFlagManager?.IsEnabled("Syncfusion report viewer") ?? true;
+
 			Title = "Reports";
             Master.title = "Reports";
 
             if (IsPostBack == false)
             {
-
-                
                 int action;
                 CurrentUser user = cMisc.GetCurrentUser();
                 ViewState["accountid"] = user.AccountID;
@@ -76,9 +90,6 @@ namespace Spend_Management
                 
             }
 		}
-        
-
-       
 
 		#region Web Form Designer generated code
 		override protected void OnInit(EventArgs e)
@@ -99,10 +110,6 @@ namespace Spend_Management
 
 		}
 		#endregion
-
-
-
-        
 
         protected override void OnInitComplete(EventArgs e)
         {

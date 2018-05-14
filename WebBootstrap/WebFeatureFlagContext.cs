@@ -13,6 +13,10 @@
         {
             UserIdentity userIdentity = this._identityProvider.GetUserIdentity();
             IRequestContext requestContext = new RequestContext(userIdentity?.EmployeeId, string.Empty, string.Empty);
+            if (userIdentity != null)
+            {
+                requestContext.Properties.Add("accountId", userIdentity.AccountId.ToString());
+            }
 
             return requestContext;
         }

@@ -1388,8 +1388,7 @@
                             $(this).attr('selected', 'selected');
                         }
                     });
-                },
-
+                }
             },
 
             Misc:

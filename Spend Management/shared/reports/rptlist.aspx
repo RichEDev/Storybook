@@ -26,12 +26,14 @@
                 }
             }
             
-            function runReport(reportname, reportid, claimants, area)
-            {
-                window.open('reportviewer.aspx?reportid=' + reportid + '&reportarea='+ area,'reportviewer','locationbar=no,menubar=no,scrollbars=yes,status=1,resizable=1');
+            function runReport(reportname, reportid, claimants, area) {
+                if ('<%=this.NewStyle%>' === 'True') {
+                    window.open('view.aspx?reportid=' + reportid + '&reportarea='+ area,'_blank');
+                } else {
+                    window.open('reportviewer.aspx?reportid=' + reportid + '&reportarea='+ area,'reportviewer','locationbar=no,menubar=no,scrollbars=yes,status=1,resizable=1');    
+                }
+                
             }
-            
-
 
                     function toggle(divId)
                     {

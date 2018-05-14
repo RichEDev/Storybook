@@ -1,7 +1,16 @@
 ﻿[
   {
     "Enabled": true,
-    "Name": "Feature Name",
-    "Strategies": []
+    "Name": "Syncfusion report viewer",
+    "Strategies": [{
+      "$type": "SEL.FeatureFlags.Strategies.AccountIdStrategy, SEL.FeatureFlags",
+      "EnabledOnMatchList": {
+        "$type": "System.Int32[], mscorlib",
+        "$values": [
+          419
+        ]
+      },
+      "Name": "AccountIdStrategy"
+    }]
   }
 ]

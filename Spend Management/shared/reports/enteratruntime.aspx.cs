@@ -1,18 +1,27 @@
 using System;
 using System.Web.UI;
 
+using BusinessLogic;
+
+using SEL.FeatureFlags;
+
 using Spend_Management;
 
 using SpendManagementLibrary;
 
 public partial class reports_enteratruntime : Page
 {
+    [Dependency]
+    public IFeatureFlagManager FeatureFlagManager { get; set; }
+
+    public bool NewStyle { get; set; }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         CurrentUser user = cMisc.GetCurrentUser();
         ViewState["accountid"] = user.AccountID;
         ViewState["employeeid"] = user.EmployeeID;
-
+        this.NewStyle = this.FeatureFlagManager.IsEnabled("Syncfusion report viewer");
         int financialExportID = 0;
         if (Request.QueryString["financialexportid"] != null)
         {
@@ -49,6 +58,8 @@ public partial class reports_enteratruntime : Page
 
         ClientScript.RegisterClientScriptBlock(this.GetType(), "runtime", "self.focus();", true);
     }
+
+    
 
     protected void cmdok_Click(object sender, ImageClickEventArgs e)
     {
@@ -87,7 +98,14 @@ public partial class reports_enteratruntime : Page
         }
         else
         {
-            Response.Redirect("reportviewer.aspx?reportid=" + request.report.reportid + "&requestnum=" + request.requestnum, true);
+            if (NewStyle)
+            {
+                Response.Redirect("view.aspx?reportid=" + request.report.reportid + "&requestnum=" + request.requestnum, true);
+            }
+            else
+            {
+                Response.Redirect("reportviewer.aspx?reportid=" + request.report.reportid + "&requestnum=" + request.requestnum, true);    
+            }
         }
     }
 }
