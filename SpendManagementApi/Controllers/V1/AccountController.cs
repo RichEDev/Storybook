@@ -921,7 +921,7 @@ namespace SpendManagementApi.Controllers.V1
             string accountLockedMessage = generalOptions.AccountMessages.AccountLockedMessage;
             string accountCurrentlyLockedMessage = generalOptions.AccountMessages.AccountCurrentlyLockedMessage;
             bool canAskForReviews = new EmployeeAppReviewPreference().PermittedToAskEmployeeForReview(user.EmployeeID, user.AccountID);
-            bool automaticVehicleDocumentLookup = generalOptions.Car.PopulateDocumentsFromVehicleLookup;
+            bool automaticVehicleDocumentLookup = user.Account.HasLicensedElement(SpendManagementElement.VehicleLookup);
       
 
             IAccessRoleElementPermissions bankAccountElementPermissions = DetermineElementAccess.SetElementPermissions(new ElementAccessPermissions(), user, SpendManagementElement.BankAccounts);
