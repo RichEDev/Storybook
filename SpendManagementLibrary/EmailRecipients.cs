@@ -15,7 +15,7 @@
         /// <returns>The index of the added item</returns>
         public int Add(int employeeId, string emailAddress)
         {
-            if (employeeId <= 0 || string.IsNullOrEmpty(emailAddress))
+            if (string.IsNullOrEmpty(emailAddress))
             {
                 return 0;
             }
