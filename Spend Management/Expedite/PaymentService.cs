@@ -53,8 +53,7 @@ namespace Spend_Management.Expedite
                 FinancialApplication application;
                 cFinancialExport export = null;
                 var employees = new cEmployees(accountId);
-                var adminExpediteEmployeeId = employees.getEmployeeidByUsername(accountId, "adminexpedite");
-           
+              
                 financialexportid = financialExportId;
 
                 if (financialexportid > 0)
@@ -62,7 +61,7 @@ namespace Spend_Management.Expedite
                     var clsexports = new Spend_Management.cFinancialExports(accountId);
                     export = clsexports.getExportById(financialexportid);
                     reportId = export.reportid;
-                    exportOptions = reports.getExportOptions(accountId, adminExpediteEmployeeId, reportId, true);
+                    exportOptions = reports.getExportOptions(accountId, 0, reportId, true);
                     exportType = (ExportType)export.exporttype;
                     exportOptions.isfinancialexport = true;
                     exportOptions.financialexport = export;
@@ -106,13 +105,13 @@ namespace Spend_Management.Expedite
                     (ExportType)export.exporttype,
                     exportOptions,
                     claimants,
-                    adminExpediteEmployeeId, accessRoleLevel);
+                    0, accessRoleLevel);
 
                 if (exportOptions != null && exportOptions.footerreport != null)
                 {
                     exportOptions.footerreport.isFooter = true;
                     exportOptions.footerreport.exportoptions = reports.getExportOptions(
-                      accountId, adminExpediteEmployeeId, exportOptions.footerreport.reportid);
+                      accountId, 0, exportOptions.footerreport.reportid);
                     exportOptions.footerreport.criteria.Clear();
                     for (int i = 0; i < reportRequest.report.criteria.Count; i++)
                     {
@@ -146,7 +145,7 @@ namespace Spend_Management.Expedite
                             (ExportType)export.exporttype,
                             exportOptions,
                             claimants,
-                            adminExpediteEmployeeId,
+                            0,
                             ReportRunFrom.PrimaryServer, accessRoleLevel
                             );
                         break;
@@ -159,7 +158,7 @@ namespace Spend_Management.Expedite
                             ExportType.CSV,
                             exportOptions,
                             false,
-                            adminExpediteEmployeeId,
+                            0,
                             ReportRunFrom.PrimaryServer,
                             accessRoleLevel);
                         break;

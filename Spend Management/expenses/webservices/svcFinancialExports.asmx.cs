@@ -140,7 +140,7 @@ namespace Spend_Management
 
             var eStatus = FinancialExportStatus.AwaitingESRInboundTransfer;
 
-            string strSQL = "SELECT exporthistory.exporthistoryid, exporthistory.financialexportid, exporthistory.exportnum, exporthistory.dateexported, employees.username, exporthistory.exportStatus, financial_exports.applicationtype FROM dbo.exporthistory";
+            string strSQL = "SELECT exporthistory.exporthistoryid, exporthistory.financialexportid, exporthistory.exportnum, exporthistory.dateexported, dbo.GetEmployeeUserNameFromId(exporthistory.employeeid), exporthistory.exportStatus, financial_exports.applicationtype FROM dbo.exporthistory";
             var gridExportHistory = new cGridNew(currentUser.AccountID, currentUser.EmployeeID, "exportHistoryGrid", strSQL);
 
             gridExportHistory.KeyField = "exporthistoryid";
@@ -158,8 +158,8 @@ namespace Spend_Management
             gridExportHistory.EmptyText = "This Financial Report has not been exported yet";
 
             gridExportHistory.addEventColumn("viewhistory", "/shared/images/icons/export1.png", "javascript:exportReport({financialexportid},{exporthistoryid});", "View Export from History", "View this Financial Export");
-
-            ((cFieldColumn)gridExportHistory.getColumnByName("exportStatus")).addValueListItem((byte)0, "No Status set");
+        
+           ((cFieldColumn)gridExportHistory.getColumnByName("exportStatus")).addValueListItem((byte)0, "No Status set");
             ((cFieldColumn)gridExportHistory.getColumnByName("exportStatus")).addValueListItem((byte)1, "Export Failed");
             ((cFieldColumn)gridExportHistory.getColumnByName("exportStatus")).addValueListItem((byte)2, "Export Succeeded");
             ((cFieldColumn)gridExportHistory.getColumnByName("exportStatus")).addValueListItem((byte)3, "Awaiting ESR Inbound Transfer");

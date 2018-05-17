@@ -181,10 +181,9 @@ namespace SpendManagementApi.Repositories.Expedite
 
                 if (isProcessed == 1)
                 {
-                    var employees = new cEmployees(paymentServiceAccount.AccountId);
-                    var adminExpediteEmployeeId = employees.getEmployeeidByUsername(paymentServiceAccount.AccountId, "adminexpedite");
+                    var employees = new cEmployees(paymentServiceAccount.AccountId);               
                     var claims = new cClaims(paymentServiceAccount.AccountId);
-                    var notifications = new NotificationTemplates(paymentServiceAccount.AccountId, adminExpediteEmployeeId, string.Empty, 0, Modules.expenses);
+                    var emails = new NotificationTemplates(paymentServiceAccount.AccountId);
 
                     foreach (int id in claimIds)
                     {
@@ -201,7 +200,7 @@ namespace SpendManagementApi.Repositories.Expedite
                             //Send an email to each claimant                                
                             notifications.SendMessage(
                                 new Guid("67E99E3E-E431-4C9C-A131-5D647D64FF05"),
-                                adminExpediteEmployeeId,
+                                0,
                                 new[] { employee.EmployeeID });
                         }
                     }

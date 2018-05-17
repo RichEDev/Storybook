@@ -5794,7 +5794,12 @@ namespace Expenses_Reports
                 // insert history record
                 connection.AddWithValue("@financialExportID", reportRequest.report.exportoptions.financialexport.financialexportid);
                 connection.AddWithValue("@exportNum", reportRequest.report.exportoptions.financialexport.curexportnum);
-                connection.AddWithValue("@employeeID", reportRequest.employeeid);
+
+                if (reportRequest.employeeid > 0)
+                {
+                    connection.AddWithValue("@employeeID", reportRequest.employeeid);
+                }
+
                 connection.AddWithValue("@dateExported", string.Format("{0}/{1}/{2} {3}:{4}:{5}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second));
                 connection.AddWithValue("@exportType", exportType);
                 connection.sqlexecute.Parameters.Add("@exportHistoryID", SqlDbType.Int);
