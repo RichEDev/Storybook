@@ -637,20 +637,34 @@ namespace Spend_Management
 			row.getCellByID("name").Value = string.Format("<a href=\"/expenses/claimViewer.aspx?claimid={0}{2}\" {3}>{1}</a>", row.getCellByID("claimid").Value, row.getCellByID("name").Value, claimSelectorToUrlPart, claimSelectorFuction);
 		}
 
-		public void changeStatus(cClaim reqclaim, ClaimStatus status, int userid)
-		{
-			DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));
-			DateTime modifiedon = DateTime.Now.ToUniversalTime();
+        public void changeStatus(cClaim reqclaim, ClaimStatus status, int? userid)
+        {
+            using (DatabaseConnection expdata = new DatabaseConnection(cAccounts.getConnectionString(accountid)))
+            {
+                DateTime modifiedon = DateTime.Now.ToUniversalTime();
 
-			expdata.sqlexecute.Parameters.AddWithValue("@claimid", reqclaim.claimid);
-			expdata.sqlexecute.Parameters.AddWithValue("@status", (byte)status);
-			expdata.sqlexecute.Parameters.AddWithValue("@modifiedon", modifiedon);
-			expdata.sqlexecute.Parameters.AddWithValue("@userid", userid);
-			const string strsql = "update claims_base set status = @status, ModifiedOn = @modifiedon, ModifiedBy = @userid where claimid = @claimid";
-			expdata.ExecuteSQL(strsql);
-			expdata.sqlexecute.Parameters.Clear();
-			reqclaim.changeStatus(status);
-		}
+                expdata.sqlexecute.Parameters.AddWithValue("@claimid", reqclaim.claimid);
+                expdata.sqlexecute.Parameters.AddWithValue("@status", (byte)status);
+             
+
+                var sql = new StringBuilder();
+                sql.Append("UPDATE claims_base SET status = @status");
+
+                if (userid.HasValue)
+                {
+                    sql.Append(", ModifiedOn = @modifiedon");
+                    sql.Append(", ModifiedBy = @userid");                 
+                    expdata.sqlexecute.Parameters.AddWithValue("@modifiedon", modifiedon);
+                    expdata.sqlexecute.Parameters.AddWithValue("@userid", userid);
+                }
+
+                sql.Append(" WHERE claimid = @claimid");
+
+                expdata.ExecuteSQL(sql.ToString());
+                expdata.sqlexecute.Parameters.Clear();
+                reqclaim.changeStatus(status);
+            }      
+        }
 
 		public string getPreviousClaimsDropDown(int employeeid)
 		{
@@ -3438,64 +3452,70 @@ namespace Spend_Management
 			}
 		}
 
-		/// <summary>
-		/// Update itemCheckerId for CaseOfCostCode
-		/// </summary>
-		/// <param name="expenseItem">List of expenseItems</param>
-		/// <param name="checkerId">CheckerId of saveexpenses</param>
-		public void UpdateItemCheckerIdInCaseOfCostCode(List<int> expenseItems, int? checkerId)
-		{
-			List<SqlDataRecord> expenseItemIds = new List<SqlDataRecord>();
-			SqlDataRecord row;
-			SqlMetaData[] tvpexpenseItems = { new SqlMetaData("SavedExpencesId", System.Data.SqlDbType.Int) };
-			//string expenseItemIds = string.Empty;
-			foreach (var item in expenseItems)
-			{
-				row = new SqlDataRecord(tvpexpenseItems);
-				row.SetInt32(0, (int)item);
-				expenseItemIds.Add(row);
-			}
-			using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(this.accountid)))
-			{
-				expdata.sqlexecute.Parameters.Clear();
-				expdata.sqlexecute.Parameters.Add("@SavedExpenseIds", System.Data.SqlDbType.Structured);
-				expdata.sqlexecute.Parameters["@SavedExpenseIds"].Value = expenseItemIds;
-				expdata.sqlexecute.Parameters.Add("@CheckerId", checkerId);
-				expdata.ExecuteProc("dbo.UpdateItemCheckerIdSavedExpenses");
-				expdata.sqlexecute.Parameters.Clear();
-			}
-		}
+        /// <summary>
+        /// Update itemCheckerId for CaseOfCostCode
+        /// </summary>
+        /// <param name="expenseItem">List of expenseItems</param>
+        /// <param name="checkerId">CheckerId of saveexpenses</param>
+        public void UpdateItemCheckerIdInCaseOfCostCode(List<int> expenseItems, int? checkerId)
+        {
+            List<SqlDataRecord> expenseItemIds = new List<SqlDataRecord>();
+            SqlDataRecord row;
+            SqlMetaData[] tvpexpenseItems = { new SqlMetaData("SavedExpencesId", System.Data.SqlDbType.Int) };
+            //string expenseItemIds = string.Empty;
+            foreach (var item in expenseItems)
+            {
+                row = new SqlDataRecord(tvpexpenseItems);
+                row.SetInt32(0, (int)item);
+                expenseItemIds.Add(row);
+            }
+            using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(this.accountid)))
+            {
+                expdata.sqlexecute.Parameters.Clear();
+                expdata.sqlexecute.Parameters.Add("@SavedExpenseIds", System.Data.SqlDbType.Structured);
+                expdata.sqlexecute.Parameters["@SavedExpenseIds"].Value = expenseItemIds;
 
-		/// <summary>
-		/// Delate claim approver detail ExpenceItems
-		/// </summary>
-		/// <param name="expenseItem">List of expenseItems</param>
-		/// <param name="checkerId">CheckerId of saveexpenses</param>
-		public void DeleteClaimApproverDetailExpenseItems(List<int> expenseItems, int? checkerId)
-		{
-			List<SqlDataRecord> expenseItemIds = new List<SqlDataRecord>();
-			SqlDataRecord row;
-			SqlMetaData[] tvpexpenseItems = { new SqlMetaData("SavedExpencesId", System.Data.SqlDbType.Int) };
-			//string expenseItemIds = string.Empty;
-			foreach (var item in expenseItems)
-			{
-				row = new SqlDataRecord(tvpexpenseItems);
-				row.SetInt32(0, (int)item);
-				expenseItemIds.Add(row);
-			}
-			//expenseIds = expenseIds.Substring(0, expenseIds.Length - 1);
-			using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(this.accountid)))
-			{
-				expdata.sqlexecute.Parameters.Clear();
-				expdata.sqlexecute.Parameters.Add("@SavedExpenseIds", System.Data.SqlDbType.Structured);
-				expdata.sqlexecute.Parameters["@SavedExpenseIds"].Value = expenseItemIds;
-				expdata.sqlexecute.Parameters.Add("@CheckerId", checkerId);
-				expdata.ExecuteProc("dbo.DeleteClaimApproverDetailExpenceItems");
-				expdata.sqlexecute.Parameters.Clear();
-			}
-		}
+                expdata.sqlexecute.Parameters.Add("@CheckerId", checkerId);
+                expdata.ExecuteProc("dbo.UpdateItemCheckerIdSavedExpenses");
+                expdata.sqlexecute.Parameters.Clear();
+            }
+        }
 
+        /// <summary>
+        /// Delate claim approver detail ExpenceItems
+        /// </summary>
+        /// <param name="expenseItem">List of expenseItems</param>
+        /// <param name="checkerId">CheckerId of saveexpenses</param>
+         public void DeleteClaimApproverDetailExpenseItems(List<int> expenseItems, int? checkerId)
+        {
+            List<SqlDataRecord> expenseItemIds = new List<SqlDataRecord>();
+            SqlDataRecord row;
+            SqlMetaData[] tvpexpenseItems = { new SqlMetaData("SavedExpencesId", System.Data.SqlDbType.Int) };
+            //string expenseItemIds = string.Empty;
+            foreach (var item in expenseItems)
+            {
+                row = new SqlDataRecord(tvpexpenseItems);
+                row.SetInt32(0, (int)item);
+                expenseItemIds.Add(row);
+            }
+            //expenseIds = expenseIds.Substring(0, expenseIds.Length - 1);
+            using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(this.accountid)))
+            {
+                expdata.sqlexecute.Parameters.Clear();
+                expdata.sqlexecute.Parameters.Add("@SavedExpenseIds", System.Data.SqlDbType.Structured);
+                expdata.sqlexecute.Parameters["@SavedExpenseIds"].Value = expenseItemIds;
 
+                if (checkerId.HasValue)
+                {
+                    expdata.sqlexecute.Parameters.Add("@CheckerId", checkerId);
+                }
+
+                expdata.ExecuteProc("dbo.DeleteClaimApproverDetailExpenceItems");
+                expdata.sqlexecute.Parameters.Clear();
+            }
+        }
+ 
+ 
 
 		/// <summary>
 		/// Get id of an employee who is assigned default authoriser level.
@@ -4058,46 +4078,58 @@ namespace Spend_Management
 			}
 		}
 
-		/// <summary>
-		/// Return multiple expense items
-		/// </summary>
-		/// <param name="claim">The expense claim</param>
-		/// <param name="items">The expense items to return</param>
-		/// <param name="reason">The reason for returning the items</param>
-		/// <param name="currentUserId">The employee returning the items</param>
-		/// <param name="delegateId">The employee returning the items if doing it as a delegate</param>
-		/// <param name="connection">A mockable connection to override the default database connection</param>
-		/// <param name="isFromValidation">Whether this return is from the SEL Validation stage. Defaults to false.</param>
-		/// <returns>Boolean false</returns>
-		public virtual bool ReturnExpenses(cClaim claim, List<int> items, string reason, int currentUserId, int? delegateId, IDBConnection connection = null, bool isFromValidation = false)
-		{
-			try
-			{
-				using (IDBConnection expdata = connection ?? new DatabaseConnection(cAccounts.getConnectionString(accountid)))
-				{
-					expdata.AddWithValue("@claimId", claim.claimid);
-					expdata.AddWithValue("@ids", items);
-					expdata.AddWithValue("@userid", delegateId.HasValue ? delegateId : currentUserId);
-					expdata.AddWithValue("@modifiedon", DateTime.UtcNow);
-					expdata.AddWithValue("@reason", reason, 4000);
+        /// <summary>
+        /// Return multiple expense items
+        /// </summary>
+        /// <param name="claim">The expense claim</param>
+        /// <param name="items">The expense items to return</param>
+        /// <param name="reason">The reason for returning the items</param>
+        /// <param name="currentUserId">The employee returning the items</param>
+        /// <param name="delegateId">The employee returning the items if doing it as a delegate</param>
+        /// <param name="connection">A mockable connection to override the default database connection</param>
+        /// <param name="isFromValidation">Whether this return is from the SEL Validation stage. Defaults to false.</param>
+        /// <returns>Boolean false</returns>
+        public virtual bool ReturnExpenses(cClaim claim, List<int> items, string reason, int? currentUserId, int? delegateId, IDBConnection connection = null, bool isFromValidation = false)
+        {
+            try
+            {
+                using (IDBConnection expdata = connection ?? new DatabaseConnection(cAccounts.getConnectionString(accountid)))
+                {
+                    expdata.AddWithValue("@claimId", claim.claimid);
+                    expdata.AddWithValue("@ids", items);
 
-					expdata.ExecuteProc("returnExpenses");
-					expdata.sqlexecute.Parameters.Clear();
-				}
-			}
-			catch (Exception)
-			{
-				return false;
-			}
+                    if (delegateId.HasValue)
+                    {
+                        expdata.AddWithValue("@userid", delegateId);
+                    }
+                    else if (currentUserId.HasValue)
+                    {
+                        expdata.AddWithValue("@userid", currentUserId);
+                    }
+
+                    expdata.AddWithValue("@userid", delegateId.HasValue ? delegateId : currentUserId);
+                    expdata.AddWithValue("@modifiedon", DateTime.UtcNow);
+                    expdata.AddWithValue("@reason", reason, 4000);
+
+                    expdata.ExecuteProc("returnExpenses");
+                    expdata.sqlexecute.Parameters.Clear();
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
 
 			changeStatus(claim, ClaimStatus.ItemReturnedAwaitingEmployee, currentUserId);
 
-			var notifications = new NotificationTemplates(this.ClaimUser(currentUserId));
-			notifications.SendMessage((Guid)(isFromValidation ? SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenAnExpenseFailsReceiptValidation) : SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAUserIfAnExpenseItemGetsReturned)), currentUserId, new[] { claim.employeeid }, items);
-			DeleteClaimApproverDetailExpenseItems(items, currentUserId);
+            var currentEmployeeId = currentUserId.HasValue ? currentUserId.Value : 0;
 
-			return true;
-		}
+            var email = new NotificationTemplates(accountid);
+            email.SendMessage((Guid)(isFromValidation ? SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAClaimantWhenAnExpenseFailsReceiptValidation) : SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAUserIfAnExpenseItemGetsReturned)), currentEmployeeId, new[] { claim.employeeid }, items);
+            DeleteClaimApproverDetailExpenseItems(items, currentUserId);
+           
+            return true;
+        }
 
 		/// <summary>
 		/// Disputes and expense item, updating the claim history, and emailing the user.
@@ -7002,7 +7034,7 @@ namespace Spend_Management
         /// <summary>
         /// Audits the view of a claim
         /// </summary>
-        /// <param name="SpendManagementElement">The <see cref="SpendManagementElement"/></param>
+        /// <param name="element">The <see cref="SpendManagementElement"/></param>
         /// <param name="claimName">The claim name to audit</param>
         /// <param name="claimOwnerId">The Id of the claim owner</param>
         /// <param name="user">The <see cref="ICurrentUser"/></param>
@@ -7014,6 +7046,20 @@ namespace Spend_Management
                 var employees = new cEmployees(user.AccountID);
                 auditLog.ViewRecord(element, $"{claimName} ({employees.GetEmployeeById(claimOwnerId).Username})", user);
             }
+        }
+
+        /// <summary>
+        /// Audits the view of a claim
+        /// </summary>
+        /// <param name="element">The <see cref="SpendManagementElement"/></param>
+        /// <param name="claimName">The claim name to audit</param>
+        /// <param name="claimOwnerId">The Id of the claim owner</param>
+        /// <param name="accountId">The account Id of the claim to audit</param>
+        public void AuditViewClaimForSystemUser(SpendManagementElement element, string claimName, int claimOwnerId, int accountId)
+        {
+            var auditLog = new cAuditLog(accountId, 0);
+            var employees = new cEmployees(accountId);
+            auditLog.ViewRecord(element, $"{claimName} ({employees.GetEmployeeById(claimOwnerId).Username})", null);
         }
 
         /// <summary>

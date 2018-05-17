@@ -87,7 +87,17 @@
         private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
 
         /// <summary>
-        /// Gets the templates Ids for the email templates where mobile notifications are permitted.
+        /// The company name name.
+        /// </summary>
+        private string _companyName;
+
+        /// <summary>
+        /// The employee id.
+        /// </summary>
+        private int _employeeId;
+
+        /// <summary>
+        /// Create a new instance of <see cref="cEmailTemplates"/>
         /// </summary>
         public List<Guid?> PermittedMobileNotificationTemplateIds { get; } = new List<Guid?>() { new Guid("F929969F-B2F3-4B98-9252-7AE6B17A418B") };
 
@@ -103,6 +113,53 @@
             this._clsemps = new cEmployees(user.AccountID);
             this.InitialiseData();
             this._claimsSummary = new ApproverClaimsSummary();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotificationTemplates"/> class.
+        /// </summary>
+        /// <param name="accountId">
+        /// The account id.
+        /// </param>
+        /// <param name="currentModule">
+        /// The current module.
+        /// </param>
+        public NotificationTemplates(int accountId)
+        {
+            this.nAccountid = accountId;
+            this._clsemps = new cEmployees(accountId);
+
+            this._claimsSummary = new ApproverClaimsSummary();
+            this._inputStringBuilder = new StringBuilder();
+            this.mobilePrefix = ConfigurationManager.AppSettings["MobilePrefix"];
+            this.path = cMisc.Path == "/" ? string.Empty : cMisc.Path;
+
+            this._employeeId = 0;
+
+            var accounts = new cAccounts().GetAccountByID(accountId);
+
+            this._companyName = accounts.companyid;
+
+            this.hostName = HostManager.GetHostName(accounts.HostnameIds, Modules.expenses, accounts.companyid);
+            try
+            {
+                this.serverName = Environment.MachineName;
+            }
+            catch (Exception)
+            {
+                this.serverName = string.Empty;
+            }
+
+            var windowsIdentity = System.Security.Principal.WindowsIdentity.GetCurrent();
+
+            if (windowsIdentity != null)
+            {
+                this.identityName = windowsIdentity.Name;
+            }
+
+            var modules = new cModules();
+            this.brandName = modules.GetModuleByID((int)Modules.expenses).BrandNamePlainText;
+            this.list = this.CacheList();
         }
 
         /// <summary>
@@ -1685,11 +1742,22 @@
             var result = subject.Replace("[passwordkey]", this.passwordKey);
             result = result.Replace("[attempts]", this.attempts.ToString());
             result = result.Replace("[brandname]", this.brandName);
-            result = result.Replace("[companyid]", this.currentUser.Account.companyid);
+
+            if (this.currentUser == null)
+            {
+                result = result.Replace("[companyid]", this._companyName);
+                result = result.Replace("[employeeid]", this._employeeId.ToString());
+            }
+            else
+            {
+                result = result.Replace("[companyid]", this.currentUser.Account.companyid);
+                result = result.Replace("[employeeid]", this.currentUser.EmployeeID.ToString());
+            }
+        
             result = result.Replace("[hostname]", this.hostName);
             result = result.Replace("[host]", this.hostName);
             result = result.Replace("[path]", this.path);
-            result = result.Replace("[employeeid]", this.currentUser.EmployeeID.ToString());
+      
             result = result.Replace("[MobilePrefix]", this.mobilePrefix);
             result = result.Replace("[servername]", this.serverName);
             result = result.Replace("[identityname]", this.identityName);

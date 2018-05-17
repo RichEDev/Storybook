@@ -43,15 +43,34 @@
         }
 
         /// <summary>
+        /// Gets all <see cref="ExpenseValidationCriterion">ExpenseValidationCriteria</see> in the system.
+        /// </summary>
+        /// <returns>The <see cref="GetExpenseValidationCriteriaResponse">GetExpenseValidationCriteriaResponse</see>></returns>
+        [HttpGet, Route("GetExpenseValidationCriteria")]
+        [NoAuthorisationRequired]
+        public GetExpenseValidationCriteriaResponse GetExpenseValidationCriteria()
+        {
+            var response = this.InitialiseResponse<GetExpenseValidationCriteriaResponse>();
+            response.List = ((ExpenseValidationCriterionRepository)this.Repository).GetExpenseValidationCriteriaForAccount().ToList();
+            return response;
+        }
+
+        /// <summary>
         /// Gets all <see cref="ExpenseValidationCriterion">ExpenseValidationCriteria</see> that must be validated
         /// for a particular expense item. These include any custom, account created subcat criteria.
         /// </summary>
-        [HttpGet, Route("ForExpenseItem/{expenseItemId:int}")]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.View)]
-        public GetExpenseValidationCriteriaResponse GetForExpenseItem(int expenseItemId)
+        /// <param name="expenseItemId">
+        /// The expense Item Id to get the validation for.
+        /// </param>
+        /// <param name="accountId">
+        /// The account Id.
+        /// </param>
+        [HttpGet, Route("ForExpenseItem/{expenseItemId:int}/{accountId:int}")]
+        [NoAuthorisationRequired]
+        public GetExpenseValidationCriteriaResponse GetForExpenseItem(int expenseItemId, int accountId)
         {
             var response = this.InitialiseResponse<GetExpenseValidationCriteriaResponse>();
-            response.List = ((ExpenseValidationCriterionRepository) this.Repository).GetForExpenseItem(expenseItemId).ToList();
+            response.List = ((ExpenseValidationCriterionRepository) this.Repository).GetForExpenseItem(expenseItemId, accountId).ToList();
             return response;
         }
         

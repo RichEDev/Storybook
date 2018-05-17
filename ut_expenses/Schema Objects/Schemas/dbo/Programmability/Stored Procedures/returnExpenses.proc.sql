@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[returnExpenses] 
 	@claimId INT,
 	@ids IntPK READONLY,
-	@userid INT,
+	@userid INT = NULL,
 	@modifiedon DATETIME,
 	@reason NVARCHAR(4000)
 AS

@@ -1,12 +1,12 @@
-﻿Create PROCEDURE [dbo].[DeleteClaimApproverDetailExpenceItems]
-	@CheckerId int,
+﻿CREATE PROCEDURE [dbo].[DeleteClaimApproverDetailExpenceItems]
+	@CheckerId INT = NULL,
 	@SavedExpenseIds ExpencesItems READONLY
 
 AS
 BEGIN
 
-Declare @ExpenseId  varchar(1000)
- dECLARE db_cursor
+DECLARE @ExpenseId  varchar(1000)
+ DECLARE db_cursor
  CURSOR FOR  
 SELECT
    SavedExpencesId
@@ -19,16 +19,16 @@ FETCH NEXT FROM db_cursor INTO @ExpenseId
 
 WHILE @@FETCH_STATUS = 0  
 BEGIN  
-	if EXISTS (SELECT * FROM ClaimApproverDetails c where c.CheckerId = @CheckerId and c.SavedExpenseId=@ExpenseId ) 
-	begin
+	IF EXISTS (SELECT * FROM ClaimApproverDetails c WHERE c.CheckerId = @CheckerId AND c.SavedExpenseId=@ExpenseId ) 
+	BEGIN
 
-	delete ClaimApproverDetails where SavedExpenseId=@ExpenseId and CheckerId = @CheckerId
+	DELETE ClaimApproverDetails WHERE SavedExpenseId=@ExpenseId AND CheckerId = @CheckerId
 	
-	end
+	END
 	 FETCH NEXT FROM db_cursor INTO @ExpenseId 
 End
 
 CLOSE db_cursor  
 DEALLOCATE db_cursor 
-return @@RowCount
+RETURN @@RowCount
 END

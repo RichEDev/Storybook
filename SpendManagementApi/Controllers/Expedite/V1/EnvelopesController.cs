@@ -270,7 +270,7 @@
         /// <param name="id">The id of the <see cref="Envelope">Envelope</see> to update.</param>
         /// <returns>The updated Envelope.</returns>
         [HttpPatch, Route("{id:int}/MarkComplete")]
-        [AuthAudit(SpendManagementElement.None, AccessRoleType.Edit)]
+        [NoAuthorisationRequired]
         public EnvelopeResponse MarkComplete(int id)
         {
             var response = this.InitialiseResponse<EnvelopeResponse>();

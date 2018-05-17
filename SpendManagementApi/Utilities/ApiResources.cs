@@ -538,6 +538,10 @@
 
         public const string ApiErrorReceiptNotFound = "Receipt not found";
         public const string ApiErrorGetReceiptMessage = "An error occurred while getting the Receipt";
+
+        public static string ApiErrorNoAccountForReceipt = "Invalid Account Id for the Receipt";
+
+        public static string ApiErrorNoEmployeeForReceipt = "Invalid Employee Id for the Receipt";
         #endregion
 
         #region SystemGreenLight
@@ -583,7 +587,5 @@
         public const string ApiErrorEmailNotificationsFailed = "An error occured while trying to send email notifications";
 
         #endregion
-
     }
-
 }

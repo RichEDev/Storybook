@@ -20,7 +20,9 @@
 
     using ApiResources = Utilities.ApiResources;
     using SpendManagementApi.Common;
-    
+    using SpendManagementApi.Models.Requests.Expedite;
+    using SpendManagementApi.Models.Types.Expedite;
+
     using Spend_Management;
     using Claim = Models.Types.Claim;
 
@@ -83,6 +85,21 @@
         {
             var response = this.InitialiseResponse<ClaimResponse>();
             response.Item = ((ClaimRepository) this.Repository).GetByReferenceNumber(crn);
+            return response;
+        }
+
+        /// <summary>
+        /// Gets a single <see cref="Claim">Claim</see> for the Expedite apps.
+        /// </summary>
+        /// <param name="envelopeReferenceNumber">The envelope reference number.</param>
+        /// <param name="accountId">The account Id the envelope and claim belong too.</param>
+        /// <returns>A ClaimResponse, containing the <see cref="Claim">Claim</see> if found.</returns>
+        [HttpGet, Route("GetClaimByEnvelopeReferenceNumber")]
+        [InternalSelenityMethod, NoAuthorisationRequired, ApiExplorerSettings(IgnoreApi = true)]
+        public ClaimResponse GetClaimByEnvelopeReferenceNumber(string envelopeReferenceNumber, int? accountId)
+        {
+            var response = this.InitialiseResponse<ClaimResponse>();
+            response.Item = ((ClaimRepository)this.Repository).GetClaimByEnvelopeReferenceNumber(envelopeReferenceNumber, accountId);
             return response;
         }
 

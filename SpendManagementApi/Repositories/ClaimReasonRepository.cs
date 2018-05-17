@@ -31,6 +31,14 @@ namespace SpendManagementApi.Repositories
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ClaimReasonRepository"/> class.
+        /// </summary>
+        public ClaimReasonRepository()
+        {
+            
+        }
+
+        /// <summary>
         /// Gets all the ClaimReasons within the system.
         /// </summary>
         /// <returns>A list of <see cref="ClaimReason"/></returns>

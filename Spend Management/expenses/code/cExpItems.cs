@@ -835,6 +835,21 @@ namespace Spend_Management
             }
         }
 
+        /// <summary>
+        /// Audits the viewing of an expense item by a system user.
+        /// </summary>
+        /// <param name="value">
+        /// The value for the audit log.
+        /// </param>
+        /// <param name="accountId">
+        /// The account id.
+        /// </param>
+        public void AuditExpenseItemsViewedBySystemUser(string value, int accountId)
+        {
+            var auditLog = new cAuditLog(accountId, 0);
+            auditLog.ViewRecord(SpendManagementElement.Expenses, value, null);
+        }
+
         private void linkSplitItem(cExpenseItem item)
         {
             DBConnection expdata = new DBConnection(cAccounts.getConnectionString(accountid));

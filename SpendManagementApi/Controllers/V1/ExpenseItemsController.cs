@@ -15,6 +15,7 @@
     using Utilities;
     using SpendManagementApi.Common;
     using SpendManagementApi.Models;
+    using SpendManagementApi.Models.Responses.Expedite;
     using SpendManagementApi.Models.Types.Expedite;
     /// <summary>
     /// Manages operations on <see cref="ExpenseItem">ExpenseItems</see>.
@@ -48,12 +49,35 @@
         }
 
         /// <summary>
+        /// Gets a single <see cref="ExpenseItem">ExpenseItem</see>, by its Id.
+        /// </summary>
+        /// <param name="expenseId">
+        /// The expense Id.
+        /// </param>
+        /// <param name="accountId">
+        /// The account Id the expense belongs to.
+        /// </param>
+        /// <returns>
+        /// A ExpenseItemResponse, containing the <see cref="ExpenseItem">ExpenseItem</see> if found.
+        /// </returns>
+        [HttpGet, Route("GetExpenseItemByIdForExpedite/{expenseId:int}/{accountId:int}")]
+        [InternalSelenityMethod]
+        [NoAuthorisationRequired]
+        public ExpediteExpenseItemResponse GetExpenseItemByIdForExpedite([FromUri] int expenseId, int accountId)
+        {
+            var response = InitialiseResponse<ExpediteExpenseItemResponse>();
+            response.Item = ((ExpenseItemRepository)Repository).GetExpenseItemByIdForExpedite(expenseId, accountId);
+            return response;
+        }
+
+        /// <summary>
         /// Gets a list of <see cref="ExpenseItem">ExpenseItems</see>, that require validation.
         /// This is defined by the ExpenseSubCategory.Validate, whether receipts are attached, and the validation count.
         /// </summary>
         /// <returns>A ExpenseItemResponse, containing the <see cref="ExpenseItem">ExpenseItems</see> if found.</returns>
-        [InternalSelenityMethod, HttpGet, Route("RequiringValidation")]
-        [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
+        [HttpGet, Route("RequiringValidation")]
+        [InternalSelenityMethod]
+        [NoAuthorisationRequired]      
         public GetIdsReponse RequiringValidation()
         {
             var response = InitialiseResponse<GetIdsReponse>();
@@ -241,13 +265,15 @@
         /// </summary>
         /// <param name="id">Expense Id</param>
         /// <param name="operatorValidationProgress">Expense Validation Progress</param>
+        /// <param name="accountId">The accountId the expense belongs to.</param>
         /// <returns>ExpenseItemResponse</returns>
-        [HttpPost, Route("UpdateOperatorValidationStatus/{Id:int}/{OperatorValidationProgress:int}")]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.Add)]
-        public ExpenseItemResponse UpdateOperatorValidationStatus(int id, int operatorValidationProgress)
+        [HttpPost, Route("UpdateOperatorValidationStatus/{Id:int}/{OperatorValidationProgress:int}/{accountId:int}")]
+        [InternalSelenityMethod]
+        [NoAuthorisationRequired]
+        public ExpediteExpenseItemResponse UpdateOperatorValidationStatus(int id, int operatorValidationProgress, int accountId)
         {
-            var result = ((ExpenseItemRepository)this.Repository).UpdateOperatorValidationStatus(id, operatorValidationProgress);
-            var expenseItem =  this.Get<ExpenseItemResponse>(id);
+            var result = ((ExpenseItemRepository)this.Repository).UpdateOperatorValidationStatus(id, operatorValidationProgress, accountId);
+            var expenseItem = this.GetExpenseItemByIdForExpedite(id, accountId);
             expenseItem.Item.OperatorValidationProgress = (ExpediteOperatorValidationProgress) result;
             return expenseItem;
         }

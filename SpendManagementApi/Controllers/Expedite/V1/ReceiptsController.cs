@@ -13,6 +13,8 @@
     using SpendManagementApi.Models.Types.Expedite;
     using SpendManagementApi.Repositories.Expedite;
 
+    using ExpediteReceipt = SpendManagementApi.Models.Types.Expedite.ExpediteReceipt;
+
     /// <summary>
     /// Contains account specific actions.
     /// </summary>
@@ -83,13 +85,14 @@
         /// Gets all the Receipts for a specific claim line, or 'savedexpense'.
         /// </summary>
         /// <param name="savedExpenseId">The Id of the expense.</param>
+        /// <param name="accountId">The account Id the saved expense belongs to.</param>
         /// <returns>A list of Receipts.</returns>
-        [HttpGet, Route("~/Expedite/Receipts/ByClaimLine/{savedExpenseId:int}")]
-        [AuthAudit(SpendManagementElement.None, AccessRoleType.View)]
-        public GetReceiptsResponse GetByClaimLine(int savedExpenseId)
+        [HttpGet, Route("~/Expedite/Receipts/ByClaimLine/{savedExpenseId:int}/{accountId:int}")]
+        [NoAuthorisationRequired]
+        public GetReceiptsResponse GetByClaimLine([FromUri] int savedExpenseId, int accountId)
         {
             var response = this.InitialiseResponse<GetReceiptsResponse>();
-            response.List = ((ReceiptRepository)this.Repository).GetByClaimLine(savedExpenseId).ToList();
+            response.List = ((ReceiptRepository)this.Repository).GetByClaimLine(savedExpenseId, accountId).ToList();
             return response;
         }
 
@@ -103,6 +106,27 @@
         public ReceiptResponse Get(int id)
         {
             return this.Get<ReceiptResponse>(id);
+        }
+
+        /// <summary>
+        /// Gets the data for a receipt from the cloud, and returns the Receipt with its data property populated.
+        /// </summary>
+        /// <param name="receiptId">
+        /// The receipt Id.
+        /// </param>
+        /// <param name="accountId">
+        /// The account Id.
+        /// </param>
+        /// <returns>
+        /// The Receipt.
+        /// </returns>
+        [HttpGet, Route("~/Expedite/GetReceiptByIdForExpedite/{receiptId:int}/{accountId:int}")]
+        [NoAuthorisationRequired]
+        public ReceiptResponse GetReceiptByIdForExpedite([FromUri] int receiptId, int accountId)
+        {
+            var response = this.InitialiseResponse<ReceiptResponse>();
+            response.Item = ((ReceiptRepository)this.Repository).GetReceiptByIdForExpedite(receiptId, accountId);
+            return response;        
         }
 
         /// <summary>
@@ -140,6 +164,29 @@
             request.CreationMethod = ReceiptCreationMethod.UploadedByExpedite;
             var response = this.InitialiseResponse<ReceiptResponse>();
             response.Item = ((ReceiptRepository)this.Repository).Add(request);
+            return response;
+        }
+
+        /// <summary>
+        /// Adds the supplied <see cref="Models.Types.Expedite.Receipt">Receipt</see> to an account.
+        /// <strong>Make sure the Extension, EnvelopeId, and Data properties are populated.</strong>
+        /// The others will be set and returned when the addition of the Receipt is complete.<br/>
+        /// Also note that that you can attach at the same time as adding. If you populate
+        /// the ClaimLines, ClaimId and EmployeeId, these will be assigned in that order, but only 
+        /// one of them will be assigned - as the receipt can only be against either claim lines, 
+        /// a claim header or an employee. The most granular setting will be used. 
+        /// Alternatively, use the attach patch methods.
+        /// </summary>
+        /// <param name="request">The Receipt to add.</param>
+        /// <returns>The newly added Receipt.</returns>
+        [Route("~/Expedite/PostExpediteReceipt")]
+        [NoAuthorisationRequired]
+        public ReceiptResponse PostExpediteReceipt([FromBody] ExpediteReceipt request)
+        {
+            request.ModifiedOn = DateTime.UtcNow;
+            request.CreationMethod = ReceiptCreationMethod.UploadedByExpedite;
+            var response = this.InitialiseResponse<ReceiptResponse>();
+            response.Item = ((ReceiptRepository)this.Repository).AddExpediteReceipt(request);
             return response;
         }
 

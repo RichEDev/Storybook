@@ -159,6 +159,14 @@
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExpenseValidationManager"/> class.
+        /// </summary>
+        public ExpenseValidationManager()
+        {
+            
+        }
+
         #endregion Constructor
 
         #region Public Properties

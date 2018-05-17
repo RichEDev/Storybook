@@ -296,7 +296,14 @@
         public Envelope MarkComplete(int id)
         {
             var envelope = TryGetEnvelopeAndThrow(id);
-            _actionContext.AccountId = envelope.AccountId ?? User.AccountID;
+
+            var user = this.User ?? new CurrentUser(envelope.AccountId.Value, 0, 0, Modules.expenses, 1);
+
+            if (this._actionContext is null)
+            {
+                this._actionContext = new ActionContext(user);
+            }
+
             var claim = TryGetClaimAndThrow(envelope);
 
             // check that the claim is in a SELScanAttach stage.
@@ -307,16 +314,16 @@
             if (claims.HasClaimPreviouslyPassedSelStage(claim, SignoffType.SELScanAttach, claimStages))
             {
                 // mark complete and overwrite properties.
-                envelope = envelope.From(_data.MarkComplete(id, User), _actionContext);
+                envelope = envelope.From(this._data.MarkComplete(id, user), _actionContext);
 
                 // update claim history.
                 var history = string.Format("Envelope scanned and attached: {0}.", envelope.EnvelopeNumber);
-                claims.UpdateClaimHistory(claim, history, User.EmployeeID);
+                claims.UpdateClaimHistory(claim, history, user.EmployeeID);
             }
             else
             {
                 // mark complete and overwrite properties.
-                envelope = envelope.From(_data.MarkComplete(id, User), _actionContext);
+                envelope = envelope.From(_data.MarkComplete(id, user), _actionContext);
 
                 // find the number of completed envelopes.
                 int total, completed;
@@ -328,7 +335,7 @@
                 {
                     // update claim history.
                     var history = string.Format("Scan & attach complete for envelope: {0}. {1} remaining of {2} total.", envelope.EnvelopeNumber, completed, total);
-                    claims.UpdateClaimHistory(claim, history, User.EmployeeID);
+                    claims.UpdateClaimHistory(claim, history, user.EmployeeID);
                 }
                 else
                 {
@@ -340,12 +347,12 @@
                     claims.UpdateClaimHistory(claim, canAdvance
                         ? "Scan & attach complete for all envelopes in this claim."
                         : "All envelopes marked complete, but not all expenses have receipts attached.",
-                        User.EmployeeID);
+                        user.EmployeeID);
 
                     // only advance the claim if we can
                     if (canAdvance)
                     {
-                        _actionContext.ClaimSubmission.SendClaimToNextStage(claim, false, User.EmployeeID, claim.employeeid, User.isDelegate ? User.Delegate.EmployeeID : (int?) null);
+                        _actionContext.ClaimSubmission.SendClaimToNextStage(claim, false, user.EmployeeID, claim.employeeid, user.isDelegate ? user.Delegate.EmployeeID : (int?) null);
                     }
                     else
                     {

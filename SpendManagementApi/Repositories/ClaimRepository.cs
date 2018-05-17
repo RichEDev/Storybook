@@ -30,11 +30,14 @@
     using Models.Requests;
 
     using SpendManagementApi.Common.Enum;
+    using SpendManagementApi.Models.Types.Expedite;
     using SpendManagementApi.Models.Types.Flags;
 
     using SpendManagementLibrary.Claims;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Enumerators;
+    using SpendManagementLibrary.Expedite;
+    using SpendManagementLibrary.Helpers;
 
     using Spend_Management.expenses.code;
 
@@ -55,7 +58,7 @@
         private const string UdfClaimTableName = "userdefinedClaims";
 
         /// <summary>
-        /// Creates a new ExpenseCategoryRespository.
+        /// Initializes a new instance of the <see cref="ClaimRepository"/> class.
         /// </summary>
         /// <param name="user">The Current User.</param>
         /// <param name="actionContext">The action context.</param>
@@ -63,6 +66,13 @@
             : base(user, x => x.Id, x => x.Name)
         {
             this._actionContext = actionContext;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClaimRepository"/> class.
+        /// </summary>
+        public ClaimRepository()
+        {
         }
 
         /// <summary>
@@ -141,6 +151,25 @@
             claimBasic.CurrencyLabel = currencyRepository.GetGlobalCurrencyFromCurrencyId(claimBasic.BaseCurrency).Label;
 
             return claimBasic;
+        }
+
+        /// <summary>
+        /// Gets a claim by its Id and the account Id the claim belongs to.
+        /// </summary>
+        /// <param name="envelopeReferenceNumber">The envelope reference number.</param>
+        /// <param name="accountId">The account Id.</param>
+        /// <returns>The claim</returns>
+        public Claim GetClaimByEnvelopeReferenceNumber(string envelopeReferenceNumber, int? accountId)
+        {
+            if (accountId == null)
+            {
+                throw new ApiException(ApiResources.ResponseForbiddenNoAccountId, ApiResources.ApiErrorAccountDoesntExist);
+            }
+
+            var claims = new cClaims((int)accountId);
+            var claim = claims.GetClaimByReferenceNumber(envelopeReferenceNumber);
+            claims.AuditViewClaimForSystemUser(SpendManagementElement.Claims, claim.name, claim.employeeid, (int)accountId);
+            return new Claim().From(claim, claims, new Envelopes());
         }
 
         /// <summary>

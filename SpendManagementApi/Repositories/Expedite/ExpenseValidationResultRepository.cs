@@ -21,6 +21,8 @@ namespace SpendManagementApi.Repositories.Expedite
 
     using SpendManagementApi.Models.Responses.Expedite;
 
+    using Spend_Management.expenses.code.Claims;
+
     /// <summary>
     /// EnvelopeRepository manages data access for Envelopes.
     /// </summary>
@@ -42,6 +44,13 @@ namespace SpendManagementApi.Repositories.Expedite
             : base(user, actionContext, x => x.Id, null)
         {
             _data = ActionContext.ExpenseValidation;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExpenseValidationResultRepository"/> class.
+        /// </summary>
+        public ExpenseValidationResultRepository()
+        {           
         }
 
         #region Inapplicable implementations
@@ -75,7 +84,7 @@ namespace SpendManagementApi.Repositories.Expedite
         /// <returns>A list of all Results.</returns>
         public List<ExpenseValidationResult> GetAllForExpenseItem(int expenseId)
         {
-            var expenseItem = TryGetExpenseItem(expenseId);
+            var expenseItem = TryGetExpenseItem(expenseId, ActionContext.Claims);
             var results = _data.GetResultsForExpenseItem(expenseId)
                                 .Select(c => new ExpenseValidationResult().From(c, ActionContext))
                                 .ToList();
@@ -97,7 +106,7 @@ namespace SpendManagementApi.Repositories.Expedite
 
             if (result != null)
             {
-                expenseItem = TryGetExpenseItem(result.ExpenseItemId);
+                expenseItem = TryGetExpenseItem(result.ExpenseItemId, ActionContext.Claims);
 
                 if (expenseItem != null)
                 {
@@ -112,12 +121,16 @@ namespace SpendManagementApi.Repositories.Expedite
         /// Adds and converts all posted results to actual ExpenseValidationResults.
         /// </summary>
         /// <param name="request">The requset to validate an entire item at once.</param>
-        public void AddResultsForExpenseItem(ExpenseItemValidationResults request)
+        /// <param name="accountId">The account id the validation resulrs</param>
+        public void AddResultsForExpenseItem(ExpenseItemValidationResults request, int accountId)
         {
             // ensure the expense exists
-            var expenseItem = this.TryGetExpenseItem(request.ExpenseItemId);
 
-            var subcat = this.ActionContext.SubCategories.GetSubcatById(expenseItem.subcatid);
+            var claims = new cClaims(accountId);
+            var expenseItem = this.TryGetExpenseItem(request.ExpenseItemId, claims);
+
+            var subcats = new cSubcats(accountId);
+            var subcat = subcats.GetSubcatById(expenseItem.subcatid);
 
             var expenseItemVatable = true;
 
@@ -127,13 +140,13 @@ namespace SpendManagementApi.Repositories.Expedite
                 expenseItemVatable = false;
             }
 
-
-
             // validate progress
             this.ValidateExpenseValidationProgress(expenseItem);
 
             // get all the criteria for this item
-            var criteria = this._data.GetAllSubcatCriteria(expenseItem.subcatid);
+
+            IManageExpenseValidation expenseValidation = new DAL.ExpenseValidationManager(accountId);
+            var criteria = expenseValidation.GetAllSubcatCriteria(expenseItem.subcatid);
 
             // throw if there are not enough results to cover the criteria
             if (request.Results.Count != criteria.Count)
@@ -141,105 +154,106 @@ namespace SpendManagementApi.Repositories.Expedite
                 throw new InvalidDataException(ApiResources.ApiErrorValidationNotEnoughResults);
             }
 
-            var validationManager = new DAL.ExpenseValidationManager(User.AccountID);
+            var validationManager = new DAL.ExpenseValidationManager(accountId);
 
             request.Results.ForEach(r =>
-            {
-                var criterion = criteria.FirstOrDefault(c => c.Id == r.CriterionId);
+           {
+               var criterion = criteria.FirstOrDefault(c => c.Id == r.CriterionId);
 
-                // make sure it exists
-                if (criterion == null)
-                {
-                    throw new InvalidDataException(ApiResources.ApiErrorValidationCriterionDoesntExist);
-                }
+               // make sure it exists
+               if (criterion == null)
+               {
+                   throw new InvalidDataException(ApiResources.ApiErrorValidationCriterionDoesntExist);
+               }
 
-                // make sure it's enabled
-                if (!criterion.Enabled)
-                {
-                    throw new InvalidDataException(ApiResources.ApiErrorValidationCriterionDisabled);
-                }
+               // make sure it's enabled
+               if (!criterion.Enabled)
+               {
+                   throw new InvalidDataException(ApiResources.ApiErrorValidationCriterionDisabled);
+               }
 
-                // check the criteria doesn't already have a result for this item
-         
-                expenseItem.ValidationResults = validationManager.GetResultsForExpenseItem(expenseItem.expenseid).ToList();
-                var existingValidationResult = expenseItem.ValidationResults.SingleOrDefault(er => er.Criterion.Id == criterion.Id);
-                if (existingValidationResult != null)
-                {
-                    // delete it.
-                    _data.DeleteResult(existingValidationResult.Id);
-                }
+               // check the criteria doesn't already have a result for this item
 
-                var result = new DAL.ExpenseValidationResult
-                {
-                    Criterion = criterion,
-                    Comments = r.Comments,
-                    Data = r.Data,
-                    ExpenseItemId = request.ExpenseItemId,
-                    Timestamp = DateTime.UtcNow,
-                    MatchingResult = (DALEnum.ExpenseValidationMatchingResult)r.Reason
-                };
+               expenseItem.ValidationResults = validationManager.GetResultsForExpenseItem(expenseItem.expenseid).ToList();
+               var existingValidationResult = expenseItem.ValidationResults.SingleOrDefault(er => er.Criterion.Id == criterion.Id);
+               if (existingValidationResult != null)
+               {
+                   // delete it.
+                   expenseValidation.DeleteResult(existingValidationResult.Id);
+               }
 
-                // update both the Business and VAT status
-                if (criterion.SubcatId.HasValue)
-                {
-                    result.BusinessStatus = r.Reason == ExpenseValidationMatchingResult.FoundAndMatched
-                        ? DALEnum.ExpenseValidationResultStatus.Pass
-                        : DALEnum.ExpenseValidationResultStatus.Fail;
-                    result.VATStatus = DALEnum.ExpenseValidationResultStatus.NotApplicable;
-                }
-                else
-                {
-                    result.BusinessStatus = this._data.DetermineStatusFromReason(criterion.Id, (int)r.Reason);
-                    result.VATStatus = expenseItemVatable ? this._data.DetermineStatusFromReason(criterion.Id, (int)r.Reason, true, request.Total) : DALEnum.ExpenseValidationResultStatus.NotApplicable;
+               var result = new DAL.ExpenseValidationResult
+               {
+                   Criterion = criterion,
+                   Comments = r.Comments,
+                   Data = r.Data,
+                   ExpenseItemId = request.ExpenseItemId,
+                   Timestamp = DateTime.UtcNow,
+                   MatchingResult = (DALEnum.ExpenseValidationMatchingResult)r.Reason
+               };
 
-                    //Override the existing validation result from "Fail" to "Pass"
-                    //Customers with "Allow receipts for a higher value than the expense claimed to pass validation" configured 
-                    //General Option->Expedite->Validation Options
+               // update both the Business and VAT status
+               if (criterion.SubcatId.HasValue)
+               {
+                   result.BusinessStatus = r.Reason == ExpenseValidationMatchingResult.FoundAndMatched
+                                               ? DALEnum.ExpenseValidationResultStatus.Pass
+                                               : DALEnum.ExpenseValidationResultStatus.Fail;
+                   result.VATStatus = DALEnum.ExpenseValidationResultStatus.NotApplicable;
+               }
+               else
+               {
+                   result.BusinessStatus = expenseValidation.DetermineStatusFromReason(criterion.Id, (int)r.Reason);
+                   result.VATStatus = expenseItemVatable ? expenseValidation.DetermineStatusFromReason(criterion.Id, (int)r.Reason, true, request.Total) : DALEnum.ExpenseValidationResultStatus.NotApplicable;
 
-                    var clsSubAccounts = new cAccountSubAccounts(ActionContext.AccountId);
-                    cAccountProperties reqProperties = clsSubAccounts.getFirstSubAccount().SubAccountProperties.Clone();
+                   //Override the existing validation result from "Fail" to "Pass"
+                   //Customers with "Allow receipts for a higher value than the expense claimed to pass validation" configured 
+                   //General Option->Expedite->Validation Options
 
-                    if (reqProperties.AllowReceiptTotalToPassValidation && ((((DALEnum.CriterionIdentifiers)criterion.Id == DALEnum.CriterionIdentifiers.AmountIncVat) || ((DALEnum.CriterionIdentifiers)criterion.Id == DALEnum.CriterionIdentifiers.InvoiceTotal)) && r.Reason == ExpenseValidationMatchingResult.FoundNotMatched))
-                    {
-                            XmlDocument xmlDoc = new XmlDocument();
-                            xmlDoc.LoadXml(r.Data);
-                            string currencyValue = xmlDoc.SelectSingleNode("/MatchingResultData/CurrencyValue").InnerText;
+                   var clsSubAccounts = new cAccountSubAccounts(accountId);
+                   cAccountProperties reqProperties = clsSubAccounts.getFirstSubAccount().SubAccountProperties.Clone();
 
-                            //Check if the receipt amount is more than the amount claimed
-                            if (currencyValue != null && Convert.ToDecimal(currencyValue) > expenseItem.total)
-                            {
-                                result.VATStatus = result.VATStatus == DALEnum.ExpenseValidationResultStatus.Fail
-                                    ? DALEnum.ExpenseValidationResultStatus.Pass
-                                    : result.VATStatus;
-                            result.BusinessStatus = result.BusinessStatus == DALEnum.ExpenseValidationResultStatus.Fail
-                                    ? DALEnum.ExpenseValidationResultStatus.Pass
-                                    : result.BusinessStatus;
-                            }
-                        }
-                    }
+                   if (reqProperties.AllowReceiptTotalToPassValidation && ((((DALEnum.CriterionIdentifiers)criterion.Id == DALEnum.CriterionIdentifiers.AmountIncVat) || ((DALEnum.CriterionIdentifiers)criterion.Id == DALEnum.CriterionIdentifiers.InvoiceTotal)) && r.Reason == ExpenseValidationMatchingResult.FoundNotMatched))
+                   {
+                       XmlDocument xmlDoc = new XmlDocument();
+                       xmlDoc.LoadXml(r.Data);
+                       string currencyValue = xmlDoc.SelectSingleNode("/MatchingResultData/CurrencyValue").InnerText;
 
-                // set the fraud marker
-                result.PossiblyFraudulent = criterion.FraudulentIfFailsVAT && result.VATStatus == DALEnum.ExpenseValidationResultStatus.Fail || criterion.FraudulentIfFailsVAT && result.VATStatus == DALEnum.ExpenseValidationResultStatus.Fail;
+                       //Check if the receipt amount is more than the amount claimed
+                       if (currencyValue != null && Convert.ToDecimal(currencyValue) > expenseItem.total)
+                       {
+                           result.VATStatus = result.VATStatus == DALEnum.ExpenseValidationResultStatus.Fail
+                                                  ? DALEnum.ExpenseValidationResultStatus.Pass
+                                                  : result.VATStatus;
+                           result.BusinessStatus = result.BusinessStatus == DALEnum.ExpenseValidationResultStatus.Fail
+                                                       ? DALEnum.ExpenseValidationResultStatus.Pass
+                                                       : result.BusinessStatus;
+                       }
+                   }
+               }
 
-                // commit the result to the database, getting back the modified db object
-                _data.AddResult(result);
-            });
+               // set the fraud marker
+               result.PossiblyFraudulent = criterion.FraudulentIfFailsVAT && result.VATStatus == DALEnum.ExpenseValidationResultStatus.Fail || criterion.FraudulentIfFailsVAT && result.VATStatus == DALEnum.ExpenseValidationResultStatus.Fail;
+
+               // commit the result to the database, getting back the modified db object
+               expenseValidation.AddResult(result);
+           });
 
             // update the validation count
-            ActionContext.ExpenseValidation.UpdateCountForExpenseItem(expenseItem.expenseid, ++expenseItem.ValidationCount);
+            expenseValidation.UpdateCountForExpenseItem(expenseItem.expenseid, ++expenseItem.ValidationCount);
 
             // re-fetch the item, as now the results have changed.
-            expenseItem = TryGetExpenseItem(expenseItem.expenseid);
+            expenseItem = TryGetExpenseItem(expenseItem.expenseid, claims);
 
             // determine progress
-            expenseItem.DetermineValidationProgress(User.Account, true, true, ActionContext.ExpenseValidation);
+            var account = new cAccounts().GetAccountByID(accountId);
 
-            // get the claims and claim
-            var claims = new cClaims(ActionContext.AccountId);
+            expenseItem.DetermineValidationProgress(account, true, true, expenseValidation);
+
+            // get the claims and claim      
             var claim = claims.getClaimById(expenseItem.claimid);
 
-
             expenseItem.ValidationResults = validationManager.GetResultsForExpenseItem(expenseItem.expenseid).ToList();
+       
             // If any results fail for business reasons, return the expense and update the history.
             if (expenseItem.ValidationResults.Any(r => r.BusinessStatus == DALEnum.ExpenseValidationResultStatus.Fail))
             {
@@ -250,12 +264,12 @@ namespace SpendManagementApi.Repositories.Expedite
                     {
                         claims.ReturnExpenses(claim, new List<int> { expenseItem.expenseid },
                             "Expense returned because it failed receipt validation for business reasons.",
-                            User.EmployeeID, null, null, true);
+                            null, null, null, true);
                     }
                     else
                     {
-                        var subCat = ActionContext.SubCategories.GetSubcatById(expenseItem.subcatid);
-                        expenseItem.DetermineValidationProgress(User.Account, subCat.Validate, true, _data);
+                        var subCat = subcats.GetSubcatById(expenseItem.subcatid);
+                        expenseItem.DetermineValidationProgress(account, subCat.Validate, true, expenseValidation);
                     }
                 }
             }
@@ -284,16 +298,18 @@ namespace SpendManagementApi.Repositories.Expedite
             if (resultsAllowAdvance)
             {
                 // check that the claim is in a Valiadtion stage.
-                var claimEmployee = ActionContext.Employees.GetEmployeeById(claim.employeeid);
-                var signoffGroup = ActionContext.SignoffGroups.GetGroupById(claimEmployee.SignOffGroupID);
+                var employees = new cEmployees(accountId);
+                var claimEmployee = employees.GetEmployeeById(claim.employeeid);
+                var signoffGroup = new cGroups(accountId).GetGroupById(claimEmployee.SignOffGroupID);
 
                 // approve any expense items that might have been returned.
                 claims.approveItems(expenseItems.Select(i => i.Value.expenseid).ToList());
 
                 // only advance if it is.
                 if (signoffGroup.stages.Values[claim.stage - 1].signofftype == SignoffType.SELValidation)
-                {
-                    ActionContext.ClaimSubmission.SendClaimToNextStage(claim, false, User.EmployeeID, User.EmployeeID, User.isDelegate ? User.Delegate.EmployeeID : (int?)null);
+                {                 
+                    var claimSubmission = new ClaimSubmission(accountId, 0);
+                    claimSubmission.SendClaimToNextStage(claim, false, 0, 0, null);
                 }
             }
         }
@@ -505,10 +521,10 @@ namespace SpendManagementApi.Repositories.Expedite
         /// </summary>
         /// <param name="expenseId">The Expense Id.</param>
         /// <returns>The Expense Item, then null.</returns>
-        private cExpenseItem TryGetExpenseItem(int expenseId)
+        private cExpenseItem TryGetExpenseItem(int expenseId, cClaims claims)
         {
             // error check
-            var expenseItem = ActionContext.Claims.getExpenseItemById(expenseId);
+            var expenseItem = claims.getExpenseItemById(expenseId);
             if (expenseItem == null)
             {
                 throw new InvalidDataException(ApiResources.ApiErrorValidationResultInvalidExpense);

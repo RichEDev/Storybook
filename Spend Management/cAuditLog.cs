@@ -285,7 +285,7 @@ namespace Spend_Management
         public void ViewRecord(SpendManagementElement element, string value, ICurrentUser currentUser)
         {
             CurrentUser user = (currentUser ?? cMisc.GetCurrentUser()) as CurrentUser;
-            DBConnection expdata = new DBConnection(cAccounts.getConnectionString(AccountID));
+            DBConnection expdata = new DBConnection(cAccounts.getConnectionString(this.AccountID));
             if (user != null)
             {
                 expdata.sqlexecute.Parameters.AddWithValue("@employeeid", user.EmployeeID);
@@ -297,15 +297,18 @@ namespace Spend_Management
                 {
                     expdata.sqlexecute.Parameters.AddWithValue("@delegateID", DBNull.Value);
                 }
+                expdata.sqlexecute.Parameters.AddWithValue("@subAccountId", user.CurrentSubAccountId);
             }
             else
             {
                 expdata.sqlexecute.Parameters.AddWithValue("@employeeid", 0);
                 expdata.sqlexecute.Parameters.AddWithValue("@delegateID", DBNull.Value);
+                expdata.sqlexecute.Parameters.AddWithValue("@subAccountId", DBNull.Value);
             }
+
             expdata.sqlexecute.Parameters.AddWithValue("@elementid", (int)element);
             expdata.sqlexecute.Parameters.AddWithValue("@recordTitle", value);
-            expdata.sqlexecute.Parameters.AddWithValue("@subAccountId", user.CurrentSubAccountId);
+  
             expdata.ExecuteProc("AddViewEntryToAuditLog");
             expdata.sqlexecute.Parameters.Clear();
         }

@@ -148,14 +148,24 @@
 			EmployeeId = employeeId;
 		}
 
-		#endregion Constructor
+	    /// <summary>
+	    /// Creates a new Receipts instance.
+	    /// </summary>
+	    /// <param name="accountId">The accountId to identify the database.</param>
+	    public Receipts(int accountId)
+	    {
+	        this.AccountId = accountId;
+	    }
 
-		#region Public Properties
 
-		/// <summary>
-		/// The Id of the Account.
-		/// </summary>
-		public int AccountId
+        #endregion Constructor
+
+        #region Public Properties
+
+        /// <summary>
+        /// The Id of the Account.
+        /// </summary>
+        public int AccountId
 		{
 			get { return _accountId; }
 			set
@@ -177,10 +187,7 @@
 			get { return _employeeId; }
 			set
 			{
-				if (value < 1)
-				{
-					throw new ArgumentException();
-				}
+			
 				_employeeId = value;
 			}
 		}

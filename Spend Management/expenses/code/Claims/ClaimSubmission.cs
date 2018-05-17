@@ -70,11 +70,11 @@ namespace Spend_Management.expenses.code.Claims
 			_claims = new cClaims(pairing.AccountID);
 		}
 
-		public ClaimSubmission(int accountId, int employeeId)
-		{
-			_user = new CurrentUser(accountId, employeeId, 0, Modules.expenses, -1);
-			_claims = new cClaims(accountId);
-		}
+        public ClaimSubmission(int accountId, int employeeId)
+        {
+            _user = new CurrentUser(accountId, employeeId, 0, Modules.expenses, 1);
+            _claims = new cClaims(accountId);
+        }
 
 		#region Public Methods
 
@@ -504,15 +504,25 @@ namespace Spend_Management.expenses.code.Claims
 				var firstSubAccount = this._subAccounts.getFirstSubAccount();
 				var reqProperties = firstSubAccount.SubAccountProperties;
 
-				int? commenter = delegateid ?? employeeid;
-				try
-				{
-					subAccountID = this._user.CurrentSubAccountId;
-				}
-				catch
-				{
-					subAccountID = firstSubAccount.SubAccountID;
-				}
+                int? commenter = null;
+
+                if (delegateid.HasValue)
+                {
+                    commenter = delegateid;
+                }
+                else if (employeeid != 0)
+                {
+                    commenter = employeeid;
+                }
+              
+                try
+                {
+                    subAccountID = this._user.CurrentSubAccountId;
+                }
+                catch
+                {
+                    subAccountID = firstSubAccount.SubAccountID;
+                }
 
 				var notifications = new NotificationTemplates(this._user);
 
@@ -711,7 +721,7 @@ namespace Spend_Management.expenses.code.Claims
 									"update claims_base set status = 3, stage = @stage, ModifiedOn = @modifiedon, ModifiedBy = @userid, checkerid = @checkerId, teamid = @teamid, splitApprovalStage = @splitApprovalStage WHERE claimid = @claimid";
 								connection.sqlexecute.Parameters.AddWithValue("@stage", stage + 1);
 
-								this._teams = this._teams ?? new cTeams(this._user.AccountID, this._user.CurrentSubAccountId);
+                                this._teams = this._teams ?? new cTeams(this._user.AccountID, subAccountID);
 
 								switch (signofftype)
 								{

@@ -28,16 +28,21 @@
 
     using SpendManagementLibrary;
     using SpendManagementLibrary.ExpenseItems;
-    using SpendManagementLibrary.Enumerators.Expedite;
 
     using Common;
     using Common.Enums;
 
     using SpendManagementApi.Common.Enum;
+    using SpendManagementApi.Models.Types.Expedite;
 
+
+    using SpendManagementLibrary.Interfaces.Expedite;
+
+    using Address = SpendManagementApi.Models.Types.Address;
     using BankAccount = SpendManagementLibrary.Employees.BankAccount;
     using Claim = SpendManagementApi.Models.Types.Claim;
     using CostCentreBreakdown = SpendManagementApi.Models.Types.Employees.CostCentreBreakdown;
+    using ExpediteOperatorValidationProgress = SpendManagementLibrary.Enumerators.Expedite.ExpediteOperatorValidationProgress;
     using ExpenseItemFlagSummary = SpendManagementApi.Models.Types.ExpenseItemFlagSummary;
     using ExpenseValidationProgress = SpendManagementApi.Models.Types.Expedite.ExpenseValidationProgress;
     using FlagAction = SpendManagementLibrary.Flags.FlagAction;
@@ -48,6 +53,8 @@
     using FlagPeriodType = SpendManagementLibrary.Flags.FlagPeriodType;
     using FlagSummary = SpendManagementApi.Models.Types.FlagSummary;
     using FlagType = SpendManagementLibrary.Flags.FlagType;
+    using Hotel = SpendManagementApi.Models.Types.Hotel;
+    using Organisation = SpendManagementApi.Models.Types.Organisation;
     using ValidationPoint = SpendManagementApi.Common.Enums.ValidationPoint;
     using ValidationType = SpendManagementApi.Common.Enums.ValidationType;
 
@@ -79,6 +86,11 @@
             this._generalOptionsFactory = WebApiApplication.container.GetInstance<IDataFactory<IGeneralOptions, int>>();
         }
 
+        public ExpenseItemRepository()
+        {
+            
+        }
+
         /// <summary>
         /// Get all of T
         /// </summary>
@@ -95,12 +107,14 @@
         public List<ValidatableExpenseInfo> GetIdsRequiringValidation()
         {
             var list = new List<ValidatableExpenseInfo>();
+            var accounts = new cAccounts();
+            IManageExpenseValidation expenseValidation = new ExpenseValidationManager();
 
-            this.ActionContext.Accounts.GetAccountsWithValidationServiceEnabled().ForEach(
+            accounts.GetAccountsWithValidationServiceEnabled().ForEach(
                 a =>
                 {
-                    this.ActionContext.ExpenseValidation.AccountId = a.accountid;
-                    list.AddRange(this.ActionContext.ExpenseValidation.GetExpenseItemIdsRequiringValidation());
+                    expenseValidation.AccountId = a.accountid;
+                    list.AddRange(expenseValidation.GetExpenseItemIdsRequiringValidation());
                 });
 
             return list.OrderBy(i => i.ModifiedOn).ToList();
@@ -250,17 +264,85 @@
         /// <returns>An <see cref="ExpenseItem">ExpenseItem</see></returns>
         public override ExpenseItem Get(int id)
         {
-            cExpenseItem item = GetExpenseItem(id);
 
-            //Checks claim ownership before proceeding
-            new ClaimRepository(this.User, this.ActionContext).Get(item.claimid);
-            var expenseIds = new List<int> { id };
+            cExpenseItem expenseItem = this.GetExpenseItemData(id, this._claimsData, this._expenseItemData);
+            var expense = new ExpenseItem().From(expenseItem, this.ActionContext);
+     
+            //check ownership before continuing
+            new ClaimRepository(this.User, this.ActionContext).Get(expense.ClaimId);
+            expense = this.GetAdditionalExpenseItemData(expense, this.User, this.ActionContext);
 
-            item.flags = _expenseItemData.GetFlaggedItems(expenseIds).First;
-            item.costcodebreakdown = _expenseItemData.getCostCodeBreakdown(item.expenseid);
+            return expense;
+        }
 
-            var expenseItem = new ExpenseItem().From(item, this.ActionContext);
+        /// <summary>
+        /// Gets an Expense item by Id for the Expedite applications.
+        /// </summary>
+        /// <param name="expenseId">
+        /// The expense id.
+        /// </param>
+        /// <param name="accountId">
+        /// The account id.
+        /// </param>
+        /// <returns>
+        /// An instance of <see cref="ExpediteExpenseItem"/>.
+        /// </returns>
+        public ExpediteExpenseItem GetExpenseItemByIdForExpedite(int expenseId, int accountId)
+        {
+            var claims = new cClaims(accountId);        
+            var expenseItems = new cExpenseItems(accountId);
+            var expenseItem = this.GetExpenseItemData(expenseId, claims, expenseItems);
+            var employeeId = new cEmployees(accountId).getEmployeeidByUsername(accountId, "adminexpedite");
 
+            IActionContext actionContext = new ActionContext(accountId, employeeId, 1);     
+            var expense = new ExpediteExpenseItem().ToApiType(expenseItem, actionContext);            
+            ICurrentUser user = new CurrentUser(accountId, 0, 0, Modules.expenses, 1);
+            expenseItems.AuditExpenseItemsViewedBySystemUser($"{expenseItem.refnum}, {expenseItem.date.ToShortDateString()}, {expense.ExpenseSubCategoryName}, {expenseItem.total:0.00}", accountId);
+
+            return expense;
+        }
+
+        /// <summary>
+        /// Gets the expense item data.
+        /// </summary>
+        /// <param name="expenseId">
+        /// The expense id.
+        /// </param>
+        /// <param name="claims">
+        /// An instance of <see cref="cClaims"/>.
+        /// </param>
+        /// <param name="expenseItems">
+        /// An instance of <see cref="cExpenseItems"/>.
+        /// </param>
+        /// <returns>
+        /// An instance of <see cref="cExpenseItem"/>.
+        /// </returns>
+        private cExpenseItem GetExpenseItemData(int expenseId, cClaims claims, cExpenseItems expenseItems)
+        {
+            cExpenseItem item = claims.getExpenseItemById(expenseId);   
+            var expenseIds = new List<int> { expenseId };
+            item.flags = expenseItems.GetFlaggedItems(expenseIds).First;
+            item.costcodebreakdown = expenseItems.getCostCodeBreakdown(item.expenseid);
+            return item;
+        }
+
+        /// <summary>
+        /// Gets any additional expense item data.
+        /// </summary>
+        /// <param name="expenseItem">
+        /// An instance of <see cref="ExpenseItem"/>.
+        /// </param>
+        /// <param name="User">
+        /// An instance of <see cref="ICurrentUser"/>.
+        /// </param>
+        /// <param name="ActionContext">
+        /// An instance of <see cref="IActionContext"/>.
+        /// </param>
+        /// <returns>
+        /// An instance of <see cref="ExpenseItem"/>.
+        /// </returns>
+        private ExpenseItem GetAdditionalExpenseItemData(ExpenseItem expenseItem, ICurrentUser User, IActionContext ActionContext)
+        {
             if (expenseItem.ClaimReasonId > 0)
             {
                 expenseItem.ClaimReasonInfo =
@@ -270,7 +352,7 @@
             if (expenseItem.CompanyId > 0)
             {
                 Organisation company =
-                    new OrganisationRepository(this.User, this.ActionContext).Get(expenseItem.CompanyId);
+                    new OrganisationRepository(User, this.ActionContext).Get(expenseItem.CompanyId);
 
                 if (company != null)
                 {
@@ -280,7 +362,7 @@
 
             if (expenseItem.HotelId > 0)
             {
-                Hotel hotel = new HotelRepository(this.User, this.ActionContext).Get(expenseItem.HotelId);
+                Hotel hotel = new HotelRepository(User, ActionContext).Get(expenseItem.HotelId);
 
                 if (hotel != null)
                 {
@@ -1132,11 +1214,20 @@
         /// <summary>
         /// Update the operator validation progress status .Update the  ExpediteValidationProgress flag in saved expense table
         /// </summary>
-        /// <param name="id">Expense Id</param>
-        /// <param name="operatorValidationProgress">Expense Validation Progress</param>
-        public int UpdateOperatorValidationStatus(int id, int operatorValidationProgress)
+        /// <param name="id">
+        /// The expense Id
+        /// </param>
+        /// <param name="operatorValidationProgress">
+        /// Expense Validation Progress
+        /// </param>
+        /// <param name="accountId">The account Id the expense belongs to.</param>
+        /// <returns>
+        /// The <see cref="int"/>.
+        /// </returns>
+        public int UpdateOperatorValidationStatus(int id, int operatorValidationProgress, int accountId)
         {
-            var validationManager = new ExpenseValidationManager(User.AccountID);
+            var validationManager = new ExpenseValidationManager(accountId);
+
             return validationManager.UpdateOperatorProgressForExpenseItem(
                 id,
                 (ExpediteOperatorValidationProgress)operatorValidationProgress);

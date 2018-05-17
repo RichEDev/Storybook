@@ -302,6 +302,7 @@
     <Compile Include="Controllers\V1\WalletReceiptController.cs" />
     <Compile Include="Controllers\V2\MobileMetricDataController.cs" />
     <Compile Include="Interfaces\IBasicRepository.cs" />
+    <Compile Include="Models\Requests\Expedite\EnvelopeRequest.cs" />
     <Compile Include="Models\Requests\MobileAppFeedback\MobileAppFeedbackRequest.cs" />
     <Compile Include="Models\Requests\MobileMetricData\MobileMetricDataRequest.cs" />
     <Compile Include="Models\Requests\MobileMetricData\SetDeviceStatusRequest.cs" />
@@ -310,10 +311,14 @@
     <Compile Include="Models\Requests\PushNotifications\MobileDeviceInstallationRequest.cs" />
     <Compile Include="Models\Responses\AppFeedback\MobileAppFeedbackCategoriesResponse.cs" />
     <Compile Include="Models\Responses\BooleanResponse.cs" />
+    <Compile Include="Models\Responses\Expedite\ExpediteExpenseItemResponse.cs" />
+    <Compile Include="Models\Types\CustomEntity.cs" />
     <Compile Include="Models\Responses\ProcessedReceiptResponse.cs" />
     <Compile Include="Models\Responses\WalletReceipt.cs" />
+    <Compile Include="Models\Types\Expedite\ExpediteExpenseItem.cs" />
+    <Compile Include="Models\Types\Expedite\ExpediteReceipt.cs" />
     <Compile Include="Models\Responses\MobileMetrics\MobileMetricDataResponse.cs" />
-    <Compile Include="Models\Types\CustomEntity.cs" />
+
     <Compile Include="Models\Types\MobileFeedback\MobileAppFeedbackCategory.cs" />
     <Compile Include="Models\Types\MobileMetrics\MobileMetricData.cs" />
     <Compile Include="Models\Responses\GeneralOptionsDisplayFieldSettingResponse.cs" />
@@ -1202,16 +1207,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>3433</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://smapi.localhost</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

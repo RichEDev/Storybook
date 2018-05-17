@@ -67,14 +67,14 @@
         /// <summary>
         /// Adds the supplied <see cref="ExpenseItemValidationResults">ExpenseItemValidationResults</see>.
         /// </summary>
+        /// <param name="accountId">The accountId to update</param>
         /// <param name="request">The ExpenseItemValidationResults to add.</param>
-        /// <returns>The newly added ExpenseValidationResult.</returns>
-        [HttpPost, Route("ResultsForExpenseItem")]
+        [HttpPost, Route("ResultsForExpenseItem/{accountId:int}")]
         [InternalSelenityMethod]
-        [AuthAudit(SpendManagementElement.Api, AccessRoleType.Add)]
-        public void PostResultsForExpenseItem([FromBody] ExpenseItemValidationResults request)
+        [NoAuthorisationRequired]
+        public void PostResultsForExpenseItem([FromUri] int accountId, [FromBody] ExpenseItemValidationResults request)
         {
-            ((ExpenseValidationResultRepository)this.Repository).AddResultsForExpenseItem(request);
+            ((ExpenseValidationResultRepository)this.Repository).AddResultsForExpenseItem(request, accountId);
         }
 
         /// <summary>

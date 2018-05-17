@@ -4,10 +4,14 @@
     using System.IO;
     using System.Linq;
     using Interfaces;
-    using Models.Types.Expedite;
+
+    using SpendManagementLibrary.Expedite;
+
     using Utilities;
     using SpendManagementLibrary.Interfaces.Expedite;
     using Spend_Management;
+
+    using ExpenseValidationCriterion = SpendManagementApi.Models.Types.Expedite.ExpenseValidationCriterion;
 
     /// <summary>
     /// EnvelopeRepository manages data access for Envelopes.
@@ -26,6 +30,13 @@
         {
             _data = ActionContext.ExpenseValidation;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExpenseValidationCriterionRepository"/> class.
+        /// </summary>
+        public ExpenseValidationCriterionRepository()
+        {
+        }
         
         /// <summary>
         /// Gets all common Criteria.
@@ -33,22 +44,47 @@
         /// <returns>A list of all "common" criteria, i.e. not the customer specific ones.</returns>
         public override IList<ExpenseValidationCriterion> GetAll()
         {
-            return _data.GetCriteria().Where(c => c.AccountId == null).Select(c => new ExpenseValidationCriterion().From(c, ActionContext)).ToList();
+         
+            return this._data.GetCriteria().Where(c => c.AccountId == null).Select(c => new ExpenseValidationCriterion().From(c, null)).ToList();
         }
-        
+
+        /// <summary>
+        /// The get expense validation criteria for account.
+        /// </summary>
+        /// <returns>
+        /// A list of <see cref="ExpenseValidationCriterion"/>.
+        /// </returns>
+        public IList<ExpenseValidationCriterion> GetExpenseValidationCriteriaForAccount()
+        {
+            IManageExpenseValidation expenseValidation = new ExpenseValidationManager();
+
+            return expenseValidation.GetCriteria().Where(c => c.AccountId == null).Select(c => new ExpenseValidationCriterion().From(c, null)).ToList();
+        }
+
         /// <summary>
         /// Gets custom Criteria for a particular expense item.
         /// </summary>
-        /// <returns>A list of Criteria.</returns>
-        public IList<ExpenseValidationCriterion> GetForExpenseItem(int expenseItemId)
+        /// <param name="expenseItemId">
+        /// The expense Item Id.
+        /// </param>
+        /// <param name="accountId">
+        /// The account Id the expense belongs to.
+        /// </param>
+        /// <returns>
+        /// A list of Criteria.
+        /// </returns>
+        public IList<ExpenseValidationCriterion> GetForExpenseItem(int expenseItemId, int accountId)
         {
-            var expenseItem = ActionContext.Claims.getExpenseItemById(expenseItemId);
+            var expenseItem = new cClaims(accountId).getExpenseItemById(expenseItemId);
+          
             if (expenseItem == null)
             {
                 throw new InvalidDataException(ApiResources.ApiErrorValidationResultInvalidExpense);
             }
 
-            return _data.GetCriteriaForSubcat(expenseItem.subcatid).Select(c => new ExpenseValidationCriterion().From(c, ActionContext)).ToList();
+            IManageExpenseValidation expenseValidation = new ExpenseValidationManager(accountId);
+
+            return expenseValidation.GetCriteriaForSubcat(expenseItem.subcatid).Select(c => new ExpenseValidationCriterion().From(c, null)).ToList();
         }
 
         /// <summary>

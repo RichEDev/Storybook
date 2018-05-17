@@ -13,6 +13,10 @@ namespace SpendManagementApi.Models.Types
     using Utilities;
     using SpendManagementApi.Common.Enums;
 
+    using SpendManagementLibrary.Expedite;
+
+    using Spend_Management;
+
     /// <summary>
     /// Represents an expense claim in the system. This is the mechanism by which claimants
     /// account for the money they have spent and wish to claim back. A claim contains a 
@@ -281,6 +285,63 @@ namespace SpendManagementApi.Models.Types
         /// <returns>An api Type</returns>
         public Claim From(SpendManagementLibrary.cClaim dbType, IActionContext actionContext)
         {
+            var claim = this.ConvertClaimDBTypeToApiType(dbType);
+            // pick out the expenseItems
+            claim.ExpenseItems = actionContext.Claims.getExpenseItemsFromDB(claim.Id).Select(x => x.Key).ToList();
+
+            // pick out the envelopes
+            const int minimumCompleteStatus = (int)EnvelopeStatus.ReceiptsAttached;
+            var allEnvelopesForClaim = actionContext.Envelopes.GetEnvelopesByClaimReferenceNumber(claim.ReferenceNumber);
+            claim.Envelopes = allEnvelopesForClaim.Select(x => x.EnvelopeId).ToList();
+            claim.IncompleteEnvelopes = allEnvelopesForClaim.Where(x => (int)x.Status < minimumCompleteStatus).Select(x => x.EnvelopeId).ToList();
+
+            return claim;
+        }
+
+        /// <summary>
+        /// Convert from a data access layer Type to an api Type.
+        /// </summary>
+        /// <param name="dbType">The instance of the data access layer Type to convert from.</param>       
+        /// <returns>An instance of <see cref="Claim"/>Claim</returns>
+        public Claim From(SpendManagementLibrary.cClaim dbType, cClaims claims, Envelopes envelopes)
+        {
+            var claim = this.ConvertClaimDBTypeToApiType(dbType);
+
+            // pick out the expenseItems
+            claim.ExpenseItems = claims.getExpenseItemsFromDB(claim.Id).Select(x => x.Key).ToList();
+
+            // pick out the envelopes
+            const int minimumCompleteStatus = (int)EnvelopeStatus.ReceiptsAttached;
+            var allEnvelopesForClaim = envelopes.GetEnvelopesByClaimReferenceNumber(claim.ReferenceNumber);
+            claim.Envelopes = allEnvelopesForClaim.Select(x => x.EnvelopeId).ToList();
+            claim.IncompleteEnvelopes = allEnvelopesForClaim.Where(x => (int)x.Status < minimumCompleteStatus).Select(x => x.EnvelopeId).ToList();
+
+            return claim;
+        }
+
+        /// <summary>
+        /// Converts to a data access layer Type from an api Type.
+        /// </summary>
+        /// <param name="actionContext">The actionContext which contains DAL classes.</param>
+        /// <returns>A data access layer Type</returns>
+        public SpendManagementLibrary.cClaim To(IActionContext actionContext)
+        {
+            return new SpendManagementLibrary.cClaim(AccountId, Id, ClaimNumber, EmployeeId, Name, Description, Stage,
+                Approved, DatePaid.HasValue, DateSubmitted ?? DateTime.MinValue, DatePaid ?? DateTime.MinValue,
+                (SpendManagementLibrary.ClaimStatus)Status, TeamId, CheckerId, DateSubmitted.HasValue,
+                SplitApprovalStage, CreatedOn, CreatedById, ModifiedOn ?? DateTime.UtcNow, ModifiedById ?? 0,
+                CurrencyId, ReferenceNumber, HasClaimHistory, CurrentApprover, TotalStageCount, HasReturnedItems,
+                HasCashItems, HasCreditCardItems, HasPurchaseCardItems, HasFlaggedItems, NumberOfItems, StartDate,
+                EndDate, Total, AmountPayable, NumberOfReceipts, NumberOfUnapprovedItems, CreditCardTotal, PurchaseCardTotal, PayBeforeValidate);
+        }
+
+        /// <summary>
+        /// Converts properties of a data access layer type claim to an api type claim.
+        /// </summary>
+        /// <param name="dbType">The instance of the data access layer Type to convert from.</param>
+        /// <returns>A claim</returns>
+        private Claim ConvertClaimDBTypeToApiType(SpendManagementLibrary.cClaim dbType)
+        {
             if (dbType == null)
             {
                 return null;
@@ -326,38 +387,22 @@ namespace SpendManagementApi.Models.Types
             ModifiedById = dbType.modifiedby;
             this.PayBeforeValidate = dbType.PayBeforeValidate;
 
-            // pick out the expenseItems
-            ExpenseItems = actionContext.Claims.getExpenseItemsFromDB(claimId: this.Id).Select(x => x.Key).ToList();
-           
             if (string.IsNullOrEmpty(ReferenceNumber))
             {
                 return this;
             }
 
-            const int minimumCompleteStatus = (int)EnvelopeStatus.ReceiptsAttached;
-
-            // pick out the envelopes
-            var allEnvelopesForClaim = actionContext.Envelopes.GetEnvelopesByClaimReferenceNumber(ReferenceNumber);
-            Envelopes = allEnvelopesForClaim.Select(x => x.EnvelopeId).ToList();
-            IncompleteEnvelopes = allEnvelopesForClaim.Where(x => (int)x.Status < minimumCompleteStatus).Select(x => x.EnvelopeId).ToList();
-      
             return this;
         }
 
-        /// <summary>
-        /// Converts to a data access layer Type from an api Type.
-        /// </summary>
-        /// <param name="actionContext">The actionContext which contains DAL classes.</param>
-        /// <returns>A data access layer Type</returns>
-        public SpendManagementLibrary.cClaim To(IActionContext actionContext)
+        private List<int> GetExpenseItems(int claimId, IActionContext actionContext = null, cClaims claims = null)
         {
-            return new SpendManagementLibrary.cClaim(AccountId, Id, ClaimNumber, EmployeeId, Name, Description, Stage,
-                Approved, DatePaid.HasValue, DateSubmitted ?? DateTime.MinValue, DatePaid ?? DateTime.MinValue,
-                (SpendManagementLibrary.ClaimStatus)Status, TeamId, CheckerId, DateSubmitted.HasValue,
-                SplitApprovalStage, CreatedOn, CreatedById, ModifiedOn ?? DateTime.UtcNow, ModifiedById ?? 0,
-                CurrencyId, ReferenceNumber, HasClaimHistory, CurrentApprover, TotalStageCount, HasReturnedItems,
-                HasCashItems, HasCreditCardItems, HasPurchaseCardItems, HasFlaggedItems, NumberOfItems, StartDate,
-                EndDate, Total, AmountPayable, NumberOfReceipts, NumberOfUnapprovedItems, CreditCardTotal, PurchaseCardTotal, PayBeforeValidate);
+            if (actionContext != null)
+            {
+                return actionContext.Claims.getExpenseItemsFromDB(claimId).Select(x => x.Key).ToList();
+            }
+            
+            return claims?.getExpenseItemsFromDB(claimId).Select(x => x.Key).ToList();
         }
     }
 }
