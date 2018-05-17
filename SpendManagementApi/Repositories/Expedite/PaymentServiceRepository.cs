@@ -183,7 +183,7 @@ namespace SpendManagementApi.Repositories.Expedite
                 {
                     var employees = new cEmployees(paymentServiceAccount.AccountId);               
                     var claims = new cClaims(paymentServiceAccount.AccountId);
-                    var emails = new NotificationTemplates(paymentServiceAccount.AccountId);
+                    var notifications = new NotificationTemplates(paymentServiceAccount.AccountId);
 
                     foreach (int id in claimIds)
                     {
