@@ -44,9 +44,9 @@ namespace Spend_Management
 
         string strsql;
         cMisc clsmisc;
-        
-        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
 
+        private readonly Lazy<IDataFactory<IGeneralOptions, int>> _generalOptionsFactory = new Lazy<IDataFactory<IGeneralOptions, int>>(() => FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>());
+        
         cFields fields;
 
         private cStage currentStage;
@@ -150,7 +150,7 @@ namespace Spend_Management
 
             cEmployeeCars clsEmployeeCars = new cEmployeeCars(accountid, reqemp.EmployeeID);
 
-            var generalOptions = this._generalOptionsFactory[currentUser.CurrentSubAccountId].WithDutyOfCare().WithCurrency();
+            var generalOptions = this._generalOptionsFactory.Value[currentUser.CurrentSubAccountId].WithDutyOfCare().WithCurrency();
 
             if (reqmileage != null)
             {
@@ -347,7 +347,7 @@ namespace Spend_Management
             if (expitem.allowanceid != 0)
             {
                 cAllowances clsallowances = new cAllowances(accountid);
-                clsallowances.calculateDailyAllowance(reqemp.EmployeeID, ref expitem, this._generalOptionsFactory);
+                clsallowances.calculateDailyAllowance(reqemp.EmployeeID, ref expitem, this._generalOptionsFactory.Value); 
             }
 
             clsvat.calculateVAT();
@@ -988,7 +988,7 @@ namespace Spend_Management
             if (expitem.allowanceid != 0)
             {
                 cAllowances clsallowances = new cAllowances(accountid);
-                clsallowances.calculateDailyAllowance(reqemp.EmployeeID, ref expitem, this._generalOptionsFactory);
+                clsallowances.calculateDailyAllowance(reqemp.EmployeeID, ref expitem, this._generalOptionsFactory.Value);
             }
 
             if (subcat.calculation == CalculationType.ExcessMileage && expitem.journeysteps.ContainsKey(0))
@@ -1005,7 +1005,7 @@ namespace Spend_Management
 
             cEmployeeCars clsEmployeeCars = new cEmployeeCars(accountid, employeeid);
 
-            var generalOptions = this._generalOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithCurrency().WithDutyOfCare().WithMileage();
+            var generalOptions = this._generalOptionsFactory.Value[cMisc.GetCurrentUser().CurrentSubAccountId].WithCurrency().WithDutyOfCare().WithMileage();
 
             if (reqmileage != null)
             {
@@ -3322,7 +3322,7 @@ namespace Spend_Management
             }
             else
             {
-                basecurrency = (int)this._generalOptionsFactory[cMisc.GetCurrentUser().CurrentSubAccountId].WithCurrency().Currency.BaseCurrency;
+                basecurrency = (int)this._generalOptionsFactory.Value[cMisc.GetCurrentUser().CurrentSubAccountId].WithCurrency().Currency.BaseCurrency;
             }
 
             if (expenseitem.currencyid == basecurrency)
@@ -3382,7 +3382,7 @@ namespace Spend_Management
             double globalexchangerate;
             decimal globaltotal;
 
-            basecurrency = (int)this._generalOptionsFactory[subAccountID].WithCurrency().Currency.BaseCurrency;
+            basecurrency = (int)this._generalOptionsFactory.Value[subAccountID].WithCurrency().Currency.BaseCurrency;
 
             if (expenseitem.currencyid == basecurrency || expenseitem.basecurrency == basecurrency)
             {

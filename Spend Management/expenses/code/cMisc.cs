@@ -50,8 +50,7 @@ namespace Spend_Management
         /// </summary>
         private readonly Utilities.DistributedCaching.Cache _generalFieldsCache = new Utilities.DistributedCaching.Cache();
 
-        private readonly IDataFactory<IAccountProperty, AccountPropertyCacheKey> _accountPropertiesFactory = FunkyInjector.Container.GetInstance<IDataFactory<IAccountProperty, AccountPropertyCacheKey>>();
-
+        private readonly Lazy<IDataFactory<IAccountProperty, AccountPropertyCacheKey>> _accountPropertiesFactory = new Lazy<IDataFactory<IAccountProperty, AccountPropertyCacheKey>>(() => FunkyInjector.Container.GetInstance<IDataFactory<IAccountProperty, AccountPropertyCacheKey>>());
         #endregion
 
         #region Constructors and Destructors
@@ -441,8 +440,7 @@ namespace Spend_Management
         {
             CurrentUser currentUser = GetCurrentUser();
 
-            this._accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.PolicyType.GetDescription(), policytype.ToString(), currentUser.CurrentSubAccountId));
-
+            this._accountPropertiesFactory.Value.Save(new AccountProperty(AccountPropertyKeys.PolicyType.GetDescription(), policytype.ToString(), currentUser.CurrentSubAccountId));
             var accountBase = new cAccountSubAccountsBase(currentUser.AccountID);
             accountBase.InvalidateCache(currentUser.CurrentSubAccountId);
         }
@@ -844,9 +842,9 @@ namespace Spend_Management
         {
             CurrentUser currentUser = GetCurrentUser();
 
-            this._accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.PolicyType.GetDescription(), policytype.ToString(), currentUser.CurrentSubAccountId));
+            this._accountPropertiesFactory.Value.Save(new AccountProperty(AccountPropertyKeys.PolicyType.GetDescription(), policytype.ToString(), currentUser.CurrentSubAccountId));
 
-            this._accountPropertiesFactory.Save(new AccountProperty(AccountPropertyKeys.CompanyPolicy.GetDescription(), policy, currentUser.CurrentSubAccountId));
+            this._accountPropertiesFactory.Value.Save(new AccountProperty(AccountPropertyKeys.CompanyPolicy.GetDescription(), policy, currentUser.CurrentSubAccountId));
 
             var accountBase = new cAccountSubAccountsBase(currentUser.AccountID);
             accountBase.InvalidateCache(currentUser.CurrentSubAccountId);
