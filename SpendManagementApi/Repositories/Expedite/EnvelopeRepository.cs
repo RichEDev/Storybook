@@ -318,7 +318,7 @@
 
                 // update claim history.
                 var history = string.Format("Envelope scanned and attached: {0}.", envelope.EnvelopeNumber);
-                claims.UpdateClaimHistory(claim, history, user.EmployeeID);
+                claims.UpdateClaimHistory(claim, history);
             }
             else
             {
@@ -335,7 +335,7 @@
                 {
                     // update claim history.
                     var history = string.Format("Scan & attach complete for envelope: {0}. {1} remaining of {2} total.", envelope.EnvelopeNumber, completed, total);
-                    claims.UpdateClaimHistory(claim, history, user.EmployeeID);
+                    claims.UpdateClaimHistory(claim, history);
                 }
                 else
                 {
@@ -346,8 +346,7 @@
                     // update claim history.
                     claims.UpdateClaimHistory(claim, canAdvance
                         ? "Scan & attach complete for all envelopes in this claim."
-                        : "All envelopes marked complete, but not all expenses have receipts attached.",
-                        user.EmployeeID);
+                        : "All envelopes marked complete, but not all expenses have receipts attached.");
 
                     // only advance the claim if we can
                     if (canAdvance)
