@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[SaveFinancialExportHistory] @financialExportID int, @exportNum int, @employeeID int, @dateExported datetime, @exportType INT, @historyIDs IntPK READONLY
+﻿CREATE PROCEDURE [dbo].[SaveFinancialExportHistory] @financialExportID int, @exportNum int, @employeeID int = NULL, @dateExported datetime, @exportType INT, @historyIDs IntPK READONLY
 AS
 BEGIN
 	DECLARE @exportHistoryID INT;

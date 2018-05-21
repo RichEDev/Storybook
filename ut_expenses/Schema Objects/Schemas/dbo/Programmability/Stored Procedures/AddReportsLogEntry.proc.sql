@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[AddReportsLogEntry]
 
 	@reportId UNIQUEIDENTIFIER,
-	@employeeId INT,
+	@employeeId INT = NULL,
 	@reportName NVARCHAR(150),
 	@baseTableId UNIQUEIDENTIFIER,
 	@limit SMALLINT,
