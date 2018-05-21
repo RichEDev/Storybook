@@ -84,7 +84,7 @@
         /// </summary>
         private ApproverClaimsSummary _claimsSummary;
 
-        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
+        private readonly Lazy<IDataFactory<IGeneralOptions, int>> _generalOptionsFactory = new Lazy<IDataFactory<IGeneralOptions, int>>(() => FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>());
 
         /// <summary>
         /// The company name name.
@@ -2638,7 +2638,7 @@
                     }
                     output.Append("):</td><td>");
 
-                    var generalOptions = this._generalOptionsFactory[subAccountID].WithCurrency();
+                    var generalOptions = this._generalOptionsFactory.Value[subAccountID].WithCurrency();
 
                     if (reqitem.currencyid == generalOptions.Currency.BaseCurrency)
                     {

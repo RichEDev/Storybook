@@ -42,7 +42,7 @@ namespace Spend_Management.expenses.code.Claims
 
 		private readonly ICurrentUser _user;
 
-        private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
+	    private readonly Lazy<IDataFactory<IGeneralOptions, int>> _generalOptionsFactory = new Lazy<IDataFactory<IGeneralOptions, int>>(() => FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>());
 
         internal enum GetClaimItemCheckerFor
         {
@@ -1232,7 +1232,7 @@ namespace Spend_Management.expenses.code.Claims
             this._groups = this._groups ?? new cGroups(this._user.AccountID);
             cGroup reqgroup = this._groups.GetGroupById(claimemp.SignOffGroupID);
 
-            var generalOptions = this._generalOptionsFactory[this._user.CurrentSubAccountId].WithClaim();
+            var generalOptions = this._generalOptionsFactory.Value[this._user.CurrentSubAccountId].WithClaim();
 
             // there is a method GetGroupForClaim in cClaims.cs so any changes here might need to be reflected there
             if (generalOptions.Claim.OnlyCashCredit && generalOptions.Claim.PartSubmit)
@@ -1290,7 +1290,7 @@ namespace Spend_Management.expenses.code.Claims
             int claimid;
             using (var expdata = new DatabaseConnection(cAccounts.getConnectionString(_user.AccountID)))
             {
-                var generalOptions = this._generalOptionsFactory[this._user.CurrentSubAccountId].WithCurrency();
+                var generalOptions = this._generalOptionsFactory.Value[this._user.CurrentSubAccountId].WithCurrency();
 
                 DateTime createdon = DateTime.Now.ToUniversalTime();
                 int userid = 0;

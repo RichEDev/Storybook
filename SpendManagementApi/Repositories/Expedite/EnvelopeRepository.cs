@@ -4,6 +4,10 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Web;
+
+    using BusinessLogic.Identity;
+
     using Interfaces;
     using Models.Common;
     using Models.Types.Expedite;
@@ -296,6 +300,8 @@
         public Envelope MarkComplete(int id)
         {
             var envelope = TryGetEnvelopeAndThrow(id);
+
+            HttpContext.Current.User = new WebPrincipal(new UserIdentity(envelope.AccountId.Value, 0));
 
             var user = this.User ?? new CurrentUser(envelope.AccountId.Value, 0, 0, Modules.expenses, 1);
 
