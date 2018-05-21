@@ -4106,8 +4106,7 @@ namespace Spend_Management
                     {
                         expdata.AddWithValue("@userid", currentUserId);
                     }
-
-                    expdata.AddWithValue("@userid", delegateId.HasValue ? delegateId : currentUserId);
+                   
                     expdata.AddWithValue("@modifiedon", DateTime.UtcNow);
                     expdata.AddWithValue("@reason", reason, 4000);
 
