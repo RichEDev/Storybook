@@ -6,6 +6,8 @@ namespace SpendManagementApi.Repositories.Expedite
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Web;
+
     using Interfaces;
     using Models.Requests.Expedite;
     using Models.Types.Expedite;
@@ -18,6 +20,8 @@ namespace SpendManagementApi.Repositories.Expedite
     using DALEnum = SpendManagementLibrary.Enumerators.Expedite;
     using DAL = SpendManagementLibrary.Expedite;
     using System.Xml;
+
+    using BusinessLogic.Identity;
 
     using SpendManagementApi.Models.Responses.Expedite;
 
@@ -124,6 +128,8 @@ namespace SpendManagementApi.Repositories.Expedite
         /// <param name="accountId">The account id the validation resulrs</param>
         public void AddResultsForExpenseItem(ExpenseItemValidationResults request, int accountId)
         {
+            HttpContext.Current.User = new WebPrincipal(new UserIdentity(accountId, 0));
+
             // ensure the expense exists
 
             var claims = new cClaims(accountId);
