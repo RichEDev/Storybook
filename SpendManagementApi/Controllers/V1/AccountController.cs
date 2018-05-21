@@ -4,15 +4,12 @@ namespace SpendManagementApi.Controllers.V1
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.IO;
     using System.Net;
     using System.Net.Http;
     using System.Web;
     using System.Web.Http;
     using System.Web.Http.Description;
-    using System.Linq;
-    using System.Net.Http.Headers;
 
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
@@ -107,8 +104,8 @@ namespace SpendManagementApi.Controllers.V1
             
             var employees = new cEmployees(reqAccount.accountid);
             var authenticate = employees.Authenticate(request.Username, request.Password, mobileRequest ? AccessRequestType.Mobile : AccessRequestType.Api, EncryptorFactory.CreateEncryptor());
-
-            this.RequestContext.Principal = new WebPrincipal(new UserIdentity(reqAccount.accountid, authenticate.employeeId));
+            
+            this.RequestContext.Principal = new WebPrincipal(new UserIdentity(reqAccount.accountid, Math.Abs(authenticate.employeeId)));
 
             var subAccounts = new cAccountSubAccounts(reqAccount.accountid);
             int subaccountid = subAccounts.getFirstSubAccount().SubAccountID;

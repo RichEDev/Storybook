@@ -119,7 +119,7 @@
             //retrun if the email sending feature is not turned on
             if (enableMinimumFundEmail == false)
             {
-                MakeEventLogEntry("Email Disabled", "", "Email sending feature to notify float limit is not enabled");
+                MakeEventLogEntry("Email Disabled", string.Empty, "Email sending feature to notify float limit is not enabled");
                 return;
             }
             if (!string.IsNullOrEmpty(this.AuthToken))
@@ -377,7 +377,9 @@
         /// <returns></returns>
         private string GetDomain()
         {
-            return "http://" + ConfigurationManager.AppSettings["domain"];
+            var useHttps = ConfigurationManager.AppSettings["https"] == "1";
+
+            return useHttps ? "https://" : "http://" + ConfigurationManager.AppSettings["domain"];
         }
 
         #endregion
