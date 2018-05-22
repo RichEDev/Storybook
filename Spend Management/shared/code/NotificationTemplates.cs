@@ -1448,10 +1448,8 @@
         {
             if (emailTemplate != null)
             {
-                cAuditLog clsaudit;
-
-                clsaudit = senderId == 0 ? new cAuditLog() : new cAuditLog(accountid, senderId);
-               
+                cAuditLog clsaudit = new cAuditLog(accountid, senderId); 
+             
                 var lstRecipientTypes = emailTemplate.RecipientTypes;
                 var clsSubAccounts = new cAccountSubAccounts(accountid);
                 cAccountSubAccount reqSubAccount = clsSubAccounts.getFirstSubAccount();
