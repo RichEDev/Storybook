@@ -286,8 +286,14 @@ namespace SpendManagementApi.Models.Types
         public Claim From(SpendManagementLibrary.cClaim dbType, IActionContext actionContext)
         {
             var claim = this.ConvertClaimDBTypeToApiType(dbType);
+
             // pick out the expenseItems
             claim.ExpenseItems = actionContext.Claims.getExpenseItemsFromDB(claim.Id).Select(x => x.Key).ToList();
+
+            if (string.IsNullOrEmpty(dbType.ReferenceNumber))
+            {
+                return claim;
+            }
 
             // pick out the envelopes
             const int minimumCompleteStatus = (int)EnvelopeStatus.ReceiptsAttached;
@@ -309,6 +315,11 @@ namespace SpendManagementApi.Models.Types
 
             // pick out the expenseItems
             claim.ExpenseItems = claims.getExpenseItemsFromDB(claim.Id).Select(x => x.Key).ToList();
+
+            if (string.IsNullOrEmpty(dbType.ReferenceNumber))
+            {
+                return claim;
+            }
 
             // pick out the envelopes
             const int minimumCompleteStatus = (int)EnvelopeStatus.ReceiptsAttached;
@@ -386,11 +397,6 @@ namespace SpendManagementApi.Models.Types
             ModifiedOn = dbType.modifiedon;
             ModifiedById = dbType.modifiedby;
             this.PayBeforeValidate = dbType.PayBeforeValidate;
-
-            if (string.IsNullOrEmpty(ReferenceNumber))
-            {
-                return this;
-            }
 
             return this;
         }
