@@ -5,7 +5,11 @@
     using System.Web.Http.Filters;
     using System.Net;
     using System.Net.Http;
+    using System.Web;
     using System.Web.Http;
+
+    using BusinessLogic.Identity;
+
     using Utilities;
 
     /// <summary>
@@ -20,6 +24,12 @@
             if (!IPValidator.IsSelenity(actionContext.Request))
             {
                 throw new HttpResponseException(actionContext.Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Only Selenity staff may access this endpoint."));
+            }
+
+            //Check if account id is passed as a parameter and set the current user
+            if (actionContext.ActionArguments.TryGetValue("accountId", out var accountIdArgument) && int.TryParse(accountIdArgument.ToString(), out var accountId))
+            {
+                HttpContext.Current.User = new WebPrincipal(new UserIdentity(accountId, 0));
             }
 
             // if we got this far, allow access to the action...

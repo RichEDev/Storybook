@@ -124,7 +124,6 @@
             }
             if (!string.IsNullOrEmpty(this.AuthToken))
             {
-                this.NotifyDutyOfCareDocumentsExpiry("DutyOfCare/NotifyOnExpiryOfDutyOfCareDocument", this.AuthToken);
                 this.NotifyAdministratorsOfFloatBelowLimit("Expedite/Funds/NotifyAdministratorsOfFloatBelowLimit");
             }
         }
