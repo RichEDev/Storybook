@@ -378,7 +378,7 @@
         {
             var useHttps = ConfigurationManager.AppSettings["https"] == "1";
 
-            return useHttps ? "https://" : "http://" + ConfigurationManager.AppSettings["domain"];
+            return (useHttps ? "https://" : "http://") + ConfigurationManager.AppSettings["domain"];
         }
 
         #endregion
