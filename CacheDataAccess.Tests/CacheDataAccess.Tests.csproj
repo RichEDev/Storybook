@@ -119,6 +119,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Announcements\IdentityContextStub.cs" />
+    <Compile Include="Announcements\AnnouncementsCacheFactoryTests.cs" />
     <Compile Include="Caching\AccountCacheFactoryTests.cs" />
     <Compile Include="Caching\JsonSerializerTests.cs" />
     <Compile Include="Caching\BinarySerializerTests.cs" />

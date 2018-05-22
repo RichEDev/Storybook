@@ -117,17 +117,30 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="AccessRoles\AccessRoleTests.cs" />
+    <Compile Include="AccessRoles\ExpensesAccessRoleTests.cs" />
+    <Compile Include="AccessRoles\ReportAccess\AllDataReportsAccessTests.cs" />
+    <Compile Include="AccessRoles\ReportAccess\EmployeesResponsibleForTests.cs" />
+    <Compile Include="AccessRoles\ReportAccess\SelectedAccessRolesTests.cs" />
+    <Compile Include="AccessRoles\Scopes\AccessScopeCollectionTests.cs" />
+    <Compile Include="AccessRoles\Scopes\AccessScopeTests.cs" />
     <Compile Include="Accounts\AccountTests.cs" />
     <Compile Include="Accounts\Elements\ElementTests.cs" />
     <Compile Include="Accounts\Elements\AccountWithElementsTests.cs" />
+    <Compile Include="Announcements\AnnouncementTests.cs" />
     <Compile Include="Cache\GetByCustomTests.cs" />
     <Compile Include="Cache\MetabaseCacheKeyTests.cs" />
     <Compile Include="Cache\AccountCacheKeyTests.cs" />
     <Compile Include="Database\MetabaseCatalogueTests.cs" />
     <Compile Include="DataConnections\DataParametersTests.cs" />
+    <Compile Include="Employees\AccessRoles\AssignedAccessRoleTests.cs" />
+    <Compile Include="Employees\AccessRoles\EmployeeCombinedAccessRoleTests.cs" />
+    <Compile Include="GuardTests.cs" />
+    <Compile Include="Identity\IdentityProviderTests.cs" />
+    <Compile Include="Identity\UserIdentityTests.cs" />
     <Compile Include="GeneralOptions\AddEditExpenseOptionsTests.cs" />
     <Compile Include="Images\ImageTests.cs" />
-    <Compile Include="ImportExport\ImportFieldTests.cs" />
+    <Compile Include="ListWrapperTests.cs" />
     <Compile Include="P11DCategories\P11DCategoryTests.cs" />
     <Compile Include="ProjectCodes\ProjectCodeTests.cs" />
     <Compile Include="ProjectCodes\ProjectCodeWithUserDefinedFieldsTests.cs" />
@@ -160,7 +173,9 @@
       <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="AccessRoles\ApplicationAccess\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

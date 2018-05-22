@@ -123,6 +123,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AccessRoles\SqlAccessRolesFactoryTests.cs" />
     <Compile Include="Accounts\SqlAccountWithElementsFactoryTests.cs" />
     <Compile Include="Bootstrap\Fields.cs" />
     <Compile Include="Bootstrap\System.cs" />
@@ -137,6 +138,8 @@
     <Compile Include="GeneralOptions\GeneralOptionsBuilderTests.cs" />
     <Compile Include="GeneralOptions\SqlAccountPropertyTests.cs" />
     <Compile Include="GeneralOptions\SqlGeneralOptionsFactoryTests.cs" />
+    <Compile Include="Employees\AccessRoles\SqlEmployeeAssignedAccessRolesTests.cs" />
+    <Compile Include="Employees\AccessRoles\SqlEmployeeCombinedAccessRoleFactoryTests.cs" />
     <Compile Include="Helpers\IdentityContextStub.cs" />
     <Compile Include="ImportExport\ImportFilefactoryTests.cs" />
     <Compile Include="ImportExport\ImportProjectCodesTests.cs" />
@@ -176,6 +179,7 @@
       <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -114,6 +114,7 @@
     <Compile Include="Caching\MetabaseCacheFactory.cs" />
     <Compile Include="Caching\NoCacheFactoryBaseComposition.cs" />
     <Compile Include="Caching\CacheFactory.cs" />
+    <Compile Include="Caching\AnnouncementsCacheFactory.cs" />
     <Compile Include="Caching\RedisCache.cs" />
     <Compile Include="Caching\RedisClientWrapper.cs" />
     <Compile Include="CustomFields\CacheCustomEntityFieldsFactory.cs" />
@@ -135,6 +136,10 @@
       <Project>{85dfc378-171e-46c8-9c54-74cbe66368ac}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{c417335b-7be1-45ae-8274-c0b65829c4fc}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -145,7 +150,6 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

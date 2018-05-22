@@ -5,14 +5,18 @@
     using System.Data;
     using System.Data.SqlClient;
 
-    using BusinessLogic.Accounts;
+    using BusinessLogic;
     using BusinessLogic.AccessRoles;
+    using BusinessLogic.AccessRoles.ApplicationAccess;
     using BusinessLogic.AccessRoles.ReportsAccess;
+    using BusinessLogic.AccessRoles.Scopes;
     using BusinessLogic.Accounts.Elements;
     using BusinessLogic.Cache;
     using BusinessLogic.DataConnections;
 
     using CacheDataAccess.Caching;
+
+    using Common.Logging;
 
     /// <summary>
     /// Implements methods to retrieve and create instances of <see cref="IAccessRole"/> from SQL
@@ -22,7 +26,7 @@
         /// <summary>
         /// An instance of <see cref="CacheFactory{T,TK}"/> to retrieve and create instances of <see cref="IAccessRole"/> in cache via <see cref="ICache{T,TK}"/>.
         /// </summary>
-        private readonly AccountCacheFactory<IAccessRole, int> _cacheFactory;
+        private readonly IAccountCacheFactory<IAccessRole, int> _cacheFactory;
 
         /// <summary>
         /// An instance of <see cref="ICustomerDataConnection{T}"/> to use for accessing <see cref="ICustomerDataConnection{T}"/>
@@ -30,16 +34,22 @@
         private readonly ICustomerDataConnection<SqlParameter> _customerDataConnection;
 
         /// <summary>
+        /// A logger instance to enable logging in this <see cref="SqlAccessRolesFactory"/>.
+        /// </summary>
+        private ILog _logger;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SqlAccessRolesFactory"/> class to use when creating or retrieving new instances of <see cref="IAccessRole"/>
         /// </summary>
-        /// <param name="cacheFactory">
-        /// An instance of <see cref="CacheFactory{T,TK}"/> to retrieve and create instances of <see cref="IAccessRole"/> in cache via <see cref="ICache{T,TK}"/>.
-        /// </param>
-        /// <param name="customerDataConnection">
-        /// An instance of <see cref="ICustomerDataConnection{T}"/> to use when accessing <see cref="SqlAccessRolesFactory"/>
-        /// </param>
-        public SqlAccessRolesFactory(AccountCacheFactory<IAccessRole, int> cacheFactory, ICustomerDataConnection<SqlParameter> customerDataConnection)
+        /// <param name="cacheFactory">An instance of <see cref="CacheFactory{T,TK}"/> to retrieve and create instances of <see cref="IAccessRole"/> in cache via <see cref="ICache{T,TK}"/>.</param>
+        /// <param name="customerDataConnection">An instance of <see cref="ICustomerDataConnection{T}"/> to use when accessing <see cref="SqlAccessRolesFactory"/>.</param>
+        /// <param name="logger">A logger instance to enable logging in this <see cref="SqlAccessRolesFactory"/>.</param>
+        public SqlAccessRolesFactory(IAccountCacheFactory<IAccessRole, int> cacheFactory, ICustomerDataConnection<SqlParameter> customerDataConnection, ILog logger)
         {
+            Guard.ThrowIfNull(cacheFactory, nameof(cacheFactory));
+            Guard.ThrowIfNull(customerDataConnection, nameof(customerDataConnection));
+            Guard.ThrowIfNull(logger, nameof(logger));
+
             this._customerDataConnection = customerDataConnection;
             this._cacheFactory = cacheFactory;
         }
@@ -58,11 +68,33 @@
                 if (accessRole == null)
                 {
                     accessRole = this.Get(id);
-                    this._cacheFactory.Save(accessRole);
+
+                    if (accessRole != null)
+                    {
+                        this._cacheFactory.Save(accessRole);
+                    }
                 }
 
                 return accessRole;
             }
+        }
+
+        /// <inheritdoc />
+        public int Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public IList<IAccessRole> Get()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public IList<IAccessRole> Get(Predicate<IAccessRole> predicate)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -76,7 +108,7 @@
         /// </returns>
         public IAccessRole Save(IAccessRole entity)
         {
-            return this._cacheFactory.Save(entity);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -88,25 +120,17 @@
         /// <returns>
         /// The <see cref="IAccessRole">IAccess</see>
         /// </returns>
-        public IAccessRole Get(int id)
+        private IAccessRole Get(int id)
         {
-            AccessRole accessRole;
+            AccessRole accessRole = null;
 
-            ElementAccessCollections elementAccessCollections = this.GetElementAccessCollections(id);
+            const string Sql = "SELECT rolename, description, expenseClaimMinimumAmount, expenseClaimMaximumAmount, employeesCanAmendDesignatedCostCode, employeesCanAmendDesignatedDepartment, employeesCanAmendDesignatedProjectCode, roleAccessLevel, allowWebsiteAccess, allowMobileAccess, allowApiAccess, employeesMustHaveBankAccount FROM accessRoles where roleID = @accessRoleID";
 
-            const string Sql = "SELECT roleID, rolename, description, expenseClaimMinimumAmount, expenseClaimMaximumAmount, employeesCanAmendDesignatedCostCode, employeesCanAmendDesignatedDepartment, employeesCanAmendDesignatedProjectCode, roleAccessLevel, allowWebsiteAccess, allowMobileAccess, allowApiAccess, employeesMustHaveBankAccount FROM accessRoles where roleID = @accessRoleID";
-
-            this._customerDataConnection.Parameters.Add(new SqlParameter("@accessRoleID", SqlDbType.Int) { Value = id});
+            this._customerDataConnection.Parameters.Add(new SqlParameter("@accessRoleID", SqlDbType.Int) { Value = id });
    
-            // Skipping the creation of the custom entities section of access roles for now since its not needed.
-            // IList<CustomEntityElementAccessLevelCollection> customEntityElementAccessLevelCollections = GetCustomEntityElementAcessLevels();
-
-            LinkedAccessRoleCollections linkedAccessRoleCollections = this.GetLinkedAccessRoles();
-
             using (IDataReader reader = this._customerDataConnection.GetReader(Sql))
             {
-                int accessRoleIdOrdinal = reader.GetOrdinal("roleID");
-                int acessRoleNameOrdinal = reader.GetOrdinal("rolename");
+                int accessRoleNameOrdinal = reader.GetOrdinal("rolename");
                 int descriptionOrdinal = reader.GetOrdinal("description");
                 int expenseClaimMinimumAmountOrdinal = reader.GetOrdinal("expenseClaimMinimumAmount");
                 int expenseClaimMaximumAmountOrdinal = reader.GetOrdinal("expenseClaimMaximumAmount");
@@ -119,41 +143,28 @@
                 int allowApiAccessOrdinal = reader.GetOrdinal("allowApiAccess");
                 int employeesMustHaveBankAccountOrdinal = reader.GetOrdinal("employeesMustHaveBankAccount");
 
-                reader.Read();
-                int accessRoleId = reader.GetInt32(accessRoleIdOrdinal);
-                string acessRoleName = reader.GetString(acessRoleNameOrdinal);
-                string description = reader.GetString(descriptionOrdinal);
-                bool allowWebsiteAccess = reader.GetBoolean(allowWebsiteAccessOrdinal);
-                bool allowMobileAccess = reader.GetBoolean(allowMobileAccessOrdinal);
-                bool allowApiAccess = reader.GetBoolean(allowApiAccessOrdinal);
-
-                IReportsAccess reportAccess = null;
-                ReportingAccess roleAccessLevel = (ReportingAccess)reader.GetInt32(roleAccessLevelOrdinal);
-
-                switch (roleAccessLevel)
+                while (reader.Read())
                 {
-                    case ReportingAccess.AllData:
-                        reportAccess = new AllDataReportsAccess();
-                        break;
-                    case ReportingAccess.EmployeesResponsibleFor:
-                        reportAccess = new EmployeesResponsibleFor();
-                        break;
-                    case ReportingAccess.SelectedRoles:
-                        reportAccess = new SelectedAccessRoles(linkedAccessRoleCollections[accessRoleId]);
-                        break;
+                    string accessRoleName = reader.GetString(accessRoleNameOrdinal);
+                    string description = reader.GetString(descriptionOrdinal);
+                    bool allowWebsiteAccess = reader.GetBoolean(allowWebsiteAccessOrdinal);
+                    bool allowMobileAccess = reader.GetBoolean(allowMobileAccessOrdinal);
+                    bool allowApiAccess = reader.GetBoolean(allowApiAccessOrdinal);
+                    
+                    ReportingAccess roleAccessLevel = (ReportingAccess)reader.GetInt16(roleAccessLevelOrdinal);
+
+                    accessRole = new AccessRole(id, accessRoleName, description, this.GetApplicationScopes(allowApiAccess, allowWebsiteAccess, allowMobileAccess), this.GetReportAccess(id, roleAccessLevel), this.GetAccessScopeCollection(id));
+
+                    // Creation of an ExpenseAccessRole - not sure how we will decide to create this or not yet.
+                    bool employeesMustHaveBankAccount = reader.GetBoolean(employeesMustHaveBankAccountOrdinal);
+                    decimal? expenseClaimMinimumAmount = reader.IsDBNull(expenseClaimMinimumAmountOrdinal) ? (decimal?)null : reader.GetDecimal(expenseClaimMinimumAmountOrdinal);
+                    decimal? expenseClaimMaximumAmount = reader.IsDBNull(expenseClaimMaximumAmountOrdinal) ? (decimal?)null : reader.GetDecimal(expenseClaimMaximumAmountOrdinal);
+                    bool employeesCanAmendDesignatedCostCode = reader.GetBoolean(employeesCanAmendDesignatedCostCodeOrdinal);
+                    bool employeesCanAmendDesignatedDepartment = reader.GetBoolean(employeesCanAmendDesignatedDepartmentOrdinal);
+                    bool employeesCanAmendDesignatedProjectCode = reader.GetBoolean(employeesCanAmendDesignatedProjectCodeOrdinal);
+
+                    accessRole = new ExpensesAccessRole(accessRole, expenseClaimMaximumAmount, expenseClaimMinimumAmount, employeesCanAmendDesignatedCostCode, employeesCanAmendDesignatedDepartment, employeesCanAmendDesignatedProjectCode, employeesMustHaveBankAccount);
                 }
-
-                accessRole = new AccessRole(accessRoleId, acessRoleName, description, allowApiAccess, allowMobileAccess, allowWebsiteAccess, reportAccess, elementAccessCollections[accessRoleId]);
-
-                // Creation of an ExpenseAccessRole - not sure how we will decide to create this or not yet.
-                bool employeesMustHaveBankAccount = reader.GetBoolean(employeesMustHaveBankAccountOrdinal);
-                decimal? expenseClaimMinimumAmount = reader.IsDBNull(expenseClaimMinimumAmountOrdinal) ? (decimal?)null : reader.GetDecimal(expenseClaimMinimumAmountOrdinal);
-                decimal? expenseClaimMaximumAmount = reader.IsDBNull(expenseClaimMaximumAmountOrdinal) ? (decimal?)null : reader.GetDecimal(expenseClaimMaximumAmountOrdinal);
-                bool employeesCanAmendDesignatedCostCode = reader.GetBoolean(employeesCanAmendDesignatedCostCodeOrdinal);
-                bool employeesCanAmendDesignatedDepartment = reader.GetBoolean(employeesCanAmendDesignatedDepartmentOrdinal);
-                bool employeesCanAmendDesignatedProjectCode = reader.GetBoolean(employeesCanAmendDesignatedProjectCodeOrdinal);
-
-                accessRole = new ExpensesAccessRole(accessRole, expenseClaimMaximumAmount, expenseClaimMinimumAmount, employeesCanAmendDesignatedCostCode, employeesCanAmendDesignatedDepartment, employeesCanAmendDesignatedProjectCode, employeesMustHaveBankAccount);
             }
 
             this._customerDataConnection.Parameters.Clear();
@@ -168,14 +179,14 @@
         /// The access Role ID.
         /// </param>
         /// <returns>
-        /// An instance of <see cref="ElementAccessCollections"/> for this <see cref="IAccessRole"/>
+        /// An instance of <see cref="AccessScopeCollection"/> for this <see cref="IAccessRole"/>
         /// </returns>
-        private ElementAccessCollections GetElementAccessCollections(int accessRoleId)
+        private AccessScopeCollection GetAccessScopeCollection(int accessRoleId)
         {
             const string Sql = "SELECT elementID, updateAccess, insertAccess, deleteAccess, viewAccess FROM dbo.accessRoleElementDetails WHERE roleID=@accessRoleID";
-            this._customerDataConnection.Parameters.Add(new SqlParameter("@accessRoleID", SqlDbType.Int) { Value = accessRoleId});
-            
-            ElementAccessCollections elementAccessCollections = new ElementAccessCollections();
+            this._customerDataConnection.Parameters.Add(new SqlParameter("@accessRoleID", SqlDbType.Int) { Value = accessRoleId });
+
+            AccessScopeCollection accessScopeCollection = new AccessScopeCollection();
 
             using (var reader = this._customerDataConnection.GetReader(Sql))
             {
@@ -189,76 +200,111 @@
                 {
                     int elementId = reader.GetInt32(elementIdOrdinal);
                     ModuleElements element = (ModuleElements)elementId;
-                    bool updateAccess = reader.GetBoolean(updateAccessOrdinal);
-                    bool insertAccess = reader.GetBoolean(insertAccessOrdinal);
+                    bool editAccess = reader.GetBoolean(updateAccessOrdinal);
+                    bool addAccess = reader.GetBoolean(insertAccessOrdinal);
                     bool deleteAccess = reader.GetBoolean(deleteAccessOrdinal);
                     bool viewAccess = reader.GetBoolean(viewAccessOrdinal);
 
-                    ElementAccessLevel elementAccess = new ElementAccessLevel(elementId, viewAccess, insertAccess, updateAccess, deleteAccess);
-
-                    if (elementAccessCollections.Contains(accessRoleId) == false)
-                    {
-                        elementAccessCollections.Add(new ElementAccessCollection(accessRoleId));
-                    }
-
-                    elementAccessCollections[accessRoleId].Add(element, elementAccess);
+                    AccessScope elementAccess = new AccessScope(element, viewAccess, addAccess, editAccess, deleteAccess);
+                    accessScopeCollection.Add(elementAccess);
                 }
             }
 
             this._customerDataConnection.Parameters.Clear();
 
-            return elementAccessCollections;
+            return accessScopeCollection;
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="ApplicationScopeCollection"/> based on the arguments passed.
+        /// </summary>
+        /// <param name="api">Whether access to the api application is granted.</param>
+        /// <param name="website">Whether access to the website application is granted.</param>
+        /// <param name="mobile">Whether access to the mobile application is granted.</param>
+        /// <returns>The <see cref="ApplicationScopeCollection"/> populated with instances of <see cref="IApplicationAccessScope"/>.</returns>
+        private ApplicationScopeCollection GetApplicationScopes(bool api, bool website, bool mobile)
+        {
+            ApplicationScopeCollection applicationScopesCollection = new ApplicationScopeCollection();
+
+            if (api)
+            {
+                applicationScopesCollection.Add(new ApiAccess());
+            }
+
+            if (website)
+            {
+                applicationScopesCollection.Add(new WebsiteAccess());
+            }
+
+            if (mobile)
+            {
+                applicationScopesCollection.Add(new MobileAccess());
+            }
+
+            return applicationScopesCollection;
         }
 
         /// <summary>
         /// Returns a list of AccessRole links, i.e. AccessRoleID 1 may be able to report on AccessRole 2, 4 and 6
         /// </summary>
+        /// <param name="accessRoleId">The primary access role to check links for.</param>
         /// <returns>
-        /// A <see cref="LinkedAccessRoleCollection"/> containing all linked <see cref="IAccessRole"/> IDs for this <see cref="IAccount"/>
+        /// An <see cref="IEnumerable{T}"/> instance containing all linked <see cref="IAccessRole"/> IDs for the specified <see cref="IAccessRole"/>.
         /// </returns>
-        private LinkedAccessRoleCollections GetLinkedAccessRoles()
+        private IEnumerable<int> GetLinkedAccessRoles(int accessRoleId)
         {
-            LinkedAccessRoleCollections linkedAccessRoleCollections = new LinkedAccessRoleCollections();
+            List<int> linkedAccessRoleCollections = new List<int>();
 
-            const string Sql = "SELECT primaryAccessRoleID, secondaryAccessRoleID FROM dbo.accessRolesLink";
+            const string Sql = "SELECT secondaryAccessRoleID FROM dbo.accessRolesLink WHERE primaryAccessRoleID=@accessRoleId";
 
-            // primaryAccessRoleID
+            this._customerDataConnection.Parameters.Add(new SqlParameter("@accessRoleId", accessRoleId));
+
             using (IDataReader reader = this._customerDataConnection.GetReader(Sql))
             {
-                int primaryAccessRoleIdOrdinal = reader.GetOrdinal("primaryAccessRoleID");
                 int secondaryAccessRoleIdOrdinal = reader.GetOrdinal("secondaryAccessRoleID");
 
                 while (reader.Read())
                 {
-                    int primaryAccessRoleId = reader.GetInt32(primaryAccessRoleIdOrdinal);
                     int secondaryAccessRoleId = reader.GetInt32(secondaryAccessRoleIdOrdinal);
 
-                    if (linkedAccessRoleCollections.Contains(primaryAccessRoleId) == false)
+                    if (linkedAccessRoleCollections.Contains(secondaryAccessRoleId) == false)
                     {
-                        linkedAccessRoleCollections.Add(new LinkedAccessRoleCollection(primaryAccessRoleId));
+                        linkedAccessRoleCollections.Add(secondaryAccessRoleId);
                     }
-
-                    linkedAccessRoleCollections[primaryAccessRoleId].Add(secondaryAccessRoleId);
                 }
             }
-            
+
             return linkedAccessRoleCollections;
         }
 
-        public int Delete(int id)
+        /// <summary>
+        /// Creates an instance of <see cref="IReportsAccess"/> based on the parameters passed.
+        /// </summary>
+        /// <param name="accessRoleId">The access role id.</param>
+        /// <param name="reportingAccess">The reporting access.</param>
+        /// <returns>
+        /// The <see cref="IReportsAccess"/> instance based on the <paramref name="accessRoleId"/> and <paramref name="reportingAccess"/>.
+        /// </returns>
+        /// <exception cref="ArgumentException">Thrown if the reporting access is not valid.</exception>
+        private IReportsAccess GetReportAccess(int accessRoleId, ReportingAccess reportingAccess)
         {
-            throw new System.NotImplementedException();
-        }
+            IReportsAccess reportAccess;
+            switch (reportingAccess)
+            {
+                case ReportingAccess.AllData:
+                    reportAccess = new AllDataReportsAccess();
+                    break;
+                case ReportingAccess.EmployeesResponsibleFor:
+                    reportAccess = new EmployeesResponsibleFor();
+                    break;
+                case ReportingAccess.SelectedRoles:
+                    reportAccess = new SelectedAccessRoles(this.GetLinkedAccessRoles(accessRoleId));
+                    break;
+                default:
+                    throw new ArgumentException($"Unhandled report access {reportingAccess}.", nameof(reportingAccess));
+            }
 
-        public IList<IAccessRole> Get()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public IList<IAccessRole> Get(Predicate<IAccessRole> predicate)
-        {
-            throw new NotImplementedException();
+            return reportAccess;
         }
     }
 }

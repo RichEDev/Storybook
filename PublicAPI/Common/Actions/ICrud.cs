@@ -8,17 +8,8 @@
     /// </summary>
     /// <typeparam name="TComplexType">The data type this controller opperates on.</typeparam>
     /// <typeparam name="TPrimaryKeyDataType">The primary key data type for <typeparamref name="TComplexType"/>.</typeparam>
-    interface ICrud<TComplexType, in TPrimaryKeyDataType>
+    interface ICrud<TComplexType, in TPrimaryKeyDataType> : IGet<TComplexType>
     {
-        /// <summary>
-        /// Controller action to get all available instances of <typeparam cref="TComplexType"/>.
-        /// </summary>
-        /// <remarks>
-        /// GET: <a href="https://api.hostname/{controller}">https://api.hostname/{controller}</a>
-        /// </remarks>
-        /// <returns>A <see cref="IEnumerable{T}"/> containing all instances of <typeparam cref="TComplexType"/>.</returns>
-        IHttpActionResult Get();
-
         /// <summary>
         /// Controller action to get a specific <typeparam name="TComplexType" /> with a matching <typeparam name="TPrimaryKeyDataType"></typeparam> Id.
         /// </summary>

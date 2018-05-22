@@ -3,16 +3,19 @@ using Common.Logging.Log4Net;
 
 namespace PublicAPI.Bootstrap
 {
+    using System;
     using System.Web.Http;
 
     using BusinessLogic;
     using BusinessLogic.Accounts;
+    using BusinessLogic.Announcements;
     using BusinessLogic.Cache;
-    using BusinessLogic.Identity;
-    using BusinessLogic.Images;
     using BusinessLogic.DataConnections;
+    using BusinessLogic.Employees.AccessRoles;
     using BusinessLogic.Fields;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Identity;
+    using BusinessLogic.Images;
     using BusinessLogic.Tables;
     using BusinessLogic.UserDefinedFields;
 
@@ -29,6 +32,7 @@ namespace PublicAPI.Bootstrap
 
     using SQLDataAccess;
     using SQLDataAccess.Accounts;
+    using SQLDataAccess.Employees.AccessRoles;
     using SQLDataAccess.Builder;
     using SQLDataAccess.ProjectCodes;
     using SQLDataAccess.Tables;
@@ -79,9 +83,11 @@ namespace PublicAPI.Bootstrap
             container.Register(typeof(RepositoryBase<,>), typeof(RepositoryBase<,>));
             container.Register(typeof(IMetabaseCacheFactory<,>), typeof(MetabaseCacheFactory<,>));
             container.Register(typeof(IAccountCacheFactory<,>), typeof(AccountCacheFactory<,>));
+            container.Register(typeof(IDataFactory<IAnnouncement, Guid>), typeof(AnnouncementsCacheFactory));
             container.Register(typeof(IRpcClient), typeof(RabbitMqRpcClient));
             container.Register(typeof(IImageConversion), typeof(JpgImageConversion));
             container.Register(typeof(IImageManipulation), typeof(JpgImageManipulation));
+            container.Register(typeof(ReadReceiptFactory), typeof(ReadReceiptFactory));
 
             container.Register<UserDefinedFieldValueRepository, SqlUserDefinedFieldValuesFactory>(Lifestyle.Transient);
             container.RegisterCollection(typeof(UserDefinedFieldValueRepository), new[] { typeof(SqlUserDefinedFieldValuesFactory) });
@@ -92,8 +98,8 @@ namespace PublicAPI.Bootstrap
             container.RegisterCollection(typeof(TableRepository), typeof(SqlTableFactory).Assembly, typeof(TableRepository).Assembly);
             container.Register<IFieldFactory, FieldFactory>(Lifestyle.Transient);
 
-            //container.Register<IDataFactory<IProjectCode, int>, SqlProjectCodesFactory>();
-            //container.Register<IDataFactory<IAccount, int>, SqlAccountFactory>();
+            container.Register<IAssignedAccessRolesFactory, SqlEmployeeAssignedAccessRoles>(Lifestyle.Transient);
+            container.Register<IEmployeeCombinedAccessRoles, SqlEmployeeCombinedAccessRolesFactory>(Lifestyle.Transient);
 
             // This registration should register all implementations of IDataFactory<,> within the SqlDataAccess project. 
             container.Register(typeof(IDataFactory<,>), new[] { typeof(SqlAccountFactory).Assembly });

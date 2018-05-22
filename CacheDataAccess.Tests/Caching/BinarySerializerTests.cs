@@ -38,7 +38,7 @@ namespace CacheDataAccess.Tests.Caching
             [Fact]
             public void NullComplexType_Deserialize_ReturnsDefault()
             {
-                ISerialize serializer = new JsonSerializer();
+                ISerialize serializer = new BinarySerializer();
 
                 Assert.Equal(default(ProjectCode), serializer.Deserialize<ProjectCode>(null));
             }
@@ -46,7 +46,7 @@ namespace CacheDataAccess.Tests.Caching
             [Fact]
             public void NullSimpleType_Deserialize_ReturnsDefault()
             {
-                ISerialize serializer = new JsonSerializer();
+                ISerialize serializer = new BinarySerializer();
 
                 Assert.Equal(default(int), serializer.Deserialize<int>(null));
             }

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "92d62b34-0010-485e-ab52-b2446c2ae515",
+		"_postman_id": "013b14eb-d46d-4b89-a21d-bc713211aa5b",
 		"name": "APIConfidence copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -3319,7 +3319,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "d5869f04-b3e0-49b2-a69f-099268e89a69",
+										"id": "8870a7b6-2255-4c2b-b5de-690ae8c0adc2",
 										"type": "text/javascript",
 										"exec": [
 											"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -3343,7 +3343,6 @@
 											"};",
 											"",
 											"postman.setEnvironmentVariable(\"P11DCategoryId\", data.Id);",
-											"postman.setEnvironmentVariable(\"P11DCategoryName\", data.Name);",
 											"",
 											"tests[\"P11DCategory - Schema\"] = tv4.validate(data, schema, false, true);"
 										]
@@ -3387,7 +3386,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "b4f5882b-60ac-4f37-969a-ce6024944370",
+										"id": "63bfece5-a3d8-475e-9113-95f78d9f2cb9",
 										"type": "text/javascript",
 										"exec": [
 											"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -3412,7 +3411,7 @@
 											"",
 											"tests[\"P11DCategory - Schema\"] = tv4.validate(data, schema, false, true);",
 											"tests[\"P11DCategory - Id Equals\"] = data.Id = environment[\"P11DCategoryId\"];",
-											"tests[\"P11DCategory - Name Equals\"] = data.Name === environment[\"P11DCategoryName\"];"
+											"tests[\"P11DCategory - Name Equals\"] = data.Name === environment[\"CollectionGUID\"];"
 										]
 									}
 								}
@@ -3450,7 +3449,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "0c095caf-f0f5-4320-8f6f-766d771416dd",
+										"id": "59f6e3ef-a978-4536-be8e-4faf881c87a5",
 										"type": "text/javascript",
 										"exec": [
 											"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -3475,9 +3474,7 @@
 											"",
 											"tests[\"P11DCategory - Schema\"] = tv4.validate(data, schema, false, true);",
 											"tests[\"P11DCategory - Id Equals\"] = data.Id = environment[\"P11DCategoryId\"];",
-											"tests[\"P11DCategory - Name Equals\"] = data.Name === environment[\"P11DCategoryName\"] + \" Updated\";",
-											"",
-											"postman.setEnvironmentVariable(\"P11DCategoryName\", data.Name);"
+											"tests[\"P11DCategory - Name Equals\"] = data.Name === environment[\"CollectionGUID\"] + \" Updated\";"
 										]
 									}
 								}
@@ -3499,7 +3496,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"Id\" : \"{{P11DCategoryId}}\",\n\t\"Name\" : \"{{P11DCategoryName}} Updated\"\n}"
+									"raw": "{\n\t\"Id\" : \"{{P11DCategoryId}}\",\n\t\"Name\" : \"{{CollectionGUID}} Updated\"\n}"
 								},
 								"url": {
 									"raw": "{{PublicAPIUrl}}P11DCategories/",
@@ -3620,6 +3617,100 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Announcements",
+					"description": null,
+					"item": [
+            {
+              "name": "Get Announcement",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "DUNNO",
+                    "type": "text/javascript",
+                    "exec": [
+                      "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                      "",
+                      "var data = JSON.parse(responseBody);",
+                      "",
+                      "var schema = {",
+                      "    \"$schema\":  \"http: //json-schema.org/draft-06/schema#\",",
+                      "    \"title\": \"Announcement\", ",
+                      "    \"type\": \"array\",",
+                      "    \"additionalProperties\":  true",
+                      "};",
+                      "",
+                      "postman.setEnvironmentVariable(\"Announcement\");",
+                      "",
+                      "tests[\"Announcement - Schema\"] = tv4.validate(data, schema, false, true);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{PublicAPIAuthToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{PublicAPIUrl}}Announcements/",
+                  "host": [ "{{PublicAPIUrl}}Announcements/" ],
+                  "path": [
+                    ""
+                  ]
+                },
+                "description": null
+              },
+              "response": []
+            },
+					  {
+              "name": "Announcement Read",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "",
+                    "type": "text/javascript",
+
+                  }
+                }
+              ] 
+					  }
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "AnnouncementAPI",
+			"description": null,
+			"item": [
+				{
+					"name": "",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
 				}
 			]
 		}

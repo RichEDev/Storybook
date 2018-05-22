@@ -102,6 +102,8 @@
     <Compile Include="CustomFields\SqlCustomFieldListvalueFactory.cs" />
     <Compile Include="Databases\SQLDatabaseServerFactory.cs" />
     <Compile Include="Elements\SqlElementFactory.cs" />
+    <Compile Include="Employees\AccessRoles\SqlEmployeeAssignedAccessRoles.cs" />
+    <Compile Include="Employees\AccessRoles\SqlEmployeeCombinedAccessRole.cs" />
     <Compile Include="Employees\SqlEmployeeFactory.cs" />
     <Compile Include="Fields\SqlFieldFactory.cs" />
     <Compile Include="Fields\SqlFieldListValueFactory.cs" />

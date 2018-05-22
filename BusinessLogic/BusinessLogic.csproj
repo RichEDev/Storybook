@@ -76,6 +76,10 @@
     <CodeAnalysisRuleSet>BusinessLogic.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BusinessLogic, Version=2017.11.14.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\frameworkWebApp\Bin\BusinessLogic.dll</HintPath>
+    </Reference>
     <Reference Include="Configuration.Interface, Version=1.1.2.28032, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Configuration.Interface.1.1.2.28032\lib\net461\Configuration.Interface.dll</HintPath>
       <Private>True</Private>
@@ -95,26 +99,46 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessRoles\AccessRole.cs" />
-    <Compile Include="AccessRoles\ElementAccessCollection.cs" />
-    <Compile Include="AccessRoles\ElementAccessCollections.cs" />
-    <Compile Include="AccessRoles\ElementAccessLevel.cs" />
+    <Compile Include="AccessRoles\ApplicationAccess\ApiAccess.cs" />
+    <Compile Include="AccessRoles\ApplicationAccess\ApplicationScopes.cs" />
+    <Compile Include="AccessRoles\ApplicationAccess\IApplicationAccess.cs" />
+    <Compile Include="AccessRoles\ApplicationAccess\IApplicationAccessScope.cs" />
+    <Compile Include="AccessRoles\ApplicationAccess\MobileAccess.cs" />
+    <Compile Include="AccessRoles\ApplicationAccess\WebsiteAccess.cs" />
     <Compile Include="AccessRoles\ExpensesAccessRole.cs" />
     <Compile Include="AccessRoles\IAccessLevel.cs" />
     <Compile Include="AccessRoles\IAccessRole.cs" />
     <Compile Include="AccessRoles\IExpensesAccessRole.cs" />
     <Compile Include="AccessRoles\ReportsAccess\AllDataReportsAccess.cs" />
     <Compile Include="AccessRoles\ReportsAccess\EmployeesResponsibleFor.cs" />
+    <Compile Include="AccessRoles\ReportsAccess\IReportAccessScopes.cs" />
     <Compile Include="AccessRoles\ReportsAccess\IReportsAccess.cs" />
-    <Compile Include="AccessRoles\ReportsAccess\ISelectedAccessRoles.cs" />
-    <Compile Include="AccessRoles\ReportsAccess\LinkedAccessRoleCollection.cs" />
-    <Compile Include="AccessRoles\ReportsAccess\LinkedAccessRoleCollections.cs" />
     <Compile Include="AccessRoles\ReportsAccess\ReportingAccess.cs" />
     <Compile Include="AccessRoles\ReportsAccess\SelectedAccessRoles.cs" />
+    <Compile Include="AccessRoles\Scopes\AccessScope.cs" />
+    <Compile Include="AccessRoles\Scopes\AccessScopeCollection.cs" />
+    <Compile Include="AccessRoles\Scopes\IAccessScope.cs" />
+    <Compile Include="AccessRoles\Scopes\IAccessScopes.cs" />
+    <Compile Include="AccessRoles\Scopes\ScopeType.cs" />
     <Compile Include="AccountProperties\AccountProperty.cs" />
     <Compile Include="AccountProperties\IAccountProperty.cs" />
     <Compile Include="Accounts\Account.cs" />
+    <Compile Include="Accounts\NhsAccount.cs" />
+    <Compile Include="Announcements\ReadReceipt.cs" />
+    <Compile Include="Announcements\ReadReceiptFactory.cs" />
+    <Compile Include="Announcements\ReadReceipts.cs" />
+    <Compile Include="ImportExport\IImportFile.cs" />
+    <Compile Include="ImportExport\ImportField.cs" />
+    <Compile Include="Validator\AdminValidator.cs" />
+    <Compile Include="Announcements\Announcement.cs" />
+    <Compile Include="Announcements\AudienceFlags.cs" />
+    <Compile Include="Announcements\IAnnouncement.cs" />
     <Compile Include="Accounts\Elements\IAccountWithElement.cs" />
     <Compile Include="Accounts\Elements\AccountWithElements.cs" />
+    <Compile Include="Validator\ClaimantValidator.cs" />
+    <Compile Include="Validator\IValidator.cs" />
+    <Compile Include="Validator\NhsValidator.cs" />
+    <Compile Include="Validator\NonNhsValidator.cs" />
     <Compile Include="Cache\AccountCacheKey.cs" />
     <Compile Include="Cache\CacheKey.cs" />
     <Compile Include="Cache\IAccountCacheKey.cs" />
@@ -131,16 +155,9 @@
     <Compile Include="Accounts\IAccount.cs" />
     <Compile Include="Databases\IDatabaseCatalogue.cs" />
     <Compile Include="Databases\IDatabaseServer.cs" />
-    <Compile Include="DataConnections\IDataFactoryCustom.cs" />
     <Compile Include="Cache\GetByCustom.cs" />
+    <Compile Include="DataConnections\IDataFactoryCustom.cs" />
     <Compile Include="Dependency.cs" />
-    <Compile Include="CustomEntities\AccessRoles\CustomEntityElementAccessLevel.cs" />
-    <Compile Include="CustomEntities\AccessRoles\CustomEntityAccessWrapper.cs" />
-    <Compile Include="CustomEntities\AccessRoles\CustomEntityElementAccessLevelCollection.cs" />
-    <Compile Include="CustomEntities\AccessRoles\CustomEntityFormAccess.cs" />
-    <Compile Include="CustomEntities\AccessRoles\CustomEntityFormAccessCollection.cs" />
-    <Compile Include="CustomEntities\AccessRoles\CustomEntityViewAccess.cs" />
-    <Compile Include="CustomEntities\AccessRoles\CustomEntityViewAccessCollection.cs" />
     <Compile Include="CustomEntities\CustomEntityFieldRepository.cs" />
     <Compile Include="CustomFields\CustomFieldRepository.cs" />
     <Compile Include="Databases\MetabaseCatalogue.cs" />
@@ -154,6 +171,11 @@
     <Compile Include="DataConnections\IGetBy.cs" />
     <Compile Include="DataConnections\IMetabaseDataConnection.cs" />
     <Compile Include="DataConnections\ISave.cs" />
+    <Compile Include="Employees\AccessRoles\AssignedAccessRole.cs" />
+    <Compile Include="Employees\AccessRoles\EmployeeCombinedAccessRole.cs" />
+    <Compile Include="Employees\AccessRoles\IAssignedAccessRole.cs" />
+    <Compile Include="Employees\AccessRoles\IEmployeeAccessScope.cs" />
+    <Compile Include="Employees\AccessRoles\IEmployeeCombinedAccessRole.cs" />
     <Compile Include="Employees\Employee.cs" />
     <Compile Include="Employees\IEmployee.cs" />
     <Compile Include="Enums\EnumHelper.cs" />
@@ -274,8 +296,7 @@
     <Compile Include="Images\IImageManipulation.cs" />
     <Compile Include="Images\JpgImageConversion.cs" />
     <Compile Include="Images\JpgImageManipulation.cs" />
-    <Compile Include="ImportExport\IImportFile.cs" />
-    <Compile Include="ImportExport\ImportField.cs" />
+    <Compile Include="ListWrapper.cs" />
     <Compile Include="Receipts\WalletReceiptStatus.cs" />
     <Compile Include="SELCloud\CloudWalletReceipt.cs" />
     <Compile Include="SELCloud\ICloudReceipt.cs" />

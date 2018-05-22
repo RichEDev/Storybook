@@ -197,6 +197,15 @@
                 Assert.Null(this.SUT.Save(null));
             }
         }
+
+        public class Delete : SqlAccountFactoryFixture
+        {
+            [Fact]
+            public void Call_Delete_ThrowsNotImplemented()
+            {
+                Assert.Throws<NotImplementedException>(() => this.SUT.Delete(15));
+            }
+        }
     }
 
     /// <summary>

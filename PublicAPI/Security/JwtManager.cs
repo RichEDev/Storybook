@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-
-namespace PublicAPI.Security
+﻿namespace PublicAPI.Security
 {
     using System;
+    using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
+
+    using BusinessLogic.Employees.AccessRoles;
+
     using Microsoft.IdentityModel.Tokens;
 
     /// <summary>
@@ -22,10 +24,11 @@ namespace PublicAPI.Security
         /// <summary>
         /// Creates a JWT based on the <paramref name="tokenRequest"/> and <paramref name="expireMinutes"/>.
         /// </summary>
-        /// <param name="tokenRequest"></param>
+        /// <param name="tokenRequest">An instance of <see cref="TokenRequest"/> for the current request.</param>
+        /// <param name="combinedEmployeeAccessRolesFactory">An instance of <see cref="IEmployeeCombinedAccessRoles"/> to use when obtaining the users access scopes.</param>
         /// <param name="expireMinutes">The number of minutes this JWT is valid for (sets the expired date appropriately).</param>
         /// <returns>A generated JWT.</returns>
-        public static string GenerateToken(TokenRequest tokenRequest, int expireMinutes = 20)
+        public static string GenerateToken(TokenRequest tokenRequest, IEmployeeCombinedAccessRoles combinedEmployeeAccessRolesFactory, int expireMinutes = 20)
         {
             var symmetricKey = Convert.FromBase64String(Secret);
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -41,10 +44,15 @@ namespace PublicAPI.Security
 
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, name),
-                
+                new Claim(ClaimTypes.Name, name),  
             };
-            
+
+            IEmployeeAccessScope employeeAccessScope = combinedEmployeeAccessRolesFactory.Get(tokenRequest.EmployeeId, tokenRequest.SubAccountId);
+
+            claims.Add(new Claim(ClaimTypes.Role, employeeAccessScope.Id));
+
+            claims.Add(new Claim("SubAccountId", tokenRequest.SubAccountId.ToString()));
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
@@ -52,8 +60,8 @@ namespace PublicAPI.Security
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(symmetricKey), SecurityAlgorithms.HmacSha256Signature)
             };
 
-            var stoken = tokenHandler.CreateToken(tokenDescriptor);
-            var token = tokenHandler.WriteToken(stoken);
+            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+            var token = tokenHandler.WriteToken(securityToken);
 
             return token;
         }
@@ -65,13 +73,14 @@ namespace PublicAPI.Security
         /// <returns>An instance of <see cref="ClaimsPrincipal"/> created from the content of the JWT.</returns>
         public static ClaimsPrincipal GetPrincipal(string token)
         {
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var jwtToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+            var tokenHandler = new JwtSecurityTokenHandler();
 
-                if (jwtToken == null)
-                    return null;
+            if (!(tokenHandler.ReadToken(token) is JwtSecurityToken))
+            {
+                return null;
+            }
 
-                var symmetricKey = Convert.FromBase64String(Secret);
+            var symmetricKey = Convert.FromBase64String(Secret);
 
                 var validationParameters = new TokenValidationParameters()
                 {
@@ -83,8 +92,7 @@ namespace PublicAPI.Security
 
             try
             {
-                SecurityToken securityToken;
-                var principal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+                var principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken _);
                 return principal;
             }
             catch (SecurityTokenExpiredException)

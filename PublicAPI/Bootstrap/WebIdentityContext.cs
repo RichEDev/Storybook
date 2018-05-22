@@ -1,5 +1,8 @@
 ﻿namespace PublicAPI.Bootstrap
 {
+    using System;
+    using System.Linq;
+    using System.Security.Claims;
     using System.Web;
     using BusinessLogic.Identity;
 
@@ -16,7 +19,9 @@
         {
             int delegateId = 0;
 
-            string identityName = HttpContext.Current.User.Identity.Name;
+            ClaimsIdentity claimsIdentity = HttpContext.Current.User.Identity as ClaimsIdentity;
+
+            string identityName = claimsIdentity.Name;
 
             if (string.IsNullOrWhiteSpace(identityName))
             {
@@ -38,17 +43,20 @@
                 delegateId = int.Parse(nameSplit[2]);
             }
 
+            UserIdentity userIdentity = null;
+            
             if (accountId > 0 && employeeId > 0)
             {
-                if (delegateId > 0)
-                {
-                    return new UserIdentity(accountId, employeeId, delegateId);
-                }
+                var subAccountClaim = claimsIdentity.Claims.FirstOrDefault(claim => claim.Type == "SubAccountId");
+                userIdentity = new UserIdentity(accountId, employeeId, delegateId);
 
-                return new UserIdentity(accountId, employeeId);
+                if (subAccountClaim != null)
+                {
+                    userIdentity.SubAccountId = Convert.ToInt32(subAccountClaim.Value);
+                }
             }
 
-            return null;
+            return userIdentity;
         }
     }
 }

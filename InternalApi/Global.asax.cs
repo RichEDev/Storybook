@@ -36,6 +36,8 @@
 
             FunkyInjector.Container = Container;
 
+            MapObjects.Create();
+
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(Container);
 
         }

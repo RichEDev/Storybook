@@ -8,16 +8,16 @@
     public class TokenRequest
     {
         /// <summary>
-        /// The employeeId for the employee using the API.
+        /// Gets or sets the employeeId for the employee using the API.
         /// </summary>
         [Required]
-        public int EmployeeId;
+        public int EmployeeId { get; set; }
 
         /// <summary>
-        /// The accountId for the employee using the API.
+        /// Gets or sets the accountId for the employee using the API.
         /// </summary>
         [Required]
-        public int AccountId;
+        public int AccountId { get; set; }
 
         /// <summary>
         /// Gets or sets the secret key used for logon
@@ -25,13 +25,18 @@
         public string SecretKey { get; set; }
 
         /// <summary>
-        /// The delegateId if the employee using the API is logged in as a delegate.
+        /// Gets or sets the sub-account id for the current request.
         /// </summary>
-        public int? DelegateId;
+        public int SubAccountId { get; set; }
 
         /// <summary>
-        /// The number of minutes this token should last for before expiring.
+        /// Gets or sets the delegateId if the employee using the API is logged in as a delegate.
         /// </summary>
-        public int TimeoutMinutes;
+        public int? DelegateId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of minutes this token should last for before expiring.
+        /// </summary>
+        public int TimeoutMinutes { get; set; }
     }
 }

@@ -2,8 +2,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,8 +16,16 @@ using SpendManagementLibrary;
 using Spend_Management;
 using Spend_Management.shared.code.GreenLight;
 using System.Web;
+
+using AjaxControlToolkit;
+
+using RestSharp;
+
 using Spend_Management.shared.code.EasyTree;
 using Spend_Management.shared.code;
+
+using DataFormat = Syncfusion.Pdf.Parsing.DataFormat;
+
 #endregion
 
 /// <summary>
@@ -419,7 +429,7 @@ public partial class menu : MasterPage
             this.GetType(), "variables", clsMasterPageMethods.SetMasterPageJavaScriptVars);
         this.Page.ClientScript.RegisterStartupScript(
             this.GetType(), "modalvariables", clsMasterPageMethods.SetupGlobalMasterPopup(ref this.mdlMasterPopup));
-
+        this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "sel.public.api", clsMasterPageMethods.SetupPublicApi(ref this.scriptman));
     }
 
     /// <summary>

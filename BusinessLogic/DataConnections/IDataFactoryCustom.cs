@@ -12,8 +12,8 @@
         /// <summary>
         /// Gets an instance of <typeparamref name="TComplexType"/> using a <see cref="GetByCustom"/> instance from cache.
         /// </summary>
-        /// <param name="customGet"></param>
-        /// <returns></returns>
+        /// <param name="customGet">An instance of <see cref="GetByCustom"/></param>
+        /// <returns>An instance of <typeparamref name="TComplexType"/> from cache</returns>
         TComplexType GetByCustom(GetByCustom customGet);
     }
 }

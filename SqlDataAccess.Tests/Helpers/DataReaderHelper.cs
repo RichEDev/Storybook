@@ -32,11 +32,17 @@
                     case int _:
                         dataReader.GetInt32(Arg.Is(i)).Returns(Convert.ToInt32(rowData[i]));
                         break;
+                    case short _:
+                        dataReader.GetInt16(Arg.Is(i)).Returns(rowData[i]);
+                        break;
                     case DateTime _:
                         dataReader.GetDateTime(Arg.Is(i)).Returns(Convert.ToDateTime(rowData[i]));
                         break;
                     case bool _:
                         dataReader.GetBoolean(Arg.Is(i)).Returns(Convert.ToBoolean(rowData[i]));
+                        break;
+                    case decimal _:
+                        dataReader.GetDecimal(Arg.Is(i)).Returns(Convert.ToDecimal(rowData[i]));
                         break;
                     default:
                         throw new InvalidCastException($"({rowData[i].GetType()}){rowData[i]} is not currently caught, you will need to add support for it.");

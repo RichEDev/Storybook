@@ -1,8 +1,11 @@
 ﻿namespace BusinessLogic.AccessRoles
 {
+    using System;
+
     /// <summary>
     /// <see cref="ExpensesAccessRole">ExpensesAccessRole</see> defines criteria for an accessRole
     /// </summary>
+    [Serializable]
     public class ExpensesAccessRole : AccessRole,  IExpensesAccessRole
     {
         /// <summary>
@@ -29,7 +32,7 @@
         /// <param name="mustHaveBankAccount">
         /// Whether the ExpenseAccessRole must have a bank account
         /// </param>
-        public ExpensesAccessRole(IAccessRole accessRole, decimal? claimMaximumAmount, decimal? claimMinimumAmount, bool canEditCostCode, bool canEditDepartment, bool canEditProjectCode, bool mustHaveBankAccount) : base(accessRole.Id, accessRole.Name, accessRole.Description, accessRole.AllowApiAccess, accessRole.AllowMobileAccess, accessRole.AllowWebsiteAccess, accessRole.AccessLevel, accessRole.ElementAccess)
+        public ExpensesAccessRole(IAccessRole accessRole, decimal? claimMaximumAmount, decimal? claimMinimumAmount, bool canEditCostCode, bool canEditDepartment, bool canEditProjectCode, bool mustHaveBankAccount) : base(accessRole.Id, accessRole.Name, accessRole.Description, accessRole.ApplicationScopes, accessRole.ReportsAccess, accessRole.AccessScopes)
         {
             this.ClaimMaximumAmount = claimMaximumAmount;
             this.ClaimMinimumAmount = claimMinimumAmount;

@@ -2,6 +2,8 @@
 {
     using System.Security.Principal;
 
+    using BusinessLogic.Employees.AccessRoles;
+
     /// <summary>
     /// Defines a user and their current identity.
     /// </summary>
@@ -11,10 +13,15 @@
         public string Name { get; }
 
         /// <inheritdoc />
-        public string AuthenticationType { get; internal set; }
+        public string AuthenticationType { get; set; }
 
         /// <inheritdoc />
-        public bool IsAuthenticated { get; internal set; }
+        public bool IsAuthenticated { get; set; }
+
+        /// <summary>
+        /// Gets or sets the combined access role id for use with <see cref="IEmployeeCombinedAccessRoles"/>
+        /// </summary>
+        public string CombinedAccessRoleId { get; set; }
 
         /// <summary>
         /// Gets the unique employee identifier for the current user -OR- the unique employee identifier used for impersonating another user.
@@ -34,9 +41,9 @@
         public int? DelegateId { get; }
 
         /// <summary>
-        /// Gets the current sub account identifier for the user.
+        /// Gets or sets the current sub account identifier for the user.
         /// </summary>
-        public int SubAccountId { get; }
+        public int SubAccountId { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserIdentity"/> class.

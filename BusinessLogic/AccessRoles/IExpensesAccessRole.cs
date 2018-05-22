@@ -6,32 +6,32 @@
     public interface IExpensesAccessRole : IAccessRole
     {
         /// <summary>
-        /// Whether the ExpenseAccessRole can edit Cost Codes
+        /// Gets a value indicating whether the ExpenseAccessRole can edit Cost Codes.
         /// </summary>
         bool CanEditCostCode { get; }
 
         /// <summary>
-        /// Whether the ExpenseAccessRole can edit Departments
+        /// Gets a value indicating whether the ExpenseAccessRole can edit Departments.
         /// </summary>
         bool CanEditDepartment { get; }
 
         /// <summary>
-        /// Whether the ExpenseAccessRole can edit Project Codes
+        /// Gets a value indicating whether the ExpenseAccessRole can edit Project Codes.
         /// </summary>
         bool CanEditProjectCode { get; }
 
         /// <summary>
-        /// The maximum claim amount for the ExpenseAccessRole
+        /// Gets a value indicating the maximum claim amount for the ExpenseAccessRole.
         /// </summary>
         decimal? ClaimMaximumAmount { get; }
 
         /// <summary>
-        /// The minimum claim amount for the ExpenseAccessRole
+        /// Gets a value indicating the minimum claim amount for the ExpenseAccessRole.
         /// </summary>
         decimal? ClaimMinimumAmount { get; }
 
         /// <summary>
-        /// Whether the ExpenseAccessRole must has a Bank Account
+        /// Gets a value indicating whether the <see cref="IExpensesAccessRole"/> must have a Bank Account.
         /// </summary>
         bool MustHaveBankAccount { get; }
     }

@@ -4,9 +4,11 @@
 
     using BusinessLogic.AccountProperties;
     using BusinessLogic.GeneralOptions;
+
+    using BusinessLogic.Announcements;
+    using BusinessLogic.P11DCategories;
     using BusinessLogic.ProjectCodes;
     using BusinessLogic.UserDefinedFields;
-    using BusinessLogic.P11DCategories;
     using BusinessLogic.Receipts;
 
     using DTO;
@@ -30,6 +32,8 @@
                 cfg.CreateMap<IEnumerable<ProjectCodeDto>, IEnumerable<ProjectCodeWithUserDefinedFields>>();
                 cfg.CreateMap<IEnumerable<P11DCategoryDto>, IEnumerable<P11DCategory>>().ReverseMap();
                 cfg.CreateMap<P11DCategoryDto, P11DCategory>().ReverseMap();
+                cfg.CreateMap<IEnumerable<AnnouncementDto>, IEnumerable<Announcement>>().ReverseMap();
+                cfg.CreateMap<AnnouncementDto, Announcement>().ReverseMap();
                 cfg.CreateMap<WalletReceiptDto, WalletReceipt>().ReverseMap();
                 cfg.CreateMap<AccountPropertiesDTO, IAccountProperty>().ReverseMap();
                 cfg.CreateMap<GeneralOptionsDTO, IGeneralOptions>().ReverseMap();

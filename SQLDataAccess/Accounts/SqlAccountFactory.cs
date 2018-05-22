@@ -170,7 +170,7 @@
         {
             List<IAccount> accounts = new List<IAccount>();
 
-            const string Sql = "SELECT accountid, dbname, dbusername, dbpassword, dbserver, archived FROM registeredusers";
+            const string Sql = "SELECT accountid, dbname, dbusername, dbpassword, dbserver, archived, isNHSCustomer FROM registeredusers";
 
             using (IDataReader reader = this._metabaseDataConnection.GetReader(Sql))
             {
@@ -182,13 +182,21 @@
                     string password = reader.GetString(3);
                     int databaseServerId = reader.GetInt32(4);
                     bool archived = reader.GetBoolean(5);
+                    bool nhsCustomer = reader.GetBoolean(6);
 
                     IDatabaseServer databaseServer = this._databaseServerFactory[databaseServerId];
 
                     // Tightly coupled due to the catalogue technically being part of an Account but isolated for seperation of concerns
                     IDatabaseCatalogue databaseCatalogue = new DatabaseCatalogue(databaseServer, databaseCatalogueName, username, password, this._cryptography);
 
-                    accounts.Add(new Account(accountId, databaseCatalogue, archived));
+                    if (nhsCustomer)
+                    {
+                        accounts.Add(new NhsAccount(accountId, databaseCatalogue, archived));
+                    }
+                    else
+                    {
+                        accounts.Add(new Account(accountId, databaseCatalogue, archived));
+                    }
                 }
 
                 this._metabaseDataConnection.Parameters.Clear();
