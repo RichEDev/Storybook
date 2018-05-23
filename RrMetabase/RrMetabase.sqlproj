@@ -183,6 +183,43 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Production|AnyCPU' ">
+    <OutputPath>bin\Production\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Main|AnyCPU'">
+    <OutputPath>bin\Main\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Testing|AnyCPU'">
+    <OutputPath>bin\Testing\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- Customizable Output Directory Opt-In for TFS Build (non-web application projects) -->
+  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+    <OutputPath>$(TeamBuildOutDir)\_PublishedScripts\$(MSBuildProjectName)</OutputPath>
+  </PropertyGroup>
   <!--Import the settings-->
   <PropertyGroup>
     <AppDataPath>$(LOCALAPPDATA)</AppDataPath>
@@ -200,9 +237,6 @@
     <Folder Include="Migrations\1.0.0-Baseline\" />
     <Folder Include="Migrations\1.1.0-Changes\" />
   </ItemGroup>
-  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
-    <OutputPath>$(TeamBuildOutDir)\_PublishedScripts\$(MSBuildProjectName)</OutputPath>
-  </PropertyGroup>
   <ItemGroup>
     <None Include="Pre-Deployment\01_Create_Database.sql" />
   </ItemGroup>
