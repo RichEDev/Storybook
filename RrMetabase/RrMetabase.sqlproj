@@ -200,6 +200,9 @@
     <Folder Include="Migrations\1.0.0-Baseline\" />
     <Folder Include="Migrations\1.1.0-Changes\" />
   </ItemGroup>
+  <PropertyGroup Condition="$(TeamBuildOutDir) != '' ">
+    <OutputPath>$(TeamBuildOutDir)\_PublishedScripts\$(MSBuildProjectName)</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="Pre-Deployment\01_Create_Database.sql" />
   </ItemGroup>
