@@ -829,8 +829,7 @@
         public List<cCcbItem> itemArray
         {
             get;
-            //set { tempItemArray = value; }
-        } = new List<cCcbItem>();
+        }
 
         #endregion
     }

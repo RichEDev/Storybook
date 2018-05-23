@@ -4,30 +4,33 @@ using SpendManagementLibrary;
 
 namespace Spend_Management
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
 
-    using Microsoft.SqlServer.Server;
-    using SpendManagementLibrary.Addresses;
-    using SpendManagementLibrary.Employees;
-    using SpendManagementLibrary.Enumerators;
-    using SpendManagementLibrary.Enumerators.Expedite;
-    using SpendManagementLibrary.Expedite;
-    using SpendManagementLibrary.JourneyDeductionRules;
-    using SpendManagementLibrary.Mileage;
-    using SpendManagementLibrary.Flags;
-    using SpendManagementLibrary.Helpers;
-    using SpendManagementLibrary.Interfaces;
-    using SpendManagementLibrary.UserDefinedFields;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
 
     using Common.Logging;
 
     using expenses.code;
     using expenses.code.Claims;
 
-    using BusinessLogic.DataConnections;
-    using BusinessLogic.GeneralOptions;
+    using Microsoft.SqlServer.Server;
+
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Addresses;
+    using SpendManagementLibrary.Employees;
+    using SpendManagementLibrary.Enumerators;
+    using SpendManagementLibrary.Enumerators.Expedite;
+    using SpendManagementLibrary.Expedite;
+    using SpendManagementLibrary.Flags;
+    using SpendManagementLibrary.Helpers;
+    using SpendManagementLibrary.Interfaces;
+    using SpendManagementLibrary.JourneyDeductionRules;
+    using SpendManagementLibrary.Mileage;
+    using SpendManagementLibrary.UserDefinedFields;
 
     /// <summary>
     /// Summary description for items.

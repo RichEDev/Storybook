@@ -1,16 +1,18 @@
-using System;
-using System.Collections.Generic;
-using SpendManagementLibrary;
-using System.Web.UI.WebControls;
-using BusinessLogic;
-using BusinessLogic.DataConnections;
-using BusinessLogic.GeneralOptions;
-using SpendManagementLibrary.Employees;
-using Utilities.DistributedCaching;
-
 namespace Spend_Management
 {
-	/// <summary>
+    using System;
+    using System.Collections.Generic;
+    using System.Web.UI.WebControls;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Employees;
+
+    using Utilities.DistributedCaching;
+
+    /// <summary>
 	/// Summary description for cAllowances.
 	/// </summary>
 	public class cAllowances

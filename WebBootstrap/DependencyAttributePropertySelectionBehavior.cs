@@ -1,10 +1,9 @@
-﻿using System.Web.Services;
-
-namespace WebBootstrap
+﻿namespace WebBootstrap
 {
     using System;
     using System.Linq;
     using System.Reflection;
+    using System.Web.Services;
     using System.Web.UI;
 
     using BusinessLogic;

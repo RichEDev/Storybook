@@ -1,24 +1,28 @@
 ﻿namespace SpendManagementLibrary.Expedite
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Data;
-	using System.IO;
-	using System.Globalization;
-	using Interfaces.Expedite;
-	using Helpers;
-	using SELCloud;
-	using SELCloud.Utilities;
-	using Enumerators.Expedite;
-	using SpendManagementLibrary.Flags;
-	using SpendManagementLibrary.Helpers.AuditLogger;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
     using System.Drawing;
     using System.Drawing.Drawing2D;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
     using System.Text;
-    using System.Web;
 
-	using BusinessLogic.FilePath;
+    using BusinessLogic.FilePath;
+
+    using Enumerators.Expedite;
+
+    using Helpers;
+
+    using Interfaces.Expedite;
+
+    using SELCloud;
+    using SELCloud.Utilities;
+
+    using SpendManagementLibrary.Flags;
+    using SpendManagementLibrary.Helpers.AuditLogger;
 
     /// <summary>
 	/// Manages all receipt processing in expenses.

@@ -41,13 +41,6 @@ Partial Public Class [Global]
 
         FunkyInjector.Container = container
 
-        If (GlobalVariables.GetAppSettingAsBoolean("EnableBrokers")) Then
-            Dim crypt As cSecureData = New cSecureData()
-            Dim sConnectionString As System.Data.SqlClient.SqlConnectionStringBuilder = New System.Data.SqlClient.SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings("metabase").ConnectionString)
-            sConnectionString.Password = crypt.Decrypt(sConnectionString.Password)
-            System.Data.SqlClient.SqlDependency.Start(sConnectionString.ToString())
-        End If
-
         ' Set global variables for use in SML classes
         Dim gv As New SpendManagementLibrary.GlobalVariables(SpendManagementLibrary.GlobalVariables.ApplicationType.Web)
 

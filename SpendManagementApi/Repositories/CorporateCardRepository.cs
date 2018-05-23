@@ -1,20 +1,26 @@
-﻿using BusinessLogic.DataConnections;
-using BusinessLogic.GeneralOptions;
-
-namespace SpendManagementApi.Repositories
+﻿namespace SpendManagementApi.Repositories
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.GeneralOptions;
+
     using Interfaces;
+
     using Models.Common;
     using Models.Types.Employees;
+
     using SpendManagementApi.Models.Types;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Helpers.AuditLogger;
 
     using Spend_Management;
-    using Utilities;
+
+    using SpendManagementApi.Utilities;
+
     using CardStatement = SpendManagementApi.Models.Types.CardStatement;
     using CreditCardTransaction = SpendManagementApi.Models.Types.CreditCardTransaction;
 

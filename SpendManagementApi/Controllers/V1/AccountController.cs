@@ -990,7 +990,6 @@ namespace SpendManagementApi.Controllers.V1
                 CanAskForReviews = canAskForReviews, 
                 EmployeeId = user.EmployeeID,
                 VehicleLookup = automaticVehicleDocumentLookup
-
             };
 
             return response;

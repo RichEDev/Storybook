@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using SpendManagementLibrary;
-using System.Web.Services;
-using System.Text;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Web.Services;
+    using System.Web.UI;
+
+    using SpendManagementLibrary;
+
     public partial class aeexchangerate : System.Web.UI.Page
     {
         public int currID = 0;

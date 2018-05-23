@@ -1,4 +1,3 @@
-
 namespace expenses.admin
 {
     using System;
