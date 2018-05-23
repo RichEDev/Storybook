@@ -7,6 +7,8 @@
     using System.Globalization;
     using System.Linq;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Interfaces;
     using SpendManagementLibrary.SalesForceApi;

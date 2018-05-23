@@ -18,7 +18,9 @@ using System.Text;
 
 namespace Spend_Management
 {
-	/// <summary>
+    using BusinessLogic.Modules;
+
+    /// <summary>
 	/// Summary description for adminuserdefined.
 	/// </summary>
 	public partial class adminuserdefined : Page
@@ -42,7 +44,7 @@ namespace Spend_Management
                 user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.UserDefinedFields, true, true);
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1148;
                         break;
                     default:
@@ -143,7 +145,7 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect("~/MenuMain.aspx?menusection=tailoring", true);
                     break;
                 default:

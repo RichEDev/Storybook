@@ -16,6 +16,10 @@ namespace Spend_Management
 {
     using System.Globalization;
 
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using Microsoft.SqlServer.Server;
 
     using SpendManagementLibrary.Definitions.JoinVia;
@@ -2855,11 +2859,11 @@ namespace Spend_Management
             StringBuilder sbJS = new StringBuilder();
 
             // set the sel.grid javascript variables
-            cModules clsmodules = new cModules();
+            var module = FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>()[activeModuleID];
 
             sbJS.Append("(function() {\n");
             sbJS.Append("var " + jsBlockID + " = function () {\n");
-            sbJS.Append("SEL.Grid.applicationName = \"" + clsmodules.GetModuleByID((int)activeModuleID).BrandNamePlainText + "\";\n");
+            sbJS.Append("SEL.Grid.applicationName = \"" + module.BrandName + "\";\n");
 
             foreach (string s in gridJSObjects)
             {

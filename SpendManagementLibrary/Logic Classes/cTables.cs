@@ -9,6 +9,10 @@ using SpendManagementLibrary.Helpers;
 
 namespace SpendManagementLibrary
 {
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules.Elements;
+
     using SpendManagementLibrary.Logic_Classes.Tables;
     using SpendManagementLibrary.Report;
 
@@ -391,12 +395,10 @@ namespace SpendManagementLibrary
         /// <param name="excludeTableList">List of table IDs to exclude as necessary</param>
         /// <param name="filterModule">Module enumerator to </param>
         /// <returns>List of permitted tables for inclusion in a drop downlist</returns>
-        public List<ListItem> CreateEntityRelationshipDropDown(bool includeNone = false, bool customTablesOnly = false, List<Guid> excludeTableList = null, Modules filterModule = Modules.expenses)
+        public List<ListItem> CreateEntityRelationshipDropDown(bool includeNone = false, bool customTablesOnly = false, List<Guid> excludeTableList = null, Modules filterModule = Modules.Expenses)
         {
-            // get a list of element IDs for the current module
-            cModules modules = new cModules();
-
-            List<int> lstLicencedElementIDs = modules.GetModuleElementIds(nAccountID, filterModule);
+            var lstLicencedElementIDs =
+                FunkyInjector.Container.GetInstance<IDataFactory<IProductModuleWithElements, Modules>>()[filterModule].Elements.Select(moduleLicencedElement => moduleLicencedElement.Id).ToList();
 
             List<ListItem> items;
 

@@ -11,6 +11,8 @@ using Spend_Management.expenses.code.Claims;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     /// <summary>
     /// Summary description for expensesSvc
     /// </summary>
@@ -58,7 +60,7 @@ namespace Spend_Management
             AuthenicationOutcome authOutcome = clsEmployees.Authenticate(username, password, AccessRequestType.Mobile, EncryptorFactory.CreateEncryptor());
             employeeID = authOutcome.employeeId;
 
-            var user = new CurrentUser(reqAccount.accountid, employeeID, -1, Modules.expenses, 0);
+            var user = new CurrentUser(reqAccount.accountid, employeeID, -1, Modules.Expenses, 0);
 
             Guid token = Guid.NewGuid();
 

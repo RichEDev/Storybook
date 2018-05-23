@@ -21,6 +21,8 @@ namespace expenses.admin
 {
     using System.Collections.Generic;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary.Employees;
 
     public partial class filterrules : System.Web.UI.Page

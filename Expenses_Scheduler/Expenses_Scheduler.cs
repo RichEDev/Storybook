@@ -18,6 +18,8 @@ namespace Expenses_Scheduler
 {
     using System.ComponentModel;
 
+    using BusinessLogic.Modules;
+
     using ConsoleBootstrap;
 
     using Container = SimpleInjector.Container;
@@ -351,7 +353,7 @@ namespace Expenses_Scheduler
 
                                 DiagLog(string.Format("Scheduler : TmrElapsed : Calling SendPasswordKey and SendWelcomeEmail methods for employeeID {0}", employeeID));
                             
-                                clsEmployees.SendPasswordKey(employeeID, cEmployees.PasswordKeyType.Imported, null, Modules.expenses);
+                                clsEmployees.SendPasswordKey(employeeID, cEmployees.PasswordKeyType.Imported, null, Modules.Expenses);
                                 clsEmployees.SendWelcomeEmail(properties.MainAdministrator, employeeID, scheduleUser); 
                                 employeeIds.Add(employeeID);
                             }

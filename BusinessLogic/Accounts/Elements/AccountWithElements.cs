@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using BusinessLogic.Databases;
+    using BusinessLogic.Elements;
 
     /// <summary>
     /// Defines a <see cref="AccountWithElements"/> and it's members

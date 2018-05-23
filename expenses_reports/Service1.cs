@@ -9,6 +9,8 @@ using SpendManagementLibrary;
 
 namespace Expenses_Reports
 {
+    using BusinessLogic.Modules;
+
     public partial class Service1 : ServiceBase
     {
         private static bool _enableLogging;

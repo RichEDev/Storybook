@@ -12,6 +12,9 @@ namespace Spend_Management
     using System.Web.Services;
     using SpendManagementLibrary;
     using System.Text;
+
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary.Addresses;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Employees.DutyOfCare;
@@ -160,7 +163,7 @@ namespace Spend_Management
 
                 switch (this._user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         if (employeeid > 0)
                             Master.helpid = 1139;
                         else
@@ -185,7 +188,7 @@ namespace Spend_Management
                     case Modules.SpendManagement:
                     case Modules.SmartDiligence:
                     case Modules.CorporateDiligence:
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         var sb = new StringBuilder();
                         sb.Append("document.getElementById('lineManagerDiv').style.display = 'none';\n");
                         sb.Append("document.getElementById('startMileageDiv').style.display = 'none';\n");
@@ -1716,7 +1719,7 @@ namespace Spend_Management
 
             foreach (Notification notification in lstStandardNotifications.Values)
             {
-                if (!notification.Enabled || (this._user.CurrentActiveModule != Modules.expenses &&
+                if (!notification.Enabled || (this._user.CurrentActiveModule != Modules.Expenses &&
                                               notification.EmailNotificationType ==
                                               EmailNotificationType.ExcessMileage)) continue;
                 if (secondColumn)

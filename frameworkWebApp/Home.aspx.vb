@@ -1,5 +1,9 @@
 Imports System.Collections
 Imports System.Collections.Generic
+Imports BusinessLogic
+Imports BusinessLogic.DataConnections
+Imports BusinessLogic.Modules
+Imports BusinessLogic.ProductModules
 Imports FWClasses
 Imports SEL.FeatureFlags
 Imports SpendManagementLibrary
@@ -17,6 +21,17 @@ Namespace Framework2006
 
         Public Property FeatureFlagManager As IFeatureFlagManager
 
+        ''' <summary>
+        ''' An instance of <see cref="IDataFactory{IProductModule,Modules}"/> to get a <see cref="IProductModule"/>
+        ''' </summary>
+        <Dependency()>  _
+        Public Property ProductModuleFactory As IDataFactory(Of IProductModule, Modules)
+            Get
+            End Get
+            Set
+            End Set
+        End Property
+
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
             If Me.IsPostBack = False Then
                 Dim db As New cFWDBConnection
@@ -28,11 +43,11 @@ Namespace Framework2006
 
                 Dim curUser As CurrentUser = cMisc.GetCurrentUser()
                 Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, New cAccountSubAccounts(curUser.Account.accountid).getSubAccountsCollection, curUser.CurrentSubAccountId)
-                Dim clsModules As New cModules
-                Dim clsModule As cModule = clsModules.GetModuleByID(curUser.CurrentActiveModule)
 
-                Title = "Welcome to " & clsModule.BrandNamePlainText
-                Master.title = "Welcome to " & clsModule.BrandNameHTML
+                Dim productModule = Me.ProductModuleFactory(curUser.CurrentActiveModule)
+
+                Title = "Welcome to " & productModule.BrandName
+                Master.title = "Welcome to " & productModule.BrandNameHtml
 
                 Master.iconSize = fwIconSize.Large
 
@@ -135,22 +150,14 @@ Namespace Framework2006
 
         Private Sub CreateMenu()
             Dim curUser As CurrentUser = cMisc.GetCurrentUser()
-            Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, New cAccountSubAccounts(curUser.Account.accountid).getSubAccountsCollection, curUser.CurrentSubAccountId)
             Dim subaccs As New cAccountSubAccounts(curUser.Account.accountid)
             Dim params As cAccountProperties
 
-            Dim clsModules As cModules = New cModules()
-            Dim curModule As cModule = clsModules.GetModuleByID(curUser.CurrentActiveModule)
+            Dim productModule = Me.ProductModuleFactory(curUser.CurrentActiveModule)
 
-            Dim clsEmployees As New cEmployees(curUser.AccountID)
             Dim lstAccessRoles As List(Of Integer) = curUser.Employee.GetAccessRoles.GetBy(curUser.CurrentSubAccountId)
 
-            ' - Can't see any reason why we need this if statement
-            'If curUser.CurrentSubAccountId >= 0 Then
             params = subaccs.getSubAccountById(curUser.CurrentSubAccountId).SubAccountProperties
-            'Else
-            'params = subaccs.getFirstSubAccount().SubAccountProperties
-            'End If
 
             Dim supplierStr As String = params.SupplierPrimaryTitle
 
@@ -196,7 +203,7 @@ Namespace Framework2006
             Master.addMenuItem("user_information", Master.iconSize, "My Details", "View information specific to you as a user. This option can also be used to update your profile and change your password", "MenuMain.aspx?menusection=mydetails")
 
             If lstAccessRoles.Count > 0 Then
-                Master.addMenuItem("help2", 48, "Help &amp; Support", "Help &amp; Support is an online service for education, guidance and support that enables you to find the best answers for your " & curModule.BrandNameHTML & " questions.", "shared/helpAndSupport.aspx")
+                Master.addMenuItem("help2", 48, "Help &amp; Support", "Help &amp; Support is an online service for education, guidance and support that enables you to find the best answers for your " & productModule.BrandNameHtml & " questions.", "shared/helpAndSupport.aspx")
             End If
 
             Master.addMenuItem("trafficlight_green", 48, "GreenLight", "GreenLight means you can now take any paper based approval and put it online, click here to find out more.", GlobalVariables.GreenLightInfoPage, "_blank")
@@ -211,7 +218,7 @@ Namespace Framework2006
                     exitURL += "&sd=0"
             End Select
 
-            Master.addMenuItem("exit", Master.iconSize, "Log Out", "Log out of " & curModule.BrandNameHTML & " and end current session", "shared/process.aspx?process=1")
+            Master.addMenuItem("exit", Master.iconSize, "Log Out", "Log out of " & productModule.BrandNameHtml & " and end current session", "shared/process.aspx?process=1")
         End Sub
 
         Private Sub SetAccountInfoPanel(ByVal curuser As CurrentUser)

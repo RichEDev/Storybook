@@ -13,7 +13,9 @@ using SpendManagementLibrary;
 using Spend_Management;
 namespace Spend_Management
 {
-	/// <summary>
+    using BusinessLogic.Modules;
+
+    /// <summary>
 	/// Summary description for aefolder.
 	/// </summary>
 	public partial class aefolder : Page
@@ -35,7 +37,7 @@ namespace Spend_Management
 
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1029;
                         break;
                     default:

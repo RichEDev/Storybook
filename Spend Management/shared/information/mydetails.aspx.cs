@@ -14,7 +14,9 @@ namespace Spend_Management
     using SpendManagementLibrary.Helpers;
     using System.Data;
 
-	/// <summary>
+	using BusinessLogic.Modules;
+
+    /// <summary>
 	/// Summary description for mydetails.
 	/// </summary>
 	public partial class mydetails : Page
@@ -45,7 +47,7 @@ namespace Spend_Management
 
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1161;
                         break;
                     default:
@@ -53,7 +55,7 @@ namespace Spend_Management
                         break;
                 }
 
-				if (user.CurrentActiveModule != Modules.expenses)
+				if (user.CurrentActiveModule != Modules.Expenses)
 				{
                     var suScript = new StringBuilder();
 					suScript.Append("if(document.getElementById('divCCBreakdown') != null) {document.getElementById('divCCBreakdown').style.display = 'none'; }");
@@ -123,7 +125,7 @@ namespace Spend_Management
                     txtemailhome.Enabled = false;
                     txtpagerno.Enabled = false;
                     lblnamemsg.Visible = false;
-                    if (user.CurrentActiveModule != Modules.expenses)
+                    if (user.CurrentActiveModule != Modules.Expenses)
                     {
                         cmdok.Visible = false;
                     }
@@ -449,7 +451,7 @@ namespace Spend_Management
             cAccountSubAccounts subaccs = new cAccountSubAccounts((int)ViewState["accountid"]);
             cAccountProperties accProperties = subaccs.getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
 
-			if (accProperties.EditMyDetails == false && user.CurrentActiveModule != Modules.expenses)
+			if (accProperties.EditMyDetails == false && user.CurrentActiveModule != Modules.Expenses)
 			{
                 return;               
 			}
@@ -473,7 +475,7 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect("~/MenuMain.aspx?menusection=mydetails", true);
                     break;
                 default:
@@ -504,7 +506,7 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect("~/MenuMain.aspx?menusection=mydetails", true);
                     break;
                 default:

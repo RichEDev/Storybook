@@ -10,6 +10,8 @@ using System.Text;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     public partial class aecurrency : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -26,7 +28,7 @@ namespace Spend_Management
 
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1165;
                         break;
                     default:
@@ -110,7 +112,7 @@ namespace Spend_Management
                 {
                     case Modules.SpendManagement:
                     case Modules.SmartDiligence:
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.title = action + " Currency";
                         cmdAddExchange.Visible = false;
                         staticCurrencies.Visible = true;

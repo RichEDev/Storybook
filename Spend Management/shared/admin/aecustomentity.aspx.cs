@@ -86,7 +86,7 @@ namespace Spend_Management
                 var disabledModules = user.Account.AccountModules();
                 if (disabledModules.Count() > 1)
                 {
-                    this.MenuDisabledModulesRepeater.DataSource = disabledModules.OrderBy(module => module.ModuleID);
+                    this.MenuDisabledModulesRepeater.DataSource = disabledModules.OrderBy(module => module.Id);
                     this.MenuDisabledModulesRepeater.DataBind();
                 }
 

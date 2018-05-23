@@ -1,18 +1,29 @@
-using System;
-using System.Web.UI;
-
-using SpendManagementLibrary;
-using Spend_Management;
-
 namespace expenses.information
 {
-	/// <summary>
+    using System;
+    using System.Web.UI;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
+    using SpendManagementLibrary;
+
+    using Spend_Management;
+
+    /// <summary>
 	/// Summary description for about.
 	/// </summary>
 	public partial class about : Page
 	{
-	
-		protected void Page_Load(object sender, System.EventArgs e)
+	    /// <summary>
+	    /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+	    /// </summary>
+	    [Dependency]
+	    public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
+        protected void Page_Load(object sender, System.EventArgs e)
 		{
 			Title = "About";
             Master.title = Title;
@@ -23,19 +34,18 @@ namespace expenses.information
 				System.Diagnostics.FileVersionInfo ver = System.Diagnostics.FileVersionInfo.GetVersionInfo(Server.MapPath("../bin/expenses.dll"));
 				string strversion;
                 CurrentUser user = cMisc.GetCurrentUser();
-                ViewState["accountid"] = user.AccountID;
-                ViewState["employeeid"] = user.EmployeeID;
+			    this.ViewState["accountid"] = user.AccountID;
+			    this.ViewState["employeeid"] = user.EmployeeID;
                 cAccounts clsaccounts = new cAccounts();
                 cAccount reqaccount = clsaccounts.GetAccountByID(user.AccountID);
 
-                cModules clsModules = new cModules();
-                cModule module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
+			    var module = this.ProductModuleFactory[user.CurrentActiveModule];
 
-                lblname.Text = (module != null) ? module.BrandNamePlainText : "Expenses";
-				
-				
-				lblexpiry.Text = reqaccount.expiry.ToShortDateString();
-				lblusers.Text = reqaccount.numusers.ToString();
+			    this.lblname.Text = (module != null) ? module.BrandName : "Expenses";
+
+
+			    this.lblexpiry.Text = reqaccount.expiry.ToShortDateString();
+			    this.lblusers.Text = reqaccount.numusers.ToString();
 				strversion = ver.FileVersion.ToString();
 				
 				lblversion.Text = strversion;

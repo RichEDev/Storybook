@@ -5,7 +5,10 @@ namespace Spend_Management
     using System.Web.UI.WebControls;
     using System.Collections.Generic;
 
-    using SpendManagementLibrary;using BusinessLogic;
+    using BusinessLogic;
+    using BusinessLogic.Modules;
+
+    using SpendManagementLibrary;
 
     using SQLDataAccess.ImportExport;
 
@@ -29,7 +32,7 @@ namespace Spend_Management
                 CurrentUser user = cMisc.GetCurrentUser();
                 user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.ImportDataWizard, true, true);
 
-                var usingExpenses = user.CurrentActiveModule == Modules.expenses;
+                var usingExpenses = user.CurrentActiveModule == Modules.Expenses;
 
                 ViewState["accountid"] = user.AccountID;
                 ViewState["employeeid"] = user.EmployeeID;
@@ -43,7 +46,7 @@ namespace Spend_Management
                 {
                     case Modules.SmartDiligence:
                     case Modules.SpendManagement:
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         wizimport.CancelDestinationPageUrl = cMisc.Path + "/MenuMain.aspx?menusection=importsexports";
                         break;
                     default:
@@ -560,7 +563,7 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect(cMisc.Path + "/MenuMain.aspx?menusection=importsexports", true);
                     break;
 

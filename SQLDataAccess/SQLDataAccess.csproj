@@ -113,9 +113,10 @@
     <Compile Include="ImportExport\ImportProjectCodes.cs" />
     <Compile Include="GeneralOptions\SqlGeneralOptionsFactory.cs" />
     <Compile Include="MetabaseCustomerDataConnection.cs" />
-    <Compile Include="Modules\SqlModulesFactoryComposite.cs" />
+    <Compile Include="ProductModules\SqlProductModulesFactory.cs" />
     <Compile Include="AccessRoles\SQLAccessRolesFactory.cs" />
     <Compile Include="P11DCategories\SqlP11DCategoriesFactory.cs" />
+    <Compile Include="ProductModules\SqlProductModulesWithElementsFactory.cs" />
     <Compile Include="ProjectCodes\SqlProjectCodesFactory.cs" />
     <Compile Include="ProjectCodes\SqlProjectCodesWithUserDefinedValuesFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

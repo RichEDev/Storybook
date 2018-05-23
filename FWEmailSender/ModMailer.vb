@@ -4,6 +4,7 @@ Imports FWBase
 Imports SpendManagementLibrary
 Imports Spend_Management
 Imports System.Configuration
+Imports BusinessLogic.Modules
 
 Module ModMailer
     Private CurrentRunLocationId As Integer

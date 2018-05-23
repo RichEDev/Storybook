@@ -7,6 +7,9 @@
     using Spend_Management.shared.code.EasyTree;
     using System.Text;
     using System.Linq;
+
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary.Employees.DutyOfCare;
     using SpendManagementLibrary;
 
@@ -82,7 +85,7 @@
                 var entityview = new DutyOfCareDocumentsInformation().GetDocEntityAndViewIdByGuid("223018FE-EDAE-408E-8851-C09ABA09DF81", "F95C0754-82FA-493A-97B4-E1ED42B3C337", this.user.AccountID);
                 if (customMenuItem.CustomMenuName == "My Duty of Care Documents")
                 {                    
-                    if (this.user.CurrentActiveModule == Modules.expenses && !this.user.isDelegate && (this.accountProperties.EnableAutomaticDrivingLicenceLookup && this.user.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect)) && this.user.CheckAccessRole(
+                    if (this.user.CurrentActiveModule == Modules.Expenses && !this.user.isDelegate && (this.accountProperties.EnableAutomaticDrivingLicenceLookup && this.user.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect)) && this.user.CheckAccessRole(
                        AccessRoleType.View, CustomEntityElementType.View, Convert.ToInt32(entityview.Split(',')[0]), Convert.ToInt32(entityview.Split(',')[1]), false))
                     {
                         this.Master.addMenuItem(

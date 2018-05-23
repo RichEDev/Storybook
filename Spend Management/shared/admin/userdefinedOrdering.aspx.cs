@@ -11,6 +11,8 @@ using System.Text;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     public partial class userdefinedOrderingSummaryPage : System.Web.UI.Page
     {
         CurrentUser currentUser;
@@ -60,7 +62,7 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect("~/MenuMain.aspx?menusection=tailoring", true);
                     break;
                 default:

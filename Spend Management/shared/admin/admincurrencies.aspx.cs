@@ -8,6 +8,7 @@ namespace Spend_Management
     using BusinessLogic;
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
 
     using SpendManagementLibrary;
 
@@ -31,7 +32,7 @@ namespace Spend_Management
             Master.title = Title;
             switch (user.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 1165;
                     break;
                 default:
@@ -95,7 +96,7 @@ namespace Spend_Management
                 {
                     case Modules.SpendManagement:
                     case Modules.SmartDiligence:
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         sb.Append("if(document.getElementById('ERTypeDiv') != null) { document.getElementById('ERTypeDiv').style.display = 'none'; }\n");
                         break;
                     default:
@@ -283,7 +284,7 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect("~/MenuMain.aspx?menusection=baseinfo", true);
                     break;
                 default:

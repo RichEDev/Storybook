@@ -7,6 +7,8 @@
     using System.Text;
     using System.Text.RegularExpressions;
 
+    using BusinessLogic.Modules;
+
     using Spend_Management.shared.webServices;
     using Newtonsoft.Json;
 
@@ -302,12 +304,12 @@
                     {
                         case Modules.SpendManagement:
                         case Modules.SmartDiligence:
-                        case Modules.contracts:
+                        case Modules.Contracts:
                             // Set default report base to contract details
                             this.SetDefaultSelectedItem(new Guid("998e51fa-2c23-467e-b90f-75c44d1838bc"));
                             this.baseTreeData.Value = this.AddNodesInWebTree("998e51fa-2c23-467e-b90f-75c44d1838bc", reportService);
                             break;
-                        case Modules.expenses:
+                        case Modules.Expenses:
                             // Set default report base to expenses
                             this.SetDefaultSelectedItem(new Guid("d70d9e5f-37e2-4025-9492-3bcf6aa746a8"));
                             this.baseTreeData.Value = this.AddNodesInWebTree("d70d9e5f-37e2-4025-9492-3bcf6aa746a8", reportService);

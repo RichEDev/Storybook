@@ -15,6 +15,8 @@
     using Spend_Management.shared.webServices;
     using System.Text;
 
+    using BusinessLogic.Modules;
+
     public partial class aeReport : System.Web.UI.Page
     {
         /// <summary>
@@ -141,11 +143,11 @@
                     {
                         case Modules.SpendManagement:
                         case Modules.SmartDiligence:
-                        case Modules.contracts:
+                        case Modules.Contracts:
                             // Set default report base to contract details
                             this.SetDefaultSelectedItem(new Guid(ReportTable.ContractDetails));
                             break;
-                        case Modules.expenses:
+                        case Modules.Expenses:
                             // Set default report base to expenses
                             this.SetDefaultSelectedItem(new Guid(ReportTable.SavedExpenses));
                             break;

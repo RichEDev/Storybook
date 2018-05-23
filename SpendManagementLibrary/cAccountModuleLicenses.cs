@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace SpendManagementLibrary
+﻿namespace SpendManagementLibrary
 {
+    using System;
+
+    using BusinessLogic.ProductModules;
+
     public class cAccountModuleLicenses
     {
         private int nModuleID;
         private int nAccountID;
         private int nMaxUsers;
         private DateTime dtExpiryDate;
-        private cModule clsModule;
+        private IProductModule clsModule;
 
 
         /// <summary>
         /// Constructor for cAccountModuleLicenses
         /// </summary>
-        public cAccountModuleLicenses(int moduleID, int accountID, int maxUsers, DateTime expiryDate, cModule module)
+        public cAccountModuleLicenses(int moduleID, int accountID, int maxUsers, DateTime expiryDate, IProductModule module)
         {
             nModuleID = moduleID;
             nAccountID = accountID;
@@ -29,7 +28,7 @@ namespace SpendManagementLibrary
         /// <summary>
         /// Returns an instance of cModule
         /// </summary>
-        public cModule Module { get { return clsModule; } }
+        public IProductModule Module { get { return clsModule; } }
 
         /// <summary>
         /// Gets or sets the moduleID

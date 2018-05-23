@@ -5,6 +5,7 @@
     using System.Configuration;
     using System.Data.SqlClient;
     using System.Globalization;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -14,25 +15,25 @@
 
     using AjaxControlToolkit;
 
-    using SpendManagementHelpers;
-
-    using SpendManagementLibrary;
-
-    using shared.code;
-
-    using Syncfusion.DocIO.DLS;
-
-    using System.IO;
-
-    using shared.usercontrols;
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
 
     using NewRelic.Api.Agent;
 
+    using shared.code;
+    using shared.usercontrols;
+
+    using SpendManagementHelpers;
     using SpendManagementHelpers.TreeControl;
 
+    using SpendManagementLibrary;
     using SpendManagementLibrary.Helpers;
 
     using Spend_Management.shared.code.Helpers;
+
+    using Syncfusion.DocIO.DLS;
 
     using Utilities.StringManipulation;
 
@@ -60,6 +61,12 @@
         public bool Ie9OrLess { get; set; }
 
         #endregion
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -848,7 +855,7 @@
 
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                     case Modules.SpendManagement:
                     case Modules.SmartDiligence:
                         {
@@ -1614,10 +1621,9 @@
                 mpe.Show();
                 pnlWorkflowHolder.Controls.Add(mpe);
                 StringBuilder sb = new StringBuilder();
-                cModules clsModules = new cModules();
                 CurrentUser currentUser = cMisc.GetCurrentUser();
-                cModule module = clsModules.GetModuleByID((int)currentUser.CurrentActiveModule);
-                string sModuleName = "Message From " + module.BrandNameHTML;
+                var module = this.ProductModuleFactory[currentUser.CurrentActiveModule];
+                string sModuleName = "Message From " + module.BrandName;
                 switch (newRecordID)
                 {
                     case (int)ReturnValues.AlreadyExists:
@@ -1850,9 +1856,8 @@
             mpe.Show();
             pnlWorkflowHolder.Controls.Add(mpe);
             var sb = new StringBuilder();
-            var clsModules = new cModules();
-            cModule module = clsModules.GetModuleByID((int)curUser.CurrentActiveModule);
-            string sModuleName = "Message From " + module.BrandNameHTML;
+            var module = this.ProductModuleFactory[curUser.CurrentActiveModule];
+            string sModuleName = "Message From " + module.BrandNameHtml;
             bool invalidFile = false;
 
             switch (retid)
@@ -2870,9 +2875,8 @@
             mpe.Show();
             pnlWorkflowHolder.Controls.Add(mpe);
             StringBuilder sb = new StringBuilder();
-            cModules clsModules = new cModules();
-            cModule module = clsModules.GetModuleByID((int)curUser.CurrentActiveModule);
-            string sModuleName = "Message From " + module.BrandNameHTML;
+            var module = this.ProductModuleFactory[curUser.CurrentActiveModule];
+            string sModuleName = "Message From " + module.BrandName;
 
             switch (nResult)
             {

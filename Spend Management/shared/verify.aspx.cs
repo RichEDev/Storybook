@@ -14,6 +14,8 @@ namespace Spend_Management
     using BusinessLogic;
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
 
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
@@ -31,6 +33,12 @@ namespace Spend_Management
         /// </summary>
         [Dependency]
         public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
         #region Public Methods and Operators
 
@@ -82,7 +90,7 @@ namespace Spend_Management
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public string CreateCarSummary(int accountId, Employee employee, cModule module)
+        public string CreateCarSummary(int accountId, Employee employee, IProductModule module)
         {
             var clsEmpCars = new cEmployeeCars(accountId, employee.EmployeeID);
 
@@ -116,7 +124,7 @@ namespace Spend_Management
                         + "</td></tr>");
                     output.Append("<tr><td class=\"labeltd\">Engine Type:</td><td class=\"inputtd\">");
 
-                    var engine = VehicleEngineType.Get(new CurrentUser(accountId, employee.EmployeeID, 0, (Modules)module.ModuleID, 0), car.VehicleEngineTypeId);
+                    var engine = VehicleEngineType.Get(new CurrentUser(accountId, employee.EmployeeID, 0, (Modules)module.Id, 0), car.VehicleEngineTypeId);
                     output.Append(engine == null ? "None" : engine.Name);
 
                     output.Append("</td></tr>");
@@ -408,7 +416,7 @@ namespace Spend_Management
         /// <param name="employeeid">
         /// The employeeid.
         /// </param>
-        public void SendActivateEmail(int accountId, Employee employee, cModule module)
+        public void SendActivateEmail(int accountId, Employee employee, IProductModule module)
         {
             var subaccs = new cAccountSubAccounts(accountId);
             cAccountProperties properties = subaccs.getSubAccountById(employee.DefaultSubAccount).SubAccountProperties;
@@ -639,12 +647,11 @@ namespace Spend_Management
                 employee.Verified = true;
                 employee.Save(null);
 
-                var clsModules = new cModules();
                 Modules activeModule = HostManager.GetModule(this.Request.Url.Host);
-                cModule module = clsModules.GetModuleByID((int)activeModule);
+                var module = this.ProductModuleFactory[activeModule];
                 this.SendActivateEmail(accountid, employee, module);
 
-                this.litMsgBrand.Text = (module != null) ? module.BrandNameHTML : "Expenses";
+                this.litMsgBrand.Text = (module != null) ? module.BrandNameHtml : "Expenses";
                 this.litMsgBrand2.Text = this.litMsgBrand.Text;
             }
         }

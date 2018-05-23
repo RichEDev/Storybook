@@ -4,6 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Web.UI;
 
+using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.Modules;
+using BusinessLogic.ProductModules;
+
 using Spend_Management;
 using SpendManagementLibrary;
 
@@ -16,6 +21,12 @@ using Spend_Management.shared.code.GreenLight;
 /// </summary>
 public partial class policymenu : Page
 {
+    /// <summary>
+    /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
     #region Methods
 
     /// <summary>
@@ -32,9 +43,10 @@ public partial class policymenu : Page
         if (this.IsPostBack == false)
         {
             CurrentUser user = cMisc.GetCurrentUser();
-            var clsModules = new cModules();
-            var usingExpenses = user.CurrentActiveModule == Modules.expenses;
-            cModule module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
+            var usingExpenses = user.CurrentActiveModule == Modules.Expenses;
+
+            var module = this.ProductModuleFactory[user.CurrentActiveModule];
+
             this.Title = "Policy Information";
             this.Master.Title = this.Title;
 
@@ -54,7 +66,7 @@ public partial class policymenu : Page
                     "satellite_dish",
                     48,
                     "Broadcast Messages",
-                    string.Format("Enter a message that all employees will see when they logon to {0}.", module.BrandNameHTML),
+                    string.Format("Enter a message that all employees will see when they logon to {0}.", module.BrandNameHtml),
                     "admin/broadcastmessages.aspx");
             }
 

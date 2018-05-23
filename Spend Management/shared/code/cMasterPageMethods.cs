@@ -1,30 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Text;
-using System.Web.SessionState;
-using SpendManagementLibrary;
-using System.IO;
-using System.Web.UI.HtmlControls;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using AjaxControlToolkit;
-using CacheDataAccess.Caching;
-using Common.Logging;
-using Configuration.Core;
-using RestSharp;
-using SpendManagementLibrary.Employees;
-using Spend_Management.Bootstrap;
-using Spend_Management.shared.code;
-using Spend_Management.shared.code.GreenLight;
-using Configuration = System.Configuration.Configuration;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Text;
+    using System.Web;
+    using System.Web.UI;
+    using System.Web.UI.HtmlControls;
+    using System.Web.UI.WebControls;
+
+    using AjaxControlToolkit;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
+    using RestSharp;
+
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Employees;
+
+    using Spend_Management.shared.code;
+    using Spend_Management.shared.code.GreenLight;
+
     public class cMasterPageMethods
     {
         public CurrentUser CurrentUser { get; set; }
@@ -41,6 +43,8 @@ namespace Spend_Management
         /// </summary>
         private CustomMenuStructure customMenu;
 
+        private readonly IDataFactory<IProductModule, Modules> _productModuleFactory;
+
         /// <summary>
         /// Initialises a new instance of the cMasterPageMethods class.
         /// </summary>
@@ -50,11 +54,14 @@ namespace Spend_Management
         /// <param name="theme">
         /// The theme (stylesheet name) for the page.
         /// </param>
-        public cMasterPageMethods(CurrentUser currentUser, string theme)
+        public cMasterPageMethods(CurrentUser currentUser, string theme, IDataFactory<IProductModule, Modules> productModuleFactory)
         {
+            Guard.ThrowIfNull(productModuleFactory, nameof(productModuleFactory));
+
             this.CurrentUser = currentUser;
             this.Theme = theme;
             this.UseDynamicCSS = true;
+            this._productModuleFactory = productModuleFactory;
         }
 
         /// <summary>
@@ -286,7 +293,7 @@ namespace Spend_Management
 
                 if (string.IsNullOrEmpty(ext) == true)
                 {
-                    if (this.CurrentUser.CurrentActiveModule == Modules.contracts)
+                    if (this.CurrentUser.CurrentActiveModule == Modules.Contracts)
                     {
                          output.Append("<img id=\"clientlogoimg\" alt=\"\" src=\"" + GlobalVariables.StaticContentLibrary +
                                      "/images/expense/selenity.png\"/>");
@@ -333,8 +340,8 @@ namespace Spend_Management
         {
             switch (module)
             {
-                case Modules.contracts:
-                case Modules.expenses:
+                case Modules.Contracts:
+                case Modules.Expenses:
                 case Modules.SpendManagement:
                 case Modules.SmartDiligence:
                 case Modules.PurchaseOrders:
@@ -411,8 +418,7 @@ namespace Spend_Management
         {
             get
             {
-                cModules clsModules = new cModules();
-                cModule module = clsModules.GetModuleByID((int)CurrentUser.CurrentActiveModule);
+                var module = this._productModuleFactory[this.CurrentUser.CurrentActiveModule];
 
                 StringBuilder currentUserInfo = new StringBuilder("\n\n");
                 currentUserInfo.AppendLine("var CurrentUserInfo = {");
@@ -429,7 +435,7 @@ namespace Spend_Management
 
                 currentUserInfo.AppendLine("};");
 
-                return "<script language=\"javascript\" type=\"text/javascript\" >\nvar accountid = " + CurrentUser.Account.accountid + ";var employeeid = " + CurrentUser.Employee.EmployeeID + ";\nvar appPath = '" + VirtualPath + "';\nvar StaticLibPath = '" + GlobalVariables.StaticContentLibrary + "';\nvar theme='" + this.Theme + "';\nvar module='" + this.CurrentUser.CurrentActiveModule + "';\nvar moduleNameHTML='" + module.BrandNameHTML + "';\nvar moduleNamePlain='" + module.BrandNamePlainText + "';" + currentUserInfo + "\n</script>";
+                return "<script language=\"javascript\" type=\"text/javascript\" >\nvar accountid = " + CurrentUser.Account.accountid + ";var employeeid = " + CurrentUser.Employee.EmployeeID + ";\nvar appPath = '" + VirtualPath + "';\nvar StaticLibPath = '" + GlobalVariables.StaticContentLibrary + "';\nvar theme='" + this.Theme + "';\nvar module='" + this.CurrentUser.CurrentActiveModule + "';\nvar moduleNameHTML='" + module.BrandNameHtml + "';\nvar moduleNamePlain='" + module.BrandName + "';" + currentUserInfo + "\n</script>";
             }
         }
 
@@ -694,7 +700,7 @@ namespace Spend_Management
 
             RedirectToChangePasswordPageOnChangePasswordBypass(out absoluteUri);
 
-            if (this.CurrentUser.CurrentActiveModule == Modules.expenses)
+            if (this.CurrentUser.CurrentActiveModule == Modules.Expenses)
             {
                 RedirectToOdometerReadingsOnChangePasswordBypass(absoluteUri);
             }

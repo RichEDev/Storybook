@@ -5,6 +5,11 @@
     using System.Web;
     using System.Web.UI.WebControls;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using SpendManagementLibrary.Enumerators;
     using SpendManagementLibrary.HelpAndSupport;
     using SpendManagementLibrary.Helpers;
@@ -18,6 +23,12 @@
         /// 
         /// </summary>
         public string SupportTicketId { get; set; }
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
         /// <summary>
         /// Page Load
@@ -85,7 +96,7 @@
                 ticket.Status = SupportTicketStatus.PendingEmployeeResponse.ToString();
                 ticket.ModifiedOn = DateTime.UtcNow;
 
-                SupportTicketInternal.Update(user, ticket);
+                SupportTicketInternal.Update(user, ticket, this.ProductModuleFactory);
             }
 
             Response.Redirect(Request.Url.ToString());
@@ -105,7 +116,7 @@
             ticket.InternalStatus = (SupportTicketStatus)int.Parse(ddlStatus.SelectedValue);
             ticket.ModifiedOn = DateTime.UtcNow;
 
-            SupportTicketInternal.Update(user, ticket);
+            SupportTicketInternal.Update(user, ticket, this.ProductModuleFactory);
 
             this.CmdCancel_Click(sender, e);
         }

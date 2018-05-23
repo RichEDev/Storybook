@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary;
 
     /// <summary>
@@ -48,7 +50,7 @@
 
             switch (userCurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                 case Modules.SpendManagement:
                 case Modules.SmartDiligence:
                 case Modules.ESR:

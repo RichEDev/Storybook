@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using BusinessLogic.Modules;
+
     public interface ITables
     {
         /// <summary>

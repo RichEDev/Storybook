@@ -7,6 +7,7 @@
     using BusinessLogic;
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
 
     using SpendManagementLibrary;
     using Spend_Management.shared.code;
@@ -48,8 +49,8 @@
         {
             var menuItems = new StringBuilder();
             var user = cMisc.GetCurrentUser();
-            var usingExpenses = user.CurrentActiveModule == Modules.expenses;
-            var usingFramework = user.CurrentActiveModule == Modules.contracts;
+            var usingExpenses = user.CurrentActiveModule == Modules.Expenses;
+            var usingFramework = user.CurrentActiveModule == Modules.Contracts;
             
             var accountSubAccounts = new cAccountSubAccounts(user.Account.accountid);
             cAccountProperties accountProperties = accountSubAccounts.getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;

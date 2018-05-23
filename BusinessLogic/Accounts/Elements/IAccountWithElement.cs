@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using BusinessLogic.Elements;
+
     /// <summary>
     /// Defines a <see cref="IAccountWithElement"/>
     /// </summary>

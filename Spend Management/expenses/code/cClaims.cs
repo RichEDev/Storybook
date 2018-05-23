@@ -16,6 +16,7 @@ namespace Spend_Management
 
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
     using BusinessLogic.Identity;
 
     using global::expenses;
@@ -6564,7 +6565,7 @@ namespace Spend_Management
 
                     if (approverAccountId == 0 || approverAccountId != approver.AccountId)
 					{
-						emails = new NotificationTemplates(approver.AccountId, approver.EmployeeId, string.Empty, 0, Modules.expenses);
+						emails = new NotificationTemplates(approver.AccountId, approver.EmployeeId, string.Empty, 0, Modules.Expenses);
 						var clsSubAccounts = new cAccountSubAccounts(approver.AccountId);
 						var reqProperties = clsSubAccounts.getFirstSubAccount().SubAccountProperties.Clone();
 						msgFrom = reqProperties.SourceAddress == 1 ? reqProperties.EmailAdministrator : "admin@sel-expenses.com";
@@ -6615,7 +6616,7 @@ namespace Spend_Management
 
                     if (claimantAccountId == 0 || claimantAccountId != claimant.AccountId)
 					{
-						notifications = new NotificationTemplates(claimant.AccountId, claimant.EmployeeId, string.Empty, 0, Modules.expenses);
+						notifications = new NotificationTemplates(claimant.AccountId, claimant.EmployeeId, string.Empty, 0, Modules.Expenses);
 						var clsSubAccounts = new cAccountSubAccounts(claimant.AccountId);
 						var reqProperties = clsSubAccounts.getFirstSubAccount().SubAccountProperties.Clone();
 						msgFrom = reqProperties.SourceAddress == 1 ? reqProperties.EmailAdministrator : "admin@sel-expenses.com";

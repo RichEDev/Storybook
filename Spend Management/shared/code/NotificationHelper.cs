@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using BusinessLogic;
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
     using Spend_Management.expenses.code;
@@ -73,7 +75,7 @@
 
             this.Send(SendMessageDescription.SentToTheExcessMileageNotificationGroupWhenAClaimantsAddressChanges
                 , EmailNotificationType.ExcessMileage
-                , Modules.expenses);
+                , Modules.Expenses);
         }
 
         /// <summary>

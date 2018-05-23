@@ -3,6 +3,11 @@
     using System;
     using System.Web;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using SpendManagementLibrary.Enumerators;
     using SpendManagementLibrary.HelpAndSupport;
     using SpendManagementLibrary.Interfaces;
@@ -31,6 +36,12 @@
         /// The type of ticket being used by the page
         /// </summary>
         public SupportTicketType TicketType { get; set; }
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
         /// <summary>
         /// Page Load
@@ -122,7 +133,7 @@
                 {
                     SupportTicketInternal ticket = SupportTicketInternal.Get(user, int.Parse(this.SupportTicketId));
                     ticket.InternalStatus = SupportTicketStatus.Closed;
-                    SupportTicketInternal.Update(user, ticket);
+                    SupportTicketInternal.Update(user, ticket, this.ProductModuleFactory);
                     litStatus.Text = ticket.Status;
 
                     break;
@@ -150,7 +161,7 @@
 
             SupportTicketSalesForce ticket = SupportTicketSalesForce.Get(user.Account.companyid, user, this.SupportTicketId);
 
-            int newTicketId = SupportTicketInternal.Create(user, ticket.Subject, ticket.Description);
+            int newTicketId = SupportTicketInternal.Create(user, ticket.Subject, ticket.Description, this.ProductModuleFactory);
 
             if (ticket.Comments.Count > 0 || ticket.Attachments.Count > 0)
             {
@@ -191,7 +202,7 @@
                         ticket = SupportTicketInternal.Get(user, int.Parse(this.SupportTicketId));
                         ticket.ModifiedOn = DateTime.UtcNow;
 
-                        SupportTicketInternal.Update(user, ticket as SupportTicketInternal);
+                        SupportTicketInternal.Update(user, ticket as SupportTicketInternal, this.ProductModuleFactory);
                     }
 
                     break;
@@ -250,7 +261,7 @@
                         ticket.Status = SupportTicketStatus.PendingAdministratorResponse.ToString();
                         ticket.ModifiedOn = DateTime.UtcNow;
 
-                        SupportTicketInternal.Update(user, ticket as SupportTicketInternal);
+                        SupportTicketInternal.Update(user, ticket as SupportTicketInternal, this.ProductModuleFactory);
                     }
 
                     break;

@@ -12,6 +12,11 @@ using Spend_Management;
 
 namespace expenses
 {
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using SpendManagementLibrary;
 
 	/// <summary>
@@ -19,13 +24,18 @@ namespace expenses
 	/// </summary>
 	public partial class qeprintout : System.Web.UI.Page
 	{
-	
-		protected void Page_Load(object sender, System.EventArgs e)
+	    /// <summary>
+	    /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+	    /// </summary>
+	    [Dependency]
+	    public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
+        protected void Page_Load(object sender, System.EventArgs e)
 		{
 			if (IsPostBack == false)
 			{
 			    CurrentUser user = cMisc.GetCurrentUser();
-                var mpm = new cMasterPageMethods(user, HostManager.GetTheme(HttpContext.Current.Request.Url.Host));
+                var mpm = new cMasterPageMethods(user, HostManager.GetTheme(HttpContext.Current.Request.Url.Host), this.ProductModuleFactory);
                 this.litJavascript.Text = user.CurrentUserInfoJavascriptVariable;
                 mpm.SetupJQueryReferences(ref jQueryCss,ref scriptman);
                 mpm.SetupSessionTimeoutReferences(ref scriptman, this.Page);

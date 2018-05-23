@@ -4,6 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.UI;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using code;
     using code.Logon;
     using SpendManagementLibrary;
@@ -34,6 +40,12 @@
         /// Gets or sets the value of whether an background image is valid
         /// </summary>
         public bool ValidBackgroundCheck { get; set; }
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
         /// <summary>
         /// Page load function of aeLogonMessages
@@ -173,10 +185,8 @@
                 }
                 if (!moduleActiveState && moduleList.Count > 0 && !string.IsNullOrEmpty(moduleList[0]))
                 {
-                   
-                    var currentModules = new cModules();
                     var checkForCurrentActiveMessages = this._logonMessages.CheckCheckLogonMessagesCanArchivedOrDeleted();
-                    checkForCurrentActiveMessages.AddRange(from item in moduleList select currentModules.GetModuleByID(int.Parse(item)) into currentModule where currentModule != null select currentModule.BrandNamePlainText);
+                    checkForCurrentActiveMessages.AddRange(from item in moduleList select this.ProductModuleFactory[(Modules)int.Parse(item)] into currentModule where currentModule != null select currentModule.BrandName);
                     var modulesWhichCannotBeActivated = checkForCurrentActiveMessages.GroupBy(i => i).Where(g => g.Count() > 1).Select(g => g.Key);
                     IEnumerable<string> whichCannotBeActivated = modulesWhichCannotBeActivated as string[] ?? modulesWhichCannotBeActivated.ToArray();
                     if (whichCannotBeActivated.Any())

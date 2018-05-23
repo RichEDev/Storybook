@@ -8,6 +8,7 @@ namespace Spend_Management.expenses.code.Claims
 
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
 
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
@@ -66,15 +67,15 @@ namespace Spend_Management.expenses.code.Claims
 		/// <param name="pairing"></param>
 		public ClaimSubmission(PairingKey pairing)
 		{
-			_user = new CurrentUser(pairing.AccountID, pairing.EmployeeID, 0, Modules.expenses, -1);
+			_user = new CurrentUser(pairing.AccountID, pairing.EmployeeID, 0, Modules.Expenses, -1);
 			_claims = new cClaims(pairing.AccountID);
 		}
 
-        public ClaimSubmission(int accountId, int employeeId)
-        {
-            _user = new CurrentUser(accountId, employeeId, 0, Modules.expenses, 1);
-            _claims = new cClaims(accountId);
-        }
+		public ClaimSubmission(int accountId, int employeeId)
+		{
+			_user = new CurrentUser(accountId, employeeId, 0, Modules.Expenses, 1);
+			_claims = new cClaims(accountId);
+		}
 
 		#region Public Methods
 

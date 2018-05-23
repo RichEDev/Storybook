@@ -18,6 +18,8 @@ namespace Spend_Management
 {
     using System.Globalization;
 
+    using BusinessLogic.Modules;
+
     public class cMenuStructure
     {
         SortedList<int, cMenuElement> lstMenu;
@@ -124,7 +126,7 @@ namespace Spend_Management
             SortedList<string, cMenuElement> sorted = this.sortList();
 
             ICurrentUser curUser = cMisc.GetCurrentUser();
-            var showPolicyInfo = curUser.CurrentActiveModule == Modules.expenses
+            var showPolicyInfo = curUser.CurrentActiveModule == Modules.Expenses
                                  || curUser.CurrentActiveModule == Modules.Greenlight
                                  || curUser.CurrentActiveModule == Modules.GreenlightWorkforce;
 

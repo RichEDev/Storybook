@@ -17,6 +17,7 @@ namespace Spend_Management
     using BusinessLogic.DataConnections;
     using BusinessLogic.Enums;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
 
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary;
@@ -233,7 +234,7 @@ namespace Spend_Management
             var user = new CurrentUser(accountid, employeeid, delegateId, activeModule, subaccountid, fromScheduler);
 
             // refresh lastActivityDate for concurrent user management
-            if (activeModule == Modules.contracts)
+            if (activeModule == Modules.Contracts)
             {
                 SetLastActivity(accountid, employeeid);
             }

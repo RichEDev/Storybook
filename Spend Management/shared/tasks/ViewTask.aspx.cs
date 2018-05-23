@@ -16,7 +16,9 @@ using SpendManagementLibrary.Helpers;
 
 namespace Spend_Management
 {
-	public partial class ViewTask : System.Web.UI.Page
+    using BusinessLogic.Modules;
+
+    public partial class ViewTask : System.Web.UI.Page
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -33,7 +35,7 @@ namespace Spend_Management
 
                 switch (curUser.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1169;
                         break;
                     default:

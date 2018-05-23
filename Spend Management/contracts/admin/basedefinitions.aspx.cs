@@ -12,6 +12,7 @@ using SpendManagementLibrary;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
 
     #region cBaseDefinitionValues
     /// <summary>
@@ -180,7 +181,7 @@ namespace Spend_Management
             Master.title = "Base Definitions";
             switch (curUser.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 1133;
                     break;
                 default:
@@ -612,7 +613,7 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect(parentURL, true);
                     break;
                 default:

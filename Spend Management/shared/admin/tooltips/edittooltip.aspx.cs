@@ -14,6 +14,8 @@ using Spend_Management;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     public partial class edittooltip : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -23,7 +25,7 @@ namespace Spend_Management
 
             switch (currentUser.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 1182;
                     break;
                 default:

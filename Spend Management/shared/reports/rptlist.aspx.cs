@@ -3,7 +3,9 @@ using System.Web;
 using System.Web.UI;
 namespace Spend_Management
 {
+
     using BusinessLogic;
+    using BusinessLogic.Modules;
 
     using SEL.FeatureFlags;
 
@@ -39,7 +41,7 @@ namespace Spend_Management
 
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1027;
                         break;
                     default:

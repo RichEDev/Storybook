@@ -9,6 +9,8 @@ namespace Spend_Management
     using System.Web.UI;
     using System.Web.UI.WebControls;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Enumerators;
 
@@ -56,7 +58,7 @@ namespace Spend_Management
 			{
                 if (clsemployees.getCount(_user.AccountID) > 50 && delegatetype == 2)
                 {
-					if (_user.CurrentActiveModule == Modules.expenses)
+					if (_user.CurrentActiveModule == Modules.Expenses)
 					{
 						cGroups clsgroups = new cGroups(_user.AccountID);
 						this.cmbgroups.Items.AddRange(clsgroups.CreateDropDown(0));
@@ -257,7 +259,7 @@ namespace Spend_Management
             grid.getColumnByName("employeeid").hidden = true;
             grid.getColumnByName("archived").hidden = true;
 
-			if (_user.CurrentActiveModule != Modules.expenses)
+			if (_user.CurrentActiveModule != Modules.Expenses)
 			{
 				grid.getColumnByName("groupname").hidden = true;
 			}

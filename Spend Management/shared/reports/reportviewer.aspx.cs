@@ -12,6 +12,7 @@ using System.Web.UI.WebControls;
 using BusinessLogic;
 using BusinessLogic.DataConnections;
 using BusinessLogic.GeneralOptions;
+using BusinessLogic.Modules;
 
 using Infragistics.WebUI.CalcEngine;
 using Infragistics.WebUI.UltraWebGrid;
@@ -86,7 +87,7 @@ public partial class reports_reportviewer : System.Web.UI.Page
 
             switch (user.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 1027;
                     break;
                 default:
@@ -1143,12 +1144,12 @@ public partial class reports_reportviewer : System.Web.UI.Page
                                 }
                                 switch (currentUser.CurrentActiveModule)
                                 {
-                                    case Modules.contracts:
+                                    case Modules.Contracts:
                                         currentColumn.Footer.Style.BackColor = System.Drawing.ColorTranslator.FromHtml("#00a0af");
                                         currentColumn.Footer.Style.BorderDetails.ColorTop = System.Drawing.ColorTranslator.FromHtml("#00a0af");
                                         currentColumn.Footer.Style.BorderDetails.ColorBottom = System.Drawing.ColorTranslator.FromHtml("#00a0af");
                                         break;
-                                    case Modules.expenses:
+                                    case Modules.Expenses:
                                         currentColumn.Footer.Style.BackColor = System.Drawing.ColorTranslator.FromHtml("#19A2E6");
                                         currentColumn.Footer.Style.BorderDetails.ColorTop = System.Drawing.ColorTranslator.FromHtml("#19A2E6");
                                         currentColumn.Footer.Style.BorderDetails.ColorBottom = System.Drawing.ColorTranslator.FromHtml("#19A2E6");
@@ -1228,12 +1229,12 @@ public partial class reports_reportviewer : System.Web.UI.Page
                                         {                                            
                                             switch (currentUser.CurrentActiveModule)
                                             {
-                                                case Modules.contracts:
+                                                case Modules.Contracts:
                                                     e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BackColor = System.Drawing.ColorTranslator.FromHtml("#00a0af");
                                                     e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BorderDetails.ColorTop = System.Drawing.ColorTranslator.FromHtml("#00a0af");
                                                     e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BorderDetails.ColorBottom = System.Drawing.ColorTranslator.FromHtml("#00a0af");
                                                     break;
-                                                case Modules.expenses:
+                                                case Modules.Expenses:
                                                     e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BackColor = System.Drawing.ColorTranslator.FromHtml("#19A2E6");
                                                     e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BorderDetails.ColorTop = System.Drawing.ColorTranslator.FromHtml("#19A2E6");
                                                     e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BorderDetails.ColorBottom = System.Drawing.ColorTranslator.FromHtml("#19A2E6");
@@ -1270,12 +1271,12 @@ public partial class reports_reportviewer : System.Web.UI.Page
                                     {                                        
                                         switch (currentUser.CurrentActiveModule)
                                         {
-                                            case Modules.contracts:
+                                            case Modules.Contracts:
                                                 e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BackColor = System.Drawing.ColorTranslator.FromHtml("#00a0af");
                                                 e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BorderDetails.ColorTop = System.Drawing.ColorTranslator.FromHtml("#00a0af");
                                                 e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BorderDetails.ColorBottom = System.Drawing.ColorTranslator.FromHtml("#00a0af");
                                                 break;
-                                            case Modules.expenses:
+                                            case Modules.Expenses:
                                                 e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BackColor = System.Drawing.ColorTranslator.FromHtml("#19A2E6");
                                                 e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BorderDetails.ColorTop = System.Drawing.ColorTranslator.FromHtml("#19A2E6");
                                                 e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BorderDetails.ColorBottom = System.Drawing.ColorTranslator.FromHtml("#19A2E6");
@@ -1312,12 +1313,12 @@ public partial class reports_reportviewer : System.Web.UI.Page
                                     {                                      
                                         switch (currentUser.CurrentActiveModule)
                                         {
-                                            case Modules.contracts:
+                                            case Modules.Contracts:
                                                 e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BackColor = System.Drawing.ColorTranslator.FromHtml("#00a0af");
                                                 e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BorderDetails.ColorTop = System.Drawing.ColorTranslator.FromHtml("#00a0af");
                                                 e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BorderDetails.ColorBottom = System.Drawing.ColorTranslator.FromHtml("#00a0af");
                                                 break;
-                                            case Modules.expenses:
+                                            case Modules.Expenses:
                                                 e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BackColor = System.Drawing.ColorTranslator.FromHtml("#19A2E6");
                                                 e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BorderDetails.ColorTop = System.Drawing.ColorTranslator.FromHtml("#19A2E6");
                                                 e.Layout.Bands[0].Columns.FromKey(standard.columnid.ToString()).Footer.Style.BorderDetails.ColorBottom = System.Drawing.ColorTranslator.FromHtml("#19A2E6");

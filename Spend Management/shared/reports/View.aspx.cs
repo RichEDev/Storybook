@@ -11,6 +11,7 @@ namespace Spend_Management.shared.reports
     using BusinessLogic;
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
 
     using SpendManagementHelpers.TreeControl;
 
@@ -72,7 +73,7 @@ namespace Spend_Management.shared.reports
             Master.title = convertedReportName;
             switch (user.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 1027;
                     break;
                 default:

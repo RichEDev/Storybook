@@ -12,7 +12,9 @@
     using System.Web.UI.WebControls;
 
     using Bootstrap;
-    
+
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Helpers;
 
@@ -40,7 +42,7 @@
                 var entityview = new DutyOfCareDocumentsInformation().GetDocEntityAndViewIdByGuid("223018FE-EDAE-408E-8851-C09ABA09DF81", "F95C0754-82FA-493A-97B4-E1ED42B3C337", user.AccountID);
                 this.dvlaLookUpFrequencyValue.Text = DvlaConsentLookUp.BuildFrequencyMessage(accountProperties.DrivingLicenceLookupFrequency).Trim();
 
-                if (user.CurrentActiveModule != Modules.expenses || user.isDelegate || !(accountProperties.EnableAutomaticDrivingLicenceLookup && user.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect)) || !user.CheckAccessRole(AccessRoleType.View, CustomEntityElementType.View, Convert.ToInt32(entityview.Split(',')[0]), Convert.ToInt32(entityview.Split(',')[1]), false))
+                if (user.CurrentActiveModule != Modules.Expenses || user.isDelegate || !(accountProperties.EnableAutomaticDrivingLicenceLookup && user.Account.HasDvlaLookupKeyAndDvlaConnectLicenceElement(SpendManagementElement.DvlaConnect)) || !user.CheckAccessRole(AccessRoleType.View, CustomEntityElementType.View, Convert.ToInt32(entityview.Split(',')[0]), Convert.ToInt32(entityview.Split(',')[1]), false))
                 {
                     this.Response.Redirect("~/shared/restricted.aspx?reason=Current%20access%20role%20does%20not%20permit%20you%20to%20view%20this%20page.", true);
                 }

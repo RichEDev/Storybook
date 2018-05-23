@@ -1,6 +1,8 @@
 using System;
 using System.Web.UI;
 
+using BusinessLogic.Modules;
+
 using Spend_Management;
 
 /// <summary>
@@ -22,7 +24,7 @@ public partial class categorymenu : Page
         if (this.IsPostBack == false)
         {
             var user = cMisc.GetCurrentUser();
-            var usingExpenses = user.CurrentActiveModule == Modules.expenses;
+            var usingExpenses = user.CurrentActiveModule == Modules.Expenses;
 
             this.Title = "Base Information";
             this.Master.Title = this.Title;

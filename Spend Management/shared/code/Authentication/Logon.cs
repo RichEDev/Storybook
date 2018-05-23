@@ -12,6 +12,8 @@
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
     using BusinessLogic.Identity;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
 
     using Common.Cryptography;
 
@@ -571,7 +573,7 @@
         private Guid CheckConcurrentUserLicenceLimitReached(Modules currentModule)
         {
             Guid manageId = Guid.Empty;
-            if (currentModule == Modules.contracts)
+            if (currentModule == Modules.Contracts)
             {
                 var cusers = new cConcurrentUsers(this.accountId, this.employeeId);
                 manageId = cusers.LogonUser();
@@ -784,7 +786,10 @@
         /// </param>
         private void RedirectToHomePage(HttpRequest request, HttpResponse response, Modules currentModule)
         {
-            string defaultHomePage = cModules.GetDefaultHomepageForModule(currentModule);
+            var modules = FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>();
+
+            string defaultHomePage = modules[currentModule].HomePage;
+
             if (currentModule == Modules.CorporateDiligence)
             {
                 var clsSubAccounts = new cAccountSubAccounts(this.accountId);
@@ -935,7 +940,7 @@
 
             Guid manageId = this.CheckConcurrentUserLicenceLimitReached(currentModule);
 
-            if (manageId == Guid.Empty && currentModule == Modules.contracts)
+            if (manageId == Guid.Empty && currentModule == Modules.Contracts)
             {
                 return "Concurrent user licence limit reached.";
             }

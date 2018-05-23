@@ -7,6 +7,8 @@ namespace Spend_Management
     using System.Web.UI;
     using System.Web.UI.WebControls;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary;
 
     /// <summary>
@@ -37,7 +39,7 @@ namespace Spend_Management
 
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1148;
                         break;
                     default:
@@ -52,7 +54,7 @@ namespace Spend_Management
 
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                     case Modules.SpendManagement:
                     case Modules.SmartDiligence:
                         phAllowSearch.Visible = true;
@@ -80,7 +82,7 @@ namespace Spend_Management
 
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                     case Modules.SpendManagement:
                     case Modules.SmartDiligence:
                         // hide the item specific checkbox if we're in framework
@@ -117,7 +119,7 @@ namespace Spend_Management
 
                     switch (user.CurrentActiveModule)
                     {
-                        case Modules.contracts:
+                        case Modules.Contracts:
                         case Modules.SpendManagement:
                         case Modules.SmartDiligence:
                             chkallowsearch.Checked = reqfield.AllowSearch;
@@ -326,7 +328,7 @@ namespace Spend_Management
                 // currently only Framework uses DynamicHyperlink udfs so if it's something else, hide that from the type dropdowns
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                     case Modules.SpendManagement:
                     case Modules.SmartDiligence:
                         cmbattributetype.Items.FindByValue("16").Enabled = true;

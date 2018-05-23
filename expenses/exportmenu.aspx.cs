@@ -3,6 +3,8 @@
 using System;
 using System.Web.UI;
 
+using BusinessLogic.Modules;
+
 using SpendManagementLibrary;
 
 using Spend_Management;
@@ -32,7 +34,7 @@ public partial class exportmenu : Page
             this.Title = "Imports / Exports";
             this.Master.Title = this.Title;
             CurrentUser user = cMisc.GetCurrentUser();
-            var usingExpenses = user.CurrentActiveModule == Modules.expenses;
+            var usingExpenses = user.CurrentActiveModule == Modules.Expenses;
 
             this.ViewState["accountid"] = user.AccountID;
             this.ViewState["employeeid"] = user.EmployeeID;

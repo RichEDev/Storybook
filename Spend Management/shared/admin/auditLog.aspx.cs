@@ -12,6 +12,8 @@ using System.Text;
 
 namespace Spend_Management.shared.admin
 {
+    using BusinessLogic.Modules;
+
     public partial class auditLog : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -23,7 +25,7 @@ namespace Spend_Management.shared.admin
 
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1132;
                         break;
                     default:

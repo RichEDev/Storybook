@@ -805,7 +805,6 @@
     <Compile Include="Definitions\cField.cs" />
     <Compile Include="cMenuElement.cs" />
     <Compile Include="cMimeType.cs" />
-    <Compile Include="Logic Classes\cModules.cs" />
     <Compile Include="cProvider.cs" />
     <Compile Include="cRegexPatterns.cs" />
     <Compile Include="cRowFunction.cs" />
@@ -856,7 +855,6 @@
     <Compile Include="cMileageCat.cs" />
     <Compile Include="cGlobalMimeType.cs" />
     <Compile Include="cMisc.cs" />
-    <Compile Include="Definitions\cModule.cs" />
     <Compile Include="cMonthlyCurrency.cs" />
     <Compile Include="cPendingEmail.cs" />
     <Compile Include="cRecharge.cs" />
@@ -914,7 +912,6 @@
     <Compile Include="IReports.cs" />
     <Compile Include="IUserView.cs" />
     <Compile Include="Enumerators\LoginResult.cs" />
-    <Compile Include="Enumerators\Modules.cs" />
     <Compile Include="Enumerators\OrderRecurrence.cs" />
     <Compile Include="Definitions\JoinVia\JoinVia.cs" />
     <Compile Include="Logic Classes\JoinVias.cs" />

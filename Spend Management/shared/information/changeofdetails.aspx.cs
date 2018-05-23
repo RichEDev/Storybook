@@ -3,6 +3,11 @@ namespace Spend_Management
     using System;
     using System.Web.UI;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Enumerators;
 
@@ -10,9 +15,14 @@ namespace Spend_Management
 	/// Summary description for changeofdetails.
 	/// </summary>
 	public partial class changeofdetails : Page
-	{
-	
-		protected void Page_Load(object sender, System.EventArgs e)
+    {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
+        protected void Page_Load(object sender, System.EventArgs e)
 		{
             CurrentUser user = cMisc.GetCurrentUser();
             if (user.isDelegate)
@@ -62,7 +72,7 @@ namespace Spend_Management
             cAccountProperties reqProperties = subAccounts.getFirstSubAccount().SubAccountProperties;
             var emailSender = new EmailSender(reqProperties.EmailServerAddress);
 
-            employees.NotifyAdminOfChanges(currentUser, this.txtchanges.Text, new cModules(), reqProperties, emailSender);
+            employees.NotifyAdminOfChanges(currentUser, this.txtchanges.Text, this.ProductModuleFactory, reqProperties, emailSender);
 
 		    Response.Redirect("mydetails.aspx", true);		        
 		}

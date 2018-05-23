@@ -13,6 +13,8 @@ namespace SpendManagementLibrary
     using SpendManagementLibrary.Definitions.JoinVia;
     using System.Text.RegularExpressions;
 
+    using BusinessLogic.Modules;
+
     #endregion
 
     /// <summary>

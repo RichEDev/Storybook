@@ -14,7 +14,9 @@ using System.Text;
 
 namespace Spend_Management
 {
-	/// <summary>
+    using BusinessLogic.Modules;
+
+    /// <summary>
 	/// Summary description for adminteams.
 	/// </summary>
 	public partial class adminteams : Page
@@ -27,7 +29,7 @@ namespace Spend_Management
             Master.PageSubTitle = Title;
             switch (currentUser.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 1045;
                     break;
                 default:
@@ -78,7 +80,7 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect("~/MenuMain.aspx?menusection=employee", true);
                     break;
                 default:

@@ -18,6 +18,8 @@ using BusinessLogic;
 using BusinessLogic.DataConnections;
 using BusinessLogic.GeneralOptions;
 using BusinessLogic.Identity;
+using BusinessLogic.Modules;
+using BusinessLogic.ProductModules;
 
 using Common.Cryptography;
 
@@ -869,7 +871,13 @@ public partial class register : Page
     /// </summary>
     [Dependency]
     public IEncryptor Encryptor { get; set; }
-    
+
+    /// <summary>
+    /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
     /// <summary>
     /// The page_ load.
     /// </summary>
@@ -904,21 +912,19 @@ public partial class register : Page
             }
 
             CurrentUser currentUser = cMisc.GetCurrentUser();
-            var clsModules = new cModules();
-
-            cModule clsModule;
+            IProductModule module;
 
             if (currentUser != null)
             {
-                clsModule = clsModules.GetModuleByID((int)currentUser.CurrentActiveModule);
+                module = this.ProductModuleFactory[currentUser.CurrentActiveModule];
             }
             else
             {
                 Modules activeModule = HostManager.GetModule(this.Request.Url.Host);
-                clsModule = clsModules.GetModuleByID((int)activeModule);
+                module = this.ProductModuleFactory[activeModule];
             }
 
-            string brandName = (clsModule != null) ? clsModule.BrandNamePlainText : "Expenses";
+            string brandName = (module != null) ? module.BrandName : "Expenses";
             this.requsername.ErrorMessage = "Please enter a username you would like to logon to " + brandName + @" with";
 
             CarsBase.AddVehicleTypesToDropDownList(ref this.cmbvehicletype);
@@ -1892,20 +1898,19 @@ public partial class register : Page
 
         CurrentUser currentUser = cMisc.GetCurrentUser();
 
-        var modules = new cModules();
-        cModule module;
+        IProductModule module;
 
         if (currentUser != null)
         {
-            module = modules.GetModuleByID((int)currentUser.CurrentActiveModule);
+            module = this.ProductModuleFactory[currentUser.CurrentActiveModule];
         }
         else
         {
             Modules activeModule = HostManager.GetModule(this.Request.Url.Host);
-            module = modules.GetModuleByID((int)activeModule);
+            module = this.ProductModuleFactory[activeModule];
         }
 
-        string brandName = (module != null) ? module.BrandNamePlainText : "Expenses";
+        string brandName = (module != null) ? module.BrandName : "Expenses";
 
         string subject = brandName + " registration details verification";
         string server = this.Request.ServerVariables["SERVER_NAME"];

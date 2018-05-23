@@ -10,6 +10,8 @@
     using Spend_Management.expenses.code;
     using System.Configuration;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Helpers;
 
@@ -129,7 +131,7 @@
             var subAccounts = new cAccountSubAccounts(user.AccountID);
             var subAccount = subAccounts.getFirstSubAccount();
             var accountProperties = subAccount.SubAccountProperties;
-            var notifications = new NotificationTemplates(user.AccountID, user.EmployeeID, string.Empty, 0, Modules.expenses);
+            var notifications = new NotificationTemplates(user.AccountID, user.EmployeeID, string.Empty, 0, Modules.Expenses);
             var teams = new cTeams(user.AccountID, null);
             int[] recipientsId;
             if (accountProperties.DutyOfCareApprover.ToUpper() != "LINE MANAGER")

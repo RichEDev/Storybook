@@ -16,7 +16,9 @@ using SpendManagementLibrary.Helpers;
 
 namespace Spend_Management
 {
-	public partial class MyTasks : System.Web.UI.Page
+    using BusinessLogic.Modules;
+
+    public partial class MyTasks : System.Web.UI.Page
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -26,7 +28,7 @@ namespace Spend_Management
             CurrentUser user = cMisc.GetCurrentUser();
             switch (user.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 1175;
                     break;
                 default:
@@ -247,7 +249,7 @@ namespace Spend_Management
                 {
                     case Modules.SmartDiligence:
                     case Modules.SpendManagement:
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Response.Redirect("~/MenuMain.aspx?menusection=mydetails", true);
                         break;
                     default:

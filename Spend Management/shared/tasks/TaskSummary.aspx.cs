@@ -11,7 +11,9 @@ using SpendManagementLibrary.Helpers;
 
 namespace Spend_Management
 {
-	public partial class TaskSummary : System.Web.UI.Page
+    using BusinessLogic.Modules;
+
+    public partial class TaskSummary : System.Web.UI.Page
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -23,7 +25,7 @@ namespace Spend_Management
                 CurrentUser user = cMisc.GetCurrentUser();
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1223;
                         break;
                     default:

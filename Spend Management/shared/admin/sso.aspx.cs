@@ -6,6 +6,12 @@
     using System.Web;
     using System.Web.Script.Serialization;
     using System.Web.UI;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using shared.webServices;
 
     using SpendManagementLibrary;
@@ -18,13 +24,20 @@
     {
         private string _moduleName;
 
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
         protected string ModuleName
         {
             get
             {
                 if (this._moduleName == null)
                 {
-                    this._moduleName = new cModules().GetModuleByID((int)cMisc.GetCurrentUser().CurrentActiveModule).BrandNamePlainText;
+                    var module = this.ProductModuleFactory[cMisc.GetCurrentUser().CurrentActiveModule];
+                    this._moduleName = module.BrandName;
                 }
                 return this._moduleName;
             }

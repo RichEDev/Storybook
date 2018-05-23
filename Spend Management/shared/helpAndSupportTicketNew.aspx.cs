@@ -5,6 +5,11 @@
     using System.Text;
     using System.Web;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using Microsoft.JScript;
 
     using SpendManagementLibrary;
@@ -21,6 +26,12 @@
         /// The type (SalesForce/Internal) of ticket to create
         /// </summary>
         public SupportTicketType TicketType { get; set; }
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
         /// <summary>
         /// Page Load
@@ -193,7 +204,7 @@
                         int customEntityId = 0;
                         int.TryParse(Request.QueryString["CustomEntityId"], out customEntityId);
 
-                        int internalTicketId = SupportTicketInternal.Create(user, txtSubject.Text, txtDescription.Text, customEntityId);
+                        int internalTicketId = SupportTicketInternal.Create(user, txtSubject.Text, txtDescription.Text, this.ProductModuleFactory, customEntityId);
                         if (uplAttachment.HasFile)
                         {
                             SupportTicketAttachment.Create(user, internalTicketId, uplAttachment.FileName, uplAttachment.FileBytes);

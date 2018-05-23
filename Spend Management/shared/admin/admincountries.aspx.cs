@@ -16,7 +16,9 @@ using System.Text;
 
 namespace Spend_Management
 {
-	/// <summary>
+    using BusinessLogic.Modules;
+
+    /// <summary>
 	/// Summary description for admincountries.
 	/// </summary>
 	public partial class admincountries : Page
@@ -34,7 +36,7 @@ namespace Spend_Management
             CurrentUser user = cMisc.GetCurrentUser();
             switch (user.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 0;
                     break;
                 default:
@@ -144,7 +146,7 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect("~/MenuMain.aspx?menusection=baseinfo", true);
                     break;
                 default:

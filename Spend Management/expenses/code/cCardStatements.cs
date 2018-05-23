@@ -12,6 +12,7 @@
     using BusinessLogic.Cache;
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
 
     using Common.Logging;
 
@@ -2495,7 +2496,7 @@
 
                 cardImportLogs.Save(importLog);
 
-                var notifications = new NotificationTemplates(account.accountid, 0, string.Empty, 0, Modules.expenses);
+                var notifications = new NotificationTemplates(account.accountid, 0, string.Empty, 0, Modules.Expenses);
                 NotificationTemplate reqmsg = notifications.Get(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorWhenACardImportFails));
                 var recipientTypes = new List<sSendDetails>
                 {

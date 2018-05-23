@@ -16,6 +16,8 @@ using SpendManagementLibrary.Employees;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     /// <summary>
     /// Summary description for aeteam.
     /// </summary>
@@ -42,7 +44,7 @@ namespace Spend_Management
             Master.PageSubTitle = "Team Details";
             switch (currentUser.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 1045;
                     break;
                 default:

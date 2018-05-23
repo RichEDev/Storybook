@@ -10,6 +10,11 @@ namespace Spend_Management
     using System.Text;
     using System.Collections.Generic;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     /// <summary>
     /// smForm Master
     /// </summary>
@@ -129,6 +134,12 @@ namespace Spend_Management
         #endregion
 
         /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
+        /// <summary>
         /// The _start processing time for the page.
         /// </summary>
         private DateTime _startProcessing;
@@ -198,7 +209,7 @@ namespace Spend_Management
             }
             this.UseDynamicCSS = true;
             string theme = this.Page.StyleSheetTheme;
-            var clsMasterPageMethods = new cMasterPageMethods(currentUser, theme) { UseDynamicCSS = this.UseDynamicCSS };
+            var clsMasterPageMethods = new cMasterPageMethods(currentUser, theme, this.ProductModuleFactory) { UseDynamicCSS = this.UseDynamicCSS };
             clsMasterPageMethods.PreventBrowserFromCachingTheResponse();
             clsMasterPageMethods.RedirectUserBypassingChangePassword();
             clsMasterPageMethods.SetupJQueryReferences(ref jQueryCss, ref scriptman);

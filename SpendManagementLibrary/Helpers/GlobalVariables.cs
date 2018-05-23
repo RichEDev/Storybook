@@ -6,6 +6,8 @@ namespace SpendManagementLibrary
     using System.Data.SqlClient;
     using System.Diagnostics.CodeAnalysis;
 
+    using BusinessLogic.Modules;
+
     /// <summary>
     /// Global variables as defined in the web config and loaded in the global.asax
     /// </summary>

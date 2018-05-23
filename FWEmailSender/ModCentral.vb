@@ -9,6 +9,7 @@ Imports System.ComponentModel
 Imports System.Collections
 Imports System.Collections.Generic
 Imports System.Data.SqlClient
+Imports BusinessLogic.Modules
 Imports FWBase
 Imports SpendManagementLibrary
 Imports Spend_Management

@@ -4,6 +4,10 @@ namespace expenses
     using System.Diagnostics.CodeAnalysis;
     using System.Web.UI;
     using System.Web.UI.WebControls;
+
+    using BusinessLogic.Modules;
+
+    using Spend_Management.shared.code.GreenLight;
     using Spend_Management.shared.code;
 
     using Spend_Management;
@@ -13,6 +17,7 @@ namespace expenses
     using BusinessLogic;
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.ProductModules;
 
     /// <summary>
     /// Home page for expenses.
@@ -29,6 +34,12 @@ namespace expenses
         /// </summary>
         [Dependency]
         public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether is delegate.
@@ -58,13 +69,13 @@ namespace expenses
         protected void Page_Load(object sender, EventArgs e)
         {
             var user = cMisc.GetCurrentUser();
-            var clsModules = new cModules();
-            var module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
 
-            var usingExpenses = user.CurrentActiveModule == Modules.expenses;
+            var module = this.ProductModuleFactory[user.CurrentActiveModule];
 
-            this.Title = string.Format("Welcome to {0}", module.BrandNamePlainText);
-            this.Master.Title = string.Format("Welcome to {0}", module.BrandNameHTML);
+            var usingExpenses = user.CurrentActiveModule == Modules.Expenses;
+
+            this.Title = string.Format("Welcome to {0}", module.BrandName);
+            this.Master.Title = string.Format("Welcome to {0}", module.BrandNameHtml);
 
             if (this.IsPostBack == false)
             {
@@ -110,7 +121,7 @@ namespace expenses
                         menuText,
                         "mydetailsmenu.aspx");
 
-                this.Master.AddMenuItem("help", 48, "Help &amp; Support", "Help &amp; Support is an online service for education, guidance and support that enables you to find the best answers for your " + module.BrandNameHTML + " questions.", "shared/helpAndSupport.aspx");
+                this.Master.AddMenuItem("help", 48, "Help &amp; Support", "Help &amp; Support is an online service for education, guidance and support that enables you to find the best answers for your " + module.BrandNameHtml + " questions.", "shared/helpAndSupport.aspx");
 
                 if (usingExpenses)
                 {
@@ -193,7 +204,7 @@ namespace expenses
                         "administrative_settings",
                         48,
                         "Administrative Settings",
-                        string.Format(menuText, module.BrandNameHTML),
+                        string.Format(menuText, module.BrandNameHtml),
                         "adminmenu.aspx");
                 }
 
@@ -220,7 +231,7 @@ namespace expenses
                         "search",
                         48,
                         "Search",
-                        string.Format(menuText, module.BrandNameHTML),
+                        string.Format(menuText, module.BrandNameHtml),
                         "searchmenu.aspx");
                 }
 
@@ -303,7 +314,7 @@ namespace expenses
                 }
                 this.Master.AddCustomEntityViewMenuIcons(user, 1);
 
-                this.Master.AddMenuItem("exit", 48, "Log Out", "Log out of " + module.BrandNameHTML + " and close this window.", "shared/process.aspx?process=1");
+                this.Master.AddMenuItem("exit", 48, "Log Out", "Log out of " + module.BrandNameHtml + " and close this window.", "shared/process.aspx?process=1");
 
                 if (Request.QueryString["action"] != null)
                 {

@@ -202,11 +202,7 @@ namespace Spend_Management
 
             var userdefined = new SortedList<int, object>();
 
-            var clsModules = new cModules();
-            cModule module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
-            string brandName = (module != null) ? module.BrandNamePlainText : "Expenses";
             bool carPreviouslyActive = false;
-
 
             foreach (object o in udfs)
             {

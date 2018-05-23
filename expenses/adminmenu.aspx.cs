@@ -5,7 +5,10 @@ using System.Linq;
 using BusinessLogic;
 using BusinessLogic.DataConnections;
 using BusinessLogic.GeneralOptions;
+using BusinessLogic.Modules;
+using BusinessLogic.ProductModules;
 
+using SpendManagementLibrary.Enumerators;
 using Spend_Management;
 
 using SpendManagementLibrary;
@@ -20,6 +23,12 @@ public partial class adminmenu : System.Web.UI.Page
     /// </summary>
     [Dependency]
     public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+    /// <summary>
+    /// An instance of <see cref="IDataFactory{IProductModule,Modules}"/> to get a <see cref="IProductModule"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
     /// <summary>
     /// The page_ load.
@@ -40,8 +49,7 @@ public partial class adminmenu : System.Web.UI.Page
             this.ViewState["accountid"] = user.AccountID;
             this.ViewState["employeeid"] = user.EmployeeID;
 
-            var clsModules = new cModules();
-            cModule module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
+            var module = this.ProductModuleFactory[user.CurrentActiveModule];
 
             var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithDelegate();
             var clsentities = new cCustomEntities(user);
@@ -67,7 +75,7 @@ public partial class adminmenu : System.Web.UI.Page
                 systemOptionsMenuAccess = false;
             }
 
-            var usingExpenses = user.CurrentActiveModule == Modules.expenses;
+            var usingExpenses = user.CurrentActiveModule == Modules.Expenses;
             string menuText;
 
             #region custom entities for base information check
@@ -104,7 +112,7 @@ public partial class adminmenu : System.Web.UI.Page
                     "thread",
                     48,
                     "Tailoring",
-                    string.Format("Customise the look and feel of {0} and alter basic settings.", module.BrandNameHTML),
+                    string.Format("Customise the look and feel of {0} and alter basic settings.", module.BrandName),
                     "tailoringmenu.aspx");
             }
 
@@ -156,7 +164,7 @@ public partial class adminmenu : System.Web.UI.Page
                     "objects_exchange",
                     48,
                     "Imports / Exports",
-                    string.Format("Import and export data from {0}", module.BrandNameHTML),
+                    string.Format("Import and export data from {0}", module.BrandName),
                     "exportmenu.aspx");
             }
 

@@ -17,6 +17,8 @@
 
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
     using BusinessLogic.Reasons;
 
     using SpendManagementLibrary.Addresses;
@@ -87,6 +89,8 @@
 
         private readonly Lazy<IDataFactory<IGeneralOptions, int>> _generalOptionsFactory = new Lazy<IDataFactory<IGeneralOptions, int>>(() => FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>());
 
+        private readonly Lazy<IDataFactory<IProductModule, Modules>> _productModuleFactory = new Lazy<IDataFactory<IProductModule, Modules>>(() => FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>());
+
         /// <summary>
         /// The company name name.
         /// </summary>
@@ -141,7 +145,7 @@
 
             this._companyName = accounts.companyid;
 
-            this.hostName = HostManager.GetHostName(accounts.HostnameIds, Modules.expenses, accounts.companyid);
+            this.hostName = HostManager.GetHostName(accounts.HostnameIds, Modules.Expenses, accounts.companyid);
             try
             {
                 this.serverName = Environment.MachineName;
@@ -158,8 +162,8 @@
                 this.identityName = windowsIdentity.Name;
             }
 
-            var modules = new cModules();
-            this.brandName = modules.GetModuleByID((int)Modules.expenses).BrandNamePlainText;
+            this.brandName = this._productModuleFactory.Value[Modules.Expenses].BrandName;
+
             this.list = this.CacheList();
         }
 
@@ -243,10 +247,10 @@
             {
                 this.identityName = windowsIdentity.Name;
             }
-            var modules = new cModules();
-            this.brandName = modules.GetModuleByID(currentModule == Modules.None ? (int)this.currentUser.CurrentActiveModule : (int)currentModule).BrandNamePlainText;
-            this.list = this.CacheList();
 
+            var module = this._productModuleFactory.Value[currentModule == Modules.None ? this.currentUser.CurrentActiveModule : currentModule];
+            this.brandName = module.BrandName;
+            this.list = this.CacheList();
         }
 
         /// <summary>

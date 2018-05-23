@@ -1,10 +1,15 @@
-﻿using System;
-using System.Text;
-using SpendManagementLibrary.Helpers;
-using SpendManagementLibrary;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
+    using System;
+    using System.Text;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Helpers;
+
     /// <summary>
     /// Used to generate error emails when errors happen in the application - used HttpContext to pass details to ErrorHandler
     /// </summary>
@@ -65,10 +70,11 @@ namespace Spend_Management
         /// </summary>
         /// <param name="ex"></param>
         /// <returns></returns>
-        public bool SendAutomatedProcessError(Exception ex) 
+        public bool SendAutomatedProcessError(Exception ex)
         {
-            cModules clsModules = new cModules();
-            return GenerateEmail(null, null, clsModules.GetModuleByEnum(GlobalVariables.DefaultModule), null, null, ex, true);
+            var module = FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>()[GlobalVariables.DefaultModule];
+
+            return GenerateEmail(null, null, module, null, null, ex, true);
         }
         
         /// <summary>
@@ -90,19 +96,18 @@ namespace Spend_Management
             }
             else
             {
-                cModules clsModules = new cModules();
+                var module = FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>()[GlobalVariables.DefaultModule];
 
-                cModule reqModule = clsModules.GetModuleByEnum(GlobalVariables.DefaultModule);
                 if (currentUser != null)
                 {
                     cAccountSubAccounts clsSubAccounts = new cAccountSubAccounts(currentUser.Account.accountid);
                     cAccountSubAccount currentSubAccount = clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId);
 
-                    response = GenerateEmail(currentUser.Account, currentSubAccount, reqModule, currentUser.Employee, currentUser.Delegate, ex);
+                    response = GenerateEmail(currentUser.Account, currentSubAccount, module, currentUser.Employee, currentUser.Delegate, ex);
                 }
                 else
                 {
-                    response = GenerateEmail(null, null, reqModule, null, null, ex);
+                    response = GenerateEmail(null, null, module, null, null, ex);
                 }
             }
 

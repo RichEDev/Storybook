@@ -4,7 +4,9 @@ using System.Web.UI.WebControls;
 
 namespace Spend_Management
 {
-	/// <summary>
+    using BusinessLogic.Modules;
+
+    /// <summary>
 	/// Summary description for selectemployee.
 	/// </summary>
 	public partial class selectemployee : Page
@@ -23,7 +25,7 @@ namespace Spend_Management
 
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1139;
                         break;
                     default:
@@ -54,7 +56,7 @@ namespace Spend_Management
                 {
                     case Modules.SpendManagement:
                     case Modules.SmartDiligence:
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "hidePanel", "if(document.getElementById('expcriteria') != null) { document.getElementById('expcriteria').style.display = 'none'; }", true);
                         break;
                     case Modules.Greenlight:
@@ -107,7 +109,7 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect("~/MenuMain.aspx?menusection=employee", true);
                     break;
                 default:

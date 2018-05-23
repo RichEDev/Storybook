@@ -9,6 +9,10 @@ using SpendManagementLibrary.Employees;
 
 namespace Spend_Management
 {
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     /// <summary>
     /// cPendingEmails 
     /// </summary>
@@ -28,6 +32,9 @@ namespace Spend_Management
         /// Reference to the cache
         /// </summary>
         private readonly Utilities.DistributedCaching.Cache _cache = new Utilities.DistributedCaching.Cache();
+
+        private readonly IDataFactory<IProductModule, Modules> _productModuleFactory =
+            FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>();
 
         /// <summary>
         /// The cache couchbase cache key for this item.
@@ -156,12 +163,11 @@ namespace Spend_Management
             int pendingEmailId = 0;
             StringBuilder sMessage = new StringBuilder();
             CurrentUser currentUser = cMisc.GetCurrentUser();
-            cModules modules = new cModules();
             string brandName = "Framework";
             if (currentUser != null)
             {
-                cModule module = modules.GetModuleByID((int)currentUser.CurrentActiveModule);
-                brandName = (module != null) ? module.BrandNamePlainText : "Framework";
+                var module = this._productModuleFactory[currentUser.CurrentActiveModule];
+                brandName = (module != null) ? module.BrandName : "Framework";
             }
             else
             {
@@ -252,12 +258,11 @@ namespace Spend_Management
             int pendingEmailId = 0;
             StringBuilder sMessage = new StringBuilder();
             CurrentUser currentUser = cMisc.GetCurrentUser();
-            cModules modules = new cModules();
             string brandName = "Framework";
             if (currentUser != null)
             {
-                cModule module = modules.GetModuleByID((int)currentUser.CurrentActiveModule);
-                brandName = (module != null) ? module.BrandNamePlainText : "Framework";
+                var module = this._productModuleFactory[currentUser.CurrentActiveModule];
+                brandName = (module != null) ? module.BrandName : "Framework";
             }
             else
             {
@@ -372,12 +377,11 @@ namespace Spend_Management
             int pendingEmailId = 0;
             StringBuilder sMessage = new StringBuilder();
             CurrentUser currentUser = cMisc.GetCurrentUser();
-            cModules modules = new cModules();
             string brandName = "Framework";
             if (currentUser != null)
             {
-                cModule module = modules.GetModuleByID((int)currentUser.CurrentActiveModule);
-                brandName = (module != null) ? module.BrandNamePlainText : "Framework";
+                var module = this._productModuleFactory[currentUser.CurrentActiveModule];
+                brandName = (module != null) ? module.BrandName : "Framework";
             }
             else
             {
@@ -476,12 +480,11 @@ namespace Spend_Management
             int pendingEmailId = 0;
             StringBuilder sMessage = new StringBuilder();
             CurrentUser currentUser = cMisc.GetCurrentUser();
-            cModules modules = new cModules();
             string brandName = "Framework";
             if (currentUser != null)
             {
-                cModule module = modules.GetModuleByID((int)currentUser.CurrentActiveModule);
-                brandName = (module != null) ? module.BrandNamePlainText : "Framework";
+                var module = this._productModuleFactory[currentUser.CurrentActiveModule];
+                brandName = (module != null) ? module.BrandName : "Framework";
             }
             else
             {
@@ -617,12 +620,11 @@ namespace Spend_Management
             int pendingEmailId = 0;
             StringBuilder sMessage = new StringBuilder();
             CurrentUser currentUser = cMisc.GetCurrentUser();
-            cModules modules = new cModules();
             string brandName = "Framework";
             if (currentUser != null)
             {
-                cModule module = modules.GetModuleByID((int)currentUser.CurrentActiveModule);
-                brandName = (module != null) ? module.BrandNamePlainText : "Framework";
+                var module = this._productModuleFactory[currentUser.CurrentActiveModule];
+                brandName = (module != null) ? module.BrandName : "Framework";
             }
             else
             {

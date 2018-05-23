@@ -5,6 +5,8 @@ Imports BusinessLogic.AccountProperties
 Imports BusinessLogic.DataConnections
 Imports BusinessLogic.Enums
 Imports BusinessLogic.GeneralOptions
+Imports BusinessLogic.Modules
+Imports BusinessLogic.ProductModules
 
 Imports FWBase
 
@@ -42,6 +44,17 @@ Namespace Framework2006
         ''' </summary>
         <Dependency()>  _
         Public Property AccountPropertiesFactory As IDataFactory(Of IAccountProperty, AccountPropertyCacheKey)
+            Get
+            End Get
+            Set
+            End Set
+        End Property
+        
+        ''' <summary>
+        ''' An instance of <see cref="IDataFactory{IProductModule,Modules}"/> to get a <see cref="IProductModule"/>
+        ''' </summary>
+        <Dependency()>  _
+        Public Property ProductModuleFactory As IDataFactory(Of IProductModule, Modules)
             Get
             End Get
             Set
@@ -747,11 +760,10 @@ Namespace Framework2006
             Dim ARec As New cAuditRecord
             Dim subaccs As New cAccountSubAccounts(curUser.Account.accountid)
             Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, subaccs.getSubAccountsCollection(), curUser.CurrentSubAccountId)
-            Dim accProperties As cAccountProperties = subaccs.getSubAccountById(curUser.CurrentSubAccountId).SubAccountProperties
 
-            Dim clsModules As New cModules
-            Dim clsModule As cModule = clsModules.GetModuleByID(CInt(curUser.CurrentActiveModule))
-            Dim brandName As String = clsModule.BrandNameHTML
+            Dim productModule = Me.ProductModuleFactory(curUser.CurrentActiveModule)
+
+            Dim brandName As String = productModule.BrandNameHtml
             Dim activeContractid = ViewState("ActiveContract")
 
             'Set the element for the audit log

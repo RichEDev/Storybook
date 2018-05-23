@@ -5,6 +5,10 @@ using SpendManagementLibrary;
 
 namespace Expenses_Scheduler
 {
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     class cEmails
     {
         EmailSender sender;
@@ -106,9 +110,10 @@ namespace Expenses_Scheduler
 
         private string GetApplicationName()
         {
-            cModules clsModules = new cModules();
-            cModule reqModule = clsModules.GetModuleByID((int)GlobalVariables.DefaultModule);
-            return reqModule.BrandNamePlainText;
+            var module =
+                FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>()[GlobalVariables
+                    .DefaultModule];
+            return module.BrandName;
         }
     }
 

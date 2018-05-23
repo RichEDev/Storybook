@@ -4,6 +4,8 @@ namespace SpendManagementLibrary.Logic_Classes.Tables
     using System;
     using System.Collections.Generic;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary.Logic_Classes.Fields;
 
     public class SubAccountTables :ITables

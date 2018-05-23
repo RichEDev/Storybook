@@ -6,6 +6,7 @@
 
     using BusinessLogic.Accounts.Elements;
     using BusinessLogic.DataConnections;
+    using BusinessLogic.Elements;
     using BusinessLogic.Identity;
 
     using CacheDataAccess.Caching;

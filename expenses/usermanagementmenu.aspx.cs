@@ -4,6 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Web.UI;
 
+using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.Modules;
+using BusinessLogic.ProductModules;
+
 using Spend_Management;
 using SpendManagementLibrary;
 
@@ -16,6 +21,12 @@ using Spend_Management.shared.code.GreenLight;
 /// </summary>
 public partial class usermanagementmenu : Page
 {
+    /// <summary>
+    /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
     #region Methods
 
     /// <summary>
@@ -35,9 +46,10 @@ public partial class usermanagementmenu : Page
             this.Master.Title = this.Title;
 
             var user = cMisc.GetCurrentUser();
-            var clsModules = new cModules();
-            var module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
-            var usingExpenses = user.CurrentActiveModule == Modules.expenses;
+
+            var module = this.ProductModuleFactory[user.CurrentActiveModule];
+
+            var usingExpenses = user.CurrentActiveModule == Modules.Expenses;
 
             this.ViewState["accountid"] = user.AccountID;
 
@@ -47,7 +59,7 @@ public partial class usermanagementmenu : Page
                     "data_lock",
                     48,
                     "Access Roles",
-                    string.Format("Add, edit or delete Access Roles. An employee’s Access Role determines the areas within {0} which can be accessed and the data that can be viewed through Reports. Build a finer security policy by creating Access Roles limiting access to specific functions.", module.BrandNameHTML),
+                    string.Format("Add, edit or delete Access Roles. An employee’s Access Role determines the areas within {0} which can be accessed and the data that can be viewed through Reports. Build a finer security policy by creating Access Roles limiting access to specific functions.", module.BrandNameHtml),
                     "shared/admin/accessRoles.aspx");
             }
 

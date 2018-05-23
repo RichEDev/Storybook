@@ -181,6 +181,8 @@
     <Compile Include="Common\Actions\IGet.cs" />
     <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\HttpActionResult.cs" />
+    <Compile Include="Controllers\ProductModulesWithElementsController.cs" />
+    <Compile Include="Controllers\ProductModulesController.cs" />
     <Compile Include="Controllers\P11DCategoriesController.cs" />
     <Compile Include="Controllers\ProjectCodesController.cs" />
     <Compile Include="Controllers\ControllerExtensions.cs" />
@@ -192,6 +194,8 @@
     <Compile Include="DTO\GeneralOptionsRequestDTO.cs" />
     <Compile Include="DTO\AnnouncementDto.cs" />
     <Compile Include="DTO\P11DCategoryDTO.cs" />
+    <Compile Include="DTO\ProductModuleWithElementsDTO.cs" />
+    <Compile Include="DTO\ProductModuleDTO.cs" />
     <Compile Include="DTO\ProjectCodeDTO.cs" />
     <Compile Include="DTO\ReasonDTO.cs" />
     <Compile Include="DTO\WalletReceiptDTO.cs" />

@@ -25,6 +25,8 @@ namespace Spend_Management
     using BusinessLogic;
     using BusinessLogic.DataConnections;
     using BusinessLogic.Reasons;
+    using BusinessLogic.Modules;
+
     using CacheDataAccess.Reasons;
 
     /// <summary>
@@ -1665,7 +1667,7 @@ namespace Spend_Management
 
             #region Employee Home and Office Locations
 
-            CurrentUser currentUser = new CurrentUser(nAccountID, nEmployeeID, 0, Modules.expenses, subAccountID);
+            CurrentUser currentUser = new CurrentUser(nAccountID, nEmployeeID, 0, Modules.Expenses, subAccountID);
             Address homeAddress = null;
             // todo check this is the correct field for AddressName?
             string homeLocation = lstEmployee["Home Location"].ToString();

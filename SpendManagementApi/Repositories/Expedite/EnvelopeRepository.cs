@@ -7,6 +7,7 @@
     using System.Web;
 
     using BusinessLogic.Identity;
+    using BusinessLogic.Modules;
 
     using Interfaces;
     using Models.Common;
@@ -181,7 +182,7 @@
         /// <returns>The edited envelope.</returns>
         public override Envelope Update(Envelope item)
         {
-            var user = this.User ?? new CurrentUser(item.AccountId.Value, 0, 0, Modules.expenses, 1);
+            var user = this.User ?? new CurrentUser(item.AccountId.Value, 0, 0, Modules.Expenses, 1);
             return new Envelope().From(_data.EditEnvelope(item.To(_actionContext), user), _actionContext);
         }
 
@@ -261,7 +262,7 @@
         {
             var envelope = TryGetEnvelopeAndThrow(id);
 
-            var user = this.User ?? new CurrentUser(envelope.AccountId.Value, 0, 0, Modules.expenses, 1);
+            var user = this.User ?? new CurrentUser(envelope.AccountId.Value, 0, 0, Modules.Expenses, 1);
 
             if (this._actionContext is null)
             {           
@@ -303,7 +304,7 @@
 
             HttpContext.Current.User = new WebPrincipal(new UserIdentity(envelope.AccountId.Value, 0));
 
-            var user = this.User ?? new CurrentUser(envelope.AccountId.Value, 0, 0, Modules.expenses, 1);
+            var user = this.User ?? new CurrentUser(envelope.AccountId.Value, 0, 0, Modules.Expenses, 1);
 
             if (this._actionContext is null)
             {

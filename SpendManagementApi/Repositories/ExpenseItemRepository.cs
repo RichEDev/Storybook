@@ -14,6 +14,8 @@
 
     using System.Collections.Generic;
 
+    using BusinessLogic.Modules;
+
     using Interfaces;
 
     using Models.Common;
@@ -296,7 +298,7 @@
 
             IActionContext actionContext = new ActionContext(accountId, employeeId, 1);     
             var expense = new ExpediteExpenseItem().ToApiType(expenseItem, actionContext);            
-            ICurrentUser user = new CurrentUser(accountId, 0, 0, Modules.expenses, 1);
+            ICurrentUser user = new CurrentUser(accountId, 0, 0, Modules.Expenses, 1);
             expenseItems.AuditExpenseItemsViewedBySystemUser($"{expenseItem.refnum}, {expenseItem.date.ToShortDateString()}, {expense.ExpenseSubCategoryName}, {expenseItem.total:0.00}", accountId);
 
             return expense;

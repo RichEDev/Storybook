@@ -2,6 +2,11 @@
 {
     using System;
     using System.Text;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using SpendManagementLibrary;
 
     /// <summary>
@@ -19,6 +24,9 @@
         /// </summary>
         public int ItemId { private get; set; }
 
+        private readonly IDataFactory<IProductModule, Modules> _productModuleFactory =
+            FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>();
+
         /// <summary>
         /// The displayable Title for this record.
         /// </summary>
@@ -28,9 +36,8 @@
             set
             {
                 this.lockDialogTitle.InnerText = value + " - Locked";
-                var modules = new cModules();
-                var module = modules.GetModuleByID((int)cMisc.GetCurrentUser().CurrentActiveModule);
-                this.lockDialogTitle.InnerText = "Message from " + module.BrandNameHTML;
+                var module = this._productModuleFactory[cMisc.GetCurrentUser().CurrentActiveModule];
+                this.lockDialogTitle.InnerText = "Message from " + module.BrandNameHtml;
                 this.elementLockingTitle.InnerText = value;
                 this.dialogLockingTitle.InnerText = value;
             }

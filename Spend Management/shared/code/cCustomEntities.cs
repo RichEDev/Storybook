@@ -42,6 +42,9 @@ namespace Spend_Management
     using shared.code.GreenLight;
     using shared.code.EasyTree;
     using System.Text;
+
+    using BusinessLogic.Modules;
+
     /// <summary>
     /// Primary custom entities collection class
     /// </summary>
@@ -5288,10 +5291,10 @@ namespace Spend_Management
 
                 switch (oCurrentUser.CurrentActiveModule)
                 {
-                    case Modules.expenses:
+                    case Modules.Expenses:
                         title += "Expenses";
                         break;
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         title += "Framework";
                         break;
                     case Modules.SmartDiligence:
@@ -8841,7 +8844,7 @@ namespace Spend_Management
 
             switch (this.oCurrentUser.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                 case Modules.SmartDiligence:
                     switch (menuId)
                     {
@@ -8871,7 +8874,7 @@ namespace Spend_Management
                             break;
                     }
                     break;
-                case Modules.expenses:
+                case Modules.Expenses:
                 case Modules.Greenlight:
                 case Modules.GreenlightWorkforce:
                     switch (menuId)

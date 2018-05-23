@@ -11,15 +11,26 @@ using SpendManagementLibrary;
 
 namespace Spend_Management.shared
 {
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     public partial class aeEntityPopup : Page
     {
         public string sGridID = string.Empty;
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
             string theme = Page.StyleSheetTheme;
-            var clsMasterPageMethods = new cMasterPageMethods(currentUser, theme) { UseDynamicCSS = true };
+            var clsMasterPageMethods = new cMasterPageMethods(currentUser, theme, this.ProductModuleFactory) { UseDynamicCSS = true };
             favLink.Href = clsMasterPageMethods.GetFavIcon();
             clsMasterPageMethods.SetupDynamicStyles(ref this.Head1);
             clsMasterPageMethods.SetupJQueryReferences(ref this.jQueryCss, ref this.scriptman);

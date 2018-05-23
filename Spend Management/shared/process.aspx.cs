@@ -22,6 +22,8 @@ using System.Web.Security;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     /// <summary>
     /// Summary description for process.
     /// </summary>
@@ -52,7 +54,7 @@ namespace Spend_Management
 
                         switch (user.CurrentActiveModule)
                         {
-                            case Modules.contracts:
+                            case Modules.Contracts:
                             case Modules.SpendManagement:
                             case Modules.SmartDiligence:
                                 // remove concurrent user manage

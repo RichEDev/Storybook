@@ -25,6 +25,9 @@ namespace Expenses_Reports
     using System.Windows.Forms.DataVisualization.Charting;
     using System.Text.RegularExpressions;
     using System.Diagnostics;
+
+    using BusinessLogic.Modules;
+
     using Expenses_Reports.Formula;
     using SpendManagementLibrary.Logic_Classes.Fields;
 

@@ -1,20 +1,23 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using SpendManagementLibrary;
-using SpendManagementLibrary.Employees;
-
 namespace Spend_Management
 {
+    using System;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Employees;
+
     public partial class activate : System.Web.UI.Page
     {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack == false)
@@ -22,10 +25,9 @@ namespace Spend_Management
                 int employeeid = int.Parse(Request.QueryString["employeeid"]);
                 int accountid = int.Parse(Request.QueryString["accountid"]);
                 cEmployees clsemployees = new cEmployees(accountid);
-                cModules clsModules = new cModules();
-                cModule clsModule = clsModules.GetModuleByID((int)Modules.contracts);
-                string brandName = (clsModule != null) ? clsModule.BrandNamePlainText : "Expenses";
 
+                var module = this.ProductModuleFactory[Modules.Contracts];
+                string brandName = (module != null) ? module.BrandName : "Expenses";
 
                 Employee reqemp = clsemployees.GetEmployeeById(employeeid);
                 clsemployees.Activate(employeeid);

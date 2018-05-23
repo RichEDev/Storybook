@@ -142,6 +142,8 @@
     <Compile Include="Images\ImageTests.cs" />
     <Compile Include="ListWrapperTests.cs" />
     <Compile Include="P11DCategories\P11DCategoryTests.cs" />
+    <Compile Include="ProductModules\ProductModuleWithElementsTests.cs" />
+    <Compile Include="ProductModules\ProductModuleTests.cs" />
     <Compile Include="ProjectCodes\ProjectCodeTests.cs" />
     <Compile Include="ProjectCodes\ProjectCodeWithUserDefinedFieldsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

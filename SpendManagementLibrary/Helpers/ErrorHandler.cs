@@ -9,6 +9,8 @@ namespace SpendManagementLibrary.Helpers
     using System.Net.Mail;
     using System.Text;
 
+    using BusinessLogic.ProductModules;
+
     /// <summary>
     /// Handles the sending of errors caught in the application
     /// </summary>
@@ -205,7 +207,7 @@ namespace SpendManagementLibrary.Helpers
         /// <returns>
         /// true if the email was sent, false if it failed
         /// </returns>
-        public bool GenerateEmail(cAccount account, cAccountSubAccount subAccount, cModule module, Employee employee, Employee delegateEmployee, Exception exception, bool isAutomatedProcess = false, cReportRequest reportRequest = null)
+        public bool GenerateEmail(cAccount account, cAccountSubAccount subAccount, IProductModule module, Employee employee, Employee delegateEmployee, Exception exception, bool isAutomatedProcess = false, cReportRequest reportRequest = null)
         {
             Dictionary<ErrorInformation, string> replacements = new Dictionary<ErrorInformation, string>();
 
@@ -236,7 +238,7 @@ namespace SpendManagementLibrary.Helpers
                 replacements.Add(ErrorInformation.SubAccountName, subAccount.Description);
             }
             #endregion
-            replacements.Add(ErrorInformation.Module, (module != null ? module.ModuleName : "Unknown"));
+            replacements.Add(ErrorInformation.Module, (module != null ? module.Name : "Unknown"));
             #region user details
             if (employee != null && employee.EmployeeID != 0)
             {

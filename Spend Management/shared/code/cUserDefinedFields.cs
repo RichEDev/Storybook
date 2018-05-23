@@ -13,6 +13,8 @@
 
     using AjaxControlToolkit;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary;
 
     using Spend_Management.shared.code;
@@ -2779,7 +2781,7 @@
 
             switch (currentUser.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                 case Modules.SpendManagement:
                 case Modules.SmartDiligence:
                     allowsearch = allowSearch;

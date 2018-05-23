@@ -19,6 +19,8 @@ namespace Expenses_Reports
     using Infragistics.WebUI.UltraWebCalcManager;
     using Infragistics.WebUI.UltraWebGrid;
 
+    using SimpleInjector;
+
     using Spend_Management;
 
     using SpendManagementLibrary;
@@ -1102,6 +1104,12 @@ namespace Expenses_Reports
                         {
                             if (req.Status == ReportRequestStatus.Queued && !ReportAlreadyBeingProcessed(req))
                             {
+                                //Bootstrap scheduler as it use SM and SMLib
+                                Container container = Bootstrapper.Bootstrap(req.accountid);
+
+                                //Assign container to funky injector
+                                FunkyInjector.Container = container;
+
                                 req.Status = ReportRequestStatus.BeingProcessed;
                                 var thread = new Thread(startReportThread)
                                 {

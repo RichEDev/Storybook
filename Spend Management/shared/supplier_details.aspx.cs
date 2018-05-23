@@ -12,6 +12,8 @@ using SpendManagementLibrary.Helpers;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     public partial class supplier_detailsPage : System.Web.UI.Page
     {
         public string mdlContact;
@@ -91,7 +93,7 @@ namespace Spend_Management
                     {
                         switch (curUser.CurrentActiveModule)
                         {
-                            case Modules.contracts:
+                            case Modules.Contracts:
                                 Master.helpid = 1060;
                                 break;
                             default:
@@ -142,7 +144,7 @@ namespace Spend_Management
 
                         switch (curUser.CurrentActiveModule)
                         {
-                            case Modules.contracts:
+                            case Modules.Contracts:
                                 Master.helpid = 1059;
                                 break;
                             default:

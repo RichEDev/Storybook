@@ -8,6 +8,11 @@ namespace Spend_Management
     using System.Collections.Generic;
     using System.Web.UI;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using SpendManagementLibrary;
 
     using Spend_Management.shared.code.GreenLight;
@@ -19,6 +24,12 @@ namespace Spend_Management
     /// </summary>
     public partial class menu : Page
     {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
         #region Methods
 
         /// <summary>
@@ -37,8 +48,7 @@ namespace Spend_Management
             this.ViewState["accountid"] = user.AccountID;
             this.ViewState["employeeid"] = user.EmployeeID;
 
-            var clsModules = new cModules();
-            cModule module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
+            var module = this.ProductModuleFactory[user.CurrentActiveModule];
 
             string menuPage = string.Empty;
 
@@ -58,7 +68,7 @@ namespace Spend_Management
                             "policeman_bobby",
                             48,
                             "Audit Log",
-                            string.Format("Every action that occurs in {0} is logged. Search and view logged actions.", module.BrandNameHTML),
+                            string.Format("Every action that occurs in {0} is logged. Search and view logged actions.", module.BrandName),
                             "~/shared/admin/auditlog.aspx");
                     }
 
@@ -68,7 +78,7 @@ namespace Spend_Management
                             "key_preferences",
                             48,
                             "IP Address Filtering",
-                            string.Format("Specify which IP Addresses should be allowed to access {0}.", module.BrandNameHTML),
+                            string.Format("Specify which IP Addresses should be allowed to access {0}.", module.BrandName),
                             "~/shared/admin/adminIPfilters.aspx");
                     }
 

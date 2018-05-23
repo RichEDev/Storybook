@@ -3,6 +3,12 @@
     using System;
     using System.Linq;
     using System.Text;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using SpendManagementLibrary;
 
     using Spend_Management.shared;
@@ -32,6 +38,11 @@
         /// The _end processing time for the page.
         /// </summary>
         private DateTime _endProcessing;
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
         /// <summary>
         /// The page pre innit event.
@@ -87,13 +98,13 @@
             // Force IE out of compat mode
             Response.AddHeader("X-UA-Compatible", "IE=edge");
             string brandName = "Expenses";
-            var clsModules = new cModules();
             Modules activeModule = HostManager.GetModule(this.Request.Url.Host);
-            cModule module = clsModules.GetModuleByID((int)activeModule);
-        
+
+            var module = this.ProductModuleFactory[activeModule];
+
             if (module != null)
             {
-                brandName = module.BrandNamePlainText;
+                brandName = module.BrandName;
             }
 
             Page.Title = string.Format("{0} logon", brandName);
@@ -102,7 +113,7 @@
 
             switch (activeModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                 case Modules.SmartDiligence:
                 case Modules.Greenlight:
                 case Modules.GreenlightWorkforce:
@@ -197,7 +208,7 @@
             sb.Append("}\n");
 
             sb.Append("#titlegradient { \n");
-            if (activeModule == Modules.expenses)
+            if (activeModule == Modules.Expenses)
             {
                 sb.Append("background-image: url(../shared/images/login_header_bg.png); border-bottom: #000000 1px solid; \n");
             }

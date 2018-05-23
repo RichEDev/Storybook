@@ -10,6 +10,8 @@
     using System.Runtime.Serialization;
     using System.Web.Caching;
 
+    using BusinessLogic.Modules;
+
     using Microsoft.SqlServer.Server;
 
     using SpendManagementLibrary.Interfaces;

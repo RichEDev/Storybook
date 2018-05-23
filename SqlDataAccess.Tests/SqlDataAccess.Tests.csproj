@@ -143,6 +143,8 @@
     <Compile Include="Employees\AccessRoles\SqlEmployeeAssignedAccessRolesTests.cs" />
     <Compile Include="Employees\AccessRoles\SqlEmployeeCombinedAccessRoleFactoryTests.cs" />
     <Compile Include="Helpers\IdentityContextStub.cs" />
+    <Compile Include="ProductModules\SqlProductModuleWithElementsFactoryTests.cs" />
+    <Compile Include="ProductModules\SqlProductModuleTests.cs" />
     <Compile Include="ImportExport\ImportFilefactoryTests.cs" />
     <Compile Include="ImportExport\ImportReasonsTests.cs" />
     <Compile Include="ImportExport\ImportProjectCodesTests.cs" />

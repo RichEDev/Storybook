@@ -13,7 +13,9 @@
 	using Controllers;
 	using System.IO;
 
-	internal class Helper
+	using BusinessLogic.Modules;
+
+    internal class Helper
 	{
 		internal ICurrentUser GetDummyUser()
 		{

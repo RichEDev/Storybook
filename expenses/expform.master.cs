@@ -11,6 +11,11 @@ namespace expenses
     using System.Collections.Generic;
     using System.Text;
 
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     public partial class expform : System.Web.UI.MasterPage, IMasterPage
     {
         private string _title;
@@ -84,6 +89,12 @@ namespace expenses
 
         #endregion
 
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
            // Force IE out of compat mode
@@ -96,7 +107,7 @@ namespace expenses
             this.UseDynamicCSS = true;
             CurrentUser currentUser = cMisc.GetCurrentUser();
             string theme = this.Page.StyleSheetTheme;
-            var clsMasterPageMethods = new cMasterPageMethods(currentUser, theme);
+            var clsMasterPageMethods = new cMasterPageMethods(currentUser, theme, this.ProductModuleFactory);
             clsMasterPageMethods.PreventBrowserFromCachingTheResponse();
             clsMasterPageMethods.RedirectUserBypassingChangePassword();
             clsMasterPageMethods.UseDynamicCSS = UseDynamicCSS;

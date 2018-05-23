@@ -9,6 +9,7 @@ namespace Spend_Management.shared
     using BusinessLogic;
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
 
     using code.Authentication;
 
@@ -29,8 +30,6 @@ namespace Spend_Management.shared
         /// </summary>
         protected Modules Module { get; set; }
 
-        private string _moduleName;
-
         /// <summary>
         /// A public instance of <see cref="IEncryptor"/>
         /// </summary>
@@ -42,23 +41,6 @@ namespace Spend_Management.shared
         /// </summary>
         [Dependency]
         public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
-
-        /// <summary>
-        /// Gets the plain text module name.
-        /// </summary>
-        protected string ModuleName
-        {
-            get
-            {
-                if (this._moduleName == null)
-                {
-                    this._moduleName = new cModules().GetModuleByEnum(this.Module).BrandNamePlainText;
-                }
-
-                return this._moduleName;
-
-            }
-        }
 
         /// <summary>
         /// The page_ pre initialise.

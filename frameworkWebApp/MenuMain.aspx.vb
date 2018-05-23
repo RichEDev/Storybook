@@ -2,16 +2,30 @@ Imports SpendManagementLibrary
 Imports Spend_Management
 Imports FWClasses
 Imports Spend_Management.shared.code.GreenLight
+Imports BusinessLogic
+Imports BusinessLogic.DataConnections
+Imports BusinessLogic.Modules
+Imports BusinessLogic.ProductModules
 
 Partial Class MenuMain
     Inherits System.Web.UI.Page
 
     Private mnuSection As String
 
+    ''' <summary>
+    ''' An instance of <see cref="IDataFactory{IProductModule,Modules}"/> to get a <see cref="IProductModule"/>
+    ''' </summary>
+    <Dependency()>  _
+    Public Property ProductModuleFactory As IDataFactory(Of IProductModule, Modules)
+        Get
+        End Get
+        Set
+        End Set
+    End Property
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim curUser As CurrentUser = cMisc.GetCurrentUser()
-        Dim clsModules As New cModules()
-        Dim moduleType As cModule = clsModules.GetModuleByID(curUser.CurrentActiveModule)
+        Dim productModule = Me.ProductModuleFactory(curUser.CurrentActiveModule)
         Dim subaccs As New cAccountSubAccounts(curUser.Account.accountid)
         Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, subaccs.getSubAccountsCollection, curUser.CurrentSubAccountId)
         Dim recharge_entity As String = "Entity"
@@ -147,7 +161,7 @@ Partial Class MenuMain
                 CE_menuId = 6
 
                 If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.Employees, True) Then
-                    Master.addMenuItem("user", Master.iconSize, "Employees", "Define users permitted to access " & moduleType.BrandNameHTML & " and assign their access levels", "shared/admin/selectemployee.aspx")
+                    Master.addMenuItem("user", Master.iconSize, "Employees", "Define users permitted to access " & productModule.BrandNameHtml & " and assign their access levels", "shared/admin/selectemployee.aspx")
                 End If
                 If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.Teams, True) Then
                     Master.addMenuItem("users2", Master.iconSize, "Teams", "Define and manage teams of employees for email notifications or access control", "shared/admin/adminteams.aspx")
@@ -169,7 +183,7 @@ Partial Class MenuMain
                 End If
 
                 If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.IPAdressFiltering, True) Then
-                    Master.addMenuItem("key_preferences", 48, "IP Address Filtering", "Specify which IP Addresses should be allowed to access " + moduleType.BrandNameHTML + ".", "shared/admin/adminIPfilters.aspx")
+                    Master.addMenuItem("key_preferences", 48, "IP Address Filtering", "Specify which IP Addresses should be allowed to access " + productModule.BrandNameHtml + ".", "shared/admin/adminIPfilters.aspx")
                 End If
 
                 If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.AttachmentMimeTypes, True) Then
@@ -217,7 +231,7 @@ Partial Class MenuMain
                     Master.addMenuItem("palette", Master.iconSize, "Colours", "Modify the colour scheme of the application", "shared/admin/colours.aspx")
                 End If
                 If curUser.CheckAccessRole(AccessRoleType.View, SpendManagementElement.GeneralOptions, True) Then
-                    Master.addMenuItem("gear_preferences", Master.iconSize, "General Options", "Enable or disable various features within " & moduleType.BrandNameHTML & ".", "shared/admin/accountOptions.aspx")
+                    Master.addMenuItem("gear_preferences", Master.iconSize, "General Options", "Enable or disable various features within " & productModule.BrandNameHtml & ".", "shared/admin/accountOptions.aspx")
                 End If
 
             Case "reports"

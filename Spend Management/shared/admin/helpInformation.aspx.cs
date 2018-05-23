@@ -10,6 +10,8 @@
     using BusinessLogic.DataConnections;
     using BusinessLogic.Enums;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
 
     using SpendManagementLibrary;
 
@@ -20,6 +22,12 @@
         /// </summary>
         [Dependency]
         public IDataFactory<IAccountProperty, AccountPropertyCacheKey> AccountPropertiesFactory { get; set; }
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,11 +41,9 @@
             cAccountSubAccounts clsSubAccounts = new cAccountSubAccounts(currentUser.AccountID);
             cAccountProperties reqProperties = clsSubAccounts.getSubAccountById(currentUser.CurrentSubAccountId).SubAccountProperties;
 
-            cModules clsModules = new cModules();
-
             if (IsPostBack == false)
             {
-                litModuleSectionTitle.Text = clsModules.GetModuleByID((int)currentUser.CurrentActiveModule).BrandNamePlainText;
+                litModuleSectionTitle.Text = this.ProductModuleFactory[currentUser.CurrentActiveModule].BrandName;
 
                 #region help information
                 txtCustomerHelpContactName.Text = reqProperties.CustomerHelpContactName;

@@ -7,6 +7,7 @@ namespace Spend_Management
     using BusinessLogic;
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
 
     using Common.Cryptography;
 
@@ -40,7 +41,7 @@ namespace Spend_Management
 
             switch (this.user.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     this.Master.helpid = 1003;
                     break;
                 default:

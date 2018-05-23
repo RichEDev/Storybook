@@ -17,7 +17,9 @@ using System.Text;
 
 namespace Spend_Management.shared.admin
 {
-	/// <summary>
+    using BusinessLogic.Modules;
+
+    /// <summary>
 	/// Add/Edit countries and their associated VAT rates for expense items.
 	/// </summary>
 	public partial class aecountry : Page
@@ -30,7 +32,7 @@ namespace Spend_Management.shared.admin
             CurrentUser user = cMisc.GetCurrentUser();
             switch (user.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 0;
                     break;
                 default:
@@ -145,7 +147,7 @@ namespace Spend_Management.shared.admin
                 {
                     case Modules.SpendManagement:
                     case Modules.SmartDiligence:
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         System.Text.StringBuilder sb = new System.Text.StringBuilder();
                         sb.Append("if(document.getElementById('lnkNewVatRate') != null) { document.getElementById('lnkNewVatRate').style.display = 'none'; }\n");
                         sb.Append("if(document.getElementById('" + pnlrates.ClientID + "') != null) { document.getElementById('" + pnlrates.ClientID + "').style.display = 'none'; }\n");

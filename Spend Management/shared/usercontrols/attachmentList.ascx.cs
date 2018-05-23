@@ -11,6 +11,8 @@ using System.Text;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     public partial class attachmentList : System.Web.UI.UserControl
     {
         private string sTableName;
@@ -136,7 +138,7 @@ namespace Spend_Management
 
             switch (user.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                 case Modules.SpendManagement:
                 case Modules.SmartDiligence:
                     clsgrid.CssClass = "datatbl";

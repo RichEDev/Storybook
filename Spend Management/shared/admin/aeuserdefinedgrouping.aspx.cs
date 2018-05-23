@@ -11,6 +11,8 @@ using System.Text;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     public partial class aeuserdefinedgrouping : System.Web.UI.Page
     {
         public int nCurrentGroupingId;
@@ -35,7 +37,7 @@ namespace Spend_Management
                 ViewState["employeeid"] = user.EmployeeID;
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1147;
                         break;
                     default:

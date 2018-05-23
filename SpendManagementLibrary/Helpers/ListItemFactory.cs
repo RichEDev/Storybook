@@ -5,6 +5,8 @@ namespace SpendManagementLibrary.Helpers
     using System.Linq;
     using System.Web.UI.WebControls;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary.Interfaces;
 
     /// <summary>
@@ -83,10 +85,10 @@ namespace SpendManagementLibrary.Helpers
                             case Modules.SmartDiligence:
                                 listItem.Attributes["data-category"] = "Smart Dilligigence";
                                 break;
-                            case Modules.expenses:
+                            case Modules.Expenses:
                                 listItem.Attributes["data-category"] = "Expenses";
                                 break;
-                            case Modules.contracts:
+                            case Modules.Contracts:
                                 listItem.Attributes["data-category"] = "Framework";
                                 break;
                         }

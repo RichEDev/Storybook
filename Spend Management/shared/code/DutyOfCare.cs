@@ -7,6 +7,9 @@
     using SpendManagementLibrary.Employees.DutyOfCare;
     using SpendManagementLibrary;
     using System.Diagnostics;
+
+    using BusinessLogic.Modules;
+
     using expenses.code;
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Helpers;
@@ -82,7 +85,7 @@
                         int reminderDays = reqSubAccount.SubAccountProperties.RemindApproverOnDOCDocumentExpiryDays;
                         filterDate = DateTime.Today.AddDays(reminderDays);
                     }
-                    var notifications = new NotificationTemplates(claimantDetails.AccountId, claimantDetails.ClaimantId, string.Empty, 0, Modules.expenses);
+                    var notifications = new NotificationTemplates(claimantDetails.AccountId, claimantDetails.ClaimantId, string.Empty, 0, Modules.Expenses);
                     int[] recipientsId = claimantDetails.Approver == "Line Manager" ? new int[] { Employee.Get(claimantDetails.ClaimantId, claimantDetails.AccountId).LineManager } : claimantDetails.TeamIds;
                     notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAsApproverWhenClaimantsDocIsAboutToExpire), claimantDetails.ClaimantId, recipientsId, filterfieldval: filterDate, filterFieldGuid: new Guid("9F6E275F-516E-4A71-A94C-0D3D26A77D38"));
                 }
@@ -128,7 +131,7 @@
                     filterDate = DateTime.Today.AddDays(reminderDays);
                 }
 
-                var notifications = new NotificationTemplates(accountId, 0, string.Empty, 0, Modules.expenses);
+                var notifications = new NotificationTemplates(accountId, 0, string.Empty, 0, Modules.Expenses);
 
                 foreach (var claimant in claimantsEmailDetails)
                 {
@@ -171,7 +174,7 @@
             foreach (var claimant in claimantsEmailDetails)
             {
                 var claimantDetails = CreateEmployeeDataTableForEmailTemplatesBody(claimant, accountId);
-                var notifications = new NotificationTemplates(accountId, claimant.EmployeeId, string.Empty, 0, Modules.expenses);
+                var notifications = new NotificationTemplates(accountId, claimant.EmployeeId, string.Empty, 0, Modules.Expenses);
                 notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToClaimantWhenDrivingLicenceReviewIsDueToExpire), claimant.EmployeeId, new[] { claimant.EmployeeId }, EmployeeDetailsForBody: claimantDetails);
             }
 

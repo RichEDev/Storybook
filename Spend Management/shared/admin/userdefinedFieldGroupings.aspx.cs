@@ -9,6 +9,8 @@ using System.Text;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     public partial class userdefinedFieldGroupings : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -24,7 +26,7 @@ namespace Spend_Management
 
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1147;
                         break;
                     default:
@@ -97,7 +99,7 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect("~/MenuMain.aspx?menusection=tailoring", true);
                     break;
                 default:

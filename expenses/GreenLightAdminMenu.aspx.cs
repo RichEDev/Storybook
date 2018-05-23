@@ -3,7 +3,6 @@
     using System;
 
     using Spend_Management;
-    using SpendManagementLibrary;
 
     /// <summary>
     /// The GreenLight admin menu.
@@ -29,9 +28,6 @@
                 CurrentUser user = cMisc.GetCurrentUser();
                 this.ViewState["accountid"] = user.AccountID;
                 this.ViewState["employeeid"] = user.EmployeeID;
-
-                var clsModules = new cModules();
-                cModule module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
 
                 if (user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.CustomEntities, true))
                 {

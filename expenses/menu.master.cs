@@ -17,6 +17,11 @@ using Spend_Management;
 using Spend_Management.shared.code.GreenLight;
 using System.Web;
 
+using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.Modules;
+using BusinessLogic.ProductModules;
+
 using AjaxControlToolkit;
 
 using RestSharp;
@@ -134,9 +139,15 @@ public partial class menu : MasterPage
     /// This store if the menu has a View 
     /// </summary>
     private bool hasView = false;
-   
+
 
     #endregion
+
+    /// <summary>
+    /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
     #region Public Methods and Operators
 
@@ -350,7 +361,7 @@ public partial class menu : MasterPage
         cMasterPageMethods clsMasterPageMethods;
         foreach (CustomMenuStructureItem menuItem in menuItems)
         {
-            clsMasterPageMethods = new cMasterPageMethods(currentUser, theme);
+            clsMasterPageMethods = new cMasterPageMethods(currentUser, theme, this.ProductModuleFactory);
             if (clsMasterPageMethods.CheckForAnyViewInMenuTree(currentUser, menuItem.CustomMenuId))
             {
                 var entityUrl = string.Format(
@@ -380,7 +391,7 @@ public partial class menu : MasterPage
         var currentUser = cMisc.GetCurrentUser();
         string theme = this.Page.StyleSheetTheme;
         this.UseDynamicCss = true;
-        var clsMasterPageMethods = new cMasterPageMethods(currentUser, theme) { UseDynamicCSS = this.UseDynamicCss };
+        var clsMasterPageMethods = new cMasterPageMethods(currentUser, theme, this.ProductModuleFactory) { UseDynamicCSS = this.UseDynamicCss };
         clsMasterPageMethods.PreventBrowserFromCachingTheResponse();
         clsMasterPageMethods.RedirectUserBypassingChangePassword();
         clsMasterPageMethods.SetupJQueryReferences(ref this.jQueryCss, ref this.scriptman);

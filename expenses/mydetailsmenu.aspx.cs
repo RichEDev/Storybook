@@ -4,6 +4,8 @@ using System.Web.UI;
 using BusinessLogic;
 using BusinessLogic.DataConnections;
 using BusinessLogic.GeneralOptions;
+using BusinessLogic.Modules;
+using BusinessLogic.ProductModules;
 
 using Spend_Management;
 using Spend_Management.shared.code;
@@ -20,6 +22,12 @@ public partial class mydetailsmenu : Page
     /// </summary>
     [Dependency]
     public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+    /// <summary>
+    /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
     #region Methods
 
@@ -47,13 +55,13 @@ public partial class mydetailsmenu : Page
             this.ViewState["accountid"] = user.AccountID;
             this.ViewState["employeeid"] = user.EmployeeID;
 
-            var usingExpenses = user.CurrentActiveModule == Modules.expenses;
+            var usingExpenses = user.CurrentActiveModule == Modules.Expenses;
             
             var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithCar().WithMobile();
 
-            var clsModules = new cModules();
-            var module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
-            string brandName = (module != null) ? module.BrandNameHTML : "Expenses";
+            var module = this.ProductModuleFactory[user.CurrentActiveModule];
+
+            string brandName = (module != null) ? module.BrandNameHtml : "Expenses";
 
             this.Title = "My Details";
             this.Master.Title = this.Title;

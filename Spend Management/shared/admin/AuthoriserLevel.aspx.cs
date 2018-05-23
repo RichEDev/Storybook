@@ -5,6 +5,9 @@
     using Spend_Management;
     using Spend_Management.shared.code;
     using System.Collections.Generic;
+
+    using BusinessLogic.Modules;
+
     public partial class AuthoriserLevel : System.Web.UI.Page
     {
         /// <summary>
@@ -92,7 +95,7 @@
                     break;
                 case Modules.SpendManagement:
                     break;
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect("~/MenuMain.aspx?menusection=employee", true);
                     break;
                 default:

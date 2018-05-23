@@ -10,6 +10,7 @@ namespace Spend_Management
 
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
 
     using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
@@ -494,7 +495,7 @@ namespace Spend_Management
             expdata.ExecuteSQL(strsql);
             expdata.sqlexecute.Parameters.Clear();
 
-            var notifications = new NotificationTemplates(this.accountid, 0, string.Empty, 0, Modules.expenses);
+            var notifications = new NotificationTemplates(this.accountid, 0, string.Empty, 0, Modules.Expenses);
 
             recipient[0] = reqfloat.approver;
             notifications.SendMessage(SendMessageEnum.GetEnumDescription(SendMessageDescription.SentToAnAdministratorToNotifyThemAnAdvanceHasBeenDispute), reqfloat.employeeid, recipient, floatid);
@@ -856,7 +857,7 @@ namespace Spend_Management
 
             reqfloat.payAdvance();
 
-            var notifications = new NotificationTemplates(this.accountid, 0, string.Empty, 0, Modules.expenses);
+            var notifications = new NotificationTemplates(this.accountid, 0, string.Empty, 0, Modules.Expenses);
 
             recipient[0] = reqfloat.employeeid;
 
@@ -893,7 +894,7 @@ namespace Spend_Management
             expdata.ExecuteSQL(strsql);
             expdata.sqlexecute.Parameters.Clear();
 
-            var notifications = new NotificationTemplates(this.accountid, 0, string.Empty, 0, Modules.expenses);
+            var notifications = new NotificationTemplates(this.accountid, 0, string.Empty, 0, Modules.Expenses);
 
             recipient[0] = reqfloat.employeeid;
             reqfloat.rejected = true;

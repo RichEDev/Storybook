@@ -21,6 +21,8 @@
     using BusinessLogic.GeneralOptions.AddEditExpense;
     using BusinessLogic.GeneralOptions.ESR;
     using BusinessLogic.GeneralOptions.Password;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
 
     using shared.code;
 
@@ -51,6 +53,12 @@
         public IDataFactory<IAccountProperty, AccountPropertyCacheKey> AccountPropertiesFactory { get; set; }
 
         /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
+        /// <summary>
         /// The page_ init.
         /// </summary>
         /// <param name="sender">
@@ -65,11 +73,11 @@
             var currentTab = 0;
             switch (user.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                 case Modules.SmartDiligence:
                     currentTab = 1;
                     break;
-                case Modules.expenses:
+                case Modules.Expenses:
                     currentTab = 0;
                     break;
                 case Modules.Greenlight:
@@ -106,7 +114,7 @@
 
             switch (currentUser.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     this.Master.helpid = 1140;
                     break;
                 default:
@@ -114,7 +122,7 @@
                     break;
             }
 
-            var usingExpenses = currentUser.CurrentActiveModule == Modules.expenses;
+            var usingExpenses = currentUser.CurrentActiveModule == Modules.Expenses;
             this.lblemployees.Text = usingExpenses ? DELEGATE_EMPLOYEE_EXPENSES_TEXT : DELEGATE_EMPLOYEE_NONEXPENSES_TEXT;
             this.delegateExpensesDiv.Visible = usingExpenses;
             this.delegateExpensesSpan.Visible = usingExpenses;
@@ -165,9 +173,9 @@
 
                 var clsEmployees = new cEmployees(currentUser.AccountID);
 
-                var clsModules = new cModules();
-                cModule clsModule = clsModules.GetModuleByID((int)currentUser.CurrentActiveModule);
-                string brandName = (clsModule != null) ? clsModule.BrandNamePlainText : "Expenses";
+                var module = this.ProductModuleFactory[currentUser.CurrentActiveModule];
+
+                string brandName = (module != null) ? module.BrandName : "Expenses";
                 this.optserver.Text = string.Format("{0} server", brandName);
 
                 #region General Options
@@ -842,7 +850,7 @@
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     this.Response.Redirect("~/menumain.aspx?menusection=tailoring", true);
                     break;
                 default:
@@ -1261,7 +1269,7 @@
             {
                 case Modules.SpendManagement:
                 case Modules.SmartDiligence:
-                case Modules.contracts:
+                case Modules.Contracts:
                 case Modules.Greenlight:
                 case Modules.GreenlightWorkforce:
                     if (generalOptions.Email.EmailServerFromAddress != this.txtEmailFromAddress.Text)
@@ -1273,7 +1281,7 @@
 
             switch (currentUser.CurrentActiveModule)
             {
-                case Modules.expenses:
+                case Modules.Expenses:
                 case Modules.Greenlight:
                 case Modules.GreenlightWorkforce:
                     var sourceAddress = (byte)(this.optserver.Checked ? 1 : 0);
@@ -1688,7 +1696,7 @@
 
             switch (currentUser.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     // Framework - Help & Support
                     if (generalOptions.HelpAndSupport.EnableInternalSupportTickets != this.chkInternalTicketsFW.Checked)
                     {
@@ -2131,7 +2139,7 @@
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     this.Response.Redirect(cMisc.Path + "/menumain.aspx?menusection=tailoring", true);
                     break;
                 default:
@@ -2170,7 +2178,7 @@
             {
                 case Modules.SpendManagement:
                 case Modules.SmartDiligence:
-                case Modules.contracts:
+                case Modules.Contracts:
                     tabIdsToHide.Add(this.tabGeneral.ClientID);
                     tabIdsToHide.Add(this.tabSelfRegistration.ClientID);
                     tabIdsToHide.Add(this.tabDelegates.ClientID);
@@ -2179,7 +2187,7 @@
                     tabIdsToHide.Add(this.tabEmployees.ClientID);
                     tabIdsToHide.Add(this.tabExpedite.ClientID);
                     break;
-                case Modules.expenses:
+                case Modules.Expenses:
                     tabIdsToHide.Add(this.tabFWGeneral.ClientID);
                     tabIdsToHide.Add(this.tabContracts.ClientID);
                     tabIdsToHide.Add(this.tabInvoices.ClientID);
@@ -2228,7 +2236,7 @@
             string initialTab = this.tabGeneral.ClientID;
             switch (activeModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                 case Modules.SmartDiligence:
                     initialTab = this.tabFWGeneral.ClientID;
                     break;
@@ -2277,7 +2285,7 @@
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     reportsPath = ConfigurationManager.AppSettings["ReportsServicePath"];
                     break;
                 default:

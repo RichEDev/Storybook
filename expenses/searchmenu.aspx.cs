@@ -3,6 +3,8 @@ using System;
 using BusinessLogic;
 using BusinessLogic.DataConnections;
 using BusinessLogic.GeneralOptions;
+using BusinessLogic.Modules;
+using BusinessLogic.ProductModules;
 
 using Spend_Management;
 
@@ -15,6 +17,12 @@ public partial class searchmenu : System.Web.UI.Page
     /// </summary>
     [Dependency]
     public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+    /// <summary>
+    /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -29,11 +37,11 @@ public partial class searchmenu : System.Web.UI.Page
 
             var generalOptions = this.GeneralOptionsFactory[user.CurrentSubAccountId].WithEmployee().WithHotel();
 
-            var clsModules = new cModules();
-            var module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
-            var brandName = (module != null) ? module.BrandNameHTML : "Expenses";
+            var module = this.ProductModuleFactory[user.CurrentActiveModule];
 
-			var usingExpenses = user.CurrentActiveModule == Modules.expenses;
+            var brandName = (module != null) ? module.BrandNameHtml : "Expenses";
+
+			var usingExpenses = user.CurrentActiveModule == Modules.Expenses;
 
             if (generalOptions.Employee.SearchEmployees)
             {
@@ -47,3 +55,4 @@ public partial class searchmenu : System.Web.UI.Page
         }
     }
 }
+;

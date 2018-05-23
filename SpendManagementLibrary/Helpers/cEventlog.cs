@@ -2,6 +2,8 @@
 
 namespace SpendManagementLibrary
 {
+    using BusinessLogic.Modules;
+
     public class cEventlog
     {
         /// <summary>

@@ -18,6 +18,7 @@ namespace Spend_Management
     using BusinessLogic.AccountProperties;
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
 
     /// <summary>
     /// Summary description for colours.
@@ -137,7 +138,7 @@ namespace Spend_Management
                 CurrentUser user = cMisc.GetCurrentUser();
                 switch (user.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Master.helpid = 1222;
                         break;
                     default:
@@ -186,10 +187,10 @@ namespace Spend_Management
                 {
                     case Modules.SmartDiligence:
                     case Modules.SpendManagement:
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         btnCancelNavigateUrl = "/MenuMain.aspx?menusection=tailoring";
                         break;
-                    case Modules.expenses:
+                    case Modules.Expenses:
                         btnCancelNavigateUrl = "/tailoringmenu.aspx";
                         break;
                     default:
@@ -297,10 +298,10 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect("~/MenuMain.aspx?menusection=tailoring", true);
                     break;
-                case Modules.expenses:
+                case Modules.Expenses:
                     Response.Redirect("~/tailoringmenu.aspx", true);
                     break;
                 default:
@@ -308,6 +309,5 @@ namespace Spend_Management
                     break;
             }
         }
-
     }
 }

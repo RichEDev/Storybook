@@ -4,6 +4,10 @@
     using System.Collections.Generic;
     using System.IO;
 
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using SpendManagementApi.Common.Enum;
     using SpendManagementApi.Interfaces;
     using SpendManagementApi.Models.Requests;
@@ -20,6 +24,8 @@
     /// </summary>
     internal class MyDetailRepository : BaseRepository<MyDetail>, ISupportsActionContext
     {
+        private readonly IDataFactory<IProductModule, Modules> _productModuleFactory;
+
         /// <summary>
         /// The employees.
         /// </summary>
@@ -31,6 +37,7 @@
             : base(user, actionContext, emp => emp.Id, emp => emp.UserName)
         {
             this.employees = this.ActionContext.Employees;
+            this._productModuleFactory = WebApiApplication.container.GetInstance<IDataFactory<IProductModule, Modules>>();
         }
 
         #endregion
@@ -159,7 +166,7 @@
             SpendManagementLibrary.Enumerators.NotifyAdminOfChangesOutcome notifyOutcome = this.ActionContext.Employees.NotifyAdminOfChanges(
                 User,
                 detailsOfChange,
-                new cModules(),
+                this._productModuleFactory,
                 reqProperties,
                 emailSender);
 

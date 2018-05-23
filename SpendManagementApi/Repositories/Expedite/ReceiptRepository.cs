@@ -5,6 +5,9 @@
     using System.Globalization;
     using System.IO;
     using System.Linq;
+
+    using BusinessLogic.Modules;
+
     using Interfaces;
     using Models.Common;
 
@@ -663,7 +666,7 @@
         private ICurrentUser MockCurrentUser(int accountId)
         {
             int employeeId = 0;
-            ICurrentUser user = new CurrentUser(accountId, employeeId, 0, Modules.expenses, 1);
+            ICurrentUser user = new CurrentUser(accountId, employeeId, 0, Modules.Expenses, 1);
             return user;
         }
     }

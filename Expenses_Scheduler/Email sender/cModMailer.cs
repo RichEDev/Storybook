@@ -15,6 +15,8 @@ namespace Expenses_Scheduler
 {
     using System.Globalization;
 
+    using BusinessLogic.Modules;
+
     public enum csvDB_Fields
     {
         RowStatus = 0,
@@ -310,7 +312,7 @@ namespace Expenses_Scheduler
                     msg.Append("Contract Description : " + cDetails["contractDescription"] + "\r\n");
                     msg.Append("Supplier             : " + cDetails["supplierName"] + "\r\n\r\n");
                     msg.Append("Click the link below to access the contract" + "\r\n\r\n");
-                    msg.AppendFormat("http://{0}/ContractSummary.aspx?tab=0&loc={1}&id={2}", HostManager.GetHostName(this.Account.HostnameIds, Modules.contracts, this.Account.companyid), this.RunLocationId.ToString(CultureInfo.InvariantCulture).Trim(), cid);
+                    msg.AppendFormat("http://{0}/ContractSummary.aspx?tab=0&loc={1}&id={2}", HostManager.GetHostName(this.Account.HostnameIds, Modules.Contracts, this.Account.companyid), this.RunLocationId.ToString(CultureInfo.InvariantCulture).Trim(), cid);
                     msg.Append("\r\n\r\n");
                     msg.Append("** NOTE ** This is an automated email. Do not reply.");
 
@@ -378,7 +380,7 @@ namespace Expenses_Scheduler
                             msg.Append("Employee : " + rRow["memberName"] + "\r\n");
                             msg.Append("\r\n\r\n");
                             msg.Append("Click the link below to access the employee record" + "\r\n\r\n");
-                            msg.AppendFormat("http://{0}/shared/admin/aeemployee.aspx?employeeid={1}", HostManager.GetHostName(this.Account.HostnameIds, Modules.contracts, this.Account.companyid), rRow["EmployeeId"].ToString().Trim());
+                            msg.AppendFormat("http://{0}/shared/admin/aeemployee.aspx?employeeid={1}", HostManager.GetHostName(this.Account.HostnameIds, Modules.Contracts, this.Account.companyid), rRow["EmployeeId"].ToString().Trim());
                             msg.Append("\r\n\r\n");
                             msg.Append("** NOTE ** This is an automated email. Do not reply.");
 
@@ -495,7 +497,7 @@ namespace Expenses_Scheduler
                     }
                     else if (field == "[*Contract Link*]")
                     {
-                        string hostName = HostManager.GetHostName(this.Account.HostnameIds, Modules.contracts, this.Account.companyid);
+                        string hostName = HostManager.GetHostName(this.Account.HostnameIds, Modules.Contracts, this.Account.companyid);
                         tpl = hostName.Substring(hostName.Length - 1, 1) == "/" 
                             ? tpl.Replace(field, string.Format("http://{0}ContractSummary.aspx?tab=0&loc={1}&id={2}", hostName, this.RunLocationId.ToString(CultureInfo.InvariantCulture).Trim(), resRow["contractId"])) 
                             : tpl.Replace(field, string.Format("http://{0}/ContractSummary.aspx?tab=0&loc={1}&id={2}", hostName, this.RunLocationId.ToString(CultureInfo.InvariantCulture).Trim(), resRow["contractId"]));

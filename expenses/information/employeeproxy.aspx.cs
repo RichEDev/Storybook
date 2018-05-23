@@ -8,7 +8,10 @@ namespace expenses
 	using System.Web;
 	using System.Collections.Generic;
 	using System.Web.UI;
-    using SpendManagementLibrary.Definitions;
+
+	using BusinessLogic.Modules;
+
+	using SpendManagementLibrary.Definitions;
 	using SpendManagementLibrary.Employees;
 	using Spend_Management;
 	using SpendManagementLibrary;	
@@ -134,7 +137,7 @@ namespace expenses
             {
                 case Modules.SpendManagement:
                 case Modules.SmartDiligence:
-                case Modules.contracts:
+                case Modules.Contracts:
 				case Modules.Greenlight:
                 case Modules.GreenlightWorkforce:
                     clsGrid.getColumnByName("groupname").hidden = true;

@@ -11,6 +11,8 @@ using System.Text;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     public partial class aeAudience : System.Web.UI.Page
     {
         static int nAudienceID;
@@ -53,7 +55,7 @@ namespace Spend_Management
                 Master.title = Title;
                 Master.PageSubTitle = "Audience Details";                
 
-                if (currentUser.CurrentActiveModule != Modules.expenses)
+                if (currentUser.CurrentActiveModule != Modules.Expenses)
                 {                    
                     budgetHolderLnkContainer.Style.Add("display", "none");
                 }

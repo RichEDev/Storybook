@@ -12,6 +12,8 @@ using System.Text;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     public partial class aeUserdefinedOrdering : System.Web.UI.Page
     {
         public string sUnorderedListID = string.Empty;
@@ -30,7 +32,7 @@ namespace Spend_Management
                 {
                     case Modules.SmartDiligence:
                     case Modules.SpendManagement:
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         Response.Redirect("~/MenuMain.aspx?menusection=tailoring", true);
                         break;
                     default:

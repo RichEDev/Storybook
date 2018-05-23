@@ -2,12 +2,19 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
     using System.Text;
     using System.Web.UI;
     using System.Web.UI.WebControls;
 
     using AjaxControlToolkit;
+
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+    using BusinessLogic.ProductModules.Elements;
 
     using SpendManagementLibrary;
     using SpendManagementLibrary.Helpers;
@@ -67,7 +74,7 @@
             var clsAccessRoles = new cAccessRoles(currentUser.AccountID, cAccounts.getConnectionString(currentUser.AccountID));
 
             Master.enablenavigation = false;
-            List<cModule> lstModules = currentUser.Account.AccountModules();
+            List<IProductModule> lstModules = currentUser.Account.AccountModules();
 
             reqAccessRole = PopulateTheForm(currentUser,  clsAccessRoles, lstModules);
 
@@ -99,7 +106,7 @@
             {
                 case Modules.SpendManagement:
                 case Modules.SmartDiligence:
-                case Modules.contracts:
+                case Modules.Contracts:
                     sbJS.Append("if(document.getElementById('reportAccessLevelDiv') != null) { document.getElementById('reportAccessLevelDiv').style.display = 'none'; }\n");
                     break;
                 default:
@@ -110,7 +117,7 @@
         }
 
         private cAccessRole PopulateTheForm(ICurrentUser currentUser, cAccessRolesBase clsAccessRoles,
-            List<cModule> lstModules)
+            List<IProductModule> lstModules)
         {
             cAccessRole reqAccessRole = null;
             bool blnEditMode = false;
@@ -155,9 +162,9 @@
                     }
 
 
-                    var apiLicenced = lstModules.Select(x => x.ModuleID == (int) SpendManagementElement.Api).Any();
+                    var apiLicenced = lstModules.Select(x => x.Id == (int) SpendManagementElement.Api).Any();
                     var mobileLicenced =
-                        lstModules.Select(x => x.ModuleID == (int) SpendManagementElement.MobileDevices).Any();
+                        lstModules.Select(x => x.Id == (int) SpendManagementElement.MobileDevices).Any();
 
                     if (!apiLicenced && !mobileLicenced)
                     {
@@ -210,7 +217,7 @@
                 {
                     case Modules.SpendManagement:
                     case Modules.SmartDiligence:
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         radReportAccessLevel_3.Checked = true;
                         break;
                     default:
@@ -221,7 +228,7 @@
 
             switch (currentUser.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = blnEditMode ? 1149 : 1126;
                     break;
                 default:
@@ -265,18 +272,18 @@
             return reqAccessRole;
         }
 
-        private void CreateTheTabs(IEnumerable<cModule> lstModules, CurrentUser currentUser, cAccessRole reqAccessRole, TabContainer tabContainer, cCustomEntities clsCustomEntities)
+        private void CreateTheTabs(IEnumerable<IProductModule> lstModules, CurrentUser currentUser, cAccessRole reqAccessRole, TabContainer tabContainer, cCustomEntities clsCustomEntities)
         {
-            foreach (cModule module in lstModules)
+            foreach (IProductModule module in lstModules)
             {
                 var tbPanel = new TabPanel
                 {
-                    ID = "tb" + module.ModuleID.ToString(),
-                    HeaderText = ((module.ModuleID == (int) Modules.Greenlight ||
-                                   module.ModuleID == (int) Modules.GreenlightWorkforce) &&
-                                  (module.ModuleID == (int) currentUser.CurrentActiveModule))
+                    ID = "tb" + module.Id.ToString(),
+                    HeaderText = ((module.Id == (int) Modules.Greenlight ||
+                                   module.Id == (int) Modules.GreenlightWorkforce) &&
+                                  (module.Id == (int) currentUser.CurrentActiveModule))
                         ? "General"
-                        : module.ModuleName
+                        : module.Name
                 };
 
                
@@ -300,29 +307,27 @@
             const string nonBreakingSpace = @"&nbsp;";
             var rowCss = "row1";
 
-            var clsModules = new cModules();
-
             //Literal litSpace;
 
-            foreach (cModule module in currentUser.Account.AccountModules()) // loop through all modules in list
+            foreach (IProductModule module in currentUser.Account.AccountModules()) // loop through all modules in list
             {
-                var tbPanel = tabContainer.FindControl("tb" + module.ModuleID.ToString()) as TabPanel; // get the modules tab panel
+                var tbPanel = tabContainer.FindControl("tb" + module.Id.ToString()) as TabPanel; // get the modules tab panel
                 if (tbPanel == null)
                 {
                     // if panel not present, then don't output options for that module
                     continue;
                 }
-                var tbl = tbPanel.FindControl("tbl_" + module.ModuleID.ToString()) as Table; // get the modules table
+                var tbl = tbPanel.FindControl("tbl_" + module.Id.ToString()) as Table; // get the modules table
 
                 if (tbl != null)
                 {
                     row = new TableRow();
                     CheckBox chk;
-                    AddModuleRow(row, module.ModuleName, module.ModuleID.ToString());
+                    AddModuleRow(row, module.Name, module.Id.ToString());
                     tbl.Rows.Add(row);
 
                     Dictionary<cElementCategory, SortedList<string, cElement>> lstSortedCategories =
-                        clsModules.GetCategoryElements(currentUser.AccountID, module.ModuleID);
+                        GetCategoryElements(currentUser.AccountID, module.Id);
 
                     foreach (KeyValuePair<cElementCategory, SortedList<string, cElement>> kvpElements in lstSortedCategories)
                         // loop through all the current modules categories
@@ -448,7 +453,7 @@
                             {
                                 System.Diagnostics.Debug.WriteLine("Element: " + element.ElementID.ToString());
                                 System.Diagnostics.Debug.WriteLine("Element Cat: " + element.ElementCategoryID.ToString());
-                                System.Diagnostics.Debug.WriteLine("Module: " + module.ModuleID.ToString());
+                                System.Diagnostics.Debug.WriteLine("Module: " + module.Id.ToString());
                             }
                         }
                     }
@@ -770,12 +775,12 @@
             tabPanel.Controls.Add(pnl);
         }
 
-        private void SetAdditionalAccessRoleFieldsOnTheirRelevantTab(cModule module, TabPanel tbPanel,
+        private void SetAdditionalAccessRoleFieldsOnTheirRelevantTab(IProductModule module, TabPanel tbPanel,
              cAccessRole reqAccessRole, bool hasBankAccountLicensedElement)
         {
-            switch ((Modules) module.ModuleID)
+            switch ((Modules) module.Id)
             {
-                case Modules.expenses:
+                case Modules.Expenses:
                 case Modules.Greenlight:
                 case Modules.GreenlightWorkforce:
                     var pnl = new Panel {CssClass = "sectiontitle"};
@@ -800,7 +805,7 @@
                         reqAccessRole != null && reqAccessRole.CanEditDepartment);
                     CreateLiteral(pnl, "</span>");
 
-                    if ((Modules) module.ModuleID == Modules.expenses)
+                    if ((Modules) module.Id == Modules.Expenses)
                     {
                         CreateLiteral(pnl,
                             "<span class=\"inputicon\">&nbsp;</span><span class=\"inputtooltipfield\">&nbsp;</span><span class=\"inputvalidatorfield\">&nbsp;</span>");
@@ -830,7 +835,7 @@
                
                     break;
 
-                case Modules.contracts:
+                case Modules.Contracts:
                     break;
 
                 default:
@@ -901,7 +906,7 @@
             pnl.Controls.Add(lit);
         }
 
-        private static void CreateElementTablesForThisTab(TabPanel tbPanel, cModule module)
+        private static void CreateElementTablesForThisTab(TabPanel tbPanel, IProductModule module)
         {
             var pnl = new Panel {CssClass = "sectiontitle"};
             CreateLiteral(pnl, "Element Access");
@@ -909,7 +914,7 @@
             tbPanel.Controls.Add(pnl);
 
             // create a table for each tab
-            CreateTable(tbPanel, "tbl_" + module.ModuleID);
+            CreateTable(tbPanel, "tbl_" + module.Id);
         }
 
         private static void CreateTable(TabPanel tbPanel, string id)
@@ -936,6 +941,101 @@
 
             // add the table to the current tab
             tbPanel.Controls.Add(tbl);
+        }
+
+        /// <summary>
+        /// Get collection of elements assigned by category for a given module ID
+        /// </summary>
+        /// <param name="moduleID">Module to retrieve elements for</param>
+        /// <returns></returns>
+        public static Dictionary<cElementCategory, SortedList<string, cElement>> GetCategoryElements(int accountID, int moduleID)
+        {
+            SortedList<int, SortedList<string, cElement>> retList = null;
+            Dictionary<int, SortedList<int, SortedList<string, cElement>>> dicModuleCategoryElements = null;
+            dicModuleCategoryElements = GetLicencedElementByCategory(accountID);
+
+            if (dicModuleCategoryElements.ContainsKey(moduleID))
+            {
+                retList = dicModuleCategoryElements[moduleID];
+            }
+
+            if (retList == null)
+            {
+                retList = new SortedList<int, SortedList<string, cElement>>();
+            }
+
+            Dictionary<cElementCategory, SortedList<string, cElement>> sortedByCategoryList =
+                new Dictionary<cElementCategory, SortedList<string, cElement>>();
+            SortedList<string, int> sortedElementCategories = new SortedList<string, int>();
+            cElementCategories cats = new cElementCategories();
+            foreach (KeyValuePair<int, SortedList<string, cElement>> catKVP in retList)
+            {
+                int categoryId = (int)catKVP.Key;
+                cElementCategory cat = cats.GetElementCategoryByID(categoryId);
+                sortedElementCategories.Add(cat.ElementCategoryName, cat.ElementCategoryID);
+            }
+
+            foreach (KeyValuePair<string, int> kvp in sortedElementCategories)
+            {
+                cElementCategory cat = cats.GetElementCategoryByID((int)kvp.Value);
+                if (retList.ContainsKey((int)kvp.Value))
+                {
+                    sortedByCategoryList.Add(cat, retList[(int)kvp.Value]);
+                }
+            }
+
+            return sortedByCategoryList;
+        }
+
+        private static Dictionary<int, SortedList<int, SortedList<string, cElement>>> GetLicencedElementByCategory(int accountID)
+        {
+            #region collate module elements by category
+            cElements elements = new cElements();
+            SortedList<int, SortedList<string, cElement>> slCategoryElements;
+            Dictionary<int, SortedList<int, SortedList<string, cElement>>> dicModuleCategoryElements = new Dictionary<int, SortedList<int, SortedList<string, cElement>>>();
+
+            int elementID;
+            int moduleID;
+
+            using (var metabase = new DatabaseConnection(GlobalVariables.MetabaseConnectionString))
+            {
+                metabase.AddWithValue("@accountId", accountID);
+                using (var reader = metabase.GetReader("GetLicencedElementsByAccountId", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                    {
+                        moduleID = reader.GetInt32(0);
+                        elementID = reader.GetInt32(1);
+
+                        cElement curElement = elements.GetElementByID(elementID);
+
+                        if (!dicModuleCategoryElements.ContainsKey(moduleID))
+                        {
+                            slCategoryElements = new SortedList<int, SortedList<string, cElement>>();
+                            dicModuleCategoryElements.Add(moduleID, slCategoryElements);
+                        }
+                        else
+                        {
+                            slCategoryElements = dicModuleCategoryElements[moduleID];
+                        }
+
+                        if (!slCategoryElements.ContainsKey(curElement.ElementCategoryID))
+                        {
+                            slCategoryElements.Add(curElement.ElementCategoryID, new SortedList<string, cElement>());
+                        }
+
+                        SortedList<string, cElement> categoryElements = slCategoryElements[curElement.ElementCategoryID];
+                        if (!categoryElements.ContainsKey(curElement.Name))
+                        {
+                            categoryElements.Add(curElement.Name, curElement);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+
+            return dicModuleCategoryElements;
+            #endregion
         }
     }
 }

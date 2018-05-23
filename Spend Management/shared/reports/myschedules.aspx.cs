@@ -9,6 +9,8 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 
+using BusinessLogic.Modules;
+
 using expenses;
 using SpendManagementLibrary;
 using Spend_Management;
@@ -43,7 +45,7 @@ public partial class reports_myschedules : System.Web.UI.Page
 
             switch (user.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 1155;
                     break;
                 default:

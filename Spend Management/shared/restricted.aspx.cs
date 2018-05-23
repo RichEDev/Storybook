@@ -8,6 +8,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+
+using BusinessLogic.Modules;
+
 using Spend_Management;
 
 public partial class restrictedPage : System.Web.UI.Page
@@ -34,7 +37,7 @@ public partial class restrictedPage : System.Web.UI.Page
         {
             case Modules.SmartDiligence:
             case Modules.SpendManagement:
-            case Modules.contracts:
+            case Modules.Contracts:
                 sbErrorTxt.Append("<div class=\"inputpanel\">If you have verified your permissions with your System Administrator, but are still diverted to this screen, <a href=\"" + (Request.IsSecureConnection ? "https" : "http") + "://" + Request.Url.Host + cMisc.Path + "/MenuMain.aspx?menusection=help\" title=\"Help &amp; Support\">click here</a> for further help</div>");
                 break;
             default:

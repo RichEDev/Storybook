@@ -10,6 +10,8 @@ using System.Text;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     public partial class suppliers : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -18,7 +20,7 @@ namespace Spend_Management
 
             switch (curUser.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 1058;
                     break;
                 default:

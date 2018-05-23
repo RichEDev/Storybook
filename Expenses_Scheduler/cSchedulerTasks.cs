@@ -1,26 +1,29 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
-using System.Diagnostics;
-using Spend_Management;
-using SpendManagementLibrary;
-using Syncfusion.XlsIO;
-using Syncfusion.XlsIO.Interfaces;
-using System.Net.Mail;
-using System.Configuration;
-
-namespace Expenses_Scheduler
+﻿namespace Expenses_Scheduler
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Net.Mail;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
+    using SpendManagementLibrary;
     using SpendManagementLibrary.Employees;
+
+    using Spend_Management;
+
+    using Syncfusion.XlsIO;
 
     public class cSchedulerTasks
     {
         public delegate void CompleteTasks();
 
         private readonly int _nAccountId;
+
+        private readonly IDataFactory<IProductModule, Modules> _productModuleFactory =
+            FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>();
 
         public cSchedulerTasks(int accountid)
         {
@@ -111,7 +114,7 @@ namespace Expenses_Scheduler
                 try
                 {
                     Expenses_Scheduler.DiagLog(string.Format("Scheduler : Calling IssueLogonStats for accountId {0}, subAccount {1}", _nAccountId, subacc.SubAccountID));
-                    IssueLogonStats(_nAccountId, subacc.SubAccountID);
+                    IssueLogonStats(_nAccountId, subacc.SubAccountID, this._productModuleFactory);
                 }
                 catch (Exception ex)
                 {
@@ -149,7 +152,7 @@ namespace Expenses_Scheduler
             return;
         }
 
-        private static void IssueLogonStats(int accountid, int? subaccountid)
+        private static void IssueLogonStats(int accountid, int? subaccountid, IDataFactory<IProductModule, Modules> productModuleFactory)
         {
             DBConnection db = new DBConnection(cAccounts.getConnectionString(accountid));
             cAccounts accs = new cAccounts();
@@ -213,11 +216,12 @@ namespace Expenses_Scheduler
                     System.IO.File.Delete(tmpFilename);
                 }
                 workBook.SaveAs(tmpFilename, ExcelSaveType.SaveAsXLS);
-                cModules clsModules = new cModules();
-                cModule reqModule = clsModules.GetModuleByID((int)GlobalVariables.DefaultModule);
+
+                var module = productModuleFactory[GlobalVariables.DefaultModule];
+
                 // email to SEL
                 EmailSender sender = new EmailSender(properties.EmailServerAddress);
-                MailMessage mail = new MailMessage((properties.EmailServerFromAddress == String.Empty ? "support@selenity.com" : properties.EmailServerFromAddress), "framework-stats@selenity.com") {Subject = "Monthly Logon Activity for " + acc.companyname, Body = "The latest logon statistics for " + acc.companyname + " are contained in the attached spreadsheet\n\n**THIS IS AN AUTOMATED EMAIL FROM " + reqModule.BrandNamePlainText.ToUpper() + " - DO NOT REPLY **"};
+                MailMessage mail = new MailMessage((properties.EmailServerFromAddress == String.Empty ? "support@selenity.com" : properties.EmailServerFromAddress), "framework-stats@selenity.com") {Subject = "Monthly Logon Activity for " + acc.companyname, Body = "The latest logon statistics for " + acc.companyname + " are contained in the attached spreadsheet\n\n**THIS IS AN AUTOMATED EMAIL FROM " + module.BrandName.ToUpper() + " - DO NOT REPLY **"};
                 mail.Attachments.Add(new Attachment(tmpFilename));
 
                 if (sender.SendEmail(mail))

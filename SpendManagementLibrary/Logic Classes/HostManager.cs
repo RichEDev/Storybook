@@ -6,6 +6,8 @@
     using System.Data;
     using System.Linq;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary.Definitions;
     using SpendManagementLibrary.Helpers;
 

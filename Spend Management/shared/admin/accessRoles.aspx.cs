@@ -9,6 +9,8 @@ using System.Text;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     /// <summary>
     /// Access roles summary screen
     /// </summary>
@@ -29,7 +31,7 @@ namespace Spend_Management
 
             switch (currentUser.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 1149;
                     break;
                 default:
@@ -84,7 +86,7 @@ namespace Spend_Management
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     Response.Redirect("~/MenuMain.aspx?menusection=employee", true);
                     break;
                 default:

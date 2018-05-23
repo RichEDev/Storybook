@@ -18,6 +18,9 @@ namespace Spend_Management
     using BusinessLogic.GeneralOptions.Password;
     using BusinessLogic.Identity;
 
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using Common.Cryptography;
 
     using expenses.code;
@@ -2945,11 +2948,11 @@ namespace Spend_Management
         /// </summary>
         /// <param name="user">The current user</param>
         /// <param name="requestedChanges">The requested changes</param>
-        /// <param name="modules">The <see cref="cModules">cModules</see></param>
+        /// <param name="productModuleFactory">An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> for getting <see cref="IProductModule"/></param>
         /// <param name="reqProperties">The <see cref="cAccountProperties">cAccountProperties</see></param>
         /// <param name="emailSender">The <see cref="EmailSender">EmailSender</see></param>
         /// <returns></returns>
-        public NotifyAdminOfChangesOutcome NotifyAdminOfChanges(ICurrentUser user, string requestedChanges, cModules modules, cAccountProperties reqProperties, EmailSender emailSender)
+        public NotifyAdminOfChangesOutcome NotifyAdminOfChanges(ICurrentUser user, string requestedChanges, IDataFactory<IProductModule, Modules> productModuleFactory, cAccountProperties reqProperties, EmailSender emailSender)
         {
             var employee = this.GetEmployeeById(user.EmployeeID);
 
@@ -2975,8 +2978,9 @@ namespace Spend_Management
                 }
             }
 
-            cModule module = modules.GetModuleByID((int)user.CurrentActiveModule);
-            string brandName = (module != null) ? module.BrandNamePlainText : "Expenses";
+            var module = productModuleFactory[user.CurrentActiveModule];
+
+            string brandName = (module != null) ? module.BrandName : "Expenses";
 
             var adminEmployee = this.GetEmployeeById(reqProperties.MainAdministrator);
             MailMessage msg = new MailMessage(fromAddress, adminEmployee.EmailAddress, "Some of my details are incorrect in " + brandName + ".", changes);

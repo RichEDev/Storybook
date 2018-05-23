@@ -29,6 +29,7 @@
 
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
 
     using SpendManagementLibrary.SalesForceApi;
 
@@ -1442,7 +1443,7 @@
                         accountId,
                         employeeId,
                         delegateId.HasValue ? delegateId.Value : 0,
-                        Modules.expenses,
+                        Modules.Expenses,
                         -1));
             if (delegateId == 0)
             {

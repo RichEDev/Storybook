@@ -7,6 +7,10 @@
     using System.Linq;
     using System.Text;
 
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Helpers;
     using SpendManagementLibrary.Interfaces;
@@ -135,7 +139,7 @@
         /// <param name="description">The description of the problem</param>
         /// <param name="customEntityId">An associated greenlight</param>
         /// <returns></returns>
-        public static int Create(ICurrentUserBase user, string subject, string description, int customEntityId = 0)
+        public static int Create(ICurrentUserBase user, string subject, string description, IDataFactory<IProductModule, Modules> ProductModuleFactory, int customEntityId = 0)
         {
             int returnedValue = Save(user, 0, subject, description, SupportTicketStatus.New, customEntityId);
 
@@ -143,14 +147,16 @@
             {
                 // send email notification
                 SupportTicketInternal ticket = Get(user, returnedValue);
-                string moduleBrandName = new cModules().GetModuleByEnum(user.CurrentActiveModule).BrandNamePlainText;
-                string messageSubject = string.Format("{0} Support Ticket Created ({1})", moduleBrandName, ticket.Identifier);
+
+                var module = ProductModuleFactory[user.CurrentActiveModule];
+
+                string messageSubject = string.Format("{0} Support Ticket Created ({1})", module.BrandName, ticket.Identifier);
 
                 cAccountProperties accountProperties = new cAccountSubAccountsBase(user.AccountID).getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
                 var bodyBuilder = new StringBuilder();
                 bodyBuilder.AppendFormat("{0} has created a support ticket\n", user.Employee.FullName);
                 bodyBuilder.AppendFormat("{0}/shared/admin/adminHelpAndSupportTicket.aspx?SupportTicketId={1}\n", accountProperties.ApplicationURL, ticket.Identifier);
-                bodyBuilder.AppendFormat("Because this ticket may contain security sensitive information, we ask that you please click the link above or log on to {0} to view the ticket.", moduleBrandName);
+                bodyBuilder.AppendFormat("Because this ticket may contain security sensitive information, we ask that you please click the link above or log on to {0} to view the ticket.", module.BrandName);
                 string messageBody = bodyBuilder.ToString();
 
                 SendNotification(user, ticket, messageSubject, messageBody);
@@ -246,21 +252,22 @@
         /// <param name="user">The user</param>
         /// <param name="ticket">The <see cref="SupportTicketInternal"/> to save</param>
         /// <returns></returns>
-        public static int Update(ICurrentUserBase user, SupportTicketInternal ticket)
+        public static int Update(ICurrentUserBase user, SupportTicketInternal ticket, IDataFactory<IProductModule, Modules> ProductModuleFactory)
         {
             int returnedValue = Save(user, ticket.Identifier, ticket.Subject, ticket.Description, ticket.InternalStatus, ticket.CustomEntityId);
 
             if (returnedValue > 0)
             {
-                string moduleBrandName = new cModules().GetModuleByEnum(user.CurrentActiveModule).BrandNamePlainText;
-                string subject = string.Format("{0} Support Ticket Update ({1})", moduleBrandName, ticket.Identifier);
+                var module = ProductModuleFactory[user.CurrentActiveModule];
+
+                string subject = string.Format("{0} Support Ticket Update ({1})", module.BrandName, ticket.Identifier);
                 string urlPrefix = (ticket.Owner == user.EmployeeID) ? "{0}/shared/admin/adminHelpAndSupportTicket.aspx?SupportTicketId={1}\n" : "{0}/shared/helpAndSupportTicket.aspx?TicketType=1&SupportTicketId={1}\n";
 
                 cAccountProperties accountProperties = new cAccountSubAccountsBase(user.AccountID).getSubAccountById(user.CurrentSubAccountId).SubAccountProperties;
                 var bodyBuilder = new StringBuilder();
                 bodyBuilder.AppendFormat("{0} has updated a support ticket\n", user.Employee.FullName);
                 bodyBuilder.AppendFormat(urlPrefix, accountProperties.ApplicationURL, ticket.Identifier);
-                bodyBuilder.AppendFormat("Because this ticket may contain security sensitive information, we ask that you please click the link above or log on to {0} to view the ticket.", moduleBrandName);
+                bodyBuilder.AppendFormat("Because this ticket may contain security sensitive information, we ask that you please click the link above or log on to {0} to view the ticket.", module.BrandName);
                 string body = bodyBuilder.ToString();
 
                 SendNotification(user, ticket, subject, body);

@@ -1,11 +1,15 @@
-using System;
-using System.Text;
-using SpendManagementLibrary;
-using System.Net.Mail;
-using System.Data.SqlClient;
-
 namespace Expenses_Reports
 {
+    using System;
+    using System.Data.SqlClient;
+    using System.Text;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
+    using SpendManagementLibrary;
+
     class cEmails
     {
         public cEmails()
@@ -77,9 +81,8 @@ namespace Expenses_Reports
 
         private string GetApplicationName()
         {
-            cModules clsModules = new cModules();
-            cModule reqModule = clsModules.GetModuleByID((int)GlobalVariables.DefaultModule);
-            return reqModule.BrandNamePlainText;
+            var module = FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>()[GlobalVariables.DefaultModule];
+            return module.BrandName;
         }
 
         private string GetCompanyID(int accountID)

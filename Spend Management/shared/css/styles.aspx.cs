@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Text;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary;
 
     /// <summary>
@@ -84,11 +86,11 @@
 
             switch (this._activeModule)
             {
-                case Modules.expenses:
+                case Modules.Expenses:
                     toolTipBorderColour = "#013473";
                     toolTipBackgroundColour = "#7794CA";
                     break;
-                case Modules.contracts:
+                case Modules.Contracts:
                    toolTipBorderColour = "#00241C";
                    toolTipBackgroundColour = "#00A0AF";
                     break;

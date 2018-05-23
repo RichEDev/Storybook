@@ -1,4 +1,8 @@
 Imports System.Web.Configuration
+Imports BusinessLogic
+Imports BusinessLogic.DataConnections
+Imports BusinessLogic.Modules
+Imports BusinessLogic.ProductModules
 Imports SpendManagementLibrary
 Imports FWClasses
 Imports SpendManagementLibrary.Helpers
@@ -25,6 +29,17 @@ Namespace Framework2006
 
 #End Region
 
+        ''' <summary>
+        ''' An instance of <see cref="IDataFactory{IProductModule,Modules}"/> to get a <see cref="IProductModule"/>
+        ''' </summary>
+        <Dependency()>  _
+        Public Property ProductModuleFactory As IDataFactory(Of IProductModule, Modules)
+            Get
+            End Get
+            Set
+            End Set
+        End Property
+
         Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
             Dim curUser As CurrentUser = cMisc.GetCurrentUser()
             Dim db As New cFWDBConnection
@@ -38,9 +53,9 @@ Namespace Framework2006
             Dim params As cAccountProperties = subaccs.getSubAccountById(curUser.CurrentSubAccountId).SubAccountProperties
             Dim suppStr As String = params.SupplierPrimaryTitle
 
-            Dim clsModules As New cModules
-            Dim clsModule As cModule = clsModules.GetModuleByID(CInt(curUser.CurrentActiveModule))
-            Dim brandName As String = clsModule.BrandNameHTML
+            Dim productModule = Me.ProductModuleFactory(curUser.CurrentActiveModule)
+
+            Dim brandName As String = productModule.BrandNameHtml
 
             db.DBOpen(fws, False)
 

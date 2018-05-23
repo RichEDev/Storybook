@@ -8,6 +8,10 @@ namespace Spend_Management
     using System.Text;
     using System.Text.RegularExpressions;
 
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using SpendManagementLibrary;
     using SpendManagementLibrary.Addresses;
     using SpendManagementLibrary.ESRTransferServiceClasses;
@@ -1994,10 +1998,11 @@ namespace Spend_Management
             string taskText = string.Empty;
 
             CurrentUser currentUser = cMisc.GetCurrentUser();
-            Modules currentModule = (currentUser != null) ? currentUser.CurrentActiveModule : Modules.expenses;
-            cModules clsModules = new cModules();
-            cModule clsModule = clsModules.GetModuleByID((int)currentModule);
-            string brandName = (clsModule != null) ? clsModule.BrandNamePlainText : "Expenses";
+            Modules currentModule = (currentUser != null) ? currentUser.CurrentActiveModule : Modules.Expenses;
+
+            var module = FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>()[currentModule];
+
+            string brandName = (module != null) ? module.BrandName : "Expenses";
 
             if (isHome)
             {

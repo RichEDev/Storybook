@@ -256,6 +256,10 @@
       <Project>{97a11ed2-577c-4be6-bffa-adee411bc45f}</Project>
       <Name>ConsoleBootstrap</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
+      <Project>{69860ce5-949c-47f0-8fda-65c0a74171c8}</Project>
+      <Name>BusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Spend Management\Spend Management.csproj">
       <Project>{1CBFD8EC-F67C-4425-A10C-97BFC7501045}</Project>
       <Name>Spend Management</Name>

@@ -1,11 +1,15 @@
-﻿using System;
-using System.Text;
-using SpendManagementLibrary;
-using SpendManagementLibrary.Employees;
-using SpendManagementLibrary.Helpers;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
+    using System;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
+    using SpendManagementLibrary;
+    using SpendManagementLibrary.Employees;
+    using SpendManagementLibrary.Helpers;
+
     /// <summary>
     /// Generates notification e-mails when errors occur in the service
     /// </summary>
@@ -20,8 +24,8 @@ namespace Spend_Management
         /// <returns>true if the email was sent, false if it wasn't</returns>
         public bool sendError(cReportRequest reportRequest, Exception ex) 
         {
-            cModules modules = new cModules();
-            cModule module = modules.GetModuleByEnum(GlobalVariables.DefaultModule);
+            var module =
+                FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>()[GlobalVariables.DefaultModule];
 
             cAccounts accounts = new cAccounts();
             cAccount account = accounts.GetAccountByID(reportRequest.accountid);

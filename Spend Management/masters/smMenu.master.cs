@@ -15,6 +15,11 @@ using System.Web;
 using System.Globalization;
 using System.Linq;
 
+using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.Modules;
+using BusinessLogic.ProductModules;
+
 /// <summary>
 /// Menu Page
 /// </summary>
@@ -142,6 +147,12 @@ public partial class smMenu : System.Web.UI.MasterPage, IMasterPage
     #endregion
 
     /// <summary>
+    /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
+    /// <summary>
     /// The _start processing time for the page.
     /// </summary>
     private DateTime _startProcessing;
@@ -187,7 +198,7 @@ public partial class smMenu : System.Web.UI.MasterPage, IMasterPage
         Response.AddHeader("X-UA-Compatible", "IE=edge");
         var currentUser = cMisc.GetCurrentUser();
         string theme = this.Page.StyleSheetTheme;
-        var clsMasterPageMethods = new cMasterPageMethods(currentUser, theme) { UseDynamicCSS = this.UseDynamicCSS };
+        var clsMasterPageMethods = new cMasterPageMethods(currentUser, theme, this.ProductModuleFactory) { UseDynamicCSS = this.UseDynamicCSS };
         clsMasterPageMethods.PreventBrowserFromCachingTheResponse();
         clsMasterPageMethods.RedirectUserBypassingChangePassword();
 	    clsMasterPageMethods.SetupJQueryReferences(ref this.jQueryCss, ref this.scriptman);
@@ -401,7 +412,7 @@ public partial class smMenu : System.Web.UI.MasterPage, IMasterPage
         cMasterPageMethods clsMasterPageMethods;
         foreach (CustomMenuStructureItem menuItem in menuItems)
         {
-            clsMasterPageMethods = new cMasterPageMethods(currentUser, theme);
+            clsMasterPageMethods = new cMasterPageMethods(currentUser, theme, this.ProductModuleFactory);
             if (clsMasterPageMethods.CheckForAnyViewInMenuTree(currentUser, menuItem.CustomMenuId))
             {
                 var entityUrl = string.Format(

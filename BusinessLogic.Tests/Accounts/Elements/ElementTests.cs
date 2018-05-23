@@ -1,6 +1,7 @@
 ﻿namespace BusinessLogic.Tests.Accounts.Elements
 {
     using BusinessLogic.Accounts.Elements;
+    using BusinessLogic.Elements;
 
     using Xunit;
 

@@ -4,6 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Web.UI;
 
+using BusinessLogic;
+using BusinessLogic.DataConnections;
+using BusinessLogic.Modules;
+using BusinessLogic.ProductModules;
+
 using Spend_Management;
 using SpendManagementLibrary;
 
@@ -16,6 +21,12 @@ using Spend_Management.shared.code.GreenLight;
 /// </summary>
 public partial class reports_tailoringmenu : Page
 {
+    /// <summary>
+    /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+
     #region Methods
 
     /// <summary>
@@ -32,9 +43,10 @@ public partial class reports_tailoringmenu : Page
         if (this.IsPostBack == false)
         {
             CurrentUser user = cMisc.GetCurrentUser();
-            var usingExpenses = user.CurrentActiveModule == Modules.expenses;
-            var clsModules = new cModules();
-            cModule module = clsModules.GetModuleByID((int)user.CurrentActiveModule);
+            var usingExpenses = user.CurrentActiveModule == Modules.Expenses;
+
+            var module = this.ProductModuleFactory[user.CurrentActiveModule];
+
             this.ViewState["accountid"] = user.AccountID;
             this.ViewState["employeeid"] = user.EmployeeID;
 
@@ -83,7 +95,7 @@ public partial class reports_tailoringmenu : Page
                     "palette",
                     48,
                     "Colours",
-                    string.Format("Modify the look of {0} by altering the colour of various sections.", module.BrandNameHTML),
+                    string.Format("Modify the look of {0} by altering the colour of various sections.", module.BrandNameHtml),
                     "shared/admin/colours.aspx");
             }
 
@@ -133,7 +145,7 @@ public partial class reports_tailoringmenu : Page
                     "gear_preferences",
                     48,
                     "General Options",
-                    string.Format("Enable or disable various features within {0}.", module.BrandNameHTML),
+                    string.Format("Enable or disable various features within {0}.", module.BrandNameHtml),
                     "~/shared/admin/accountOptions.aspx"); // admin/generaloptions.aspx");
             }
 
@@ -143,7 +155,7 @@ public partial class reports_tailoringmenu : Page
                     "data_edit",
                     48,
                     "User Defined Fields",
-                    string.Format("Add, edit or delete User Defined Fields here. These fields are used to store additional information that {0} does not record by default.", module.BrandNameHTML),
+                    string.Format("Add, edit or delete User Defined Fields here. These fields are used to store additional information that {0} does not record by default.", module.BrandNameHtml),
                     "shared/admin/adminuserdefined.aspx");
 
                 this.Master.AddMenuItem(

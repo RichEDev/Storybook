@@ -2,6 +2,8 @@
 {
     using System;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary.Employees;
 
     [Serializable()]
@@ -115,10 +117,10 @@
                 // select the appropriate support portal product name to match the current spend management module to
                 switch (this.CurrentActiveModule)
                 {
-                    case Modules.contracts:
+                    case Modules.Contracts:
                         helpProdName = "framework";
                         break;
-                    case Modules.expenses:
+                    case Modules.Expenses:
                         helpProdName = "expenses";
                         break;
                     default:

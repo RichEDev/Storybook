@@ -20,6 +20,8 @@ using System.Text;
 
 namespace Spend_Management
 {
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary.Enumerators;
 
     public partial class aeCars : System.Web.UI.UserControl
@@ -29,7 +31,7 @@ namespace Spend_Management
         private int nCarID;
         private aeCarPageAction nAction;
         private string sReturnURL;
-		private Modules currentModule = Modules.expenses;
+		private Modules currentModule = Modules.Expenses;
         bool bAdministrator = false;
         bool bIsPoolCar = false;
         bool bSendEmailForNewCar = false;

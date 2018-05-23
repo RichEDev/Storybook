@@ -11,6 +11,11 @@
 
     using Helpers;
     using API;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using Enumerators;
 
     using SpendManagementLibrary.Logic_Classes;
@@ -66,6 +71,9 @@
         }
 
         #endregion
+
+        private readonly IDataFactory<IProductModule, Modules> _productModuleFactory =
+            FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>();
 
         #region Public Methods and Operators
 
@@ -404,7 +412,6 @@
 
             DBConnection db = new DBConnection(this.MetabaseConnectionString);
             cEventlog.LogEntry("Get Account Modules - new cModules.");
-            cModules clsModules = new cModules();
 
             using (SqlDataReader reader = db.GetReader("SELECT moduleID, accountID, expiryDate, maxUsers FROM dbo.moduleLicencesBase"))
             {
@@ -414,7 +421,7 @@
                     int accountID = reader.GetInt32(1);
                     DateTime expiryDate = reader.GetDateTime(2);
                     int maxUsers = reader.GetInt32(3);
-                    cModule tmpModule = clsModules.GetModuleByID(moduleID);
+                    IProductModule tmpModule = this._productModuleFactory[(Modules)moduleID];
 
                     lstAccountModuleLicenses.Add(new cAccountModuleLicenses(moduleID, accountID, maxUsers, expiryDate, tmpModule));
                 }

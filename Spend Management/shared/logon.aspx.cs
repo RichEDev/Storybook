@@ -9,6 +9,10 @@
     using System.Web.Security;
     using System.Web.UI;
     using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using Common.Cryptography;
     using Spend_Management.shared.code;
     using SpendManagementLibrary;
@@ -36,6 +40,12 @@
         /// </summary>
         [Dependency]
         public IEncryptor Encryptor { get; set; }
+
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
 
         /// <summary>
         /// The page_ pre init.
@@ -78,8 +88,7 @@
             this.BannerSlider.Href = GlobalVariables.StaticContentLibrary + "/js/bxSlider/jquery.bxslider.css";
 
             this.Module = HostManager.GetModule(Request.Url.Host);
-            var clsModules = new cModules();
-            cModule module = clsModules.GetModuleByID((int)this.Module);
+            var module = this.ProductModuleFactory[this.Module];
 
             var clsInfoMessages = new cInformationMessages();
             List<cInformationMessage> listInfoMessages = clsInfoMessages.GetMessages();
@@ -87,7 +96,7 @@
             var logonMessages = new LogonMessages();
             if (string.IsNullOrEmpty(Request.QueryString["previewId"]) || string.IsNullOrEmpty(User.Identity.Name))
             {
-                List<LogonMessage> logonMessageList = logonMessages.GetAllActiveMessages(module.ModuleID);
+                List<LogonMessage> logonMessageList = logonMessages.GetAllActiveMessages(module.Id);
                 BannerGenerator.DataSource = logonMessageList;
                 BannerGenerator.DataBind();
             }
@@ -130,10 +139,10 @@
             var clsSecure = new cSecureData();
             switch (this.Module)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     this.imgBrandingLogo.ImageUrl = "~/shared/images/branding/FRA152-wp.png";
-                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHTML);
-                    this.Title = string.Format("{0} {1}", module.BrandNamePlainText, Logon);
+                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHtml);
+                    this.Title = string.Format("{0} {1}", module.BrandName, Logon);
                     break;
                 case Modules.SmartDiligence:
                     this.imgBrandingLogo.ImageUrl = "~/shared/images/spacer.png";
@@ -142,34 +151,34 @@
                     break;
                 case Modules.SpendManagement:
                     this.imgBrandingLogo.ImageUrl = "~/shared/images/branding/expenses76w_77h.png";
-                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHTML);
-                    this.Title = string.Format("{0} {1}", module.BrandNamePlainText, Logon);
+                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHtml);
+                    this.Title = string.Format("{0} {1}", module.BrandName, Logon);
                     break;
-                case Modules.expenses:
+                case Modules.Expenses:
                     this.imgBrandingLogo.ImageUrl = "~/shared/images/branding/EXP152-wp.png";
-                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHTML);
-                    this.Title = string.Format("{0} {1}", module.BrandNamePlainText, Logon);
+                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHtml);
+                    this.Title = string.Format("{0} {1}", module.BrandName, Logon);
                     this.lnkSelfRegistration.Visible = true;
                     break;
                 case Modules.Greenlight:
                     this.imgBrandingLogo.ImageUrl = "~/shared/images/branding/greenlightlogo.png";
-                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHTML);
-                    this.Title = string.Format("{0} {1}", module.BrandNamePlainText, Logon);
+                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHtml);
+                    this.Title = string.Format("{0} {1}", module.BrandName, Logon);
                     break;
                 case Modules.GreenlightWorkforce:
                     this.imgBrandingLogo.ImageUrl = "~/shared/images/branding/greenlightworkforcelogo.png";
-                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHTML);
-                    this.Title = string.Format("{0} {1}", module.BrandNamePlainText, Logon);
+                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHtml);
+                    this.Title = string.Format("{0} {1}", module.BrandName, Logon);
                     break;
                 case Modules.CorporateDiligence:
                     this.imgBrandingLogo.ImageUrl = "~/shared/images/branding/corporated.png";
-                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHTML);
-                    this.Title = string.Format("{0} {1}", module.BrandNamePlainText, Logon);
+                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHtml);
+                    this.Title = string.Format("{0} {1}", module.BrandName, Logon);
                     break;
                 default:
                     this.imgBrandingLogo.ImageUrl = "~/shared/images/branding/expenses76w_77h.png";
-                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHTML);
-                    this.Title = string.Format("{0} {1}", module.BrandNamePlainText, Logon);
+                    this.litPageTitle.Text = string.Format("{0} {1}", LogonTo, module.BrandNameHtml);
+                    this.Title = string.Format("{0} {1}", module.BrandName, Logon);
                     break;
             }
 

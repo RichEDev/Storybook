@@ -9,12 +9,16 @@ Imports System.Web.UI.WebControls
 Imports System.Web.UI.WebControls.WebParts
 Imports System.Web.UI.HtmlControls
 Imports System.IO
+Imports BusinessLogic
+Imports BusinessLogic.DataConnections
+Imports BusinessLogic.ProductModules
 Imports FWClasses
 Imports SpendManagementLibrary
 Imports Spend_Management
 Imports Spend_Management.shared.code.GreenLight
 Imports SpendManagementLibrary.Interfaces
 Imports SpendManagementLibrary.Enumerators
+Imports BusinessLogic.Modules
 
 Partial Class FWMenu
     Inherits System.Web.UI.MasterPage
@@ -142,12 +146,23 @@ Partial Class FWMenu
 
 #End Region
 
+    ''' <summary>
+    ''' An instance of <see cref="IDataFactory{IProductModule,Modules}"/> to get a <see cref="IProductModule"/>
+    ''' </summary>
+    <Dependency()> _
+    Public Property ProductModuleFactory As IDataFactory(Of IProductModule, Modules)
+        Get
+        End Get
+        Set
+        End Set
+    End Property
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         'Force IE out of compat mode
         Response.AddHeader("X-UA-Compatible", "IE=edge")
         Dim currentUser As CurrentUser = cMisc.GetCurrentUser()
         Dim theme As String = Me.Page.StyleSheetTheme
-        Dim clsMasterPageMethods As New cMasterPageMethods(currentUser, theme)
+        Dim clsMasterPageMethods As New cMasterPageMethods(currentUser, theme, Me.ProductModuleFactory)
         clsMasterPageMethods.PreventBrowserFromCachingTheResponse()
         clsMasterPageMethods.RedirectUserBypassingChangePassword()
         clsMasterPageMethods.UseDynamicCSS = UseDynamicCSS
@@ -173,9 +188,8 @@ Partial Class FWMenu
             Dim subacc As cAccountSubAccount = subaccs.getSubAccountById(currentUser.CurrentSubAccountId)
             Dim fws As cFWSettings = cMigration.ConvertToFWSettings(currentUser.Account, subaccs.getSubAccountsCollection, currentUser.CurrentSubAccountId)
 
-            Dim clsModules As New cModules
-            Dim clsModule As cModule = clsModules.GetModuleByID(CInt(currentUser.CurrentActiveModule))
-            Page.Title = clsModule.BrandNamePlainText & " from Selenity Ltd."
+            Dim productModule = Me.ProductModuleFactory(currentUser.CurrentActiveModule)
+            Page.Title = productModule.BrandName & " from Selenity Ltd."
 
             If Request.QueryString("cl") = "1" Then
                 ' clear any locks held for the current user

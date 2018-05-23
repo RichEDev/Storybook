@@ -5,49 +5,42 @@
     /// <summary>
     /// An instance of <see cref="IProductModule"/>
     /// </summary>
+    [Serializable]
     public abstract class ProductModule : IProductModule
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductModule"/> class. 
         /// </summary>
         /// <param name="id">
-        /// The identifier for <see cref="IProductModule"/>
+        /// The identifier for <see cref="ProductModule"/>
         /// </param>
         /// <param name="name">
-        /// The Name of the <see cref="IProductModule"/>
+        /// The Name of the <see cref="ProductModule"/>
         /// </param>
         /// <param name="description">
-        /// The Description of the <see cref="IProductModule"/>
+        /// The Description of the <see cref="ProductModule"/>
         /// </param>
         /// <param name="brandName">
-        /// The Brand Name of the <see cref="IProductModule"/>
+        /// The Brand Name of the <see cref="ProductModule"/>
         /// </param>
-        protected ProductModule(int id, string name, string description, string brandName)
+        /// <param name="brandNameHtml">
+        /// The Brand Name html of the <see cref="ProductModule"/>
+        /// </param>
+        protected ProductModule(int id, string name, string description, string brandName, string brandNameHtml)
         {
             if (id <= 0)
             {
                 throw new ArgumentException(nameof(id));
             }
 
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
-
-            if (string.IsNullOrWhiteSpace(brandName))
-            {
-                throw new ArgumentNullException(nameof(brandName));
-            }
+            Guard.ThrowIfNullOrWhiteSpace(name, nameof(name));
+            Guard.ThrowIfNull(description, nameof(description));
 
             this.Id = id;
             this.Name = name;
             this.Description = description;
             this.BrandName = brandName;
+            this.BrandNameHtml = brandNameHtml;
         }
 
         /// <summary>
@@ -69,5 +62,15 @@
         /// Gets the Brand Name of the <see cref="IProductModule"/>
         /// </summary>
         public string BrandName { get; }
+
+        /// <summary>
+        /// Gets the Brand Name html of the <see cref="IProductModule"/>
+        /// </summary>
+        public string BrandNameHtml { get; }
+
+        /// <summary>
+        /// Get the HomePage of the <see cref="IProductModule"/>
+        /// </summary>
+        public string HomePage => "~/home.aspx";
     }
 }

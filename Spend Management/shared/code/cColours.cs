@@ -4,6 +4,8 @@ namespace Spend_Management
     using BusinessLogic.DataConnections;
     using BusinessLogic.Enums;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary;
 
     /// <summary>
@@ -241,7 +243,7 @@ namespace Spend_Management
         {
             switch (activeModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     sHeaderBGColour = "#00A0AF".ToUpper();
                     sHeaderBreadcrumbTxtColour = "#FFFFFF".ToUpper();
 
@@ -278,7 +280,7 @@ namespace Spend_Management
                     sGreenLightSectionBackgroundColour = "#FFFFFF".ToUpper();
                     sGreenLightSectionUnderlineColour = "#00A0AF".ToUpper();
                     break;
-                case Modules.expenses:
+                case Modules.Expenses:
                     sHeaderBGColour = "#004990".ToUpper();
                     sHeaderBreadcrumbTxtColour = "#FFFFFF".ToUpper();
 
@@ -1779,7 +1781,7 @@ namespace Spend_Management
 
             switch (activemodule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     sb.Append("#logonpage { background-color: #ffffff; }");
                     sb.Append("#logonpage #breadcrumbbar a { color: #ffffff; }");
                     sb.Append("#logonpage #breadcrumbbar { background-image: none; background-color: #97ce8b; }");
@@ -1815,7 +1817,7 @@ namespace Spend_Management
                     sb.Append("#divlocked {background-color: #C7114A; color: #ffffff;}");
                     sb.Append("#divlocked:before {border-top-color: #C7114A; border-right-color: #C7114A; border-bottom-color: transparent; border-left-color: transparent;}");
                     break;
-                case Modules.expenses:
+                case Modules.Expenses:
                     sb.Append("#logonpage { background-color: #ffffff; }");
                     sb.Append("#logonpage #breadcrumbbar a { color: #ffffff; }");
                     sb.Append("#logonpage #breadcrumbbar { background-color: #4A65A0; }");

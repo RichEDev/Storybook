@@ -17,6 +17,9 @@ namespace Expenses_Reports
     using System.Runtime.Serialization.Formatters;
     using System.Text;
     using System.Text.RegularExpressions;
+
+    using BusinessLogic.Modules;
+
     using Infragistics.WebUI.UltraWebCalcManager;
     using Infragistics.WebUI.UltraWebGrid;
     using Microsoft.JScript;

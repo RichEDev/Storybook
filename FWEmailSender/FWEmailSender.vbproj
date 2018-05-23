@@ -304,6 +304,10 @@
     <Folder Include="logs\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
+      <Project>{69860ce5-949c-47f0-8fda-65c0a74171c8}</Project>
+      <Name>BusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FWClasses\FWClasses.csproj">
       <Project>{88E92370-7FEF-4289-878E-FC449E5C6D38}</Project>
       <Name>FWClasses</Name>

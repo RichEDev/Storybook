@@ -7,6 +7,9 @@ namespace SpendManagementLibrary
 {
     using System.Linq;
 
+    using BusinessLogic.Modules;
+    using BusinessLogic.ProductModules;
+
     using SpendManagementLibrary.Definitions;
     using SpendManagementLibrary.Enumerators;
 
@@ -112,27 +115,27 @@ namespace SpendManagementLibrary
         /// Returns a list of modules for this account, sorted alphabetically with Spend Management at the 0 index
         /// </summary>
         /// <returns></returns>
-        public List<cModule> AccountModules()
+        public List<IProductModule> AccountModules()
         {
-            List<cModule> lstModules = new List<cModule>();
-            SortedList<string, cModule> lstSortedModules = new SortedList<string, cModule>();
+            List<IProductModule> lstModules = new List<IProductModule>();
+            SortedList<string, IProductModule> lstSortedModules = new SortedList<string, IProductModule>();
 
 
             if (lstAccountModules.Count > 0)
             {
                 foreach (cAccountModuleLicenses module in lstAccountModules)
                 {
-                    if (module.Module.ModuleName == "Spend Management")
+                    if (module.Module.Name == "Spend Management")
                     {
                         lstModules.Insert(0, module.Module);
                     }
                     else
                     {
-                        lstSortedModules.Add(module.Module.ModuleName, module.Module);
+                        lstSortedModules.Add(module.Module.Name, module.Module);
                     }
                 }
 
-                foreach (KeyValuePair<string, cModule> kvp in lstSortedModules)
+                foreach (KeyValuePair<string, IProductModule> kvp in lstSortedModules)
                 {
                     lstModules.Add(kvp.Value);
                 }

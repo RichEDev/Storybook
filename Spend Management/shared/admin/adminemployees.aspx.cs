@@ -9,7 +9,9 @@ using System.Collections.Generic;
 
 namespace Spend_Management
 {
-	/// <summary>
+    using BusinessLogic.Modules;
+
+    /// <summary>
 	/// Summary description for adminemployees.
 	/// </summary>
 	public partial class adminemployees : Page
@@ -33,7 +35,7 @@ namespace Spend_Management
 
             switch (user.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     Master.helpid = 1139;
                     break;
                 default:
@@ -199,7 +201,7 @@ namespace Spend_Management
             {
                 case Modules.SpendManagement:
                 case Modules.SmartDiligence:
-                case Modules.contracts:
+                case Modules.Contracts:
                     grid.getColumnByName("groupname").hidden = true;
                     break;
             }

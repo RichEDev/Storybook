@@ -149,8 +149,8 @@
     <Compile Include="Databases\DatabaseCatalogue.cs" />
     <Compile Include="Databases\DatabaseServer.cs" />
     <Compile Include="Accounts\Elements\ModuleElements.cs" />
-    <Compile Include="Accounts\Elements\Element.cs" />
-    <Compile Include="Accounts\Elements\IElement.cs" />
+    <Compile Include="Elements\Element.cs" />
+    <Compile Include="Elements\IElement.cs" />
     <Compile Include="Accounts\IAccount.cs" />
     <Compile Include="Databases\IDatabaseCatalogue.cs" />
     <Compile Include="Databases\IDatabaseServer.cs" />
@@ -295,6 +295,21 @@
     <Compile Include="Images\IImageManipulation.cs" />
     <Compile Include="Images\JpgImageConversion.cs" />
     <Compile Include="Images\JpgImageManipulation.cs" />
+    <Compile Include="Modules\Modules.cs" />
+    <Compile Include="ProductModules\Elements\CorporateDilligenceProductModuleWithElements.cs" />
+    <Compile Include="ProductModules\Elements\ESRProductModuleWithElements.cs" />
+    <Compile Include="ProductModules\Elements\ExpensesProductModuleWithElements.cs" />
+    <Compile Include="ProductModules\Elements\FrameworkProductModuleWithElements.cs" />
+    <Compile Include="ProductModules\Elements\GreenLightProductModuleWithElements.cs" />
+    <Compile Include="ProductModules\Elements\GreenLIghtWorkForceProductModuleWithElements.cs" />
+    <Compile Include="ProductModules\Elements\IProductModuleWithElements.cs" />
+    <Compile Include="ProductModules\Elements\NullProductModuleWithElements.cs" />
+    <Compile Include="ProductModules\Elements\ProductModuleWithElements.cs" />
+    <Compile Include="ProductModules\Elements\PurchaseOrderProductModuleWithElements.cs" />
+    <Compile Include="ProductModules\Elements\SpendManagementProductModuleWithElements.cs" />
+    <Compile Include="ProductModules\PurchaseOrderProductModule.cs" />
+    <Compile Include="ProductModules\ESRProductModule.cs" />
+    <Compile Include="ProductModules\SpendManagementProductModule.cs" />
     <Compile Include="Interfaces\ICreated.cs" />
     <Compile Include="Interfaces\IDescription.cs" />
     <Compile Include="Interfaces\IModified.cs" />
@@ -432,6 +447,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

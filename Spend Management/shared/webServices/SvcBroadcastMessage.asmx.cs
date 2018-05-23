@@ -6,6 +6,9 @@
     using System.Linq;
     using System.Web.Script.Services;
     using System.Web.Services;
+
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary;
 
     /// <summary>

@@ -8,6 +8,9 @@
     using Logon;
     using Utilities.DistributedCaching;
     using System.Linq;
+
+    using BusinessLogic.Modules;
+
     /// <summary>
     /// Class includes Data access methods related to Logon Messages.
     /// </summary>

@@ -5,6 +5,8 @@
     using System.Web.Http;
     using System.Web.Http.Description;
 
+    using BusinessLogic.Modules;
+
     using SpendManagementApi.Attributes;
     using SpendManagementApi.Attributes.Mobile;
 
@@ -89,7 +91,7 @@
                     var subCats = new cSubcats(this.PairingKeySerialKey.PairingKey.AccountID);
                     var subCategory = subCats.GetSubcatById(expenseItem.subcatid);
 
-                    var user = new CurrentUser(this.PairingKeySerialKey.PairingKey.AccountID, this.PairingKeySerialKey.PairingKey.EmployeeID, 0, Modules.expenses, 1, false);
+                    var user = new CurrentUser(this.PairingKeySerialKey.PairingKey.AccountID, this.PairingKeySerialKey.PairingKey.EmployeeID, 0, Modules.Expenses, 1, false);
 
                     // multiple receipts per expense item are now possible, until the mobile apps can be enhanced we'll just return the first receipt
                     AttachedReceipt receipt = receiptData.GetByClaimLine(expenseItem, user, subCategory, claim)

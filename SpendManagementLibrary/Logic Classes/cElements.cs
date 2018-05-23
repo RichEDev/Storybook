@@ -6,6 +6,9 @@ namespace SpendManagementLibrary
     using System.Data;
     using System.Linq;
     using System.Web.UI.WebControls;
+
+    using BusinessLogic.Modules;
+
     using SpendManagementLibrary.Helpers;
 
     public class cElements

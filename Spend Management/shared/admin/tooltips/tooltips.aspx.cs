@@ -10,6 +10,8 @@
     using System.Web.Services;
     using System.Web.UI;
 
+    using BusinessLogic.Modules;
+
     #endregion
 
     /// <summary>
@@ -39,7 +41,7 @@
 
             switch (currentUser.CurrentActiveModule)
             {
-                case Modules.contracts:
+                case Modules.Contracts:
                     this.Master.helpid = 1182;
                     break;
                 default:
@@ -59,7 +61,7 @@
             {
                 case Modules.SmartDiligence:
                 case Modules.SpendManagement:
-                case Modules.contracts:
+                case Modules.Contracts:
                     this.hlClose.NavigateUrl = "~/MenuMain.aspx?menusection=tailoring";
                     break;
                 default:
