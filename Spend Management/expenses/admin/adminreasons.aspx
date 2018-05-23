@@ -10,7 +10,7 @@
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="contentmain">				
     <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
         <Scripts>
-            <asp:ScriptReference Path="~/expenses/javaScript/reasons.js" />
+            <asp:ScriptReference Path="~/expenses/javaScript/reasons.js?date=20180523" />
         </Scripts>
     </asp:ScriptManagerProxy>
 <div class="formpanel formpanel_padding">

@@ -9,6 +9,7 @@
     using BusinessLogic.P11DCategories;
     using BusinessLogic.ProjectCodes;
     using BusinessLogic.UserDefinedFields;
+    using BusinessLogic.Reasons;
     using BusinessLogic.Receipts;
 
     using DTO;
@@ -37,6 +38,7 @@
                 cfg.CreateMap<WalletReceiptDto, WalletReceipt>().ReverseMap();
                 cfg.CreateMap<AccountPropertiesDTO, IAccountProperty>().ReverseMap();
                 cfg.CreateMap<GeneralOptionsDTO, IGeneralOptions>().ReverseMap();
+                cfg.CreateMap<ReasonDTO, Reason>().ReverseMap();
             });
         }
 

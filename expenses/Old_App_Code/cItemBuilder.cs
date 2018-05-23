@@ -13,6 +13,7 @@ using AjaxControlToolkit;
 using BusinessLogic;
 using BusinessLogic.DataConnections;
 using BusinessLogic.GeneralOptions;
+using BusinessLogic.Reasons;
 
 using Common.Logging;
 
@@ -80,19 +81,23 @@ public class cItemBuilder
 
     private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory;
 
+    private readonly IDataFactoryArchivable<IReason, int, int> _reasonsFactory;
+
     /// <summary>
     /// Error message for invalid licence.
     /// </summary>
     private const string InvalidLicenceErrorMessage = "Mileage cannot be claimed because your driving licence status is set as banned/disqualified.";
 
-    public cItemBuilder(int accountId, int employeeId, DateTime expenseItemDate, IDataFactory<IGeneralOptions, int> generalOptionsFactory, int? subAccountId = null)
+    public cItemBuilder(int accountId, int employeeId, DateTime expenseItemDate, IDataFactory<IGeneralOptions, int> generalOptionsFactory, IDataFactoryArchivable<IReason, int, int> reasonsFactory, int? subAccountId = null)
     {
         Guard.ThrowIfNull(generalOptionsFactory, nameof(generalOptionsFactory));
+        Guard.ThrowIfNull(reasonsFactory, nameof(reasonsFactory));
 
         nAccountid = accountId;
         nEmployeeid = employeeId;
 
         this._generalOptionsFactory = generalOptionsFactory;
+        this._reasonsFactory = reasonsFactory;
 
         var employees = new cEmployees(accountId);
         employee = employees.GetEmployeeById(employeeId);
@@ -103,8 +108,8 @@ public class cItemBuilder
         clsEmployeeCars = new cEmployeeCars(accountId, employeeid, expenseItemDate);
     }
 
-    public cItemBuilder(int accountid, int employeeid, DateTime expenseItemDate, IDataFactory<IGeneralOptions, int> generalOptionsFactory, int subaccountid, int selectedcurrency, int selectedcountry, ItemType itemtype, Page addpage)
-        : this(accountid, employeeid, expenseItemDate, generalOptionsFactory, subaccountid)
+    public cItemBuilder(int accountid, int employeeid, DateTime expenseItemDate, IDataFactory<IGeneralOptions, int> generalOptionsFactory, IDataFactoryArchivable<IReason, int, int> reasonsFactory, int subaccountid, int selectedcurrency, int selectedcountry, ItemType itemtype, Page addpage)
+        : this(accountid, employeeid, expenseItemDate, generalOptionsFactory, reasonsFactory, subaccountid)
     {
         pgAddPage = addpage;
         nSelectedCurrency = selectedcurrency;
@@ -113,8 +118,8 @@ public class cItemBuilder
         mileageGridBuilder = new MileageGridBuilder();
     }
 
-    public cItemBuilder(int accountid, int employeeid, DateTime expenseItemDate, IDataFactory<IGeneralOptions, int> generalOptionsFactory, int subaccountid, ItemType itemtype, int transactionid, int selectedcurrency, int selectedcountry, int? mobileID, int? mobileJourneyID)
-        : this(accountid, employeeid, expenseItemDate, generalOptionsFactory, subaccountid)
+    public cItemBuilder(int accountid, int employeeid, DateTime expenseItemDate, IDataFactory<IGeneralOptions, int> generalOptionsFactory, IDataFactoryArchivable<IReason, int, int> reasonsFactory, int subaccountid, ItemType itemtype, int transactionid, int selectedcurrency, int selectedcountry, int? mobileID, int? mobileJourneyID)
+        : this(accountid, employeeid, expenseItemDate, generalOptionsFactory, reasonsFactory, subaccountid)
     {
         nAccountid = accountid;
         nEmployeeid = employeeid;
@@ -977,11 +982,15 @@ public class cItemBuilder
             cell.CssClass = "labeltd";
             cell.Text = reason.description + ":";
             row.Cells.Add(cell);
-            cReasons clsreasons = actionContext.ClaimReasons;
             cell = new TableCell();
             cell.CssClass = "inputtd";
             ddlst = new DropDownList();
-            ddlst.Items.AddRange(clsreasons.CreateDropDown().ToArray());
+
+            var reasons = this._reasonsFactory.Get().OrderBy(x => x.Name);
+            var items = new List<ListItem> { new ListItem(string.Empty, "0") };
+            items.AddRange(reasons.Select(listReason => new ListItem(listReason.Name, listReason.Id.ToString(CultureInfo.InvariantCulture))));
+
+            ddlst.Items.AddRange(items.ToArray());
             ddlst.ID = "cmbreason" + id;
 
             if (expenseitem != null)

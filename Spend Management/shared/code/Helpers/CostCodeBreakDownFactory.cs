@@ -1,6 +1,7 @@
 ﻿namespace Spend_Management.shared.code.Helpers
 {
     using System;
+
     using SpendManagementLibrary;
 
     /// <summary>
@@ -34,9 +35,6 @@
                   
                 case FilterType.Projectcode:
                     return new cProjectCodes(accountId);
-
-                case FilterType.Reason:
-                    return new cReasons(accountId);
 
                 case FilterType.Userdefined:
                     return new cUserdefinedFields(accountId);

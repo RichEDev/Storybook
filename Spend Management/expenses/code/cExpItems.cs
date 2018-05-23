@@ -11,6 +11,7 @@ namespace Spend_Management
 
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Reasons;
 
     using Common.Logging;
 
@@ -49,7 +50,9 @@ namespace Spend_Management
         cMisc clsmisc;
 
         private readonly Lazy<IDataFactory<IGeneralOptions, int>> _generalOptionsFactory = new Lazy<IDataFactory<IGeneralOptions, int>>(() => FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>());
-        
+
+        private readonly Lazy<IDataFactoryArchivable<IReason, int, int>> _reasonsFactory = new Lazy<IDataFactoryArchivable<IReason, int, int>>(() => FunkyInjector.Container.GetInstance<IDataFactoryArchivable<IReason, int, int>>());
+
         cFields fields;
 
         private cStage currentStage;
@@ -1788,25 +1791,10 @@ namespace Spend_Management
 
             if (olditem.reasonid != newitem.reasonid)
             {
-                cReasons clsreasons = new cReasons(accountid);
-                if (olditem.reasonid == 0)
-                {
-                    oldval = string.Empty;
-                }
-                else
-                {
-                    cReason oldreas = clsreasons.getReasonById(olditem.reasonid);
-                    oldval = oldreas.reason;
-                }
-                if (newitem.reasonid == 0)
-                {
-                    newval = string.Empty;
-                }
-                else
-                {
-                    cReason newreas = clsreasons.getReasonById(newitem.reasonid);
-                    newval = newreas.reason;
-                }
+                oldval = olditem.reasonid == 0 ? string.Empty : this._reasonsFactory.Value[olditem.reasonid].Name;
+
+                newval = newitem.reasonid == 0 ? string.Empty : this._reasonsFactory.Value[newitem.reasonid].Name;
+
                 clsaudit.editRecord(olditem.expenseid, itemDesc, SpendManagementElement.Expenses, new Guid("AF839FE7-8A52-4BD1-962C-8A87F22D4A10"), oldval, newval);
             }
 
@@ -4074,10 +4062,8 @@ namespace Spend_Management
         private void setAccountCode(ref cExpenseItem item, cSubcat subcat)
         {
             string accountcode = string.Empty;
-            cReasons clsreasons = new cReasons(accountid);
 
-
-            cReason reason = clsreasons.getReasonById(item.reasonid);
+            var reason = this._reasonsFactory.Value[item.reasonid];
 
             if (reason == null)
             {
@@ -4086,6 +4072,7 @@ namespace Spend_Management
                     accountcode = subcat.alternateaccountcode;
                     item.accountcode = accountcode;
                 }
+
                 return;
             }
 
@@ -4093,16 +4080,16 @@ namespace Spend_Management
             {
                 accountcode = subcat.alternateaccountcode;
             }
-            else if (item.receipt == true && reason.accountcodevat != string.Empty)
+            else if (item.receipt == true && reason.AccountCodeVat != string.Empty)
             {
-                accountcode = reason.accountcodevat;
+                accountcode = reason.AccountCodeVat;
             }
-            else if (item.receipt == false && reason.accountcodenovat != string.Empty)
+            else if (item.receipt == false && reason.AccountCodeNoVat != string.Empty)
             {
-                accountcode = reason.accountcodenovat;
+                accountcode = reason.AccountCodeNoVat;
             }
-            item.accountcode = accountcode;
 
+            item.accountcode = accountcode;
         }
 
         public List<cDepCostItem> getCostCodeBreakdown(int expenseId)

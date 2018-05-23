@@ -26,7 +26,7 @@
         /// <param name="container">An instance of <see cref="Container"/> to obtain instances of objects from.</param>
         public override void Action(IAccount account, Container container)
         {
-            IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> projectCodes = container.GetInstance<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int>>();
+            IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool> projectCodes = container.GetInstance<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool>>();
 
             this.Log.Info($"Caching {projectCodes.Get().Count} Project Codes");
         }

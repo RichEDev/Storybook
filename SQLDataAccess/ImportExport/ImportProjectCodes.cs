@@ -6,6 +6,7 @@
     using System.Linq;
 
     using BusinessLogic;
+    using BusinessLogic.Constants.Tables;
     using BusinessLogic.DataConnections;
     using BusinessLogic.Fields;
     using BusinessLogic.Fields.Type.Base;
@@ -15,15 +16,14 @@
     using BusinessLogic.Tables.Type;
     using BusinessLogic.UserDefinedFields;
 
+    using QueryBuilder.Builders;
     using QueryBuilder.Common;
     using QueryBuilder.Comparisons;
 
     /// <summary>
     /// Import a file into expenses.
     /// </summary>
-    /// <typeparam name="IProjectCodesWithUserDefined"> The target file type to inport into.
-    /// </typeparam>
-    public class ImportProjectCodes<IProjectCodesWithUserDefined> : IImportFile<IProjectCodesWithUserDefined>
+    public class ImportProjectCodes : IImportFile
     {
         private readonly FieldRepository _fieldRepository;
 
@@ -33,10 +33,10 @@
 
         private readonly ICustomerDataConnection<SqlParameter> _customerDataConnection;
 
-        private readonly IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> _projectCodesRepository;
+        private readonly IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool> _projectCodesRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImportProjectCodes{IProjectCodesWithUserDefined}"/> class.
+        /// Initializes a new instance of the <see cref="ImportProjectCodes"/> class.
         /// </summary>
         /// <param name="fieldRepository">
         /// An instance of <see cref="FieldRepository"/>.
@@ -51,15 +51,16 @@
         /// The <see cref="ICustomerDataConnection{T}"/> to use.
         /// </param>
         /// <param name="projectCodesRepository">
-        /// An instance of <see cref="IDataFactoryCustom{TComplexType,TPrimaryKeyDataType}"/> where TComplexType is <seealso cref="IProjectCodesWithUserDefined"/>.
+        /// An instance of <see cref="IDataFactoryCustom{TComplexType,TPrimaryKeyDataType,TArchivedReturnType}"/> where TComplexType is <seealso cref="IProjectCodeWithUserDefinedFields"/>.
         /// </param>
-        public ImportProjectCodes(FieldRepository fieldRepository, BusinessLogic.UserDefinedFields.UserDefinedFieldRepository userDefinedFieldRepository, TableRepository tableRepository, ICustomerDataConnection<SqlParameter> customerDataConnection, IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> projectCodesRepository)
+        public ImportProjectCodes(FieldRepository fieldRepository, UserDefinedFieldRepository userDefinedFieldRepository, TableRepository tableRepository, ICustomerDataConnection<SqlParameter> customerDataConnection, IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool> projectCodesRepository)
         {
-            Guard.ThrowIfNull(fieldRepository, "fieldRepository");
-            Guard.ThrowIfNull(userDefinedFieldRepository, "userDefinedFieldRepository");
-            Guard.ThrowIfNull(tableRepository, "tableRepository");
-            Guard.ThrowIfNull(customerDataConnection, "customerDataConnection");
-            Guard.ThrowIfNull(projectCodesRepository, "projectCodesRepository");
+            Guard.ThrowIfNull(fieldRepository, nameof(fieldRepository));
+            Guard.ThrowIfNull(userDefinedFieldRepository, nameof(userDefinedFieldRepository));
+            Guard.ThrowIfNull(tableRepository, nameof(tableRepository));
+            Guard.ThrowIfNull(customerDataConnection, nameof(customerDataConnection));
+            Guard.ThrowIfNull(projectCodesRepository, nameof(projectCodesRepository));
+
             this._fieldRepository = fieldRepository;
             this._userDefinedFieldRepository = userDefinedFieldRepository;
             this._tableRepository = tableRepository;
@@ -80,7 +81,7 @@
         /// The file content.
         /// </param>
         /// <returns>
-        /// The <see cref="List{T}"/> of imort stats results (one per row).
+        /// The <see cref="List{T}"/> of import stats results (one per row).
         /// </returns>
         public List<string> Import(
             SortedList<Guid, string> defaultValues,
@@ -90,7 +91,7 @@
             Guard.ThrowIfNull(defaultValues, "defaultValues");
             Guard.ThrowIfNull(matchedColumns, "matchedColumns");
             Guard.ThrowIfNull(fileContents, "fileContents");
-            ITable baseTable = this._tableRepository[new Guid("e1ef483c-7870-42ce-be54-ecc5c1d5fb34")];
+            ITable baseTable = this._tableRepository[ProjectCodes.TableId];
             IField keyfield = this._fieldRepository[baseTable.KeyFieldId];
             IField primaryKeyField = this._fieldRepository[baseTable.PrimaryKeyId];
             int keyindex = this.GetKeyFieldIndex(keyfield, matchedColumns);
@@ -162,7 +163,7 @@
             IField keyfield,
             int keyindex)
         {
-            var existQuery = new QueryBuilder.Builders.SelectQueryBuilder();
+            var existQuery = new SelectQueryBuilder();
             existQuery.From.Add(new SqlName(baseTable.Name));
             existQuery.Columns.Add(new Column(primaryKeyField.Name, baseTable.Name));
             existQuery.Columns.Add(new Column(keyfield.Name, baseTable.Name));
@@ -217,10 +218,10 @@
         }
 
         /// <summary>
-        /// Update an existing <see cref="IProjectCodesWithUserDefined"/>.
+        /// Update an existing <see cref="IProjectCodeWithUserDefinedFields"/>.
         /// </summary>
         /// <param name="existingProjectCode">
-        /// The instance of <see cref="IProjectCodesWithUserDefined"/> to update.
+        /// The instance of <see cref="IProjectCodeWithUserDefinedFields"/> to update.
         /// </param>
         /// <param name="fileContent">
         /// The content of the file, used to update the field.
@@ -239,7 +240,7 @@
                 var importValueMissing = string.IsNullOrEmpty(fileContent[idx].ToString());
                 string defaultValue = importValueMissing ? importField.DefaultValue : string.Empty;
 
-                if (importField.DestinationColumn == BusinessLogic.Constants.Tables.ProjectCodes.Fields.Archived)
+                if (importField.DestinationColumn == ProjectCodes.Fields.Archived)
                 {
                     if (importValueMissing)
                     {
@@ -251,17 +252,17 @@
                     }
                 }
 
-                if (importField.DestinationColumn == BusinessLogic.Constants.Tables.ProjectCodes.Fields.Description)
+                if (importField.DestinationColumn == ProjectCodes.Fields.Description)
                 {
                     existingProjectCode.Description = importValueMissing ? defaultValue : fileContent[idx].ToString();
                 }
 
-                if (importField.DestinationColumn == BusinessLogic.Constants.Tables.ProjectCodes.Fields.Projectcode)
+                if (importField.DestinationColumn == ProjectCodes.Fields.Projectcode)
                 {
                     existingProjectCode.Name = importValueMissing ? defaultValue : fileContent[idx].ToString();
                 }
 
-                if (!BusinessLogic.Constants.Tables.ProjectCodes.Fields.Contains(importField.DestinationColumn))
+                if (!ProjectCodes.Fields.Contains(importField.DestinationColumn))
                 {
                     // It's a user defined field
                     var field = this._userDefinedFieldRepository[importField.DestinationColumn];
@@ -282,7 +283,7 @@
                         {
                             var udfValues = existingProjectCode.UserDefinedFieldValues.ToSortedList();
                             udfValues[userdefinedAttribute.UserDefinedFieldId] = value;
-                                
+
                             existingProjectCode.UserDefinedFieldValues = new UserDefinedFieldValueCollection(udfValues);
                         }
                         else
@@ -290,7 +291,7 @@
                             var udfValues = existingProjectCode.UserDefinedFieldValues.ToSortedList();
                             udfValues.Add(userdefinedAttribute.UserDefinedFieldId, value);
                             existingProjectCode.UserDefinedFieldValues = new UserDefinedFieldValueCollection(udfValues);
-                        }    
+                        }
                     }
                 }
 

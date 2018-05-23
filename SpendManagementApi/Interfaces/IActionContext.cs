@@ -44,8 +44,6 @@ namespace SpendManagementApi.Interfaces
 
         cBudgetholders BudgetHolders { get; set; }
 
-        cReasons ClaimReasons { get; set; }
-
         cCostcodes CostCodes { get; set; }
 
         cDepartments Departments { get; set; }

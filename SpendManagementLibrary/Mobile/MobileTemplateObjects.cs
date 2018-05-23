@@ -192,16 +192,12 @@ using System.Runtime.Serialization;
         [DataMember]
         public string accountcodenovat { get; set; }
 
-        //[DataMember]
-        public DateTime createdon { get; set; }
+        public DateTime? createdon { get; set; }
 
-        //[DataMember]
-        public int createdby { get; set; }
+        public int? createdby { get; set; }
 
-        //[DataMember]
         public DateTime? modifiedon { get; set; }
 
-        //[DataMember]
         public int? modifiedby { get; set; }
 
         [DataMember]

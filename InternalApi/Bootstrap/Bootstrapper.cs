@@ -103,7 +103,7 @@
 
             // This registration should register all implementations of IDataFactory<,> within the SqlDataAccess project. 
             container.Register(typeof(IDataFactory<,>), new[] { typeof(SqlAccountFactory).Assembly });
-            container.Register(typeof(IDataFactoryCustom<,>), new[] { typeof(SqlProjectCodesWithUserDefinedValuesFactory).Assembly });
+            container.Register(typeof(IDataFactoryCustom<,,>), new[] { typeof(SqlProjectCodesWithUserDefinedValuesFactory).Assembly });
 
             container.Register<IFileWatcher, FileWatcher>();
             container.Register<IFileSystem, FileSystem>();

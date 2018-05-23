@@ -24,7 +24,8 @@ namespace Spend_Management
     using BusinessLogic.P11DCategories;
     using BusinessLogic;
     using BusinessLogic.DataConnections;
-
+    using BusinessLogic.Reasons;
+    using CacheDataAccess.Reasons;
 
     /// <summary>
     /// Class used to import all data from the implementations spreadsheet 
@@ -42,17 +43,21 @@ namespace Spend_Management
 
         private readonly IDataFactory<IP11DCategory, int> _p11DCategoryFactory;
 
+        private readonly IDataFactoryCustom<IReason, int, int> _reasonFactory;
+
         /// <summary>
         /// Constructor for cCustomerDataImport
         /// </summary>
         /// <param name="AccountID">ID of the logged in account</param>
         /// <param name="employeeid">ID of the user</param>
         /// <param name="p11DCategoryFactory">An instance of <see cref="IDataFactory{IP11DCategory,Int32}"/> to get a <see cref="IP11DCategory"/></param>
-        public cCustomerDataImport(int AccountID, int employeeid, int logID, IDataFactory<IP11DCategory, int> p11DCategoryFactory)
+        public cCustomerDataImport(int AccountID, int employeeid, int logID, IDataFactory<IP11DCategory, int> p11DCategoryFactory, IDataFactoryCustom<IReason, int, int> reasonFactory)
         {
             Guard.ThrowIfNull(p11DCategoryFactory, nameof(p11DCategoryFactory));
+            Guard.ThrowIfNull(reasonFactory, nameof(reasonFactory));
 
             this._p11DCategoryFactory = p11DCategoryFactory;
+            this._reasonFactory = reasonFactory;
 
             nAccountID = AccountID;
             nEmployeeID = employeeid;
@@ -1100,29 +1105,48 @@ namespace Spend_Management
             cElements clsElements = new cElements();
             cElement element = clsElements.GetElementByName("Reasons");
 
-            cReasons clsReasons = new cReasons(AccountID);
-            string reason = lstReasons["Reason"].ToString();
+            string reasonName = lstReasons["Reason"].ToString();
             string reasonDesc = lstReasons["Reason Description"].ToString();
-            cReason reqReason = null;
 
-            if (exists("reasons", "reason", reason))
+            if (exists("reasons", "reason", reasonName))
             {
-                reqReason = clsReasons.getReasonByString(reason);
+                var reason = this._reasonFactory.GetByCustom(new GetByReasonName(reasonName));
 
-                if (reqReason != null)
+                if (reason != null)
                 {
-                    clsReasons.saveReason(new cReason(AccountID, reqReason.reasonid, reason, reasonDesc, reqReason.accountcodevat, reqReason.accountcodenovat, reqReason.createdon, reqReason.createdby, DateTime.UtcNow, employeeid, reqReason.Archive));
+                    this._reasonFactory.Save(
+                        new BusinessLogic.Reasons.Reason(
+                            reason.Id,
+                            reason.Archived,
+                            reasonDesc,
+                            reasonName,
+                            reason.AccountCodeVat,
+                            reason.AccountCodeNoVat,
+                            reason.CreatedBy,
+                            reason.CreatedOn,
+                            this.employeeid,
+                            DateTime.UtcNow));
 
-                    clsLogging.saveLogItem(logID, LogReasonType.SuccessUpdate, element, "Updated Reason " + reason);
+                    this.clsLogging.saveLogItem(this.logID, LogReasonType.SuccessUpdate, element, "Updated Reason " + reasonName);
                 }
             }
             else
             {
-                reqReason = new cReason(AccountID, 0, reason, reasonDesc, "", "", DateTime.UtcNow, employeeid, null, null, false);
-                clsReasons.saveReason(reqReason);
-                clsLogging.saveLogItem(logID, LogReasonType.SuccessAdd, element, "Added Reason " + reason);
-            }
+                this._reasonFactory.Save(
+                    new BusinessLogic.Reasons.Reason(
+                        0,
+                        false,
+                        reasonDesc,
+                        reasonName,
+                        "",
+                        "",
+                        this.employeeid,
+                        DateTime.UtcNow,
+                        null,
+                        null));
 
+                this.clsLogging.saveLogItem(this.logID, LogReasonType.SuccessAdd, element, "Added Reason " + reasonName);
+            }
         }
 
         private void saveP11DCat(Dictionary<string, object> lstP11Dcats, IDataFactory<IP11DCategory, int> p11DCategoryRepository)

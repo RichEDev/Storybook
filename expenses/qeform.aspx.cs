@@ -3,6 +3,8 @@ namespace expenses
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using System.Text;
     using System.Web.Services;
     using System.Web.UI;
@@ -13,6 +15,7 @@ namespace expenses
     using BusinessLogic;
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Reasons;
 
     using Spend_Management;
     using Spend_Management.shared.code;
@@ -25,6 +28,12 @@ namespace expenses
 
     public partial class qeform : Page
     {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IReason"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactoryArchivable<IReason, int, int> ReasonFactory { get; set; }
+
         public int quickentryid;
         public IWorkbook workbook;
 
@@ -352,8 +361,7 @@ namespace expenses
                 worksheet = null;
             }
             int cursubcol;
-            
-            cReasons clsreasons = new cReasons((int)ViewState["accountid"]);
+
             cCountries clscountries = new cCountries((int)ViewState["accountid"], (int)ViewState["subAccountID"]);
             cCurrencies clscurrencies = new cCurrencies((int)ViewState["accountid"], (int)ViewState["subAccountID"]);
             cMileagecats clsmileagecats = new cMileagecats((int)ViewState["accountid"]);
@@ -537,8 +545,12 @@ namespace expenses
 
                                 ddlst = new DropDownList();
                                 ddlst.ID = "cmbreasons" + i;
-                                ddlst.Items.AddRange(clsreasons.CreateDropDown().ToArray());
 
+                                var reasons = this.ReasonFactory.Get().OrderBy(x => x.Name);
+                                var items = new List<ListItem> { new ListItem(string.Empty, "0") };
+                                items.AddRange(reasons.Select(listReason => new ListItem(listReason.Name, listReason.Id.ToString(CultureInfo.InvariantCulture))));
+
+                                ddlst.Items.AddRange(items.ToArray());
 
                                 if (spreadsheet == true)
                                 {
@@ -1378,7 +1390,6 @@ namespace expenses
             string[] yesno = new string[2];
             int row;
             int cursubcol;
-            cReasons clsreasons = new cReasons((int)ViewState["accountid"]);
             cCountries clscountries = new cCountries((int)ViewState["accountid"], (int)ViewState["subAccountID"]);
             cCurrencies clscurrencies = new cCurrencies((int)ViewState["accountid"], (int)ViewState["subAccountID"]);
             cQeFieldColumn fieldcol;
@@ -1458,11 +1469,13 @@ namespace expenses
                             case "af839fe7-8a52-4bd1-962c-8a87f22d4a10": //dd
                                 if (reasons.Length == 0)
                                 {
-                                    reasons = clsreasons.getArray();
+                                    reasons = this.ReasonFactory.Get().Select(e => e.Name).ToArray();
                                 }
+
                                 val = worksheet.Range[row, col].DataValidation;
                                 val.DataRange = worksheet.Range[1, 105, reasons.Length, 105];
                                 worksheet.Range[1, 105, reasons.Length, 105].CellStyle.Font.Color = ExcelKnownColors.White;
+
                                 break;
                         }
                         style = worksheet.Range[row, col].CellStyle;

@@ -18,7 +18,7 @@
     /// <summary>
     /// Implements methods to retrieve and create instances of <see cref="IProjectCode"/> in <see cref="IDataConnection{T}"/>
     /// </summary>
-    public class SqlProjectCodesFactory : IDataFactoryCustom<IProjectCode, int>
+    public class SqlProjectCodesFactory : IDataFactoryCustom<IProjectCode, int, bool>
     {
         /// <summary>
         /// An instance of <see cref="CacheFactory{T,TK}"/> to handle caching of <see cref="IProjectCode"/> instances.

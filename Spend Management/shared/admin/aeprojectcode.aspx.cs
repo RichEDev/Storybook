@@ -19,7 +19,7 @@ namespace Spend_Management
     public partial class aeprojectcode : Page
     {
         [Dependency]
-        public IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> ProjectCodesRepository { get; set; }
+        public IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool> ProjectCodesRepository { get; set; }
 
         private CurrentUser _currentUser;
 

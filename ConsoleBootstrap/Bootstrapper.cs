@@ -24,6 +24,7 @@
     using SQLDataAccess.ProjectCodes;
     using SQLDataAccess.Tables;
     using SQLDataAccess.UserDefinedFieldValues;
+    using SQLDataAccess.Reasons;
 
     using Utilities.Cryptography;
 
@@ -86,7 +87,8 @@
 
             // This registration should register all implementations of IDataFactory<,> within the SqlDataAccess project. 
             container.Register(typeof(IDataFactory<,>), new[] { typeof(SqlAccountFactory).Assembly });
-            container.Register(typeof(IDataFactoryCustom<,>), new[] { typeof(SqlProjectCodesWithUserDefinedValuesFactory).Assembly });
+            container.Register(typeof(IDataFactoryCustom<,,>), new[] { typeof(SqlProjectCodesWithUserDefinedValuesFactory).Assembly });
+            container.Register(typeof(IDataFactoryArchivable<,,>), new[] { typeof(SqlReasonsFactory).Assembly });
 
             // Verify verifies that all required dependencies are registered
             // ONLY RUN IN DEBUG MODE

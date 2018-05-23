@@ -48,7 +48,7 @@
         /// <summary>
         /// Gets or sets the Mock'd <see cref="RepositoryBase{T,TK}"/>
         /// </summary>
-        public IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> SqlProjectCodesWithUserDefinedValuesFactory { get; set; }
+        public SqlProjectCodesWithUserDefinedValuesFactory SqlProjectCodesWithUserDefinedValuesFactory { get; set; }
 
         /// <summary>
         /// Gets or sets an instance of <see cref="AccountCacheFactory{T,TK}"/>

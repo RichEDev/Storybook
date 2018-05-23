@@ -22,7 +22,7 @@ namespace expenses
 	public partial class codesplit : System.Web.UI.Page
 	{
 	    [Dependency]
-	    public IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> ProjectCodesRepository { get; set; }
+	    public IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool> ProjectCodesRepository { get; set; }
 
         protected void Page_Load(object sender, System.EventArgs e)
 		{

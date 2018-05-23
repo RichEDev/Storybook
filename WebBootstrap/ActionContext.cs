@@ -37,11 +37,6 @@
         private cCategories _categories;
 
         /// <summary>
-        /// A private instance of <see cref="cReasons"/>
-        /// </summary>
-        private cReasons _claimReasons;
-
-        /// <summary>
         /// A private instance of <see cref="cClaims"/>
         /// </summary>
         private cClaims _claims;
@@ -258,11 +253,6 @@
         /// Gets an instance of <see cref="cCategories"/>
         /// </summary>
         public cCategories Categories => this._categories ?? (this._categories = new cCategories(this.AccountId));
-
-        /// <summary>
-        /// Gets an instance of <see cref="cReasons"/>
-        /// </summary>
-        public cReasons ClaimReasons => this._claimReasons ?? (this._claimReasons = new cReasons(this.AccountId));
 
         /// <summary>
         /// Gets an instance of <see cref="cCostcodes"/>

@@ -6,6 +6,7 @@
 
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Reasons;
 
     using Spend_Management;
 
@@ -27,6 +28,11 @@
         public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory = expenses.Global.container.GetInstance<IDataFactory<IGeneralOptions, int>>();
 
         /// <summary>
+        /// An instance of <see cref="IDataFactoryArchivable{IReason,Int32,Int32}"/> to get a <see cref="IReason"/>
+        /// </summary>
+        public IDataFactoryArchivable<IReason, int, int> ReasonsFactory = expenses.Global.container.GetInstance<IDataFactoryArchivable<IReason, int, int>>();
+
+        /// <summary>
         /// getDocComment webmethod create DOC Validation messages for the car selected.
         /// Session removed to fix response time
         /// </summary>
@@ -42,7 +48,7 @@
         [WebMethod, ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string[] GetDutyOfCareComments(string id, int accountid, int employeeid, int carid, int subcatid, DateTime date, bool claimSubmitted, bool isDelegate)
         {
-            cItemBuilder itemBuilder = new cItemBuilder(accountid, employeeid, date, this.GeneralOptionsFactory);
+            cItemBuilder itemBuilder = new cItemBuilder(accountid, employeeid, date, this.GeneralOptionsFactory, this.ReasonsFactory);
             string[] data = new string[2];
             data[0] = id;
             data[1] = itemBuilder.CreateDutyOfCareExpiryMessages(subcatid, carid, claimSubmitted, date, isDelegate);

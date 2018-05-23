@@ -6,6 +6,11 @@ namespace SpendManagementApi.Repositories
 {
     using System.Collections.Generic;
     using System.Linq;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.P11DCategories;
+    using BusinessLogic.Reasons;
+
     using Models.Common;
     using Models.Types;
     using Utilities;
@@ -17,7 +22,7 @@ namespace SpendManagementApi.Repositories
     /// </summary>
     internal class ClaimReasonRepository : BaseRepository<ClaimReason>, ISupportsActionContext
     {
-        private cReasons _data;
+        private readonly IDataFactoryArchivable<IReason, int, int> _reasons;
 
         /// <summary>
         /// Creates a new ClaimReasonRepository with the passed in user.
@@ -27,7 +32,7 @@ namespace SpendManagementApi.Repositories
         public ClaimReasonRepository(ICurrentUser user, IActionContext actionContext) 
             : base(user, actionContext, x => x.Id, x => x.Label)
         {
-            _data = ActionContext.ClaimReasons;
+            this._reasons = WebApiApplication.container.GetInstance<IDataFactoryArchivable<IReason, int, int>>();
         }
 
         /// <summary>
@@ -44,7 +49,7 @@ namespace SpendManagementApi.Repositories
         /// <returns>A list of <see cref="ClaimReason"/></returns>
         public override IList<ClaimReason> GetAll()
         {
-            return _data.CachedList().Select(b => new ClaimReason().From(b, ActionContext)).ToList();
+            return this._reasons.Get().Select(reason => new ClaimReason().From(reason, ActionContext)).ToList();
         }
 
         /// <summary>
@@ -53,7 +58,7 @@ namespace SpendManagementApi.Repositories
         /// <returns>A list of <see cref="ClaimReason"/></returns>
         public IList<ClaimReason> GetAllUnarchived()
         {
-            return this._data.CachedList().Select(b => new ClaimReason().From(b, ActionContext)).Where(e => e.Archived == false).ToList();
+            return this._reasons.Get().Select(reason => new ClaimReason().From(reason, ActionContext)).Where(e => e.Archived == false).ToList();
         }
 
         /// <summary>
@@ -63,8 +68,7 @@ namespace SpendManagementApi.Repositories
         /// <returns>The budget holder.</returns>
         public override ClaimReason Get(int id)
         {
-            _data = new cReasons(User.AccountID);
-            var item = _data.getReasonById(id);
+            var item = this._reasons[id];
           
             if (item == null)
             {
@@ -84,21 +88,20 @@ namespace SpendManagementApi.Repositories
         {
             item = base.Add(item);
 
-            var id = _data.saveReason(item.To(ActionContext));
+            var result = new ClaimReason().From(this._reasons.Save(item.To(this.ActionContext)), this.ActionContext);
             
-            if (id == -1)
+            if (result.Id == -1)
             {
                 throw new ApiException(ApiResources.ApiErrorRecordAlreadyExists,
                         ApiResources.ApiErrorRecordAlreadyExistsMessage);
             }
             
-            if (id < 1)
+            if (result.Id < 1)
             {
                 throw new ApiException(ApiResources.ApiErrorSaveUnsuccessful,
                         ApiResources.ApiErrorSaveUnsuccessfulMessage);
             }
 
-            var result = Get(id);
             return result;
         }
 
@@ -111,15 +114,21 @@ namespace SpendManagementApi.Repositories
         {
             item = base.Update(item);
 
-            var id = _data.saveReason(item.To(ActionContext));
-            if (id == 1)
+            var result = new ClaimReason().From(this._reasons.Save(item.To(this.ActionContext)), this.ActionContext);
+
+            if (result.Id == -1)
             {
                 throw new ApiException(ApiResources.ApiErrorRecordAlreadyExists,
-                        ApiResources.ApiErrorRecordAlreadyExistsMessage);
+                    ApiResources.ApiErrorRecordAlreadyExistsMessage);
             }
 
-            item = Get(id);
-            return item;
+            if (result.Id < 1)
+            {
+                throw new ApiException(ApiResources.ApiErrorSaveUnsuccessful,
+                    ApiResources.ApiErrorSaveUnsuccessfulMessage);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -131,7 +140,8 @@ namespace SpendManagementApi.Repositories
         {
             var item = base.Delete(id);
 
-            var result = _data.deleteReason(id);
+            var result = this._reasons.Delete(id);
+
             if (result != 0)
             {
                 throw new ApiException(ApiResources.ApiErrorDeleteUnsuccessful,

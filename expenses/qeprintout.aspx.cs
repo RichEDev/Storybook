@@ -148,8 +148,6 @@ namespace expenses
 		
 		private string generateBody(cQeForm reqform)
 		{
-			cReasons clsreasons = new cReasons((int)ViewState["accountid"]);
-            cCountries clscountries = new cCountries((int)ViewState["accountid"], (int)ViewState["subAccountID"]);
 			cQeFieldColumn fieldcol;
 			cQeSubcatColumn subcatcol;
 			string rowclass = "row1";

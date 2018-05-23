@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Services;
-using System.Web.Script.Services;
-using SpendManagementLibrary;
-
-namespace Spend_Management
+﻿namespace Spend_Management
 {
+    using System;
+    using System.Web.Script.Services;
+    using System.Web.Services;
+
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Reasons;
+
+    using SpendManagementLibrary;
+
     /// <summary>
     /// Summary description for svcReasons
     /// </summary>
@@ -17,6 +18,8 @@ namespace Spend_Management
     [System.Web.Script.Services.ScriptService]
     public class svcReasons : System.Web.Services.WebService
     {
+        private readonly IDataFactoryArchivable<IReason, int, int> _reasonsFactory = FunkyInjector.Container.GetInstance<IDataFactoryArchivable<IReason, int, int>>();
+        
         /// <summary>
         /// 
         /// </summary>
@@ -32,21 +35,21 @@ namespace Spend_Management
         {
             CurrentUser currentUser = cMisc.GetCurrentUser();
             int returncode;
-            cReasons clsReasons = new cReasons(currentUser.AccountID);
-            cReason clsReason;
 
+            BusinessLogic.Reasons.Reason reason;
 
             if (ReasonID > 0) //update
             {
-                cReason oldreason = clsReasons.getReasonById(ReasonID);
-                clsReason = new cReason(currentUser.AccountID, ReasonID, ReasonName, Description, CodeWithVAT, CodeWithoutVAT, oldreason.createdon, oldreason.createdby, DateTime.Now, currentUser.EmployeeID, Archived);
+                var oldReason = this._reasonsFactory[ReasonID];
+                reason = new BusinessLogic.Reasons.Reason(ReasonID, Archived, Description, ReasonName, CodeWithVAT, CodeWithoutVAT, oldReason.CreatedBy, oldReason.CreatedOn, currentUser.EmployeeID, DateTime.Now);
             }
             else
             {
-                clsReason = new cReason(currentUser.AccountID, ReasonID, ReasonName, Description, CodeWithVAT, CodeWithoutVAT, DateTime.Now, currentUser.EmployeeID, null, null, Archived);
-
+                reason = new BusinessLogic.Reasons.Reason(ReasonID, Archived, Description, ReasonName, CodeWithVAT, CodeWithoutVAT, currentUser.EmployeeID, DateTime.Now, null, null);
             }
-            returncode = clsReasons.saveReason(clsReason);
+
+            returncode = this._reasonsFactory.Save(reason).Id;
+
             return returncode;
         }
     }

@@ -18,7 +18,7 @@ namespace SpendManagementApi.Repositories
     /// </summary>
     internal class ProjectCodeRepository : ArchivingBaseRepository<ProjectCode>
     {
-        private readonly IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> _projectCodes;
+        private readonly IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool> _projectCodes;
 
         /// <summary>
         /// Creates a new ProjectCodeRepository with the passed in user.
@@ -28,7 +28,7 @@ namespace SpendManagementApi.Repositories
             : base(user, x => x.Id, x => x.Label)
         {
 
-            this._projectCodes = WebApiApplication.container.GetInstance<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int>>();
+            this._projectCodes = WebApiApplication.container.GetInstance<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool>>();
         }
 
         /// <summary>

@@ -813,9 +813,6 @@ namespace Spend_Management
                         status.Add("Row " + i + " imported successfully.");
                     }
 
-                    // distributed cache needs clearing if the table affected uses that instead of brokers
-                    this.DeleteCollectionCache(keyfield.GetParentTable().TableID.ToString());
-
                     status.Add("File imported successfully.");
                 }
                 else
@@ -884,17 +881,6 @@ namespace Spend_Management
         {
             var cache = new Cache();
             cache.Delete(accountId, cacheArea, employeeId.ToString(CultureInfo.InvariantCulture));
-        }
-
-        private void DeleteCollectionCache(string tableId)
-        {
-            switch (tableId.ToUpperInvariant())
-            {
-                case "83077E08-FE7D-4C1A-A306-BE4327C349C1": // reasons
-                    var cache = new Cache();
-                    cache.Delete(accountid, cReasons.CacheArea, "0");
-                    break;
-            }
         }
 
         private void insertUserDefinedValues(int recordid, List<object> oFileContents, cField keyfield)

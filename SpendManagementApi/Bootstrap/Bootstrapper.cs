@@ -35,6 +35,7 @@ namespace SpendManagementApi.Bootstrap
     using SQLDataAccess;
     using SQLDataAccess.Accounts;
     using SQLDataAccess.ProjectCodes;
+    using SQLDataAccess.Reasons;
     using SQLDataAccess.Tables;
     using SQLDataAccess.UserDefinedFieldValues;
 
@@ -93,7 +94,8 @@ namespace SpendManagementApi.Bootstrap
 
             // This registration should register all implementations of IDataFactory<,> within the SqlDataAccess project. 
             container.Register(typeof(IDataFactory<,>), new[] { typeof(SqlAccountFactory).Assembly });
-            container.Register(typeof(IDataFactoryCustom<,>), new[] { typeof(SqlProjectCodesWithUserDefinedValuesFactory).Assembly });
+            container.Register(typeof(IDataFactoryCustom<,,>), new[] { typeof(SqlProjectCodesWithUserDefinedValuesFactory).Assembly });
+            container.Register(typeof(IDataFactoryArchivable<,,>), new[] { typeof(SqlReasonsFactory).Assembly });
 
             container.Register<IFileWatcher, FileWatcher>();
             container.Register<IFileSystem, FileSystem>();

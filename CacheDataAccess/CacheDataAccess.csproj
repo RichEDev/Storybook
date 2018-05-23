@@ -124,6 +124,7 @@
     <Compile Include="ProjectCodes\GetByProjectCodeDescription.cs" />
     <Compile Include="ProjectCodes\GetByProjectCodeName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reasons\GetByReasonName.cs" />
     <Compile Include="Tables\CacheTableFactory.cs" />
     <Compile Include="UserDefinedFields\CacheUserDefinedFieldFactory.cs" />
   </ItemGroup>

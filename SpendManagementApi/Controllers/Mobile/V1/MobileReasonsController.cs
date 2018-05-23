@@ -6,6 +6,9 @@
     using System.Web.Http;
     using System.Web.Http.Description;
 
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Reasons;
+
     using SpendManagementApi.Attributes;
     using SpendManagementApi.Attributes.Mobile;
 
@@ -23,6 +26,8 @@
     [ApiExplorerSettings(IgnoreApi = true)]
     public class MobileReasonsV1Controller : BaseMobileApiController
     {
+        private readonly IDataFactoryArchivable<IReason, int, int> _reasonFactory = FunkyInjector.Container.GetInstance<IDataFactoryArchivable<IReason, int, int>>();
+
         /// <summary>
         /// Gets the reasons for the mobile user.
         /// </summary>
@@ -38,27 +43,24 @@
             {
                 try
                 {
-                    cReasons clsReasons = new cReasons(this.PairingKeySerialKey.PairingKey.AccountID);
-                    List<Reason> reasons =
-                        clsReasons.CachedList()
-                            .Select(
-                                r =>
-                                new Reason
-                                    {
-                                        accountcodenovat = r.accountcodenovat,
-                                        accountcodevat = r.accountcodevat,
-                                        accountid = r.accountid,
-                                        createdby = r.createdby,
-                                        createdon = r.createdon,
-                                        description = r.description,
-                                        modifiedby = r.modifiedby,
-                                        modifiedon = r.modifiedon,
-                                        reason = r.reason,
-                                        reasonid = r.reasonid
-                                    })
-                            .ToList();
+                    var accountId = this.PairingKeySerialKey.PairingKey.AccountID;
 
-                    result.List = reasons;
+                    var newReasons = this._reasonFactory.Get().Select(
+                        r => new Reason
+                                 {
+                                     accountcodenovat = r.AccountCodeVat,
+                                     accountcodevat = r.AccountCodeVat,
+                                     accountid = accountId,
+                                     createdby = r.CreatedBy,
+                                     createdon = r.CreatedOn,
+                                     description = r.Description,
+                                     modifiedby = r.ModifiedBy,
+                                     modifiedon = r.ModifiedOn,
+                                     reason = r.Name,
+                                     reasonid = r.Id
+                                 }).ToList();
+
+                    result.List = newReasons;
                 }
                 catch (Exception ex)
                 {

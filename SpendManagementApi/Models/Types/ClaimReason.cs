@@ -1,6 +1,10 @@
 ﻿namespace SpendManagementApi.Models.Types
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
+
+    using BusinessLogic.Reasons;
+
     using Interfaces;
     using Utilities;
     using SpendManagementLibrary;
@@ -8,7 +12,7 @@
     /// <summary>
     /// Represents a reason by which a user can claim expenses back.
     /// </summary>
-    public class ClaimReason : BaseExternalType, IApiFrontForDbObject<cReason, ClaimReason>
+    public class ClaimReason : BaseExternalType, IApiFrontForDbObject<IReason, ClaimReason>
     {
         /// <summary>
         /// The unique Id for this ClaimReason object.
@@ -50,20 +54,20 @@
         /// <param name="dbType">The DAL type.</param>
         /// <param name="actionContext">The IActionContext.</param>
         /// <returns>This, the API type.</returns>
-        public ClaimReason From(cReason dbType, IActionContext actionContext)
+        public ClaimReason From(IReason dbType, IActionContext actionContext)
         {
-            Id = dbType.reasonid;
-            Label = dbType.reason;
-            Description = dbType.description;
-            AccountCodeVat = dbType.accountcodevat ?? "";
-            AccountCodeNoVat = dbType.accountcodenovat ?? "";
+            Id = dbType.Id;
+            Label = dbType.Name;
+            Description = dbType.Description;
+            AccountCodeVat = dbType.AccountCodeVat ?? string.Empty;
+            AccountCodeNoVat = dbType.AccountCodeNoVat ?? string.Empty;
 
-            AccountId = dbType.accountid;
-            CreatedById = dbType.createdby;
-            CreatedOn = dbType.createdon;
-            ModifiedById = dbType.modifiedby ?? -1;
-            ModifiedOn = dbType.modifiedon;
-            Archived = dbType.Archive;
+            AccountId = actionContext.AccountId;
+            CreatedById = dbType.CreatedBy ?? 0;
+            CreatedOn = dbType.CreatedOn ?? new DateTime(1900, 01, 01);
+            ModifiedById = dbType.ModifiedBy ?? -1;
+            ModifiedOn = dbType.ModifiedOn;
+            Archived = dbType.Archived;
             return this;
         }
 
@@ -71,9 +75,9 @@
         /// Converts from the API type to the DAL type.
         /// </summary>
         /// <returns>The DAL type.</returns>
-        public cReason To(IActionContext actionContext)
+        public IReason To(IActionContext actionContext)
         {
-            return new cReason(AccountId ?? -1, Id, Label, Description, AccountCodeVat ?? "", AccountCodeNoVat ?? "", CreatedOn, CreatedById, ModifiedOn, ModifiedById, Archived);
+            return new Reason(this.Id, this.Archived, this.Description, this.Label, this.AccountCodeVat, this.AccountCodeNoVat ?? string.Empty, this.CreatedById, this.CreatedOn, this.ModifiedById, this.ModifiedOn);
         }
     }
 }

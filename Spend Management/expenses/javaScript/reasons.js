@@ -3,7 +3,7 @@
 function deleteReason(reasonid) {
     currentRowID = reasonid;
     if (confirm('Are you sure you wish to delete the selected reason?')) {
-        PageMethods.deleteReason(accountid, reasonid,deleteReasonComplete);
+        SEL.PublicApi.Call("DELETE", "Reasons/" + reasonid, "", deleteReasonComplete, deleteReasonComplete);
     }
 }
 
@@ -70,7 +70,7 @@ function errorMessage()
 
 function changeArchiveStatus(reasonid) {
     currentRowID = reasonid;
-    PageMethods.ChangeStatus(accountid, reasonid);
+    SEL.PublicApi.Call("PUT", "Reasons/Archive/" + reasonid, "", null, null);
     var cell = SEL.Grid.getCellById('gridReasons', currentRowID, 'archiveStatus');
     if (cell.innerHTML.indexOf('Un-Archive') != -1) {
         cell.innerHTML = "<a href='javascript:changeArchiveStatus(" + currentRowID + ");'><img title='Archive' src='/shared/images/icons/folder_lock.png'></a>";

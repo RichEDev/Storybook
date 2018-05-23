@@ -26,6 +26,11 @@
         public IProjectCodes ProjectCodes { get; set; }
 
         /// <summary>
+        /// Gets or sets the Mocked "Reasons" objects
+        /// </summary>
+        public IReasons Reasons { get; set; }
+
+        /// <summary>
         /// Populate the <see cref="ISystem"/> object with Mocks.
         /// </summary>
         /// <returns>
@@ -95,6 +100,23 @@
             }
 
             this.ProjectCodes = new ProjectCodes(this.System, this.Fields, this.Tables);
+            return this;
+        }
+
+        /// <summary>
+        /// Populate the <see cref="IReasons"/> object with Mocks.
+        /// </summary>
+        /// <returns>
+        /// A valid <see cref="BootstrapBuilder"/> with the <seealso cref="IReasons"/> property populated.
+        /// </returns>
+        public BootstrapBuilder WithReasons()
+        {
+            if (this.System == null)
+            {
+                this.WithSystem();
+            }
+
+            this.Reasons = new Reasons(this.System);
             return this;
         }
     }

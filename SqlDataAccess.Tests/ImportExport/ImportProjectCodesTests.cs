@@ -5,31 +5,20 @@
     using System.Data;
     using System.Data.SqlClient;
 
-    using BusinessLogic;
     using BusinessLogic.Accounts.Elements;
-    using BusinessLogic.Cache;
-    using BusinessLogic.Databases;
     using BusinessLogic.DataConnections;
     using BusinessLogic.Fields;
     using BusinessLogic.Fields.Type.Attributes;
     using BusinessLogic.Fields.Type.Base;
-    using BusinessLogic.Identity;
     using BusinessLogic.ImportExport;
-    using BusinessLogic.ProjectCodes;
-    using BusinessLogic.Tables;
     using BusinessLogic.Tables.Type;
     using BusinessLogic.UserDefinedFields;
-
-    using CacheDataAccess.Caching;
-
-    using Common.Logging;
 
     using NSubstitute;
 
     using SqlDataAccess.Tests.Bootstrap;
 
     using SQLDataAccess.ImportExport;
-    using SQLDataAccess.ProjectCodes;
 
     using Xunit;
 
@@ -40,19 +29,19 @@
             [Fact]
             public void WithNulls_ctor_ShouldThrowException()
             {
-                Assert.Throws<ArgumentNullException>(() => new ImportProjectCodes<IProjectCodeWithUserDefinedFields>(null, null, null, null, null));
+                Assert.Throws<ArgumentNullException>(() => new ImportProjectCodes(null, null, null, null, null));
             }
 
             [Fact]
             public void WithNullFieldRepository_ctor_ShouldThrowException()
             {
-                Assert.Throws<ArgumentNullException>(() => new ImportProjectCodes<IProjectCodeWithUserDefinedFields>(null, this.BootstrapBuilder.Fields.UserDefinedFieldRepository, this.BootstrapBuilder.Tables.TableRepository, this.BootstrapBuilder.System.CustomerDataConnection, this.BootstrapBuilder.ProjectCodes.SqlProjectCodesWithUserDefinedValuesFactory));
+                Assert.Throws<ArgumentNullException>(() => new ImportProjectCodes(null, this.BootstrapBuilder.Fields.UserDefinedFieldRepository, this.BootstrapBuilder.Tables.TableRepository, this.BootstrapBuilder.System.CustomerDataConnection, this.BootstrapBuilder.ProjectCodes.SqlProjectCodesWithUserDefinedValuesFactory));
             }
 
             [Fact]
             public void ValidParams_FieldRepository_ctor_ShouldNotThrowException()
             {
-                 var sut = new ImportProjectCodes<IProjectCodeWithUserDefinedFields>(this.BootstrapBuilder.Fields.FieldRepository, this.BootstrapBuilder.Fields.UserDefinedFieldRepository, this.BootstrapBuilder.Tables.TableRepository, this.BootstrapBuilder.System.CustomerDataConnection, this.BootstrapBuilder.ProjectCodes.SqlProjectCodesWithUserDefinedValuesFactory);
+                 var sut = new ImportProjectCodes(this.BootstrapBuilder.Fields.FieldRepository, this.BootstrapBuilder.Fields.UserDefinedFieldRepository, this.BootstrapBuilder.Tables.TableRepository, this.BootstrapBuilder.System.CustomerDataConnection, this.BootstrapBuilder.ProjectCodes.SqlProjectCodesWithUserDefinedValuesFactory);
                 Assert.NotNull(sut);
             }
         }
@@ -115,7 +104,7 @@
         /// <summary>
         /// Gets the System Under Test - <see cref="ImportProjectCodes{T}"/>
         /// </summary>
-        public ImportProjectCodes<IProjectCodeWithUserDefinedFields> SUT { get; }
+        public ImportProjectCodes SUT { get; }
 
         public SqlImportProjectCodeFactoryFixture()
         {
@@ -221,7 +210,7 @@
 
             this.BootstrapBuilder.System.CustomerDataConnection.Parameters = Substitute.For<DataParameters<SqlParameter>>();
             
-            this.SUT = new ImportProjectCodes<IProjectCodeWithUserDefinedFields>(this.BootstrapBuilder.Fields.FieldRepository, this.BootstrapBuilder.Fields.UserDefinedFieldRepository, this.BootstrapBuilder.Tables.TableRepository, this.BootstrapBuilder.System.CustomerDataConnection, this.BootstrapBuilder.ProjectCodes.SqlProjectCodesWithUserDefinedValuesFactory);
+            this.SUT = new ImportProjectCodes(this.BootstrapBuilder.Fields.FieldRepository, this.BootstrapBuilder.Fields.UserDefinedFieldRepository, this.BootstrapBuilder.Tables.TableRepository, this.BootstrapBuilder.System.CustomerDataConnection, this.BootstrapBuilder.ProjectCodes.SqlProjectCodesWithUserDefinedValuesFactory);
         }
     }
 }

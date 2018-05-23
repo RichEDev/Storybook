@@ -126,6 +126,8 @@
     <Compile Include="AccessRoles\SqlAccessRolesFactoryTests.cs" />
     <Compile Include="Accounts\SqlAccountWithElementsFactoryTests.cs" />
     <Compile Include="Bootstrap\Fields.cs" />
+    <Compile Include="Bootstrap\IReasons.cs" />
+    <Compile Include="Bootstrap\Reasons.cs" />
     <Compile Include="Bootstrap\System.cs" />
     <Compile Include="Bootstrap\ISystem.cs" />
     <Compile Include="Bootstrap\IFields.cs" />
@@ -142,11 +144,13 @@
     <Compile Include="Employees\AccessRoles\SqlEmployeeCombinedAccessRoleFactoryTests.cs" />
     <Compile Include="Helpers\IdentityContextStub.cs" />
     <Compile Include="ImportExport\ImportFilefactoryTests.cs" />
+    <Compile Include="ImportExport\ImportReasonsTests.cs" />
     <Compile Include="ImportExport\ImportProjectCodesTests.cs" />
     <Compile Include="P11DCategories\SqlP11DCategoryTests.cs" />
     <Compile Include="Accounts\SqlAccountFactoryTests.cs" />
     <Compile Include="Helpers\DataReaderHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reasons\SqlReasonTests.cs" />
     <Compile Include="Receipts\SqlWalletReceiptsFactoryTests.cs" />
     <Compile Include="SqlDataParametersTests.cs" />
     <Compile Include="UserdefinedFieldValues\SqlUserDefinedFieldFactoryTests.cs" />

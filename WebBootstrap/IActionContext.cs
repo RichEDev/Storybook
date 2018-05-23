@@ -42,11 +42,6 @@
         cCurrencies Currencies { get;  }
 
         /// <summary>
-        /// Gets an instance of <see cref="cReasons"/>
-        /// </summary>
-        cReasons ClaimReasons { get;  }
-
-        /// <summary>
         /// Gets an instance of <see cref="cCostcodes"/>
         /// </summary>
         cCostcodes CostCodes { get;  }

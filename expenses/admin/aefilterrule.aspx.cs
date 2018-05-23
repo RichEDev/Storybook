@@ -23,6 +23,8 @@ using Spend_Management;
 
 namespace expenses.admin
 {
+    using BusinessLogic.Reasons;
+
     public partial class aefilterrule : System.Web.UI.Page
     {
         private cFilterRules _filterRules;
@@ -31,7 +33,13 @@ namespace expenses.admin
 
 
         [Dependency]
-        public IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> ProjectCodesRepository { get; set; }
+        public IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool> ProjectCodesRepository { get; set; }
+        
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IReason"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactoryCustom<IReason, int, int> ReasonFactory { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -276,7 +284,7 @@ namespace expenses.admin
             }
             if (rule.parent != FilterType.Userdefined)
             {
-                parentid = this._filterRules.getIdOfFilterType(rule.parent, parVal, this.ProjectCodesRepository);
+                parentid = this._filterRules.getIdOfFilterType(rule.parent, parVal, this.ProjectCodesRepository, this.ReasonFactory);
             }
             else
             {
@@ -313,7 +321,7 @@ namespace expenses.admin
 
             if (rule.child != FilterType.Userdefined)
             {
-                childid = this._filterRules.getIdOfFilterType(rule.child, childVal, this.ProjectCodesRepository);
+                childid = this._filterRules.getIdOfFilterType(rule.child, childVal, this.ProjectCodesRepository, this.ReasonFactory);
             }
             else
             {

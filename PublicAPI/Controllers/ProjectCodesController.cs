@@ -17,7 +17,7 @@
     [JwtAuthentication]
     public class ProjectCodesController : ApiController, ICrud<ProjectCodeDto, int>, IArchive<int>
     {
-        private readonly Lazy<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int>> _projectCodes = new Lazy<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int>>(() => WebApiApplication.container.GetInstance<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int>>());
+        private readonly Lazy<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool>> _projectCodes = new Lazy<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool>>(() => WebApiApplication.container.GetInstance<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool>>());
 
         /// <summary>
         /// Controller action to get all available instances of <see cref="ProjectCodeDto"/>.

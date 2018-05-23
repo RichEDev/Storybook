@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="contentmain">
     <asp:ScriptManagerProxy ID="smp" runat="server">
         <Scripts>
-            <asp:ScriptReference Path="~/expenses/javaScript/reasons.js" />
+            <asp:ScriptReference Path="~/expenses/javaScript/reasons.js?date=20180523" />
         </Scripts>
         <Services>
             <asp:ServiceReference Path="~/expenses/webservices/svcReasons.asmx" InlineScript="false" />

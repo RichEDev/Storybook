@@ -5,12 +5,15 @@
     using System.Linq;
     using System.Web.UI.WebControls;
     using System.Collections.Generic;
+    using System.Globalization;
 
     using BusinessLogic.DataConnections;
     using BusinessLogic.ProjectCodes;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Reasons;
 
     using CacheDataAccess.ProjectCodes;
+    using CacheDataAccess.Reasons;
 
     using SpendManagementLibrary;
     using SpendManagementLibrary.Helpers;
@@ -26,6 +29,8 @@
         private readonly cCostcodes CostCodes;
 
         private readonly IDataFactory<IGeneralOptions, int> _generalOptionsFactory = FunkyInjector.Container.GetInstance<IDataFactory<IGeneralOptions, int>>();
+
+        private readonly IDataFactoryArchivable<IReason, int, int> _reasonsFactory = FunkyInjector.Container.GetInstance<IDataFactoryArchivable<IReason, int, int>>();
 
         /// <summary>
         /// Not for general use - Required by cGridNew when it tries to initialise an instance of this class
@@ -420,8 +425,8 @@
             ResetCache();
         }
 
-        /// <param name="projectCodes">An instance of IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> to access <see cref="IProjectCodeWithUserDefinedFields"/></param>
-        public int getIdOfFilterType(FilterType filtertype, string item, IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> projectCodes)
+        /// <param name="projectCodes">An instance of IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool> to access <see cref="IProjectCodeWithUserDefinedFields"/></param>
+        public int getIdOfFilterType(FilterType filtertype, string item, IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool> projectCodes, IDataFactoryCustom<IReason, int, int> reasonFactory)
         {
             int id = 0;
             switch (filtertype)
@@ -459,13 +464,15 @@
                 }
                 case FilterType.Reason:
                     {
-                        cReasons clsreasons = new cReasons(accountid);
-                        cReason reason = clsreasons.getReasonByString(item);
+                        IReason reason = reasonFactory.GetByCustom(new GetByReasonName(item));
+
                         if (reason == null)
                         {
                             throw new Exception(String.Format("The Reason '{0}' could not be found", item));
                         }
-                        id = reason.reasonid;
+
+                        id = reason.Id;
+
                         break;
                     }
             }
@@ -473,7 +480,7 @@
             return id;
         }
 
-        public sFilterRuleControlAttributes getFilterValueAttributes(FilterType filtertype, IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> projectCodes)
+        public sFilterRuleControlAttributes getFilterValueAttributes(FilterType filtertype, IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool> projectCodes)
         {
             sFilterRuleControlAttributes filValAtts = new sFilterRuleControlAttributes();
             switch (filtertype)
@@ -506,11 +513,15 @@
                     }
                 case FilterType.Reason:
                     {
-                        cReasons clsreasons = new cReasons(accountid);
                         filValAtts.labelText = "Reasons:";
                         filValAtts.serviceMethod = "getReasonList";
-                        filValAtts.items = clsreasons.CreateDropDown();
-                        filValAtts.itemCount = clsreasons.count;
+
+                        var reasons = this._reasonsFactory.Get().OrderBy(x => x.Name);
+                        var items = new List<ListItem> { new ListItem(string.Empty, "0") };
+                        items.AddRange(reasons.Select(listReason => new ListItem(listReason.Name, listReason.Id.ToString(CultureInfo.InvariantCulture))));
+
+                        filValAtts.items = items;
+                        filValAtts.itemCount = items.Count;
                         break;
                     }
             }
@@ -598,7 +609,7 @@
                                 item = GetParentOrChildItem(rule.child, fval.childid, false, generalOptions.CodeAllocation.UseProjectCodeDesc, childBreakdown);
                                 break;
                             case FilterType.Reason:
-                                item = GetParentOrChildItem(rule.child, fval.childid, false, false, childBreakdown);
+                                item = GetParentOrChildItem(rule.child, fval.childid, false, false, this._reasonsFactory);
                                 break;
                             case FilterType.Userdefined:
                                 item = GetParentOrChildItem(rule.child, fval.childid, false, false, childBreakdown);
@@ -697,9 +708,9 @@
                     }
                 case FilterType.Reason:
                     {
-                        var reasons = (cReasons)breakdown;
-                        cReason reason = reasons.getReasonById(id);
-                               item = parent ? string.Format("{0},{1}", reason.reason, reason.reasonid) : reason.reason;
+                        var reason = this._reasonsFactory[id];
+
+                        item = parent ? string.Format("{0},{1}", reason.Name, reason.Id) : reason.Name;
                         break;
                     }
                 case FilterType.Userdefined:
@@ -839,8 +850,11 @@
                     }
                 case FilterType.Reason:
                     {
-                        var reasons = new cReasons(accountid);
-                        lstItems = reasons.CreateDropDown();
+                        var reasons = this._reasonsFactory.Get().OrderBy(x => x.Name);
+                        var items = new List<ListItem> { new ListItem(string.Empty, "0") };
+                        items.AddRange(reasons.Select(listReason => new ListItem(listReason.Name, listReason.Id.ToString(CultureInfo.InvariantCulture))));
+
+                        lstItems = items;
                         break;
                     }
             }

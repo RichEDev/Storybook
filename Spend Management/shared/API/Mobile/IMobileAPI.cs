@@ -38,10 +38,6 @@ namespace Spend_Management
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        ReasonResult GetReasonsList(string pairingKey, string serialKey);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         GeneralOptions GetGeneralOptions(string pairingKey, string serialKey);
 
         [OperationContract]

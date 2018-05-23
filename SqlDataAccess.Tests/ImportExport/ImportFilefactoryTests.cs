@@ -33,44 +33,24 @@
 
     public class ImportFilefactoryTests
     {
-        public class Constructor:ImportFileFactoryFixture
+        public class Constructor : ImportFileFactoryFixture
         {
             [Fact]
             public void WithNulls_ctor_ShouldThrowException()
             {
-                Assert.Throws<ArgumentNullException>(() => new ImportFileFactory(null, null, null, null, null));
+                Assert.Throws<ArgumentNullException>(() => new ImportFileFactory(null, null));
             }
 
             [Fact]
-            public void WithNulls_ctor_ShouldThrowException2()
+            public void WithNullProjectCodes_ctor_ShouldThrowException()
             {
-                Assert.Throws<ArgumentNullException>(() => new ImportFileFactory(this.BootstrapBuilder.Fields.FieldRepository, null, null, null, null));
-            }
-
-
-            [Fact]
-            public void WithNulls_ctor_ShouldThrowException3()
-            {
-                Assert.Throws<ArgumentNullException>(() => new ImportFileFactory(this.BootstrapBuilder.Fields.FieldRepository, this.BootstrapBuilder.Fields.UserDefinedFieldRepository , null, null, null));
+                Assert.Throws<ArgumentNullException>(() => new ImportFileFactory(null, this.ImportReasonsFactory));
             }
 
             [Fact]
-            public void WithNulls_ctor_ShouldThrowException4()
+            public void WithNullReasons_ctor_ShouldThrowException()
             {
-                Assert.Throws<ArgumentNullException>(() => new ImportFileFactory(this.BootstrapBuilder.Fields.FieldRepository, this.BootstrapBuilder.Fields.UserDefinedFieldRepository , this.BootstrapBuilder.Tables.TableRepository, null, null));
-            }
-
-            [Fact]
-            public void WithNulls_ctor_ShouldThrowException5()
-            {
-                Assert.Throws<ArgumentNullException>(() => new ImportFileFactory(this.BootstrapBuilder.Fields.FieldRepository, this.BootstrapBuilder.Fields.UserDefinedFieldRepository , this.BootstrapBuilder.Tables.TableRepository, this.BootstrapBuilder.System.CustomerDataConnection, null));
-            }
-
-            [Fact]
-            public void ValidParams_ShouldReturnObject()
-            {
-                var result = new ImportFileFactory(this.BootstrapBuilder.Fields.FieldRepository, this.BootstrapBuilder.Fields.UserDefinedFieldRepository , this.BootstrapBuilder.Tables.TableRepository, this.BootstrapBuilder.System.CustomerDataConnection, this.BootstrapBuilder.ProjectCodes.SqlProjectCodesWithUserDefinedValuesFactory);
-                Assert.NotNull(result);
+                Assert.Throws<ArgumentNullException>(() => new ImportFileFactory(this.ImportProjectCodesFactory, null));
             }
         }
 
@@ -93,12 +73,22 @@
         }
     }
 
-     public class ImportFileFactoryFixture
+    public class ImportFileFactoryFixture
     {
         /// <summary>
-        /// Gets the System Under Test - <see cref="ImportProjectCodes{T}"/>
+        /// Gets the System Under Test - <see cref="ImportFileFactory"/>
         /// </summary>
         public ImportFileFactory SUT { get; }
+
+        /// <summary>
+        /// Gets the System Under Test - <see cref="ImportProjectCodes"/>
+        /// </summary>
+        public ImportProjectCodes ImportProjectCodesFactory { get; }
+
+        /// <summary>
+        /// Gets the System Under Test - <see cref="ImportReasons"/>
+        /// </summary>
+        public ImportReasons ImportReasonsFactory { get; }
 
         /// <summary>
         /// Gets or sets an instance of <see cref="BootstrapBuilder"/>.
@@ -108,9 +98,9 @@
         public ImportFileFactoryFixture()
         {
 
-            this.BootstrapBuilder = new BootstrapBuilder().WithSystem().WithFields().WithTables().WithProjectCodes();
+            this.BootstrapBuilder = new BootstrapBuilder().WithSystem().WithFields().WithTables().WithProjectCodes().WithReasons();
 
-            var projectCodeTable = new MetabaseTable("ProjectCodes", 0, "Project Codes", false, false, false, false,new Guid("E1EF483C-7870-42CE-BE54-ECC5C1D5FB34"), new Guid("311857E6-33C2-47A4-AD6F-F38708B2A45B"), new Guid("6D06B15E-A157-4F56-9FF2-E488D7647219"), new Guid("CE235F78-82C6-4BA1-8845-034A015C5DCA"), Guid.Empty, ModuleElements.ProjectCodes, false, string.Empty);
+            var projectCodeTable = new MetabaseTable("ProjectCodes", 0, "Project Codes", false, false, false, false, new Guid("E1EF483C-7870-42CE-BE54-ECC5C1D5FB34"), new Guid("311857E6-33C2-47A4-AD6F-F38708B2A45B"), new Guid("6D06B15E-A157-4F56-9FF2-E488D7647219"), new Guid("CE235F78-82C6-4BA1-8845-034A015C5DCA"), Guid.Empty, ModuleElements.ProjectCodes, false, string.Empty);
 
             var projectCode = new Field(
                 new Guid("6D06B15E-A157-4F56-9FF2-E488D7647219"),
@@ -133,8 +123,8 @@
                 new Guid("E1EF483C-7870-42CE-BE54-ECC5C1D5FB34"),
                 string.Empty,
                 new FieldAttributes(),
-                Guid.Empty, 
-                0, 
+                Guid.Empty,
+                0,
                 0,
                 false);
 
@@ -164,8 +154,8 @@
                                 null,
                                 0)
                         }),
-                Guid.Empty, 
-                0, 
+                Guid.Empty,
+                0,
                 0,
                 false);
 
@@ -193,8 +183,8 @@
                                 null,
                                 0)
                         }),
-                Guid.Empty, 
-                0, 
+                Guid.Empty,
+                0,
                 0,
                 false);
 
@@ -209,8 +199,12 @@
             this.BootstrapBuilder.Fields.FieldRepository[new Guid("311857E6-33C2-47A4-AD6F-F38708B2A45B")].Returns(projectCodeId);
 
             this.BootstrapBuilder.System.CustomerDataConnection.Parameters = Substitute.For<DataParameters<SqlParameter>>();
-            
-            this.SUT = new ImportFileFactory(this.BootstrapBuilder.Fields.FieldRepository, this.BootstrapBuilder.Fields.UserDefinedFieldRepository, this.BootstrapBuilder.Tables.TableRepository, this.BootstrapBuilder.System.CustomerDataConnection, this.BootstrapBuilder.ProjectCodes.SqlProjectCodesWithUserDefinedValuesFactory);
+
+            this.ImportProjectCodesFactory  = new ImportProjectCodes(this.BootstrapBuilder.Fields.FieldRepository, this.BootstrapBuilder.Fields.UserDefinedFieldRepository, this.BootstrapBuilder.Tables.TableRepository, this.BootstrapBuilder.System.CustomerDataConnection, this.BootstrapBuilder.ProjectCodes.SqlProjectCodesWithUserDefinedValuesFactory);
+
+            this.ImportReasonsFactory = new ImportReasons(this.BootstrapBuilder.Fields.FieldRepository, this.BootstrapBuilder.Tables.TableRepository, this.BootstrapBuilder.System.CustomerDataConnection, this.BootstrapBuilder.Reasons.SqlReasonsFactory);
+
+            this.SUT = new ImportFileFactory(this.ImportProjectCodesFactory, this.ImportReasonsFactory);
         }
     }
 }

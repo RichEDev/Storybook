@@ -127,8 +127,6 @@
     <Compile Include="Announcements\ReadReceipt.cs" />
     <Compile Include="Announcements\ReadReceiptFactory.cs" />
     <Compile Include="Announcements\ReadReceipts.cs" />
-    <Compile Include="ImportExport\IImportFile.cs" />
-    <Compile Include="ImportExport\ImportField.cs" />
     <Compile Include="Validator\AdminValidator.cs" />
     <Compile Include="Announcements\Announcement.cs" />
     <Compile Include="Announcements\AudienceFlags.cs" />
@@ -146,7 +144,8 @@
     <Compile Include="Cache\ICacheKey.cs" />
     <Compile Include="Cache\IMetabaseCacheKey.cs" />
     <Compile Include="Cache\MetabaseCacheKey.cs" />
-    <Compile Include="Constants\Tables.cs" />
+    <Compile Include="Constants\Tables\ProjectCodes.cs" />
+    <Compile Include="Constants\Tables\Reasons.cs" />
     <Compile Include="Databases\DatabaseCatalogue.cs" />
     <Compile Include="Databases\DatabaseServer.cs" />
     <Compile Include="Accounts\Elements\ModuleElements.cs" />
@@ -296,6 +295,14 @@
     <Compile Include="Images\IImageManipulation.cs" />
     <Compile Include="Images\JpgImageConversion.cs" />
     <Compile Include="Images\JpgImageManipulation.cs" />
+    <Compile Include="Interfaces\ICreated.cs" />
+    <Compile Include="Interfaces\IDescription.cs" />
+    <Compile Include="Interfaces\IModified.cs" />
+    <Compile Include="Interfaces\IName.cs" />
+    <Compile Include="Reasons\IReason.cs" />
+    <Compile Include="Reasons\Reason.cs" />
+    <Compile Include="ImportExport\IImportFile.cs" />
+    <Compile Include="ImportExport\ImportField.cs" />
     <Compile Include="ListWrapper.cs" />
     <Compile Include="Receipts\WalletReceiptStatus.cs" />
     <Compile Include="SELCloud\CloudWalletReceipt.cs" />

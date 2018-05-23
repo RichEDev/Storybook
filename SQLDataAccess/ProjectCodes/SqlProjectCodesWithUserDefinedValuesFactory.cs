@@ -23,7 +23,7 @@
     /// <summary>
     /// The sql project codes with user defined values factory.
     /// </summary>
-    public class SqlProjectCodesWithUserDefinedValuesFactory : IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int>
+    public class SqlProjectCodesWithUserDefinedValuesFactory : IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool>
     {
         /// <summary>
         /// An instance of <see cref="ICustomerDataConnection{T}"/> to use for accessing <see cref="IDataConnection{T}"/>

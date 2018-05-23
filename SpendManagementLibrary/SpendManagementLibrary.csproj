@@ -882,7 +882,6 @@
     <Compile Include="cProjectCode.cs" />
     <Compile Include="cQueryBuilder.cs" />
     <Compile Include="cRangeCurrency.cs" />
-    <Compile Include="cReason.cs" />
     <Compile Include="cReport.cs" />
     <Compile Include="cReportClasses.cs" />
     <Compile Include="cReportRequest.cs" />

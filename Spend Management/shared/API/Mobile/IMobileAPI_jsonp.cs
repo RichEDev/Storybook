@@ -35,10 +35,6 @@
 
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        ReasonResult GetReasonsList(string pairingKey, string serialKey);
-
-        [OperationContract]
-        [WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         GeneralOptions GetGeneralOptions(string pairingKey, string serialKey);
 
         [OperationContract]

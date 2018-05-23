@@ -14,11 +14,21 @@ using System.Text;
 
 namespace Spend_Management
 {
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Reasons;
+
     /// <summary>
     /// Summary description for aereason.
     /// </summary>
     public partial class aereason : Page
     {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IReason"/>
+        /// </summary>
+        [Dependency]
+        public IDataFactoryArchivable<IReason, int, int> ReasonFactory { get; set; }
+
         protected System.Web.UI.WebControls.ImageButton cmdhelp;
         int reasonid;
         /// <summary>
@@ -33,37 +43,40 @@ namespace Spend_Management
         protected void Page_Load(object sender, System.EventArgs e)
         {
 
-            Master.helpid = 1018;
+            this.Master.helpid = 1018;
 
-            if (IsPostBack == false)
+            if (this.IsPostBack == false)
             {
-                Master.enablenavigation = false;
+                this.Master.enablenavigation = false;
                 CurrentUser user = cMisc.GetCurrentUser();
                 user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.Reasons, true, true);
 
-                if (Request.QueryString["reasonid"] != null)
+                if (this.Request.QueryString["reasonid"] != null)
                 {
-                    int.TryParse(Request.QueryString["reasonid"], out reasonid);
+                    int.TryParse(this.Request.QueryString["reasonid"], out this.reasonid);
                 }
-                ViewState["reasonid"] = reasonid;
+                this.ViewState["reasonid"] = this.reasonid;
 
-                if (reasonid > 0)
+                if (this.reasonid > 0)
                 {
-                    cReason reqreason;
-                    cReasons clsreasons = new cReasons(user.AccountID);
+                    var reason = this.ReasonFactory[this.reasonid];
 
-                    reqreason = clsreasons.getReasonById(reasonid);
-                    txtreason.Text = reqreason.reason;
-                    txtdescription.Text = reqreason.description;
-                    txtaccountcodevat.Text = reqreason.accountcodevat;
-                    txtaccountcodenovat.Text = reqreason.accountcodenovat;
-                    Master.title = "Reason: " + reqreason.reason;
+                    if (reason == null)
+                    {
+                        this.Response.Redirect(ErrorHandlerWeb.MissingRecordUrl, true);
+                    }
+
+                    this.txtreason.Text = reason?.Name;
+                    this.txtdescription.Text = reason?.Description;
+                    this.txtaccountcodevat.Text = reason?.AccountCodeVat;
+                    this.txtaccountcodenovat.Text = reason?.AccountCodeNoVat;
+                    this.Master.title = "Reason: " + reason?.Name;
                 }
                 else
                 {
-                    Master.title = "Reason: New";
+                    this.Master.title = "Reason: New";
                 }
-                Master.PageSubTitle = "Reason Details";
+                this.Master.PageSubTitle = "Reason Details";
             }
         }
     }

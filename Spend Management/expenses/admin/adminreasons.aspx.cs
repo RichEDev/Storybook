@@ -15,13 +15,22 @@ using System.Text;
 
 namespace Spend_Management
 {
-	/// <summary>
+    using BusinessLogic;
+    using BusinessLogic.DataConnections;
+    using BusinessLogic.Reasons;
+
+    /// <summary>
 	/// Summary description for adminreasons.
 	/// </summary>
 	public partial class adminreasons : Page
-	{
-		
-		protected void Page_Load(object sender, System.EventArgs e)
+    {
+        /// <summary>
+        /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IReason"/>
+        /// </summary>
+        [Dependency]
+	    public IDataFactoryArchivable<IReason, int, int> ReasonFactory { get; set; }
+
+        protected void Page_Load(object sender, System.EventArgs e)
 		{
 			Response.Expires = 60;
 			Response.ExpiresAbsolute = DateTime.Now.AddMinutes(-1);
@@ -48,8 +57,7 @@ namespace Spend_Management
         private string[] createGrid()
         {
             CurrentUser user = cMisc.GetCurrentUser();
-            cReasons clsreasons =new cReasons(user.AccountID);
-            cGridNew clsgrid = new cGridNew(user.AccountID, user.EmployeeID, "gridReasons", clsreasons.getGrid());
+            cGridNew clsgrid = new cGridNew(user.AccountID, user.EmployeeID, "gridReasons", this.GetGrid());
             bool allowEdit = user.CheckAccessRole(AccessRoleType.Edit, SpendManagementElement.Reasons, true);
             clsgrid.EmptyText = "There are currently no Reasons to display.";
             clsgrid.archivelink = "javascript:changeArchiveStatus({reasonid});";
@@ -64,8 +72,14 @@ namespace Spend_Management
             clsgrid.getColumnByName("archived").hidden = true;
             return clsgrid.generateGrid();
         }
-		#region Web Form Designer generated code
-		override protected void OnInit(EventArgs e)
+
+        private string GetGrid()
+        {
+            return "select reasonid, reason, description, archived from reasons";
+        }
+
+        #region Web Form Designer generated code
+        override protected void OnInit(EventArgs e)
 		{
 			//
 			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
@@ -83,34 +97,6 @@ namespace Spend_Management
 
 		}
 		#endregion
-
-
-        [WebMethod(EnableSession = true)]
-        public static int deleteReason(int accountid, int reasonid)
-        {
-            cReasons clsreasons = new cReasons(accountid);
-            return clsreasons.deleteReason(reasonid);
-        }
-
-        /// <summary>
-        /// Update status of the reason
-        /// </summary>
-        /// <param name="accountId">
-        /// current account ID
-        /// </param>
-        /// <param name="reasonId">
-        /// Reason ID which needs to be updated
-        /// </param>
-        /// <returns>
-        /// The <see cref="int"/>.
-        /// </returns>
-        [WebMethod(EnableSession = true)]
-        public static int ChangeStatus(int accountId, int reasonId)
-        {
-            cReasons clsreasons = new cReasons(accountId);
-            cReason reason = clsreasons.getReasonById(reasonId);
-            return clsreasons.ChangeStatus(reasonId, !reason.Archive);
-        }
 
         /// <summary>
         /// Close button event function

@@ -2888,7 +2888,6 @@
     <Compile Include="expenses\code\ItemRoles.cs" />
     <Compile Include="expenses\code\cMileagecats.cs" />
     <Compile Include="shared\code\cProjectCodes.cs" />
-    <Compile Include="expenses\code\cReasons.cs" />
     <Compile Include="expenses\code\cSubcats.cs" />
     <Compile Include="shared\code\cTeams.cs" />
     <Compile Include="shared\code\cUserDefined.cs" />

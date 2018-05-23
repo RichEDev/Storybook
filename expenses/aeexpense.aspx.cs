@@ -30,6 +30,7 @@ using BusinessLogic;
 using BusinessLogic.DataConnections;
 using BusinessLogic.GeneralOptions;
 using BusinessLogic.ProjectCodes;
+using BusinessLogic.Reasons;
 
 using Common.Logging;
 using Common.Logging.Log4Net;
@@ -95,13 +96,19 @@ public partial class aeexpense : System.Web.UI.Page
     public IActionContext ActionContext { get; set; }
 
     [Dependency]
-    public IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int> ProjectCodesRepository { get; set; }
-
+    public IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool> ProjectCodesRepository { get; set; }
+    
     /// <summary>
     /// An instance of <see cref="IDataFactory{IGeneralOptions,Int32}"/> to get a <see cref="IGeneralOptions"/>
     /// </summary>
     [Dependency]
     public IDataFactory<IGeneralOptions, int> GeneralOptionsFactory { get; set; }
+
+    /// <summary>
+    /// An instance of <see cref="IDataFactoryArchivable{IReason,Int32,Int32}"/> to get a <see cref="IReason"/>
+    /// </summary>
+    [Dependency]
+    public IDataFactoryArchivable<IReason, int, int> ReasonsFactory { get; set; }
 
     /// <summary>
     /// An instance of <see cref="ILog"/> for logging information.
@@ -1121,7 +1128,12 @@ public partial class aeexpense : System.Web.UI.Page
             cell = new TableCell();
             cell.CssClass = "inputtd";
             ddlst = new DropDownList();
-            ddlst.Items.AddRange(this.ActionContext.ClaimReasons.CreateActiveReasonsDropDown().ToArray());
+
+            var reasons = this.ReasonsFactory.Get().OrderBy(x => x.Name).Where(e => e.Archived == false);
+            var items = new List<ListItem> { new ListItem(string.Empty, "0") };
+            items.AddRange(reasons.Select(listReason => new ListItem(listReason.Name, listReason.Id.ToString(CultureInfo.InvariantCulture))));
+
+            ddlst.Items.AddRange(items.ToArray());
             ddlst.ID = "cmbreason";
             var reasonAttribute = this.ActionContext.FilterRules.FilterDropdown(FilterType.Reason, "", ddlst.ID);
 
@@ -2528,15 +2540,15 @@ public partial class aeexpense : System.Web.UI.Page
         cItemBuilder clsbuilder;
         if (transactionid > 0 || mobileItem != null)
         {
-            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], expenseItemDate, this.GeneralOptionsFactory, (int)ViewState["subAccountID"], itemtype, transactionid, currencyid, countryid, (int?)ViewState["mobileID"], null);
+            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], expenseItemDate, this.GeneralOptionsFactory, this.ReasonsFactory, (int)ViewState["subAccountID"], itemtype, transactionid, currencyid, countryid, (int?)ViewState["mobileID"], null);
         }
         else if (mobileJourney != null)
         {
-            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], expenseItemDate, this.GeneralOptionsFactory, (int)ViewState["subAccountID"], itemtype, transactionid, currencyid, countryid, null, mobileJourney.JourneyId);
+            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], expenseItemDate, this.GeneralOptionsFactory, this.ReasonsFactory, (int)ViewState["subAccountID"], itemtype, transactionid, currencyid, countryid, null, mobileJourney.JourneyId);
         }
         else
         {
-            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], expenseItemDate, this.GeneralOptionsFactory, (int)ViewState["subAccountID"], currencyid, countryid, itemtype, this.Page);
+            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], expenseItemDate, this.GeneralOptionsFactory, this.ReasonsFactory, (int)ViewState["subAccountID"], currencyid, countryid, itemtype, this.Page);
         }
         cGlobalCurrencies clsglobalcurrencies = this.ActionContext.GlobalCurrencies;
         var subcats = this.ActionContext.SubCategories;
@@ -4740,15 +4752,15 @@ public partial class aeexpense : System.Web.UI.Page
         cItemBuilder clsbuilder;
         if (transactionid > 0)
         {
-            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], tempitems.Values[0].date, this.GeneralOptionsFactory, (int)ViewState["subAccountID"], itemtype, transactionid, (int)ViewState["currencyid"], (int)ViewState["countryid"], (int?)ViewState["mobileID"], (int?)ViewState["mobileJourneyID"]);
+            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], tempitems.Values[0].date, this.GeneralOptionsFactory, this.ReasonsFactory, (int)ViewState["subAccountID"], itemtype, transactionid, (int)ViewState["currencyid"], (int)ViewState["countryid"], (int?)ViewState["mobileID"], (int?)ViewState["mobileJourneyID"]);
         }
         else if (ViewState["mobileJourneyID"] != null && (int)ViewState["mobileJourneyID"] > 0)
         {
-            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], tempitems.Values[0].date, this.GeneralOptionsFactory, (int)ViewState["subAccountID"], itemtype, transactionid, (int)ViewState["currencyid"], (int)ViewState["countryid"], null, (int)ViewState["mobileJourneyID"]);
+            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], tempitems.Values[0].date, this.GeneralOptionsFactory, this.ReasonsFactory, (int)ViewState["subAccountID"], itemtype, transactionid, (int)ViewState["currencyid"], (int)ViewState["countryid"], null, (int)ViewState["mobileJourneyID"]);
         }
         else
         {
-            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], tempitems.Values[0].date, this.GeneralOptionsFactory, (int)ViewState["subAccountID"], (int)ViewState["currencyid"], (int)ViewState["countryid"], itemtype, this.Page);
+            clsbuilder = new cItemBuilder((int)ViewState["accountid"], (int)ViewState["employeeid"], tempitems.Values[0].date, this.GeneralOptionsFactory, this.ReasonsFactory, (int)ViewState["subAccountID"], (int)ViewState["currencyid"], (int)ViewState["countryid"], itemtype, this.Page);
         }
 
         //get the current date of the xpense item being claimed

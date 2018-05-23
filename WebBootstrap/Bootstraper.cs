@@ -1,6 +1,7 @@
 ﻿namespace WebBootstrap
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Remoting.Channels.Http;
@@ -47,10 +48,14 @@
     using SQLDataAccess.ProjectCodes;
     using SQLDataAccess.Tables;
     using SQLDataAccess.UserDefinedFieldValues;
+    using SQLDataAccess.Reasons;
+    using SQLDataAccess.ImportExport;
 
     using Utilities.Cryptography;
 
     using System.Web;
+
+    using BusinessLogic.ImportExport;
 
     using SQLDataAccess.ImportExport;
 
@@ -103,10 +108,12 @@
 
             // This registration should register all implementations of IDataFactory<,> within the SqlDataAccess project. 
             container.Register(typeof(IDataFactory<,>), new[] { typeof(SqlAccountFactory).Assembly });
-            container.Register(typeof(IDataFactoryCustom<,>), new[] { typeof(SqlProjectCodesWithUserDefinedValuesFactory).Assembly });
-            
+            container.Register(typeof(IDataFactoryCustom<,,>), new[] { typeof(SqlProjectCodesWithUserDefinedValuesFactory).Assembly });
+            container.Register(typeof(IDataFactoryArchivable<,,>), new[] { typeof(SqlReasonsFactory).Assembly });
+            container.RegisterCollection(typeof(IImportFile), new[] { typeof(IImportFile).Assembly} );
+
             // Register the lazy for places such as self reg
-            container.Register(() => new Lazy<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int>>(container.GetInstance<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int>>));
+            container.Register(() => new Lazy<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool>>(container.GetInstance<IDataFactoryCustom<IProjectCodeWithUserDefinedFields, int, bool>>));
 
             container.Register<FieldRepository, SqlFieldFactory>(Lifestyle.Transient);
             container.RegisterCollection(typeof(FieldRepository), typeof(SqlFieldFactory).Assembly, typeof(CacheFieldFactory).Assembly);

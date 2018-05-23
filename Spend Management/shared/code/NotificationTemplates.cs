@@ -17,6 +17,7 @@
 
     using BusinessLogic.DataConnections;
     using BusinessLogic.GeneralOptions;
+    using BusinessLogic.Reasons;
 
     using SpendManagementLibrary.Addresses;
     using SpendManagementLibrary.Definitions.JoinVia;
@@ -2432,7 +2433,6 @@
             cMisc clsmisc = new cMisc(accountid);
             cGlobalCountries clsglobalcountries = new cGlobalCountries();
             cGlobalCurrencies clsglobalcurrencies = new cGlobalCurrencies();
-            cReasons clsreason = new cReasons(accountid);
 
             cSubcats clssubcats = new cSubcats(accountid);
             cCountries clscountries = new cCountries(accountid, subAccountID);
@@ -2476,7 +2476,10 @@
                 }
                 if (reqitem.reasonid != 0)
                 {
-                    output.Append("<tr><td>" + clsmisc.GetGeneralFieldByCode("reason").description + ": </td><td>" + clsreason.getReasonById(reqitem.reasonid).reason + "</td></tr>");
+                    var reason =
+                        FunkyInjector.Container.GetInstance<IDataFactoryArchivable<IReason, int, int>>()[reqitem.reasonid];
+
+                    output.Append("<tr><td>" + clsmisc.GetGeneralFieldByCode("reason").description + ": </td><td>" + reason.Name + "</td></tr>");
                 }
                 if (reqitem.countryid != 0)
                 {

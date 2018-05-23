@@ -57,8 +57,6 @@ namespace SpendManagementApi.Common
 
         private cBudgetholders _budgetHolders;
 
-        private cReasons _claimReasons;
-
         private cCostcodes _costCodes;
 
         private cDepartments _departments;
@@ -412,18 +410,6 @@ namespace SpendManagementApi.Common
             set
             {
                 _budgetHolders = value;
-            }
-        }
-
-        public cReasons ClaimReasons
-        {
-            get
-            {
-                return _claimReasons ?? (_claimReasons = new cReasons(AccountId));
-            }
-            set
-            {
-                _claimReasons = value;
             }
         }
 

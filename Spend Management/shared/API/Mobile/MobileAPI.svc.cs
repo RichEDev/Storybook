@@ -446,54 +446,6 @@ namespace Spend_Management
         /// </summary>
         /// <param name="pairingKey">Pairing key of the mobile device</param>
         /// <param name="serialKey">Serial key of the mobile device hardware</param>
-        /// <returns>ReasonResult class record</returns>
-        public ReasonResult GetReasonsList(string pairingKey, string serialKey)
-        {
-            ServiceResultMessage retCode = Authenticate(pairingKey, serialKey);
-            ReasonResult result = new ReasonResult { FunctionName = "GetReasonsList", ReturnCode = retCode.ReturnCode };
-
-            switch(retCode.ReturnCode)
-            {
-                case MobileReturnCode.Success:
-                    try
-                    {
-                        List<Reason> reasons = new List<Reason>();
-
-                        cReasons clsReasons = new cReasons(AccountID);
-                        foreach(cReason r in clsReasons.CachedList())
-                        {
-                            reasons.Add(new Reason
-                                        {
-                                            accountcodenovat = r.accountcodenovat,
-                                            accountcodevat = r.accountcodevat,
-                                            accountid = r.accountid,
-                                            createdby = r.createdby,
-                                            createdon = r.createdon,
-                                            description = r.description,
-                                            modifiedby = r.modifiedby,
-                                            modifiedon = r.modifiedon,
-                                            reason = r.reason,
-                                            reasonid = r.reasonid
-                                        });
-                        }
-                        result.List = reasons;
-                    }
-                    catch (Exception ex)
-                    {
-                        cEventlog.LogEntry("MobileAPI.GetReasonsList():Error:{ Pairingkey: " + pairingKey + "\nSerialKey: " + serialKey + "\nMessage: " + ex.Message + " }", true, System.Diagnostics.EventLogEntryType.Information, cEventlog.ErrorCode.DebugInformation);
-
-                        throw ex;
-                    }
-                    break;
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// A complete list of reasons
-        /// </summary>
-        /// <param name="pairingKey">Pairing key of the mobile device</param>
-        /// <param name="serialKey">Serial key of the mobile device hardware</param>
         /// <returns>CurrencyResult class record</returns>
         public CurrencyResult GetCurrencyList(string pairingKey, string serialKey)
         {

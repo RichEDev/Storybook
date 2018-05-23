@@ -8,7 +8,7 @@
     /// </summary>
     /// <typeparam name="T"> The target file type to inport into.
     /// </typeparam>
-    public interface IImportFile<T>
+    public interface IImportFile
     {
         /// <summary>
         /// Import a given file into expenses.
