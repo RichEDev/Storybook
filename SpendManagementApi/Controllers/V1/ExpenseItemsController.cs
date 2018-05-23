@@ -61,6 +61,7 @@
         /// A ExpenseItemResponse, containing the <see cref="ExpenseItem">ExpenseItem</see> if found.
         /// </returns>
         [HttpGet, Route("GetExpenseItemByIdForExpedite/{expenseId:int}/{accountId:int}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [InternalSelenityMethod]
         [NoAuthorisationRequired]
         public ExpediteExpenseItemResponse GetExpenseItemByIdForExpedite([FromUri] int expenseId, int accountId)
@@ -76,6 +77,7 @@
         /// </summary>
         /// <returns>A ExpenseItemResponse, containing the <see cref="ExpenseItem">ExpenseItems</see> if found.</returns>
         [HttpGet, Route("RequiringValidation")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [InternalSelenityMethod]
         [NoAuthorisationRequired]      
         public GetIdsReponse RequiringValidation()
@@ -268,6 +270,7 @@
         /// <param name="accountId">The accountId the expense belongs to.</param>
         /// <returns>ExpenseItemResponse</returns>
         [HttpPost, Route("UpdateOperatorValidationStatus/{Id:int}/{OperatorValidationProgress:int}/{accountId:int}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [InternalSelenityMethod]
         [NoAuthorisationRequired]
         public ExpediteExpenseItemResponse UpdateOperatorValidationStatus(int id, int operatorValidationProgress, int accountId)
