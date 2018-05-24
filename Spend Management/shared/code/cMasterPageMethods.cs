@@ -504,9 +504,10 @@
             
             var client = new RestClient(ConfigurationManager.AppSettings["PublicApiUrl"]);
             RestRequest request = new RestRequest("/Token", Method.POST) { RequestFormat = DataFormat.Json};
-            var reqProperties = new cAccountSubAccounts(CurrentUser.AccountID).getFirstSubAccount().SubAccountProperties;
+            var firstSubAccount = new cAccountSubAccounts(CurrentUser.AccountID).getFirstSubAccount();
+            var reqProperties = firstSubAccount.SubAccountProperties;
             var idleTimeout = reqProperties.IdleTimeout == 0 ? 5 : reqProperties.IdleTimeout * 60;
-            string json = $"\"accountId\":\"{this.CurrentUser.AccountID}\", \"employeeId\":\"{this.CurrentUser.EmployeeID}\", \"TimeoutMinutes\":\"{idleTimeout}\", \"SecretKey\":\"{ConfigurationManager.AppSettings["PublicApiLogonSecret"]}\"";
+            string json = $"\"accountId\":\"{this.CurrentUser.AccountID}\", \"employeeId\":\"{this.CurrentUser.EmployeeID}\", \"TimeoutMinutes\":\"{idleTimeout}\", \"SecretKey\":\"{ConfigurationManager.AppSettings["PublicApiLogonSecret"]}\", \"SubAccountId\": \"{firstSubAccount.SubAccountID}\"";
 
             if (this.CurrentUser.isDelegate)
             {
