@@ -53,13 +53,7 @@ Namespace Framework2006
         ''' <summary>
         ''' An instance of <see cref="IDataFactory{IProductModule,Modules}"/> to get a <see cref="IProductModule"/>
         ''' </summary>
-        <Dependency()>  _
-        Public Property ProductModuleFactory As IDataFactory(Of IProductModule, Modules)
-            Get
-            End Get
-            Set
-            End Set
-        End Property
+        Dim ReadOnly _productModuleFactory As IDataFactory(Of IProductModule, Modules) = (FunkyInjector.Container.GetInstance(GetType(IDataFactory(Of IProductModule,Modules))))
 
 #Region "Navigation panel calls"
         Protected Sub lnkCDnav_Click(ByVal sender As Object, ByVal e As System.EventArgs)
@@ -761,7 +755,7 @@ Namespace Framework2006
             Dim subaccs As New cAccountSubAccounts(curUser.Account.accountid)
             Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, subaccs.getSubAccountsCollection(), curUser.CurrentSubAccountId)
 
-            Dim productModule = Me.ProductModuleFactory(curUser.CurrentActiveModule)
+            Dim productModule = Me._productModuleFactory(curUser.CurrentActiveModule)
 
             Dim brandName As String = productModule.BrandNameHtml
             Dim activeContractid = ViewState("ActiveContract")

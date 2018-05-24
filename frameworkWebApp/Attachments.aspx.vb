@@ -32,13 +32,7 @@ Namespace Framework2006
         ''' <summary>
         ''' An instance of <see cref="IDataFactory{IProductModule,Modules}"/> to get a <see cref="IProductModule"/>
         ''' </summary>
-        <Dependency()>  _
-        Public Property ProductModuleFactory As IDataFactory(Of IProductModule, Modules)
-            Get
-            End Get
-            Set
-            End Set
-        End Property
+        Dim ReadOnly _productModuleFactory As IDataFactory(Of IProductModule, Modules) = (FunkyInjector.Container.GetInstance(GetType(IDataFactory(Of IProductModule,Modules))))
 
         Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
             Dim curUser As CurrentUser = cMisc.GetCurrentUser()
@@ -53,7 +47,7 @@ Namespace Framework2006
             Dim params As cAccountProperties = subaccs.getSubAccountById(curUser.CurrentSubAccountId).SubAccountProperties
             Dim suppStr As String = params.SupplierPrimaryTitle
 
-            Dim productModule = Me.ProductModuleFactory(curUser.CurrentActiveModule)
+            Dim productModule = Me._productModuleFactory(curUser.CurrentActiveModule)
 
             Dim brandName As String = productModule.BrandNameHtml
 

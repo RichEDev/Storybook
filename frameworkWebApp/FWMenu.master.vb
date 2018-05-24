@@ -149,20 +149,14 @@ Partial Class FWMenu
     ''' <summary>
     ''' An instance of <see cref="IDataFactory{IProductModule,Modules}"/> to get a <see cref="IProductModule"/>
     ''' </summary>
-    <Dependency()> _
-    Public Property ProductModuleFactory As IDataFactory(Of IProductModule, Modules)
-        Get
-        End Get
-        Set
-        End Set
-    End Property
+    Dim ReadOnly _productModuleFactory As IDataFactory(Of IProductModule, Modules) = (FunkyInjector.Container.GetInstance(GetType(IDataFactory(Of IProductModule,Modules))))
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         'Force IE out of compat mode
         Response.AddHeader("X-UA-Compatible", "IE=edge")
         Dim currentUser As CurrentUser = cMisc.GetCurrentUser()
         Dim theme As String = Me.Page.StyleSheetTheme
-        Dim clsMasterPageMethods As New cMasterPageMethods(currentUser, theme, Me.ProductModuleFactory)
+        Dim clsMasterPageMethods As New cMasterPageMethods(currentUser, theme, Me._productModuleFactory)
         clsMasterPageMethods.PreventBrowserFromCachingTheResponse()
         clsMasterPageMethods.RedirectUserBypassingChangePassword()
         clsMasterPageMethods.UseDynamicCSS = UseDynamicCSS
@@ -188,7 +182,7 @@ Partial Class FWMenu
             Dim subacc As cAccountSubAccount = subaccs.getSubAccountById(currentUser.CurrentSubAccountId)
             Dim fws As cFWSettings = cMigration.ConvertToFWSettings(currentUser.Account, subaccs.getSubAccountsCollection, currentUser.CurrentSubAccountId)
 
-            Dim productModule = Me.ProductModuleFactory(currentUser.CurrentActiveModule)
+            Dim productModule = Me._productModuleFactory(currentUser.CurrentActiveModule)
             Page.Title = productModule.BrandName & " from Selenity Ltd."
 
             If Request.QueryString("cl") = "1" Then

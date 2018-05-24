@@ -11,6 +11,10 @@ namespace Expenses_Reports
 {
     using BusinessLogic.Modules;
 
+    using ConsoleBootstrap;
+
+    using SimpleInjector;
+
     public partial class Service1 : ServiceBase
     {
         private static bool _enableLogging;
@@ -31,6 +35,12 @@ namespace Expenses_Reports
         {
              try
             {
+                //Bootstrap scheduler as it use SM and SMLib
+                Container container = Bootstrapper.Bootstrap(null);
+
+                //Assign container to funky injector
+                FunkyInjector.Container = container;
+
                 _enableLogging = Convert.ToBoolean(ConfigurationManager.AppSettings["enableLogging"]);
                 // Set global variables for use in SML classes
                 GlobalVariables.ReportServicePort = Convert.ToInt32(ConfigurationManager.AppSettings["Port"]);

@@ -2,6 +2,7 @@ Imports System.Collections
 Imports System.Collections.Generic
 Imports BusinessLogic
 Imports BusinessLogic.DataConnections
+Imports BusinessLogic.GeneralOptions
 Imports BusinessLogic.Modules
 Imports BusinessLogic.ProductModules
 Imports FWClasses
@@ -24,13 +25,7 @@ Namespace Framework2006
         ''' <summary>
         ''' An instance of <see cref="IDataFactory{IProductModule,Modules}"/> to get a <see cref="IProductModule"/>
         ''' </summary>
-        <Dependency()>  _
-        Public Property ProductModuleFactory As IDataFactory(Of IProductModule, Modules)
-            Get
-            End Get
-            Set
-            End Set
-        End Property
+        Dim ReadOnly _productModuleFactory As IDataFactory(Of IProductModule, Modules) = (FunkyInjector.Container.GetInstance(GetType(IDataFactory(Of IProductModule,Modules))))
 
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
             If Me.IsPostBack = False Then
@@ -44,7 +39,7 @@ Namespace Framework2006
                 Dim curUser As CurrentUser = cMisc.GetCurrentUser()
                 Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, New cAccountSubAccounts(curUser.Account.accountid).getSubAccountsCollection, curUser.CurrentSubAccountId)
 
-                Dim productModule = Me.ProductModuleFactory(curUser.CurrentActiveModule)
+                Dim productModule As IProductModule = Me._productModuleFactory(curUser.CurrentActiveModule)
 
                 Title = "Welcome to " & productModule.BrandName
                 Master.title = "Welcome to " & productModule.BrandNameHtml
@@ -152,8 +147,8 @@ Namespace Framework2006
             Dim curUser As CurrentUser = cMisc.GetCurrentUser()
             Dim subaccs As New cAccountSubAccounts(curUser.Account.accountid)
             Dim params As cAccountProperties
-
-            Dim productModule = Me.ProductModuleFactory(curUser.CurrentActiveModule)
+            
+            Dim productModule As IProductModule = Me._productModuleFactory(curUser.CurrentActiveModule)
 
             Dim lstAccessRoles As List(Of Integer) = curUser.Employee.GetAccessRoles.GetBy(curUser.CurrentSubAccountId)
 

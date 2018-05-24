@@ -15,17 +15,11 @@ Partial Class MenuMain
     ''' <summary>
     ''' An instance of <see cref="IDataFactory{IProductModule,Modules}"/> to get a <see cref="IProductModule"/>
     ''' </summary>
-    <Dependency()>  _
-    Public Property ProductModuleFactory As IDataFactory(Of IProductModule, Modules)
-        Get
-        End Get
-        Set
-        End Set
-    End Property
+    Dim ReadOnly _productModuleFactory As IDataFactory(Of IProductModule, Modules) = (FunkyInjector.Container.GetInstance(GetType(IDataFactory(Of IProductModule,Modules))))
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim curUser As CurrentUser = cMisc.GetCurrentUser()
-        Dim productModule = Me.ProductModuleFactory(curUser.CurrentActiveModule)
+        Dim productModule = Me._productModuleFactory(curUser.CurrentActiveModule)
         Dim subaccs As New cAccountSubAccounts(curUser.Account.accountid)
         Dim fws As cFWSettings = cMigration.ConvertToFWSettings(curUser.Account, subaccs.getSubAccountsCollection, curUser.CurrentSubAccountId)
         Dim recharge_entity As String = "Entity"

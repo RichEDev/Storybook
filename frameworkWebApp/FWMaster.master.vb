@@ -182,13 +182,7 @@ Partial Class FWMaster
     ''' <summary>
     ''' An instance of <see cref="IDataFactory{IProductModule,Modules}"/> to get a <see cref="IProductModule"/>
     ''' </summary>
-    <Dependency()> _
-    Public Property ProductModuleFactory As IDataFactory(Of IProductModule, Modules)
-        Get
-        End Get
-        Set
-        End Set
-    End Property
+    Dim ReadOnly _productModuleFactory As IDataFactory(Of IProductModule, Modules) = (FunkyInjector.Container.GetInstance(GetType(IDataFactory(Of IProductModule,Modules))))
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         'Force IE out of compat mode
@@ -200,7 +194,7 @@ Partial Class FWMaster
         fws = New cFWSettings
         Dim curUser As CurrentUser = cMisc.GetCurrentUser()
         Dim theme As String = Me.Page.StyleSheetTheme
-        Dim clsMasterPageMethods As New cMasterPageMethods(curUser, theme, Me.ProductModuleFactory)
+        Dim clsMasterPageMethods As New cMasterPageMethods(curUser, theme, Me._productModuleFactory)
         clsMasterPageMethods.PreventBrowserFromCachingTheResponse()
         clsMasterPageMethods.RedirectUserBypassingChangePassword()
         clsMasterPageMethods.UseDynamicCSS = UseDynamicCSS
@@ -208,7 +202,7 @@ Partial Class FWMaster
         clsMasterPageMethods.SetupSessionTimeoutReferences(ajaxScriptManager, Page)
         clsMasterPageMethods.SetupDynamicStyles(Head1)
 
-        Dim productModule = Me.ProductModuleFactory(curUser.CurrentActiveModule)
+        Dim productModule = Me._productModuleFactory(curUser.CurrentActiveModule)
 
         Page.Title = productModule.BrandName & " from Selenity Ltd."
 

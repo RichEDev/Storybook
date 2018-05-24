@@ -43,9 +43,10 @@
 
         /// <summary>
         /// An instance of <see cref="IDataFactory{TComplexType,TPrimaryKeyDataType}"/> to get a <see cref="IProductModule"/>
+        /// Can't register as dependency due to logon being avoided for Page initialization
         /// </summary>
-        [Dependency]
-        public IDataFactory<IProductModule, Modules> ProductModuleFactory { get; set; }
+        private readonly IDataFactory<IProductModule, Modules> _productModuleFactory =
+            FunkyInjector.Container.GetInstance<IDataFactory<IProductModule, Modules>>();
 
         /// <summary>
         /// The page_ pre init.
@@ -88,7 +89,7 @@
             this.BannerSlider.Href = GlobalVariables.StaticContentLibrary + "/js/bxSlider/jquery.bxslider.css";
 
             this.Module = HostManager.GetModule(Request.Url.Host);
-            var module = this.ProductModuleFactory[this.Module];
+            var module = this._productModuleFactory[this.Module];
 
             var clsInfoMessages = new cInformationMessages();
             List<cInformationMessage> listInfoMessages = clsInfoMessages.GetMessages();

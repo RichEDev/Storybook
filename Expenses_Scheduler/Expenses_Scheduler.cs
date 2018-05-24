@@ -122,6 +122,13 @@ namespace Expenses_Scheduler
         {
             GlobalVariables.DefaultModule = (Modules)int.Parse(ConfigurationManager.AppSettings["defaultModule"]);
             GlobalVariables.MetabaseConnectionString = ConfigurationManager.ConnectionStrings["metabase"].ToString();
+
+            //Bootstrap scheduler as it use SM and SMLib
+            Container container = Bootstrapper.Bootstrap(null);
+
+            //Assign container to funky injector
+            FunkyInjector.Container = container;
+
             try
             {
                 _enableLogging = Convert.ToBoolean(ConfigurationManager.AppSettings["enableLogging"]);
@@ -184,6 +191,12 @@ namespace Expenses_Scheduler
         /// <param name="e"></param>
         void TmrElapsed(object sender, ElapsedEventArgs e)
         {
+            //Bootstrap scheduler as it use SM and SMLib
+            Container container = Bootstrapper.Bootstrap(null);
+
+            //Assign container to funky injector
+            FunkyInjector.Container = container;
+
             //check for potential schedules
 
             DateTime startDate = new DateTime(1900, 01, 01, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
@@ -214,7 +227,7 @@ namespace Expenses_Scheduler
                 }
 
                 //Bootstrap scheduler as it use SM and SMLib
-                Container container = Bootstrapper.Bootstrap(account.accountid);
+                container = Bootstrapper.Bootstrap(account.accountid);
 
                 //Assign container to funky injector
                 FunkyInjector.Container = container;
