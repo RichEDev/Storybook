@@ -259,6 +259,11 @@
         /// </summary>
         public decimal HeavyBulkyEquipmentRate { get; set; }
 
+        /// <summary>
+        /// Gets or sets the fuel rates for this threshold.
+        /// </summary>
+        public IEnumerable<VehicleJourneyRateThresholdRate> Rates { get; set; }
+
         #endregion
 
         public bool Equals(Threshold other)
@@ -525,7 +530,8 @@
                             PassengerXRate = threshold.PassengerX,
                             RangeType = (RangeType)threshold.RangeType,
                             RangeValue1 = threshold.RangeValue1,
-                            RangeValue2 = threshold.RangeValue2
+                            RangeValue2 = threshold.RangeValue2,
+                            Rates = rates.Where(rate => rate.MileageThresholdId == threshold.MileageThresholdId)
                         };
                     }).ToList()
                 }).ToList()
