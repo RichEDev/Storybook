@@ -137,7 +137,7 @@ namespace SpendManagementApi.Repositories
                 }
             }
 
-            List<FinancialYear> financialYears = FinancialYears.Years(this.User).Select(year => year.Cast<SpendManagementApi.Models.Types.FinancialYear>()).Where(y => y.FinancialYearID == financialYearId || financialYearId == 0).ToList();
+            List<FinancialYear> financialYears = FinancialYears.Years(this.User).Select(year => year.Cast<SpendManagementApi.Models.Types.FinancialYear>()).Where(y => y.Active && (y.FinancialYearID == financialYearId || financialYearId == 0)).ToList();
 
             var vehicleDefinition = new VehicleDefinition
                                         {
