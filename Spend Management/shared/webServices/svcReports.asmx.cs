@@ -27,6 +27,7 @@
     using System.Data;
     using System.Globalization;
 
+    using SpendManagementLibrary.Employees;
     using SpendManagementLibrary.Logic_Classes.Fields;
     using SpendManagementLibrary.Logic_Classes.Tables;
 
@@ -1366,7 +1367,37 @@
             cReports clsReports = new cReports(currentUser.AccountID, currentUser.CurrentSubAccountId);
             return clsReports.SaveReportAs(reportId, currentUser.EmployeeID, reportName, folderId, currentUser);
         }
-        
+
+        /// <summary>
+        /// Get Claim details for viewing a claim.
+        /// </summary>
+        /// <param name="claimId">
+        /// The claim id.
+        /// </param>
+        /// <returns>
+        /// An instacne of <see cref="ViewClaimDetails"/>.
+        /// </returns>
+        [WebMethod(EnableSession = true)]
+        public ViewClaimDetails ViewClaim(int claimId)
+        {
+            var user = cMisc.GetCurrentUser();
+            var clsclaims = new cClaims(user.AccountID);
+            var result = new ViewClaimDetails();
+            cClaim reqclaim = clsclaims.getClaimById(claimId);
+            Employee claimemp = Employee.Get(reqclaim.employeeid, user.AccountID);
+
+            string empname = claimemp.Title + " " + claimemp.Forename + " " + claimemp.Surname;
+
+            result.EmployeeName = empname;
+            result.ClaimNumber = reqclaim.claimno.ToString();
+            if (reqclaim.paid == true)
+            {
+                result.DatePaid = reqclaim.datepaid.ToShortDateString();
+            }
+            result.Description = reqclaim.description;
+
+            return result;
+        }
 
         /// <summary>
         /// Get the Image path for Charts.

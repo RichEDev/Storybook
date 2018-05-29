@@ -547,6 +547,21 @@ namespace Expenses_Reports
         /// </returns>
         private DataSet ReCreateDatasetWithCalculatedFields(cReportRequest request, DataSet ds, IUltraCalcManager calcMan)
         {
+            var foundCalculations = false;
+            foreach (cReportColumn column in request.report.columns)
+            {
+                if (column is cCalculatedColumn)
+                {
+                    foundCalculations = true;
+                    break;
+                }
+            }
+
+            if (!foundCalculations)
+            {
+                return ds;
+            }
+
             var ultraCalcMan = calcMan as UltraWebCalcManager;
             var resultTable = new DataTable(ds.Tables[0].TableName);
             var calculationFactory = new CalculationFactory(ds.Tables[0].Columns, request.report.columns);

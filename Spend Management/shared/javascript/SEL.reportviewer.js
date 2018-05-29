@@ -9,7 +9,16 @@
                 RequestNumber : null,
                 Grid: null,
                 CriteriaId : null,
-                ReportId: null
+                ReportId : null,
+                HiddenColumn : null,
+                CriteriaSelector:
+                {
+                    Tab: null,
+                    TreeContainer: null,
+                    Tree: null,
+                    Drop: null,
+                    Node:null
+                }
             },
             GetReportStatus: function() {
                 var params = new SEL.ReportViewer.GetReportProgress();
@@ -277,7 +286,7 @@
                     toolbarSettings: {
                         showToolbar: true,
                         toolbarItems:
-                            [ej.Grid.ToolBarItems.Search, ej.Grid.ToolBarItems.PrintGrid],
+                            [ej.Grid.ToolBarItems.PrintGrid],
                         customToolbarItems: [
                             { templateID: "#Save", tooltip: "Save as" }
                             , { templateID: "#Change", tooltip:"Change columns or filters" }
@@ -302,6 +311,7 @@
                             $('#imgSpin').hide("slow");
                         },
                         cellSelected: function(args, item) {
+                            SEL.ReportViewer.IDs.CriteriaId++;
                             var gridObj = $('#preview').data("ejGrid");
                             var column = gridObj.getColumnByIndex(args.cellIndex[0]);
                             var drilldown = $('#drilldownreportid').val();
@@ -311,9 +321,16 @@
                                     cellValue = args.data[args.cellIndex[0] + 1];
                                     switch (column.headerText) {
                                     case 'View Claim':
-                                        window.open('/expenses/claimViewer.aspx?claimid=' +
-                                            cellValue +
-                                            '&claimSelector=true');
+                                        SEL.ReportViewer.ViewClaim(cellValue);
+                                        cellValue = args.data[args.cellIndex[0] + 1];        
+                                        gridObj.filterColumn(column.field,"equal",cellValue,"and", false);
+                                        $('#preview_ClearFilter').removeClass('e-hide');
+                                        var treeItem = {"data":column.headerText,"attr":{"text":column.headerText,"id":column.field,"internalId":"","crumbs":"","rel":"node","fieldid":column.fieldID,"joinviaid":0,"fieldtype":"X","columnid":"","comment":""},"state":"","metadata":{"conditionType":1,"criterionOne":cellValue.toString(),"criterionTwo":"","conditionTypeText":"Equals","fieldType":"S","isListItem":false,"firstListItemText":"","runtime":false,"conditionJoiner":1,"group":0}}
+                                        SEL.ReportViewer.InsertCriteria(treeItem);
+                                        gridObj.hideColumns(column.field);
+                                        SEL.ReportViewer.IDs.HiddenColumn = column;
+                                        $('#criteriaContainer').animate({backgroundColor: '#FFFFF'}, 'slow').animate({backgroundColor: '#ececec'}, 'slow');
+
                                         break;
                                     case 'View Contract':
                                         window.open('/ContractSummary.aspx?tab=0&id=' +
@@ -334,10 +351,14 @@
                                 {
                                     cellValue = args.data[args.cellIndex[0] + 1];        
                                     gridObj.filterColumn(column.field,"equal",cellValue,"and", false);
+                                    var treeItem = {"data":column.headerText,"attr":{"text":column.headerText,"id":column.field,"internalId":"","crumbs":"","rel":"node","fieldid":column.fieldID,"joinviaid":0,"fieldtype":"X","columnid":"","comment":""},"state":"","metadata":{"conditionType":1,"criterionOne":cellValue.toString(),"criterionTwo":"","conditionTypeText":"Equals","fieldType":"S","isListItem":false,"firstListItemText":"","runtime":false,"conditionJoiner":1,"group":0}}
+                                    SEL.ReportViewer.InsertCriteria(treeItem);
                                     $('#preview_ClearFilter').removeClass('e-hide');
+                                    $('#criteriaContainer').animate({backgroundColor: '#FFFFF'}, 'slow').animate({backgroundColor: '#ececec'}, 'slow');
                                 }
-                                
-                                
+
+                                SEL.ReportViewer.SetFilterCount();
+
                             } else {
                                 ClickCellButtonHandler(args.cellIndex[0], args.currentCell.text());    
                             }
@@ -349,6 +370,8 @@
                             } else {
                                 $('#preview_ClearFilter').removeClass('e-hide');
                             }
+
+                            $('.e-rowcell').mouseover(function() { $(this).addClass('e-hover'); }).mouseout(function() { $(this).removeClass('e-hover') });
                         }
                     }
 
@@ -363,7 +386,12 @@
                     $('.e-rowcell').mouseover(function() { $(this).addClass('e-hover'); }).mouseout(function() { $(this).removeClass('e-hover') });
 
                     $('#preview_Save').attr('data-content', 'Save a copy').click(function() {
-                        saveDialog();
+                        $('#pnlSaveOption').dialog(
+                            {
+                                modal: true,
+                                resizable: false,
+                                title: 'Save a copy of this report'
+                            });
                     });
 
                     $('#preview_Change').attr('data-content', 'Change report columns or filters').click(function() {
@@ -395,14 +423,42 @@
                     });
 
 
-                $('#preview_ClearFilter').attr('data-content', 'Clear all filters').addClass('e-hide').click(function() {
-                    $('#preview').data("ejGrid").clearFiltering();
-                    $(this).addClass('e-hide');
+                $('#preview_ClearFilter').attr('data-content', 'Clear all filters').addClass('e-hide').click(
+                    function() {
+                        var gridObj = $('#preview').data("ejGrid");
+                        gridObj.clearFiltering();
+                        $(this).addClass('e-hide');
+                        $('#divViewClaim').hide();
+                        $('.filterInfo[nodeid=""]').remove();
+                    if (SEL.ReportViewer.IDs.HiddenColumn !== null) {
+                        gridObj.showColumns(SEL.ReportViewer.IDs.HiddenColumn.headerText);
+                        SEL.ReportViewer.IDs.HiddenColumn = null;
+                    }
+                    $('#criteriaContainer').animate({backgroundColor: '#FFFFF'}, 'slow').animate({backgroundColor: '#ececec'}, 'slow');
+                    SEL.ReportViewer.SetFilterCount();
                 });
 
                 },
             ErrorHandler: function (data) {
                 SEL.Common.WebService.ErrorHandler(data);
+            },
+            ViewClaim: function(claimId) {
+                var viewClaimComplete = function (viewClaim) {
+                    if (viewClaim) {
+                        $('#lblemployee').text(viewClaim.d.EmployeeName);
+                        $('#lblclaimno').text(viewClaim.d.ClaimNumber);
+                        $('#lbldatepaid').text(viewClaim.d.DatePaid);
+                        $('#lbldescription').text(viewClaim.d.Description);
+                        $('#divViewClaim').show();
+                    }
+                }
+
+                var params = { claimId: claimId };
+                SEL.Ajax.Service('/shared/webServices/svcReports.asmx/',
+                    'ViewClaim',
+                    params,
+                    viewClaimComplete,
+                    SEL.ReportViewer.ErrorHandler);
             },
             CriteriaNodesRefreshComplete: function (data) {
                 SEL.ReportViewer.IDs.CriteriaId = 1;
@@ -421,7 +477,10 @@
 
                     SEL.ReportViewer.InsertGroup(groupCount);
                 }
+
+                SEL.ReportViewer.SetFilterCount();
                 
+                SEL.ReportViewer.IDs.CriteriaId = 9999;
             },
             InsertCriteria: function (treeItem) {
                 //show elements
@@ -430,14 +489,13 @@
                 // add the data
                 $.data(document, "filter" + SEL.ReportViewer.IDs.CriteriaId.toString(), treeItem.metadata);
                 // insert into div
-                SEL.Reports.IDs.CriteriaSelector.Node = treeItem.attr;
-                SEL.Reports.IDs.CriteriaSelector.Node["text"] = treeItem["data"];
+                SEL.ReportViewer.IDs.CriteriaSelector.Node = treeItem.attr;
+                SEL.ReportViewer.IDs.CriteriaSelector.Node["text"] = treeItem["data"];
                 // insert criteria and groups
                 $('#criteriaList').append(SEL.ReportViewer.DisplaySummaryFilterInformation("filter" + SEL.ReportViewer.IDs.CriteriaId.toString()));                 
                    
                 $.filterModal.Filters.FilterModal.EditControl = null;
                 $.filterModal.Filters.Ids.EditControl = null;
-
             },
             InsertGroup: function(groupCount){
                 for (var i = 1; i < groupCount; i++) {
@@ -490,7 +548,7 @@
                         andOr = andOr + "onclick='" + andOrOnClick + "' value=" + andOrValue + " >" + andOrText + "</div></td>";
 
                         // Set the condition text to display
-                        filterCellInfo = "<tr class='filterInfo e-grid " + rowClass + "' id='" + criteriaId + "' nodeid='" + SEL.Reports.IDs.CriteriaSelector.Node.internalId + "' fieldid='" + $.filterModal.Filters.Ids.FilterFieldID + "' fieldtype='" + SEL.Reports.IDs.CriteriaSelector.Node.fieldType + "' joinviaid='" + SEL.Reports.IDs.CriteriaSelector.Node.joinviaid + "' crumbs='' group = '" + group + "'>" + groupIcon + "&nbsp;" + andOr + '<td class="e-rowcell">' + SEL.Reports.IDs.CriteriaSelector.Node.text + '</td><td class="e-rowcell">' + conditionTypeText + '</td>';
+                        filterCellInfo = "<tr class='filterInfo e-grid " + rowClass + "' id='" + criteriaId + "' nodeid='" + SEL.ReportViewer.IDs.CriteriaSelector.Node.internalId + "' fieldid='" + $.filterModal.Filters.Ids.FilterFieldID + "' fieldtype='" + SEL.ReportViewer.IDs.CriteriaSelector.Node.fieldType + "' joinviaid='" + SEL.ReportViewer.IDs.CriteriaSelector.Node.joinviaid + "' crumbs='' group = '" + group + "'>" + groupIcon + "&nbsp;" + andOr + '<td class="e-rowcell">' + SEL.ReportViewer.IDs.CriteriaSelector.Node.text + '</td><td class="e-rowcell">' + conditionTypeText + '</td>';
 
 
                   // If adding a new filter or the metadata is not set correctly, set criteria1 accordingly
@@ -535,7 +593,14 @@
 
 
                     return filterCellInfo + "<td class='e-rowcell'>" + criteriaCellInfo + "</td></tr>";                   
+                },
+            SetFilterCount: function() { var filterCount = $('.filterInfo').length;
+                if (filterCount === 0) {
+                    $('#filterCount').html(' ');
+                } else {
+                    $('#filterCount').html(' (' + filterCount + ')');    
                 }
+            }
         }
     }
     if (window.Sys && window.Sys.loader) {

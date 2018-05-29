@@ -41,7 +41,15 @@
     </script>
     <style>
         
-
+.sectionHeader {
+    background:#ececec;
+    padding:10px;
+    text-indent: 10px;
+    font-weight: bold;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #fff;
+}
 /*ej*/
 th.e-headercell {
     color: #282827!important;
@@ -93,7 +101,7 @@ ul{
 .closeArrow {
     background-image: url(/static/icons/16/new-icons/navigate_close.png);
     background-repeat: no-repeat;
-    background-position: 65px 10px;
+    background-position: 75px 10px;
     background-size: 16px 16px;
     cursor:pointer;
 }
@@ -101,12 +109,10 @@ ul{
 .openArrow {
     background-image: url(/static/icons/16/new-icons/navigate_open.png);
     background-repeat: no-repeat;
-    background-position: 65px 12px;
+    background-position: 75px 12px;
     background-size: 16px 16px;
     cursor:pointer;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-bottom-color: #fff;
+    
 }
 
 .e-grid .e-headercelldiv{
@@ -308,12 +314,6 @@ background: rgb(199, 223, 247) none repeat scroll 0% 0%;
             // Page option moving
             $('#maindiv').css('margin-left', '20px');
             $('.submenuholder').hide();
-
-
-           
-        
-
-
         });
         function PageOptions() {
             var optionPosition = $('#showPageOptions').position();
@@ -348,32 +348,12 @@ background: rgb(199, 223, 247) none repeat scroll 0% 0%;
         function printerFriendly() {
             $("#preview").ejGrid("print");
         }
-        function viewclaim(requestnum, claimid, expenseid) {
-            ReportFunctions.ViewClaim(requestnum, claimid, expenseid, ViewClaimComplete, onError);
+        function viewclaim(claimid) {
+
+            
         }
         
-        function ViewClaimComplete(viewClaim) {
-            $('#lblemployee').text(viewClaim.EmployeeName);
-            $('#lblclaimno').text(viewClaim.ClaimNumber);
-            $('#lbldatepaid').text(viewClaim.DatePaid);
-            $('#lbldescription').text(viewClaim.Description);
-            $('#litViewClaimGrid').html(viewClaim.Grid[1]);
-            SEL.Grid.updateGrid(viewClaim.Grid[0]);
-            $('#divViewClaim').dialog({
-                modal:true,
-                title: "View Claim",
-                minWidth: 850,
-                dialogClass: "formpanel",
-                maxHeight: 650,
-                height:650,
-                buttons: [{
-                    text: "OK",
-                    "class": "jQueryUIButton",
-                    click: function () {
-                    $('#divViewClaim').dialog('close');
-                }}]
-            });
-        }
+        
         var wndDrilldown;
         function showDrillDownReports()
         {         
@@ -406,14 +386,14 @@ background: rgb(199, 223, 247) none repeat scroll 0% 0%;
 
         }
         
-        function saveDialog() 
-        {
-            $find('<%=mdlSaveDialog.ClientID %>').show();
+        function saveDialog() {
+
+
+            <%--$find('<%=mdlSaveDialog.ClientID %>').show();--%>
         }
         
-        function saveDialogClose() 
-        {
-            $find('<%=mdlSaveDialog.ClientID %>').hide();
+        function saveDialogClose() {
+            $('#pnlSaveOption').dialog('destroy');
             document.getElementById('<% = txtReportName.ClientID %>').value = reportName;
         }
 
@@ -490,7 +470,7 @@ background: rgb(199, 223, 247) none repeat scroll 0% 0%;
     </div>
     <div id="divReportWindow" style="display: none;">
         <div id="criteriaContainer" class="sectionHeader">
-            <h4 style="display: inline;" > Filters</h4>
+            <h4 style="display: inline;" > Filters<span id="filterCount"></span> </h4>
             </div>
         <div class="dropper easytree-droppable" id="Dropper" style="padding: 10px 0 10px 10px; overflow: hidden;">
             <table class="e-grid e-table e-headercontent"id="criteriaList" style="width:100%;">
@@ -504,15 +484,26 @@ background: rgb(199, 223, 247) none repeat scroll 0% 0%;
         </div>
         <div runat="server" ID="divFilter" clientidmode="Static" class="sm_panel" style="display: none"></div>
         <div class="sectionHeader">Report</div>
+        <div id="divViewClaim"  style="display: none;">
+            <div class="sectionHeader">Claim details</div>
+
+            <div class="comment sm_panel" >
+                <div class="twocolumn">
+                    <label id="lblemployelabel">Employee Name</label><span class="inputs"><span id="lblemployee"></span></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"></span>
+                    <label id="lblclaimnum">Claim No</label><span class="inputs"><span id="lblclaimno">Label</span></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"></span></div>
+                <div class="twocolumn">
+                    <label id="lbldatepaidlbl" for="lbldatepaid">Date Approved</label><span class="inputs"><span id="lbldatepaid">£0.00</span></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"></span>
+                    <label id="lbldescriptionlbl">Description</label><span class="inputs" style="width: 250px;"><span id="lbldescription">Label</span></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"></span>
+                </div>
+            </div>
+        </div>
         </div>
     <div runat="server" ID="div1" clientidmode="Static" class="sm_panel" style="display: none"></div>
     <div id="previewWindow">
         <div id="preview"></div>
     </div>
     
-    <cc1:ModalPopupExtender ID="mdlSaveDialog" TargetControlID="lnkSave" PopupControlID="pnlSaveOption" runat="server" BackgroundCssClass="modalBackground" OnCancelScript="saveDialogClose()" OnOkScript="saveDialog()"></cc1:ModalPopupExtender>
-    <asp:HyperLink ID="lnkSave" runat="server" style="display: none;" Text="&nbsp;">&nbsp;</asp:HyperLink>   
-    <asp:Panel ID="pnlSaveOption" runat="server" style="background-color: #ffffff; border: 1px solid #000000; padding: 10px;">
+    <div ID="pnlSaveOption" style="display: none;">
         <table>
             <tr><td class="labeltd">New Name:</td><td class="inputtd"><asp:TextBox ID="txtReportName" runat="server" style="width: 100%;"></asp:TextBox></td></tr>
             <tr><td class="labeltd">Category:</td><td class="inputtd">
@@ -522,7 +513,7 @@ background: rgb(199, 223, 247) none repeat scroll 0% 0%;
             </td></tr>
         </table>      
         <p><a href="javascript:saveAs();"><asp:Image ID="imgOK" runat="server" ImageUrl="~/shared/images/buttons/btn_save.png" BorderWidth="0" /></a> <a href="javascript:saveDialogClose();"><asp:Image ID="imgCancel" runat="server" ImageUrl="~/shared/images/buttons/cancel_up.gif" BorderWidth="0" /></a></p>
-    </asp:Panel>
+    </div>
 </asp:Content>
 
 
@@ -533,16 +524,6 @@ background: rgb(199, 223, 247) none repeat scroll 0% 0%;
     <div id="divPivot" runat="server"><a id="hrefPivot" href="" class="submenuitem" runat="server">Create Pivot Table</a></div>
     <div id="divPrinterFriendly" runat="server"><a id="hrefPrinterFriendly" href="javascript:printerFriendly();" class="submenuitem" runat="server">Printer Friendly</a></div>
     <asp:Literal ID="litoptions3" runat="server"></asp:Literal>   
-    <div id="divViewClaim"  style="display: none;">
-        <div class="twocolumn">
-            <label id="lblemployelabel" >Employee Name</label><span class="inputs"><span id="lblemployee"></span></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"></span></div>
-        
-        <div class="twocolumn">
-            <label id="lblclaimnum" >Claim No</label><span class="inputs"><span id="lblclaimno">Label</span></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"></span>
-            <label id="lbldatepaidlbl" for="lbldatepaid">Date Approved</label><span class="inputs"><span id="lbldatepaid">£0.00</span></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"></span></div>
-        <div class="twocolumn">
-            <label id="lbldescriptionlbl" >Description</label><span class="inputs"  style="width: 250px;"><span id="lbldescription" >Label</span></span><span class="inputicon"></span><span class="inputtooltipfield"></span><span class="inputvalidatorfield"></span></div>
-        <div id="litViewClaimGrid"></div>
-    </div>
+    
     <asp:HiddenField runat="server" ID="divCriteriaValue"/>
 </asp:Content>
