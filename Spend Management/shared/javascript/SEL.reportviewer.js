@@ -40,6 +40,11 @@
                     var timeoutId = setTimeout(function() { SEL.ReportViewer.GetReportStatus(); }, 500);
                     break;
                 case 1:
+                    if (data.d.ChartPath !== null) {
+                        $('#imgChart').attr('src', data.d.ChartPath);
+                    } else {
+                        $('#chartHeader').hide();
+                    }
 
                     // build a column list compatible with the grid, a sortedColumnList and a groupedColumn
                     var ejColumns = [];

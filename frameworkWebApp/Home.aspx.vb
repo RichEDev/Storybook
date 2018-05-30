@@ -31,7 +31,7 @@ Namespace Framework2006
             If Me.IsPostBack = False Then
                 Dim db As New cFWDBConnection
                 If FeatureFlagManager Is Nothing Then
-                    NewStyleReports = True
+                    NewStyleReports = False
                 Else
                     NewStyleReports = FeatureFlagManager.IsEnabled("Syncfusion report viewer")
                 End If

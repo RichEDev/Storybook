@@ -28,6 +28,8 @@ namespace Expenses_Reports
 
     using BusinessLogic.Modules;
 
+    using System.Windows.Forms;
+
     using Expenses_Reports.Formula;
     using SpendManagementLibrary.Logic_Classes.Fields;
 
@@ -1436,6 +1438,11 @@ namespace Expenses_Reports
         /// <returns></returns>
         private object AddValues(Type getType, object currentValue, object yValue)
         {
+            if (yValue == null || string.IsNullOrEmpty(yValue.ToString()))
+            {
+                return currentValue;
+            }
+
             switch (getType.Name)
             {
                 case "Int32":

@@ -127,22 +127,15 @@ ul{
 }
 
 
-#imgChartPreview {
-    border: 1px solid; 
-    border-color: <%=BorderColour%>;     
-    border-image-outset:3px;
-    position:absolute;
-    top:95px;
-    left:606px;
-} 
-
 #imgChart {
-    position: absolute;
     top: 10px;
     left: 100px;
     border: 1px solid; 
     border-color: <%=BorderColour%>;     
     border-image-outset:3px;
+    margin-top: 10px !important;
+    margin-left: 100px !important;
+    margin-bottom: 10px !important;
 }
 
 .group-first {
@@ -305,6 +298,15 @@ background: rgb(199, 223, 247) none repeat scroll 0% 0%;
             $('#criteriaContainer').addClass("openArrow").click(function ()
             {
                 $('#Dropper').slideToggle('fast');
+                if ($(this).hasClass("closeArrow")) {
+                    $(this).removeClass("closeArrow").addClass("openArrow");
+                } else {
+                    $(this).removeClass("openArrow").addClass("closeArrow");
+                }
+            });
+            $('#chartHeader').addClass("openArrow").click(function ()
+            {
+                $('#chartContainer').slideToggle('fast');
                 if ($(this).hasClass("closeArrow")) {
                     $(this).removeClass("closeArrow").addClass("openArrow");
                 } else {
@@ -482,6 +484,8 @@ background: rgb(199, 223, 247) none repeat scroll 0% 0%;
             </tfoot>
             </table>
         </div>
+        <div class="sectionHeader" id="chartHeader"><h4 style="display: inline;">Chart</h4> </div>
+        <div id="chartContainer" style="display: none;"><img id="imgChart"/></div>        
         <div runat="server" ID="divFilter" clientidmode="Static" class="sm_panel" style="display: none"></div>
         <div class="sectionHeader">Report</div>
         <div id="divViewClaim"  style="display: none;">
