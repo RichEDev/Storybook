@@ -120,7 +120,11 @@
                 <asp:Literal ID="litCardTransactionsGrid" runat="server"></asp:Literal>
             </div>
         </div>
-
+        <div id="divExpenses360Warning" runat="server" Visible="False" clientidmode="Static" class="comment claimExpenses360Warning">We are phasing out Expenses360 so that we can continue to improve, support and add features to Expenses Mobile.
+             You will no longer be able to use Expenses360 from 14th July 2018, so please ensure that you have synced and reconciled any outstanding expenses.
+            <br/>
+            <br/> More information can be found here LINK.
+        </div>
         <div class="sectiontitle">My Mobile Items</div>
         <div id="divMobileItems">
             <asp:Literal ID="litmobileitems" runat="server"></asp:Literal>

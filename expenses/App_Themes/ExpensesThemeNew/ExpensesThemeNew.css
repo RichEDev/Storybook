@@ -2447,6 +2447,12 @@ div.claimEnvelopes {
     background: #FFFFE1 url(/static/icons/32/plain/airmail.png) no-repeat 4px center;
 }
 
+div.claimExpenses360Warning {
+    width: 798px;
+    padding: 14px 30px 16px 50px;
+    background: #FFFFE1 url(/static/icons/32/plain/sign_warning.png) no-repeat 10px center;
+}
+
 /* Claim level Receipts END */
 
 #additionalEnvelopeLink {

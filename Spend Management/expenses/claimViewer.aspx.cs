@@ -211,10 +211,15 @@
 
                     #region my mobile items
                     if (generalOptions.Mobile.UseMobileDevices && user.CheckAccessRole(AccessRoleType.View, SpendManagementElement.MobileDevices, true) && (viewType == UserView.Current))
-                    {
-                        useMobileDevices = true;
+                    {                    
                         string[] grid = claims.generateMobileItemsGrid(claim);
                         this.litmobileitems.Text = grid[1];
+
+                        if (!this.litmobileitems.Text.Contains("You do not have any mobile items to reconcile."))
+                        {
+                            divExpenses360Warning.Visible = true;
+                        }
+
                         this.Page.ClientScript.RegisterStartupScript(this.GetType(), "gridMobileItemsVars", cGridNew.generateJS_init("gridMobileItemsVars", new List<string> { grid[0] }, user.CurrentActiveModule), true);
 
                         grid = claims.GenerateMobileJourneysGrid(user.EmployeeID, user.AccountID, claim.claimid);
