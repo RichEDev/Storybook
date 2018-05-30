@@ -7122,6 +7122,8 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\IX_RoleSubCats_RoleId_SubCatId.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\IX_Subcats_subcatId.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\GetEmployeeUserNameById.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\IX_ClaimApproverDetails_CheckerId_ClaimId_SavedExpenseId_ClaimApproverId.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\IX_ClaimApproverDetails_ClaimantId_CheckerId_CreatedOn.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ut_expenses.refactorlog">
