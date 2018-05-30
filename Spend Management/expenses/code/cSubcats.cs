@@ -926,7 +926,7 @@ namespace Spend_Management
         /// <param name="employeeId">The ID of the <see cref="Employee"/>this request relates to</param>
         /// <param name="includeEmployeeItemRoleDates">True if the method should return "StartDate" and "EndDate" populated from the EmployeeItemRoles</param>
         /// <returns>A list of <see cref="SubcatItemRoleBasic"></see></returns>
-        public List<SubcatItemRoleBasic> GetSubCatsByEmployeeItemRoles(int employeeId, bool includeEmployeeItemRoleDates = false) 
+        public List<SubcatItemRoleBasic> GetSubCatsByEmployeeItemRoles(int employeeId, bool includeEmployeeItemRoleDates = false)
         {
             var subcats = new List<SubcatItemRoleBasic>();
             using (var connection = new DatabaseConnection(cAccounts.getConnectionString(this._accountid)))
@@ -1454,18 +1454,25 @@ namespace Spend_Management
         /// <param name="categoryId">The categoryId</param>
         /// <param name="isCorpCard">Whether it's for a corporate card reconciliation</param>
         /// <param name="isMobileJourney">Whether its for a mobile journey reconciliation</param>
+        /// <param name="employeeId">The employee Id</param>
+        /// <param name="itemRoleSubCats">A list of <see cref="SubcatItemRoleBasic"/></param>
         /// <returns>A SortedList of subcat details</returns>
-        public SortedList<int, SubcatItemRoleBasic> GetExpenseSubCatsForCategory(int categoryId, bool isCorpCard, bool isMobileJourney, int employeeId)
+        public SortedList<int, SubcatItemRoleBasic> GetExpenseSubCatsForCategory(
+            int categoryId,
+            bool isCorpCard,
+            bool isMobileJourney,
+            int employeeId,
+            List<SubcatItemRoleBasic> itemRoleSubCats)
         {
             var subcats = new SortedList<int, SubcatItemRoleBasic>();
 
             var sorted = new SortedList<string, SubcatItemRoleBasic>();
 
-            foreach (SubcatItemRoleBasic rolesub in this.GetSubCatsByEmployeeItemRoles(employeeId))
+            foreach (SubcatItemRoleBasic itemRoleSubCat in itemRoleSubCats)
             {
-                if (rolesub.CategoryId == categoryId && !sorted.ContainsKey(rolesub.Subcat))
+                if (itemRoleSubCat.CategoryId == categoryId && !sorted.ContainsKey(itemRoleSubCat.Subcat))
                 {
-                    sorted.Add(rolesub.Subcat, rolesub);
+                    sorted.Add(itemRoleSubCat.Subcat, itemRoleSubCat);
                 }
             }
 

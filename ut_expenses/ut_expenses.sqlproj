@@ -7119,6 +7119,8 @@
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetBankAccounts.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetBankAccountById.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Tables\ApiLicensing.table.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\IX_RoleSubCats_RoleId_SubCatId.sql" />
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\IX_Subcats_subcatId.sql" />
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\GetEmployeeUserNameById.sql" />
   </ItemGroup>
   <ItemGroup>

@@ -499,13 +499,12 @@ namespace Spend_Management
         public SortedList<string,int> GetExpenseCategoriesFromItemRoles(List<SubcatItemRoleBasic> roleitems)
         {
             var categories = new SortedList<string, int>();
-      
-            foreach (SubcatItemRoleBasic rolesub in roleitems)
-            {
-                cCategory category = this.FindById(rolesub.CategoryId);
 
-                if (!categories.ContainsValue(category.categoryid))
+            foreach (SubcatItemRoleBasic rolesub in roleitems.OrderBy(x => x.CategoryId))
+            {
+                if (!categories.ContainsValue(rolesub.CategoryId))
                 {
+                    var category = this.FindById(rolesub.CategoryId);
                     categories.Add(category.category, category.categoryid);
                 }
             }

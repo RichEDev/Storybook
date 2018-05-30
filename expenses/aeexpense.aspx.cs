@@ -48,6 +48,21 @@ using Spend_Management.shared.code.Helpers;
 public partial class aeexpense : System.Web.UI.Page
 {
     /// <summary>
+    /// An instance of <see cref="ILog"/> for logging information.
+    /// </summary>
+    private static readonly ILog Log = new LogFactory<aeexpense>().GetLogger();
+
+    /// <summary>
+    /// An instance of <see cref="IExtraContext"/> for logging extra inforamtion
+    /// </summary>
+    private static readonly IExtraContext LoggingContent = new Log4NetContextAdapter();
+
+    /// <summary>
+    /// A list of <see cref="SubcatItemRoleBasic"/>
+    /// </summary>
+    private List<SubcatItemRoleBasic> _subCatItemRoles;
+
+    /// <summary>
     /// The account's postcode anywhere key (for the address widget)
     /// </summary>
     public string PostcodeAnywhereKey { get; set; }
@@ -111,14 +126,20 @@ public partial class aeexpense : System.Web.UI.Page
     public IDataFactoryArchivable<IReason, int, int> ReasonsFactory { get; set; }
 
     /// <summary>
-    /// An instance of <see cref="ILog"/> for logging information.
+    /// Gets a list of <see cref="SubcatItemRoleBasic"/>
     /// </summary>
-    private static readonly ILog Log = new LogFactory<aeexpense>().GetLogger();
+    public List<SubcatItemRoleBasic> SubCatItemRoles
+    {
+        get
+        {
+            if (this._subCatItemRoles == null)
+            {
+                this._subCatItemRoles = this.ActionContext.SubCategories.GetSubCatsByEmployeeItemRoles((int)this.ViewState["employeeid"], true);
+            }
 
-    /// <summary>
-    /// An instance of <see cref="IExtraContext"/> for logging extra inforamtion
-    /// </summary>
-    private static readonly IExtraContext LoggingContent = new Log4NetContextAdapter();
+            return this._subCatItemRoles;
+        }
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -2558,8 +2579,6 @@ public partial class aeexpense : System.Web.UI.Page
 
         TextBox txtnumitems = new TextBox();
 
-        List<SubcatItemRoleBasic> limits = subcats.GetSubCatsByEmployeeItemRoles((int)this.ViewState["employeeid"], true);
-
         //get the current date of the xpense item being claimed
         HiddenField hdnDate = (HiddenField)pnlgeneral.FindControl("hdnExpdate");
         DateTime date = DateTime.Now;
@@ -2653,7 +2672,7 @@ public partial class aeexpense : System.Web.UI.Page
         else
         {
             if (action == Action.Add || ((action == Action.Edit || action == Action.Copy) && ((int)ViewState["transactionid"] > 0 && cardAutomaticAllocation)))
-            {
+            {             
                 FlagManagement flagManagement = this.ActionContext.FlagManagement;
                 int itemRoleID;
                 txtnumitems.Text = items.Count.ToString();
@@ -2669,7 +2688,8 @@ public partial class aeexpense : System.Web.UI.Page
                         expitems.TryGetValue(reqsubcat.subcatid, out expenseitem);
                         lit = new Literal();
                         lit.Text = "<div class=\"inputpaneltitle\">" + reqsubcat.subcat;
-                        SubcatItemRoleBasic roleSubcat = limits.OrderByDescending(x => x.Maximum).FirstOrDefault(subcat => subcat.SubcatId == reqsubcat.subcatid);
+                     
+                        SubcatItemRoleBasic roleSubcat = this.SubCatItemRoles.OrderByDescending(x => x.Maximum).FirstOrDefault(subcat => subcat.SubcatId == reqsubcat.subcatid);
                            
                         LimitFlag limitFlag = null;
                         if (roleSubcat != null)
@@ -2803,10 +2823,9 @@ public partial class aeexpense : System.Web.UI.Page
         var itemtype = (ItemType) ViewState["itemtype"];
         var action = (int) ViewState["action"];
         var addControl = (itemtype == ItemType.Cash && action != 2 && action != 3 && action != 4 && (int) ViewState["mobileJourneyID"] == 0);
- 
-        List<SubcatItemRoleBasic> roleitems = subcats.GetSubCatsByEmployeeItemRoles(employeeid, true);
+        
         var sortedlst = new SortedList<string, ListItem>();
-        foreach (SubcatItemRoleBasic rolesub in roleitems)
+        foreach (SubcatItemRoleBasic rolesub in this.SubCatItemRoles)
         {
             if (addControl)
             {
@@ -3592,15 +3611,20 @@ public partial class aeexpense : System.Web.UI.Page
             countryid = homecountry;
         }
 
+        cCardTransaction transaction = null;
+        if (transactionid > 0)
+        {
+            transaction = this.ActionContext.CardStatements.getTransactionById(transactionid);
+        }
+
         cFieldToDisplay currency = clsmisc.GetGeneralFieldByCode("currency");
-        cCardStatements statements = this.ActionContext.CardStatements;
-        cCardTransaction transaction = statements.getTransactionById(transactionid);
+
 
         if ((itemtype == ItemType.Cash && currency.display) || (itemtype == ItemType.CreditCard && currency.displaycc) || (itemtype == ItemType.PurchaseCard && currency.displaypc))
         {
             ddlst = (DropDownList)pnlgeneral.FindControl("cmbcurrency");
             if (ddlst.SelectedItem != null)
-            {
+            {             
                 currencyid = int.Parse(ddlst.SelectedValue);
                 Session["currencyid"] = currencyid;
                 if (currencyid != basecurrency)
@@ -3671,7 +3695,7 @@ public partial class aeexpense : System.Web.UI.Page
         {
             if ((int)ViewState["transactionid"] > 0)
             {
-                cCardStatement statement = statements.getStatementById(transaction.statementid);
+                cCardStatement statement = ActionContext.CardStatements.getStatementById(transaction.statementid);
                 if (statement.Corporatecard.allocateditem != null)
                 {
                     items.Add((int)statement.Corporatecard.allocateditem);
@@ -4632,7 +4656,7 @@ public partial class aeexpense : System.Web.UI.Page
         var ddlst = new DropDownList();
         ddlst.ID = "cmbcategories";
         ddlst.SelectedIndexChanged += new EventHandler(cmbcategories_SelectedIndexChanged);
-        ddlst.Items.AddRange(categories.PopulateCategoriesDropDownList(subcats.GetSubCatsByEmployeeItemRoles((int)this.ViewState["employeeid"])).ToArray());
+        ddlst.Items.AddRange(categories.PopulateCategoriesDropDownList(this.SubCatItemRoles).ToArray());
         ddlst.Items.Insert(0, new ListItem("Please select an option", "0"));
         if (expenseitem != null)
         {
@@ -5430,7 +5454,7 @@ public partial class aeexpense : System.Web.UI.Page
     /// <returns>a List of listeItems</returns>
     private List<ListItem> PopulateExpensesDropDownList(cSubcats subCats, int categoryId, bool isCorpCard, bool isMobileJourney)
     {
-        SortedList<int, SubcatItemRoleBasic> subCatsItems = subCats.GetExpenseSubCatsForCategory(categoryId, isCorpCard, isMobileJourney, (int)ViewState["employeeid"]);
+        SortedList<int, SubcatItemRoleBasic> subCatsItems = subCats.GetExpenseSubCatsForCategory(categoryId, isCorpCard, isMobileJourney, (int)ViewState["employeeid"], this.SubCatItemRoles);
 
         var result = new List<ListItem>();
         foreach (KeyValuePair<int, SubcatItemRoleBasic> itemRoleBasic in subCatsItems)
