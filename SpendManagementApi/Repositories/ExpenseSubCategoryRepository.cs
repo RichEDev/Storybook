@@ -234,10 +234,11 @@ namespace SpendManagementApi.Repositories
         /// <returns>A list of <see cref="ListItemData">ListItemData</see></returns>
         public List<ListItemData> GetExpenseSubCatsForCategory(int categoryId, bool isCorpCard, bool isMobileJourney)
         {
-            var subCategories = ActionContext.SubCategories;
-            SortedList<int, SubcatItemRoleBasic> subcatsForCategory = subCategories.GetExpenseSubCatsForCategory(categoryId, isCorpCard, isMobileJourney, this.User.EmployeeID);
+            var subCategories = this.ActionContext.SubCategories;
+            List<SubcatItemRoleBasic> subcatItemRoles = subCategories.GetSubCatsByEmployeeItemRoles(this.User.EmployeeID, true);
+            SortedList<int, SubcatItemRoleBasic> subcatsForCategory = subCategories.GetExpenseSubCatsForCategory(categoryId, isCorpCard, isMobileJourney, this.User.EmployeeID, subcatItemRoles);
 
-           return subcatsForCategory.Select(subcat => new ListItemData(subcat.Key, subcat.Value.Subcat)).ToList();
+            return subcatsForCategory.Select(subcat => new ListItemData(subcat.Key, subcat.Value.Subcat)).ToList();
         }
       
         public override ExpenseSubCategory Add(ExpenseSubCategory expenseSubCategory)
