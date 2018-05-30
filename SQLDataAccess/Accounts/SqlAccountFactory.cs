@@ -130,7 +130,7 @@
         /// <returns>The required <see cref="IAccount"/></returns>
         private IAccount Get(int id)
         {
-            const string Sql = "SELECT accountid, dbname, dbusername, dbpassword, dbserver, archived FROM registeredusers WHERE accountid=@accountID";
+            const string Sql = "SELECT accountid, dbname, dbusername, dbpassword, dbserver, archived, isNHSCustomer FROM registeredusers WHERE accountid=@accountID";
 
             this._metabaseDataConnection.Parameters.Add(new SqlParameter("@accountID", SqlDbType.Int) { Value = id });
 
@@ -146,13 +146,21 @@
                     string password = reader.GetString(3);
                     int databaseServerId = reader.GetInt32(4);
                     bool archived = reader.GetBoolean(5);
+                    bool nhsCustomer = reader.GetBoolean(6);
 
                     IDatabaseServer databaseServer = this._databaseServerFactory[databaseServerId];
 
                     // Tightly coupled due to the catalogue technically being part of an Account but isolated for seperation of concerns
                     IDatabaseCatalogue databaseCatalogue = new DatabaseCatalogue(databaseServer, databaseCatalogueName, username, password, this._cryptography);
 
-                    account = new Account(accountId, databaseCatalogue, archived);
+                    if (nhsCustomer)
+                    {
+                        account = new NhsAccount(accountId, databaseCatalogue, archived);
+                    }
+                    else
+                    {
+                        account = new Account(accountId, databaseCatalogue, archived);
+                    }
                 }
 
                 this._metabaseDataConnection.Parameters.Clear();
