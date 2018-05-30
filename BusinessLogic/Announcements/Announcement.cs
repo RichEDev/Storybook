@@ -96,7 +96,7 @@
         }
 
         /// <summary>
-        /// A method that returns a boolean value indicating whether an instance of <see cref="IAnnouncement"/> should be visible by the current user.
+        /// A method that returns a boolean value indicating whether an instance of <see cref="IAnnouncement"/> should be visible by the current user on the current day.
         /// </summary>
         /// <param name="account">An instance of <see cref="IAccount"/> associated with the current account</param>
         /// <param name="userIdentity">An instance of <see cref="UserIdentity"/></param>
@@ -107,7 +107,11 @@
             UserIdentity userIdentity,
             IEmployeeCombinedAccessRoles combinedEmployeesAccessRolesFactory)
         {
-            var result = false;
+            if (this.StartDate > DateTime.Today || this.EndDate < DateTime.Today)
+            {
+                return false;
+            }
+            
             foreach (IValidator validator in this._validators)
             {
                 if (!validator.Valid(account, userIdentity, combinedEmployeesAccessRolesFactory))
