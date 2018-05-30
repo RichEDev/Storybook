@@ -405,10 +405,10 @@ namespace SpendManagementApi.Repositories
 
             // get the added / updated db item
             var result = vehicleRepository.Get(carId);
-            if (subAccountProperties.PopulateDocumentsFromVehicleLookup )
+            if (subAccountProperties.PopulateDocumentsFromVehicleLookup)
             {
                 DateTime taxExpiry;
-                if (subAccountProperties.BlockTaxExpiry && DateTime.TryParseExact(item.TaxExpiry, "dd/MM/yyyy",null,DateTimeStyles.None, out taxExpiry ))
+                if (subAccountProperties.BlockTaxExpiry && !string.IsNullOrEmpty(item.TaxExpiry) && DateTime.TryParseExact(item.TaxExpiry, "dd/MM/yyyy",null,DateTimeStyles.None, out taxExpiry ))
                 {
                     var taxRepo = new TaxDocumentRepository(
                         this.User, 
@@ -421,7 +421,7 @@ namespace SpendManagementApi.Repositories
                 DateTime motExpiry;
                 DateTime motStart;
 
-                if (subAccountProperties.BlockMOTExpiry && DateTime.TryParseExact(item.MotExpiry, "dd/MM/yyyy",null,DateTimeStyles.None, out motExpiry) && DateTime.TryParseExact(item.MotStart, "dd/MM/yyyy",null,DateTimeStyles.None, out motStart ))
+                if (subAccountProperties.BlockMOTExpiry && !string.IsNullOrEmpty(item.MotExpiry) && DateTime.TryParseExact(item.MotExpiry, "dd/MM/yyyy",null,DateTimeStyles.None, out motExpiry) && DateTime.TryParseExact(item.MotStart, "dd/MM/yyyy",null,DateTimeStyles.None, out motStart ))
                 {
                     var motRepo = new MotDocumentRepository(
                         this.User,
