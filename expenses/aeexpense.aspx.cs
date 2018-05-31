@@ -2823,9 +2823,12 @@ public partial class aeexpense : System.Web.UI.Page
         var itemtype = (ItemType) ViewState["itemtype"];
         var action = (int) ViewState["action"];
         var addControl = (itemtype == ItemType.Cash && action != 2 && action != 3 && action != 4 && (int) ViewState["mobileJourneyID"] == 0);
-        
+
+        // Only lazy load the list of SubcatItemRoleBasic if the claim owner is the employeeId from view state. This is to prevent the approvers/delegates list of SubcatItemRoleBasic being used. 
+        List<SubcatItemRoleBasic> subCatItemRoles = employeeid == (int)this.ViewState["employeeid"] ? this.SubCatItemRoles : this.ActionContext.SubCategories.GetSubCatsByEmployeeItemRoles(employeeid, true);
+       
         var sortedlst = new SortedList<string, ListItem>();
-        foreach (SubcatItemRoleBasic rolesub in this.SubCatItemRoles)
+        foreach (SubcatItemRoleBasic rolesub in subCatItemRoles)
         {
             if (addControl)
             {
