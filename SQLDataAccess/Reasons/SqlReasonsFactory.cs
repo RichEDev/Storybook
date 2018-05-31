@@ -80,6 +80,7 @@
                     if (reasons != null && reasons.Count > 0)
                     {
                         reason = reasons[0];
+                        this._cacheFactory.OnAdd += this.AddToMap;
                         this._cacheFactory.Save(reason);
                     }
                 }
@@ -161,6 +162,7 @@
 
             if (reason.Id > 0)
             {
+                this._cacheFactory.OnAdd += this.AddToMap;
                 reason = this._cacheFactory.Save(reason);
             }
 
@@ -253,6 +255,7 @@
 
             if (returnCode == 0)
             {
+                this._cacheFactory.OnDelete += this.DeleteFromHash;
                 this._cacheFactory.Delete(id);
             }
 
@@ -265,10 +268,9 @@
         }
 
         /// <summary>
-        /// Deletes the instance of <see cref="IReason"/> with a matching id.
-        /// </summary>
-        /// <param name="id">The id of the <see cref="IReason"/> to delete.</param>
-        /// <returns>An <see cref="int"/> containing the result of the delete.</returns>
+        /// Gets an List of all available <see cref="IReason"/> 
+        /// </summary>    
+        /// <returns>The list of <see cref="IReason"/>.</returns>
         public IList<IReason> Get()
         {
             IList<IReason> reasons = this._cacheFactory.Get();
@@ -279,6 +281,7 @@
 
                 if (reasons.Count > 0)
                 {
+                    this._cacheFactory.OnAddMultiple += this.AddToMapMultiple;
                     this._cacheFactory.Add(reasons);
                 }
             }
@@ -322,6 +325,54 @@
         {
             return this._cacheFactory.HashGet(customGet.HashName, customGet.Field);
         }
+
+        /// <summary>
+        /// Adds an instance of <see cref="IReason"/> to the names and descriptions hash in cache.
+        /// </summary>
+        /// <param name="reason">The <see cref="IReason"/> to add to cache.</param>
+        private void AddToMap(IReason reason)
+        {
+            if (reason.Id > 0)
+            {
+                IReason cachedReason = this._cacheFactory[reason.Id];
+
+                if (cachedReason != null)
+                {
+                    this.DeleteFromHash(cachedReason);
+                }
+            }
+
+            this._cacheFactory.HashAdd("names", reason.Name, reason);
+        }
+
+        /// <summary>
+        /// Adds multiple instances of <see cref="IReason"/> to the names and descriptions hash in cache.
+        /// </summary>
+        /// <param name="reasons">Collection of <see cref="IReason"/> to add to cache.</param>
+        private void AddToMapMultiple(IList<IReason> reasons)
+        {
+            IDictionary<string, object> hashReasonsByName = new Dictionary<string, object>();
+
+            foreach (IReason reason in reasons)
+            {
+                if (hashReasonsByName.ContainsKey(reason.Name) == false)
+                {
+                    hashReasonsByName.Add(reason.Name, reason);
+                }
+            }
+
+            this._cacheFactory.HashAdd("names", hashReasonsByName);
+        }
+
+        /// <summary>
+        /// Deletes <paramref name="reason"/> from the names and descriptions hash in cache.
+        /// </summary>
+        /// <param name="reason">The <see cref="IReason"/> to delete.</param>
+        private void DeleteFromHash(IReason reason)
+        {
+            this._cacheFactory.HashDelete("names", reason.Name);
+        }
+
 
         /// <summary>
         /// Gets a collection of <see cref="IReason"/> or a specific instance if <paramref name="id"/> has a value.
