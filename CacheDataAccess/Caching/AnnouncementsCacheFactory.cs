@@ -88,7 +88,6 @@
             Guard.ThrowIfNull(cacheFactory, nameof(cacheFactory));
             Guard.ThrowIfNull(identityProvider, nameof(identityProvider));
             Guard.ThrowIfNull(logger, nameof(logger));
-            Guard.ThrowIfNull(account, nameof(account));
             Guard.ThrowIfNull(combinedEmployeeAccessRolesFactory, nameof(combinedEmployeeAccessRolesFactory));
             Guard.ThrowIfNull(readReceiptFactory, nameof(readReceiptFactory));
 
