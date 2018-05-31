@@ -1216,7 +1216,6 @@ namespace Spend_Management
                                 oldPassword = cPassword.SHA_HashPassword(password);
                                 break;
                             case PasswordEncryptionMethod.SaltedHash:
-                                //TODO: salty hash
                                 oldPassword = password;
                                 break;
                             default:
@@ -1250,7 +1249,7 @@ namespace Spend_Management
                     // Check against current password
                     if (!string.IsNullOrEmpty(reqEmployee.Password) && reqEmployee.PasswordMethod == PasswordEncryptionMethod.SaltedHash)
                     {
-                        if (encryptor.Verify(oldPassword, reqEmployee.Password))
+                        if (!string.IsNullOrEmpty(reqEmployee.Password) && encryptor.Verify(oldPassword, reqEmployee.Password))
                         {
                             isPrevious = true;
                         }

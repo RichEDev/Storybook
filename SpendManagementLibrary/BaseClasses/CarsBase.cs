@@ -501,7 +501,7 @@
                 data.sqlexecute.Parameters.AddWithValue("@CUdelegateID", DBNull.Value);
             }
 
-            if (car.TaxExpiry.HasValue)
+            if (car.TaxExpiry.HasValue && car.TaxExpiry.Value > DateTime.MinValue)
             {
                 data.sqlexecute.Parameters.AddWithValue("@taxexpiry", car.TaxExpiry.Value);
             }
@@ -510,7 +510,7 @@
                 data.sqlexecute.Parameters.AddWithValue("@taxexpiry", DBNull.Value);
             }
 
-            if (car.MotExpiry.HasValue)
+            if (car.MotExpiry.HasValue && car.MotExpiry.Value > DateTime.MinValue)
             {
                 data.sqlexecute.Parameters.AddWithValue("@motexpiry", car.MotExpiry.Value);
             }
