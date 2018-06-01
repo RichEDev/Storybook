@@ -39,6 +39,10 @@
                 case FilterType.Userdefined:
                     return new cUserdefinedFields(accountId);
 
+                case FilterType.Reason:
+                    // Reason Factory is created as needed
+                    return null;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(filterType), filterType, null);
             }
