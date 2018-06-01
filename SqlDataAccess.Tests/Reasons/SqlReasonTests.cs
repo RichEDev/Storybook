@@ -156,6 +156,10 @@
                 this.CustomerDataConnection.GetReader(Arg.Any<string>()).ReturnsForAnyArgs(dataReader);
                 this.CustomerDataConnection.ClearReceivedCalls();
 
+                IReason reason = Substitute.For<IReason>();
+                reason.Name = name;
+                this.CacheFactory[id].Returns(reason);
+
                 // Make sure the record returned populates the Reason correctly
                 IReason returnedReason = this.SUT[69];
 
@@ -184,7 +188,9 @@
             [InlineData(4)]
             public void ValidReason_Add_ShouldAddToCache(int id)
             {
-                IReason Reason = Substitute.For<IReason>();
+                IReason reason = Substitute.For<IReason>();
+                reason.Name = "testReason";
+                this.CacheFactory[id].Returns(reason);
 
                 // Mock save store proc to return valid Id
                 this.CustomerDataConnection.ExecuteProc<int>(Arg.Any<string>()).Returns(id);
@@ -193,13 +199,13 @@
                 this.Logger.IsDebugEnabled.Returns(true);
 
                 // Add the Reason
-                this.SUT.Save(Reason);
+                this.SUT.Save(reason);
 
                 // Ensure the Reason was added to cache
-                this.CacheFactory.Received(1).Save(Reason);
+                this.CacheFactory.Received(1).Save(reason);
 
                 // Ensure Id was set correctly on returned Reason
-                Assert.Equal(id, Reason.Id);
+                Assert.Equal(id, reason.Id);
             }
 
             /// <summary>
@@ -497,7 +503,11 @@
             public void DeleteReason_Delete_ShouldDeleteFromCache()
             {
                 // Make sure the request from memory returns null (imitates not being in memory)
-                this.RepositoryBase[32].ReturnsNull();
+                this.RepositoryBase[1].ReturnsNull();
+
+                IReason reason = Substitute.For<IReason>();
+                reason.Name = "testReason";
+                this.CacheFactory[1].Returns(reason);
 
                 // Ensure debug level is set to true
                 this.Logger.IsDebugEnabled.Returns(true);
