@@ -60,15 +60,6 @@
             }
 
             /// <summary>
-            /// Test to ensure a <see langword="null"/> <see cref="Account"/> causes the constructor to throw a <see cref="ArgumentNullException"/> correctly.
-            /// </summary>
-            [Fact]
-            public void WithNullAccount_Constructor_ShouldThrowArgumentNullException()
-            {
-                Assert.Throws<ArgumentNullException>(() => new AnnouncementsCacheFactory(this.CacheFactory, this.IdentityProvider, this.Logger, null, this.EmployeeCombinedAccessRoles, this.ReadReceiptFactory));
-            }
-
-            /// <summary>
             /// Test to ensure a <see langword="null"/> <see cref="EmployeeCombinedAccessRole"/> causes the constructor to throw a <see cref="ArgumentNullException"/> correctly.
             /// </summary>
             [Fact]
@@ -260,21 +251,27 @@
                             Id = this.GuidOne,
                             Message = "Zeroed",
                             ReadReceipts = emptyReadReceipts,
-                            Active = true
+                            Active = true,
+                            StartDate = DateTime.Today,
+                            EndDate = DateTime.Today
                         },
                     new Announcement()
                         {
                             Id = this.GuidTwo,
                             Message = "First",
                             ReadReceipts = emptyReadReceipts,
-                            Active = true
+                            Active = true,
+                            StartDate = DateTime.Today,
+                            EndDate = DateTime.Today
                         },
                     new Announcement()
                         {
                             Id = this.GuidThree,
                             Message = "Second",
                             ReadReceipts = this.ReadReceiptsList,
-                            Active = true
+                            Active = true,
+                            StartDate = DateTime.Today,
+                            EndDate = DateTime.Today
                         }
                 });
 
@@ -301,14 +298,18 @@
                             Id = this.GuidOne,
                             Message = "Zeroed",
                             ReadReceipts = this.ReadReceiptsList,
-                            Active = true
+                            Active = true,
+                            StartDate = DateTime.Today,
+                            EndDate = DateTime.Today
                         },
                     new Announcement()
                         {
                             Id = this.GuidTwo,
                             Message = "First",
                             ReadReceipts = this.ReadReceiptsList,
-                            Active = true
+                            Active = true,
+                            StartDate = DateTime.Today,
+                            EndDate = DateTime.Today
                         }
                 });
 
